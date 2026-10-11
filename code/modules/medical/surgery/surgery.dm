@@ -9,6 +9,8 @@
 	var/icon_state = "scissor"
 	/// The steps that make up this surgery
 	var/list/datum/surgery_step/surgery_steps
+	//! If non-nil, this surgery steps that will cancel the surgery.
+	var/list/datum/surgery_step/cancel_steps
 	/// If TRUE, this surgery will automatically be performed when the patient is hit with a relevant tool
 	var/implicit = FALSE
 
@@ -25,13 +27,10 @@
 	var/list/default_sub_surgeries
 	/// The body zone this surgery affects, for suturing and checking what surgeries can be performed.
 	var/affected_zone = "chest"
-	/// Whether this surgery can be cancelled with a suture or staple gun.
-	var/can_cancel = TRUE
 
 	var/last_surgery_step = 0 //! Do not modify - Tracks the last step ID added, used for ordering steps.
 	var/complete = FALSE //! If TRUE, the surgery is complete.
 	var/visible = TRUE //! if TRUE, the surgery will be visible in the context menu.
-	var/cancel_button = TRUE //! If TRUE, the surgery will show a cancel button in the context menu.
 	var/datum/surgeryHolder/holder = null
 	var/mob/living/patient = null
 
@@ -59,6 +58,7 @@
 		surgery_steps = list()
 		last_surgery_step = 0
 		generate_surgery_steps()
+		generate_cancel_steps()
 
 	/// Create the default sub-surgeries for this surgery
 	proc/populate_sub_surgeries()
@@ -86,14 +86,16 @@
 	// Internal Surgery logic
 	// ----------
 
-	// /// Attempt to perform a given step with a given tool.
-	// proc/attempt_step(mob/surgeon, obj/item/tool)
-	// 	result = step.perform_step(surgeon, tool)
-	// 	step_attempted(step, surgeon, tool)
-	// 	return result
+	/// Attempts the first possible step in this surgery, returns TRUE if one was found & attempted.
+	proc/attempt(mob/surgeon, obj/item/tool)
+		var/datum/surgery_step/step = step_possible(surgeon, tool)
+		if (step)
+			step.attempt_surgery_step(surgeon, tool)
+			return TRUE
+		return FALSE
 
 	/// Check if any steps are possible on the target using the given tool. Return the first possible step.
-	proc/surgery_step_possible(mob/surgeon, obj/item/tool)
+	proc/step_possible(mob/surgeon, obj/item/tool)
 		var/completed_count = 0
 
 		for(var/datum/surgery_step/step in surgery_steps)
@@ -112,12 +114,8 @@
 	proc/complete_surgery(mob/surgeon, obj/item/I)
 		complete = TRUE
 		on_complete(surgeon, I)
-		if (exit_when_finished && !implicit)
-			super_surgery?.show_contexts(surgeon)
-		else if (!implicit)
-			show_contexts(surgeon)
 
-
+	/// Step up to the next stage of the surgery, showing the appropriate contexts.
 	proc/step_up(mob/surgeon, obj/item/I)
 		if (super_surgery)
 			super_surgery.show_contexts(surgeon)
@@ -150,7 +148,7 @@
 	/// Returns the implicit surgery step to be performed by this tool.
 	proc/get_implicit_step(mob/surgeon, obj/item/I)
 		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
-			var/datum/surgery_step/step = surgery_step_possible(surgeon, I)
+			var/datum/surgery_step/step = step_possible(surgeon, I)
 			if (step)
 				return step
 		if (sub_surgeries_accessible(surgeon)) // only attempt subsurgeries if this surgery is done.
@@ -171,11 +169,6 @@
 			if (step.finished)
 				steps_complete = max (step.step_number, steps_complete)
 		return (chosen_step.step_number-1) <= steps_complete
-
-	/// Called whenever a step is attempted, failure or not.
-	proc/step_attempted(datum/surgery_step/step, mob/user, obj/item/tool)
-		if (!implicit)
-			show_contexts(user)
 
 	/// Called when a step is completed. Handles if the surgery is complete and re-entering the surgery UI.
 	proc/step_completed(datum/surgery_step/step, mob/user, obj/item/tool)
@@ -257,7 +250,7 @@
 			if (super_surgery != null || length(holder.get_contexts(surgeon)) > 1)
 				contexts += new /datum/contextAction/surgery/step_up(holder, src)
 
-		if (cancel_button && cancel_possible() && get_surgery_progress() > 0 && !implicit)
+		if (cancel_step && get_surgery_progress() > 0 && !implicit)
 			contexts += new/datum/contextAction/surgery/cancel(holder,src)
 
 		//place the always-optional steps to the left of the top step.
@@ -265,6 +258,14 @@
 
 		return contexts
 
+
+	/// Called whenever a step is attempted, failure or not.
+	proc/step_attempted(datum/surgery_step/step, mob/surgeon, obj/item/tool)
+		if (!implicit)
+			if (exit_when_finished && complete)
+				super_surgery?.show_contexts(surgeon)
+			else
+				show_contexts(surgeon)
 
 
 	// ----------
@@ -338,78 +339,6 @@
 	/// Checks if the surgery can be canceled.
 	proc/cancel_possible()
 		return (can_cancel && get_surgery_progress() > 0)
-	//-----
-	// Fluff
-	//-----
-
-	/// Handles the old clown fumbles.
-	proc/special_fumble(mob/surgeon, obj/item/tool)
-		if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-			if (tool_flags_required)
-				if (tool_flags_required & TOOL_CUTTING)
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [tool]!"), \
-					SPAN_ALERT("You fumble and stab yourself in the eye with [tool]!"))
-					surgeon.bioHolder.AddEffect("blind")
-					surgeon.changeStatus("knockdown", 4 SECONDS)
-					JOB_XP(surgeon, "Clown", 1)
-					var/damage = rand(5, 15)
-					random_brute_damage(surgeon, damage)
-					take_bleeding_damage(surgeon, null, damage)
-					return TRUE
-
-				if (tool_flags_required & TOOL_SAWING )
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> mishandles [tool] and cuts [him_or_her(surgeon)]self!"),\
-					SPAN_ALERT("You mishandle [tool] and cut yourself!"))
-					surgeon.changeStatus("knockdown", 1 SECOND)
-					JOB_XP(surgeon, "Clown", 1)
-					var/damage = rand(10, 20)
-					random_brute_damage(surgeon, damage)
-					take_bleeding_damage(surgeon, damage)
-					return TRUE
-				if (tool_flags_required & TOOL_SNIPPING )
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [tool]!"), \
-					SPAN_ALERT("You fumble and stab yourself in the eye with [tool]!"))
-					surgeon.bioHolder.AddEffect("blind")
-					surgeon.changeStatus("knockdown", 0.4 SECONDS)
-
-					JOB_XP(surgeon, "Clown", 1)
-					var/damage = rand(5, 15)
-					random_brute_damage(surgeon, damage)
-					take_bleeding_damage(surgeon, null, damage)
-					return TRUE
-				if (tool_flags_required & TOOL_PRYING)
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [tool]!"), \
-					SPAN_ALERT("You fumble and club yourself in the head with [tool]!"))
-					surgeon.changeStatus("knockdown", 0.4 SECONDS)
-					JOB_XP(surgeon, "Clown", 1)
-					var/damage = rand(5, 15)
-					random_brute_damage(surgeon, damage)
-					return TRUE
-				if (tool_flags_required & TOOL_CAUTERY)
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> burns [him_or_her(surgeon)]self with [tool]!"),\
-					SPAN_ALERT("You burn yourself with [tool]"))
-
-					JOB_XP(surgeon, "Clown", 1)
-					surgeon.changeStatus("knockdown", 4 SECONDS)
-					var/damage = rand(5, 15)
-					random_burn_damage(surgeon, damage)
-					return TRUE
-
-			else if (istype(tool, /obj/item/suture))
-				if (surgeon.bioHolder.HasEffect("clumsy") && prob(33))
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pricks [his_or_her(surgeon)] finger with [tool]!"),\
-					SPAN_ALERT("You prick your finger with [tool]"))
-
-					//surgeon.bioHolder.AddEffect("blind") // oh my god I'm the biggest idiot ever I forgot to get rid of this part
-					// I'm not deleting it I'm just commenting it out so my shame will be eternal and perhaps future generations of coders can learn from my mistake
-					// - Haine
-					surgeon.changeStatus("knockdown", 4 SECONDS)
-					JOB_XP(surgeon, "Clown", 1)
-					var/damage = rand(1, 10)
-					random_brute_damage(surgeon, damage)
-					take_bleeding_damage(surgeon, damage)
-					return TRUE
-		return FALSE
 
 
 	//-----
@@ -424,6 +353,9 @@
 
 	///Create & add the surgery steps for this surgery
 	proc/generate_surgery_steps()
+
+	///Create & add the cancel steps for this surgery.
+	proc/generate_cancel_steps()
 
 	///Whether this surgery is possible on the target - Otherwise, will be hidden from the context menu
 	proc/surgery_possible(mob/living/surgeon)
@@ -472,11 +404,37 @@
 
 	/// Attempts to perform this surgery step with the given tool. Returns TRUE on success, FALSE on failure.
 	proc/attempt_surgery_step(mob/surgeon, obj/item/tool)
-		if (test_success(surgeon, tool))
-			return TRUE
-		else
-			if (!parent_surgery.implicit)
-				parent_surgery.show_contexts(surgeon)
+		if (parent_surgery.super_surgery && !parent_surgery.super_surgery.surgery_complete())
+			return FALSE
+		if (!can_operate(surgeon, tool, FALSE))
+			return FALSE
+		if (special_fumble(surgeon, tool))
+			return FALSE
+
+		var/mess_up_odds = calculate_failure_chance(surgeon,tool)
+		if (surgeon.a_intent == INTENT_DISARM && can_fail)
+			boutput(surgeon, SPAN_NOTICE("You mess up [parent_surgery.patient]'s surgery on purpose."))
+			on_mess_up(surgeon,tool, forced=TRUE)
+			return FALSE
+		else if (can_fail && prob(mess_up_odds))
+			on_mess_up(surgeon,tool)
+			return FALSE
+
+		var/success = do_surgery_step(surgeon, tool)
+		if (success)
+			if (success_damage > 0)
+				var/dealt_damage = max(0,rand(success_damage-success_damage_variance, success_damage+success_damage_variance))
+				parent_surgery.patient.TakeDamage("chest",dealt_damage,0,damage_type=damage_type)
+				if (damage_type in list(DAMAGE_CRUSH,DAMAGE_CUT,DAMAGE_STAB))
+					take_bleeding_damage(parent_surgery.patient, tool.the_mob, damage = dealt_damage, damage_type = damage_type, surgery_bleed = TRUE)
+
+			if (success_sound)
+				playsound(parent_surgery.patient, success_sound, 50, TRUE)
+			on_complete(surgeon, tool)
+			finish_step(surgeon, tool)
+		parent_surgery.step_attempted(src,surgeon, tool)
+		return success
+
 	/// Returns a random mess-up text for this surgery step based on the tool used.
 	proc/get_mess_up_text(damage, obj/item/tool)
 		var/list/messup_texts
@@ -548,8 +506,7 @@
 					boutput(surgeon,SPAN_ALERT("You can't use that tool for this step."))
 			return FALSE
 
-	/// Called whenever this step is attempted, failure or not.
-	proc/step_attempted(datum/surgery_step/step, mob/user, obj/item/tool)
+
 	/// Calculates the chance of failure for this surgery step with the given tool.
 	proc/calculate_failure_chance(mob/surgeon, obj/item/tool)
 		var/screw_up_prob = failure_chance
@@ -604,37 +561,6 @@
 
 		DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) has screw_up_prob set to [screw_up_prob]</b>")
 		return screw_up_prob
-
-	///Calculate if this step succeeds
-	proc/test_success(mob/surgeon, obj/item/tool)
-		if (parent_surgery.super_surgery && !parent_surgery.super_surgery.surgery_complete())
-			return FALSE
-		if (!can_operate(surgeon, tool, FALSE))
-			return FALSE
-		if (special_fumble(surgeon, tool))
-			return FALSE
-		var/mess_up_odds = calculate_failure_chance(surgeon,tool)
-		if (surgeon.a_intent == INTENT_DISARM && can_fail)
-			boutput(surgeon, SPAN_NOTICE("You mess up [parent_surgery.patient]'s surgery on purpose."))
-			on_mess_up(surgeon,tool, forced=TRUE)
-			return FALSE
-		else if (can_fail && prob(mess_up_odds))
-			on_mess_up(surgeon,tool)
-			return FALSE
-		var/success = do_surgery_step(surgeon, tool)
-		if (success && success_damage > 0)
-			var/dealt_damage = max(0,rand(success_damage-success_damage_variance, success_damage+success_damage_variance))
-			parent_surgery.patient.TakeDamage("chest",dealt_damage,0,damage_type=damage_type)
-			if (damage_type in list(DAMAGE_CRUSH,DAMAGE_CUT,DAMAGE_STAB))
-				take_bleeding_damage(parent_surgery.patient, tool.the_mob, damage = dealt_damage, damage_type = damage_type, surgery_bleed = TRUE)
-
-			if (success_sound)
-				playsound(parent_surgery.patient, success_sound, 50, TRUE)
-			on_complete(surgeon, tool)
-			finish_step(surgeon, tool)
-		step_attempted(surgeon, tool)
-
-		return success
 
 	/// Mark this step as finished. It's better to override on_complete unless you know what you're doing.
 	proc/finish_step(mob/user, obj/item/tool)
@@ -722,3 +648,73 @@
 	proc/on_complete(mob/user, obj/item/tool)
 
 	proc/on_cancel(mob/surgeon, obj/item/I, var/from_context_menu = FALSE, var/cancelled_implicitly = FALSE, var/quiet = TRUE, var/forced = FALSE)
+
+
+	/// Handles the old clown fumbles.
+	proc/special_fumble(mob/surgeon, obj/item/tool)
+		if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
+			if (tool_flags_required)
+				if (tool_flags_required & TOOL_CUTTING)
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [tool]!"), \
+					SPAN_ALERT("You fumble and stab yourself in the eye with [tool]!"))
+					surgeon.bioHolder.AddEffect("blind")
+					surgeon.changeStatus("knockdown", 4 SECONDS)
+					JOB_XP(surgeon, "Clown", 1)
+					var/damage = rand(5, 15)
+					random_brute_damage(surgeon, damage)
+					take_bleeding_damage(surgeon, null, damage)
+					return TRUE
+
+				if (tool_flags_required & TOOL_SAWING )
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> mishandles [tool] and cuts [him_or_her(surgeon)]self!"),\
+					SPAN_ALERT("You mishandle [tool] and cut yourself!"))
+					surgeon.changeStatus("knockdown", 1 SECOND)
+					JOB_XP(surgeon, "Clown", 1)
+					var/damage = rand(10, 20)
+					random_brute_damage(surgeon, damage)
+					take_bleeding_damage(surgeon, damage)
+					return TRUE
+				if (tool_flags_required & TOOL_SNIPPING )
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [tool]!"), \
+					SPAN_ALERT("You fumble and stab yourself in the eye with [tool]!"))
+					surgeon.bioHolder.AddEffect("blind")
+					surgeon.changeStatus("knockdown", 0.4 SECONDS)
+
+					JOB_XP(surgeon, "Clown", 1)
+					var/damage = rand(5, 15)
+					random_brute_damage(surgeon, damage)
+					take_bleeding_damage(surgeon, null, damage)
+					return TRUE
+				if (tool_flags_required & TOOL_PRYING)
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [tool]!"), \
+					SPAN_ALERT("You fumble and club yourself in the head with [tool]!"))
+					surgeon.changeStatus("knockdown", 0.4 SECONDS)
+					JOB_XP(surgeon, "Clown", 1)
+					var/damage = rand(5, 15)
+					random_brute_damage(surgeon, damage)
+					return TRUE
+				if (tool_flags_required & TOOL_CAUTERY)
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> burns [him_or_her(surgeon)]self with [tool]!"),\
+					SPAN_ALERT("You burn yourself with [tool]"))
+
+					JOB_XP(surgeon, "Clown", 1)
+					surgeon.changeStatus("knockdown", 4 SECONDS)
+					var/damage = rand(5, 15)
+					random_burn_damage(surgeon, damage)
+					return TRUE
+
+			else if (istype(tool, /obj/item/suture))
+				if (surgeon.bioHolder.HasEffect("clumsy") && prob(33))
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pricks [his_or_her(surgeon)] finger with [tool]!"),\
+					SPAN_ALERT("You prick your finger with [tool]"))
+
+					//surgeon.bioHolder.AddEffect("blind") // oh my god I'm the biggest idiot ever I forgot to get rid of this part
+					// I'm not deleting it I'm just commenting it out so my shame will be eternal and perhaps future generations of coders can learn from my mistake
+					// - Haine
+					surgeon.changeStatus("knockdown", 4 SECONDS)
+					JOB_XP(surgeon, "Clown", 1)
+					var/damage = rand(1, 10)
+					random_brute_damage(surgeon, damage)
+					take_bleeding_damage(surgeon, damage)
+					return TRUE
+		return FALSE

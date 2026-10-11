@@ -331,7 +331,7 @@
 			desc = "Remove the patients' left eye."
 			organ_var_name = "left_eye"
 			organ_pretty_name = "left eye"
-			surgery_step_possible(mob/living/surgeon, obj/item/I)
+			step_possible(mob/living/surgeon, obj/item/I)
 				if (surgeon.find_in_hand(I) != surgeon.l_hand)
 					return FALSE
 				return ..()
@@ -347,7 +347,7 @@
 			desc = "Remove the patients' right eye."
 			organ_var_name = "right_eye"
 			organ_pretty_name = "right eye"
-			surgery_step_possible(mob/living/surgeon, obj/item/I)
+			step_possible(mob/living/surgeon, obj/item/I)
 				if (surgeon.find_in_hand(I) != surgeon.r_hand)
 					return FALSE
 				return ..()
@@ -648,7 +648,7 @@
 			desc = "Replace the patients' left eye."
 			organ_var_name = "left_eye"
 			organ_pretty_name = "left eye"
-			surgery_step_possible(mob/living/surgeon, obj/item/I)
+			step_possible(mob/living/surgeon, obj/item/I)
 				if (surgeon.find_in_hand(I) != surgeon.l_hand)
 					return FALSE
 				return ..()
@@ -658,7 +658,7 @@
 			desc = "Replace the patients' right eye."
 			organ_var_name = "right_eye"
 			organ_pretty_name = "right eye"
-			surgery_step_possible(mob/living/surgeon, obj/item/I)
+			step_possible(mob/living/surgeon, obj/item/I)
 				if (surgeon.find_in_hand(I) != surgeon.r_hand)
 					return FALSE
 				return ..()

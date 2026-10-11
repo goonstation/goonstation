@@ -23,7 +23,7 @@
 
 	/// Returns TRUE if the surgeon can perform this surgery when using the given tool.
 	proc/will_perform_surgery(var/mob/living/surgeon, var/obj/item/tool)
-		if (get_implicit_step(surgeon,tool))
+		if (get_implicit_surgery(surgeon,tool))
 			return TRUE
 		if (tool_relevant(surgeon,tool) && length(get_contexts(surgeon, tool)) > 0)
 			return TRUE
@@ -39,10 +39,10 @@
 	/// 'allow_implicit' determines whether implicit steps should be attempted. If FALSE, this will only open the context menu.
 	proc/perform_surgery(var/mob/living/surgeon, var/obj/item/tool, var/allow_implicit = TRUE)
 		if (allow_implicit)
-			var/datum/surgery_step/step = get_implicit_step(surgeon, tool)
-			if (step)
+			var/datum/surgery/surgery = get_implicit_surgery(surgeon, tool)
+			if (surgery)
 				tool.add_fingerprint(surgeon)
-				return step.perform_step(surgeon, tool)
+				return surgery.attempt(surgeon, tool)
 
 		if (tool_relevant(surgeon,tool))
 			if (tool)
@@ -116,7 +116,7 @@
 	/// Returns TRUE if the mob's given tool is used in a surgery step.
 	proc/tool_relevant(mob/user, obj/item/tool)
 		for (var/datum/surgery/surgery in base_surgeries)
-			if (surgery.tool_suitable(user, tool))
+			if (surgery.step_possible(user, tool))
 				return TRUE
 		return FALSE
 
@@ -158,13 +158,13 @@
 		return TRUE
 
 	/// Get the surgery step that will be performed. Returns FALSE if no surgery step is possible.
-	proc/get_implicit_step(mob/surgeon, obj/item/tool)
+	proc/get_implicit_surgery(mob/surgeon, obj/item/tool)
 		for (var/datum/surgery/surgery in base_surgeries)
 			surgery.check_surgery_stage()
 		for (var/datum/surgery/surgery in base_surgeries)
 			var/result = surgery.get_implicit_step(surgeon, tool)
 			if (result)
-				return result
+				return surgery
 		return FALSE
 
 	/// Are the conditions right for this patient to undergo surgery?

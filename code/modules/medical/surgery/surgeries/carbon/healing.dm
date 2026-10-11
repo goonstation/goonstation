@@ -1,3 +1,7 @@
+/datum/surgery/carbon
+	generate_cancel_steps()
+		src.cancel_step = new/datum/surgery_step/suture
+
 
 /datum/surgery/carbon/heal_generic
 	name = "First Aid"
