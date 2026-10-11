@@ -1419,7 +1419,7 @@
 /// surgical step - performs a step of a surgery
 /datum/contextAction/surgical_step
 	name = "Generic Surgery Step"
-	desc = "Call 1-800-IMCODER."
+	desc = "Call 0118-999-881-999-119-7253! Or better yet, a coder!"
 	icon_state = "heal_generic"
 	var/datum/surgery_step/step = null
 	var/datum/surgery/surgery = null
@@ -1431,12 +1431,12 @@
 	execute(atom/target, mob/user)
 		..()
 		var/obj/item/I = user.equipped()
-		step.attempt_surgery_step(user,I)
+		step.attempt_surgery_step(user,I, from_context_menu=TRUE)
 
 /// surgery context menu - starts/continues a surgery
 /datum/contextAction/surgery
 	name = "Generic Surgery"
-	desc = "Call 1-800-IMCODER."
+	desc = "Call 0118-999-881-999-119-7253! Or better yet, a coder!"
 	icon_state = "heal_generic"
 	var/datum/surgeryHolder/holder = null
 	var/datum/surgery/surgery = null
@@ -1447,21 +1447,6 @@
 		..()
 		var/obj/item/I = user.equipped()
 		holder.surgery_clicked(surgery,user,I)
-/datum/contextAction/surgery/cancel
-	name = "Cancel"
-	desc = "Cancel this surgery."
-	icon_state = "cancel"
-
-	New(var/datum/surgeryHolder/holder, var/datum/surgery/surgery)
-		src.holder = holder
-		src.surgery = surgery
-		name = "Cancel [surgery?.name]"
-		..()
-	execute(atom/target, mob/user)
-		..()
-		user.closeContextActions()
-		var/obj/item/I = user.equipped()
-		surgery.cancel(user,I, from_context_menu=TRUE, quiet=FALSE)
 /datum/contextAction/surgery/step_up
 	name = "Back"
 	desc = "Go up a level."

@@ -21,9 +21,9 @@
 
 /datum/surgery/carbon/limb/skeleton
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new/datum/surgery_step/limb/skeleton/wrench(src, limb_var_name))
-		add_next_step(new/datum/surgery_step/limb/skeleton/crowbar(src, limb_var_name))
-		add_next_step(new/datum/surgery_step/limb/skeleton/remove(src, limb_var_name))
+		src.add_next_step(new/datum/surgery_step/limb/skeleton/wrench(src, limb_var_name))
+		src.add_next_step(new/datum/surgery_step/limb/skeleton/crowbar(src, limb_var_name))
+		src.add_next_step(new/datum/surgery_step/limb/skeleton/remove(src, limb_var_name))
 	surgery_possible(mob/living/surgeon)
 		if (!isskeleton(patient) || !patient.organHolder || surgeon.a_intent == INTENT_HARM)
 			return FALSE
@@ -80,13 +80,13 @@
 	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/no_head = !C.organHolder.get_organ("head")
-		surgery_steps[3].finished = no_head
+		surgery_steps[3].completed = no_head
 		..()
 
 	generate_surgery_steps()
-		add_next_step(new/datum/surgery_step/head/skeleton/wrench(src))
-		add_next_step(new/datum/surgery_step/head/skeleton/crowbar(src))
-		add_next_step(new/datum/surgery_step/head/skeleton/remove(src))
+		src.add_next_step(new/datum/surgery_step/head/skeleton/wrench(src))
+		src.add_next_step(new/datum/surgery_step/head/skeleton/crowbar(src))
+		src.add_next_step(new/datum/surgery_step/head/skeleton/remove(src))
 	surgery_conditions_met(mob/surgeon, obj/item/tool)
 		return (isskeleton(patient) && patient.organHolder)
 
@@ -107,14 +107,13 @@
 	desc = "Remove the patients' tail."
 	icon_state = "tail"
 	organ_var_name = "tail"
-	can_cancel = FALSE
 	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/organ = C.organHolder.get_organ(organ_var_name)
-		surgery_steps[1].finished = (organ == null)
+		surgery_steps[1].completed = (organ == null)
 		..()
 	generate_surgery_steps()
-		add_next_step(new/datum/surgery_step/organ/skeleton_tail/crowbar(src))
+		src.add_next_step(new/datum/surgery_step/organ/skeleton_tail/crowbar(src))
 	surgery_conditions_met(mob/surgeon, obj/item/tool)
 		return (isskeleton(patient) && patient.organHolder)
 

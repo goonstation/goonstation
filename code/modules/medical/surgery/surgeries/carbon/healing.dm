@@ -1,6 +1,6 @@
 /datum/surgery/carbon
 	generate_cancel_steps()
-		src.cancel_step = new/datum/surgery_step/suture
+		add_cancel_step(new/datum/surgery_step/suture/cancel_context(src))
 
 
 /datum/surgery/carbon/heal_generic
@@ -14,10 +14,10 @@
 
 	generate_surgery_steps()
 		if(prob(50))
-			add_next_step(new /datum/surgery_step/fluff/cut(src))
+			src.add_next_step(new /datum/surgery_step/fluff/cut(src))
 		else
-			add_next_step(new /datum/surgery_step/fluff/snip(src))
-		add_next_step(new /datum/surgery_step/fluff/suture(src))
+			src.add_next_step(new /datum/surgery_step/fluff/snip(src))
+		src.add_next_step(new /datum/surgery_step/fluff/suture(src))
 
 	on_complete(mob/living/surgeon, obj/item/tool)
 		patient.HealDamage("All", 15, 0)
@@ -34,8 +34,8 @@
 	desc = "Heal BURN damage with bandages."
 
 	generate_surgery_steps()
-		add_next_step(new /datum/surgery_step/fluff/bandage(src))
-		add_next_step(new /datum/surgery_step/fluff/suture(src))
+		src.add_next_step(new /datum/surgery_step/fluff/bandage(src))
+		src.add_next_step(new /datum/surgery_step/fluff/suture(src))
 
 	on_complete(mob/living/surgeon, obj/item/tool)
 		..()
@@ -51,11 +51,11 @@
 	desc = "Mend bleeding wounds with a suture."
 
 	check_surgery_stage()
-		surgery_steps[1].finished = (patient.bleeding == 0)
+		surgery_steps[1].completed = (patient.bleeding == 0)
 		..()
 
 	generate_surgery_steps()
-		add_next_step(new /datum/surgery_step/fluff/suture(src))
+		src.add_next_step(new /datum/surgery_step/fluff/suture(src))
 
 	on_complete(mob/living/surgeon, obj/item/tool)
 		patient.bleeding = 0
@@ -80,7 +80,7 @@
 		desc = "Undo head surgery with a cautery."
 
 		check_surgery_stage()
-			surgery_steps[1].finished = (patient.surgeryHolder.get_surgery_progress("brain_surgery") == 0)
+			surgery_steps[1].completed = (patient.surgeryHolder.get_surgery_progress("brain_surgery") == 0)
 			..()
 
 		surgery_possible(mob/living/surgeon)
@@ -89,7 +89,7 @@
 			. = ..()
 
 		generate_surgery_steps()
-			add_next_step( new/datum/surgery_step/cauterize/head(src))
+			src.add_next_step( new/datum/surgery_step/cauterize/head(src))
 
 		on_complete(mob/living/surgeon, obj/item/I)
 			patient.surgeryHolder.cancel_all_in_zone("head", surgeon, I)
@@ -99,11 +99,11 @@
 		name = "Cauterize Bleeding"
 		desc = "Remove bleeding with a cautery."
 		check_surgery_stage()
-			surgery_steps[1].finished = (patient.bleeding == 0)
+			surgery_steps[1].completed = (patient.bleeding == 0)
 			..()
 
 		generate_surgery_steps()
-			add_next_step( new/datum/surgery_step/cauterize/bleeding(src))
+			src.add_next_step( new/datum/surgery_step/cauterize/bleeding(src))
 
 
 /datum/surgery/carbon/sutures
@@ -133,42 +133,43 @@
 		for (var/datum/surgery/carbon/surgery in surgeries)
 			if (surgery.cancel_possible())
 				return TRUE
+		return FALSE
 
 	head
 		desc = "Suture the head shut."
 		affected_zone = "head"
 		generate_surgery_steps()
-			add_next_step(new /datum/surgery_step/suture/head(src))
+			src.add_next_step(new /datum/surgery_step/suture/head(src))
 	torso
 		desc = "Suture the torso shut."
 		affected_zone = "chest"
 		generate_surgery_steps()
-			add_next_step(new /datum/surgery_step/suture/torso(src))
+			src.add_next_step(new /datum/surgery_step/suture/torso(src))
 	r_leg
 		desc = "Suture the right leg shut."
 		affected_zone = "r_leg"
 		generate_surgery_steps()
-			add_next_step(new /datum/surgery_step/suture/r_leg(src))
+			src.add_next_step(new /datum/surgery_step/suture/r_leg(src))
 	l_leg
 		desc = "Suture the left leg shut."
 		affected_zone = "l_leg"
 		generate_surgery_steps()
-			add_next_step(new /datum/surgery_step/suture/l_leg(src))
+			src.add_next_step(new /datum/surgery_step/suture/l_leg(src))
 	r_arm
 		desc = "Suture the right arm shut."
 		affected_zone = "r_arm"
 		generate_surgery_steps()
-			add_next_step(new /datum/surgery_step/suture/r_arm(src))
+			src.add_next_step(new /datum/surgery_step/suture/r_arm(src))
 	l_arm
 		desc = "Suture the left arm shut."
 		affected_zone = "l_arm"
 		generate_surgery_steps()
-			add_next_step(new /datum/surgery_step/suture/l_arm(src))
+			src.add_next_step(new /datum/surgery_step/suture/l_arm(src))
 	bleeding
 		desc = "Suture a bleeding wound."
 		affected_zone = "bleeding"
 		generate_surgery_steps()
-			add_next_step(new /datum/surgery_step/suture/bleeding(src))
+			src.add_next_step(new /datum/surgery_step/suture/bleeding(src))
 
 		surgery_possible(mob/living/surgeon)
 			return (patient.bleeding > 0)

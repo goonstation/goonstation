@@ -9,15 +9,15 @@
 	var/icon_state = "scissor"
 	/// The steps that make up this surgery
 	var/list/datum/surgery_step/surgery_steps
-	//! If non-nil, this surgery steps that will cancel the surgery.
+	//! If non-nil, when these steps are complete, all steps will be cancelled.
 	var/list/datum/surgery_step/cancel_steps
 	/// If TRUE, this surgery will automatically be performed when the patient is hit with a relevant tool
 	var/implicit = FALSE
 
 	/// If FALSE, sub surgeries are inaccessible until steps are completed.
 	var/sub_surgeries_always_accessible = FALSE
-	/// If TRUE, the surgery will be exited when finished, placing the user in the super-surgery.
-	var/exit_when_finished = FALSE
+	/// If TRUE, the surgery will be exited when completed, placing the user in the super-surgery.
+	var/exit_when_completed = FALSE
 
 	/// The surgery that this surgery sits inside of. Null if this sits at the top level.
 	var/datum/surgery/super_surgery
@@ -56,6 +56,7 @@
 	proc/regenerate_surgery_steps()
 		qdel(surgery_steps)
 		surgery_steps = list()
+		cancel_steps = list()
 		last_surgery_step = 0
 		generate_surgery_steps()
 		generate_cancel_steps()
@@ -81,6 +82,9 @@
 		step.step_number = 0
 		surgery_steps += step
 
+	/// Adds a step to the surgery that can only be performed after the previous step(s) are complete.
+	proc/add_cancel_step(datum/surgery_step/step)
+		cancel_steps += step
 
 	// ----------
 	// Internal Surgery logic
@@ -94,19 +98,17 @@
 			return TRUE
 		return FALSE
 
-	/// Check if any steps are possible on the target using the given tool. Return the first possible step.
+	/// Check if any of this surgeries' steps are possible using the given tool. Returns the first possible step.
 	proc/step_possible(mob/surgeon, obj/item/tool)
 		var/completed_count = 0
-
 		for(var/datum/surgery_step/step in surgery_steps)
-			if (step.finished && step.step_number != 0)
+			if (step.completed && step.step_number != 0)
 				completed_count = max(step.step_number, completed_count)
 
-		completed_count++
-		// Now check if any steps are possible with the given tool, at this point in time.
+		var/max_allowed_step = completed_count + 1
 		for (var/datum/surgery_step/step in surgery_steps)
-			if (step.step_number <= completed_count)
-				if (!step.finished && step.can_operate(surgeon, tool))
+			if (step.step_number <= max_allowed_step)
+				if (!step.completed && step.can_operate(surgeon, tool))
 					return step
 		return FALSE
 
@@ -115,75 +117,91 @@
 		complete = TRUE
 		on_complete(surgeon, I)
 
-	/// Step up to the next stage of the surgery, showing the appropriate contexts.
+	/// Moves to the surgery containing this, showing the appropriate contexts.
 	proc/step_up(mob/surgeon, obj/item/I)
 		if (super_surgery)
 			super_surgery.show_contexts(surgeon)
 		else
-			//go back to the start if we've no supersurgery
+			//go back to the holder if we've no supersurgery
 			holder.show_contexts(surgeon, I)
 
-	/// Cancel the surgery. Override on_cancel to handle cancellation.
-	proc/cancel(mob/surgeon, obj/item/I, var/from_context_menu = FALSE, var/cancelled_implicitly = FALSE, var/quiet = TRUE, var/forced = FALSE)
-		if (!forced &&!istype(I, /obj/item/suture) && !istype(I, /obj/item/staple_gun))
-			boutput(surgeon, SPAN_ALERT("You need a suture or staple gun to cancel surgery!"))
-			return
-		if (istype(I, /obj/item/staple_gun) && !cancelled_implicitly)
-			var/obj/item/staple_gun/stapler = I
-			if (stapler.ammo < 1)
-				boutput(surgeon, SPAN_ALERT("Your staple gun is out of staples!"))
-				return
-			stapler.ammo--
+	/// Cancel this surgery. Override on_cancel to handle cancellation.
+	/// Note that all sub-surgeries will also be cancelled.
+	/// - from_context_menu: Opens the context menu afterwards if TRUE.
+	/// - forced: Forces the cancellation for behaviour like admin heals.
+	proc/cancel(mob/surgeon, obj/item/I, var/from_context_menu = FALSE, var/forced = FALSE, var/quiet = FALSE)
 		on_cancel(surgeon, I, quiet=quiet, forced=forced)
 		for(var/datum/surgery_step/step in surgery_steps)
-			step.finished = FALSE
+			step.cancel(surgeon, I)
+		for(var/datum/surgery_step/step in cancel_steps)
+			step.cancel(surgeon, I)
+		complete = FALSE
 		for(var/datum/surgery/surgery in current_sub_surgeries)
 			// sub-surgeries always cancel quietly, to avoid spamming -every- subsurgeries' "You suture <X> shut!"
 			if (surgery.cancel_possible() || forced)
-				surgery.cancel(surgeon, I, from_context_menu=from_context_menu, quiet=TRUE, forced=forced, cancelled_implicitly=TRUE)
+				surgery.cancel(surgeon, I, from_context_menu=from_context_menu, quiet=quiet,forced=forced)
 		check_surgery_stage()
 		if (from_context_menu)
 			super_surgery?.show_contexts(surgeon)
-
-	/// Returns the implicit surgery step to be performed by this tool.
-	proc/get_implicit_step(mob/surgeon, obj/item/I)
-		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
-			var/datum/surgery_step/step = step_possible(surgeon, I)
-			if (step)
-				return step
-		if (sub_surgeries_accessible(surgeon)) // only attempt subsurgeries if this surgery is done.
-			// do the next implicit step if subsurgeries are implicit
-			for(var/datum/surgery/surgery in current_sub_surgeries)
-				surgery.check_surgery_stage()
-				var/result = surgery.get_implicit_step(surgeon, I)
-				if (result)
-					return result
-		return FALSE
-
-	/// Can this step be performed - Are all previous steps complete?
-	proc/step_accessible(datum/surgery_step/chosen_step)
-		if (chosen_step.step_number == 0)
-			return TRUE
-		var/steps_complete = 0
-		for (var/datum/surgery_step/step in surgery_steps)
-			if (step.finished)
-				steps_complete = max (step.step_number, steps_complete)
-		return (chosen_step.step_number-1) <= steps_complete
-
-	/// Called when a step is completed. Handles if the surgery is complete and re-entering the surgery UI.
-	proc/step_completed(datum/surgery_step/step, mob/user, obj/item/tool)
-		if (surgery_complete())
-			complete_surgery(user, tool)
-
 
 	/// Determine if this surgery is possible on the target.
 	proc/can_perform_surgery(mob/living/surgeon, obj/item/tool)
 		return surgery_conditions_met(surgeon, tool) && surgery_possible(surgeon)
 
+	/// Check the provided step is doable - IE. Are all previous steps complete?
+	proc/step_accessible(datum/surgery_step/chosen_step)
+		if (chosen_step.step_number == 0)
+			return TRUE
+		var/steps_complete = 0
+		for (var/datum/surgery_step/step in surgery_steps)
+			if (step.completed)
+				steps_complete = max (step.step_number, steps_complete)
+		return (chosen_step.step_number-1) <= steps_complete
+
+	/// Called when a step is completed. Handles if the surgery is complete/cancelled and re-entering the surgery UI.
+	proc/step_completed(mob/user, obj/item/tool, from_context_menu=FALSE)
+		if (cancel_possible() && surgery_cancelled())
+			cancel(user, tool, from_context_menu=from_context_menu, forced=FALSE)
+		else if (surgery_complete())
+			complete_surgery(user, tool)
+
+	// Appends flavor text when examining the patient. Ie '<Patient> has a large incision...'
+	// If not overridden, this will append the descriptions of all current sub-surgeries.
 	proc/get_desc(show_vague)
 		for (var/datum/surgery/surgery in current_sub_surgeries)
 			. += surgery.get_desc(show_vague)
 		return
+
+	// ----------
+	// Implicit surgeries
+	// ----------
+	// Covers old style 'implicit' surgeries that are performed when the patient is hit with the correct tool.
+
+	/// Returns the surgery (or sub-surgery) that will be performed with the given tool. Returns FALSE if no implicit surgery is possible.
+	proc/get_implicit_surgery(mob/surgeon, obj/item/I)
+		// If not complete & this is an implicit surgery, return the first possible step.
+		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
+			var/datum/surgery_step/step = step_possible(surgeon, I)
+			if (step)
+				return src
+		// If sub-surgeries are accessible, attempt to get an implicit step from them.
+		if (sub_surgeries_accessible(surgeon))
+			for(var/datum/surgery/surgery in current_sub_surgeries)
+				surgery.check_surgery_stage()
+				var/result = surgery.get_implicit_surgery(surgeon, I)
+				if (result)
+					return surgery
+		return FALSE
+
+	/// Returns the implicit surgery step that will be performed with the given tool.
+	proc/get_implicit_step(mob/surgeon, obj/item/I)
+		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
+			var/datum/surgery_step/step = step_possible(surgeon, I)
+			if (step)
+				return step
+		return FALSE
+
+
 	// ----------
 	// UI Interaction
 	// ----------
@@ -230,7 +248,7 @@
 
 		if (!implicit)
 			for (var/datum/surgery_step/step in surgery_steps)
-				if (step.finished)
+				if (step.completed)
 					completed_stages = max(completed_stages, step.step_number)
 
 			for (var/datum/surgery_step/step in surgery_steps)
@@ -250,8 +268,11 @@
 			if (super_surgery != null || length(holder.get_contexts(surgeon)) > 1)
 				contexts += new /datum/contextAction/surgery/step_up(holder, src)
 
-		if (cancel_step && get_surgery_progress() > 0 && !implicit)
-			contexts += new/datum/contextAction/surgery/cancel(holder,src)
+		if (cancel_possible() && cancel_steps && get_surgery_progress() > 0 && !implicit)
+			for (var/datum/surgery_step/step in cancel_steps)
+				if (!step.completed)
+					contexts += step.get_context()
+					break
 
 		//place the always-optional steps to the left of the top step.
 		contexts += optional_contexts
@@ -262,7 +283,7 @@
 	/// Called whenever a step is attempted, failure or not.
 	proc/step_attempted(datum/surgery_step/step, mob/surgeon, obj/item/tool)
 		if (!implicit)
-			if (exit_when_finished && complete)
+			if (exit_when_completed && complete)
 				super_surgery?.show_contexts(surgeon)
 			else
 				show_contexts(surgeon)
@@ -275,7 +296,14 @@
 	/// Check if all steps are complete.
 	proc/surgery_complete()
 		for(var/datum/surgery_step/step in surgery_steps)
-			if(!step.optional && !step.finished)
+			if(!step.optional && !step.completed)
+				return FALSE
+		return TRUE
+
+	/// Check if all cancel steps are complete
+	proc/surgery_cancelled()
+		for(var/datum/surgery_step/step in cancel_steps)
+			if(!step.completed)
 				return FALSE
 		return TRUE
 
@@ -288,15 +316,13 @@
 		return response
 
 	/// Get the progress of the surgery.
-	/// TODO: this should be a var when I've nailed down how to ensure surgeries can 100% reliably update the var when steps are completed, cancelled, or added/removed.
 	proc/get_surgery_progress()
-		// TODO: This needs to pick the lowest unfinished step number
 		var/lowest_incomplete = 99
 		var/any_complete = FALSE
 		for (var/datum/surgery_step/step in surgery_steps)
-			if (step.finished && !step.optional)
+			if (step.completed && !step.optional)
 				any_complete = TRUE
-			if (!step.finished && !step.optional)
+			if (!step.completed && !step.optional)
 				lowest_incomplete = min(step.step_number, lowest_incomplete)
 		if (!any_complete)
 			return 0
@@ -338,7 +364,7 @@
 		return FALSE
 	/// Checks if the surgery can be canceled.
 	proc/cancel_possible()
-		return (can_cancel && get_surgery_progress() > 0)
+		return (cancel_steps && get_surgery_progress() > 0)
 
 
 	//-----
@@ -366,12 +392,7 @@
 	/// Called on completion of the surgery.
 	proc/on_complete(mob/surgeon, obj/item/I)
 	/// Called when something cancels the surgery.
-	proc/on_cancel(mob/user, obj/item/I, quiet, var/forced = FALSE)
-		if (!quiet)
-			if (istype(I, /obj/item/staple_gun))
-				playsound(patient, "sound/items/med_staple.ogg", 50, TRUE)
-			else
-				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, TRUE)
+	proc/on_cancel(mob/user, obj/item/I, quiet, forced = FALSE)
 
 /datum/surgery_step
 	var/tool_flags_required = 0 //! Flags for tools that are accepted for this step
@@ -379,15 +400,14 @@
 	var/allow_no_tool = FALSE //! Whether this step can be performed without a tool, if the tool requirements are met.
 	var/step_number = 0 //! The step number in the surgery. Set by the surgery when added. '0' means the step can be performed at any time.
 	var/name = "Base surgery step"
-	var/desc = "Call 1-800-IMCODER."
+	var/desc = "Call 0118-999-881-999-IMCODER-3."
 	var/icon_state = "scissor"
 	var/success_sound = 'sound/items/Scissor.ogg'
 	var/optional = FALSE //! Whether this step is optional
 	var/visible = TRUE //! Whether this step is visible
 	var/datum/surgery/parent_surgery = null //! The surgery this step is a part of
-	var/hide_when_finished = TRUE //! Whether this step should be hidden when finished
-	var/finished = FALSE //! Whether this step is finished
-
+	var/hide_when_completed = TRUE //! Whether this step should be hidden when completed
+	var/completed = FALSE //! Whether this step is completed
 	var/failure_chance = 0 //! Flat chance of failure for this step, before modifiers. People with no training will always raise to 5%
 	var/can_fail = TRUE //! Whether this step can fail
 	var/success_damage = 15 //! The damage this step deals on success
@@ -395,7 +415,7 @@
 	var/fail_damage = 25 //! The damage dealt by this step on failure
 	var/fail_damage_variance = 5 //! How much this damage can vary, positive and negative.
 	var/damage_type = DAMAGE_CUT
-	var/repeatable = FALSE //! Whether this step can be repeated. If TRUE, the step won't automatically be marked as finished.
+	var/repeatable = FALSE //! Whether this step can be repeated. If TRUE, the step won't automatically be marked as completed.
 
 	New(datum/surgery/parent_surgery)
 		src.parent_surgery = parent_surgery
@@ -403,20 +423,28 @@
 
 
 	/// Attempts to perform this surgery step with the given tool. Returns TRUE on success, FALSE on failure.
-	proc/attempt_surgery_step(mob/surgeon, obj/item/tool)
+	proc/attempt_surgery_step(mob/surgeon, obj/item/tool, from_context_menu=FALSE)
 		if (parent_surgery.super_surgery && !parent_surgery.super_surgery.surgery_complete())
 			return FALSE
 		if (!can_operate(surgeon, tool, FALSE))
+			if (from_context_menu)
+				parent_surgery.show_contexts(surgeon)
 			return FALSE
 		if (special_fumble(surgeon, tool))
+			if (from_context_menu)
+				parent_surgery.show_contexts(surgeon)
 			return FALSE
 
 		var/mess_up_odds = calculate_failure_chance(surgeon,tool)
 		if (surgeon.a_intent == INTENT_DISARM && can_fail)
+			if (from_context_menu)
+				parent_surgery.show_contexts(surgeon)
 			boutput(surgeon, SPAN_NOTICE("You mess up [parent_surgery.patient]'s surgery on purpose."))
 			on_mess_up(surgeon,tool, forced=TRUE)
 			return FALSE
 		else if (can_fail && prob(mess_up_odds))
+			if (from_context_menu)
+				parent_surgery.show_contexts(surgeon)
 			on_mess_up(surgeon,tool)
 			return FALSE
 
@@ -430,8 +458,8 @@
 
 			if (success_sound)
 				playsound(parent_surgery.patient, success_sound, 50, TRUE)
+			complete(surgeon, tool)
 			on_complete(surgeon, tool)
-			finish_step(surgeon, tool)
 		parent_surgery.step_attempted(src,surgeon, tool)
 		return success
 
@@ -476,7 +504,7 @@
 
 	// Checks if the surgeon can perform this surgery step with the given tool.
 	proc/can_operate(mob/surgeon, obj/item/tool, quiet = TRUE)
-		if (finished)
+		if (completed)
 			return FALSE
 		if (!IN_RANGE(surgeon, parent_surgery.patient, 1))
 			if (!quiet)
@@ -562,14 +590,17 @@
 		DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) has screw_up_prob set to [screw_up_prob]</b>")
 		return screw_up_prob
 
-	/// Mark this step as finished. It's better to override on_complete unless you know what you're doing.
-	proc/finish_step(mob/user, obj/item/tool)
+	/// Mark this step as completed. It's better to override on_complete unless you know what you're doing.
+	proc/complete(mob/user, obj/item/tool)
 		if (!repeatable)
-			finished = TRUE
-		parent_surgery.step_completed(src, user, tool)
+			completed = TRUE
+		parent_surgery.step_completed(user, tool)
+
+	proc/cancel(mob/surgeon, mob/I)
+		completed = FALSE
 
 	proc/get_context(var/locked) //! Get the context icon for this step
-		if (finished && hide_when_finished || !visible)
+		if (completed && hide_when_completed || !visible)
 			return null
 		var/datum/contextAction/surgical_step/step_context = new
 		step_context.name = name
@@ -577,7 +608,7 @@
 		step_context.icon_state = icon_state
 		step_context.step = src
 		step_context.surgery = parent_surgery
-		if (finished)
+		if (completed)
 			step_context.icon_background = "greenbg"
 			step_context.pip_state = "check"
 		else if (locked)
@@ -647,7 +678,7 @@
 	/// Override this to add completion effects to this surgery step.
 	proc/on_complete(mob/user, obj/item/tool)
 
-	proc/on_cancel(mob/surgeon, obj/item/I, var/from_context_menu = FALSE, var/cancelled_implicitly = FALSE, var/quiet = TRUE, var/forced = FALSE)
+	proc/on_cancel(mob/surgeon, obj/item/I, var/from_context_menu = FALSE, var/forced = FALSE)
 
 
 	/// Handles the old clown fumbles.

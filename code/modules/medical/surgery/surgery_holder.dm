@@ -123,19 +123,19 @@
 	/// Cancel all surgeries.
 	proc/cancel_all(var/forced = FALSE, quiet = TRUE)
 		for(var/datum/surgery/surgery in base_surgeries)
-			surgery.cancel(null, null, forced=forced, quiet = quiet)
+			surgery.cancel(null, null, forced=forced, quiet=TRUE)
 
 	/// Cancel surgeries in a specific zone.
-	proc/cancel_all_in_zone(var/zone, mob/living/surgeon, obj/item/item, quiet = FALSE)
+	proc/cancel_all_in_zone(var/zone, mob/living/surgeon, obj/item/item, forced = FALSE)
 		for(var/datum/surgery/surgery in base_surgeries)
 			if (surgery.affected_zone == zone)
-				surgery.cancel(surgeon, item, quiet=quiet)
+				surgery.cancel(surgeon, item, forced=forced)
 
 	/// Cancel a surgery.
-	proc/cancel_surgery_by_id(id, mob/living/surgeon, obj/item/I, quiet = FALSE)
+	proc/cancel_surgery_by_id(id, mob/living/surgeon, obj/item/I, forced = FALSE)
 		if (!id)
 			return
-		all_surgeries[id].cancel(surgeon, I, quiet=quiet)
+		all_surgeries[id].cancel(surgeon, I, forced=forced)
 
 	/// Get the top-level surgery context icons for this holder.
 	proc/get_contexts(var/surgeon, var/obj/item/tool)
@@ -157,14 +157,14 @@
 			surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 		return TRUE
 
-	/// Get the surgery step that will be performed. Returns FALSE if no surgery step is possible.
+	/// Gets the implicit surgery that will be performed with the given tool. Returns FALSE if no surgery step is possible.
 	proc/get_implicit_surgery(mob/surgeon, obj/item/tool)
 		for (var/datum/surgery/surgery in base_surgeries)
 			surgery.check_surgery_stage()
 		for (var/datum/surgery/surgery in base_surgeries)
-			var/result = surgery.get_implicit_step(surgeon, tool)
+			var/result = surgery.get_implicit_surgery(surgeon, tool)
 			if (result)
-				return surgery
+				return result
 		return FALSE
 
 	/// Are the conditions right for this patient to undergo surgery?

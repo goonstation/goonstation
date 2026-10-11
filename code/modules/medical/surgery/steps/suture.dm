@@ -6,15 +6,41 @@
 	repeatable = TRUE
 	var/loc = ""
 	success_damage = 0
+
+	// Generic suture step for cancelling
 	do_surgery_step(mob/living/surgeon, obj/item/tool)
 		var/mob/living/patient = parent_surgery.patient
 		var/list/datum/surgery/surgeries = parent_surgery.holder.get_surgeries_by_zone(loc)
 		for (var/datum/surgery/surgery in surgeries)
 			if (surgery.cancel_possible())
-				surgery.cancel(surgeon, tool, quiet = FALSE)
+				surgery.cancel(surgeon, tool)
 				if (patient.bleeding)
 					repair_bleeding_damage(patient, 50, rand(1,3))
 				return TRUE
+
+	cancel_context
+		desc = "Suture the patient and cancel this surgery."
+		repeatable = FALSE
+		optional = TRUE
+		success_sound = FALSE
+		do_surgery_step(mob/living/surgeon, obj/item/tool)
+			var/mob/living/patient = parent_surgery.patient
+			if (!istype(tool, /obj/item/suture) && !istype(tool, /obj/item/staple_gun))
+				boutput(surgeon, SPAN_ALERT("You need a suture or staple gun to cancel surgery!"))
+				return FALSE
+			if (istype(tool, /obj/item/staple_gun))
+				var/obj/item/staple_gun/stapler = tool
+				if (stapler.ammo < 1)
+					boutput(surgeon, SPAN_ALERT("Your staple gun is out of staples!"))
+					return FALSE
+				stapler.ammo--
+			if (istype(tool, /obj/item/staple_gun))
+				playsound(patient, "sound/items/med_staple.ogg", 50, TRUE)
+			else
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, TRUE)
+			if (patient.bleeding)
+				repair_bleeding_damage(patient, 50, rand(1,3))
+			return TRUE
 
 
 	head

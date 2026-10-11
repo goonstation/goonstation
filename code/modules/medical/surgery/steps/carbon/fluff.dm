@@ -16,7 +16,7 @@
 			name = "Snip"
 			desc = "Snip out some tissue."
 			icon_state = "scissor"
-			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			success_sound = 'sound/items/Scissor.ogg'
 			tool_flags_required = TOOL_SNIPPING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/patient = parent_surgery.patient

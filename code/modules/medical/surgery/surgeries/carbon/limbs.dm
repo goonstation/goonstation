@@ -18,7 +18,7 @@
 	id = "limb_surgery_base"
 	icon_state = "heart"
 	var/limb_var_name = "limb_var_name"
-	exit_when_finished = TRUE
+	exit_when_completed = TRUE
 	implicit = TRUE
 	visible = FALSE
 
@@ -38,16 +38,16 @@
 			return FALSE
 		return TRUE
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new/datum/surgery_step/limb/cut(src, limb_var_name)) // Makes the organ count as 'in surgery'
-		add_next_step(new/datum/surgery_step/limb/saw(src, limb_var_name)) // Makes the organ unsecure
-		add_next_step(new/datum/surgery_step/limb/remove(src, limb_var_name)) // Removes the organ
+		src.add_next_step(new/datum/surgery_step/limb/cut(src, limb_var_name)) // Makes the organ count as 'in surgery'
+		src.add_next_step(new/datum/surgery_step/limb/saw(src, limb_var_name)) // Makes the organ unsecure
+		src.add_next_step(new/datum/surgery_step/limb/remove(src, limb_var_name)) // Removes the organ
 
 	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
-		surgery_steps[1].finished = (!limb || limb?.remove_stage >= 1)
-		surgery_steps[2].finished = (!limb || limb?.remove_stage >= 2)
-		surgery_steps[3].finished = (!limb)
+		surgery_steps[1].completed = (!limb || limb?.remove_stage >= 1)
+		surgery_steps[2].completed = (!limb || limb?.remove_stage >= 2)
+		surgery_steps[3].completed = (!limb)
 		..()
 
 	cancel_possible()
@@ -60,7 +60,7 @@
 		var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 		if (limb && limb.remove_stage != 0)
 			limb.remove_stage = LIMB_REMOVE_STAGE_SECURE
-			if (!quiet)
+			if (!quiet && surgeon)
 				surgeon.visible_message(SPAN_ALERT("[surgeon] attaches [C.name]'s [limb.name] securely with [tool]."), SPAN_ALERT("You attach [C.name]'s [limb.name] securely with [tool]."))
 				logTheThing(LOG_COMBAT, surgeon, "staples [constructTarget(holder,"combat")]'s [patient.name] back on.")
 				logTheThing(LOG_DIARY, surgeon, "staples [constructTarget(holder,"diary")]'s [patient.name] back on.", "combat")
@@ -70,11 +70,11 @@
 	arm
 		generate_surgery_steps(mob/living/surgeon, mob/user)
 			..()
-			add_next_step( new/datum/surgery_step/limb/attach_arm(src,limb_var_name))
+			src.add_next_step( new/datum/surgery_step/limb/attach_arm(src,limb_var_name))
 		check_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
-			surgery_steps[4].finished = (limb != null)
+			surgery_steps[4].completed = (limb != null)
 			..()
 		l_arm
 			id = "l_arm_surgery"
@@ -93,12 +93,12 @@
 	leg
 		generate_surgery_steps(mob/living/surgeon, mob/user)
 			..()
-			add_next_step( new/datum/surgery_step/limb/attach_leg(src,limb_var_name))
+			src.add_next_step( new/datum/surgery_step/limb/attach_leg(src,limb_var_name))
 
 		check_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
-			surgery_steps[4].finished = (limb != null)
+			surgery_steps[4].completed = (limb != null)
 			..()
 		l_leg
 			id = "l_leg_surgery"

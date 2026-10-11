@@ -15,11 +15,11 @@
 		return TRUE
 
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new/datum/surgery_step/fluff/cut(src))
+		src.add_next_step(new/datum/surgery_step/fluff/cut(src))
 
 	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
-		surgery_steps[1].finished = (length(C.implant) == 0)
+		surgery_steps[1].completed = (length(C.implant) == 0)
 		..()
 
 	on_complete(mob/surgeon, obj/item/tool)
@@ -51,7 +51,7 @@
 				return TRUE
 		return FALSE
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new/datum/surgery_step/parasite(src))
+		src.add_next_step(new/datum/surgery_step/parasite(src))
 
 
 
