@@ -51,42 +51,20 @@ TYPEINFO(/datum/component/tameable)
 	if(!is_valid_food(item))
 		owner.visible_message("[user] tries to feed [owner] [item] but they won't take it!")
 		return
-	var/obj/item/ranch_nametag/tag = item
-	if(owner.tamed)
-		if(istype(tag))
-			if(owner.can_be_named)
-				if(tag.critter_name)
-					if(!owner.named)
-						owner.name = tag.critter_name
-						owner.real_name = tag.critter_name
-						owner.named = tag.critter_name
-						M.visible_message(SPAN_NOTICE("<b>[M]</b> loops the nametag around [owner]'s neck")
-											,SPAN_NOTICE("You loop the nametag around [owner]'s neck"))
-						owner.u_equip(item)
-						item.set_loc(owner)
-						qdel(item)
-					else
-						boutput(M, SPAN_NOTICE("They've already been named!"))
-				else
-					boutput(M, SPAN_NOTICE("That nametag is empty!"))
-			else
-				boutput(M, SPAN_NOTICE("They reject your attempt to name them."))
-			return
-	if(!aggro_mode)
-		if (owner.tamed)
-			owner.visible_message("[user] tries to feed [owner] [item] but they seem full...")
-			return
-		if(prob(tame_chance))
-			owner.tamed = TRUE
-			owner.ai_retaliates = FALSE
-			owner.visible_message("[owner] enjoyed the [item] and seems more docile!")
-			owner.emote("burp")
-			owner.ai.interrupt()
-		if(istype(owner, /mob/living/critter/rockworm))
-			var/mob/living/critter/rockworm/RW = owner
-			RW.aftereat()
-		item.Eat(owner, owner)
+	if (owner.tamed)
+		owner.visible_message("[user] tries to feed [owner] [item] but they seem full...")
 		return
+	if(prob(tame_chance))
+		owner.tamed = TRUE
+		owner.ai_retaliates = FALSE
+		owner.visible_message("[owner] enjoyed the [item] and seems more docile!")
+		owner.emote("burp")
+		owner.ai.interrupt()
+	if(istype(owner, /mob/living/critter/rockworm))
+		var/mob/living/critter/rockworm/RW = owner
+		RW.aftereat()
+	item.Eat(owner, owner)
+	return
 	else
 		owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
 		for(var/damage_type in owner.healthlist)
