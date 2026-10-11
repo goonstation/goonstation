@@ -599,7 +599,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
 					continue
 				org = null
-			else if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
+			else if (!org || org.robotic || org.unusual) // No free organs, trade-ins only, keep ur robotic and unusual stuff
 				continue
 
 			var/obj/item/organ/new_organ = new organ_get(O, OHM)
