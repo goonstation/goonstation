@@ -18,11 +18,19 @@
 	New(var/mob/living/M)
 		..()
 		if (M)
-			src.current_ident = new /datum/absorbedIdentity(M)
-			absorbed_dna = list(
-				"[M.name]" = src.current_ident,
-				"Lesser Form" = new /datum/absorbedIdentity/monkey()
-			)
+			src.set_up_identities(M)
+
+	/// Stores the identity of the given mob as our current one, and adds lesser form
+	proc/set_up_identities(mob/living/M)
+		src.current_ident = new /datum/absorbedIdentity(M)
+		src.absorbed_dna["[M.name]"] = src.current_ident
+		src.absorbed_dna["Lesser Form"] = new /datum/absorbedIdentity/monkey()
+
+	// deepCopy (cloning) creates a holder with no mob, so it has no identities until it gets an owner
+	transferOwnership(newbody)
+		. = ..()
+		if (!src.current_ident && ishuman(newbody))
+			src.set_up_identities(newbody)
 
 	onAttach(mob/to_whom)
 		. = ..()
