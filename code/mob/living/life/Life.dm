@@ -297,7 +297,7 @@
 	if (..(parent))
 		return 1
 
-	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
+	var/mult = clamp(TIME - last_human_life_tick, tick_spacing, cap_tick_spacing) / tick_spacing
 
 	src.mutantrace?.onLife(mult)
 
