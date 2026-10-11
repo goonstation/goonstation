@@ -177,7 +177,7 @@
 		setIntact(TRUE)
 		src.broken = FALSE
 		src.burnt = FALSE
-		icon = initial(icon)
+		icon = get_initial_icon(src)
 		if(icon_old)
 			icon_state = icon_old
 		else

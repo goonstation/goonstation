@@ -14,7 +14,7 @@
 	onAttach(datum/abilityHolder/holder)
 		. = ..()
 		var/obj/disposalpipe/ctype = /obj/disposalpipe
-		var/cicon = initial(ctype.icon)
+		var/cicon = get_initial_icon(ctype)
 
 		pipe_images = new/list(((view_range*2+1)**2)*2)
 		for(var/i in 1 to length(pipe_images))

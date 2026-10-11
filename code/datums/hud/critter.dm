@@ -61,6 +61,8 @@
 /datum/hud/critter/New(M)
 	..()
 	src.master = M
+	if (istext(src.hud_icon))
+		src.hud_icon = file(src.hud_icon)
 
 	// element load order determines position in the hud
 	src.create_hand_element()

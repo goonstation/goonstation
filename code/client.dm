@@ -46,7 +46,7 @@
 	var/darkmode = TRUE
 
 	var/tg_controls = 0
-	var/tg_layout = null
+	var/tg_layout = FALSE
 
 	var/ignore_sound_flags = 0
 
@@ -63,7 +63,7 @@
 
 	var/list/datum/compid_info_list = list()
 
-	var/view_tint
+	var/view_tint = TRUE
 
 	/// saturation_matrix: the client's game saturation
 	/// color_matrix: the client's game color (tint)
@@ -115,9 +115,6 @@
 
 	var/dark_screenflash = FALSE
 
-	var/protanopia_toggled = FALSE
-	var/deuteranopia_toggled = FALSE
-	var/tritanopia_toggled = FALSE
 
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
@@ -288,8 +285,8 @@
 		var/image/I = globalImages[key]
 		src << I
 
-	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
-	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
+	SPAWN(0)
+		src.preferences.load_client_settings(src)
 
 	add_to_donator_list(src.ckey)
 
@@ -403,73 +400,10 @@
 
 /client/proc/initialize_interface()
 	set waitfor = FALSE
-	//WIDESCREEN STUFF
-	var/splitter_value = text2num(winget( src, "mainwindow.mainvsplit", "splitter" ))
-
-	var/widescreen_checked = winget( src, "menu.set_wide", "is-checked" ) == "true"
-	if (widescreen_checked)
-		if (splitter_value < 67.0)
-			src.set_widescreen(1)
-
 	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, PROC_REF(checkHiRes)))
-
-	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
-
-	if (is_vert_splitter)
-
-		if (splitter_value >= 67.0) //Was this client using widescreen last time? save that!
-			src.set_widescreen(1, splitter_value)
-
-		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, PROC_REF(checkScreenAspect)))
-	else
-
-		set_splitter_orientation(0, splitter_value)
-		src.set_widescreen(1, splitter_value)
-		winset( src, "menu.horiz_split", "is-checked=true" )
-
-	//End widescreen stuff
-
-	//blendmode stuff
-
-	var/distort_checked = winget( src, "menu.zoom_distort", "is-checked" ) == "true"
-
-	winset( src, "mapwindow.map", "zoom-mode=[distort_checked ? "distort" : "normal"]" )
-
-	//blendmode end
-
-	if(winget(src, "menu.fullscreen", "is-checked") == "true")
-		winset(src, null, "mainwindow.titlebar=false;mainwindow.is-maximized=true")
-
-	if(winget(src, "menu.hide_menu", "is-checked") == "true")
-		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
-
-	//wow its the future we can choose between 3 fps values omg
-	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
-		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
-	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
-		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
-	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
-		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
-	else
-		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
-
-	//game stuf
-	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
-
-	//sound
-	if (winget( src, "menu.speech_sounds", "is-checked" ) == "true")
-		ignore_sound_flags |= SOUND_SPEECH
-	if (winget( src, "menu.all_sounds", "is-checked" ) == "true")
-		ignore_sound_flags |= SOUND_ALL
-	if (winget( src, "menu.vox_sounds", "is-checked" ) == "true")
-		ignore_sound_flags |= SOUND_VOX
-
-	// Set view tint
-	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
-
-	dark_screenflash = winget( src, "menu.toggle_dark_screenflashes", "is-checked") == "true"
-
+	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, PROC_REF(checkScreenAspect)))
 	winset(src, null, "rpanewindow.left=infowindow")
+	src.preferences.apply_client_settings(src, sync_menu = FALSE)
 
 /client/verb/enable_browser_devtools()
 	set name = "browser-devtools"
@@ -558,9 +492,11 @@
 		return
 	if ((params["screenW"]/params["screenH"]) <= (4/3))
 		SPAWN(6 SECONDS)
+			UNTIL(!src || src.preferences.client_settings_loaded, 10 SECONDS)
+			if (!src || src.preferences.client_settings[CLIENT_SETTING_HORIZONTAL_SPLIT])
+				return
 			if(tgui_alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is recommended for your display. Activate Horizontal Split?", "Recommended option", list("Yes", "No")) == "Yes")
-				set_splitter_orientation(0)
-				winset( src, "menu.horiz_split", "is-checked=true" )
+				src.preferences.set_client_setting(src, CLIENT_SETTING_HORIZONTAL_SPLIT, TRUE)
 
 /client/proc/checkHiRes(list/params)
 	if(!length(params))
@@ -1046,38 +982,6 @@ var/global/curr_day = null
 		return
 	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
-
-/client/verb/apply_depth_shadow()
-	set hidden = 1
-	set name ="apply-depth-shadow"
-
-	apply_depth_filter() //see _plane.dm
-
-/client/verb/toggle_parallax()
-	set hidden = 1
-	set name = "toggle-parallax"
-
-	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
-		qdel(src.parallax_controller)
-		src.parallax_controller = new(src)
-
-	else if (src.parallax_controller)
-		qdel(src.parallax_controller)
-
-/client/verb/apply_view_tint()
-	set hidden = 1
-	set name ="apply-view-tint"
-
-	view_tint = !view_tint
-	if (src.mob?.respect_view_tint_settings)
-		src.set_color(length(src.mob.active_color_matrix) ? src.mob.active_color_matrix : COLOR_MATRIX_IDENTITY, src.mob.respect_view_tint_settings)
-
-/client/verb/toggle_dark_screenflashes()
-	set hidden = 1
-	set name = "toggle-dark-screenflashes"
-
-	dark_screenflash = !dark_screenflash
-
 /client/verb/adjust_saturation()
 	set hidden = TRUE
 	set name = "adjust-saturation"
@@ -1085,24 +989,8 @@ var/global/curr_day = null
 	var/s = input("Enter a saturation % from 50-150. Default is 100.", "Saturation %", 100) as num
 	s = clamp(s, 50, 150) / 100
 	src.set_saturation(s)
-	src.player?.cloudSaves.putData("saturation", s)
+	src.player?.cloudSaves.putDataSoon("saturation", s)
 	boutput(usr, SPAN_NOTICE("You have changed your game saturation to [s * 100]%."))
-
-
-/client/verb/toggle_camera_recoil()
-	set hidden = 1
-	set name = "toggle-camera-recoil"
-
-	if (!src.recoil_controller)
-		src.recoil_controller = new/datum/recoil_controller(src)
-
-	if ((winget(src, "menu.toggle_camera_recoil", "is-checked") == "true"))
-		src.recoil_controller?.enable()
-
-	else
-		src.recoil_controller?.disable()
-
-
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.
@@ -1120,74 +1008,37 @@ var/global/curr_day = null
 	else
 		src.view = 7
 
-/client/proc/set_widescreen(var/wide, var/splitter_value = 0)
-	if (widescreen == wide)
-		return
+/// With `keep_splitter`, a splitter the player dragged stays put unless it's closer to the other layout's fit
+/client/proc/set_widescreen(wide, keep_splitter = FALSE)
 	widescreen = wide
-	if (widescreen)
-		src.view = "[WIDE_TILE_WIDTH]x[SQUARE_TILE_WIDTH]"
-		winset( src, "menu.set_wide", "is-checked=true" )
-		if (vert_split)
-			winset( src, "mainwindow.mainvsplit", "splitter=[splitter_value ? splitter_value : 70]" )
-	else
-		src.view = 7
-		winset( src, "menu.set_wide", "is-checked=false" )
-		if (vert_split)
-			winset( src, "mainwindow.mainvsplit", "splitter=[splitter_value ? splitter_value : 50]" )
+	src.view = wide ? "[WIDE_TILE_WIDTH]x[TILE_HEIGHT]" : 7
+	if (!vert_split)
+		return
+	var/list/params = params2list(winget(src, "mainwindow.mainvsplit", "size;splitter"))
+	var/list/size = splittext(params["size"], "x")
+	var/width = text2num(size[1])
+	var/height = length(size) == 2 ? text2num(size[2]) : 0
+	if (width <= 0 || height <= 0)
+		return
+	// work out the splitter % where the view fills the map pane exactly
+	var/aspect = height / width / TILE_HEIGHT * 100
+	var/fit = clamp(round(aspect * (wide ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)), 20, 90)
+	var/other_fit = clamp(round(aspect * (wide ? SQUARE_TILE_WIDTH : WIDE_TILE_WIDTH)), 20, 90)
+	var/current = text2num(params["splitter"])
+	if (keep_splitter && abs(current - fit) < abs(current - other_fit))
+		return
+	winset(src, "mainwindow.mainvsplit", "splitter=[fit]")
 
-/client/verb/set_wide_view()
-	set hidden = 1
-	set name = "set-wide-view"
-
-	src.set_widescreen(1)
-
-/client/verb/set_square_view()
-	set hidden = 1
-	set name = "set-square-view"
-
-	src.set_widescreen(0)
-
-/client/proc/set_splitter_orientation(var/vert, var/splitter_value = 0)
+/client/proc/set_splitter_orientation(var/vert)
 	vert_split = vert
-	if (vert)
-		winset( src, "mainwindow.mainvsplit", "is-vert=true" )
-		winset( src, "rpane.rpanewindow", "is-vert=false" )
-		winset( src, "mainwindow.mainvsplit", "[splitter_value ? splitter_value : 70]" )
-	else
-		winset( src, "mainwindow.mainvsplit", "is-vert=false" )
-		winset( src, "rpane.rpanewindow", "is-vert=true" )
-		winset( src, "mainwindow.mainvsplit", "[splitter_value ? splitter_value : 70]" )
-
-/client/verb/set_vertical_split()
-	set hidden = 1
-	set name = "set-vertical-split"
-
-	src.set_splitter_orientation(1)
-
-/client/verb/set_horizontal_split()
-	set hidden = 1
-	set name = "set-horizontal-split"
-
-	src.set_splitter_orientation(0)
-
+	winset(src, null, "mainwindow.mainvsplit.is-vert=[vert ? "true" : "false"];rpane.rpanewindow.is-vert=[vert ? "false" : "true"]")
 
 /client/proc/set_controls(var/tg)
 	tg_controls = tg
-	winset( src, "menu.tg_controls", "is-checked=[tg ? "true" : "false"]" )
-
 	src.mob.reset_keymap()
-
-/client/verb/set_tg_controls()
-	set hidden = 1
-	set name = "set-tg-controls"
-	SPAWN(1 DECI SECOND)
-		set_controls(!tg_controls)
-
 
 /client/proc/set_layout(var/tg)
 	tg_layout = tg
-	winset( src, "menu.tg_layout", "is-checked=[tg ? "true" : "false"]" )
-
 	if (istype(mob,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = mob
 		H.detach_hud(H.hud)
@@ -1216,142 +1067,6 @@ var/global/curr_day = null
 		H.update_equipment_screen_loc()
 		for (var/datum/hud/storage/S in H.huds)
 			S.update(H)
-
-/client/verb/set_tg_layout()
-	set hidden = 1
-	set name = "set-tg-layout"
-	SPAWN(1 DECI SECOND)
-		set_layout(!tg_layout)
-
-/client/verb/set_fps()
-	set hidden = 1
-	set name = "set-fps"
-
-	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
-		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
-	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
-		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
-	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
-		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
-	else
-		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
-
-
-/client/verb/set_wasd_controls()
-	set hidden = 1
-	set name = "set-wasd-controls"
-	src.do_action("togglewasd")
-
-/client/verb/set_speech_sounds()
-	set hidden = 1
-	set name = "set-speech-sounds"
-	if (src.ignore_sound_flags & SOUND_SPEECH)
-		src.ignore_sound_flags &= ~SOUND_SPEECH
-	else
-		src.ignore_sound_flags |= SOUND_SPEECH
-
-/client/verb/set_all_sounds()
-	set hidden = 1
-	set name = "set-all-sounds"
-	if (src.ignore_sound_flags & SOUND_ALL)
-		src.ignore_sound_flags &= ~SOUND_ALL
-	else
-		src.ignore_sound_flags |= SOUND_ALL
-
-/client/verb/set_vox_sounds()
-	set hidden = 1
-	set name = "set-vox-sounds"
-	if (src.ignore_sound_flags & SOUND_VOX)
-		src.ignore_sound_flags &= ~SOUND_VOX
-	else
-		src.ignore_sound_flags |= SOUND_VOX
-
-/client/verb/set_hand_ghosts()
-	set hidden = 1
-	set name = "set-hand-ghosts"
-	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
-
-/client/verb/set_tooltip_option(val as text)
-	set hidden = 1
-	set name = "set-tooltip-option"
-	if (val == "always")
-		src.preferences.tooltip_option = TOOLTIP_ALWAYS
-	else if (val == "alt")
-		src.preferences.tooltip_option = TOOLTIP_ALT
-	else if (val == "never")
-		src.preferences.tooltip_option = TOOLTIP_NEVER
-
-/client/verb/disable_colorblind_modes()
-	set hidden = TRUE
-	set name = "disable-colorblind-modes"
-
-	if (src.protanopia_toggled)
-		src.toggle_protanopia_mode()
-	else if (src.deuteranopia_toggled)
-		src.toggle_deuteranopia_mode()
-	else if (src.tritanopia_toggled)
-		src.toggle_tritanopia_mode()
-	src.mob?.update_active_matrix()
-
-/client/verb/toggle_protanopia_mode()
-	set hidden = TRUE
-	set name = "toggle-protanopia-mode"
-
-	if (src.deuteranopia_toggled)
-		src.toggle_deuteranopia_mode()
-	else if (src.tritanopia_toggled)
-		src.toggle_tritanopia_mode()
-
-	if (!src.protanopia_toggled)
-		src.colorblind_matrix = COLOR_MATRIX_PROTANOPIA_ACCESSIBILITY
-	else
-		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
-	src.set_color()
-	src.protanopia_toggled = !src.protanopia_toggled
-	src.deuteranopia_toggled = FALSE
-	src.tritanopia_toggled = FALSE
-
-	src.mob?.update_active_matrix()
-
-/client/verb/toggle_deuteranopia_mode()
-	set hidden = TRUE
-	set name = "toggle-deuteranopia-mode"
-
-	if (src.protanopia_toggled)
-		src.toggle_protanopia_mode()
-	else if (src.tritanopia_toggled)
-		src.toggle_tritanopia_mode()
-
-	if (!src.deuteranopia_toggled)
-		src.colorblind_matrix = COLOR_MATRIX_DEUTERANOPIA_ACCESSIBILITY
-	else
-		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
-	src.set_color()
-	src.deuteranopia_toggled = !src.deuteranopia_toggled
-	src.protanopia_toggled = FALSE
-	src.tritanopia_toggled = FALSE
-
-	src.mob?.update_active_matrix()
-
-/client/verb/toggle_tritanopia_mode()
-	set hidden = TRUE
-	set name = "toggle-tritanopia-mode"
-
-	if (src.protanopia_toggled)
-		src.toggle_protanopia_mode()
-	else if (src.deuteranopia_toggled)
-		src.toggle_deuteranopia_mode()
-
-	if (!src.tritanopia_toggled)
-		src.colorblind_matrix = COLOR_MATRIX_TRITANOPIA_ACCESSIBILITY
-	else
-		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
-	src.set_color()
-	src.tritanopia_toggled = !src.tritanopia_toggled
-	src.protanopia_toggled = FALSE
-	src.deuteranopia_toggled = FALSE
-
-	src.mob?.update_active_matrix()
 
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()
@@ -1498,9 +1213,8 @@ mainwindow.hovertooltip.background-color=[_SKIN_BG];\
 mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 "
 
-/client/verb/sync_dark_mode()
-	set hidden=1
-	src.darkmode = winget(src, "menu.dark_mode", "is-checked") == "true"
+/// Applies the skin colours and chat theme to match `darkmode`
+/client/proc/sync_dark_mode()
 	if (src.darkmode)
 #define _SKIN_BG "#28292c"
 #define _SKIN_INFO_TAB_BG "#28292c"

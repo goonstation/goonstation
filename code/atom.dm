@@ -92,6 +92,8 @@ TYPEINFO(/atom)
 	var/impact_icon_state = null
 
 	New(turf/newLoc)
+		// Secret artwork is loaded on demand, rather than included in the compiled RSC.
+		src.load_runtime_icon()
 		. = ..()
 		// Movables apply their mats at the tail of /atom/movable/New() instead
 		// (Material setup can change opacity)
@@ -102,6 +104,13 @@ TYPEINFO(/atom)
 	proc/apply_default_material()
 		if (!src.material && src.default_material)
 			src.setMaterial(getMaterial(src.default_material))
+
+	/// May be called before parent New() when a subtype initializes its appearance first.
+	proc/load_runtime_icon()
+		if (!src.icon && !initial(src.icon))
+			var/typeinfo/atom/icon_metadata = src.get_typeinfo()
+			if (icon_metadata.icon)
+				src.icon = file(icon_metadata.icon)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()

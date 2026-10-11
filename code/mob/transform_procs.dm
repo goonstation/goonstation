@@ -453,37 +453,34 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (!src.can_respawn_as_ghost_critter())
 		return
 
-	if (tgui_alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", list("Yes", "No")) != "Yes")
+	get_singleton(/datum/ghost_critter_respawn_menu).ui_interact(src)
+
+
+/// Get us a full listing of the options available to them
+/mob/proc/get_ghost_critter_types()
+	var/list/critter_types = respawn_critter_types.Copy()
+	if (istype(src.mind?.purchased_bank_item, /datum/bank_purchaseable/critter_respawn))
+		var/datum/bank_purchaseable/critter_respawn/purchase = src.mind.purchased_bank_item
+		critter_types |= purchase.respawn_critter_types
+	else if (istype(src.mind?.purchased_bank_item, /datum/bank_purchaseable/bird_respawn))
+		var/datum/bank_purchaseable/bird_respawn/purchase = src.mind.purchased_bank_item
+		critter_types |= purchase.respawn_critter_types
+	if (src.mind?.is_antagonist())
+		critter_types |= antag_respawn_critter_types
+	return critter_types
+
+
+/mob/proc/make_ghost_critter(var/turf/spawnpoint, var/list/types = null, critter_type = null)
+	var/list/available_types = length(types) ? types : src.get_ghost_critter_types()
+	if (isnull(critter_type))
+		critter_type = pick(available_types)
+	if (!(critter_type in available_types))
 		return
+	var/antag_critter = !length(types) && (critter_type in antag_respawn_critter_types)
 
-	var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
-	if(!spawnpoint)
-		spawnpoint = pick_landmark(LANDMARK_LATEJOIN, get_turf(src))
-
-	src.make_ghost_critter(spawnpoint)
-
-
-/mob/proc/make_ghost_critter(var/turf/spawnpoint, var/list/types = null)
 	var/mob/selfmob = src
 	src = null
-	var/mob/living/critter/C
-	var/traitor = 0
-
-	if (length(types))
-		C = selfmob.make_critter(pick(types), spawnpoint, ghost_spawned=TRUE)
-	else
-		traitor = selfmob.mind?.is_antagonist()
-		if (traitor)
-			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
-		else
-			if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/critter_respawn))
-				var/datum/bank_purchaseable/critter_respawn/critter_respawn = selfmob.mind.purchased_bank_item
-				C = selfmob.make_critter(pick(critter_respawn.respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
-			else if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/bird_respawn))
-				var/datum/bank_purchaseable/bird_respawn/bird_respawn = selfmob.mind.purchased_bank_item
-				C = selfmob.make_critter(pick(bird_respawn.respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
-			else
-				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
+	var/mob/living/critter/C = selfmob.make_critter(critter_type, spawnpoint, ghost_spawned = TRUE)
 
 	C.mind.assigned_role = "Animal"
 	C.say_language = LANGUAGE_ANIMAL
@@ -492,7 +489,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE
 
-	if (traitor)
+	if (antag_critter)
 		C.show_antag_popup("ghostcritter_antag")
 	else
 		C.show_antag_popup("ghostcritter")
