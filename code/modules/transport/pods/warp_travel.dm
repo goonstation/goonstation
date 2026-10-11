@@ -147,7 +147,7 @@
 		qdel(src)
 
 /obj/warp_portal/Click(location, control, params)
-	if (isobserver(usr))
+	if (isobserver(usr) && src.target)
 		usr.set_loc(get_turf(src.target))
 		return
 	..()
