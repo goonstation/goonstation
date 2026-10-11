@@ -478,7 +478,7 @@ var/global/list/module_editors = list()
 	src.internal_pda.owner = "[src.name]"
 
 /mob/living/silicon/robot/UpdateName()
-	. = ..()
+	..()
 	src.botcard.assignment = src.dependent ? "AI Shell" : "Cyborg"
 
 /proc/borgify_name(var/start_name = "Robot")
