@@ -108,6 +108,6 @@ TYPEINFO(/datum/component/tameable)
 
 /datum/component/tameable/proc/pass_on_validtarget(mob/M)
 	if(!aggro_mode)
-		return
-	if(M in owner.friends)
+		return FALSE
+	if(M in !owner.friends)
 		return TRUE
