@@ -251,7 +251,7 @@
 					T.patience = rand(T.base_patience[1],T.base_patience[2])
 					T.set_up_goods(FALSE)
 			else
-				if (prob(T.chance_leave))
+				if (T.patience <= 0 || prob(T.chance_leave))
 					T.hidden = 1
 				else
 					for (var/datum/commodity/com in T.goods_sell)

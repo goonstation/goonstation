@@ -359,8 +359,6 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		return
 	if(trader.patience <= 0)
 		trader.current_message = pick(trader.dialogue_leave)
-		trader.hidden = TRUE
-		global.shippingmarket.update_supply_console_data()
 		boutput(user, SPAN_ALERT("Your haggling has pushed [trader.name] too far, and they have left."))
 		return
 	var/haggle_target = tgui_input_number(user, "Suggest a new price", "Haggling", commodity.price, 1000000, 0)
