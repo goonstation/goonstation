@@ -51,9 +51,6 @@
 			user.visible_message(SPAN_NOTICE("[user] [src.anchored ? "secures" : "unsecures"] [src]."))
 			return
 		if (ispryingtool(W))
-			if (src.anchored)
-				boutput(user, SPAN_ALERT("Unsecure [src] before rotating it."))
-				return
 			src.set_dir(turn(src.dir, -90))
 			return
 		if (src.get_clothing_slot(W))
