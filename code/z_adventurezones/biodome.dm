@@ -1093,10 +1093,15 @@ SYNDICATE DRONE FACTORY AREAS
 				if(prob(15))
 					active = 1
 					SPAWN(5 SECONDS) active = 0
-					playsound(AM, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
 
-					for(var/mob/M in view(src, 5))
-						M.flash(3 SECONDS)
+					var/list/potential_targets = list()
+					for(var/turf/unsimulated/potential_target in view(src, 7))
+						if(istype(potential_target, /turf/unsimulated/dirt) || istype(potential_target, /turf/unsimulated/grasstodirt) || istype(potential_target, /turf/unsimulated/floor/grass/leafy))
+							potential_targets += potential_target
+
+					if(length(potential_targets))
+						lightning_bolt(pick(potential_targets))
+						playsound(AM, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
 
 /obj/graveyard/loose_rock
 	icon = 'icons/misc/worlds.dmi'
