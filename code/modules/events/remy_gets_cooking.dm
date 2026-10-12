@@ -34,5 +34,5 @@
 				log_respawn_event(M, "remy", source)
 				M.transfer_to(picked_npc)
 				SPAWN(0)
-					tgui_alert(picked_npc, "You are not an antagonist! Humans can't understand your speech. What they can understand, is your cooking.", "You are not an antagonist!")
+					tgui_alert(picked_npc, "You are not an antagonist! What you are, is a chef. Get to work.", "You are not an antagonist!")
 				message_ghosts("<b>[picked_npc.real_name] has become sapient.</b>")
