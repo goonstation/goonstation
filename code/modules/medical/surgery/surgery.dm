@@ -178,25 +178,27 @@
 	// Covers old style 'implicit' surgeries that are performed when the patient is hit with the correct tool.
 
 	/// Returns the surgery (or sub-surgery) that will be performed with the given tool. Returns FALSE if no implicit surgery is possible.
-	proc/get_implicit_surgery(mob/surgeon, obj/item/I)
+	proc/get_implicit_surgery(mob/surgeon, obj/item/tool)
+		if (!can_perform_surgery(surgeon, tool))
+			return FALSE
 		// If not complete & this is an implicit surgery, return the first possible step.
-		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
-			var/datum/surgery_step/step = step_possible(surgeon, I)
+		if ((!super_surgery || super_surgery?.complete) && implicit)
+			var/datum/surgery_step/step = step_possible(surgeon, tool)
 			if (step)
 				return src
 		// If sub-surgeries are accessible, attempt to get an implicit step from them.
-		if (sub_surgeries_accessible(surgeon))
+		if (sub_surgeries_accessible(surgeon, tool))
 			for(var/datum/surgery/surgery in current_sub_surgeries)
 				surgery.check_surgery_stage()
-				var/result = surgery.get_implicit_surgery(surgeon, I)
+				var/result = surgery.get_implicit_surgery(surgeon, tool)
 				if (result)
 					return surgery
 		return FALSE
 
 	/// Returns the implicit surgery step that will be performed with the given tool.
-	proc/get_implicit_step(mob/surgeon, obj/item/I)
-		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
-			var/datum/surgery_step/step = step_possible(surgeon, I)
+	proc/get_implicit_step(mob/surgeon, obj/item/tool)
+		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, tool))
+			var/datum/surgery_step/step = step_possible(surgeon, tool)
 			if (step)
 				return step
 		return FALSE
@@ -207,17 +209,17 @@
 	// ----------
 
 	/// Called when the surgery's context icon is clicked. Returns TRUE if context was shown.
-	proc/surgery_clicked(mob/living/surgeon, obj/item/I)
+	proc/surgery_clicked(mob/living/surgeon, obj/item/tool)
 		if (super_surgery && !super_surgery.complete)
-			return super_surgery.show_contexts(surgeon)
+			return super_surgery.show_contexts(surgeon, tool)
 		else
-			return show_contexts(surgeon)
+			return show_contexts(surgeon, tool)
 
 	/// Show the surgery's context menu. Returns TRUE if context was shown.
 	proc/show_contexts(mob/surgeon, obj/item/tool)
 		check_surgery_stage()
 		if (super_surgery && !super_surgery.complete) // hop up a level if this surgery is no longer accessible
-			return super_surgery.show_contexts(surgeon)
+			return super_surgery.show_contexts(surgeon, tool)
 		else
 			var/contexts = get_surgery_contexts(surgeon, tool)
 			if (length(contexts) > 0)
@@ -330,7 +332,7 @@
 			return lowest_incomplete - 1
 
 	/// Returns true if sub surgeries are possible.
-	proc/sub_surgeries_accessible(mob/surgeon, obj/item/I)
+	proc/sub_surgeries_accessible(mob/surgeon, obj/item/tool)
 		return (sub_surgeries_always_accessible || complete)
 
 	// Returns TRUE if the provided tool is relevant to a surgery step, or sub surgery if this is complete.

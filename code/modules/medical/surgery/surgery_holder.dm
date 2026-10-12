@@ -29,8 +29,11 @@
 			return TRUE
 		return FALSE
 
-	// TODO: kill this. suturing isn't a special case
-	proc/is_suture_tool(var/obj/item/tool)
+	/// Returns TRUE if there's a reason to stop the current attack or action with the given tool.
+	/// IE: Stop beating people to death with sutures when there are no wounds to close.
+	proc/should_prevent_harm(var/mob/living/surgeon, var/obj/item/tool)
+		if (!surgery_conditions_met(surgeon, tool))
+			return FALSE
 		if (istype(tool, /obj/item/suture))
 			return TRUE
 		return FALSE
@@ -49,14 +52,15 @@
 				tool.add_fingerprint(surgeon)
 			if (show_contexts(surgeon, tool))
 				return TRUE
-			else // if the tool is relevant but has no relevant surgery, mess up the patient.
+			else // if the tool is relevant to surgery but is not currently useful, mess up the patient.
 				if (tool && surgery_conditions_met(surgeon, tool))
-					if (is_suture_tool(tool) && surgeon.a_intent != INTENT_HARM)
-						boutput(surgeon, SPAN_ALERT("[patient == surgeon ? "You have" : "[patient] has"] no wounds or incisions on [patient == surgeon ? "your" : his_or_her(patient)] [zone_sel2name[surgeon.zone_sel]]  to close!"))
-						return TRUE
-					else
+					if (!src.should_prevent_harm(surgeon, tool) || surgeon.a_intent == INTENT_HARM)
 						generic_mess_up(surgeon, tool)
 						return TRUE
+
+		if (src.should_prevent_harm(surgeon,tool) && surgeon.a_intent != INTENT_HARM)
+			boutput(surgeon, SPAN_ALERT("[patient == surgeon ? "You have" : "[patient] has"] no wounds or incisions on [patient == surgeon ? "your" : his_or_her(patient)] [zone_sel2name[surgeon.zone_sel]]  to close!"))
+			return TRUE
 		return FALSE
 
 	/// Index all surgeries, and sub surgeries, inside this holder.

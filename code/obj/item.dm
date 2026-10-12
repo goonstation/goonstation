@@ -1339,7 +1339,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		// if we're used in a surgery step, cancel the remaining attack
 		var/mob/living/H = target
 		if (H.surgeryHolder)
-			if (H.surgeryHolder.perform_surgery(user, src))
+			if (H.surgeryHolder.perform_surgery(user, src) || H.surgeryHolder.should_prevent_harm(user,src))
 				return
 
 	if (src.Eat(target, user)) // All those checks were done in there anyway
