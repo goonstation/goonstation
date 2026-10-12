@@ -36,6 +36,8 @@
 			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_DIGESTION_EFFICIENCY, src)
 
 	disposing()
+		if (src.donor) // force-replaced organs get deleted without on_removal()
+			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_DIGESTION_EFFICIENCY, src)
 		if (holder)
 			if (holder.intestines == src)
 				holder.intestines = null

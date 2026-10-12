@@ -24,6 +24,8 @@
 	New(var/is_control = 0)
 		..()
 		SPAWN(0)
+			if (src.disposed) // e.g. the sims holder got replaced in the same tick (mutantrace change)
+				return
 			if (src.holder)
 				var/icon/hud_style = hud_style_selection[get_hud_style(src.holder.owner)]
 				if (isicon(hud_style))
@@ -661,6 +663,7 @@ var/global/datum/simsControl/simsController = new()
 	proc/addMotive(var/mt, var/rand_val)
 		var/datum/simsMotive/M = new mt
 		if (initial(M.name) in motives)
+			qdel(M)
 			return
 		motives[initial(M.name)] = M
 		M.holder = src

@@ -44,6 +44,8 @@
 
 	E.Detach(src)
 
+/datum/proc/HasElement(id)
+	return !!src.datum_elements?["[id]"]
 
 TYPEINFO(/datum/element)
 	var/initialization_args = list()
