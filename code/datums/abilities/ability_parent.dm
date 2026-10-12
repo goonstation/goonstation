@@ -846,11 +846,6 @@
 		owner.holder.abilities.Swap(index_source,index_target)
 		owner.holder.updateButtons()
 
-#define AIM_ASSIST_NONE null
-#define AIM_ASSIST_SAME_TILE 0
-// The following radius(es) have expanded targeting reticules to indicate aim assist
-#define AIM_ASSIST_1_TILE 1
-
 /datum/targetable
 
 	var/name = null
@@ -883,7 +878,7 @@
 	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 	var/cooldown_after_action = FALSE		//! if TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
-	var/aim_assist_radius = AIM_ASSIST_NONE	//! If we don't click on a mob, how many tiles away do we search to find a mob to target? Use defines when possible
+	var/aim_assist_radius = AIM_ASSIST_NONE	//! If we don't click on a mob, how many tiles away do we search to find a mob to target? Use defines when reasonable, though any non-zero positive value works just fine
 	var/aim_assist_ignore_owner = TRUE		//! Should we ignore our owner when searching for nearby mobs with aim assist?
 
 	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
@@ -930,7 +925,7 @@
 
 	proc
 		handleCast(atom/target, params)
-			if (!isnull(src.aim_assist_radius) && !ismob(target))
+			if ((src.aim_assist_radius != AIM_ASSIST_NONE) && !ismob(target))
 				target = src.aim_assist_retargeting(target, params)
 			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
@@ -1139,11 +1134,11 @@
 			var/list/click_location = get_turf_pixel_clicked_over(src.holder.owner, params)
 			if(!click_location)
 				return
-			if(src.aim_assist_radius > 0)
-				mob_list = get_nearest_mobs_list(click_location["turf"], src.aim_assist_radius, click_location["pixel_x"], click_location["pixel_y"])
-			else
+			if(src.aim_assist_radius == AIM_ASSIST_SAME_TILE)
 				for(var/mob/in_turf_target in click_location["turf"])
-					mob_list[in_turf_target] += 0 // either we dont change an existing entry's range, or add a new entry with a range 0 to the end of the list
+					mob_list += in_turf_target // note that this generates a normal list, unlike the get_nearest_mobs_list() which returns an assoc list
+			else // guaranteed to have a non-zero search radius
+				mob_list = get_nearest_mobs_list(click_location["turf"], src.aim_assist_radius, click_location["pixel_x"], click_location["pixel_y"])
 			for (var/mob/mob_target in mob_list)
 				if((mob_target == src.holder.owner) && src.aim_assist_ignore_owner)
 					continue
@@ -1155,16 +1150,12 @@
 			if(!client)
 				return
 			var/file = cursors_selection[client.preferences.target_cursor]
-			if(!src.aim_assist_radius)
-				return file
-			if(!(src.aim_assist_radius == AIM_ASSIST_1_TILE))
-				return // we only have 1-tile-radius cursors right now, but we should account for
-				// bigger ones when we get them
-			var/file_name = "[file]"
-			var/filename_suffix = "-range_[num2text(src.aim_assist_radius)]"
-			var/list/split_file_name = splittext(file_name, ".")
-			file_name = split_file_name[1] + filename_suffix + ".dmi"
-			return file(file_name)
+			. = file
+			if((src.aim_assist_radius == AIM_ASSIST_NONE) || (src.aim_assist_radius == AIM_ASSIST_SAME_TILE))
+				return
+			// Unless someone adds a new set of cursors directly before this if statement, we'll just default to these currently-biggest ones
+			if((src.aim_assist_radius >= AIM_ASSIST_1_TILE))
+				return cursors_selection_range_1[client.preferences.target_cursor]
 
 /atom/movable/screen/pseudo_overlay
 	// this is hack as all get out
