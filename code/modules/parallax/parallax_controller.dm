@@ -63,11 +63,14 @@
 		var/dx = round(x_pixel_change * parallax_value, 1)
 		var/dy = round(y_pixel_change * parallax_value, 1)
 
-		// If there is no pixel change, return. Note that this is not `continue`, as `parallax_layers` is ordered by `parallax_value`.
+		// If there is no pixel change, return. Note that this is a `return` instead of a `continue`, as `parallax_layers`
+		// is ordered by parallax value, so if a layer has no pixel change, then no subsequent layer will either, as the
+		// parallax value will be smaller.
 		if (!dx && !dy)
 			return
 
-		// Update the position of the parallax layer on the client's screen, and animate the movement, using a time value derived from the client's mob's speed.
+		// Update the position of the parallax layer on the client's screen and animate the movement using a time value
+		// derived from the client's mob's speed.
 		animate(
 			parallax_layer,
 			animation_time,
