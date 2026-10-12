@@ -19,6 +19,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/coat_style = null
 	/// Used for hoodies (and anything that uses the toggle_hood component)
 	var/hooded = FALSE
+	/// If `TRUE`, override `src.wear_layer` with the max of `src.wear_layer` and `MOB_BACK_SUIT_LAYER`.
+	var/override_layer_on_back = TRUE
 
 
 	setupProperties()
@@ -29,7 +31,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 	equipped(mob/user, slot)
 		. = ..()
-		if (slot == SLOT_BACK)
+		if (slot == SLOT_BACK && src.override_layer_on_back)
 			src.wear_layer = max(src.wear_layer, MOB_BACK_SUIT_LAYER) // set to a higher layer, unless they're on an even higher layer
 		var/mob/living/carbon/human/H = user
 		if (src.hooded && istype(H) && H.head)
@@ -2699,6 +2701,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	icon_state = "autumn_scarf"
 	item_state = "autumn_scarf"
 	c_flags = ONBACK
+	override_layer_on_back = FALSE
 
 // New chaplain stuff
 
