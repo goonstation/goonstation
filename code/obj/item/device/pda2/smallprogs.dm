@@ -1023,6 +1023,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			. = SECURITY::TICKET::LEVEL::FINE_SMALL
 		if(access_fine_large in ID.access)
 			. = SECURITY::TICKET::LEVEL::FINE_LARGE
+		// this is used primarily to prevent silicons from approving fines
 		if(!src.can_approve_fines)
 			. = min(SECURITY::TICKET::LEVEL::TICKET, .)
 
