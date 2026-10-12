@@ -1611,10 +1611,10 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		H.update_tail_overlays()
 
 	update_wear_image(mob/living/carbon/human/H, override)
-		if(istype_exact(H.mutantrace, src.wear_mutantrace_type))
+		if(H && istype_exact(H.mutantrace, src.wear_mutantrace_type))
 			return
-		src.wear_mutantrace_type = H.mutantrace?.type
-		var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+		src.wear_mutantrace_type = H?.mutantrace?.type
+		var/typeinfo/datum/mutantrace/typeinfo = H?.mutantrace?.get_typeinfo()
 		if("spacemat" in typeinfo?.clothing_icon_states["overcoats"])
 			src.wear_image_icon = typeinfo.clothing_icons["overcoats"]
 		else
