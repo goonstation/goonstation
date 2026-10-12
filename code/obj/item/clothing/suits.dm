@@ -2673,6 +2673,33 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	icon_state = "autumn_jacket"
 	item_state = "autumn_jacket"
 
+/obj/item/clothing/suit/jacket/trench
+	name = "trench coat"
+	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
+	icon_state = "trench_coat"
+	item_state = "trench_coat"
+	coat_style = "trench_coat"
+
+/obj/item/clothing/suit/jacket/trench/New()
+	..()
+	src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
+
+/obj/item/clothing/suit/jacket/corduroy
+	name = "corduroy jacket"
+	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
+	icon_state = "corduroy_jacket"
+	item_state = "corduroy_jacket"
+
+/obj/item/clothing/suit/autumn_scarf
+	name = "autumn scarf"
+	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
+	icon_state = "autumn_scarf"
+	item_state = "autumn_scarf"
+	c_flags = ONBACK
+
 // New chaplain stuff
 
 /obj/item/clothing/suit/light_robes

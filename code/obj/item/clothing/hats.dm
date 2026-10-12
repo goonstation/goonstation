@@ -2817,3 +2817,9 @@ obj/item/clothing/head/headscarf
 		name = "white headscarf"
 		icon_state = "headscarf-white"
 		item_state = "headscarf-white"
+
+// Seasonal autumn hats
+/obj/item/clothing/head/newsboy
+	name = "newsboy cap"
+	icon_state = "newsboy"
+	item_state = "newsboy"

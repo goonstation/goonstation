@@ -944,3 +944,13 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 	setupProperties()
 		..()
 		setProperty("vault_speed", vault_speed_bonus)
+
+/obj/item/clothing/shoes/derby
+	name = "derby shoes"
+	icon_state = "derby"
+
+/obj/item/clothing/shoes/heeled_boots
+	name = "heeled boots"
+	icon_state = "heeled_boots"
+	step_sound = "footstep"
+	step_priority = STEP_PRIORITY_LOW
