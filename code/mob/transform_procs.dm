@@ -180,8 +180,11 @@
 	if (delete_original)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
-	// some critters are on harm intent by default, which causes confusion. this prevents that.
-	newmob.set_a_intent(INTENT_HELP)
+
+	// some critters are on harm intent by default, which causes confusion for players controlling them. this prevents that.
+	if(newmob.client)
+		newmob.set_a_intent(INTENT_HELP)
+
 	return newmob
 
 
