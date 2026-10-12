@@ -544,7 +544,7 @@ TYPEINFO(/mob/new_player)
 					// get_preference_for_role can't handle antag types under 'misc' like wrestler or wolf, so we need to special case those
 					var/antag_enabled = new_character.client?.preferences.vars[get_preference_for_role(bad_type) || get_preference_for_role(ROLE_MISC)]
 					if (antag_enabled && J.can_be_antag(bad_type))
-						if(random_events.active_storyteller.late_spawn_chance())
+						if(random_events.active_storyteller.roll_for_latejoin_antag())
 							makebad(new_character, bad_type)
 							new_character.mind.late_special_role = TRUE
 							logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")

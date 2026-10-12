@@ -29,8 +29,8 @@ ABSTRACT_TYPE(/datum/storyteller)
 	var/minimum_population = 15
 	var/minimum_population_antag_events = 1 // Specifically for antagonist spawn events etc.
 
-	var/secball_pop_threshold = 30 // population threshold at which we start checking for security deathball.
-	var/secball_multiplier = 2 // the multiplier for checking for sec deathball. Higher values = more sec expected for each antag.
+	var/overwhelming_sec_pop_threshold = 30 // population threshold at which we start checking if the number of security officers is overwhelming.
+	var/overwhelming_sec_multiplier = 2 // the multiplier for comparing security count to antag count. Higher values = more sec expected for each antag.
 
 	var/base_latejoin_chance = 4 // the flat base chance for rolling latejoin antagonist regardless of the round conditions.
 	var/want_latejoin_chance = 20 // additional chance for latejoin when we want one, but antags are still alive.
@@ -247,24 +247,26 @@ ABSTRACT_TYPE(/datum/storyteller)
 			var/mob/M = C.mob
 			if(!M || isnewplayer(M) || isdead(M) || !isliving(M))
 				continue
-			if(M.mind && (M.mind.assigned_role in security_jobs))
-				alive_security++
+			if(M.mind?.assigned_role)
+				var/datum/job/J = find_job_in_controller_by_string(M.mind.assigned_role, soft = TRUE)
+				if(J && (J.job_category == JOB_SECURITY || istype(J, /datum/job/command/head_of_security) || istype(J, /datum/job/special/nt/security_consultant)))
+					alive_security++
 		if(!alive)
 			return 0
 
 		return (alive_security / alive)
 
 	/// Returns TRUE if percentage of alive security is more than X times alive antagonists (and population is above threshold)
-	proc/security_death_ball_check()
-		if(alive_player_count() < src.secball_pop_threshold)
+	proc/overwhelming_security_check()
+		if(alive_player_count() < src.overwhelming_sec_pop_threshold)
 			return FALSE
 
 		var/sec = get_alive_security_percentage()
 		var/antags = get_alive_antags_percentage()
-		return sec > 0 && antags > 0 && sec >= src.secball_multiplier * antags
+		return sec > 0 && antags > 0 && sec >= src.overwhelming_sec_multiplier * antags
 
 	/// Rolls chance to be late join antag
-	proc/late_spawn_chance()
+	proc/roll_for_latejoin_antag()
 		var/antag_percentage = get_alive_antags_percentage()
 		var/livingtraitor = FALSE
 
@@ -292,8 +294,8 @@ ABSTRACT_TYPE(/datum/storyteller)
 				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as antag percentage is below expected threshold.")
 				return TRUE // alive antag percent is below expected threshold
 
-			if(prob(src.want_latejoin_chance) && src.security_death_ball_check())
-				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as there are at least [src.secball_multiplier] \
+			if(prob(src.want_latejoin_chance) && src.overwhelming_security_check())
+				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as there are at least [src.overwhelming_sec_multiplier] \
 				times more alive security than antagonists.")
 				return TRUE // there are too many alive security crew compared to alive antags
 		return FALSE
