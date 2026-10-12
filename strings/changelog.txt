@@ -1,4 +1,9 @@
 
+(t)mon oct 12 26
+(u)Sovexe
+(p)28066
+(e)🪲⚙|C-Bug, A-Internal
+(+)Smoothed passenger camera movement for mechanics telepads, bubble guns, and other projectile based vehicles
 (t)sun oct 11 26
 (u)ANNmagedon
 (p)28051
