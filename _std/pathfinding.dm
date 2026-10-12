@@ -475,6 +475,7 @@
 /// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
 /proc/jpsTurfPassable(turf/T, turf/source, atom/passer, list/options)
 	. = TRUE
+	options ||= list()
 	if(istype(T, /turf/space/fluid/warp_z5))
 		return FALSE
 	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
@@ -486,7 +487,7 @@
 	var/direction = get_dir(source, T)
 	if(!direction)
 		return FALSE
-	if(T.passability_cache != null && !options?[POP_IGNORE_CACHE] \
+	if(T.passability_cache != null && !options[POP_IGNORE_CACHE] \
 			&& !T.pass_unstable && !source.pass_unstable && \
 			is_cardinal(direction))
 		return T.passability_cache
@@ -504,7 +505,7 @@
 			return FALSE
 		else if (source && HAS_ALL_FLAGS(source.blocked_dirs, direction))
 			return FALSE
-	var/id = options?[POP_ID]
+	var/id = options[POP_ID]
 	for(var/atom/A as anything in T.contents)
 		if (isobj(A))
 			var/obj/O = A
@@ -514,7 +515,7 @@
 			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 			if ((passer || id) && A.density)
 				if (O.object_flags & BOTS_DIRBLOCK) //NEW - are we a door-like-openable-thing?
-					if(options?[POP_DOOR_CHECK] && istype(O, /obj/machinery/door))
+					if(options[POP_DOOR_CHECK] && istype(O, /obj/machinery/door))
 						var/obj/machinery/door/door = O
 						if (door.isblocked())
 							return FALSE
