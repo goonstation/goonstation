@@ -51,22 +51,32 @@
 	var/x_pixel_change = (old_turf.x - new_turf.x) * world.icon_size
 	var/y_pixel_change = (old_turf.y - new_turf.y) * world.icon_size
 
-	// The time it takes for an atom/movable to move one tile.
-	var/animation_time = src.outermost_movable.glide_size && ((world.icon_size / src.outermost_movable.glide_size) * world.tick_lag)
+	// The time it takes for an /atom/movable to move one tile.
+	var/glide_size = src.outermost_movable.glide_size
+	var/animation_time = glide_size && ((world.icon_size / glide_size) * world.tick_lag)
 
 	for (var/atom/movable/screen/parallax_layer/parallax_layer as anything in src.parallax_layers)
 		// Multiply the pixel change by the parallax value to determine the number of pixels the layer should move by.
+		// Round to one pixel so as not to blur sprites.
+		var/atom/movable/screen/parallax_render_source/render_source = parallax_layer.parallax_render_source
+		var/parallax_value = render_source.parallax_value
+		var/dx = round(x_pixel_change * parallax_value, 1)
+		var/dy = round(y_pixel_change * parallax_value, 1)
+
+		// If there is no pixel change, return. Note that this is not `continue`, as `parallax_layers` is ordered by `parallax_value`.
+		if (!dx && !dy)
+			return
+
 		// Update the position of the parallax layer on the client's screen, and animate the movement, using a time value derived from the client's mob's speed.
-		// Round to one pixel so to not blur sprites.
 		animate(
 			parallax_layer,
 			animation_time,
-			pixel_w = round(x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1),
-			pixel_z = round(y_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1),
+			pixel_w = dx,
+			pixel_z = dy,
 			flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE,
 		)
 
-		UPDATE_TESSELLATION_ALIGNMENT(parallax_layer)
+		UPDATE_TESSELLATION_ALIGNMENT(parallax_layer, render_source)
 
 /// Updates the parallax render sources and layers displayed to a client by a z-level.
 /datum/parallax_controller/proc/update_z_level_parallax_layers(datum/component/component, old_z_level, new_z_level)
@@ -118,6 +128,8 @@
 		src.anchor.vis_contents += render_source
 		src.anchor.vis_contents += parallax_layer
 
+	global.sortList(src.parallax_layers, GLOBAL_PROC_REF(cmp_parallax_layers))
+
 /// Creates a new parallax layer for every provided parallax layer render source.
 /datum/parallax_controller/proc/recalculate_parallax_layer(atom/movable/screen/parallax_render_source/render_source)
 	var/atom/movable/screen/parallax_layer/parallax_layer = src.parallax_render_sources[render_source]
@@ -166,6 +178,10 @@
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
 	screen_loc = "CENTER,CENTER"
 	mouse_opacity = 0
+
+
+/proc/cmp_parallax_layers(atom/movable/screen/parallax_layer/a, atom/movable/screen/parallax_layer/b)
+	. = b.parallax_render_source.parallax_value - a.parallax_render_source.parallax_value
 
 
 /client/var/datum/parallax_controller/parallax_controller = null
