@@ -63,7 +63,7 @@
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_ABOVE_LIGHTING // The room being dark doesn't mean *raw electricity* should be dark
 	icon = 'icons/effects/64x128.dmi'
 	icon_state = "lightning_1"
 	pixel_x = -4
