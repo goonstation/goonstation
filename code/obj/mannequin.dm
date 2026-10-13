@@ -161,8 +161,8 @@
 			src.UpdateOverlays(null, "[slot]_material")
 			return
 
-	proc/refresh_clothing()
-		src.UpdateIcon()
+	proc/refresh_clothing(obj/item/changed_item)
+		src.UpdateIcon(changed_item)
 
 	proc/wrench_interact(obj/item/tool, mob/user)
 		set waitfor = FALSE
@@ -217,7 +217,7 @@
 		src.UpdateIcon()
 		return TRUE
 
-	update_icon()
+	update_icon(obj/item/changed_item)
 		switch (src.display_limbs)
 			if (ARMS | LEGS)
 				src.icon_state = "mannequin-full"
@@ -229,6 +229,9 @@
 				src.icon_state = "mannequin"
 		for (var/slot in src.displayed_items)
 			var/obj/item/I = src.displayed_items[slot]
+			// Item signals should not rebuild unrelated clothing textures or filters.
+			if (changed_item && I != changed_item)
+				continue
 			var/wear_state = I.wear_state || I.icon_state
 			if (slot == SLOT_BELT)
 				wear_state = I.wear_state || I.item_state || I.icon_state
@@ -267,13 +270,15 @@
 					I.copy_appearance_to_image(half)
 					half.appearance_flags |= RESET_COLOR | RESET_ALPHA
 					worn.overlays += half
-			src.UpdateOverlays(worn, slot)
+			if (src.GetOverlayImage(slot)?.appearance != worn.appearance)
+				src.UpdateOverlays(worn, slot)
 			if (I.worn_material_texture_image)
 				var/image/texture = image(null)
 				texture.appearance = I.worn_material_texture_image.appearance
 				texture.layer = worn.layer + 0.1
 				texture.appearance_flags |= RESET_COLOR | RESET_ALPHA
-				src.UpdateOverlays(texture, "[slot]_material")
+				if (src.GetOverlayImage("[slot]_material")?.appearance != texture.appearance)
+					src.UpdateOverlays(texture, "[slot]_material")
 			else
 				src.UpdateOverlays(null, "[slot]_material")
 
