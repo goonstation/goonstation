@@ -52,8 +52,8 @@
 
 		var/ticket_text = {"<font face="Monospace" color="453425">
 							<center>
-							<font size="4">[corporate_rank]</font> <br>
-							<font size="3">[station_name]</font> <br> <br>
+							<font size="4">[src.corporate_rank]</font> <br>
+							<font size="3">[global.station_name]</font> <br> <br>
 							</center>
 							<table width="365px">
 							<tr><td width="200px">DATE OF ISSUE</td> <td>[time2text(world.realtime, "MM/DD/53 hh:mm")]</td></tr>
