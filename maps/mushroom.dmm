@@ -25703,7 +25703,6 @@
 /obj/table/auto,
 /obj/item/storage/firstaid/brain,
 /obj/machinery/firealarm/directional/north,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/extinguisher,
 /obj/item/storage/box/diskbox{
 	pixel_x = -8;

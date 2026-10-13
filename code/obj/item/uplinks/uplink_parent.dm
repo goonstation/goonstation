@@ -283,6 +283,13 @@
 			"can_lock" = !isnull(src.lock_code) || istype(src, /obj/item/uplink/integrated/radio), //radio uplink codes are on their associated radio
 			"can_self_destruct" = src.can_selfdestruct,
 		)
+		if (src.has_synd_int && !src.is_VR_uplink)
+			var/list/synd_int_records = list()
+			for (var/datum/db_record/record as anything in global.data_core.general.records)
+				if (record["p_stat"] == "In Cryogenic Storage" || !length(record["syndint"]))
+					continue
+				synd_int_records += list(list("name" = record["name"], "rank" = record["rank"], "syndint" = record["syndint"]))
+			.["synd_int_records"] = synd_int_records
 
 	proc/get_categorised_item_data()
 		var/list/categorised_data = list()
@@ -317,6 +324,8 @@
 				src.try_buy(locate(params["item_ref"]))
 			if ("lock")
 				src.lock(usr)
+			if ("refresh_synd_int")
+				src.update_static_data(usr)
 			if("self_destruct")
 				if(tgui_alert(usr, "Detonate this uplink?", "Self Destruct Confirmation", list("Confirm", "Cancel")) != "Confirm")
 					return

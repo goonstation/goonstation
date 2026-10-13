@@ -90,7 +90,7 @@
 			if (!initial(structure.show_in_tutorial))
 				continue
 			structures += list(list(
-				"icon" = icon2base64(icon(initial(structure.icon), initial(structure.icon_state), frame = 1)),
+				"icon" = icon2base64(icon(get_initial_icon(structure), initial(structure.icon_state), frame = 1)),
 				"name" = initial(structure.flock_id),
 				"description" = initial(structure.tutorial_desc) || initial(structure.flock_desc), //default to the normal description
 				"cost" = initial(structure.resourcecost)

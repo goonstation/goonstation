@@ -1,4 +1,60 @@
 
+(t)mon oct 12 26
+(u)Sovexe
+(p)28066
+(e)🪲⚙|C-Bug, A-Internal
+(+)Smoothed passenger camera movement for mechanics telepads, bubble guns, and other projectile based vehicles
+(t)sun oct 11 26
+(u)ANNmagedon
+(p)28051
+(e)🪲💪|C-Bug, A-Traits
+(+)Salvagers now keep the player decided mutantrace.
+(u)Cheekybrdy
+(p)27803
+(e)💅🐣|C-QoL, A-Respawning
+(*)Roundstart timer is 180 again on classic.
+(u)Sovexe
+(p)28062
+(e)🔄📄|C-Rework, A-UI
+(*)Respawn as Animal now allows you to choose the animal from your available options.
+(t)fri oct 09 26
+(u)ZeWaka
+(e)🪲🔄📄|C-Bug, C-Rework`, A-UI
+(*)Your display/effects/etc settings will no longer reset when you play on other servers.
+(*)Lots of settings have been moved to Game Settings in Character Setup and improved.
+(+)Removed a few settings from the top menu bar that weren't useful. More may be removed in the future.
+(+)Fixed admin music getting much quieter when changing volumes.
+(u)bladethrower
+(p)27943
+(e)🪲🗺|C-Bug, A-Mapping
+(*)Cogmap 2 Inner Engineering APC is now connected at round start. Engineers rejoice!
+(u)Warwere
+(p)28031
+(e)|
+(+)M4GP13 now speaks properly.
+(t)thu oct 08 26
+(u)cringe
+(p)28033
+(e)|
+(+)Most of the items in the HPD are cheaper by a unit.
+(t)mon oct 05 26
+(u)Kubius
+(p)27227
+(e)🆕⚖🌠|C-Feature, C-Balance, A-Events
+(*)Interdictors can now fully suppress white holes with great difficulty (likely requiring multiple interdictors or an exceptional cell), with their grid draw functionality enhanced to support this.
+(u)Kubius
+(p)28008
+(e)|
+(+)The new harmonic siphon brief now uses zero-indexed vertical coordinates to match the floor decals.
+(t)sun oct 04 26
+(u)Driftered
+(p)28026
+(e)🎨🐁|C-Sprites, A-Critters
+(+)Adds eight new Haunted Plush Toy variants to spawn as.
+(u)Prism55
+(p)27999
+(e)|
+(+)RCD can now deconstruct firedoors
 (t)fri oct 02 26
 (u)ANNmagedon
 (p)27972

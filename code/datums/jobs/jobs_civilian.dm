@@ -211,7 +211,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
-		var/mob/living/silicon/S = M.Robotize_MK2()
-		APPLY_ATOM_PROPERTY(S, PROP_ATOM_ROUNDSTART_BORG, "borg")
-		S.traitHolder.removeTrait("cyber_incompatible")
-		return S
+		var/obj/item/clothing/head/hat = M.head // hat trinket?
+		var/mob/living/silicon/robot/R = M.Robotize_MK2()
+		APPLY_ATOM_PROPERTY(R, PROP_ATOM_ROUNDSTART_BORG, "borg")
+		R.traitHolder.removeTrait("cyber_incompatible")
+		if (hat)
+			R.clothes["head"] = hat
+			hat.set_loc(R)
+			R.update_appearance()
+		return R

@@ -455,7 +455,9 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	. = sanitize(tgui_input_text(usr, Message, Title, Default), length)
 
 /proc/scrubbed_input(var/user, var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = strip_html(tgui_input_text(user, Message, Title, Default), length)
+	. = tgui_input_text(user, Message, Title, Default)
+	if (!isnull(.))
+		. = strip_html(., length)
 
 /proc/LinkBlocked(turf/A, turf/B)
 	if(A == null || B == null) return 1
@@ -2477,8 +2479,8 @@ proc/client_has_cap_grace(var/client/C)
 proc/can_act(var/mob/M, var/include_cuffs = 1)
 	return !((include_cuffs && M.restrained()) || is_incapacitated(M))
 
-/// Returns true if the given mob is incapacitated
-proc/is_incapacitated(mob/M)
+/// Returns true if the given mob is incapacitated. `ignore_no_power` skips the cyborg no-power/no-cell statuses.
+proc/is_incapacitated(mob/M, ignore_no_power = FALSE)
 	var/datum/statusEffect/lockdown/lockdown_effect = M.hasStatus("lockdown_robot") || M.hasStatus("lockdown_ai")
 	if(!istype(lockdown_effect) || lockdown_effect?.fake)
 		lockdown_effect = null
@@ -2489,8 +2491,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
 		lockdown_effect || \
-		M.hasStatus("no_power_robot") || \
-		M.hasStatus("no_cell_robot") || \
+		(!ignore_no_power && (M.hasStatus("no_power_robot") || M.hasStatus("no_cell_robot"))) || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
