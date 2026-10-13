@@ -1,4 +1,22 @@
 
+(t)mon oct 12 26
+(u)Sovexe
+(p)28066
+(e)🪲⚙|C-Bug, A-Internal
+(+)Smoothed passenger camera movement for mechanics telepads, bubble guns, and other projectile based vehicles
+(t)sun oct 11 26
+(u)ANNmagedon
+(p)28051
+(e)🪲💪|C-Bug, A-Traits
+(+)Salvagers now keep the player decided mutantrace.
+(u)Cheekybrdy
+(p)27803
+(e)💅🐣|C-QoL, A-Respawning
+(*)Roundstart timer is 180 again on classic.
+(u)Sovexe
+(p)28062
+(e)🔄📄|C-Rework, A-UI
+(*)Respawn as Animal now allows you to choose the animal from your available options.
 (t)fri oct 09 26
 (u)ZeWaka
 (e)🪲🔄📄|C-Bug, C-Rework`, A-UI

@@ -18,6 +18,13 @@ export interface UplinkData {
   can_lock: BooleanLike;
   can_self_destruct: BooleanLike;
   self_destructing: BooleanLike;
+  synd_int_records?: SyndIntRecord[];
+}
+
+export interface SyndIntRecord {
+  name: string;
+  rank: string;
+  syndint: string;
 }
 
 export interface ItemData {

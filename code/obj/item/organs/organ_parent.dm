@@ -232,10 +232,10 @@
 			var/image/I = H.prodoc_icons["robotic_organs"]
 			I.icon_state = "organs-cyber"
 
-		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP
+		// Cure the organ failure disease if this organ is healthy enough not to cause it
 		if (src.donor)
-			if (!src.broken  && failure_disease)
-				src.donor.cure_disease(failure_disease)
+			if (!src.broken && failure_disease && src.get_damage() < src.fail_damage)
+				src.donor.cure_disease_by_path(failure_disease)
 
 		if (!broken && islist(src.organ_abilities) && length(src.organ_abilities))
 			var/datum/abilityHolder/organ/A = M.get_ability_holder(/datum/abilityHolder/organ)
@@ -254,7 +254,7 @@
 		//all robotic organs have a stamina buff we must remove
 		if (src.donor)
 			if (failure_disease)
-				src.donor.cure_disease(failure_disease)
+				src.donor.cure_disease_by_path(failure_disease)
 
 			if (src.robotic)
 				src.donor.robotic_organs--
