@@ -182,7 +182,7 @@
 			qdel(src)
 
 	// some critters are on harm intent by default, which causes confusion for players controlling them. this prevents that.
-	if(newmob.client)
+	if(newmob.mind)
 		newmob.set_a_intent(INTENT_HELP)
 
 	return newmob
