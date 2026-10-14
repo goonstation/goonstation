@@ -13,7 +13,7 @@
 	if (..())
 		return
 
-	if (!affected_mob.sims?.getValue("Thirst"))
+	if (!affected_mob.sims?.getValue("Thirst") && affected_mob.sims?.getValue("Thirst") != 0)
 		affected_mob.cure_disease(D) // if you don't have thirst you can't get dehydrated
 		return
 
