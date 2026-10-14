@@ -65,7 +65,6 @@
 		/datum/clothingbooth_grouping_tag/season/autumn,
 	)
 
-
 /* ------------------------ Suits ------------------------ */
 /datum/clothingbooth_grouping/autumn_cape
 	item_paths = list(/datum/clothingbooth_item/wear_suit/autumn_cape)
@@ -116,6 +115,5 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 		/datum/clothingbooth_grouping_tag/season/autumn,
 	)
-
 
 #endif
