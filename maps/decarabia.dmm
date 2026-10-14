@@ -453,6 +453,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/walp,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
+"afN" = (
+/obj/machinery/light/emergency,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/hallway/secondary/exit)
 "afS" = (
 /obj/machinery/vending/capsule,
 /obj/decal/tile_edge/check{
@@ -100073,6 +100079,12 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/twotone/yellow,
 /area/station/engine/elect)
+"xeL" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/twotone,
+/area/station/hallway/secondary/exit)
 "xeQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/walp,
 /turf/simulated/floor/plating,
@@ -129296,21 +129308,21 @@ sBr
 cTK
 cTK
 cTK
+xeL
 cTK
+xeL
 cTK
+xeL
 cTK
+xeL
 cTK
+xeL
 cTK
+xeL
 cTK
+xeL
 cTK
-cTK
-cTK
-cTK
-cTK
-cTK
-cTK
-cTK
-cTK
+xeL
 cTK
 bAL
 oNO
@@ -129340,7 +129352,7 @@ cNV
 rlK
 mwI
 ifM
-xJC
+cHl
 xJC
 xJC
 xJC
@@ -130521,7 +130533,7 @@ jSh
 uAU
 uAU
 uAU
-uAU
+afN
 nkN
 twl
 tUc
@@ -130850,7 +130862,7 @@ cNV
 rlK
 mwI
 ifM
-xJC
+cHl
 xJC
 xJC
 xJC
@@ -131427,7 +131439,7 @@ udo
 uQy
 jSh
 uAU
-uAU
+afN
 nkN
 twl
 tUc
@@ -132036,7 +132048,7 @@ bip
 qLq
 tUc
 tUc
-dBA
+hyU
 mjz
 nKj
 rgu
@@ -133848,7 +133860,7 @@ nkN
 yaY
 tUc
 tUc
-dBA
+hyU
 mjz
 nKj
 rgu
@@ -134474,7 +134486,7 @@ cNV
 rlK
 ewT
 ifM
-xJC
+cHl
 xJC
 xJC
 xJC
@@ -135984,7 +135996,7 @@ cNV
 rlK
 ewT
 ifM
-xJC
+cHl
 xJC
 xJC
 xJC
@@ -136264,7 +136276,7 @@ nkN
 yaY
 tUc
 tUc
-dBA
+hyU
 mjz
 nKj
 jAy
@@ -136561,7 +136573,7 @@ jXS
 jXS
 jXS
 lYM
-uAU
+afN
 nkN
 twl
 tUc
@@ -137467,7 +137479,7 @@ jXS
 wzw
 kkp
 dYm
-uAU
+afN
 nkN
 twl
 tUc
@@ -138678,7 +138690,7 @@ nsu
 tUc
 nsu
 tUc
-nsu
+tUc
 tUc
 dBA
 ilr
