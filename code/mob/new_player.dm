@@ -17,7 +17,6 @@ TYPEINFO(/mob/new_player)
 	var/spawning = 0
 	var/keyd
 	var/adminspawned = 0
-	var/is_respawned_player = 0
 	var/pregameBrowserLoaded = FALSE
 	var/antag_fallthrough = FALSE
 	/// indicates if a player is currently barred from joining the game
@@ -124,8 +123,10 @@ TYPEINFO(/mob/new_player)
 
 			else
 				if (src.client.authenticated) spawned_in_keys += "[src.ckey]"
-				for (var/sound in global.dj_panel.preloaded_sounds)
-					src.client << load_resource(sound, -1)
+				for (var/name in global.dj_panel.sound_library)
+					var/datum/dj_library_sound/upload = global.dj_panel.sound_library[name]
+					if (upload.preloaded)
+						src.client << load_resource(upload.file, -1)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (current_state == GAME_STATE_PLAYING)
@@ -190,7 +191,7 @@ TYPEINFO(/mob/new_player)
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names) && !src.client.preferences.be_random_name)
+		if (src.client?.player?.timed_respawn_in_progress && (src.client.preferences.real_name in src.client.player.joined_names) && !src.client.preferences.be_random_name)
 			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name]. You can select \"random appearance\" in character setup if you don't want to make a new character.")
 			return
 		global.latespawning.lock()
@@ -527,7 +528,7 @@ TYPEINFO(/mob/new_player)
 			new_character.mind.late_special_role = 1
 			logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
-			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
+			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && new_character.client?.player && !new_character.client.player.timed_respawn_in_progress) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode.latejoin_antag_compatible && !(jobban_isbanned(new_character, "Syndicate")))
 					var/livingtraitor = 0
 
@@ -569,6 +570,7 @@ TYPEINFO(/mob/new_player)
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
+		new_character.client?.player.timed_respawn_in_progress = FALSE
 
 		return new_character
 

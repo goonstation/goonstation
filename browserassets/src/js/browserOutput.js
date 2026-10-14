@@ -75,19 +75,6 @@ var themes = {
   'theme-dark': 'Dark',
 };
 
-//Polyfill for fucking date now because of course IE8 and below don't support it
-if (!Date.now) {
-  Date.now = function now() {
-    return new Date().getTime();
-  };
-}
-//Polyfill for trim() (IE8 and below)
-if (typeof String.prototype.trim !== 'function') {
-  String.prototype.trim = function () {
-    return this.replace(/^\s+|\s+$/g, '');
-  };
-}
-
 //Actually turns the highlight term match into appropriate html
 function createHighlightMarkup() {
   var extra = '';

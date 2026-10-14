@@ -264,7 +264,7 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/under/rank/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/head_of_security))
-					M.icon = initial(M.icon)
+					M.icon = get_initial_icon(M)
 					M.inhand_image_icon = initial(M.inhand_image_icon)
 					M.wear_image_icon = initial(M.wear_image_icon)
 					M.item_state = initial(M.item_state)
@@ -275,7 +275,7 @@
 					H.set_clothing_icon_dirty()
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
-					M.icon = initial(M.icon)
+					M.icon = get_initial_icon(M)
 					M.inhand_image_icon = initial(M.inhand_image_icon)
 					M.wear_image_icon = initial(M.wear_image_icon)
 					M.name = initial(M.name)

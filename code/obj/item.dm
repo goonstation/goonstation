@@ -334,10 +334,19 @@ ABSTRACT_TYPE(/obj/item)
 		return
 
 /obj/item/New()
+	if (istext(src.wear_image_icon))
+		src.wear_image_icon = file(src.wear_image_icon)
+	if (istext(src.inhand_image_icon))
+		src.inhand_image_icon = file(src.inhand_image_icon)
 	// this is dumb but it won't let me initialize vars to image() for some reason
 	wear_image = image(wear_image_icon)
 	wear_image.icon_state = icon_state //Why was this null until someone actually wore it? Made manipulation impossible.
 	inhand_image = image(inhand_image_icon)
+	// Clothing compares these fields with the resources in its rendered images.
+	if (isfile(src.wear_image_icon))
+		src.wear_image_icon = src.wear_image.icon
+	if (isfile(src.inhand_image_icon))
+		src.inhand_image_icon = src.inhand_image.icon
 	if (src.rand_pos)
 		if (!src.pixel_x) // just in case
 			src.pixel_x = rand(-8,8)
@@ -576,6 +585,9 @@ ABSTRACT_TYPE(/obj/item)
 
 /obj/item/proc/combust(obj/item/W) // cogwerks- flammable items project
 	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
+		return
+	var/area/area = get_area(src)
+	if (!area || area.virtual)
 		return
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	src.burning = TRUE

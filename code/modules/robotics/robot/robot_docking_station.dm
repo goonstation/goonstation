@@ -997,6 +997,9 @@ TYPEINFO(/obj/machinery/recharge_station/syndicate)
 			if(clothingRef)
 				var/obj/item/clothing/cloth = locate(clothingRef) in src.clothes
 				if (istype(cloth, /obj/item/clothing))
+					if (!cloth.can_equip(R))
+						boutput(user, SPAN_ALERT("[cloth] can't be fitted onto [R]."))
+						return
 					if (istype(cloth, /obj/item/clothing/under))
 						if (R.clothes["under"] != null)
 							var/obj/old = R.clothes["under"]

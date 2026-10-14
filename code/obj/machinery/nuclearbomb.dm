@@ -3,7 +3,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 /obj/machinery/nuclearbomb
 	name = "nuclear bomb"
 	desc = "An extremely powerful bomb capable of levelling the whole station."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/nuclearbomb.dmi'
 	icon_state = "nuclearbomb"//1"
 	density = 1
 	anchored = UNANCHORED
@@ -409,7 +409,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	proc/take_damage(var/amount)
 		if(QDELETED(src))
 			return
-		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
+		if(startswith(src.icon_state, "nuclearbomb") && src.icon == get_initial_icon(src))
 			switch(src._health)
 				if(80 to 125)
 					src.icon_state = "nuclearbomb1"
@@ -571,7 +571,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 /obj/bomb_decoy
 	name = "nuclear bomb"
 	desc = ""
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/nuclearbomb.dmi'
 	icon_state = "nuclearbomb"
 	density = 1
 	anchored = UNANCHORED

@@ -177,7 +177,7 @@
 		setIntact(TRUE)
 		src.broken = FALSE
 		src.burnt = FALSE
-		icon = initial(icon)
+		icon = get_initial_icon(src)
 		if(icon_old)
 			icon_state = icon_old
 		else
@@ -1397,7 +1397,7 @@ TYPEINFO(/turf/simulated)
 
 /turf/unsimulated/floor/ballpit
 	name = "ball pit"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	icon_state = "ballpitfloor"
 
 /turf/simulated/floor/concrete

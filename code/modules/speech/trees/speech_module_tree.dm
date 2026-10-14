@@ -166,7 +166,7 @@
 	if (message.flags & SAYFLAG_DO_NOT_OUTPUT)
 		return
 
-	message.signal_recipient ||= new /datum/signal_holder
+	message.signal_recipient = new /datum/signal_holder
 
 	// Apply the effects of any applicable postmodifier speech prefix.
 	if (message.prefix && !(message.flags & SAYFLAG_PREFIX_PROCESSED))
