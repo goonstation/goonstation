@@ -13377,12 +13377,12 @@
 	},
 /area/station/engine/elect)
 "dfU" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/decal/tile_edge/line/black{
 	dir = 10;
 	icon_state = "line2"
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/minitiles/black,
 /area/station/security/hos)
 "dfW" = (
@@ -21906,6 +21906,14 @@
 	dir = 8
 	},
 /area/station/crew_quarters/quarters_south)
+"fbw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/mailtag/security/detective,
+/obj/disposalpipe/switch_junction/left/south,
+/turf/simulated/floor/twotone,
+/area/station/hallway/primary/west)
 "fbI" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -22241,6 +22249,7 @@
 /obj/stool/chair/red{
 	dir = 8
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "ffq" = (
@@ -34451,6 +34460,7 @@
 	pixel_y = 6
 	},
 /obj/item/clothing/mask/cigarette/cigar,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "hUU" = (
@@ -41460,11 +41470,17 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/device/camera_viewer,
 /obj/table/wood/auto/desk,
 /obj/machinery/camera/directional/north{
 	pixel_x = 3
 	},
+/obj/item/ammo/bullets/a38/stun{
+	pixel_x = -5
+	},
+/obj/item/ammo/bullets/a38{
+	pixel_x = 5
+	},
+/obj/item/device/camera_viewer,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "jzx" = (
@@ -43754,6 +43770,7 @@
 /obj/machinery/door/airlock/walp/security{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -50754,6 +50771,7 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge/reception)
 "lGe" = (
+/obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
@@ -58224,6 +58242,12 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
+"nwa" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "nwi" = (
 /obj/submachine/cargopad/robotics,
 /obj/machinery/ai_status_display{
@@ -63804,8 +63828,10 @@
 /turf/simulated/floor/plating/airless/shuttlebay,
 /area/station/mining/magnet_platform)
 "oML" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/disposal/mail,
+/obj/mapping_helper/mailtag/security/detective,
+/obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -74177,6 +74203,7 @@
 /area/station/crew_quarters/jazz)
 "rod" = (
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred2"
@@ -81399,6 +81426,7 @@
 /turf/simulated/floor/caution,
 /area/station/mining/staff_room)
 "sRL" = (
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred2"
@@ -82490,6 +82518,7 @@
 	icon_state = "chair_comfy"
 	},
 /obj/landmark/start/job/detective,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "tds" = (
@@ -89891,6 +89920,12 @@
 	dir = 10
 	},
 /area/station/medical/robotics)
+"uNy" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/security/detectives_office)
 "uNH" = (
 /obj/item/storage/toilet{
 	dir = 4
@@ -143378,7 +143413,7 @@ sPQ
 mKe
 pJF
 hXM
-nLk
+uNy
 jsI
 jsI
 kAx
@@ -143982,7 +144017,7 @@ kaZ
 mWb
 gbs
 iFt
-gbs
+nwa
 bIZ
 bOT
 vOZ
@@ -144284,7 +144319,7 @@ jct
 tfL
 qZZ
 hfB
-qZZ
+wKB
 qZZ
 jxy
 wDl
@@ -144586,7 +144621,7 @@ hVI
 dtu
 pqz
 pFC
-pqz
+fbw
 pqz
 wCr
 vLm

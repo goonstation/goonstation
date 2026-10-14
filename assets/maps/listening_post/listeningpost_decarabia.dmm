@@ -103,7 +103,7 @@
 /obj/cable/black{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer3/terminal/zeta,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/tech_room)
 "dd" = (
@@ -383,11 +383,11 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/comm_dish)
 "lB" = (
+/obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/recharger/wall/sticky{
 	dir = 1;
 	pixel_y = 26
 	},
-/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/redblack,
 /area/listeningpost/general)
 "lS" = (
@@ -482,6 +482,7 @@
 	pixel_x = 1;
 	pixel_y = 20
 	},
+/obj/machinery/computer/general_alert,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/tech_room)
 "nX" = (
@@ -712,11 +713,17 @@
 /area/listeningpost/tech_room)
 "tk" = (
 /obj/table/syndicate/auto,
-/obj/machinery/codereader/syndicate{
-	pixel_y = 12;
-	pixel_x = 4
+/obj/item/pinpointer/disk{
+	pixel_x = 5;
+	pixel_y = 10
 	},
-/obj/item/pinpointer/disk,
+/obj/item/pinpointer/disk{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/machinery/codereader/syndicate{
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "tE" = (
@@ -1110,17 +1117,20 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/listeningpost/power)
 "Cw" = (
-/obj/machinery/computer/general_alert,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/tech_room)
 "Di" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
 	icon_state = "line2"
+	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/listeningpost/general)
@@ -1725,7 +1735,7 @@
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
-	pixel_x = 5;
+	pixel_x = -5;
 	pixel_y = 1
 	},
 /turf/simulated/floor/black,
