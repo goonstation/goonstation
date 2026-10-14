@@ -7,6 +7,7 @@
 	cure_flags = CURE_CUSTOM
 	cure_desc = "Water ingestion"
 	affected_species = list("Human")
+	can_be_asymptomatic = FALSE
 //
 /datum/ailment/disease/dehydration/stage_act(var/mob/living/carbon/human/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
