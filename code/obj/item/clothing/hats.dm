@@ -2821,5 +2821,6 @@ obj/item/clothing/head/headscarf
 // Seasonal autumn hats
 /obj/item/clothing/head/newsboy
 	name = "newsboy cap"
+	desc = "Extra, Extra! Read all about it!"
 	icon_state = "newsboy"
 	item_state = "newsboy"

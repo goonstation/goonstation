@@ -947,10 +947,12 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 
 /obj/item/clothing/shoes/derby
 	name = "derby shoes"
+	desc = "Open-laced leather shoes with a slight heel and made with real artificial leather."
 	icon_state = "derby"
 
 /obj/item/clothing/shoes/stiletto_boots
 	name = "stiletto boots"
+	desc = "Not to be wielded like the daggers which their name comes from."
 	icon_state = "stiletto_boots"
 	step_sound = "footstep"
 	step_priority = STEP_PRIORITY_LOW

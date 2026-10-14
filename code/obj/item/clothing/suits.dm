@@ -2689,6 +2689,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 
 /obj/item/clothing/suit/jacket/corduroy
 	name = "corduroy jacket"
+	desc = "A hard-wearing jacket with a corduroy-lined collar and cuffs."
 	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
 	icon_state = "corduroy_jacket"
@@ -2696,6 +2697,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 
 /obj/item/clothing/suit/autumn_scarf
 	name = "autumn scarf"
+	desc = "A dull-colored striped scarf with decorative fringe on both ends."
 	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
 	icon_state = "autumn_scarf"
