@@ -6,6 +6,6 @@
 var/global/datum/ui_state/tgui_literate_state/tgui_literate_state = new /datum/ui_state/tgui_literate_state
 
 /datum/ui_state/tgui_literate_state/can_use_topic(src_object, mob/user)
-	if(user.literate == 1)
+	if(user.literate)
 		return UI_INTERACTIVE
 	return UI_CLOSE

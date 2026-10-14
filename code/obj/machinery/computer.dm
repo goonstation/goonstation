@@ -30,7 +30,7 @@
 		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 
 	attack_hand(var/mob/user)
-		if (!user.sight_check(1))
+		if (!user.sight_check(TRUE))
 			boutput(user, SPAN_ALERT("You can't see anything, operating a computer isn't going to work!"))
 			return 1
 		if (!user.literate)

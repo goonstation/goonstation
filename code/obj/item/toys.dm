@@ -244,11 +244,11 @@ TYPEINFO(/obj/item/toy/handheld)
 
 	attack_self(mob/user as mob)
 		. = ..()
-		if (!arcademode && user.literate && user.sight_check(1))
+		if (!arcademode && user.literate && user.sight_check(TRUE))
 			src.gameholder.new_game(user)
 			return
 
-		if(!user.sight_check(1))
+		if(!user.sight_check(TRUE))
 			boutput(user, SPAN_ALERT("You can't see the screen!"))
 		else if(!user.literate)
 			boutput(user, SPAN_ALERT("You're illiterate and can't read the screen!"))

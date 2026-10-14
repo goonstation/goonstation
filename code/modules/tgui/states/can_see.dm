@@ -6,6 +6,6 @@
 var/global/datum/ui_state/tgui_can_see_state/tgui_can_see_state = new /datum/ui_state/tgui_can_see_state
 
 /datum/ui_state/tgui_can_see_state/can_use_topic(src_object, mob/user)
-	if(user.sight_check(1))
+	if(user.sight_check(TRUE))
 		return UI_INTERACTIVE
 	return UI_CLOSE

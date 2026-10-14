@@ -341,7 +341,7 @@ proc/load_intraround_jars()
 			ui.open()
 
 	ui_status(mob/user, datum/ui_state/state)
-		if(!user.sight_check(1))
+		if(!user.sight_check(TRUE))
 			boutput(user, SPAN_ALERT("You can't read while unable to see."))
 			return UI_CLOSE
 		if(!user.literate)
