@@ -110,7 +110,7 @@ TYPEINFO(/mob/dead/observer)
 	var/datum/trait/trait
 	for (var/trait_id in P.traitPreferences.traits_selected)
 		trait = getTraitById(trait_id)
-		if (trait.mutantRace && src.icon == initial(src.icon))
+		if (trait.mutantRace && src.icon == get_initial_icon(src))
 			src.icon_state = trait.mutantRace.ghost_icon_state
 			is_mutantrace = TRUE
 			break
@@ -709,7 +709,7 @@ TYPEINFO(/mob/dead/observer)
 	set category = null
 
 	if (src.see_invisible >= INVIS_GHOST)
-		src.see_invisible = INVIS_NONE
+		src.see_invisible = INVIS_BELOW_GHOST
 		boutput(src, "You can no longer see other ghosts.", group="ghostsight")
 	else if(HAS_FLAG(src.sight, SEE_SELF))
 		src.sight &= ~SEE_SELF

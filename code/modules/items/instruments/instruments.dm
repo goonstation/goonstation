@@ -292,6 +292,7 @@
 	desc = "Not very grand, is it?"
 	icon_state = "piano"
 	item_state = "piano"
+	default_material = "wood"
 	note_range = list("c2", "c7")
 	instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 	sounds_instrument = null
@@ -313,6 +314,7 @@
 	desc = "Mask, cloak and brooding nature not included."
 	icon_state = "organ"
 	item_state = "organ"
+	default_material = "wood"
 	desc_sound = list("nice", "classic", "classical", "great", "impressive", "terrible", "awkward", "striking", "grand", "majestic", "baroque", "gothic", "rumbling", "chilling")
 	sounds_instrument = list('sound/musical_instruments/organ/bach1.ogg',
 	'sound/musical_instruments/organ/bach2.ogg',
@@ -396,6 +398,7 @@
 	item_state = "guitar1"
 	two_handed = 1
 	force = 10
+	default_material = "wood"
 	note_range = list("d2", "c6")
 	instrument_sound_directory = "sound/musical_instruments/guitar/notes/"
 	note_time = 0.18 SECONDS
@@ -554,6 +557,9 @@
 			logTheThing(LOG_STATION, user, "builds an amusing duck at [log_loc(src)]")
 			var/obj/machinery/bot/duckbot/D = new /obj/machinery/bot/duckbot
 			D.eggs = rand(2,5) // LAY EGG IS TRUE!!!
+			D.setMaterial(src.material)
+			D.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(D.forensic_holder)
 			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)
@@ -606,6 +612,9 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			return
 		else
 			var/obj/machinery/bot/chefbot/D = new /obj/machinery/bot/chefbot
+			D.setMaterial(src.material)
+			D.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(D.forensic_holder)
 			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)
@@ -874,6 +883,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "fiddle"
 	icon_state = "fiddle"
 	item_state = "fiddle"
+	default_material = "wood"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive") // works just as well for fiddles as it does for trumpets I guess  :v
 	sounds_instrument = list()
 	note_range = list("a3", "g6")

@@ -117,8 +117,7 @@ TYPEINFO(/mob/living)
 	var/stamina_max = STAMINA_MAX
 	var/stamina_regen = STAMINA_REGEN
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE
-	var/list/stamina_mods_regen = list()
-	var/list/stamina_mods_max = list()
+	var/alist/stamina_mods_max = alist()
 
 	var/last_sleep = 0 //used for sleep_bubble
 
@@ -138,6 +137,8 @@ TYPEINFO(/mob/living)
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	// The silhouette is created before atom.New() loads runtime artwork.
+	src.load_runtime_icon()
 	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
@@ -1740,10 +1741,12 @@ TYPEINFO(/mob/living)
 	src.vision.set_scan(1)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(src)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(src)
 
 /mob/living/proc/unmeson(atom/source)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(src)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(src)
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
@@ -1796,13 +1799,14 @@ TYPEINFO(/mob/living)
 			return AM
 	return picked_item
 
-/mob/living/clamp_act()
+/mob/living/clamp_act(mob/clamper, obj/item/clamp)
 	if (isintangible(src))
 		return FALSE
 	src.TakeDamage("All", 10)
 	src.setStatusMin("slowed", 2 SECONDS, 15)
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
+	logTheThing(LOG_COMBAT, clamper, "CLAMPS [key_name(src)] with [clamp] at [log_loc(src)]")
 	return TRUE
 
 /mob/living/HealBleeding(amt)

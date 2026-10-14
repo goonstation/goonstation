@@ -92,6 +92,10 @@ TYPEINFO(/mob/living/critter/crunched)
 
 ////////// Transposed limb ///////////
 /datum/limb/transposed
+	var/limb_cd = 3 SECONDS
+	var/dmg_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+	var/action = "grab"
+
 	help(mob/target, var/mob/living/user)
 		harm(target, user, 0)
 
@@ -101,13 +105,12 @@ TYPEINFO(/mob/living/critter/crunched)
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 5, 15, 0, can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
-		var/action = "grab"
 		msgs.base_attack_message = SPAN_ALERT("<b>[user] [action]s [target] with [src.holder]!</b>")
-		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+		msgs.played_sound = src.dmg_sound
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = get_weakref(target)
-		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
+		ON_COOLDOWN(src, "limb_cooldown", limb_cd)
 
 ////////////// Shades ////////////////
 TYPEINFO(/mob/living/critter/shade)
@@ -202,6 +205,133 @@ TYPEINFO(/mob/living/critter/shade)
 		if (length(.) && prob(5))
 			src.say(pick("siskur, siskur ina na sukkal...","ára ina gíg, úš ina ur zal...","lú-érim! lú-érim!","áš á-zi-ga...bal, na, e-zé ha-lam ina é si-ga..."))
 			// sacrifice, sacrifice the human envoy! // praise the night, kill the servant of light // enemy! enemy! // cursed with violence, human, you ruin the quiet house
+
+//menhir shade: in the realm of remembrance, behind a discolored locked door. entrance is inadvisable.
+/mob/living/critter/shade/lordly
+	name = "voice of grief"
+	desc = "They sing for us no longer."
+	health_brute = 600
+	base_move_delay = 1.3
+	base_walk_delay = 2
+	no_stamina_stuns = TRUE
+	can_bleed = FALSE
+	blood_id = "black_goop"
+	var/can_burst = TRUE
+
+	New() //we shall not falter
+		. = ..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANT_BE_PINNED, "theysing")
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "theysing", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "theysing", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "theysing", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "theysing", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "theysing", 100)
+
+	setup_hands() //you will be catching them
+		..()
+		var/datum/handHolder/HH = hands[1]
+		var/datum/limb/transposed/TL = HH.limb
+		TL.limb_cd = COMBAT_CLICK_DELAY
+		TL.dmg_sound = 'sound/impact_sounds/crunchy_sizzle.ogg'
+		TL.action = "strike"
+		HH = hands[2]
+		TL = HH.limb
+		TL.limb_cd = COMBAT_CLICK_DELAY
+		TL.dmg_sound = 'sound/impact_sounds/crunchy_sizzle.ogg'
+		TL.action = "strike"
+
+	critter_basic_attack(mob/target)
+		if (issilicon(target))
+			src.machine_breaker(target)
+			return TRUE
+		else
+			if(src.can_burst)
+				if(src.health < 100)
+					src.extinction_burst(target)
+				else if(prob(50) && !ON_COOLDOWN(src,"shade_wave",30 SECONDS))
+					src.great_dark()
+			return ..()
+
+	proc/machine_breaker(var/mob/living/silicon/silicon) //the machines do not serve us
+		if (isrobot(silicon) && !ON_COOLDOWN(src, "this_place_is_not_for_you", 30 SECONDS))
+			var/mob/living/silicon/robot/cyborg = silicon
+			src.visible_message(SPAN_ALERT("<B>[src] shatters [cyborg.name]'s head with a wave of force! Holy shit!</B>"))
+			playsound(src.loc, 'sound/weapons/energy/LightningCannon.ogg', 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+			cyborg.compborg_lose_limb(cyborg.part_head)
+		else
+			src.visible_message(SPAN_ALERT("<B>[src] smashes [silicon] with a wave of force!</B>"))
+			playsound(src.loc, 'sound/impact_sounds/metal_thump.ogg', 50, 1)
+			random_brute_damage(silicon, 15, 0)
+
+	proc/extinction_burst(var/mob/target)
+		if (!target) return
+		src.can_burst = FALSE
+		var/turf/makespot = get_turf(target)
+		var/turf/possible_alternate = get_step(makespot,src.dir)
+		if (!possible_alternate.density) makespot = possible_alternate
+		SPAWN(2)
+			src.visible_message(SPAN_ALERT("<B>[src] fractures into two forms!</B>"))
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 90, 1, pitch = 0.45)
+			new /mob/living/critter/shade/lordly/twinned(makespot)
+			var/half_of_remaining_hp = 0.5 * src.health
+			random_brute_damage(src,half_of_remaining_hp,FALSE)
+
+	proc/great_dark()
+		SPAWN(6)
+			src.visible_message(SPAN_ALERT("<B>A wave of shadow spills forth from [src]!</B>"))
+			new /obj/overlay/darkness_field(get_turf(src), 20 SECONDS, radius = 12)
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null) // good luck pinning it down
+		. = ..()
+		if(prob(80))
+			var/turf/mobloc = get_turf(M)
+			if(mobloc.z == src.z)
+				M.loc = get_turf(src)
+				var/turf/dest_loc = mobloc
+				if(prob(35))
+					var/turf/possible_alternate = get_step(src,pick(alldirs))
+					if(!possible_alternate.density) dest_loc = possible_alternate
+				src.loc = dest_loc
+				playsound(dest_loc, 'sound/effects/mag_golem.ogg', 18, 1, pitch = 0.7)
+
+	twinned
+		name = "voice of anguish"
+		desc = "A last rebuke."
+		health_brute = 50
+		can_burst = FALSE
+
+		death()
+			var/obj/item/chilly_orb/okfine = new /obj/item/chilly_orb(src.loc)
+			okfine.color = "#f78080"
+			okfine.name = "foreboding orb"
+			okfine.desc = "The cold seems to bite at the air around it. This should have been left undisturbed."
+			okfine.id = "SORROW"
+			. = ..()
+
+		chase_lines(var/mob/target)
+
+//menhir shade: appears only in the case of the invasion event. a bit unstable, can take burn damage
+/mob/living/critter/shade/invader
+	name = "voice of shadow"
+	layer = 3.85
+	health_burn_vuln = 0.1
+
+	examine()
+		src.desc = pick("Why do you defile the heavens?","This place was not for you.","Woe, that the butchers disturb our grieving sleep.")
+		. = ..()
+
+	critter_basic_attack(mob/target)
+		if (issilicon(target))
+			machine_strike(target)
+			return TRUE
+		else
+			return ..()
+
+	proc/machine_strike(var/mob/living/silicon/silicon) //the machines do not serve us
+		src.visible_message(SPAN_ALERT("<B>[src] strikes [silicon] with a wave of force!</B>"))
+		playsound(src.loc, 'sound/impact_sounds/metal_thump.ogg', 50, 1)
+		random_brute_damage(silicon, rand(5,15), 0)
 
 /mob/living/critter/shade/crew
 	name = "faded scientist"

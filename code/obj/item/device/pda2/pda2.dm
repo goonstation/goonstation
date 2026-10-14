@@ -184,34 +184,31 @@
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	// NT Officials
-
-	ntso
-		icon_state = "pda-nt"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
-		setup_default_module = /obj/item/device/pda_module/flashlight
-		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
-
-	ntofficial
+	nt
 		icon_state = "pda-nt"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+		bg_color = "#1b57b1"
 
-	nt_medical
-		icon_state = "pda-nt_medic"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
-		mailgroups = list(MGD_MEDICAL, MGD_COMMAND, MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+		ntso
+			setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
+			setup_default_module = /obj/item/device/pda_module/flashlight
+			mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
-	nt_engineer
-		icon_state = "pda-nt_engineer"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		setup_default_module = /obj/item/device/pda_module/tray
-		mailgroups = list(MGD_ENGINEER, MGD_SUPPLY, MGD_COMMAND, MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
+		medical
+			icon_state = "pda-nt_medic"
+			setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
+			mailgroups = list(MGD_MEDICAL, MGD_COMMAND, MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+
+		engineer
+			icon_state = "pda-nt_engineer"
+			setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+			setup_default_module = /obj/item/device/pda_module/tray
+			mailgroups = list(MGD_ENGINEER, MGD_SUPPLY, MGD_COMMAND, MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
 
 	// Security
 
@@ -322,27 +319,9 @@
 		green
 			icon_state = "pda-clown-green"
 
-		proc/on_mob_throw_end(mob/M)
-			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
-			LAZYLISTREMOVE(M.attached_objs, src)
-			src.glide_size = initial(src.glide_size)
-
-		Crossed(atom/movable/AM)
-			..()
-			if (istype(src.loc, /turf/space))
-				return
-			if (iscarbon(AM))
-				var/mob/M = AM
-				LAZYLISTADDUNIQUE(M.attached_objs, src)
-				src.glide_size = M.glide_size
-				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end))
-				if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type = THROW_PEEL_SLIP, params = list("slip_obj" = src)))
-					boutput(M, SPAN_NOTICE("You slipped on the PDA!"))
-					if (M.bioHolder.HasEffect("clumsy"))
-						M.changeStatus("knockdown", 5 SECONDS)
-						JOB_XP(M, "Clown", 1)
-				else
-					src.on_mob_throw_end(M)
+		New()
+			. = ..()
+			src.AddElement(/datum/element/slippery)
 
 	janitor
 		name = "Janitor PDA"
@@ -1027,7 +1006,7 @@
 			return
 
 	proc/insert_pen(obj/item/insertedPen, mob/user)
-		if (!istype(insertedPen))
+		if (!istype(insertedPen) || insertedPen.cant_drop)
 			return
 		if (user)
 			user.u_equip(insertedPen)

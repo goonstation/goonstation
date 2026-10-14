@@ -5268,6 +5268,15 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"ayK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/station/crew_quarters/captain)
 "ayM" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
@@ -8387,13 +8396,7 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
+/obj/pool/ladder,
 /obj/channel{
 	required_to_pass = 210
 	},
@@ -8837,9 +8840,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aMr" = (
-/obj/machinery/light/emergency{
-	dir = 1
-	},
 /obj/item/instrument/large/organ,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -9688,6 +9688,9 @@
 "aOR" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -13818,8 +13821,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bcU" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	pixel_x = 6
+/obj/filing_cabinet{
+	pixel_x = 6;
+	pixel_y = 0
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -15021,7 +15025,6 @@
 	},
 /obj/machinery/light_switch/directional/east,
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/storage/firstaid/brain{
 	pixel_x = 4;
 	pixel_y = 8
@@ -21354,12 +21357,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake"
-	},
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bMN" = (
@@ -36508,7 +36506,7 @@
 /area/station/maintenance/central)
 "ftg" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy{
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -37200,8 +37198,6 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/shrub/captainshrub,
-/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
@@ -38087,6 +38083,9 @@
 /area/station/crew_quarters/fitness)
 "gtK" = (
 /obj/landmark/pest,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "guT" = (
@@ -38862,6 +38861,14 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
+"gVg" = (
+/obj/shrub/captainshrub,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/captain)
 "gVk" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -45561,6 +45568,15 @@
 /obj/landmark/pest,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"lBf" = (
+/obj/machinery/computer/announcement/station/captain{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/captain)
 "lBr" = (
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/auto/glassblock/indigo,
@@ -48709,8 +48725,8 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fred6"
+	dir = 4;
+	icon_state = "fred2"
 	},
 /area/station/crew_quarters/captain)
 "nEP" = (
@@ -51622,7 +51638,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "pxM" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /obj/blind_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -54974,7 +54990,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "rPa" = (
@@ -55704,6 +55722,9 @@
 	},
 /obj/machinery/computer/announcement/station/security{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -59375,7 +59396,7 @@
 "uHb" = (
 /obj/strip_door,
 /obj/disposalpipe/segment,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "uHm" = (
@@ -59509,6 +59530,25 @@
 "uMC" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
+"uNB" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/captain)
 "uNH" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
@@ -63149,9 +63189,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "xfn" = (
-/obj/machinery/conveyor_switch{
-	id = "chapel"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -63880,8 +63917,12 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "xJn" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/alarm/directional/west,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "xJE" = (
@@ -89312,7 +89353,7 @@ moc
 mXQ
 adC
 adC
-adC
+aal
 adC
 adC
 adC
@@ -89612,9 +89653,9 @@ bbP
 uNH
 nHW
 bbP
+bbP
 waj
 bbP
-aal
 adC
 adC
 adC
@@ -89914,13 +89955,13 @@ bbP
 cTJ
 pwx
 fRS
+gVg
 frQ
 bbP
 bbP
 bbP
 iRs
 wJq
-adC
 adC
 adC
 adC
@@ -90216,13 +90257,13 @@ bbP
 gbf
 bdR
 beL
+beL
 bfI
 ikX
 aqA
 bhp
 biv
 ifi
-adC
 adC
 adC
 adC
@@ -90518,13 +90559,13 @@ jOM
 bcT
 foB
 oiu
+ayK
 dwR
 fAA
 lFi
 bhq
 eJk
 mQu
-adC
 adC
 adC
 adC
@@ -90820,13 +90861,13 @@ bbP
 tuC
 bdT
 beN
+beL
 bKt
 qCO
 aqA
 bhr
 bix
 dfe
-adC
 adC
 adC
 adC
@@ -91123,12 +91164,12 @@ bcV
 vuo
 beO
 nED
+lBf
 bbP
 bbP
 bbP
 gqO
 mPo
-adC
 adC
 adC
 adC
@@ -91424,9 +91465,9 @@ bbP
 uVp
 gKO
 luE
+uNB
 eFX
 bbP
-aah
 adC
 adC
 adC
@@ -109619,8 +109660,8 @@ uLB
 uLB
 uLB
 uLB
-adC
-adC
+uLB
+uLB
 adC
 adC
 adC
@@ -109913,6 +109954,8 @@ cdw
 woV
 cdw
 cpY
+cdw
+cdw
 crb
 jje
 htJ
@@ -109921,8 +109964,6 @@ uzt
 uzt
 oav
 dOf
-adC
-adC
 adC
 adC
 adC
@@ -110215,6 +110256,8 @@ cqe
 cqe
 cqe
 cqe
+cqe
+cqe
 hpX
 vIN
 htJ
@@ -110223,8 +110266,6 @@ yht
 yht
 cuA
 uLB
-adC
-adC
 adC
 adC
 adC
@@ -110520,13 +110561,13 @@ uLB
 uLB
 uLB
 uLB
-lKY
 uLB
 uLB
 lKY
 uLB
-adC
-adC
+uLB
+lKY
+uLB
 adC
 adC
 adC
@@ -110828,10 +110869,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -111131,10 +111172,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -111433,10 +111474,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -111738,10 +111779,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 aah
@@ -112041,10 +112082,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -112343,10 +112384,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -112645,10 +112686,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -112947,10 +112988,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -113249,10 +113290,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -113551,10 +113592,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -113852,10 +113893,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 aah
@@ -114151,10 +114192,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -114453,10 +114494,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -114754,10 +114795,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -115050,13 +115091,13 @@ uLB
 uLB
 uLB
 uLB
-lvn
 uLB
 uLB
 lvn
 uLB
-adC
-adC
+uLB
+lvn
+uLB
 adC
 adC
 adC
@@ -115349,6 +115390,8 @@ cqf
 cqf
 cqf
 cqf
+cdw
+cdw
 rHg
 jje
 mPB
@@ -115357,8 +115400,6 @@ uzt
 uzt
 cuC
 uLB
-adC
-adC
 adC
 adC
 adC
@@ -115651,6 +115692,8 @@ cdw
 iMi
 cdw
 cpZ
+cqe
+cqe
 cre
 vIN
 mPB
@@ -115659,8 +115702,6 @@ yht
 yht
 lpQ
 rWQ
-adC
-adC
 adC
 adC
 adC
@@ -115961,8 +116002,8 @@ uLB
 uLB
 uLB
 uLB
-adC
-adC
+uLB
+uLB
 adC
 adC
 adC

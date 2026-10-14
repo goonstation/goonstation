@@ -1449,6 +1449,13 @@
 									return
 
 						if (M)
+							if(ishuman(M))
+								var/mob/living/carbon/human/dork = M
+								if(istype(dork.wear_mask, /obj/item/clothing/mask/cigarette))
+									var/obj/item/clothing/cig = dork.wear_mask //saving this as a variable because [dork.wear_mask] in the visible_message doesn't return anything, even though it's called BEFORE the item is removed. weird stuff!
+									SPAWN(0) //SPAWN so this only outputs after the initial emote text
+									dork.visible_message(SPAN_ALERT("[cig] is knocked out of [dork]'s mouth!"))
+									cig.throw_worn_item(get_edge_cheap(dork.loc, turn(get_dir(src, dork), src.hand == LEFT_HAND ? -90 : 90)), 3, 2)
 							message = "<b>[src]</b> slaps [M] across the face! Ouch!"
 							maptext_out = "<I>slaps [M] across the face!</I>"
 						else
@@ -2225,7 +2232,7 @@
 				var/obj/item/I = get_id_card(src.wear_id)
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if(can_dab(src))
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
@@ -2352,6 +2359,8 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
+	if(iscluwne(src))
+		gas.farts *= 1.1
 	if(src.bioHolder?.HasEffect("radioactive_farts"))
 		gas.radgas = 2
 	gas.temperature = T20C

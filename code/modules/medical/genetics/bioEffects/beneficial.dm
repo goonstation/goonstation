@@ -362,7 +362,7 @@
 			roundedmult += round(roundedmultremainder)
 			roundedmultremainder = roundedmultremainder % 1
 		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
-			if (rand(1, regrow_prob) <= power)
+			if (regrow_prob && rand(1, regrow_prob) <= power)
 				if (ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if (H.limbs)
@@ -1129,6 +1129,8 @@
 			return
 		var/turf/T = get_turf(src.owner)
 		if (!istype(T) || src.owner.traction == TRACTION_NONE)
+			return
+		if (!src.owner.hasStatus("undertable") && (locate(/obj/table) in T)) // skittering is for getting under tables, not across them
 			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return

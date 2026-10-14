@@ -64,7 +64,8 @@
 /datum/fishing_lootpool/clown_shoes_loot
 	fish_available = list(/obj/item/bananapeel = 40, \
 	/obj/item/instrument/bikehorn = 20, \
-	/obj/item/instrument/bikehorn/dramatic = 5)
+	/obj/item/instrument/bikehorn/dramatic = 5, \
+	/obj/item/reagent_containers/food/fish/toonclown_fish = 60)
 
 /datum/fishing_lootpool/clown_shoes_loot/check_conditionals(mob/user, obj/item/fishing_rod/fishing_rod)
 	. = ..()

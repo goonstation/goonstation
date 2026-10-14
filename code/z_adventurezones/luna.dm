@@ -427,7 +427,7 @@ Contents:
 
 		currentFolder.add_file( new /datum/computer/file/terminal_program/email (src) )
 
-		src.root.add_file( new /datum/computer/file/terminal_program/secure_records {req_access = list(access_lunar_breakdoor);} (src) )
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/secmate {req_access = list(access_lunar_breakdoor);} (src) )
 
 /obj/machinery/computer3/generic/lunarsec
 	name = "Security computer"

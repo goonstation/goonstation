@@ -1,5 +1,4 @@
 // WIP bot improvements (Convair880).
-#define CLEANBOT_MOVE_SPEED 10
 #define CLEANBOT_CLEARTARGET_COOLDOWN "cleanbotclearinvalidtargetslist"
 #define CLEANBOT_CLEAN_COOLDOWN "slackbotidle"
 #define CLEANBOT_ACQUIRE_TARGET_COOLDOWN "cleanbotacquiretarget"
@@ -24,6 +23,9 @@
 
 		if(istype(I, /obj/item/parts/robot_parts/arm))
 			var/obj/machinery/bot/cleanbot/A = new created_cleanbot_type
+			A.setMaterial(src.material)
+			A.forensic_holder = src.forensic_holder
+			I.forensic_holder.copy_to(A.forensic_holder)
 			if (user.r_hand == src || user.l_hand == src)
 				A.set_loc(get_turf(user))
 			else
@@ -63,6 +65,7 @@
 	layer = 5
 	density = 0
 	anchored = UNANCHORED
+	default_material = "plastic"
 	var/icon_state_base // defined in new, this is the base of the icon_state with the suffix removed, i.e. "cleanbot" without the "0", for easier modification of icon_states so long as the convention is followed
 
 	on = 1
@@ -70,7 +73,7 @@
 	health = 25
 	no_camera = 1
 	access_lookup = "Janitor"
-	bot_move_delay = CLEANBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::CLEANBOT
 
 	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
@@ -264,7 +267,7 @@
 
 			// we are not there. how do we get there
 			if (!src.path || !length(src.path))
-				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 20)
+				src.navigate_to(get_turf(src.target), src.bot_move_delay, max_dist = 20)
 				if (!src.path || !length(src.path))
 					// answer: we don't. try to find something else then.
 					src.KillPathAndGiveUp(1)
@@ -457,5 +460,3 @@
 			ON_COOLDOWN(master, CLEANBOT_CLEAN_COOLDOWN, master.idle_delay)
 			master.KillPathAndGiveUp(0)
 		..()
-
-#undef CLEANBOT_MOVE_SPEED

@@ -39,6 +39,7 @@
 		if (user.a_intent == INTENT_HARM)
 			return
 
+		A.ensure_analyzable_component()
 		var/datum/computer/file/electronics_scan/theScan = new
 		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user, scannable_tags, scanned, theScan)
 

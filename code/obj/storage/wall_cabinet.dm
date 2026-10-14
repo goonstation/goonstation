@@ -384,5 +384,13 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/device/analyzer/healthanalyzer = 1,
 	)
 
+/obj/item/storage/wall/surgery/shuttle // limited
+	spawn_contents = list(
+		/obj/item/scalpel = 1,
+		/obj/item/scissors/surgical_scissors = 1,
+		/obj/item/suture = 1,
+		/obj/item/device/analyzer/healthanalyzer = 1,
+	)
+
 /obj/item/storage/wall/ak_fake
 	spawn_contents = list(/obj/item/bang_gun/ak47)

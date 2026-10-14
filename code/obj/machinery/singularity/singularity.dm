@@ -52,7 +52,8 @@ proc/singularity_containment_check(turf/center)
 	var/selfmove = 1
 	var/grav_pull = 6
 	var/radius = 0 //the variable used for all calculations involving size.this is the current size
-	var/maxradius = INFINITY//the maximum size the singularity can grow to
+	var/radius_largest = 0 // The largest radius the singularity has reached so far
+	var/radius_max = INFINITY//the maximum size the singularity can grow to
 	var/restricted_z_allowed = FALSE
 	var/right_spinning //! boolean for the spaghettification animation spin direction
 	///Count for rate-limiting the spaghettification effect
@@ -78,12 +79,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	START_TRACKING
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.energy = E
-	maxradius = rad
+	radius_max = rad
 	succ_cache = list()
-	if(maxradius<2)
-		radius = maxradius
+	if(radius_max < 2)
+		radius = radius_max
+		radius_largest = radius
 	else
 		radius = 2
+		radius_largest = 2
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
 	grav_pull = (radius+1)*3
 	event()
@@ -145,16 +148,16 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				if(!isnull(check_max_radius) && check_max_radius >= radius)
 					src.active = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
-					maxradius = check_max_radius
-					logTheThing(LOG_STATION, null, "[src] has been contained (at maxradius [maxradius]) at [log_loc(src)]")
-					message_admins("[src] has been contained (at maxradius [maxradius]) at [log_loc(src)]")
+					radius_max = check_max_radius
+					logTheThing(LOG_STATION, null, "[src] has been contained (at radius_max [radius_max]) at [log_loc(src)]")
+					message_admins("[src] has been contained (at radius_max [radius_max]) at [log_loc(src)]")
 
 	else
 		var/check_max_radius = singularity_containment_check(get_turf(src))
 		if(isnull(check_max_radius) || check_max_radius < radius)
 			src.active = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
-			maxradius = INFINITY
+			radius_max = INFINITY
 			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
@@ -366,7 +369,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			gain += 5000 //ten clowns
 			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
 			SPAWN(1 SECOND)
-				src.maxradius += 5
+				src.radius_max += 5
 				for (var/i in 1 to 5)
 					src.grow()
 					sleep(0.5 SECONDS)
@@ -422,8 +425,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	grav_pull = min((radius+1)*3, grav_pull)
 
 /obj/machinery/the_singularity/proc/grow()
-	if(radius<maxradius)
+	if(radius < radius_max)
 		radius++
+		radius_largest = max(radius_largest, radius)
 		SafeScaleAnim((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
 		grav_pull = max(grav_pull, radius)
 

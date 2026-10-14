@@ -264,7 +264,7 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/under/rank/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/head_of_security))
-					M.icon = initial(M.icon)
+					M.icon = get_initial_icon(M)
 					M.inhand_image_icon = initial(M.inhand_image_icon)
 					M.wear_image_icon = initial(M.wear_image_icon)
 					M.item_state = initial(M.item_state)
@@ -275,7 +275,7 @@
 					H.set_clothing_icon_dirty()
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
-					M.icon = initial(M.icon)
+					M.icon = get_initial_icon(M)
 					M.inhand_image_icon = initial(M.inhand_image_icon)
 					M.wear_image_icon = initial(M.wear_image_icon)
 					M.name = initial(M.name)
@@ -1091,6 +1091,17 @@
 		var/ribbon = new/obj/item/sticker/ribbon/participant(get_turf(activator))
 		activator.put_in_hand_or_drop(ribbon)
 		return 1
+
+/datum/achievementReward/xenoarcheology_hat
+	title = "(Item) Xenoarchaeologist Hat"
+	desc = "Receive a hat that shows your love of space relics."
+	required_medal = "Licensed Archaeologist"
+	once_per_round = TRUE
+
+	rewardActivate(var/mob/activator)
+		var/hat = new/obj/item/clothing/head/safari/artsci(get_turf(activator))
+		activator.put_in_hand_or_drop(hat)
+		return TRUE
 
 /datum/achievementReward/goldbud
 	title = "(Skin) Golden PR-4 Guardbuddy Frame"

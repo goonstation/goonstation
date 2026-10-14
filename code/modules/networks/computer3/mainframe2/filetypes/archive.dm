@@ -21,11 +21,7 @@
 	. = ..()
 
 /datum/computer/file/archive/copy_file()
-	var/datum/computer/file/archive/copy = new src.type()
-
-	for (var/variable_name as anything in src.vars)
-		if (issaved(src.vars[variable_name]))
-			copy.vars[variable_name] = src.vars[variable_name]
+	var/datum/computer/file/archive/copy = ..() // Handle the metadata.
 
 	copy.contained_files ||= list()
 	for (var/datum/computer/C as anything in src.contained_files)
@@ -34,12 +30,15 @@
 	return copy
 
 /datum/computer/file/archive/proc/add_file(datum/computer/C)
-	if (!C || ((src.uncompressed_size + C.size) > src.max_contained_size))
+	if (!C || ((src.uncompressed_size + C.get_archive_size()) > src.max_contained_size))
 		return FALSE
 
-	if (istype(C, /datum/computer/file/archive))
+	if (C == src) // An archive cannot contain itself
 		return FALSE
 
 	src.contained_files += C
-	src.uncompressed_size += C.size
+	src.uncompressed_size += C.get_archive_size()
 	return TRUE
+
+/datum/computer/file/archive/get_archive_size()
+	return src.uncompressed_size

@@ -136,3 +136,18 @@
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
+/datum/targetable/critter/frenzy/fermid
+	name = "Swarm"
+	desc = "Crawl all over your target and bite them bite them bite them!"
+	cooldown = 45 SECONDS
+	icon_state = "frenzy_fermid"
+	frenzy_low = 2
+	frenzy_high = 4
+	frenzy_damage = 3
+	knockdown_dur = 1.2 SECONDS
+	bleed_prob = 10
+	bleed_damage = 7
+	bleed_amount = 5
+	start_sound = 'sound/items/Scissor.ogg'
+	attack_sounds ='sound/items/Scissor.ogg'
+	attack_verbs = list("jabs", "prods", "pokes", "taps")

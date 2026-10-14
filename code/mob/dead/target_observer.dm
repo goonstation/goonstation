@@ -28,6 +28,8 @@ TYPEINFO(/mob/dead/target_observer)
 		//If our target is a mob we should also clean ourselves up and leave their observer list without a null in it.
 		var/mob/living/M = src.target
 		if(istype(M))
+			if (src in M.observers)
+				SEND_SIGNAL(M, COMSIG_MOB_OBSERVER_DETACHED, src)
 			LAZYLISTREMOVE(M.observers, src)
 			src.UnregisterSignal(M, list(COMSIG_TGUI_WINDOW_OPEN))
 
@@ -101,6 +103,8 @@ TYPEINFO(/mob/dead/target_observer)
 				for (var/datum/hud/hud in M.huds)
 					src.detach_hud(hud)
 
+				if (src in M.observers)
+					SEND_SIGNAL(M, COMSIG_MOB_OBSERVER_DETACHED, src)
 				LAZYLISTREMOVE(M.observers, src)
 
 		if(!target) //Uh oh, something went wrong here. Act natural and return the user to a regular ghost.
@@ -116,6 +120,7 @@ TYPEINFO(/mob/dead/target_observer)
 		var/mob/living/M = target
 		if (istype(M))
 			LAZYLISTADD(M.observers, src)
+			SEND_SIGNAL(M, COMSIG_MOB_OBSERVER_ATTACHED, src)
 			if(src.client)
 				M.updateOverlaysClient(src.client)
 			for (var/datum/hud/hud in M.huds)
