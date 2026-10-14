@@ -729,11 +729,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 							FLICK(src.icon_deny,src)
 							return
 						if (account["current_money"] < params["cost"])
+							if(usr.traitHolder?.hasTrait("wasitsomethingisaid"))
+								src.say(pick("BROKE ASS CREWMEMBER DETECTED.", "You are impoverished. Please step away from the vending zone.", \
+								"Your lack of funds has been noted. Would you like to file for bankruptcy?"))
 							boutput(usr, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
 							FLICK(src.icon_deny,src)
 							return
+
 					else
 						if (src.credit < params["cost"])
+							if(usr.traitHolder?.hasTrait("wasitsomethingisaid"))
+								src.say(pick("BROKE ASS CREWMEMBER DETECTED.", "You are impoverished. Please step away from the vending zone.", \
+								"Your lack of funds has been noted. Would you like to file for bankruptcy?"))
 							boutput(usr, SPAN_ALERT("Insufficient Credit."))
 							FLICK(src.icon_deny,src)
 							return
@@ -748,6 +755,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 						product = R
 				if(product_amount <= 0 || isnull(product))
 					return
+				if((usr.traitHolder?.hasTrait("wasitsomethingisaid") && prob(10)) || prob(5))
+					if(src.pay && src.acceptcard && account)
+						account["current_money"] -= product.product_cost
+						playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
+						src.say(pick("VENDING FAILED. YOUR ACCOUNT HAS BEEN CHARGED.", \
+						"Error: product failed to dispense. You have been charged [product.product_cost] credits.", \
+						"Vending malfunction detected. Contact your Head of Personnel."\))
+						FLICK(src.icon_deny,src)
+						return
 				src.vend_ready = 0
 				src.prevend_effect()
 				src.currently_vending = product
@@ -821,6 +837,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	if (src.seconds_electrified != 0)
 		if (src.shock(user, 100))
+			return
+
+	if(user.traitHolder?.hasTrait("wasitsomethingisaid") && prob(90))
+		if(src.can_fall && !src.fallen)
+			src.say(pick("Fuck you.", "Vend this, asshole.", "HIYAAARGH!"))
+			src.fall(user)
 			return
 
 	return ..()
