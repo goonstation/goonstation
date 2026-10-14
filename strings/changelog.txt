@@ -1,5 +1,8 @@
 
 (t)mon oct 12 26
+(u)ZeWaka
+(e)🪲|C-Bug, A-Player-Actions
+(+)Hand labelers no longer accept emoji.
 (u)Sovexe
 (p)28066
 (e)🪲⚙|C-Bug, A-Internal
