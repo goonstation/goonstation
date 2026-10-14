@@ -13382,7 +13382,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/firealarm/directional/west,
-/obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/vending/security,
 /turf/simulated/floor/minitiles/black,
 /area/station/security/hos)
 "dfW" = (
@@ -42636,7 +42636,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/vending/security,
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/minitiles/black,
 /area/station/security/hos)
 "jPq" = (
