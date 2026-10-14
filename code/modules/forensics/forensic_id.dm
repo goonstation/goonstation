@@ -60,7 +60,7 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 ///
 /// * forensic_proc (proc) [Required] - The proc to call to build the ID. Must return a string.
 /// * proc_arguments (list) [Required] - Proc arguments
-/proc/build_id_unique(forensic_proc, list/proc_arguments)
+/proc/build_id_unique(forensic_proc, list/proc_arguments, list/reg_list=global.registered_id_list)
 	if (!forensic_proc)
 		CRASH("Forensic proc to run not passed to build_id_unique")
 
@@ -70,7 +70,7 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 	while (iterations < 100)
 		iterations++
 		new_id = call(forensic_proc)(proc_arguments)
-		if (global.registered_id_list[new_id] && global.registered_id_list[new_id].id && global.registered_id_list[new_id].id == new_id)
+		if (reg_list[new_id])
 			continue
 		break
 
