@@ -21607,14 +21607,11 @@
 /turf/simulated/floor/longtile/black,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "eXB" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/decal/poster/wallsign/engine_sign{
 	dir = 4;
 	pixel_y = 27
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "eXD" = (
@@ -71639,12 +71636,9 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "qGd" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses/tanning,
 /obj/decal/poster/wallsign/iso/prohibited/food,
+/obj/stool/chair/pool,
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "qGk" = (
@@ -78463,15 +78457,12 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/crewquarters/reccenter)
 "shA" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses/tanning,
 /obj/landmark/start/job/assistant,
 /obj/decal/poster/wallsign/poster_hanginthere{
 	pixel_y = 28
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "shG" = (
@@ -102435,12 +102426,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "xLM" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses/tanning,
 /obj/landmark/start/job/assistant,
+/obj/stool/chair/pool,
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "xLT" = (
