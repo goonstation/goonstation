@@ -5,7 +5,6 @@
 	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement
-	ui_type = "AnnouncementComputer"
 	var/theme = "ntos"
 	var/announcement_delay = 1200
 	var/obj/item/card/id/ID = null
@@ -57,6 +56,12 @@
 			tgui_process.update_uis(src)
 			return
 		..()
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "AnnouncementComputer", src.name)
+			ui.open()
 
 	ui_data(mob/user)
 		. = list(

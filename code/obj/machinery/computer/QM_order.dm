@@ -5,7 +5,6 @@
 	var/obj/item/card/id/scan = null
 	var/console_location = null
 	circuit_type = /obj/item/circuitboard/qmorder
-	ui_type = "SupplyRequestConsole"
 
 	light_r =1
 	light_g = 0.7
@@ -27,6 +26,12 @@
 /obj/machinery/computer/ordercomp/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "qmreq1"
+
+/obj/machinery/computer/ordercomp/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SupplyRequestConsole", src.name)
+		ui.open()
 
 /obj/machinery/computer/ordercomp/ui_static_data(mob/user)
 	. = list()
