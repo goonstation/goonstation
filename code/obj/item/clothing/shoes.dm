@@ -949,8 +949,8 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 	name = "derby shoes"
 	icon_state = "derby"
 
-/obj/item/clothing/shoes/heeled_boots
-	name = "heeled boots"
-	icon_state = "heeled_boots"
+/obj/item/clothing/shoes/stiletto_boots
+	name = "stiletto boots"
+	icon_state = "stiletto_boots"
 	step_sound = "footstep"
 	step_priority = STEP_PRIORITY_LOW
