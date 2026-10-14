@@ -13,7 +13,7 @@
 	if (..())
 		return
 
-	if (!affected_mob.sims?.getValue("Thirst") && affected_mob.sims?.getValue("Thirst") != 0)
+	if (isnull(affected_mob.sims) || isnull(affected_mob.sims.getValue("Thirst")))
 		affected_mob.cure_disease(D) // if you don't have thirst you can't get dehydrated
 		return
 
@@ -38,3 +38,4 @@
 				affected_mob.visible_message(SPAN_ALERT(pick("[affected_mob] struggles to breathe!", "[affected_mob] gasps for air!")))
 			if (affected_mob.sims.getValue("Thirst") > 1.0)
 				D.stage = 1
+
