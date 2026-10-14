@@ -185,7 +185,13 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/cyberlung_right,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
+		/datum/manufacture/metal/bulk,
+		/datum/manufacture/metalR,
+		/datum/manufacture/metalR/bulk,
 		/datum/manufacture/glass,
+		/datum/manufacture/glass/bulk,
+		/datum/manufacture/glassR,
+		/datum/manufacture/glassR/bulk,
 		/datum/manufacture/asimov_laws,
 		/datum/manufacture/borg_linker)
 
