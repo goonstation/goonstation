@@ -745,7 +745,7 @@
 				src.tf_holder.age = clamp(round(text2num(new_age)), minage, maxage)
 
 		else if (href_list["blType"])
-			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list("AB+-", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Zesty Ranch")
 
 			if (blTypeNew)
 				src.tf_holder.bloodType = blTypeNew
