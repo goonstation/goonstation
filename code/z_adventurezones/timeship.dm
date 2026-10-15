@@ -25,6 +25,11 @@ Turfs and decal for the space rift
 	force_fullbright = 0
 	sound_loop = 'sound/ambience/industrial/Timeship_Tones.ogg'
 
+/area/timewarp/event_horizon
+	name = "Rift in Spacetime"
+	icon_state = "blue"
+	teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
+
 /area/timewarp/ship/New()
 	. = ..()
 	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
@@ -361,6 +366,41 @@ TYPEINFO(/obj/machinery/sleeper/future)
 	"*static*")
 
 		speakers = list("Female voice", "Male voice", "Female voice","Synthesized voice","Female voice","Female voice (distorted)","???","???","???","???","???")
+
+/obj/item/device/audio_log/timewarp_03
+	name = "Mysterious log"
+	desc = "Huh... How'd this get here?"
+	continuous = 0
+
+	New(newloc)
+		..()
+		audiolog_speakers += "Unknown"
+		src.audiolog_messages += "Hey uhhh. Hi there. Whoever you are... I uhhh... AH fuck it."
+		audiolog_speakers += "Dr. Lewis"
+		src.audiolog_messages += "My name is Dr. Lewis. I'm recording this in the year 20-"
+		audiolog_speakers += "*static*"
+		src.audiolog_messages += "ZZZZZZZZZZZZZZZZZZZZZZZ"
+		audiolog_speakers += "Dr. Lewis"
+		src.audiolog_messages += "Look. If you're listening to this. You and I are not from the same world. But I know something"
+		audiolog_speakers += "Dr. Lewis"
+		src.audiolog_messages += "Time travel. You need to listen to me. Do NOT-"
+		audiolog_speakers += "*static*"
+		src.audiolog_messages += "ZZZZZZZZZZZZZZZZZZZZZZZ"
+		audiolog_speakers += "Dr. Lewis"
+		src.audiolog_messages += "It's, it's... hard to explain. Uhhhh think of it like two parallel paths right? Same direction, but they normally never touch."
+		audiolog_speakers += "*static*"
+		src.audiolog_messages += "ZZZZZZZZZZZZZZZZZZZZZZZ"
+		audiolog_speakers += "Dr. Lewis"
+		src.audiolog_messages += "closest possible worlds. To our own. But it's not just possible worlds. There's uhhh... impossible... "
+		audiolog_speakers += "Dr. Lewis"
+		src.audiolog_messages += "TIME TRAVEL... say you kill. You kill your own grandfather. Before you're born. Your world becomes-"
+		audiolog_speakers += "*low static*"
+		src.audiolog_messages += "..."
+		audiolog_speakers += "Ominous voice"
+		src.audiolog_messages += "Expect.... us...."
+
+		src.audiolog_speakers.len = length(src.audiolog_messages)
+		return
 
 ////////////////////floating decals
 
