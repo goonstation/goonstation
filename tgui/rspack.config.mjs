@@ -31,7 +31,8 @@ const createStats = (verbose) => ({
   colors: true,
   entrypoints: false, // |GOONSTATION-CHANGE| secret interfaces
   hash: false,
-  logging: 'warn',
+  // Rspack's build-dependency resolver has no PnP support, so it warns on every bare import
+  logging: 'error',
   modules: false,
   performance: false,
   timings: verbose,
@@ -47,9 +48,8 @@ export default (env = {}, argv) => {
   const config = defineConfig({
     cache: {
       type: 'persistent',
-      cache: {
-        type: 'persistent',
-      },
+      // Package imports can't be tracked under PnP
+      buildDependencies: [path.resolve(__dirname, 'yarn.lock')],
       storage: {
         type: 'filesystem',
         directory: path.resolve(__dirname, '.yarn/rspack'),

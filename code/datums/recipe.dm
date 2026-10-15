@@ -205,7 +205,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			var/amount = src.ingredients[item_path]
 			var/list/item = list(
 				"name" = initial(item_path.name),
-				"icon" = initial(item_path.icon),
+				"icon" = get_initial_icon(item_path),
 				"icon_state" = initial(item_path.icon_state),
 				"amount" = amount
 			)
@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/datum/recipe)
 		var/amount = islist(src.output) ? src.output[mascot] : 1
 		var/list/item = list(
 		"name" = initial(mascot.name),
-		"icon" = initial(mascot.icon),
+		"icon" = get_initial_icon(mascot),
 		"icon_state" = initial(mascot.icon_state),
 		"amount" = amount
 		)

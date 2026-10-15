@@ -312,4 +312,4 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/bundled)
 
 	src.listeners_by_subchannel[registered.subchannel][registered.type] -= registered
 	if (!length(src.listeners_by_subchannel[registered.subchannel][registered.type]))
-		src.listeners[registered.subchannel] -= registered.type
+		src.listeners_by_subchannel[registered.subchannel] -= registered.type
