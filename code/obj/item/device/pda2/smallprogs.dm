@@ -1023,7 +1023,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			. = SECURITY::TICKET::LEVEL::FINE_SMALL
 		if(access_fine_large in ID.access)
 			. = SECURITY::TICKET::LEVEL::FINE_LARGE
-		// this is used primarily to prevent silicons from approving fines
 		if(!src.can_approve_fines)
 			. = min(SECURITY::TICKET::LEVEL::TICKET, .)
 
@@ -1232,6 +1231,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.master.updateSelfDialog()
 		return
 
+/datum/computer/file/pda_program/security_ticket/issue_only
+	name = "Ticket Lite"
+	can_approve_fines = FALSE
+
 //made global so fines can use it too, might also be useful for other stuff
 /proc/get_byond_key(var/name)
 	for(var/mob/M in mobs)
@@ -1239,10 +1242,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return M.key
 	return "N/A"
 
-// literally only here to prevent cyborgs from fining people
-/datum/computer/file/pda_program/security_ticket/issue_only
-	can_approve_fines = FALSE
-	name = "Ticket Lite"
 
 #define SPAM_DELAY 20
 //cargo request
