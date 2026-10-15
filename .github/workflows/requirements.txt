@@ -1,4 +1,0 @@
-pygithub
-pytz
-requests
-setuptools

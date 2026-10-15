@@ -1,3 +1,0 @@
-# Ignore config files, but not the samples
-*.txt
-!*.sample.txt

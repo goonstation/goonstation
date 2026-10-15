@@ -1,1 +1,0 @@
-This directory contains files that get copied onto the local filesystem of the server. As such, anything placed here is fair game for use in byond procs like file2text(). Please note that these files should NOT be compiled into the rsc (e.g. don't use single quotes to reference these files).

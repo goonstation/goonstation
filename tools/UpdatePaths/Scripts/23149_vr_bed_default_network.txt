@@ -1,1 +1,0 @@
-/obj/machinery/sim/vr_bed : /obj/machinery/sim/vr_bed{dir=@OLD}

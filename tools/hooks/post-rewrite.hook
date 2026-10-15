@@ -1,2 +1,0 @@
-#!/bin/sh
-exec tools/bootstrap/python -m hooks.tgui_hook post-rewrite "$@"

@@ -1,2 +1,0 @@
-/obj/item/barrier/security : /obj/item/barrier/collapsible/security{@OLD}
-

@@ -1,2 +1,0 @@
-/obj/submachine/chef_sink : /obj/machinery/sink{@OLD}
-/obj/submachine/chef_sink/chem_sink : /obj/machinery/sink/slim{@OLD}
