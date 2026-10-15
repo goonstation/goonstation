@@ -1735,7 +1735,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.get_devices()
 
 	on_deactivated(obj/item/device/pda2/pda)
-		qdel(get_radio_connection_by_id(pda, null))
+		qdel(get_radio_connection_by_id(pda, "power_control"))
 		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
 
 	return_text()

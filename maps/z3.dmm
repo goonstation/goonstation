@@ -2418,8 +2418,6 @@
 	},
 /area/bee_trader)
 "alp" = (
-/obj/table/wood/auto,
-/obj/item/paper/bombininote/postgame,
 /obj/indestructible/shuttle_corner{
 	dir = 6;
 	icon_state = "wall3_trans"
@@ -8941,7 +8939,7 @@
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat)
 "aRl" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
 "aRm" = (
@@ -15142,13 +15140,7 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
+/obj/pool/ladder,
 /obj/channel{
 	required_to_pass = 210
 	},
@@ -15870,6 +15862,7 @@
 "cUp" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chips,
+/obj/item/paper/bombininote/postgame,
 /turf/simulated/floor{
 	icon_state = "hive"
 	},
@@ -16288,8 +16281,6 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/timewarp/ship)
 "dYj" = (
-/obj/table/wood/auto,
-/obj/item/paper/postcard/owlery,
 /obj/indestructible/shuttle_corner{
 	dir = 9;
 	icon_state = "wall3_trans"
@@ -21391,6 +21382,9 @@
 "qfj" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small,
+/obj/item/paper/postcard/owlery{
+	pixel_y = 6
+	},
 /obj/item/reagent_containers/food/snacks/beefood,
 /turf/simulated/floor{
 	icon_state = "hive"
@@ -22613,7 +22607,6 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/diner/motel)
 "tbR" = (
-/obj/table/wood/auto,
 /obj/indestructible/shuttle_corner{
 	dir = 1;
 	icon_state = "wall3_trans"
@@ -23298,7 +23291,6 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/obj/table/wood/auto,
 /turf/simulated/floor{
 	icon_state = "hive"
 	},

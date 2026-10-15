@@ -97,11 +97,13 @@ TYPEINFO(/obj/machinery/plantpot)
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", PROC_REF(mechcompScanPlant))
 
-/obj/machinery/plantpot/get_desc(dist, mob/user)
+/obj/machinery/plantpot/examine(mob/user)
 	. = ..()
-	if (dist >= 5)
+	if (GET_DIST(src, user) >= 5)
 		return
-	HYPphytoscopic_scan(user, src)
+	var/scan = HYPphytoscopic_scan(user, src)
+	if (scan)
+		. += scan
 
 /obj/machinery/plantpot/proc/post_alert(var/list/alert_data)
 	if(src.status & (NOPOWER|BROKEN)) return

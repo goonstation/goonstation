@@ -21,7 +21,7 @@
 	icon_state = "pool_ladder"
 
 /obj/pool/perspective
-	name = "pool_edge"
+	name = "pool edge"
 	density = 1
 	anchored = ANCHORED
 	icon = 'icons/obj/poolballpit.dmi'

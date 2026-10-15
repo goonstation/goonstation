@@ -194,7 +194,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 /datum/plant/artifact/plasma
 	name = "Plasma"
 	override_icon_state = "Plasma"
-	crop = /obj/critter/spore
+	crop = /mob/living/critter/plasmaspore
 	unique_seed = /obj/item/seed/alien/plasma
 	starthealth = 20
 	growtime = 180

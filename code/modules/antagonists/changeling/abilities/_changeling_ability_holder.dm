@@ -18,11 +18,13 @@
 	New(var/mob/living/M)
 		..()
 		if (M)
-			src.current_ident = new /datum/absorbedIdentity(M)
-			absorbed_dna = list(
-				"[M.name]" = src.current_ident,
-				"Lesser Form" = new /datum/absorbedIdentity/monkey()
-			)
+			src.set_up_identities(M)
+
+	/// Stores the identity of the given mob as our current one, and adds lesser form
+	proc/set_up_identities(mob/living/M)
+		src.current_ident = new /datum/absorbedIdentity(M)
+		src.absorbed_dna["[M.name]"] = src.current_ident
+		src.absorbed_dna["Lesser Form"] = new /datum/absorbedIdentity/monkey()
 
 	onAttach(mob/to_whom)
 		. = ..()
@@ -293,8 +295,8 @@
 // ----------------------------------------
 
 /datum/targetable/changeling
-	icon = 'icons/mob/spell_buttons.dmi'
-	icon_state = "template" // No longer ToDo thanks to Sundance420.
+	icon = 'icons/ui/ability_icons/changeling.dmi'
+	icon_state = "changeling-template" // No longer ToDo thanks to Sundance420.
 	cooldown = 0
 	last_cast = 0
 	var/abomination_only = 0

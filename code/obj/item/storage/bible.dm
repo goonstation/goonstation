@@ -30,6 +30,12 @@
 		..()
 		STOP_TRACKING
 
+	pull(mob/user)
+		if (isghostcritter(user) || isghostdrone(user))
+			boutput(user, SPAN_ALERT("<b>[src] is too heavy for you to pull in your half-spectral state!</b>"))
+			return TRUE
+		return ..()
+
 	proc/do_heal_amt(mob/user) // also handles using faith
 		var/faith = get_chaplain_faith(user)
 		var/used_faith = min(faith * FAITH_HEAL_USE_FRACTION, FAITH_HEAL_CAP)
