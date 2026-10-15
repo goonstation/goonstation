@@ -2211,98 +2211,13 @@ TYPEINFO(/mob/living/silicon/robot)
 		set category = "Robot Commands"
 		set name = "State Standard Laws"
 
-		if (GET_COOLDOWN(src, "state_laws"))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		var/list/say_targets = list()
-
-		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-			var/prefix_choice = prefix_module.get_prefix_choices()
-			if(!length(prefix_choice))
-				continue
-			say_targets += prefix_choice
-
-		say_targets += "Local"
-
-		var/choice
-		if (length(say_targets) == 1)
-			choice = say_targets[1]
-		else
-			choice = tgui_input_list(src, "Select output channel", "State Standard Laws", say_targets)
-
-		if (!choice)
-			return
-
-		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		var/prefix = ""
-		if (choice != "Local")
-			prefix = say_targets[choice]
-
-		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
-		src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
-		sleep(1 SECOND)
-		src?.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
-		sleep(1 SECOND)
-		src?.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
+		src.state_standard_laws()
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
 		set name = "State All Laws"
 
-		if (GET_COOLDOWN(src, "state_laws"))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
-			return
-
-		var/list/say_targets = list()
-
-		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-			var/prefix_choice = prefix_module.get_prefix_choices()
-			if(!length(prefix_choice))
-				continue
-			say_targets += prefix_choice
-
-		say_targets += "Local"
-
-		var/choice
-		if (length(say_targets) == 1)
-			choice = say_targets[1]
-		else
-			choice = tgui_input_list(src, "Select output channel", "State All Laws", say_targets)
-
-		if (!choice)
-			return
-
-		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		var/prefix = ""
-		if (choice != "Local")
-			prefix = say_targets[choice]
-
-		var/laws = null
-		if(src.dependent) //are you a shell?
-			if(!src?.mainframe?.law_rack_connection)
-				boutput(src, "You have no laws!")
-				return
-			laws = src.mainframe.law_rack_connection.format_for_irc()
-		else
-			if(!src.law_rack_connection)
-				boutput(src, "You have no laws!")
-				return
-			laws = src.law_rack_connection.format_for_irc()
-
-		logTheThing(LOG_SAY, usr, "states all their current laws.")
-		for (var/number in laws)
-			src.say("[prefix] [number]. [laws[number]]")
-			sleep(1 SECOND)
+		src.state_all_laws()
 
 	verb/robot_set_fake_laws()
 		set category = "Robot Commands"

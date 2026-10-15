@@ -44,19 +44,32 @@
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)
 
-	give_equipment()
-		if (!ishuman(src.owner.current))
-			return FALSE
-
+	/// Gives the gang leader's ability holder and abilities to their current mob. The base-setting ability depends on whether the gang already has a locker.
+	proc/grant_abilities()
 		var/datum/abilityHolder/gang/A = src.owner.current.get_ability_holder(/datum/abilityHolder/gang)
 		if (!A)
 			src.ability_holder = src.owner.current.add_ability_holder(/datum/abilityHolder/gang)
 		else
 			src.ability_holder = A
 
-		src.ability_holder.addAbility(/datum/targetable/gang/set_gang_base)
+		if (src.gang.locker)
+			src.ability_holder.removeAbility(/datum/targetable/gang/set_gang_base)
+			src.ability_holder.addAbility(/datum/targetable/gang/set_gang_base/migrate)
+		else
+			src.ability_holder.addAbility(/datum/targetable/gang/set_gang_base)
 		src.ability_holder.addAbility(/datum/targetable/gang/toggle_overlay)
 		src.ability_holder.addAbility(/datum/targetable/gang/locker_spot)
+
+	mind_attach(source, mob/new_mob, mob/old_mob)
+		. = ..()
+		if (ishuman(new_mob))
+			src.grant_abilities()
+
+	give_equipment()
+		if (!ishuman(src.owner.current))
+			return FALSE
+
+		src.grant_abilities()
 
 		var/mob/living/carbon/human/H = src.owner.current
 		// If possible, get the gang leader's headset.

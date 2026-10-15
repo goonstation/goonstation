@@ -1,10 +1,37 @@
-var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
-var/regex/emoji_regex = regex(@{"([^\u0020-\u8000]+)"})
+// markup chars, removed from names only
+#define NAME_PUNCTUATION @{"[_<>;\[\]{}|\\/]+|"}
+// quotes break out of single/double-quoted HTML attributes, as names are often put unescaped into browse windows
+// TODO: allow them by mapping ' and " to ’ and ” here, in choose_name()'s strip_html()
+// TODO: the problem is then we need to replace them everywhere where they would be searched for like sec records
+#define NAME_QUOTES @{"['"]+|"}
+// 1: control chars, anything above \u8000 (emoji, cuneiform, etc), plus invisible and text-direction chars
+#define NAME_REMOVED @{"[^\u0020-\u8000]+|[\u00AD\u115F\u1160\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u3164]+)"}
+// 2: odd or repeated spaces to turn into one normal space (PRECIS nickname profile, RFC 8266)
+// 3: stacked combining marks (diacritics, Cyrillic, Thai). Trimmed to keep accents but stop zalgo
+#define NAME_SPACES_AND_MARKS @{"|([ \u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]{2,}|[\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000])|([\u0300-\u036F\u0483-\u0489\u0E31\u0E34-\u0E3A\u0E47-\u0E4E\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF]{2,})"}
+var/regex/name_cleanup_regex = regex("(" + NAME_PUNCTUATION + NAME_QUOTES + NAME_REMOVED + NAME_SPACES_AND_MARKS, "g")
+var/regex/text_cleanup_regex = regex("(" + NAME_QUOTES + NAME_REMOVED + NAME_SPACES_AND_MARKS, "g")
+#undef NAME_QUOTES
+#undef NAME_PUNCTUATION
+#undef NAME_REMOVED
+#undef NAME_SPACES_AND_MARKS
 
-proc/remove_bad_name_characters(string)
-	for (var/char in bad_name_characters)
-		string = replacetext(string, char, "")
-	return emoji_regex.Replace_char(string, "")
+/// Enforces what a player name may contain
+/// Too aggressive for general text, see `strip_illegal_characters()` for that
+/// `keep_punctuation` keeps ASCII punctuation, for text that ends up in names (e.g. labels)
+proc/remove_bad_name_characters(string, keep_punctuation = FALSE)
+	var/regex/cleanup = keep_punctuation ? text_cleanup_regex : name_cleanup_regex
+	return cleanup.Replace(string, /proc/clean_name_match)
+
+/proc/clean_name_match(match, removed, spaces, marks)
+	if (removed)
+		return ""
+	if (spaces)
+		return " "
+	// at most two marks per letter, and never the same mark twice (UTS #39)
+	var/first = copytext_char(marks, 1, 2)
+	var/second = copytext_char(marks, 2, 3)
+	return first == second ? first : first + second
 
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
@@ -476,9 +503,7 @@ var/list/removed_jobs = list(
 			if ("update-profileName")
 				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
 
-				for (var/c in bad_name_characters)
-					new_profile_name = replacetext(new_profile_name, c, "")
-
+				new_profile_name = remove_bad_name_characters(new_profile_name)
 				new_profile_name = trimtext(new_profile_name)
 
 				if (new_profile_name)
@@ -1358,7 +1383,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
+			if (jobban_isbanned(user, J.name, J) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1373,7 +1398,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
+			if (jobban_isbanned(user, J.name, J) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1400,7 +1425,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
+			if (jobban_isbanned(user, J.name, J) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1499,7 +1524,7 @@ var/list/removed_jobs = list(
 
 				// If the user cannot play as this job.
 				var/reason_tooltip = null
-				if (global.jobban_isbanned(user, job_datum.name))
+				if (global.jobban_isbanned(user, job_datum.name, job_datum))
 					reason_tooltip = "You have been banned from playing this job."
 				else if (job_datum.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					reason_tooltip = "This job requires the <i>\"Unlike the director, I went to college\"</i> medal, which you do not possess."
