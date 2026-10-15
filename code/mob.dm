@@ -143,7 +143,7 @@ TYPEINFO(/mob)
 	var/deathhunted = null
 
 	var/job = null
-
+	
 	/// For assigning mobs various factions, see factions.dm for definitions
 	var/faction = list()
 
@@ -456,10 +456,6 @@ TYPEINFO(/mob)
 		return
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
-	if(isclient(src.client) && isnull(src.client?.tg_layout))
-		var/tg_layout_enabled = winget(src.client, "menu.tg_layout", "is-checked") == "true"
-		// winget sleeps :{
-		src.client?.tg_layout = tg_layout_enabled
 	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
@@ -878,10 +874,28 @@ TYPEINFO(/mob)
 /mob/proc/apply_camera(client/C)
 	if (!C)
 		stack_trace("mob/apply_camera called without a client for mob [identify_object(src)], something likely went wrong during mind transfer.")
+	if (!src.eye && istype(src.loc, /obj/projectile) && C.eye == src.loc && !isnull(C.passenger_camera_glide_size) && \
+		C.passenger_camera_loc_pixel_x == src.loc_pixel_x && C.passenger_camera_loc_pixel_y == src.loc_pixel_y)
+		return
+	for (var/animation_index in 1 to C.passenger_camera_animation_count)
+		animate(C, flags = ANIMATION_END_NOW, tag = "passenger_camera_[animation_index]")
+	C.passenger_camera_animation_count = 0
+	if (!isnull(C.passenger_camera_glide_size))
+		C.glide_size = C.passenger_camera_glide_size
+		C.passenger_camera_glide_size = null
 	if (src.eye)
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
 		C.pixel_y = src.eye_pixel_y
+	else if (istype(src.loc, /obj/projectile))
+		var/obj/projectile/P = src.loc
+		C.passenger_camera_glide_size = C.glide_size
+		C.passenger_camera_loc_pixel_x = src.loc_pixel_x
+		C.passenger_camera_loc_pixel_y = src.loc_pixel_y
+		C.glide_size = ceil(vector_magnitude(world.maxx, world.maxy) * world.icon_size * max(C.fps / world.fps, 1))
+		C.eye = P
+		C.pixel_x = round(src.loc_pixel_x + P.next_wx, 1)
+		C.pixel_y = round(src.loc_pixel_y + P.next_wy, 1)
 	else
 		C.eye = src
 		C.pixel_x = src.loc_pixel_x

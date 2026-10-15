@@ -1150,7 +1150,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 			src.time--
 			post_display_status(src.time)
 			if(src.time <= 0)
-				outpost_destroyed = 1
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
