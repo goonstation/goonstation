@@ -63387,6 +63387,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/phone,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/reception)
 "tHX" = (

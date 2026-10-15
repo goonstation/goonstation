@@ -362,8 +362,10 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	. = html_encode(t)
 
 ///Strip out weird illegal characters that TGUI discards anyway, see `\improper` and other Byond lunacy
+///Building for UI-display-only. Names use `remove_bad_name_characters()`
 /proc/strip_illegal_characters(text)
-	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
+	// keeps everything printable, including emoji
+	var/static/regex/whitelistedWords = regex("\[^ -[ascii2text(0xFFFC)][ascii2text(0x10000)]-[ascii2text(0x10FFFF)]\]+")
 	return whitelistedWords.Replace("[text]", "")
 
 ///Cleans up data passed in from network packets for display so it doesn't mess with formatting

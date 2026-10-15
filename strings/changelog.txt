@@ -1,4 +1,17 @@
 
+(t)thu oct 15 26
+(u)JORJ949
+(p)28060
+(e)🪲🧛🔨|C-Bug, A-Gamemodes, A-Player-Actions
+(+)Phaseshifting (from either wizard spell or gene) will no longer let you pass through walls and doors in the listening post.
+(t)mon oct 12 26
+(u)ZeWaka
+(e)🪲|C-Bug, A-Player-Actions
+(+)Hand labelers no longer accept emoji.
+(u)Sovexe
+(p)28066
+(e)🪲⚙|C-Bug, A-Internal
+(+)Smoothed passenger camera movement for mechanics telepads, bubble guns, and other projectile based vehicles
 (t)sun oct 11 26
 (u)ANNmagedon
 (p)28051
