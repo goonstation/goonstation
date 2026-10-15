@@ -191,7 +191,7 @@
 						M.visible_message(SPAN_NOTICE("<b>[M]</b> loops the nametag around [src]'s neck")
 											,SPAN_NOTICE("You loop the nametag around [src]'s neck"))
 						M.u_equip(I)
-						I.set_loc(owner)
+						I.set_loc(src)
 						qdel(I)
 					else
 						boutput(M, SPAN_NOTICE("They've already been named!"))
