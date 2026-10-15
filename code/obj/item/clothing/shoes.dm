@@ -953,6 +953,17 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 /obj/item/clothing/shoes/stiletto_boots
 	name = "stiletto boots"
 	desc = "Not to be wielded like the daggers which their name comes from."
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "stiletto_boots"
 	step_sound = "footstep"
 	step_priority = STEP_PRIORITY_LOW
+
+	force = 3
+	throwforce = 7
+	throw_speed = 2
+	throw_range = 4
+	stamina_damage = 10
+	stamina_cost = 15
+	stamina_crit_chance = 30
+	hit_type = DAMAGE_STAB
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
