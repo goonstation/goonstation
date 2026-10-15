@@ -699,7 +699,6 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 				C.hyperaggressive = TRUE
 				C.xp = 10001
 				C.ai.interrupt()
-				spawned_chickens += C
 				loaded_eggs -= E
 				qdel(E)
 		qdel(src)
