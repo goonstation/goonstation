@@ -145,7 +145,7 @@ var/global/list/mapNames = list(
 	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
 	var/shuttle_map_turf = /turf/space //! Turf used to replace miscellaneous shuttles i.e. research outpost transit, space diner taxi, john's bus
-	var/emergency_station_map_turf = /turf/space //! Turf used to replace the emergency shuttle turfs, needed for maps with indoor landing bays
+	var/escape_station_floor_turf = null //! Set to a type path and the shuttle will leave that type behind instead of default (i.e. space/ocean)
 	var/space_turf_replacement = null
 
 	var/has_hotspots = FALSE
@@ -471,7 +471,7 @@ var/global/list/mapNames = list(
 
 	escape_dir = NORTH
 	default_shuttle = "donut3"
-	emergency_station_map_turf = /turf/simulated/floor/plating/jen
+	escape_station_floor_turf = /turf/simulated/floor/plating/jen
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
