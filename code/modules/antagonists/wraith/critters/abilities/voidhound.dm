@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/targetable/critter/voidhound)
 /datum/targetable/critter/voidhound
 	border_icon = 'icons/mob/wraith_ui.dmi'
 	border_icon_state = "harbinger_frame"

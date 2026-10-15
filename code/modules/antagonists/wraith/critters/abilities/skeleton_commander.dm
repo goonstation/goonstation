@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/targetable/critter/skeleton_commander)
 /datum/targetable/critter/skeleton_commander
 	border_icon = 'icons/mob/wraith_ui.dmi'
 	border_icon_state = "harbinger_frame"
