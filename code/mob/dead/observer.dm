@@ -110,7 +110,7 @@ TYPEINFO(/mob/dead/observer)
 	var/datum/trait/trait
 	for (var/trait_id in P.traitPreferences.traits_selected)
 		trait = getTraitById(trait_id)
-		if (trait.mutantRace && src.icon == initial(src.icon))
+		if (trait.mutantRace && src.icon == get_initial_icon(src))
 			src.icon_state = trait.mutantRace.ghost_icon_state
 			is_mutantrace = TRUE
 			break

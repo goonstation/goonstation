@@ -40,6 +40,10 @@
 			M.visible_message(SPAN_ALERT("What was that? There's something odd about [M]'s eyes."))
 			return 1
 
+		if (!src.can_see_vampire(M, target))
+			boutput(M, SPAN_ALERT("[target] can't see your eyes from there."))
+			return 1
+
 		. = ..()
 		M.visible_message(SPAN_ALERT("<B>[M] stares into [target]'s eyes!</B>"))
 		boutput(M, SPAN_ALERT("You have to stand still..."))
@@ -51,6 +55,10 @@
 
 		logTheThing(LOG_COMBAT, M, "uses hypnotise on [target ? "[constructTarget(target,"combat")]" : "*UNKNOWN*"] at [log_loc(M)].") // Target might have been gibbed, who knows.
 		return 1
+
+	/// The target has to be able to see the vampire, the vampire seeing them (e.g. with thermals) isn't enough
+	proc/can_see_vampire(mob/M, mob/target)
+		return target in viewers(src.max_range, M)
 
 
 /datum/action/bar/icon/vamp_hypno
@@ -75,14 +83,14 @@
 
 	onUpdate()
 		..()
-		if(hypno == null || GET_DIST(M, target) > hypno.max_range || M == null || target == null)
+		if(hypno == null || M == null || target == null || GET_DIST(M, target) > hypno.max_range || !hypno.can_see_vampire(M, target))
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(M, SPAN_ALERT("Your attempt to hypnotize the target was interrupted!"))
 			return
 
 	onStart()
 		..()
-		if(hypno == null || GET_DIST(M, target) > hypno.max_range || M == null || target == null)
+		if(hypno == null || M == null || target == null || GET_DIST(M, target) > hypno.max_range || !hypno.can_see_vampire(M, target))
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(M, SPAN_ALERT("Your attempt to hypnotize the target was interrupted!"))
 			return

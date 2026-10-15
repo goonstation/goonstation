@@ -1,3 +1,8 @@
+ABSTRACT_TYPE(/datum/targetable/critter/skeleton_commander)
+/datum/targetable/critter/skeleton_commander
+	border_icon = 'icons/mob/wraith_ui.dmi'
+	border_icon_state = "harbinger_frame"
+
 /datum/targetable/critter/skeleton_commander/rally
 	name = "rally"
 	desc = "Buff all surrounding critters to help you fight."
@@ -5,8 +10,6 @@
 	cooldown = 60 SECONDS
 	targeted = 0
 	//List of critters we can buff, same as the one the wraith portal has.
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "harbinger_frame"
 	var/list/critter_list = list(/mob/living/critter/shade,
 	/mob/living/critter/crunched,
 	/obj/critter/ancient_thing,
@@ -33,11 +36,6 @@
 			if (istypes(C, critter_list))
 				C.setStatus("skeleton_rallied", 25 SECONDS)
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/critter/skeleton_commander/summon_lesser_skeleton
 	name = "summon lesser skeleton"
 	desc = "Materialize a skeleton from the void to help you."
@@ -46,8 +44,6 @@
 	cooldown = 30 SECONDS
 	targeted = 1
 	target_anything = 1
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "harbinger_frame"
 
 	cast(atom/target)
 		if (..())
@@ -67,8 +63,3 @@
 		else
 			boutput(holder.owner, "We cannot summon a skeleton here")
 			return 1
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")

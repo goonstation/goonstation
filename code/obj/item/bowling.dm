@@ -103,13 +103,13 @@
 		if(!ismob(target))
 			throw_unlimited = 1
 		..()
-		src.icon = initial(src.icon)
+		src.icon = get_initial_icon(src)
 		src.icon_state = "armadillo_spin"
 
 	attack_hand(mob/user)
 		..()
 		if(user)
-			src.icon = initial(src.icon)
+			src.icon = get_initial_icon(src)
 			src.icon_state = "armadillo_ball"
 
 	relaymove(mob/user as mob)

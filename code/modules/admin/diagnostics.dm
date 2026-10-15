@@ -312,7 +312,7 @@ proc/debug_map_apc_count(delim,zlim)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/area/area = theTurf.loc
 			img.app.desc = "Area: [area.name]<br/>Type: [area.type]"
-			img.app.icon = initial(theTurf.loc.icon)
+			img.app.icon = get_initial_icon(theTurf.loc)
 			img.app.icon_state = initial(theTurf.loc.icon_state)
 
 	active_areas
@@ -1667,7 +1667,7 @@ proc/debug_map_apc_count(delim,zlim)
 	appearance_flags = RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
 
 	proc/reset()
-		src.icon = initial(src.icon)
+		src.icon = get_initial_icon(src)
 		src.color = initial(src.color)
 		src.override = initial(src.override)
 		src.desc = initial(src.desc)

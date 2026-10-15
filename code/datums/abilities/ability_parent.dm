@@ -632,8 +632,8 @@
 			if(owner)
 				T.color = owner.cd_text_color
 				S.color = owner.cd_text_color
-				if(src.owner.border_icon_state)
-					src.UpdateOverlays(image(src.icon, src.owner.border_icon_state), "ability_border")
+				if(src.owner.border_icon && src.owner.border_icon_state)
+					src.UpdateOverlays(image(src.owner.border_icon, src.owner.border_icon_state), "ability_border")
 
 	disposing()
 		qdel(point_overlay)
@@ -900,7 +900,10 @@
 	var/icon = 'icons/mob/spell_buttons.dmi'
 	var/icon_state = "blob-template"
 
-	var/border_icon_state = null // Border icon is separate and overlayed over the button (to avoid having to copy the border to all new abilities)
+	// Below determine if a separate "border" sprite should be overlayed on the ability
+	var/border_icon = null  /// Icon for a border to overlay over the ability separately
+	var/border_icon_state = null /// Icon state for the border to overlay over the ability icon.
+
 	var/animated_border_state = null // Border is animated while hovered over
 
 	var/theme = null // for wire's tooltips, it's about time this got varized
@@ -916,6 +919,8 @@
 		SHOULD_CALL_PARENT(FALSE) // I hate this but refactoring /datum/targetable is a big project I'll do some other time
 		..()
 		src.holder = holder
+		if (istext(src.icon))
+			src.icon = file(src.icon)
 		if (src.icon && src.icon_state)
 			var/atom/movable/screen/ability/topBar/button = new /atom/movable/screen/ability/topBar()
 			button.icon = src.icon

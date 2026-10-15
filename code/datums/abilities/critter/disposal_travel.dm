@@ -8,13 +8,13 @@
 	var/view_range = 3
 	var/list/pipe_images = null
 	var/obj/dummy/disposalmover/D = null
-	var/border_icon = 'icons/mob/critter_ui.dmi'
-	var/border_state = "template_red"
+	border_icon = 'icons/mob/critter_ui.dmi'
+	border_icon_state = "template_red"
 
 	onAttach(datum/abilityHolder/holder)
 		. = ..()
 		var/obj/disposalpipe/ctype = /obj/disposalpipe
-		var/cicon = initial(ctype.icon)
+		var/cicon = get_initial_icon(ctype)
 
 		pipe_images = new/list(((view_range*2+1)**2)*2)
 		for(var/i in 1 to length(pipe_images))
@@ -22,9 +22,6 @@
 			cimg.layer = HUD_LAYER_UNDER_3
 			cimg.plane = PLANE_OVERLAY_EFFECTS
 			pipe_images[i] = cimg
-
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
 	cast(atom/target)
 		. = ..()
@@ -146,15 +143,15 @@
 		holder.owner.client.images += pipe_images
 
 /datum/targetable/vent_move/green
-	border_state = "template_tr"
+	border_icon_state = "template_tr"
 
 /datum/targetable/vent_move/changeling
 	border_icon = 'icons/ui/ability_icons/changeling.dmi'
-	border_state = "changeling-border"
+	border_icon_state = "changeling-template"
 
 /datum/targetable/vent_move/plaguerat
 	border_icon = 'icons/mob/wraith_ui.dmi'
-	border_state = "plague_frame"
+	border_icon_state = "plague_frame"
 
 /obj/dummy/disposalmover
 	icon = null
