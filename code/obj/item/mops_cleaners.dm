@@ -371,15 +371,13 @@ TRASH BAG
 /obj/item/broom/attack(mob/target, mob/user, def_zone, is_special, params)
 	if(user.a_intent == INTENT_HELP)
 		return
-	return ..()
+	. = ..()
 
 /obj/item/broom/afterattack(atom/target, mob/user, reach, params)
 	if(user.a_intent != INTENT_HELP || BOUNDS_DIST(user, target))
 		return ..()
 
 	src.push(user, target)
-
-	return
 
 /obj/item/broom/should_suppress_attack(object, mob/user, params)
 	if(user.a_intent == INTENT_HELP)
@@ -390,7 +388,7 @@ TRASH BAG
 
 /// Attempts to push all the items at the loc of the target "foward" (based on user dir).
 /obj/item/broom/proc/push(mob/user, atom/target)
-	var/turf/target_location = isturf(target) ? target : target.loc
+	var/turf/target_location = get_turf(target)
 	var/turf/pushed_to = get_step(target_location, user.dir)
 
 	// can't push through walls (duh)
@@ -422,7 +420,7 @@ TRASH BAG
 
 	var/pushed_item_count = 0
 
-	for(var/obj/item/I in items_to_push)
+	for(var/obj/item/I as anything in items_to_push)
 		if(pushed_item_count > MAX_CAN_PUSH)
 			break
 		if(pushed_item_count > 0 && pushed_item_count % PUSH_BATCH_SIZE == 0) // every 15th iterations ignoring first.
