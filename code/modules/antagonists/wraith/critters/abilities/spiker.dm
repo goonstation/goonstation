@@ -1,3 +1,7 @@
+/datum/targetable/critter/spiker
+	border_icon = 'icons/mob/wraith_ui.dmi'
+	border_icon_state = "harbinger_frame"
+
 /datum/targetable/critter/spiker/hook	//Projectile is referenced in spiker.dm
 	name = "Tentacle hook"
 	desc = "Launch a tentacle at your target and drag it to you"
@@ -5,8 +9,6 @@
 	cooldown = 30 SECONDS
 	targeted = 1
 	target_anything = 1
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "harbinger_frame"
 
 	cast(atom/target)
 		if (..())
@@ -29,11 +31,6 @@
 		proj.launch()
 		holder.owner.setStatus("slowed", 2 SECONDS)
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 // Spiker frenzy moved to frenzy.dm
 
 /datum/targetable/critter/spiker/shuffle
@@ -42,8 +39,6 @@
 	cooldown = 50 SECONDS
 	targeted = FALSE
 	icon_state = "shuffle"
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "harbinger_frame"
 
 	cast(atom/target)
 
@@ -78,9 +73,3 @@
 
 	incapacitationCheck()
 		return FALSE
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-

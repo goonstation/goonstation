@@ -1,11 +1,13 @@
+/datum/targetable/critter/nascent
+	border_icon = 'icons/mob/wraith_ui.dmi'
+	border_icon_state = "harbinger_frame"
+
 /datum/targetable/critter/nascent/become_commander
 	name = "Become commander"
 	desc = "Become a halberd-wielding skeleton and summon more bone rattlers."
 	icon_state = "choose_skeleton"
 	cooldown = 0
 	targeted = 0
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "harbinger_frame"
 
 	cast()
 		if (..())
@@ -21,20 +23,12 @@
 		animate_buff_in(S)
 		qdel(N)
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/critter/nascent/become_voidhound
 	name = "Become voidhound"
 	desc = "Become a stealthy void hound and prey on people from the shadows."
 	icon_state = "choose_hound"
 	cooldown = 0
 	targeted = 0
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "harbinger_frame"
 
 	cast()
 		if (..())
@@ -52,20 +46,12 @@
 		animate_buff_in(S)
 		qdel(N)
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/critter/nascent/become_spiker
 	name = "Become ranged"
 	desc = "Become a long range battler able to hold victims down for your friends."
 	icon_state = "choose_spiker"
 	cooldown = 0
 	targeted = 0
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "harbinger_frame"
 
 	cast()
 		if (..())
@@ -82,9 +68,3 @@
 		holder.owner.unequip_all()
 		animate_buff_in(S)
 		qdel(N)
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
