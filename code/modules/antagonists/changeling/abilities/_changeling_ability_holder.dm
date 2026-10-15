@@ -297,8 +297,9 @@
 /datum/targetable/changeling
 	icon = 'icons/ui/ability_icons/changeling.dmi'
 	icon_state = "horror"
+	border_icon = 'icons/ui/ability_icons/changeling.dmi'
 	border_icon_state = "changeling-border"
-	animated_border_state = "changeling-border-animated"
+	hovered_border_icon_state = "changeling-border-animated"
 	cooldown = 0
 	last_cast = 0
 	var/abomination_only = 0
