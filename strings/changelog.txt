@@ -1,4 +1,9 @@
 
+(t)thu oct 15 26
+(u)JORJ949
+(p)28060
+(e)🪲🧛🔨|C-Bug, A-Gamemodes, A-Player-Actions
+(+)Phaseshifting (from either wizard spell or gene) will no longer let you pass through walls and doors in the listening post.
 (t)mon oct 12 26
 (u)ZeWaka
 (e)🪲|C-Bug, A-Player-Actions
