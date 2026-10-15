@@ -95,20 +95,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 
 //////////////////////////////////////////////// Objective-specific items //////////////////////////////////////////////
 
-/datum/syndicate_buylist/traitor/idtracker
-	name = "Target ID Tracker"
-	items = list(/obj/item/pinpointer/idtracker)
-	cost = 1
-	desc = "Allows you to track the IDs of your assassination targets, but only the ID. If they have changed or destroyed it, the pin pointer will not be useful."
-	not_in_crates = TRUE
-	vr_allowed = FALSE
-	objective = /datum/objective/regular/assassinate
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_HEAD_REV
-
-	run_on_spawn(var/obj/item/pinpointer/idtracker/tracker, var/mob/living/owner, in_surplus_crate)
-		tracker.owner = owner
-		..()
-
 /datum/syndicate_buylist/traitor/idtracker/spy
 	name = "Target ID Tracker (SPY)"
 	items = list(/obj/item/pinpointer/idtracker/spy)
@@ -119,7 +105,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	objective = /datum/objective/spy_theft/assasinate
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY
 
-	run_on_spawn(var/obj/item/pinpointer/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
+	run_on_spawn(var/obj/item/pinpointer/idtracker/spy/tracker,var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
 		..()
 

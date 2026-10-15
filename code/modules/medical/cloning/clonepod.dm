@@ -242,6 +242,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		// Create a new human and grow it while we wait for a mind
 		src.occupant = new /mob/living/carbon/human/clone(src)
+		src.meat_used = 0
 		src.UpdateIcon()
 
 		//Get the clone body ready. They start out with a bunch of damage right off.

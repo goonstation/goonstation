@@ -1150,7 +1150,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 			src.time--
 			post_display_status(src.time)
 			if(src.time <= 0)
-				outpost_destroyed = 1
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
@@ -1799,6 +1798,14 @@ TYPEINFO(/obj/machinery/networked/printer)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
+			return
+
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/jam/paperjam)) //Jam the printer with jam!
+			src.jam()
+			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
+			user.visible_message(SPAN_NOTICE("[user] jams the printer with the jam."), SPAN_NOTICE("You jam the printer with the jam."))
+			src.updateUsrDialog()
+			qdel(W)
 			return
 
 		else
