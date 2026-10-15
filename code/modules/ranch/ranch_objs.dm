@@ -670,8 +670,6 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 	var/max_eggs = 5
 	/// distance to spawn chickens in from center
 	var/spawn_radius = 2
-	/// list of already spawned chickens, for friendlyness handling
-	var/list/spawned_chickens = list()
 	HELP_MESSAGE_OVERRIDE({"Use a <b>wrench</b> on the grenade to empty its egg storage."})
 
 	get_desc()
