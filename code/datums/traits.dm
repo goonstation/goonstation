@@ -204,6 +204,18 @@
 				T.onRemove(owner)
 		traits.Cut()
 
+	proc/removeAllButMutant()
+		for (var/id in traits)
+			var/datum/trait/T = traits[id]
+			if(!isnull(T.mutantRace))
+				continue
+
+			if(!isnull(owner))
+				if(T.isMoveTrait)
+					moveTraits.Remove(T.id)
+				T.onRemove(owner)
+				traits -= id
+
 	proc/getTrait(id)
 		RETURN_TYPE(/datum/trait)
 		return traits[id]
