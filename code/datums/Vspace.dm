@@ -230,13 +230,13 @@ datum/v_space
 		character.pin = user.pin
 		character.bioHolder.bloodType = user.bioHolder.bloodType
 		character.bioHolder.mobAppearance.e_color = user.bioHolder.mobAppearance.e_color
-		character.bioHolder.mobAppearance.customizations["hair_bottom"].color = user.bioHolder.mobAppearance.customizations["hair_bottom"].color
-		character.bioHolder.mobAppearance.customizations["hair_middle"].color = user.bioHolder.mobAppearance.customizations["hair_middle"].color
-		character.bioHolder.mobAppearance.customizations["hair_top"].color = user.bioHolder.mobAppearance.customizations["hair_top"].color
+		character.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = user.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+		character.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = user.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+		character.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = user.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 		character.bioHolder.mobAppearance.s_tone = user.bioHolder.mobAppearance.s_tone
-		character.bioHolder.mobAppearance.customizations["hair_bottom"].style =  user.bioHolder.mobAppearance.customizations["hair_bottom"].style
-		character.bioHolder.mobAppearance.customizations["hair_middle"].style =  user.bioHolder.mobAppearance.customizations["hair_middle"].style
-		character.bioHolder.mobAppearance.customizations["hair_top"].style =  user.bioHolder.mobAppearance.customizations["hair_top"].style
+		character.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style =  user.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style
+		character.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  user.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style
+		character.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style =  user.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style
 
 		character.bioHolder.mobAppearance.underwear = user.bioHolder.mobAppearance.underwear
 		character.bioHolder.mobAppearance.u_color = user.bioHolder.mobAppearance.u_color
@@ -253,18 +253,18 @@ datum/v_space
 		var/datum/appearanceHolder/AH = character.bioHolder.mobAppearance
 		if (!AH)
 			AH = new
-		if (AH.customizations["hair_bottom"].color == null)
-			AH.customizations["hair_bottom"].color = "#101010"
-		if (AH.customizations["hair_bottom"].style == null)
-			AH.customizations["hair_bottom"].style =  new /datum/customization_style/none
-		if (AH.customizations["hair_middle"].color == null)
-			AH.customizations["hair_middle"].color = "#101010"
-		if (AH.customizations["hair_middle"].style == null)
-			AH.customizations["hair_middle"].style =  new /datum/customization_style/none
-		if (AH.customizations["hair_top"].color == null)
-			AH.customizations["hair_top"].color = "#101010"
-		if (AH.customizations["hair_top"].style == null)
-			AH.customizations["hair_top"].style =  new /datum/customization_style/none
+		if (AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color == null)
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = "#101010"
+		if (AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style == null)
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style =  new /datum/customization_style/none
+		if (AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color == null)
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = "#101010"
+		if (AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style == null)
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  new /datum/customization_style/none
+		if (AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color == null)
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = "#101010"
+		if (AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style == null)
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style =  new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)

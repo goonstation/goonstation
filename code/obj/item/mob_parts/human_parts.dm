@@ -242,12 +242,12 @@
 			var/datum/appearanceHolder/AH_piece = get_owner_appearance_holder()
 			if(istype(AH_piece, /datum/appearanceHolder))
 				switch(src.severed_overlay_1_color)
-					if(CUST_1)
-						colorheck = AH_piece.customizations["hair_bottom"].color
-					if(CUST_2)
-						colorheck = AH_piece.customizations["hair_middle"].color
-					if(CUST_3)
-						colorheck = AH_piece.customizations["hair_top"].color
+					if(HAIR_BOTTOM_COLOR)
+						colorheck = AH_piece.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+					if(HAIR_MIDDLE_COLOR)
+						colorheck = AH_piece.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+					if(HAIR_TOP_COLOR)
+						colorheck = AH_piece.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 					if (SKIN_TONE)
 						colorheck = src.skin_tone
 					else
@@ -270,12 +270,12 @@
 		var/colorlimb_heck = "#FFFFFF"
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.limb_overlay_1_color)
-				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customizations["hair_bottom"].color
-				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customizations["hair_middle"].color
-				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customizations["hair_top"].color
+				if(HAIR_BOTTOM_COLOR)
+					colorlimb_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+				if(HAIR_MIDDLE_COLOR)
+					colorlimb_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+				if(HAIR_TOP_COLOR)
+					colorlimb_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 				if (SKIN_TONE)
 					colorlimb_heck = src.skin_tone
 				else
@@ -283,12 +283,12 @@
 		var/colorhandfoot_heck = "#FFFFFF"
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.handfoot_overlay_1_color)
-				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customizations["hair_bottom"].color
-				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customizations["hair_middle"].color
-				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customizations["hair_top"].color
+				if(HAIR_BOTTOM_COLOR)
+					colorhandfoot_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+				if(HAIR_MIDDLE_COLOR)
+					colorhandfoot_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+				if(HAIR_TOP_COLOR)
+					colorhandfoot_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 				if (SKIN_TONE)
 					colorhandfoot_heck = src.skin_tone
 				else
@@ -1317,7 +1317,7 @@
 	skintoned = TRUE
 	handfoot_overlay_1_icon = 'icons/mob/cow.dmi'
 	handfoot_overlay_1_state = null
-	handfoot_overlay_1_color = CUST_2
+	handfoot_overlay_1_color = HAIR_MIDDLE_COLOR
 
 	New()
 		handfoot_overlay_1_state = "[src.partlistPart]"

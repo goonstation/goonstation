@@ -3249,9 +3249,9 @@
 					"You can feel your age", "You see visions of eldritch beings")))
 			if (H.bioHolder.age >= 50 && !src.hair_greyed)
 				boutput(H, SPAN_ALERT("<b>Your hair greys!</b>"))
-				H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#b1b1b1"
-				H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#b1b1b1"
-				H.bioHolder.mobAppearance.customizations["hair_top"].color = "#b1b1b1"
+				H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = "#b1b1b1"
+				H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = "#b1b1b1"
+				H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = "#b1b1b1"
 				H.update_colorful_parts()
 				src.hair_greyed = TRUE
 			if (H.bioHolder.age >= src.original_age + 100 && !src.final_msg_given)
