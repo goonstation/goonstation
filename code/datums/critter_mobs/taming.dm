@@ -51,9 +51,6 @@ TYPEINFO(/datum/component/tameable)
 	if(!is_valid_food(item))
 		owner.visible_message("[user] tries to feed [owner] [item] but they won't take it!")
 		return
-	if (owner.tamed)
-		owner.visible_message("[user] tries to feed [owner] [item] but they seem full...")
-		return
 	if(istype(owner, /mob/living/critter/rockworm))
 		var/mob/living/critter/rockworm/RW = owner
 		RW.aftereat()
@@ -68,6 +65,8 @@ TYPEINFO(/datum/component/tameable)
 	if(user in owner.friends)
 		owner.emote(emote_happy)
 	else
+		if(owner.tamed)
+			return
 		if(prob(tame_chance) && istypes(item, taming_foods))
 			owner.friends += user
 			owner.tamed = TRUE
