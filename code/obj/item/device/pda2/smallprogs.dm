@@ -1010,6 +1010,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	size = 4
 	var/mode = 0
 	var/message = null
+	var/can_approve_fines = TRUE
 
 	proc/get_ticket_level()
 		. = SECURITY::TICKET::LEVEL::NONE
@@ -1022,6 +1023,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			. = SECURITY::TICKET::LEVEL::FINE_SMALL
 		if(access_fine_large in ID.access)
 			. = SECURITY::TICKET::LEVEL::FINE_LARGE
+		if(!src.can_approve_fines)
+			. = min(SECURITY::TICKET::LEVEL::TICKET, .)
 
 	return_text()
 		if(..())
@@ -1228,12 +1231,17 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.master.updateSelfDialog()
 		return
 
+/datum/computer/file/pda_program/security_ticket/issue_only
+	name = "Ticket Lite"
+	can_approve_fines = FALSE
+
 //made global so fines can use it too, might also be useful for other stuff
 /proc/get_byond_key(var/name)
 	for(var/mob/M in mobs)
 		if(M.real_name == name && M.key)
 			return M.key
 	return "N/A"
+
 
 #define SPAM_DELAY 20
 //cargo request
@@ -1735,7 +1743,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.get_devices()
 
 	on_deactivated(obj/item/device/pda2/pda)
-		qdel(get_radio_connection_by_id(pda, null))
+		qdel(get_radio_connection_by_id(pda, "power_control"))
 		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
 
 	return_text()

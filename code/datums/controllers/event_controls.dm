@@ -193,7 +193,7 @@ var/datum/event_controller/random_events
 		majorEventData += list(list(
 			"byondRef" = ref(RE),
 			"name" = RE.name,
-			"description" = "Foo",//RE.description,
+			"description" = RE.description,
 			"customizable" = RE.customization_available,
 			"alwaysCustom" = RE.always_custom,
 			"available" = RE.is_event_available(),
@@ -214,7 +214,7 @@ var/datum/event_controller/random_events
 		minorEventData += list(list(
 			"byondRef" = ref(RE),
 			"name" = RE.name,
-			"description" = "Foo",//RE.description,
+			"description" = RE.description,
 			"customizable" = RE.customization_available,
 			"alwaysCustom" = RE.always_custom,
 			"available" = RE.is_event_available(),
@@ -235,7 +235,7 @@ var/datum/event_controller/random_events
 		menhirEventData += list(list(
 			"byondRef" = ref(RE),
 			"name" = RE.name,
-			"description" = "Foo",//RE.description,
+			"description" = RE.description,
 			"customizable" = RE.customization_available,
 			"alwaysCustom" = RE.always_custom,
 			"available" = RE.is_event_available(),
@@ -256,7 +256,7 @@ var/datum/event_controller/random_events
 		specialEventData += list(list(
 			"byondRef" = ref(RE),
 			"name" = RE.name,
-			"description" = "Foo",//RE.description,
+			"description" = RE.description,
 			"customizable" = RE.customization_available,
 			"alwaysCustom" = RE.always_custom,
 			"available" = RE.is_event_available(),
@@ -273,7 +273,7 @@ var/datum/event_controller/random_events
 		roundstartEventData += list(list(
 			"byondRef" = ref(RE),
 			"name" = RE.name,
-			"description" = "Foo",//RE.description,
+			"description" = RE.description,
 			"customizable" = RE.customization_available,
 			"alwaysCustom" = RE.always_custom,
 			"available" = RE.is_event_available(),

@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
 	var/datum/clothingbooth_item/first_clothingbooth_item = src.clothingbooth_items[src.clothingbooth_items[1]]
 	var/list_icon_atom_path = first_clothingbooth_item?.item_path ? first_clothingbooth_item.item_path : /obj/item/clothing/under/color/white
 	var/obj/item/dummy_atom = list_icon_atom_path
-	var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state), frame = 1)
+	var/icon/dummy_icon = icon(get_initial_icon(dummy_atom), initial(dummy_atom.icon_state), frame = 1)
 	src.list_icon = icon2base64(dummy_icon)
 
 	// If no name override for the group is specified, take it from the first item in the grouping.
