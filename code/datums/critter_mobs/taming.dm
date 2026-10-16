@@ -64,30 +64,30 @@ TYPEINFO(/datum/component/tameable)
 		var/mob/living/critter/rockworm/RW = owner
 		RW.aftereat()
 	item.Eat(owner, owner)
-	return
+	owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
+	for(var/damage_type in owner.healthlist)
+		var/datum/healthHolder/hh = owner.healthlist[damage_type]
+		hh.HealDamage(5)
+	owner.health_brute = min(60, owner.health_brute + 6)
+	owner.health_burn = min(60, owner.health_burn + 6)
+	item.Eat(owner, owner, TRUE)
+	if(user in owner.friends)
+		owner.emote(emote_happy)
 	else
-		owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
-		for(var/damage_type in owner.healthlist)
-			var/datum/healthHolder/hh = owner.healthlist[damage_type]
-			hh.HealDamage(5)
-		owner.health_brute = min(60, owner.health_brute + 6)
-		owner.health_burn = min(60, owner.health_burn + 6)
-		item.Eat(owner, owner, TRUE)
-		if(user in owner.friends)
+		if(prob(tame_chance) && istypes(item, taming_foods))
+			owner.friends += user
+			owner.tamed = TRUE
+			owner.visible_message("[owner] with a [emote_happy] happily eats up the \the [item], and seems a little friendlier with [user].")
 			owner.emote(emote_happy)
+			owner.ai.interrupt()
+		if(aggro_mode)
+			owner.visible_message(SPAN_NOTICE("[owner] hated \the [item] and bit [user]'s hand!"))
+			random_brute_damage(user, rand(6,12),1)
+			owner.emote(emote_angry)
+			user.emote("scream")
 		else
-			if(prob(tame_chance) && istypes(item, taming_foods))
-				owner.friends += user
-				owner.tamed = TRUE
-				owner.visible_message("[owner] with a [emote_happy] happily eats up the \the [item], and seems a little friendlier with [user].")
-				owner.emote(emote_happy)
-				owner.ai.interrupt()
-			else
-				owner.visible_message(SPAN_NOTICE("[owner] hated \the [item] and bit [user]'s hand!"))
-				random_brute_damage(user, rand(6,12),1)
-				owner.emote(emote_angry)
-				user.emote("scream")
-		return
+			owner.visible_message(SPAN_NOTICE("[owner] doesn't seem to warm up just from eating \the [item]."))
+			return
 
 /datum/component/tameable/proc/pass_on_attackhand(atom/source, mob/M)
 	if ((M.a_intent == INTENT_HARM) || !(M in owner.friends))
