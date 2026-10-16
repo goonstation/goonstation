@@ -1,5 +1,9 @@
 
 (t)fri oct 16 26
+(u)JORJ949
+(p)28009
+(e)🎨|C-Sprites
+(*)Medal rewards now have their own unique menu with many options for filtering and a preview of the item/skin you're redeeming!
 (u)Rubicubie
 (p)28032
 (e)🆕👮|C-Feature, A-Security
