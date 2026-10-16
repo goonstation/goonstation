@@ -100,6 +100,6 @@
 	name = "\improper JK-47 rifle"
 	desc = "The cold-war classic!  Well, um, a model.  Probably?"
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
-	icon_state = "ak47"
-	item_state = "ak47"
+	icon_state = "akm"
+	item_state = "akm"
 	two_handed = TRUE

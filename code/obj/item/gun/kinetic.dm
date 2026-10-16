@@ -790,8 +790,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "\improper AKM Assault Rifle"
 	desc = "An old Cold War relic chambered in 7.62x39. Rusted, but not busted. Vast numbers were brought back into service for the Martian war."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
-	icon_state = "ak47"
-	item_state = "ak47"
+	icon_state = "akm"
+	item_state = "akm"
+	wear_state = "akm"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	contraband = 8
@@ -805,6 +806,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
+	has_empty_state = TRUE
 	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
@@ -3026,7 +3028,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
 	recoil_strength = 8
-	
+
 	HELP_MESSAGE_OVERRIDE("Can be held with two hands to reduce recoil and improve accuracy.")
 
 	New()
