@@ -3,7 +3,7 @@
 	VAR_PRIVATE/datum/record_database/db = null
 	/// This database record's fields.
 	VAR_PROTECTED/alist/fields = alist(
-		"id" = new /datum/record_field/string("000000", @"[a-f0-9]{6}"),
+		"id" = new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
 	)
 
 /datum/db_record/New()
@@ -59,6 +59,10 @@
 	var/datum/record_field/field = (src.fields[key] ||= new /datum/record_field)
 	return field.set_value(value)
 
-/// Returns how this record should be displayed on record lists.
+/// Returns how this record should be displayed in shortform.
 /datum/db_record/proc/to_display_string()
+	return "ERR"
+
+/// Returns how this record should be displayed on record lists.
+/datum/db_record/proc/to_list_display_string()
 	return "ERR"
