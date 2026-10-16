@@ -1055,7 +1055,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 						dat += "Reason: [fine["reason"]]<br>"
 						dat += "Requested by: [fine["issuer"]] - [fine["issuer_job"]]<br>"
 
-						if (fine.can_approve(src.master.ID_card.access))
+						if (src.can_approve_fines && fine.can_approve(src.master.ID_card.access))
 							dat += "<a href='byond://?src=\ref[src];approve=\ref[fine]'>Approve Fine</a><br>"
 
 						dat += "<br>"
