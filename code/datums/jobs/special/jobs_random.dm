@@ -494,3 +494,22 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	alt_names = list("Cybersecurity Expert", \
 					"IT Specialist", \
 					"Network Technician")
+
+/datum/job/special/random/atmospheric_technician
+	name = "Atmospheric Technician"
+	ui_colour = /datum/job/engineering::ui_colour
+	slot_card = /datum/job/engineering::slot_card
+	wages = PAY::TRADESMAN
+	access_string = "Atmospheric Technician"
+	slot_back = list(/obj/item/storage/backpack/engineering)
+	slot_belt = list(/obj/item/storage/belt/utility/atmos)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/atmos/starts_off)
+	slot_jump = list(/obj/item/clothing/under/misc/atmospheric_technician)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_poc1 = list(/obj/item/device/pda2/atmos)
+	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	items_in_backpack = list(/obj/item/clothing/mask/gas/emergency, /obj/item/rcd_ammo/big)
+	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
+	email_group = MGD_ENGINEER
+	alt_names = list("Atmospheric Technician", "Atmospherish Technician")

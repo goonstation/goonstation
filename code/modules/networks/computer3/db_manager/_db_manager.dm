@@ -39,6 +39,12 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	if (..())
 		return TRUE
 
+	src.connected = FALSE
+	src.server_netid = null
+	src.potential_server_netid = null
+	src.known_printers = null
+	src.selected_printer = null
+
 	src.switch_menu_to("main")
 
 /datum/computer/file/terminal_program/db_manager/input_text(text)

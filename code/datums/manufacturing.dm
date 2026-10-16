@@ -3337,6 +3337,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 15 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
+	apply_material = TRUE
 
 /datum/manufacture/blindfold
 	name = "Blindfold"
@@ -3345,6 +3346,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 5 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
+	apply_material = TRUE
 
 /datum/manufacture/muzzle
 	name = "Muzzle"
@@ -3375,6 +3377,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 8 SECONDS
 	category = MANUFACTURER::CATEGORY::RESOURCE
+	apply_material = TRUE
 
 /datum/manufacture/handkerchief
 	name = "Handkerchief"
@@ -3383,6 +3386,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 4 SECONDS
 	category = MANUFACTURER::CATEGORY::RESOURCE
+	apply_material = TRUE
 
 /////// pod construction components
 

@@ -1010,6 +1010,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	size = 4
 	var/mode = 0
 	var/message = null
+	var/corporate_rank = "Nanotrasen Corporate Security"
+	var/can_approve_fines = TRUE
 
 	return_text()
 		if(..())
@@ -1130,6 +1132,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				paper.name = ticket["title"]
 				paper.info = ticket["text"]
 				paper.icon_state = "paper_caution"
+				paper.paper_color = "#FFE9AD"
 
 		else if(href_list["fine"])
 			var/PDAowner = src.master.owner
@@ -1161,7 +1164,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			)
 			global.data_core.fines.add_record(fine)
 
-			switch (fine.attempt_approve(PDAowner, PDAownerjob, src.master.ID_card.access))
+			switch (fine.attempt_approve(PDAowner, PDAownerjob, src.can_approve_fines ? src.master.ID_card.access : null))
 				if (SECURITY::TICKET::ERR::FINE_LARGE)
 					message = "Fine request created, awaiting approval for a large fine."
 				if (SECURITY::TICKET::ERR::FINE_SMALL)
@@ -1214,6 +1217,12 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		paper.name = fine["title"]
 		paper.info = fine["text"]
 		paper.icon_state = "paper_caution"
+		paper.paper_color = "#FFE9AD"
+
+
+/datum/computer/file/pda_program/security_ticket/issue_only
+	name = "Ticket Lite"
+	can_approve_fines = FALSE
 
 //made global so fines can use it too, might also be useful for other stuff
 /proc/get_byond_key(var/name)
@@ -1221,6 +1230,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		if(M.real_name == name && M.key)
 			return M.key
 	return "N/A"
+
 
 #define SPAM_DELAY 20
 //cargo request
@@ -1722,7 +1732,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.get_devices()
 
 	on_deactivated(obj/item/device/pda2/pda)
-		qdel(get_radio_connection_by_id(pda, null))
+		qdel(get_radio_connection_by_id(pda, "power_control"))
 		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
 
 	return_text()

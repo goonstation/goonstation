@@ -3,7 +3,7 @@
 		"id"			= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
 		"name"			= new /datum/record_field/string("Name", "New Record"),
 		"h_imp"			= new /datum/record_field/string("Current Health", "No health implant detected."),
-		"blood_type"	= new /datum/record_field/choice("Blood Type", "Unknown", list("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Zesty Ranch", "Unknown")),
+		"blood_type"	= new /datum/record_field/choice("Blood Type", "Unknown", list("AB+-", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Zesty Ranch", "Unknown")),
 		"mi_dis"		= new /datum/record_field/string("Minor Disabilities", "None"),
 		"mi_dis_d"		= new /datum/record_field/string("Details", "No minor disabilities have been declared."),
 		"ma_dis"		= new /datum/record_field/string("Major Disabilities", "None"),

@@ -55,6 +55,7 @@
 			paper.name = ticket["title"]
 			paper.info = ticket["text"]
 			paper.icon_state = src.paper_icon_state
+			paper.paper_color = "#FFE9AD"
 
 /obj/item/device/ticket_writer/crust
 	name = "crusty old security TicketWriter 1000"
