@@ -190,8 +190,6 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/metalR/bulk,
 		/datum/manufacture/glass,
 		/datum/manufacture/glass/bulk,
-		/datum/manufacture/glassR,
-		/datum/manufacture/glassR/bulk,
 		/datum/manufacture/asimov_laws,
 		/datum/manufacture/borg_linker)
 
