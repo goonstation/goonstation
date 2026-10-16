@@ -180,6 +180,8 @@
 	else
 		command_alert("[disaster_name] event detected on the station.  Unfortunately, the shuttle is currently unavailable due to [contrived_excuse]. All personnel must contain this event.", "Hazardous Event Alert")
 
+	ADMIN.lights_out(INFINITE_STATUS)
+
 	for(var/turf/T in world)
 		if(prob(21) && T.z == 1 && istype(T,/turf/simulated/floor))
 			SPAWN(50+rand(0,6250))

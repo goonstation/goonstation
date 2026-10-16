@@ -281,8 +281,8 @@
 #ifdef MAP_OVERRIDE_OSHAN // Radio host is on Oshan
 		if(rank == "Radio Show Host" || rank == "Talk Show Host")
 			Service.Add(entry)
-#endif
 			continue
+#endif
 		Unassigned += entry
 
 	if(length(Command))

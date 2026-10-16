@@ -368,7 +368,7 @@
 
 	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && is_incapacitated(src)) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
-			. += "<br>[SPAN_ALERT("[Noun] is limp and unresponsive, a dull lifeless look in [t_his] eyes.")]"
+			. += "<br>[SPAN_ALERT("[Noun_is] limp and unresponsive, a dull lifeless look in [t_his] eyes.")]"
 	else
 		var/brute = src.get_brute_damage()
 		if (brute >= 5)

@@ -225,6 +225,19 @@
 		spawn_contents = list(/obj/item/gun/kinetic/clock_188/boomerang/ntso,
 		/obj/item/ammo/bullets/bullet_9mm = 4)
 
+	medic
+		slots = 6
+		name = "tacticool medicine pouch"
+		desc = "A specialized pouch for various high capacity injectors; in reality just a repurposed ammo pouch due to cost cutting initiatives."
+		icon_state = "ammopouch_ntsc_medic"
+
+		spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
+			/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
+			/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
+			/obj/item/reagent_containers/emergency_injector/pentetic_acid,
+			/obj/item/reagent_containers/emergency_injector/high_capacity/filgrastim,
+			/obj/item/reagent_containers/emergency_injector/high_capacity/acetylsalicylic_acid)
+
 /obj/item/storage/breach_pouch
 	name = "mining charge pouch"
 	desc = "A large pouch specially designed to hold all of your NaNoTraSen approved explosives."

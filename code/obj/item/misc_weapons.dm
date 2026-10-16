@@ -1134,6 +1134,7 @@ TYPEINFO(/obj/item/bat)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "baseballbat"
 	item_state = "baseballbat"
+	default_material = "wood"
 	hitsound = 'sound/impact_sounds/bat_wood.ogg'
 	hit_type = DAMAGE_BLUNT
 	force = 12

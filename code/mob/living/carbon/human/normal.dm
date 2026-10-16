@@ -223,31 +223,6 @@
 		..()
 		JobEquipSpawned("Gang Respawn")
 
-
-/mob/living/carbon/human/normal/rescue
-	New()
-		..()
-		src.equip_new_if_possible(/obj/item/clothing/shoes/red, SLOT_SHOES)
-		src.equip_new_if_possible(/obj/item/clothing/under/color/red, SLOT_W_UNIFORM)
-		src.equip_new_if_possible(/obj/item/card/id, SLOT_WEAR_ID)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
-		src.equip_new_if_possible(/obj/item/storage/belt/utility/prepared, SLOT_BELT)
-		src.equip_new_if_possible(/obj/item/storage/backpack/withO2, SLOT_BACK)
-		src.equip_new_if_possible(/obj/item/device/light/flashlight, SLOT_L_STORE)
-		src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest, SLOT_WEAR_SUIT)
-		src.equip_new_if_possible(/obj/item/clothing/mask/gas, SLOT_WEAR_MASK)
-		src.equip_new_if_possible(/obj/item/clothing/gloves/black, SLOT_GLOVES)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/nightvision, SLOT_GLASSES)
-
-		var/obj/item/card/id/C = src.wear_id
-		if(C)
-			C.registered = src.real_name
-			C.assignment = "NT-SO Rescue Worker"
-			C.name = "[C.registered]’s ID Card ([C.assignment])"
-			C.access = get_all_accesses()
-
-		update_clothing()
-
 /mob/living/carbon/human/normal/ntso_old
 	New()
 		..()

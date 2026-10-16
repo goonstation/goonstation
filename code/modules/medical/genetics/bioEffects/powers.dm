@@ -563,10 +563,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 	///Returns true if a turf blocks xray vision in some way
 	proc/blocks_xray(turf/T)
-		if (T.density && T.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+		if (T.density && HAS_ATOM_PROPERTY(T, PROP_ATOM_NEVER_RADIOACTIVE))
 			return TRUE
 		for (var/obj/O in T)
-			if (O.density && O.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+			if (O.density && HAS_ATOM_PROPERTY(O, PROP_ATOM_NEVER_RADIOACTIVE))
 				return TRUE
 		return FALSE
 

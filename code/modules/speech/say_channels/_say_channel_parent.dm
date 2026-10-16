@@ -128,6 +128,8 @@ ABSTRACT_TYPE(/datum/say_channel)
 /// Unregister a listener so it no longer receieves messages from this channel.
 /datum/say_channel/proc/UnregisterInput(datum/listen_module/input/registered)
 	src.listeners[registered.type] -= registered
+	if (!length(src.listeners[registered.type]))
+		src.listeners -= registered.type
 
 	if (src.track_outermost_listener)
 		registered.parent_tree.listener_origin.ensure_outermost_listener_tracker().unrequest_track()
@@ -211,6 +213,8 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
  */
 /datum/say_channel/delimited/local
 	track_outermost_listener = TRUE
+	/// The spatial hashmap that is responsible for tracking all input modules registered to this channel.
+	var/datum/spatial_hashmap/listeners/hashmap = null
 	/// The listener tick cache is responsible for storing the "listeners by type" lists calculated by `PassToChannel()` for a single tick.
 	var/datum/listener_tick_cache/listener_tick_cache
 	/// The type of listener tick cache that this say channel should use.
@@ -219,6 +223,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 /datum/say_channel/delimited/local/New()
 	. = ..()
 
+	src.hashmap = new /datum/spatial_hashmap/listeners(name = "Say Channel ([src.channel_id])")
 	src.listener_tick_cache = new src.listener_tick_cache_type
 
 /datum/say_channel/delimited/local/PassToChannel(datum/say_message/message)
@@ -227,44 +232,51 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 		src.PassToListeners(message, listen_modules_by_type)
 		return
 
+	var/turf/centre = get_turf(message.message_origin)
+	if (!centre)
+		return
+
 	listen_modules_by_type = list()
+	for (var/type as anything in src.listeners)
+		listen_modules_by_type[type] = list()
 
 	if (isturf(GET_MESSAGE_OUTERMOST_LISTENER_LOC(message)))
-		var/turf/centre = get_turf(message.message_origin)
-		if (!centre)
-			return
 		SET_UP_HEARD_TURFS(visible_turfs, message.heard_range, centre)
 
-		for (var/type in src.listeners)
-			listen_modules_by_type[type] ||= list()
-			for (var/datum/listen_module/input/input as anything in src.listeners[type])
-				// If the outermost listener's loc is a turf, perform line of sight and range checks.
-				if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
-					// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
-					if (!input.ignore_line_of_sight_checks)
-						if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
-							continue
-					// If the input ignores line of sight checks, then the listener may hear the message if they are within the message's heard range.
-					else if (!INPUT_IN_RANGE(input, centre, message.heard_range))
+		for (var/datum/listen_module/input/input as anything in src.hashmap.vistarget_supremum(centre, message.heard_range))
+			// If the outermost listener's loc is a turf, perform line of sight and range checks.
+			if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
+				// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
+				if (!input.ignore_line_of_sight_checks)
+					if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
 						continue
-				// If the outermost listener's loc is not a turf, determine whether the message can be heard based on a shared loc chain.
-				else if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+				// If the input ignores line of sight checks, then the listener may hear the message if they are within the message's heard range.
+				else if (!INPUT_IN_RANGE(input, centre, message.heard_range))
 					continue
+			// If the outermost listener's loc is not a turf, determine whether the message can be heard based on a shared loc chain.
+			else if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+				continue
 
-				listen_modules_by_type[type] += input
+			listen_modules_by_type[input.type] += input
 
 	else
-		for (var/type in src.listeners)
-			listen_modules_by_type[type] ||= list()
-			for (var/datum/listen_module/input/input as anything in src.listeners[type])
-				// Determine whether the message can be heard based on a shared loc chain.
-				if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
-					continue
+		for (var/datum/listen_module/input/input as anything in src.hashmap.vistarget_point(centre))
+			// Determine whether the message can be heard based on a shared loc chain.
+			if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+				continue
 
-				listen_modules_by_type[type] += input
+			listen_modules_by_type[input.type] += input
 
 	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
+
+/datum/say_channel/delimited/local/RegisterInput(datum/listen_module/input/registree)
+	. = ..()
+	src.hashmap.register_hashmap_entry(registree, registree.parent_tree.listener_origin)
+
+/datum/say_channel/delimited/local/UnregisterInput(datum/listen_module/input/registered)
+	src.hashmap.unregister_hashmap_entry(registered)
+	. = ..()
 
 
 
@@ -299,3 +311,5 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/bundled)
 	. = ..()
 
 	src.listeners_by_subchannel[registered.subchannel][registered.type] -= registered
+	if (!length(src.listeners_by_subchannel[registered.subchannel][registered.type]))
+		src.listeners[registered.subchannel] -= registered.type

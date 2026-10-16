@@ -2,7 +2,6 @@
 // Cambot assembly
 
 // Cobbled together from bits of the other bots, mostly cleanbots and firebots.
-#define CAMBOT_MOVE_SPEED 8
 /obj/machinery/bot/cambot
 	name = "Cambot"
 	desc = "A little camera robot! Smile!"
@@ -15,6 +14,7 @@
 	health = 20
 	locked = 1
 	access_lookup = "Assistant"
+	bot_move_delay = BOT::SPEED::CAMBOT
 
 	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
@@ -191,7 +191,7 @@
 
 	// Let's find us a path to the target.
 	if (src.target && !length(src.path))
-		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 20)
+		src.navigate_to(get_turf(src.target), src.bot_move_delay, 1, 20)
 
 		if (!islist(src.path)) // Woops, couldn't find a path.
 			LAZYLISTADDUNIQUE(src.targets_invalid, src.target)

@@ -152,17 +152,18 @@
 			mat_changename = FALSE
 
 			random
-				var/static/list/random_blob_materials = null
+				var/static/list/datum/material/organic/blob/random_blob_materials = null
 				New()
 					. = ..()
 					if (!src.random_blob_materials)
 						src.random_blob_materials = list()
 						var/datum/material/base_mat = getMaterial("blob")
 						for (var/i in 1 to 10)
-							var/datum/material/new_mat = base_mat.getMutable()
-							new_mat.setColor(rgb(rand(1,255), rand(1,255), rand(1,255), 255))
+							var/datum/material/organic/blob/new_mat = base_mat.getMutable()
+							new_mat.match_to_blob_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
 							src.random_blob_materials += new_mat
-					src.setMaterial(pick(src.random_blob_materials))
+					var/datum/material/organic/blob/blob_mat = pick(src.random_blob_materials)
+					src.setMaterial(blob_mat)
 	sphere
 		// energy
 		icon_state = "sphere"

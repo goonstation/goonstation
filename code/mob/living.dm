@@ -1740,10 +1740,12 @@ TYPEINFO(/mob/living)
 	src.vision.set_scan(1)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(src)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(src)
 
 /mob/living/proc/unmeson(atom/source)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(src)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(src)
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (istype(H.glasses, /obj/item/clothing/glasses/visor))

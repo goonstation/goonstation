@@ -166,6 +166,9 @@
 		if(throw_type == THROW_PEEL_SLIP)
 			params += list("peel_stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
 			throw_speed = 0.5
+			if (src.client?.player)
+				var/datum/eventRecord/BananaSlip/bananaSlipEvent = new
+				bananaSlipEvent.buildAndSend(src, intensity)
 			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(src)
 			if(length(existing_throws))
 				for(var/datum/thrown_thing/thr as anything in existing_throws)

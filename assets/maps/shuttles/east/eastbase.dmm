@@ -217,6 +217,14 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
+"gQ" = (
+/obj/indestructible/shuttle_window{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
 "hx" = (
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 1
@@ -718,10 +726,9 @@
 /turf/unsimulated/floor/stairs/dark/wide,
 /area/centcom/outside)
 "DC" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Secure Transport";
-	hardened = 1
+/obj/machinery/door/airlock/pyro/glass/security{
+	hardened = 1;
+	dir = 4
 	},
 /obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle{
@@ -849,6 +856,14 @@
 "GV" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
+	},
+/area/shuttle/escape/centcom)
+"Hf" = (
+/obj/indestructible/shuttle_window{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
 "If" = (
@@ -1169,6 +1184,14 @@
 	dir = 4
 	},
 /area/centcom)
+"VB" = (
+/obj/indestructible/shuttle_window{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
 "VP" = (
 /obj/decal/poster/wallsign/danger_highvolt{
 	pixel_y = 32
@@ -1501,7 +1524,7 @@ Ya
 CC
 dW
 EF
-EF
+VB
 DC
 EF
 GV
@@ -1510,7 +1533,7 @@ Jd
 GV
 EF
 cd
-EF
+gQ
 EF
 AI
 eQ
@@ -1757,8 +1780,8 @@ EF
 EF
 EF
 CK
-EF
-EF
+Hf
+Hf
 CK
 EF
 EF
