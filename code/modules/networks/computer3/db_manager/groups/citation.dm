@@ -88,9 +88,10 @@
 				menu.parent.print_text("<b>Error:</b> Cannot print unapproved fines.")
 				return TRUE
 
+			var/obj/item/paper/paper = citation.build_citation()
 			var/datum/computer/file/record/print_record = new()
-			print_record.fields += "title=[citation["title"]]"
-			print_record.fields += citation["text"]
+			print_record.fields += "title=[paper.name]"
+			print_record.fields += paper.info
 
 			if (menu.parent.print_file(print_record))
 				menu.parent.print_text("Print instruction sent.")

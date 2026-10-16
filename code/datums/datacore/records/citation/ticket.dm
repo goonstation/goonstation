@@ -8,8 +8,6 @@
 		"issuer"		= new /datum/record_field/string("Issuer", "Unknown"),
 		"issuer_job"	= new /datum/record_field/string("Issuer Job", "Unknown"),
 		"reason"		= new /datum/record_field/string("Reason", "Unknown"),
-		"title"			= new /datum/record_field/string("Title", "Unknown"),
-		"text"			= new /datum/record_field/string("Text", "Unknown"),
 	)
 
 /datum/db_record/citation/ticket/New(authority, target, issuer, issuer_job, reason)
@@ -21,8 +19,6 @@
 	src["issuer"] = issuer
 	src["issuer_job"] = issuer_job
 	src["reason"] = reason
-	src["title"] = "Official Caution - [target]"
-	src["text"] = "[target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by [authority] for [reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
 
 	logTheThing(LOG_ADMIN, usr, "issues a ticket using [issuer] ([issuer_job])'s ID. It is a ticket on <b>[target]</b> with the reason: [reason].")
 
@@ -38,4 +34,7 @@
 	)
 
 /datum/db_record/citation/ticket/to_list_display_string()
-	return copytext(src["time"], -9, -1) + "  TICKET  " + "         " + src["target"]
+	return copytext(src["time"], 12, 20) + "  TICKET  " + "         " + src["target"]
+
+/datum/db_record/citation/ticket/get_name()
+	return "Official Caution - [src["target"]]"

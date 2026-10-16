@@ -1039,7 +1039,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					for (var/datum/db_record/citation/ticket/ticket as anything in global.data_core.tickets.records)
 						var/recipient = ticket["target"]
 						ticket_data_by_recipient[recipient] ||= "<b>[recipient]</b><br><br>"
-						ticket_data_by_recipient[recipient] += "[ticket["text"]]<br>"
+						ticket_data_by_recipient[recipient] += "Reason: [ticket["reason"]]<br>"
+						ticket_data_by_recipient[recipient] += "Issued by: [ticket["issuer"]] - [ticket["issuer_job"]]<br><br>"
 
 					for (var/_, ticket_data in ticket_data_by_recipient)
 						dat += ticket_data
@@ -1127,12 +1128,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
-				var/obj/item/paper/paper = new()
+				var/obj/item/paper/paper = ticket.build_citation()
 				usr.put_in_hand_or_drop(paper)
-				paper.name = ticket["title"]
-				paper.info = ticket["text"]
-				paper.icon_state = "paper_caution"
-				paper.paper_color = "#FFE9AD"
 
 		else if(href_list["fine"])
 			var/PDAowner = src.master.owner
@@ -1212,12 +1209,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		if (QDELETED(fine))
 			return
 
-		var/obj/item/paper/paper = new()
+		var/obj/item/paper/paper = fine.build_citation()
 		usr.put_in_hand_or_drop(paper)
-		paper.name = fine["title"]
-		paper.info = fine["text"]
-		paper.icon_state = "paper_caution"
-		paper.paper_color = "#FFE9AD"
 
 
 /datum/computer/file/pda_program/security_ticket/issue_only

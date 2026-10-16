@@ -50,12 +50,8 @@
 
 		playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 		SPAWN(3 SECONDS)
-			var/obj/item/paper/paper = new()
+			var/obj/item/paper/paper = ticket.build_citation(src.paper_icon_state)
 			user.put_in_hand_or_drop(paper)
-			paper.name = ticket["title"]
-			paper.info = ticket["text"]
-			paper.icon_state = src.paper_icon_state
-			paper.paper_color = "#FFE9AD"
 
 /obj/item/device/ticket_writer/crust
 	name = "crusty old security TicketWriter 1000"

@@ -13,8 +13,6 @@
 		"approver"		= new /datum/record_field/string("Approver", "Awaiting Approval"),
 		"approver_job"	= new /datum/record_field/string("Approver Job", "Awaiting Approval"),
 		"reason"		= new /datum/record_field/string("Reason", "Unknown"),
-		"title"			= new /datum/record_field/string("Title", "Unknown"),
-		"text"			= new /datum/record_field/string("Text", "Unknown"),
 	)
 
 /datum/db_record/citation/fine/New(authority, target, amount, issuer, issuer_job, reason)
@@ -70,16 +68,6 @@
 	src["approver"] = approver
 	src["approver_job"] = approver_job
 
-	var/fine_text = "[src["target"]] has been fined [src["amount"]] credits by [src["authority"]] for [src["reason"]] on [time2text(world.realtime, "DD/MM/53")].<br>"
-	if (src["issuer"] == approver)
-		fine_text += "Issued and approved by: [approver] - [approver_job]<br>"
-	else
-		fine_text += "Requested by: [src["issuer"]] - [src["issuer_job"]]<br>"
-		fine_text += "Approved by: [approver] - [approver_job]<br>"
-
-	src["title"] = "Official Fine Notification - [src["target"]]"
-	src["text"] = fine_text
-
 	var/datum/db_record/personnel/bank/bank_record = global.data_core.bank.find_record("name", src["target"])
 	var/net_id = bank_record?["pda_net_id"]
 	if (bank_record)
@@ -117,3 +105,31 @@
 				return
 
 			src.process_payment()
+
+/datum/db_record/citation/fine/get_name()
+	return "Official Fine Notification - [src["target"]]"
+
+/datum/db_record/citation/fine/get_approver()
+	if (src["issuer"] == src["approver"])
+		return
+
+	return {"\
+		<table width="365px">\
+		<tr><td width="200px">APPROVED BY</td><td>[src["approver"]]</td></tr>\
+		<tr><td width="200px">ASSIGNMENT</td><td>[src["approver_job"]]</td></tr>\
+		</table>\
+	"}
+
+/datum/db_record/citation/fine/get_reason()
+	return {"\
+		<table width="365px">\
+		<tr><td width="125px" colspan="2">AMOUNT<td>[src["amount"]][CREDIT_SIGN]</td></tr>\
+		<tr><td width="100px">REASON</td><td colspan="2">[src["reason"]]</td></tr>\
+		</table>\
+	"}
+
+/datum/db_record/citation/fine/build_citation(paper_icon_state = "paper_caution")
+	if (src["status"] == "PENDING")
+		CRASH("Attempted to print an unapproved fine.")
+
+	. = ..()
