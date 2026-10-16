@@ -86,7 +86,7 @@ TYPEINFO(/datum/component/tameable)
 			owner.emote(emote_angry)
 			user.emote("scream")
 		else
-			owner.visible_message(SPAN_NOTICE("[owner] doesn't seem to warm up just from eating \the [item]."))
+			owner.visible_message(SPAN_NOTICE("[owner] doesn't seem to warm up to you just from eating \the [item]."))
 			return
 
 /datum/component/tameable/proc/pass_on_attackhand(atom/source, mob/M)
