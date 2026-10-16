@@ -1,4 +1,9 @@
 
+(t)fri oct 16 26
+(u)Rubicubie
+(p)28032
+(e)🆕👮|C-Feature, A-Security
+(*)Tickets now look newer in a receipt-style!
 (t)thu oct 15 26
 (u)AronBattlnode
 (p)28103
