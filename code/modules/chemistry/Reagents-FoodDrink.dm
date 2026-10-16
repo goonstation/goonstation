@@ -3736,17 +3736,6 @@ datum
 			thirst_value = 1.5
 			taste = "tart"
 
-		fooddrink/juice_pear
-			name = "pear juice"
-			id = "juice_pear"
-			fluid_r = 253
-			fluid_g = 236
-			fluid_b = 0
-			description = "A pulpy juice extracted from pears."
-			reagent_state = LIQUID
-			thirst_value = 1.5
-			taste = "pulpy"
-
 		fooddrink/juice_peach
 			name = "peach juice"
 			id = "juice_peach"
@@ -5109,7 +5098,7 @@ datum
 			taste = list("bold", "creamy")
 			thirst_value = 1
 			caffeine_content = 0.8
-      
+
 		fooddrink/dulcedeleche
 			name = "dulce de leche"
 			id = "dulcedeleche"
