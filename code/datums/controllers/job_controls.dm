@@ -77,14 +77,14 @@ var/datum/job_controller/job_controls
 		if ((job.limit >= 0) && (job.assigned >= job.limit))
 			return
 		// prevent someone from trying to sneak their way into a job they shouldn't be able to choose
-		var/list/valid_jobs = list()
-		if (HAS_FLAG(valid_categories, STAPLE_JOBS))
-			valid_jobs.Add(src.staple_jobs)
-		if (HAS_FLAG(valid_categories, SPECIAL_JOBS))
-			valid_jobs.Add(src.special_jobs)
-		if (HAS_FLAG(valid_categories, HIDDEN_JOBS))
-			valid_jobs.Add(src.hidden_jobs)
-		if (!valid_jobs.Find(job))
+		var/is_valid_job = FALSE
+		if ((valid_categories & STAPLE_JOBS) && (job in src.staple_jobs))
+			is_valid_job = TRUE
+		else if ((valid_categories & SPECIAL_JOBS) && (job in src.special_jobs))
+			is_valid_job = TRUE
+		else if ((valid_categories & HIDDEN_JOBS) && (job in src.hidden_jobs))
+			is_valid_job = TRUE
+		if (!is_valid_job)
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
 			return
 		// antag job exemptions
@@ -92,7 +92,7 @@ var/datum/job_controller/job_controls
 			if (!job.can_be_antag(player.mind.special_role))
 				return
 		// job ban check
-		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
+		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name, job))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
 			return
 		// trusted only job check

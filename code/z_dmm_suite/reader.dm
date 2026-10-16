@@ -177,7 +177,10 @@ dmm_suite/proc/parse_model(models as text)
 			var/list/paddedAttributes = splittext(attributesText, semicolon_delim)
 			for(var/paddedAttribute in paddedAttributes)
 				key_value_regex.Find(paddedAttribute)
-				attributes[key_value_regex.group[1]] = loadAttribute(key_value_regex.group[2], originalStrings)
+				// Must be read before loadAttribute(), it re-uses key_value_regex and would clobber the groups.
+				var/attributeKey = key_value_regex.group[1]
+				var/attributeValue = key_value_regex.group[2]
+				attributes[attributeKey] = loadAttribute(attributeValue, originalStrings)
 		var/list/modelPart = list(atomPath, attributes)
 		if(ispath(atomPath, /area))
 			areas.Add(list(modelPart))

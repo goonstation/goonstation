@@ -22,6 +22,8 @@
 	#define COMSIG_ATOM_CROSSED "atom_crossed"
 	/// when something triggers Uncrossed by exiting this atom's turf (/atom/movable)
 	#define COMSIG_ATOM_UNCROSSED "atom_uncrossed"
+	/// When something that's caused an AM to be slipped ends that slip. (thing, /atom/movable/victim)
+	#define COMSIG_ATOM_SLIP_END "mov_throw_end"
 	/// When something calls UpdateIcon, before the icon is updated
 	#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
 	/// When something calls UpdateIcon, after the icon is updated
@@ -256,6 +258,10 @@
 	#define COMSIG_MOB_LOGIN "mob_login"
 	/// When a client logs out of a mob
 	#define COMSIG_MOB_LOGOUT "mob_logout"
+	/// When a target observer starts observing this mob
+	#define COMSIG_MOB_OBSERVER_ATTACHED "mob_observer_attached"
+	/// When a target observer stops observing this mob
+	#define COMSIG_MOB_OBSERVER_DETACHED "mob_observer_detached"
 	/// At the beginning of when an attackresults datum is being set up
 	#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
 	/// When a mob dies (gibbed bool)
@@ -312,6 +318,8 @@
 	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
 	/// Sent to cancel a mob viewing a camera
 	#define COMSIG_MOB_CANCEL_CAMERA "mob_cancel_camera"
+	/// Sent when a disease is cured from a mob (cured disease master, cured strain)
+	#define COMSIG_MOB_DISEASE_CURED "mob_disease_cured"
 
 	// ---- cloaking device signal ----
 

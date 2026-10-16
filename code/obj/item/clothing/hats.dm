@@ -1185,7 +1185,7 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 
 	proc/change_big_icon_state(var/BIG)
 		if(BIG == TRUE)
-			src.icon = initial(src.icon)
+			src.icon = get_initial_icon(src)
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon = 'icons/mob/clothing/bighat.dmi'
@@ -1265,7 +1265,7 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 
 	proc/change_big_icon_state(var/BIG)
 		if(BIG == TRUE)
-			src.icon = initial(src.icon)
+			src.icon = get_initial_icon(src)
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon = 'icons/mob/clothing/bighat.dmi'

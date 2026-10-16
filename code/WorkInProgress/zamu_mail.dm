@@ -230,9 +230,9 @@
 
 		// these are all things we will want later
 		crew[M] = list(
-			name = manifest_record.get_field("name"),
-			job = manifest_record.get_field("rank"),
-			dna = manifest_record.get_field("dna"),
+			name = manifest_record["name"],
+			job = manifest_record["rank"],
+			dna = manifest_record["dna"],
 			)
 
 	// nobody here

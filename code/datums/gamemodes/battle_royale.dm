@@ -441,7 +441,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/mime)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy) // Keeping this a one off cause I know someone will kill themselves and be salty
-	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream/br)
 #ifdef SECRETS_ENABLED
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)
