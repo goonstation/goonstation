@@ -1988,6 +1988,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 		..()
 		if(ishuman(src.mob))
 			M.bioHolder.AddEffect("accent_frog", do_stability = FALSE, scannable = FALSE, innate = TRUE)
+			src.mob.cure_disease_by_path(/datum/ailment/disease/dehydration)
 		if(mob.sims?.getValue("Thirst"))
 			return
 		else
@@ -1998,6 +1999,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 	disposing()
 		if(ishuman(src.mob))
 			src.mob.bioHolder.RemoveEffect("accent_frog")
+			src.mob.cure_disease_by_path(/datum/ailment/disease/dehydration) // this disease is specific to frogs, it shouldn't apply to any mutantraces
 		#ifndef RP_MODE
 			mob.sims.removeMotive("Thirst")
 		#endif
