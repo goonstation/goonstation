@@ -54,12 +54,6 @@ TYPEINFO(/datum/component/tameable)
 	if (owner.tamed)
 		owner.visible_message("[user] tries to feed [owner] [item] but they seem full...")
 		return
-	if(prob(tame_chance))
-		owner.tamed = TRUE
-		owner.ai_retaliates = FALSE
-		owner.visible_message("[owner] enjoyed the [item] and seems more docile!")
-		owner.emote("burp")
-		owner.ai.interrupt()
 	if(istype(owner, /mob/living/critter/rockworm))
 		var/mob/living/critter/rockworm/RW = owner
 		RW.aftereat()
