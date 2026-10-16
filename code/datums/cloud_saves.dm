@@ -13,6 +13,8 @@
 	var/list/saves = list()
 	var/loaded = FALSE // Have we performed an initial fetch
 	var/simulating = FALSE
+	/// Data waiting for `putDataSoon()` to send it
+	var/alist/pending_data = null
 
 	New(datum/player/player)
 		..()
@@ -130,6 +132,17 @@
 		src.data[key] = value
 		return TRUE
 
+	/// Sends after a short delay with any other changes made meanwhile, so players can't spam the API
+	proc/putDataSoon(key, value)
+		if (!src.pending_data)
+			src.pending_data = alist()
+			SPAWN(2 SECONDS)
+				var/alist/to_send = src.pending_data
+				src.pending_data = null
+				for (var/pending_key in to_send)
+					src.putData(pending_key, to_send[pending_key])
+		src.pending_data[key] = value
+
 	/// Save a new cloud file for this player. ONLY FOR CHARACTER PROFILE CLOUD SAVES. USE putData FOR ANYTHING ELSE.
 	proc/putSave(name, data)
 		if(data == src.saves[name]) //don't bother sending save if we'd be making no change
@@ -197,6 +210,8 @@
 		return TRUE
 
 	proc/getData(key)
+		if (src.pending_data && (key in src.pending_data))
+			return src.pending_data[key]
 		return src.data[key]
 
 	proc/getSave(name)

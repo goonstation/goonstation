@@ -351,6 +351,10 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	mat_changename = FALSE
 	var/is_rotated = FALSE // Logs are rotated after being felled. Need to unrotate them after stacking.
 
+	New()
+		. = ..()
+		src.UpdateIcon()
+
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")

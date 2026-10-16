@@ -290,7 +290,7 @@ TYPEINFO(/obj/item/pinpointer/idtracker)
 				continue // The ID can get deleted in the lagcheck
 			if(!I.registered)
 				continue // Don't include accessless and nameless IDs. Notably the captain's spare is registered to "Captain".
-			if(issilicon(I.loc) || istype(I.loc, /obj/machinery/bot))
+			if(issilicon(I.loc) || istype(I.loc, /obj/machinery/bot) || istype(I.loc, /obj/item/device/pda2/cyborg))
 				continue // Don't include botcards
 			if(istype(I, /obj/item/card/id/syndicate))
 				continue // No tracking nukies or anyone spending TC to not get tracked
