@@ -1819,24 +1819,24 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	set name = "Toggle Cover Lock"
 
 	if (src.dismantle_stage >= AI_DISMANTLE_STAGE_COVER_OPEN)
-		boutput(src, SPAN_ALERT("You can't lock your cover when it's open!"))
+		boutput(src.get_message_mob(), SPAN_ALERT("You can't lock your cover when it's open!"))
 	else
 		if (src.locking)
-			boutput(src, SPAN_ALERT("Your cover is currently locking, please be patient."))
+			boutput(src.get_message_mob(), SPAN_ALERT("Your cover is currently locking, please be patient."))
 		else if (src.dismantle_stage == AI_DISMANTLE_STAGE_UNLOCKED)
 			src.locking = 1
-			boutput(src, SPAN_ALERT("Locking cover..."))
+			boutput(src.get_message_mob(), SPAN_ALERT("Locking cover..."))
 			SPAWN(12 SECONDS)
 				if (!src.locking)
-					boutput(src, SPAN_ALERT("The lock was interrupted before it could finish!"))
+					boutput(src.get_message_mob(), SPAN_ALERT("The lock was interrupted before it could finish!"))
 				else
 					src.dismantle_stage = AI_DISMANTLE_STAGE_LOCKED
 					src.locking = 0
-					boutput(src, SPAN_ALERT("You lock your cover lock."))
+					boutput(src.get_message_mob(), SPAN_ALERT("You lock your cover lock."))
 
 		else
 			src.dismantle_stage = AI_DISMANTLE_STAGE_UNLOCKED
-			boutput(src, SPAN_ALERT("You unlock your cover lock."))
+			boutput(src.get_message_mob(), SPAN_ALERT("You unlock your cover lock."))
 
 /mob/living/silicon/ai/proc/eye_view()
 	if (isdead(src))

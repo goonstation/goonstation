@@ -1014,7 +1014,7 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 			src.desc = initial(B.desc)
 			src.species = initial(B.species)
 			src.gender = initial(B.gender)
-			src.icon = initial(B.icon)
+			src.icon = get_initial_icon(B)
 			src.icon_state = initial(B.icon_state)
 			src.icon_state_alive = initial(B.icon_state_alive)
 			src.icon_state_dead = initial(B.icon_state_dead)
@@ -1049,7 +1049,7 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 		src.desc = initial(info.desc)
 		src.species = initial(info.species)
 		src.gender = initial(info.gender)
-		src.icon = initial(info.icon)
+		src.icon = get_initial_icon(info)
 		src.icon_state = src.species
 		src.icon_state_alive = src.species
 		src.icon_state_dead = "[src.species]-dead"
@@ -2465,7 +2465,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			var/fall_left_or_right
 			var/new_pixel_x
 			var/new_pixel_y
-			if(target.icon == initial(T.icon) && target.icon_state == initial(T.icon_state) && target.y == src.y && !src.rest_mult)
+			if(target.icon == get_initial_icon(T) && target.icon_state == initial(T.icon_state) && target.y == src.y && !src.rest_mult)
 				if(src.dir & (SOUTH | EAST) )
 					fall_left_or_right = -1
 					switch(T.dir)

@@ -175,6 +175,7 @@
 					if(thr.throw_type & THROW_PEEL_SLIP)
 						thr.target_x = null
 						thr.target_y = null
+						thr.params["slip_objs"] ||= list()
 						thr.params["slip_objs"] += params["slip_obj"]
 						thr.range = max(thr.range, thr.dist_travelled + throw_range)
 						return 1

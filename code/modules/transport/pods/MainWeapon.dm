@@ -41,7 +41,7 @@
 	ship_install()
 		..()
 		if(src.ship.uses_weapon_overlays && src.appearanceString)
-			var/image/weap_image = image('icons/obj/pod_component128x128.dmi', "[src.appearanceString]")
+			var/image/weap_image = image('icons/obj/pod_component128x128.dmi', "[src.appearanceString]", layer = ABOVE_OBJ_LAYER)
 			weap_image.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
 			weap_image.pixel_y -=32
 			weap_image.pixel_x -=32
