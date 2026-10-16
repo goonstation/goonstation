@@ -12,18 +12,18 @@
 
 	event_effect(var/source)
 		..()
-		var/mob/picked_npc = locate(/mob/living/critter/small_animal/mouse/remy)
-		if (QDELETED(picked_npc) || !isalive(picked_npc))
+		var/mob/living/critter/small_animal/mouse/remy/remy = locate(/mob/living/critter/small_animal/mouse/remy)
+		if (QDELETED(remy) || !isalive(remy))
 			return
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as [picked_npc.real_name]?")
-		text_messages.Add("You are eligible to be respawned as [picked_npc.real_name]. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("Would you like to respawn as [remy.real_name]?")
+		text_messages.Add("You are eligible to be respawned as [remy.real_name]. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the NPC list. Please wait...")
 
 		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1, for_antag = FALSE)
 
-		if (QDELETED(picked_npc) || picked_npc.mind?.current.client || !isalive(picked_npc))
+		if (QDELETED(remy) || remy.mind?.current.client || !isalive(remy))
 			return
 
 		if (length(candidates) > 0)
@@ -32,7 +32,9 @@
 				if(!isobserver(M.current))
 					M.current.ghostize()
 				log_respawn_event(M, "remy", source)
-				M.transfer_to(picked_npc)
+				var/datum/handHolder/HH = remy.hands[1]
+				astype(HH.limb, /datum/limb/small_critter)?.max_wclass = W_CLASS_NORMAL
+				M.transfer_to(remy)
 				SPAWN(0)
-					tgui_alert(picked_npc, "You are not an antagonist! What you are, is a chef. Get to work.", "You are not an antagonist!")
-				message_ghosts("<b>[picked_npc.real_name] has become sapient.</b>")
+					tgui_alert(remy, "You are not an antagonist! What you are, is a chef. Get to work.", "You are not an antagonist!")
+				message_ghosts("<b>[remy.real_name] has become sapient.</b>")
