@@ -1,5 +1,22 @@
 
+(t)fri oct 16 26
+(u)Mr. Moriarty
+(p)27986
+(e)🆕⚙👮🖥️|C-Feature, A-Internal, A-Security, A-Computers
+(*)SecMate now has a citations database that tracks tickets and fines. Citations can also now be issued, approved, and printed from SecMate.
+(u)JORJ949
+(p)28009
+(e)🎨|C-Sprites
+(*)Medal rewards now have their own unique menu with many options for filtering and a preview of the item/skin you're redeeming!
+(u)Rubicubie
+(p)28032
+(e)🆕👮|C-Feature, A-Security
+(*)Tickets now look newer in a receipt-style!
 (t)thu oct 15 26
+(u)AronBattlnode
+(p)28103
+(e)💊👽|A-Medical, A-Mutantraces
+(+)Frog dehydration can no longer be asymptomatic.
 (u)JORJ949
 (p)28060
 (e)🪲🧛🔨|C-Bug, A-Gamemodes, A-Player-Actions

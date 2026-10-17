@@ -632,6 +632,8 @@
 			if(owner)
 				T.color = owner.cd_text_color
 				S.color = owner.cd_text_color
+				if(src.owner.border_icon && src.owner.border_icon_state)
+					src.UpdateOverlays(image(src.owner.border_icon, src.owner.border_icon_state), "ability_border")
 
 	disposing()
 		qdel(point_overlay)
@@ -888,6 +890,10 @@
 
 	var/icon = 'icons/mob/spell_buttons.dmi'
 	var/icon_state = "blob-template"
+
+	// Below determine if a separate "border" sprite should be overlayed on the ability
+	var/border_icon = null  /// Icon for a border to overlay over the ability separately
+	var/border_icon_state = null /// Icon state for the border to overlay over the ability icon.
 
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/show_tooltip = TRUE
