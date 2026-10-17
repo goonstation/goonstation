@@ -654,6 +654,11 @@ All other chickens in this file are non-secret. Please be respectful.
 	befriend_with_feed = FALSE
 	happy_pet_message = "walps happily!"
 	hens_fight = TRUE
+	eat_dead_mobs = TRUE
+
+	New()
+		. = ..()
+		abilityHolder.addAbility(/datum/targetable/critter/eat_bodies)
 
 	setup_hands()
 		..()

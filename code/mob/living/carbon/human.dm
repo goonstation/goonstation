@@ -400,6 +400,19 @@
 			if("r_leg")
 				. = r_leg
 
+	proc/get_limbs_all()
+		RETURN_TYPE(/list/obj/item/parts)
+		var/list/obj/item/parts/limbs = list()
+		if(l_arm)
+			limbs += l_arm
+		if(r_arm)
+			limbs += r_arm
+		if(l_leg)
+			limbs += l_leg
+		if(r_leg)
+			limbs += r_leg
+		return limbs
+
 	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1, var/no_drop = FALSE)
 		if (!target || !new_type || !src.holder)
 			return 0

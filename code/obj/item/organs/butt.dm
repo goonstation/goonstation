@@ -31,6 +31,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 	var/sound/sound_fart = null // this is the life I live, making it so you can change the fart sound of your butt (that you can wear on your head) so that you can make artifact butts with weird farts
 	default_material = "butt"
 	mat_changename = "butt"
+	var/is_robotic = FALSE
 	var/static/list/random_fart_sounds = list( // some nice variety in our fart sounds for random butt shennanigans
 			'sound/voice/farts/poo2.ogg',
 			'sound/voice/farts/fart1.ogg',
@@ -309,6 +310,7 @@ TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
 	toned = 0
 	default_material = "pharosium"
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
+	is_robotic = TRUE
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for
 
