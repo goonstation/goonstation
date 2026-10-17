@@ -1054,7 +1054,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			var/obj/precursor_puzzle/rotator/speen = new /obj/precursor_puzzle/rotator(twostep)
 			speen.id = node_tag
 			speen.dir = D
-			speen.opacity = 0
+			speen.set_opacity(0)
 
 		new /obj/rack/precursor/pressure/knot(nodelandmark)
 
@@ -1064,7 +1064,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		hub.id = "[node_tag]"
 		hub.tag = "controller_[node_tag]"
 		hub.self_removing = TRUE
-		hub.opacity = 0
+		hub.set_opacity(0)
 
 		for(var/D in alldirs)
 			var/turf/proxturf = get_step(nodelandmark,D)
