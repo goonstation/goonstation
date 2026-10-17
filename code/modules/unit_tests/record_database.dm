@@ -1,13 +1,25 @@
+/datum/db_record/unit_test
+
+/datum/db_record/unit_test/build_fields()
+	return alist(
+		"id"			= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
+		"test_id"		= new /datum/record_field/number(src, "Test ID", 0),
+		"test_index"	= new /datum/record_field/string(src, "Test Index", "0"),
+		"test_name"		= new /datum/record_field/string(src, "Test Name", "New Record"),
+	)
+
+
 /datum/unit_test/record_database
 	var/datum/record_database/db
 
 /datum/unit_test/record_database/Run()
-	db = new(list("test_id", "test_index"), /datum/db_record)
+	db = new(list("test_id", "test_index"), /datum/db_record/unit_test)
 
 	TEST_ASSERT("test_id" in db.indices, "Index test_id not created.")
 	TEST_ASSERT("test_index" in db.indices, "Index test_index not created.")
 
-	var/datum/db_record/r1 = db.create_record(list())
+	var/datum/db_record/unit_test/r1 = new()
+	db.add_record(r1)
 	TEST_ASSERT(r1 in db.records, "Record not added to the database.")
 	TEST_ASSERT(length(db.indices["test_id"]) == 0, "Index non-empty after adding an empty record.")
 
@@ -22,7 +34,11 @@
 	TEST_ASSERT(db.find_record("test_id", 42) != r1, "Record found for old value of test_id.")
 	TEST_ASSERT(db.find_record("test_id", 1) == r1, "Record not found for new value of test_id.")
 
-	var/datum/db_record/r2 = db.create_record(list("test_id" = 1, "test_index" = "test", "name" = "test2"))
+	var/datum/db_record/unit_test/r2 = new()
+	r2["test_id"] = 1
+	r2["test_index"] = "test"
+	r2["name"] = "test2"
+	db.add_record(r2)
 	TEST_ASSERT(length(db.records) == 2, "Incorrect length of the database after adding a second record.")
 	TEST_ASSERT(length(db.indices["test_id"][1]) == 2, "test_id index length incorrect after adding a second record.")
 	TEST_ASSERT(length(db.find_records("test_id", 1)) == 2, "Incorrect find_records output size with 2 records.")
