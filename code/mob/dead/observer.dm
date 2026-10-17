@@ -18,6 +18,7 @@ TYPEINFO(/mob/dead/observer)
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
 
+	var/datum/vision_modifier/observer/observer_vision
 	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true
 	var/observe_round = FALSE
 	var/health_shown = FALSE
@@ -260,9 +261,9 @@ TYPEINFO(/mob/dead/observer)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
 
-	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	src.see_invisible = INVIS_SPOOKY
-	src.see_in_dark = SEE_DARK_FULL
+	// This is so we can toggle flags in our own datum instead of swapping singletons in and out
+	src.observer_vision = new /datum/vision_modifier/observer()
+	src.apply_vision(src.observer_vision, "innate")
 	animate_bumble(src) // floaty ghosts  c:
 	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
 	src.verbs += /mob/dead/observer/proc/toggle_ghost_chem_vision
@@ -708,16 +709,17 @@ TYPEINFO(/mob/dead/observer)
 	set name = "Toggle Ghosts"
 	set category = null
 
-	if (src.see_invisible >= INVIS_GHOST)
-		src.see_invisible = INVIS_BELOW_GHOST
+	if (src.observer_vision.see_invisible >= INVIS_GHOST)
+		src.observer_vision.see_invisible = INVIS_BELOW_GHOST
 		boutput(src, "You can no longer see other ghosts.", group="ghostsight")
-	else if(HAS_FLAG(src.sight, SEE_SELF))
-		src.sight &= ~SEE_SELF
+	else if(HAS_FLAG(src.observer_vision.sight, SEE_SELF))
+		src.observer_vision.sight &= ~SEE_SELF
 		boutput(src, "You can no longer see yourself.", group="ghostsight")
 	else
-		src.see_invisible = INVIS_SPOOKY
-		src.sight |= SEE_SELF
+		src.observer_vision.see_invisible = INVIS_SPOOKY
+		src.observer_vision.sight |= SEE_SELF
 		boutput(src, "You can now see other ghosts and yourself.", group="ghostsight")
+	src.update_vision()
 
 
 /mob/dead/observer/verb/observe()
@@ -750,7 +752,8 @@ TYPEINFO(/mob/dead/observer)
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)
-		newobs.see_invisible = target.invisibility
+		newobs.observer_vision.see_invisible = target.invisibility
+		newobs.update_vision()
 	if(HAS_ATOM_PROPERTY(src, PROP_MOB_SPECTRO))
 		APPLY_ATOM_PROPERTY(newobs, PROP_MOB_SPECTRO, newobs)
 	if (src.corpse)
@@ -771,7 +774,8 @@ TYPEINFO(/mob/dead/observer)
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)
-		newobs.see_invisible = target.invisibility
+		newobs.observer_vision.see_invisible = target.invisibility
+		newobs.update_vision()
 	if (src.corpse)
 		corpse.ghost = newobs
 	if (src.mind)
