@@ -454,6 +454,7 @@ TYPEINFO(/obj/machinery/vending/jobclothing/syndicate)
 	pay = 1
 	acceptcard = 1
 	req_access = list()
+	company_name = "The Syndicate"
 
 	create_products(restocked)
 		..()
