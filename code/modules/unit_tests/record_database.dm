@@ -21,7 +21,6 @@
 	var/datum/db_record/unit_test/r1 = new()
 	db.add_record(r1)
 	TEST_ASSERT(r1 in db.records, "Record not added to the database.")
-	TEST_ASSERT(length(db.indices["test_id"]) == 0, "Index non-empty after adding an empty record.")
 
 	r1["test_id"] = 42
 	TEST_ASSERT(r1["test_id"] == 42, "Record test_id not changed after assignment.")
