@@ -312,6 +312,9 @@ To remove:
 #define PROP_MOB_MINING_ALERTS(x) x("mining_alerts", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_LYCANTHROPY_RESIST(x) x("lycanthropy_resist", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //resists involuntary transforms
 #define PROP_MOB_ALCOHOL_RESIST(x) x("alcohol_resist", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+// A firm grip prevents mobs from dropping held items in certain cases
+#define PROP_MOB_GRIP_FIRM_LEFT(x) x("grip_firm_left", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_GRIP_FIRM_RIGHT(x) x("grip_firm_right", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 #define PROP_HUMAN_DROP_BRAIN_ON_GIB(x) x("drop_brain_on_gib", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 

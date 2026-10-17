@@ -2582,6 +2582,7 @@ TYPEINFO(/mob)
 	actions.interrupt(src, INTERRUPT_ACT)
 
 /mob/proc/adjust_throw(datum/thrown_thing/thr)
+	SEND_SIGNAL(src, COMSIG_MOB_THROW_ADJUST, thr)
 	return
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
