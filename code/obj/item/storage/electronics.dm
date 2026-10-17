@@ -151,3 +151,13 @@
 				/obj/item/device/light/glowstick/purple)
 				src.storage.add_contents(new glowstick(src))
 
+/obj/item/storage/box/elecrepair
+	name = "electrical repair kit"
+	icon_state = "electrical_nt"
+	desc = "A specially designed box that can hold power cells, cabling and other tools that aid in electrical repairs."
+	can_hold = list(/obj/item/cell)
+	spawn_contents = list(/obj/item/cable_coil/blue = 3,
+	/obj/item/cell/cerenkite = 2,
+	/obj/item/device/t_scanner,
+	/obj/item/pinpointer/category/apcs)
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
