@@ -620,7 +620,20 @@ TYPEINFO(/mob/dead/observer)
 	set category = null
 	set name = "Re-enter Corpse"
 	if(QDELETED(corpse) || corpse.loc == null)
-		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
+		if (src.mind.brain)
+			boutput(src, SPAN_ALERT("You don't have a corpse, but your brain is still around!"))
+			var/atom/brain_loc = src.mind.brain.loc
+			while(!isnull(brain_loc))
+				if (ismob(brain_loc))
+					src.insert_observer(brain_loc)
+					break
+				if (isturf(brain_loc))
+					src.set_loc(brain_loc)
+					break
+				brain_loc = brain_loc.loc
+				continue
+			return
+		tgui_alert(src, "You don't have a corpse or a last brain! If you're very sure you do, and this seems wrong, make a bug report!", "Remains Not Found")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
 		var/rank = src.client.holder.rank
