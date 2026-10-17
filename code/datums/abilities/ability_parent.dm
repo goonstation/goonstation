@@ -444,7 +444,8 @@
 
 /atom/movable/screen/ability
 	var/datum/targetable/owner
-	var/static/image/binding = image('icons/mob/spell_buttons.dmi',"binding")
+	// Must always layer over the ability border overlay or it'll get covered
+	var/static/image/binding = image('icons/mob/spell_buttons.dmi',"binding", layer = HUD_LAYER_1)
 	//*screams*
 	var/static/image/one = image('icons/mob/spell_buttons.dmi',"1")
 	var/static/image/two = image('icons/mob/spell_buttons.dmi',"2")
@@ -578,11 +579,12 @@
 
 
 /atom/movable/screen/ability/topBar
-	var/static/image/ctrl_highlight = image('icons/mob/spell_buttons.dmi',"ctrl")
-	var/static/image/shift_highlight = image('icons/mob/spell_buttons.dmi',"shift")
-	var/static/image/alt_highlight = image('icons/mob/spell_buttons.dmi',"alt")
-	var/static/image/cooldown = image('icons/mob/spell_buttons.dmi',"cooldown")
-	var/static/image/darkener = image('icons/mob/spell_buttons.dmi',"darkener")
+	// Must always layer over the ability border overlay or they'll get covered
+	var/static/image/ctrl_highlight = image('icons/mob/spell_buttons.dmi',"ctrl", layer = HUD_LAYER_1)
+	var/static/image/shift_highlight = image('icons/mob/spell_buttons.dmi',"shift", layer = HUD_LAYER_1)
+	var/static/image/alt_highlight = image('icons/mob/spell_buttons.dmi',"alt", layer = HUD_LAYER_1)
+	var/static/image/cooldown = image('icons/mob/spell_buttons.dmi',"cooldown", layer = HUD_LAYER_1)
+	var/static/image/darkener = image('icons/mob/spell_buttons.dmi',"darkener", layer = HUD_LAYER_1)
 
 	var/atom/movable/screen/pseudo_overlay/cd_tens
 	var/atom/movable/screen/pseudo_overlay/cd_secs
