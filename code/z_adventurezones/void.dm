@@ -72,6 +72,11 @@ TYPEINFO(/turf/unsimulated/wall/void)
 /turf/unsimulated/wall/void/crunch //putting these here for now
 	fullbright = 0
 
+/turf/unsimulated/wall/void/timewarp
+	name = "dense time-space breach"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "timehole"
+
 TYPEINFO(/turf/unsimulated/floor/void)
 	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/floor/void
