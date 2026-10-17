@@ -36,6 +36,14 @@ TYPEINFO(/obj/item/device/appraisal)
 			// objs only
 			return
 
+		// If there is a barcode sticker, use the commodities list for the destination trader.
+		var/list/trader_commodities = null
+		if(istype(A, /atom/movable))
+			var/atom/movable/AM = A
+			for(var/datum/trader/T in shippingmarket.active_traders)
+				if(T.crate_tag == AM.delivery_destination)
+					trader_commodities = T.goods_buy
+
 		var/sell_value = 0
 		var/out_text = ""
 		if (art)
@@ -56,10 +64,6 @@ TYPEINFO(/obj/item/device/appraisal)
 			sell_value = -1
 			var/obj/storage/crate/C = A
 			if (C.delivery_destination)
-				for (var/datum/trader/T in shippingmarket.active_traders)
-					if (T.crate_tag == C.delivery_destination)
-						sell_value = shippingmarket.appraise_value(C.contents, T.goods_buy, sell = 0)
-						out_text = "<strong>Prices from [T.name]</strong><br>"
 				for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 					if(C.delivery_destination == "REQ_THIRDPARTY")
 						out_text = "<strong>Cannot evaluate third-party sales.</strong><br>"
@@ -71,7 +75,7 @@ TYPEINFO(/obj/item/device/appraisal)
 
 			if (sell_value == -1)
 				// no trader on the crate
-				sell_value = shippingmarket.appraise_value(A.contents, sell = 0)
+				sell_value = shippingmarket.appraise_value(A.contents, trader_commodities, sell = 0)
 
 		else if (istype(A, /obj/storage))
 			var/obj/storage/S = A
@@ -85,14 +89,18 @@ TYPEINFO(/obj/item/device/appraisal)
 				return
 
 			out_text = "[SPAN_ALERT("Contents must be placed in a crate to be sold!")]<br>"
-			sell_value = shippingmarket.appraise_value(S.contents, sell = 0)
+			sell_value = shippingmarket.appraise_value(S.contents, trader_commodities, sell = 0)
 
 		else if (istype(A, /obj/item/satchel))
 			out_text = "[SPAN_ALERT("Contents must be placed in a crate to be sold!")]<br>"
-			sell_value = shippingmarket.appraise_value(A.contents, sell = 0)
+			sell_value = shippingmarket.appraise_value(A.contents, trader_commodities, sell = 0)
+
+		else if (istype(A, /obj/item/chicken_carrier))
+			out_text = "[SPAN_ALERT("The chicken must be removed and put inside a crate to be sold!")]<br>"
+			sell_value = shippingmarket.appraise_value(A.contents, trader_commodities, sell = 0)
 
 		else if (istype(A, /obj/item))
-			sell_value = shippingmarket.appraise_value(list( A ), sell = 0)
+			sell_value = shippingmarket.appraise_value(list(A), trader_commodities, sell = 0)
 
 		// replace with boutput
 		boutput(user, SPAN_NOTICE("[out_text]Estimated value: <strong>[sell_value] credit\s.</strong>"))
