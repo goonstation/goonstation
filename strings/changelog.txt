@@ -1,4 +1,9 @@
 
+(t)sat oct 17 26
+(u)JORJ949
+(p)28057
+(e)🆕🎨🔨|C-Feature, C-Sprites, A-Player-Actions
+(+)Changeling ability icon borders have been resprited, with a writhing animation when you hover over the ability.
 (t)fri oct 16 26
 (u)Mr. Moriarty
 (p)27986
