@@ -36,12 +36,12 @@
 	var/datum/db_record/unit_test/r2 = new()
 	r2["test_id"] = 1
 	r2["test_index"] = "test"
-	r2["name"] = "test2"
+	r2["test_name"] = "test2"
 	db.add_record(r2)
 	TEST_ASSERT(length(db.records) == 2, "Incorrect length of the database after adding a second record.")
 	TEST_ASSERT(length(db.indices["test_id"][1]) == 2, "test_id index length incorrect after adding a second record.")
 	TEST_ASSERT(length(db.find_records("test_id", 1)) == 2, "Incorrect find_records output size with 2 records.")
-	TEST_ASSERT(db.find_record("name", "test2") == r2, "Incorrect result of find_record for unindexed column.")
+	TEST_ASSERT(db.find_record("test_name", "test2") == r2, "Incorrect result of find_record for unindexed column.")
 
 	r2.delete()
 	TEST_ASSERT(isnull(r2.get_db()), "A record got deleted but it still holds a reference to its database.")
