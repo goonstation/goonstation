@@ -411,3 +411,37 @@
 		var/obj/item/clothing/head/NTberet/beret = new/obj/item/clothing/head/NTberet(src)
 		wearing_beret = beret
 		src.UpdateIcon()
+
+/mob/living/critter/small_animal/turtle/machoangelo
+
+	name = "Machoangelo"
+	desc = "The terrifying gaze behind those derpy eyes tells you how bad this fights going to be."
+	player_can_spawn_with_pet = FALSE
+	is_pet = FALSE
+	ai_type = /datum/aiHolder/aggressive
+	faction = list(FACTION_TOXMOON)
+	costume_name = "sylv_costume_3"
+	add_abilities = list(/datum/targetable/critter/charge/long_cd)
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/charge/long_cd/charge = src.abilityHolder.getAbility(/datum/targetable/critter/charge/long_cd)
+		if (charge && !charge.disabled && charge.cooldowncheck())
+			charge.handleCast(target)
+			return TRUE
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_GOOPIMMUNE, src.type)
+		src.update_icon()
+
+	tigernado
+		name = "Tigernado"
+		costume_name = "sylv_costume_2"
+
+	wrathangel
+		name = "Wrathangel"
+		costume_name = "sylv_costume_1"
+
+	dontatellmom
+		name = "Dontatellmom"
+		costume_name = "sylv_costume_4"

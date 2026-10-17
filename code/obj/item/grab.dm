@@ -25,7 +25,7 @@
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
-		if(!affecting || affecting.disposed)
+		if(!affecting || affecting.disposed || HAS_ATOM_PROPERTY(affecting, PROP_MOB_UNGRABBABLE))
 			qdel(src)
 			return
 
@@ -337,7 +337,7 @@
 		.= (src.state == GRAB_PIN)
 
 	proc/check()
-		if(!assailant || !affecting)
+		if(!assailant || !affecting || HAS_ATOM_PROPERTY(affecting, PROP_MOB_UNGRABBABLE))
 			qdel(src)
 			return 1
 
