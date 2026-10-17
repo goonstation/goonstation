@@ -541,7 +541,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.quality = 0.5
 							L.limbs.r_arm = limb
 							limb.holder = L
-							limb.remove_stage = 0
+							limb.remove_stage = LIMB_REMOVE_STAGE_SECURE
 
 				if (src.l_limb_arm_type_mutantrace)
 					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
@@ -551,7 +551,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.quality = 0.5
 							L.limbs.l_arm = limb
 							limb.holder = L
-							limb.remove_stage = 0
+							limb.remove_stage = LIMB_REMOVE_STAGE_SECURE
 
 				//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
@@ -562,7 +562,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.quality = 0.5
 							L.limbs.r_leg = limb
 							limb.holder = L
-							limb.remove_stage = 0
+							limb.remove_stage = LIMB_REMOVE_STAGE_SECURE
 
 				if (src.l_limb_leg_type_mutantrace)
 					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
@@ -572,7 +572,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.quality = 0.5
 							L.limbs.l_leg = limb
 							limb.holder = L
-							limb.remove_stage = 0
+							limb.remove_stage = LIMB_REMOVE_STAGE_SECURE
 				//////////////HEAD//////////////////
 				L.organHolder?.head?.MakeMutantHead(HEAD_HUMAN, 'icons/mob/human_head.dmi', "head")
 

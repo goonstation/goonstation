@@ -73,46 +73,6 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		if (..())
 			src.on_attach()
 
-	surgery(obj/item/tool)
-		if(remove_stage > 0 && (istype(tool, /obj/item/staple_gun) || istype(tool, /obj/item/suture)) )
-			remove_stage = 0
-
-		else if(remove_stage == 0 || remove_stage == 2)
-			if(istool(tool, TOOL_CUTTING))
-				remove_stage++
-			else
-				return FALSE
-
-		else if(remove_stage == 1)
-			if(istool(tool, TOOL_SAWING))
-				remove_stage++
-			else
-				return FALSE
-
-		if(!isdead(holder))
-			if(prob(40))
-				holder.emote("scream")
-		holder.TakeDamage("chest", 20, 0, 0, DAMAGE_STAB)
-		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = TRUE)
-
-		switch(remove_stage)
-			if(0)
-				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [src.name] to [holder.name] with [tool].</span>", SPAN_ALERT("You attach [src.name] to [holder.name] with [tool]."))
-				logTheThing(LOG_COMBAT, tool.the_mob, "attaches [src.name] to [constructTarget(holder,"combat")].")
-			if(1)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] [src.cut_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.cut_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."))
-			if(2)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] [src.saw_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.saw_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."))
-
-				SPAWN(rand(15, 20) SECONDS)
-					if(remove_stage == 2)
-						src.remove(FALSE)
-			if(3)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] [src.cut_messages[1]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You [src.cut_messages[2]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool]."))
-				logTheThing(LOG_COMBAT, tool.the_mob, "removes [src.name] to [constructTarget(holder,"combat")].")
-				src.remove(FALSE)
-
-		return TRUE
 
 	on_holder_examine()
 		return "has [bicon(src)] \an [src.name] attached as a"
@@ -123,22 +83,6 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 
 		src.bodyImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
 		return bodyImage
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(!ishuman(target))
-			return
-
-		src.add_fingerprint(user)
-
-		if(user.zone_sel.selecting != src.slot)
-			return ..()
-
-		if (!surgeryCheck(target, user))
-			return ..()
-
-		var/mob/living/carbon/human/H = target
-
-		attach(H, user)
 
 	proc/on_attach()
 		return ishuman(src.holder)
