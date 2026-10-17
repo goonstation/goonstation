@@ -1251,6 +1251,8 @@
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.show_message(SPAN_ALERT("Your [src] explodes!"), 1)
+			if(isdead(M) && !isturf(M.loc))
+				M.ex_act(3) //Always gib dead wearer even if in a locker or something
 
 		if(T)
 			T.hotspot_expose(700,125)
