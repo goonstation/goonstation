@@ -926,7 +926,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		space_overlays()
 			. = ..()
-			if (length(space_overlays)) // Are we on the edge of a chunk wall
+			if (global.map_currently_underwater && length(space_overlays)) // Are we on the edge of a chunk wall
 				if (src.ore) return // Skip if there's ore here already
 				var/list/color_vals = algae_controller().get_color(src)
 				if (length(color_vals))

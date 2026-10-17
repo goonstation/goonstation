@@ -42,6 +42,17 @@
 	black
 		icon_state = "picframe_black"
 
+/obj/gravestone
+	name = "gravestone"
+	desc = "RIP in peace."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "gravestone_1"
+	anchored = ANCHORED
+
+	alt
+		icon_state = "gravestone_2"
+		desc = "Rest in RIP."
+
 // CRITTERS
 
 /obj/critter/domestic_bee/walp_bee
