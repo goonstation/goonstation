@@ -21,7 +21,7 @@
 		add_surgeries()
 		populate_child_surgeries()
 
-	/// Returns TRUE if the surgeon can perform this surgery when using the given tool.
+	/// Returns TRUE if the surgeon can perform a surgery when using the given tool.
 	proc/will_perform_surgery(var/mob/living/surgeon, var/obj/item/tool)
 		if (get_implicit_surgery(surgeon,tool))
 			return TRUE
@@ -29,7 +29,7 @@
 			return TRUE
 		return FALSE
 
-	/// Returns TRUE if there's a reason to stop the current attack or action with the given tool.
+	/// Returns TRUE if there's a reason to stop attacks with the given tool.
 	/// IE: Stop beating people to death with sutures when there are no wounds to close.
 	proc/should_prevent_harm(var/mob/living/surgeon, var/obj/item/tool)
 		if (!surgery_conditions_met(surgeon, tool))
@@ -45,7 +45,7 @@
 			var/datum/surgery/surgery = get_implicit_surgery(surgeon, tool)
 			if (surgery)
 				tool.add_fingerprint(surgeon)
-				return surgery.attempt(surgeon, tool)
+				return surgery.attempt_implicit(surgeon, tool)
 
 		if (tool_relevant(surgeon,tool))
 			if (tool)
@@ -120,7 +120,7 @@
 	/// Returns TRUE if the mob's given tool is used in a surgery step.
 	proc/tool_relevant(mob/user, obj/item/tool)
 		for (var/datum/surgery/surgery in base_surgeries)
-			if (surgery.step_possible(user, tool))
+			if (surgery.tool_relevant(user, tool))
 				return TRUE
 		return FALSE
 
@@ -193,17 +193,30 @@
 		var/target_area = zone_sel2name[surgeon.zone_sel.selecting]
 		var/damage = rand(20,30)
 		if (prob(33)) // if they REALLY fuck up
-			var/fluff = pick("", "confident ", "quick ", "agile ", "flamboyant ", "nimble ")
-			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a [fluff]cut into [patient]'s [target_area] with [tool]!"),\
-				SPAN_ALERT("You make a [fluff]cut into [patient]'s [target_area] with [tool]!"),\
-				SPAN_ALERT("<b>[surgeon]</b> makes a [fluff]cut into your [target_area] with [tool]!"))
+			if (tool.hit_type == DAMAGE_CUT || tool.hit_type == DAMAGE_STAB)
+				var/fluff = pick("", "confident ", "quick ", "agile ", "flamboyant ", "nimble ")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a [fluff]cut into [patient]'s [target_area] with [tool]!"),\
+					SPAN_ALERT("You make a [fluff]cut into [patient]'s [target_area] with [tool]!"),\
+					SPAN_ALERT("<b>[surgeon]</b> makes a [fluff]cut into your [target_area] with [tool]!"))
+				patient.visible_message(SPAN_ALERT("<b>Blood gushes everywhere!</b> That can't have been the correct thing to do!"))
+			else if (tool.hit_type == DAMAGE_BURN)
+				var/fluff = pick("","brazenly ", "ignorantly ", "recklessly ", "foolishly ", "carelessly ", "negligently ")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> [fluff]burns [patient]'s [target_area] with [tool]!"),\
+					SPAN_ALERT("You [fluff]burn [patient]'s [target_area] with [tool]!"),\
+					SPAN_ALERT("<b>[surgeon]</b> [fluff]burns your [target_area] with [tool]!"))
+				patient.visible_message(SPAN_ALERT("<b>A horrid smell fills the air!</b> That can't have been the correct thing to do!"))
+			else
+				var/fluff = pick("","brazenly ", "ignorantly ", "recklessly ", "foolishly ", "carelessly ", "negligently ")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> [fluff]hits [patient]'s [target_area] with [tool]!"),\
+					SPAN_ALERT("You [fluff]hit [patient]'s [target_area] with [tool]!"),\
+					SPAN_ALERT("<b>[surgeon]</b> [fluff]hits your [target_area] with [tool]!"))
+				patient.visible_message(SPAN_ALERT("<b>You hear a horrible crunch!</b> That can't have been the correct thing to do!"))
 
 			patient.TakeDamage(surgeon.zone_sel.selecting, damage, 0)
 			take_bleeding_damage(patient, surgeon, damage, surgery_bleed = TRUE)
 			create_blood_sploosh(patient)
 			display_slipup_image(surgeon, patient.loc)
 
-			patient.visible_message(SPAN_ALERT("<b>Blood gushes from the incision!</b> That can't have been the correct thing to do!"))
 			return
 
 		else

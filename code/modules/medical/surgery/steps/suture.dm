@@ -2,7 +2,7 @@
 	name = "Suture"
 	icon_state = "suture"
 	success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-	tool_types_required = list(/obj/item/suture)
+	tool_types_required = list(/obj/item/suture, /obj/item/staple_gun)
 	repeatable = TRUE
 	var/loc = ""
 	success_damage = 0
@@ -18,8 +18,8 @@
 					repair_bleeding_damage(patient, 50, rand(1,3))
 				return TRUE
 
-	cancel_context
-		desc = "Suture the patient and cancel this surgery."
+	cancel
+		desc = "Suture or staple the patient and cancel this surgery."
 		repeatable = FALSE
 		optional = TRUE
 		success_sound = FALSE
@@ -41,7 +41,6 @@
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
 			return TRUE
-
 
 	head
 		desc = "Suture the head shut."

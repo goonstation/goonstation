@@ -344,7 +344,7 @@
 	desc = "Add the organ."
 	icon_state = "scalpel"
 	success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-	optional = TRUE
+	optional = FALSE
 	success_damage = 0
 	on_complete(mob/surgeon, obj/item/tool)
 		var/obj/item/organ/O = tool
@@ -361,9 +361,19 @@
 			var/obj/item/organ/O = tool
 			O.attach_organ(parent_surgery.patient, surgeon)
 
+	kidney
+		tool_suitable(mob/surgeon, obj/item/tool)
+			if (istype(tool, /obj/item/organ))
+				var/obj/item/organ/O = tool
+				if (O.organ_holder_name == "right_kidney" || O.organ_holder_name == "left_kidney")
+					if (O.can_attach_organ(parent_surgery.patient, surgeon))
+						return TRUE
+			return FALSE
 	eye
 
 		tool_suitable(mob/surgeon, obj/item/tool)
+			if (!istype(tool, /obj/item/organ/eye))
+				return FALSE
 			var/obj/item/organ/O = tool
 			if (O.can_attach_organ(parent_surgery.patient, surgeon))
 				return TRUE

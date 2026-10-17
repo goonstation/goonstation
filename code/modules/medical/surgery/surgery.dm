@@ -91,11 +91,18 @@
 	// ----------
 
 	/// Attempts the first possible step in this surgery, returns TRUE if one was found & attempted.
-	proc/attempt(mob/surgeon, obj/item/tool)
+	proc/attempt_implicit(mob/surgeon, obj/item/tool)
 		var/datum/surgery_step/step = step_possible(surgeon, tool)
 		if (step)
 			step.attempt_surgery_step(surgeon, tool)
 			return TRUE
+		return FALSE
+
+	// Check if the provided tool is relevant to this surgery, even if not in use
+	proc/tool_relevant(mob/surgeon, obj/item/tool)
+		for(var/datum/surgery_step/step in surgery_steps)
+			if (step.tool_relevant(surgeon, tool))
+				return TRUE
 		return FALSE
 
 	/// Check if any of this surgeries' steps are possible using the given tool. Returns the first possible step.
@@ -110,6 +117,12 @@
 			if (step.step_number <= max_allowed_step)
 				if (!step.completed && step.can_operate(surgeon, tool))
 					return step
+
+		if (implicit && src.implicit)
+			if (cancel_possible())
+				for (var/datum/surgery_step/step in cancel_steps)
+					if (!step.completed && step.can_operate(surgeon, tool))
+						return step
 		return FALSE
 
 	/// Called when the last step of a surgery is completed. Override on_complete to add completion effects.
@@ -117,10 +130,10 @@
 		complete = TRUE
 		on_complete(surgeon, I)
 
-	/// Moves to the surgery containing this, showing the appropriate contexts.
+	/// Shows the context menu of the surgery containing this surgery.
 	proc/step_up(mob/surgeon, obj/item/I)
-		if (super_surgery)
-			super_surgery.show_contexts(surgeon)
+		if (src.super_surgery)
+			src.super_surgery.show_contexts(surgeon)
 		else
 			//go back to the holder if we've no supersurgery
 			holder.show_contexts(surgeon, I)
@@ -139,10 +152,10 @@
 		for(var/datum/surgery/surgery in current_sub_surgeries)
 			// sub-surgeries always cancel quietly, to avoid spamming -every- subsurgeries' "You suture <X> shut!"
 			if (surgery.cancel_possible() || forced)
-				surgery.cancel(surgeon, I, from_context_menu=from_context_menu, quiet=quiet,forced=forced)
+				surgery.cancel(surgeon, I, from_context_menu=from_context_menu, quiet=TRUE,forced=forced)
 		check_surgery_stage()
 		if (from_context_menu)
-			super_surgery?.show_contexts(surgeon)
+			src.super_surgery?.show_contexts(surgeon)
 
 	/// Determine if this surgery is possible on the target.
 	proc/can_perform_surgery(mob/living/surgeon, obj/item/tool)
@@ -182,17 +195,18 @@
 		if (!can_perform_surgery(surgeon, tool))
 			return FALSE
 		// If not complete & this is an implicit surgery, return the first possible step.
-		if ((!super_surgery || super_surgery?.complete) && implicit)
+		if ( implicit)
 			var/datum/surgery_step/step = step_possible(surgeon, tool)
 			if (step)
 				return src
+
 		// If sub-surgeries are accessible, attempt to get an implicit step from them.
 		if (sub_surgeries_accessible(surgeon, tool))
 			for(var/datum/surgery/surgery in current_sub_surgeries)
 				surgery.check_surgery_stage()
 				var/result = surgery.get_implicit_surgery(surgeon, tool)
 				if (result)
-					return surgery
+					return result
 		return FALSE
 
 	/// Returns the implicit surgery step that will be performed with the given tool.
@@ -317,34 +331,27 @@
 			response += surgery.get_sub_surgeries()
 		return response
 
-	/// Get the progress of the surgery.
+	/// Get the progress of the surgery. 1 = first step completed, etc.
 	proc/get_surgery_progress()
 		var/lowest_incomplete = 99
 		var/any_complete = FALSE
+		var/any_incomplete = FALSE
 		for (var/datum/surgery_step/step in surgery_steps)
 			if (step.completed && !step.optional)
 				any_complete = TRUE
 			if (!step.completed && !step.optional)
 				lowest_incomplete = min(step.step_number, lowest_incomplete)
+				any_incomplete = TRUE
 		if (!any_complete)
 			return 0
-		else
+		else if (any_incomplete)
 			return lowest_incomplete - 1
+		else
+			return last_surgery_step
 
 	/// Returns true if sub surgeries are possible.
 	proc/sub_surgeries_accessible(mob/surgeon, obj/item/tool)
 		return (sub_surgeries_always_accessible || complete)
-
-	// Returns TRUE if the provided tool is relevant to a surgery step, or sub surgery if this is complete.
-	proc/tool_appropriate(mob/surgeon, obj/item/tool)
-		for (var/datum/surgery_step/step in surgery_steps)
-			if (step.can_operate(surgeon, tool))
-				return TRUE
-		if (complete)
-			for (var/datum/surgery/surgery in current_sub_surgeries)
-				if (surgery.tool_appropriate(surgeon, tool))
-					return TRUE
-		return FALSE
 
 	/// Check if the patient can have this surgery performed on them here. IE: on a table.
 	/// Use 'tool' here to see if an item could ignore being on a table.
@@ -460,8 +467,8 @@
 
 			if (success_sound)
 				playsound(parent_surgery.patient, success_sound, 50, TRUE)
-			complete(surgeon, tool)
 			on_complete(surgeon, tool)
+			complete(surgeon, tool)
 		parent_surgery.step_attempted(src,surgeon, tool)
 		return success
 
@@ -480,6 +487,8 @@
 		else
 			if (istype(tool, /obj/item/suture))
 				messup_texts = list(" messes up", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " knots up [tool]")
+			else if (istype(tool, /obj/item/staple_gun))
+				messup_texts = list(" messes up", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " jams [tool]")
 
 		if (!messup_texts)
 			messup_texts = list(" messes up", "'s hand slips", "'s hand twitches")
@@ -494,7 +503,7 @@
 				return TRUE
 
 	// Check if the tool is relevant for this surgery step
-	proc/tool_appropriate(mob/surgeon, obj/item/tool)
+	proc/tool_relevant(mob/surgeon, obj/item/tool)
 		if (tool)
 			var/flags_suitable = (!tool_flags_required || tool?.tool_flags & tool_flags_required)
 			var/type_suitable = tool_path_required(tool)
@@ -517,7 +526,7 @@
 				boutput(surgeon,SPAN_ALERT("You need to complete the previous steps first!"))
 			return FALSE
 		if (!tool)
-			if (tool_appropriate(surgeon, tool))
+			if (tool_relevant(surgeon, tool))
 				return TRUE
 			else
 				if (!quiet)
@@ -526,7 +535,7 @@
 					else
 						boutput(surgeon,SPAN_ALERT("You need a tool for this step!"))
 				return FALSE
-		if (tool_appropriate(surgeon, tool))
+		if (tool_relevant(surgeon, tool))
 			return TRUE
 		else
 			if (!quiet)
@@ -669,11 +678,14 @@
 		display_slipup_image(surgeon, parent_surgery.patient.loc)
 		return
 
-	/// Check the provided tool is suitable for this surgery, IE. You need a mug of 50 units of ethanol or something
+	/// If types and/or tool flags aren't enough - override this to determine if the provided tool is suitable for this surgery step.
+	/// NOTE: If the tool is 'correct' but missing something like ammo or charge, this should be TRUE.
+	/// Instead, return the error message in the step's 'do_surgery_step()'!
 	proc/tool_suitable(mob/surgeon, obj/item/tool)
 		return TRUE
 
 	/// Perform the surgery step. return TRUE if successful.
+	/// This is performed AFTER checking for fuck-ups.
 	proc/do_surgery_step(mob/surgeon, obj/item/tool)
 		return TRUE
 

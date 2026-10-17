@@ -17,9 +17,12 @@
 		return ..()
 	on_cancel(mob/surgeon, obj/item/tool, quiet, forced = FALSE)
 		if (!quiet && surgeon)
-			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [tool]."),\
-				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [tool]."),\
-				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [tool]."))
+			var/action = "sew"
+			if (istype(tool, /obj/item/staple_gun))
+				action = "staple"
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> [action]s the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [tool]."),\
+				SPAN_NOTICE("You [action] the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [tool]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You [action]" : "<b>[surgeon]</b> [action]s"] the incision on your chest closed with [tool]."))
 	get_desc(show_vague)
 		var/t_his = his_or_her(patient)
 		var/Noun = capitalize(t_his)
@@ -60,10 +63,10 @@
 	name = "Head Surgery"
 	desc = "Perform surgery on the patient's head"
 	default_sub_surgeries = list(
-		/datum/surgery/carbon/organ/head/eye/left, /datum/surgery/carbon/organ/replace/eye/left,
-		/datum/surgery/carbon/organ/head/eye/right, /datum/surgery/carbon/organ/replace/eye/right,
-		/datum/surgery/carbon/organ/head/brain, /datum/surgery/carbon/organ/replace/brain,
-		/datum/surgery/carbon/organ/head/head, /datum/surgery/carbon/organ/replace/head,
+		/datum/surgery/carbon/organ/head/eye/left, /datum/surgery/carbon/organ_replace/eye/left,
+		/datum/surgery/carbon/organ/head/eye/right, /datum/surgery/carbon/organ_replace/eye/right,
+		/datum/surgery/carbon/organ/head/brain, /datum/surgery/carbon/organ_replace/brain,
+		/datum/surgery/carbon/organ/head/head, /datum/surgery/carbon/organ_replace/head,
 		/datum/surgery/carbon/cauterize/head)
 	visible = FALSE
 	implicit = TRUE
@@ -82,9 +85,9 @@
 	desc = "Open the patient's ribcage"
 	icon_state = "ribs"
 	affected_zone = "chest"
-	default_sub_surgeries = list(/datum/surgery/carbon/organ/heart, /datum/surgery/carbon/organ/replace/heart,
-	/datum/surgery/carbon/organ/left_lung, /datum/surgery/carbon/organ/replace/left_lung,
-	/datum/surgery/carbon/organ/right_lung, /datum/surgery/carbon/organ/replace/right_lung)
+	default_sub_surgeries = list(/datum/surgery/carbon/organ/heart, /datum/surgery/carbon/organ_replace/heart,
+	/datum/surgery/carbon/organ/left_lung, /datum/surgery/carbon/organ_replace/left_lung,
+	/datum/surgery/carbon/organ/right_lung, /datum/surgery/carbon/organ_replace/right_lung)
 	generate_surgery_steps()
 		src.add_next_step(new /datum/surgery_step/fluff/cut(src))
 		src.add_next_step(new /datum/surgery_step/fluff/saw(src))
@@ -101,9 +104,9 @@
 	desc = "Open the subcostal region"
 	icon_state = "subcostal"
 	affected_zone = "chest"
-	default_sub_surgeries = list(/datum/surgery/carbon/organ/liver, /datum/surgery/carbon/organ/replace/liver,
-	/datum/surgery/carbon/organ/spleen, /datum/surgery/carbon/organ/replace/spleen,
-	/datum/surgery/carbon/organ/pancreas, /datum/surgery/carbon/organ/replace/pancreas)
+	default_sub_surgeries = list(/datum/surgery/carbon/organ/liver, /datum/surgery/carbon/organ_replace/liver,
+	/datum/surgery/carbon/organ/spleen, /datum/surgery/carbon/organ_replace/spleen,
+	/datum/surgery/carbon/organ/pancreas, /datum/surgery/carbon/organ_replace/pancreas)
 	generate_surgery_steps()
 		src.add_next_step(new /datum/surgery_step/fluff/cut(src))
 		src.add_next_step(new /datum/surgery_step/fluff/snip(src))
@@ -121,8 +124,8 @@
 	desc = "Open the patient's flanks"
 	icon_state = "flanks"
 	affected_zone = "chest"
-	default_sub_surgeries = list(/datum/surgery/carbon/organ/left_kidney, /datum/surgery/carbon/organ/replace/left_kidney,
-	/datum/surgery/carbon/organ/right_kidney, /datum/surgery/carbon/organ/replace/right_kidney)
+	default_sub_surgeries = list(/datum/surgery/carbon/organ/left_kidney, /datum/surgery/carbon/organ_replace/left_kidney,
+	/datum/surgery/carbon/organ/right_kidney, /datum/surgery/carbon/organ_replace/right_kidney)
 	generate_surgery_steps()
 		src.add_next_step(new /datum/surgery_step/fluff/cut(src))
 		src.add_next_step(new /datum/surgery_step/fluff/snip(src))
@@ -138,9 +141,9 @@
 	desc = "Open the patient's abdomen"
 	icon_state = "abdominal"
 	affected_zone = "chest"
-	default_sub_surgeries = list(/datum/surgery/carbon/organ/stomach, /datum/surgery/carbon/organ/replace/stomach,
-	/datum/surgery/carbon/organ/intestine, /datum/surgery/carbon/organ/replace/intestine,
-	/datum/surgery/carbon/organ/appendix, /datum/surgery/carbon/organ/replace/appendix)
+	default_sub_surgeries = list(/datum/surgery/carbon/organ/stomach, /datum/surgery/carbon/organ_replace/stomach,
+	/datum/surgery/carbon/organ/intestine, /datum/surgery/carbon/organ_replace/intestine,
+	/datum/surgery/carbon/organ/appendix, /datum/surgery/carbon/organ_replace/appendix)
 	generate_surgery_steps()
 		src.add_next_step(new /datum/surgery_step/fluff/cut(src))
 		src.add_next_step(new /datum/surgery_step/fluff/snip(src))
@@ -157,8 +160,8 @@
 	id = "lower_back_surgery"
 	name = "Lower Back Surgery"
 	desc = "Remove the patients' tail or butt."
-	default_sub_surgeries = list(/datum/surgery/carbon/organ/butt, /datum/surgery/carbon/organ/replace/butt,
-		/datum/surgery/carbon/organ/tail, /datum/surgery/carbon/organ/replace/tail
+	default_sub_surgeries = list(/datum/surgery/carbon/organ/butt, /datum/surgery/carbon/organ_replace/butt,
+		/datum/surgery/carbon/organ/tail, /datum/surgery/carbon/organ_replace/tail
 	)
 	implicit = TRUE
 	visible = FALSE
@@ -227,9 +230,6 @@
 
 	on_complete(mob/surgeon, obj/item/I)
 		. = ..()
-		for (var/datum/surgery_step/step in surgery_steps) // reset all steps - the next organ is good as new!
-			step.completed = FALSE
-
 		// Re-open context buttons for the surgeon, so the replaced organ shows up for surgery again.
 		for (var/atom/movable/screen/contextButton/C in surgeon.contextButtons)
 			if (istype(C.action, /datum/contextAction/surgery))
@@ -296,9 +296,9 @@
 		icon_state = "appendix"
 		organ_var_name = "appendix"
 	intestine
-		id = "intestine_surgery"
+		id = "intestines_surgery"
 		name = "Intestine Surgery"
-		desc = "Remove the patients' intestine."
+		desc = "Remove the patients' intestines."
 		icon_state = "intestines"
 		organ_var_name = "intestines"
 	left_kidney
@@ -317,7 +317,7 @@
 		organ_pretty_name = "right kidney"
 
 	head // Base type to cover helmet blocking
-		attempt(mob/living/surgeon, tool)
+		attempt_implicit(mob/living/surgeon, tool)
 			if (!headSurgeryCheck(patient))
 				surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 				return TRUE
@@ -342,7 +342,7 @@
 				desc = "Remove the patients' left eye."
 				organ_var_name = "left_eye"
 				organ_pretty_name = "left eye"
-				step_possible(mob/living/surgeon, obj/item/I)
+				step_possible(mob/living/surgeon, obj/item/I, implicit=FALSE)
 					if (surgeon.find_in_hand(I) != surgeon.l_hand)
 						return FALSE
 					return ..()
@@ -358,7 +358,7 @@
 				desc = "Remove the patients' right eye."
 				organ_var_name = "right_eye"
 				organ_pretty_name = "right eye"
-				step_possible(mob/living/surgeon, obj/item/I)
+				step_possible(mob/living/surgeon, obj/item/I, implicit=FALSE)
 					if (surgeon.find_in_hand(I) != surgeon.r_hand)
 						return FALSE
 					return ..()
@@ -405,7 +405,7 @@
 			affected_zone = "head"
 			organ_var_name = "brain"
 			implicit = TRUE
-			default_sub_surgeries = list(/datum/surgery/carbon/organ/head/skull, /datum/surgery/carbon/organ/replace/skull)
+			default_sub_surgeries = list(/datum/surgery/carbon/organ/head/skull, /datum/surgery/carbon/organ_replace/skull)
 			check_surgery_stage()
 				var/mob/living/carbon/human/C = patient
 				if (C.organHolder.brain)
@@ -534,13 +534,17 @@
 			src.add_next_step(new /datum/surgery_step/organ/remove/saw(src, organ_var_name))
 
 
-/datum/surgery/carbon/organ/replace
+/datum/surgery/carbon/organ_replace
 	id = "organ_addition"
 	name = "Organ Addition"
 	desc = "Replace the patients' organs."
 	visible = FALSE
 	implicit = TRUE
 	exit_when_completed = TRUE
+	var/auto_connect_organ = TRUE //! Automatically connect the new organ if applicable.
+	var/organ_var_name = "thing"
+	var/organ_pretty_name
+
 	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/organ = C.organHolder.get_organ(organ_var_name)
@@ -554,6 +558,17 @@
 		if (patient.organHolder.get_organ(organ_var_name))
 			return FALSE
 		return TRUE
+	on_complete(mob/surgeon, obj/item/tool)
+		// Old organ behaviour - Upon insertion of a new organ, reset all steps so the next organ is good as new.
+		if (auto_connect_organ)
+			var/datum/surgery/removal_surgery = src.holder.get_surgery("[organ_var_name]_surgery") // this is icky! gross! but it works.
+			removal_surgery.cancel(surgeon, tool, quiet=TRUE, forced=TRUE)
+		return
+
+	// Cancelling this would only involve removing the organ. Not useful unless you wanted to have a multi-step addition
+	cancel_possible()
+		return FALSE
+
 	heart
 		id = "heart_replacement"
 		name = "Heart Replacement"
@@ -605,7 +620,7 @@
 		icon_state = "appendix"
 		organ_var_name = "appendix"
 	intestine
-		id = "intestine_replacement"
+		id = "intestines_replacement"
 		name = "Intestine Replacement"
 		desc = "Replace the patients' intestine."
 		icon_state = "intestine"
@@ -617,6 +632,9 @@
 		icon_state = "left_kidney"
 		organ_var_name = "left_kidney"
 		organ_pretty_name = "left kidney"
+		generate_surgery_steps()
+			src.add_next_step(new /datum/surgery_step/organ/add/kidney(src,organ_var_name))
+
 	right_kidney
 		id = "right_kidney_replacement"
 		name = "Right Kidney Replacement"
@@ -624,6 +642,8 @@
 		icon_state = "right_kidney"
 		organ_var_name = "right_kidney"
 		organ_pretty_name = "right kidney"
+		generate_surgery_steps()
+			src.add_next_step(new /datum/surgery_step/organ/add/kidney(src,organ_var_name))
 	butt
 		id = "butt_replacement"
 		name = "Butt Replacement"
@@ -646,6 +666,9 @@
 		affected_zone = "tail"
 
 	eye
+		generate_surgery_steps()
+			// Custom step to handle eyes being indifferent to which side they are on
+			src.add_next_step(new /datum/surgery_step/organ/add/eye(src))
 		surgery_possible(mob/living/surgeon)
 			if (surgeon.zone_sel.selecting != "head")
 				return FALSE
@@ -658,7 +681,7 @@
 			desc = "Replace the patients' left eye."
 			organ_var_name = "left_eye"
 			organ_pretty_name = "left eye"
-			step_possible(mob/living/surgeon, obj/item/I)
+			step_possible(mob/living/surgeon, obj/item/I, implicit=FALSE)
 				if (surgeon.find_in_hand(I) != surgeon.l_hand)
 					return FALSE
 				return ..()
@@ -668,7 +691,7 @@
 			desc = "Replace the patients' right eye."
 			organ_var_name = "right_eye"
 			organ_pretty_name = "right eye"
-			step_possible(mob/living/surgeon, obj/item/I)
+			step_possible(mob/living/surgeon, obj/item/I, implicit=FALSE)
 				if (surgeon.find_in_hand(I) != surgeon.r_hand)
 					return FALSE
 				return ..()
@@ -678,6 +701,7 @@
 		desc = "Replace the	patients' brain."
 		affected_zone = "head"
 		organ_var_name = "brain"
+		auto_connect_organ = FALSE
 		implicit = TRUE
 		generate_surgery_steps()
 			src.add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))

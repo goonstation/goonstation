@@ -381,18 +381,31 @@
 		src.removal_stage = 0
 
 		var/full_organ_name = src.organ_holder_name
+		var/side = ""
 		if (src.either_side)//Kidneys can go on the left or right, doesn't matter. Useful for cyber/synth kidneys
-			if (!H.organHolder.get_organ("left_kidney"))
+			// Prefer the side the organ is being held in by the user, since this is harmless and silly
+			var/left_preferred = user.find_in_hand(src) == user.l_hand
+			if (left_preferred && !H.organHolder.get_organ("left_kidney"))
 				full_organ_name = "left_kidney"
+				side = "left"
+			else if (!left_preferred && !H.organHolder.get_organ("right_kidney"))
+				full_organ_name = "right_kidney"
+				side = "right"
+			else if (!H.organHolder.get_organ("left_kidney"))
+				full_organ_name = "left_kidney"
+				side = "left"
 			else if (!H.organHolder.get_organ("right_kidney"))
 				full_organ_name = "right_kidney"
+				side = "right"
 			else
 				return 0
 		if (!H.organHolder.get_organ(full_organ_name))
-
-			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!"),\
-				SPAN_ALERT("You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!"),\
-				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your [src.organ_holder_location]!"))
+			var/side_string = ""
+			if (side != "")
+				side_string = " the [side] side of"
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into[side_string] [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!"),\
+				SPAN_ALERT("You [fluff] [src] into[side_string] [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into[side_string] your [src.organ_holder_location]!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)

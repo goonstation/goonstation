@@ -787,7 +787,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		var/mob/living/carbon/human/surgeon = usr
 		if (patient.surgeryHolder?.is_surgery_complete("torso_surgery"))
 			var/datum/surgery/carbon/item/chest_surgery = patient.surgeryHolder.get_surgery("chest_item_surgery")
-			if (chest_surgery.attempt(surgeon, src))
+			if (chest_surgery.attempt_implicit(surgeon, src))
 				return
 
 	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action

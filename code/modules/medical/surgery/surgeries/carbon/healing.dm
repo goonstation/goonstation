@@ -1,6 +1,6 @@
 /datum/surgery/carbon
 	generate_cancel_steps()
-		add_cancel_step(new/datum/surgery_step/suture/cancel_context(src))
+		add_cancel_step(new/datum/surgery_step/suture/cancel(src))
 
 
 /datum/surgery/carbon/heal_generic
