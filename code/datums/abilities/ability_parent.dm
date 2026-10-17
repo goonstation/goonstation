@@ -644,6 +644,15 @@
 		cd_secs = null
 		..()
 
+	MouseEntered()
+		. = ..()
+		if(src.owner?.border_icon && src.owner.hovered_border_icon_state)
+			src.UpdateOverlays(image(src.owner.border_icon, src.owner.hovered_border_icon_state), "ability_border")
+
+	MouseExited()
+		. = ..()
+		if(src.owner?.border_icon && src.owner.hovered_border_icon_state)
+			src.UpdateOverlays(image(src.owner.border_icon, src.owner.border_icon_state), "ability_border")
 
 	update_icon()
 		var/mob/M = get_controlling_mob()
@@ -894,6 +903,7 @@
 	// Below determine if a separate "border" sprite should be overlayed on the ability
 	var/border_icon = null  /// Icon for a border to overlay over the ability separately
 	var/border_icon_state = null /// Icon state for the border to overlay over the ability icon.
+	var/hovered_border_icon_state = null // Border state while ability button is moused over
 
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/show_tooltip = TRUE
