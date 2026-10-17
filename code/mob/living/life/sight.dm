@@ -62,12 +62,12 @@
 				if (sight_constr)
 					robot_owner.see_invisible = INVIS_CONSTRUCTION
 				else
-					robot_owner.see_invisible = INVIS_CLOAK
+					robot_owner.see_invisible = INVIS_INFRA
 
 				robot_owner.sight &= ~SEE_OBJS
 				robot_owner.see_in_dark = SEE_DARK_FULL
 			if(hivebot_owner)
-				hivebot_owner.see_invisible = INVIS_CLOAK
+				hivebot_owner.see_invisible = INVIS_INFRA
 			if(ai_mainframe_owner)
 				ai_mainframe_owner.see_invisible = INVIS_CLOAK
 ////Ship sight

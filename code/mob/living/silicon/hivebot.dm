@@ -91,7 +91,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/hivebot, proc/admin_add_tool, proc/admi
 	src.sight |= SEE_OBJS
 
 	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = INVIS_CLOAK
+	src.see_invisible = INVIS_INFRA
 	src.UpdateIcon()
 /*
 	if(src.client)
