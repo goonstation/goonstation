@@ -209,13 +209,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
-
-		if (fire_animation)
+		var/success = ..()
+		if (success && fire_animation)
 			if(src.ammo?.amount_left >= 1)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
 				FLICK(flick_state, src)
 
-		if(..() && user.traction != TRACTION_FULL)
+		if(success && user.traction != TRACTION_FULL)
 			user.inertia_dir = get_dir_accurate(target, user)
 			user.inertia_value = 1
 			step(user, user.inertia_dir) // Propel user in opposite direction
@@ -1916,6 +1916,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/pushsound = FALSE
 	/// The delay between racking this gun
 	var/rack_delay = 0
+	/// The racking icon
+	var/rack_state = null
 
 
 	New()
@@ -1997,8 +1999,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					playsound(user.loc, pumpsound, 50, 1)
 
 					ejectcasings()
-					if (src.icon_state == base_icon_state+"[src.gilded ? "-golden" : ""]") //"animated" racking
-						animate(icon_state = base_icon_state+"[gilded ? "-golden" : ""]")
+					if(src.rack_state)
+						FLICK(src.rack_state+"[src.gilded ? "-golden" : ""]", src)
+					else if (src.icon_state == base_icon_state+"[src.gilded ? "-golden" : ""]") //"animated" racking
+						animate(icon_state = base_icon_state+"[src.gilded ? "-golden" : ""]")
 					else
 						UpdateIcon() // Slide already open? Just close the slide
 				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))
@@ -3026,7 +3030,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
 	recoil_strength = 8
-	
+
 	HELP_MESSAGE_OVERRIDE("Can be held with two hands to reduce recoil and improve accuracy.")
 
 	New()
