@@ -3,6 +3,8 @@
 /* -------------------- Instruments -------------------- */
 /* ===================================================== */
 
+#define INSTRUMENT_NOTE_MAX_VOICE_LENGTH 64
+
 /obj/item/instrument
 	name = "instrument"
 	desc = "It makes noise!"
@@ -36,10 +38,14 @@
 	var/note = "c4"
 	var/note_range = list("c2", "c7")
 	var/use_new_interface = FALSE
+	var/supports_sustain = FALSE
+	var/legacy_mode = FALSE
 	/*At which key the notes start at*/
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 	var/keyboard_toggle = 0
+	/// Held notes keyed by user, then by the UI voice identifier.
+	var/list/sustained_notes
 
 	/// Default keybinds, ranging from c2 to c7.
 	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
@@ -183,6 +189,8 @@
 			"transpose" = src.transpose,
 			"keybindToggle" = src.keyboard_toggle,
 			"noteKeysString" = src.note_keys_string,
+			"supportsSustain" = src.supports_sustain && src.use_new_interface,
+			"legacyMode" = src.legacy_mode,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -194,17 +202,69 @@
 				src.note_keys_string = params["note_keys_order"]
 				. = TRUE
 			if("play_note")
+				if (!isnum(params["note"]) || params["note"] != floor(params["note"]) \
+					|| params["note"] < 0 || params["note"] >= length(src.sounds_instrument) || !isnum(params["volume"]))
+					return FALSE
 				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
+				var/volume = clamp(params["volume"], 0, 100)
+				if (!src.play_note(note_to_play, ui.user, volume_override = volume, use_cooldown = FALSE))
+					return FALSE
+				. = TRUE
+			if("start_note")
+				if (!istype(ui.user, /mob))
+					return FALSE
+				var/note = params["note"]
 				var/volume = params["volume"]
-				src.play_note(note_to_play, ui.user, volume_override = volume, use_cooldown = FALSE)
+				var/voice = params["voice"]
+				var/velocity = params["velocity"]
+				var/resonant = isnull(params["resonant"]) ? FALSE : params["resonant"]
+				if (!isnum(note) || note != floor(note) \
+					|| note < 0 || note >= length(src.sounds_instrument))
+					return FALSE
+				if (!isnum(volume) || !istext(voice) || !length(voice) \
+					|| length(voice) > INSTRUMENT_NOTE_MAX_VOICE_LENGTH)
+					return FALSE
+				if ((!isnull(velocity) && (!isnum(velocity) || velocity != floor(velocity) || velocity < 1 || velocity > 127)) \
+					|| !(resonant == TRUE || resonant == FALSE))
+					return FALSE
+				var/sound_path = src.sounds_instrument[note + 1]
+				if (src.legacy_mode || !src.supports_sustain \
+					|| (!global.instrument_piano_regions?[sound_path] && !global.instrument_sustain_samples?[sound_path]))
+					return src.play_note(note + 1, ui.user, volume_override = clamp(volume, 0, 100), use_cooldown = FALSE)
+				return src.start_sustained_note(ui.user, voice, note + 1, clamp(volume, 0, 100), velocity, resonant)
+			if("set_legacy_mode")
+				if (!src.supports_sustain || !(params["enabled"] == TRUE || params["enabled"] == FALSE))
+					return FALSE
+				var/enabled = params["enabled"]
+				if (src.legacy_mode == enabled)
+					return TRUE
+				src.stop_sustained_notes()
+				src.legacy_mode = enabled
+				. = TRUE
+			if("stop_note")
+				var/voice = params["voice"]
+				var/immediate = isnull(params["immediate"]) ? FALSE : params["immediate"]
+				if (!istext(voice) || !length(voice) || length(voice) > INSTRUMENT_NOTE_MAX_VOICE_LENGTH)
+					return FALSE
+				if (!(immediate == TRUE || immediate == FALSE))
+					return FALSE
+				src.stop_sustained_note(ui.user, voice, immediate)
+				. = TRUE
+			if("stop_notes")
+				src.stop_sustained_notes(ui.user)
 				. = TRUE
 			if("play_keyboard_on")
-				usr.client.apply_keybind("instrument_keyboard")
-				src.keyboard_toggle = 1
+				if (!ui.user?.client)
+					return FALSE
+				ui.user.client.apply_keybind("instrument_keyboard")
+				src.keyboard_toggle = TRUE
 				. = TRUE
 			if("play_keyboard_off")
-				usr.client.mob.reset_keymap()
-				src.keyboard_toggle = 0
+				if (!ui.user)
+					return FALSE
+				ui.user.reset_keymap()
+				src.stop_sustained_notes(ui.user)
+				src.keyboard_toggle = FALSE
 				. = TRUE
 			if("set_volume")
 				src.volume = clamp(params["value"], 0, 100)
@@ -214,14 +274,23 @@
 				. = TRUE
 
 	ui_close(mob/user)
-		user.reset_keymap()
+		if (user)
+			user.reset_keymap()
+			src.stop_sustained_notes(user)
 		. = ..()
 
 	ui_status(mob/user, datum/ui_state/state)
 		. = ..()
 		if(. <= UI_CLOSE || !IN_RANGE(src, user, 1))
-			user.reset_keymap()
+			if (user)
+				user.reset_keymap()
+				src.stop_sustained_notes(user)
 			return UI_CLOSE
+
+	disposing()
+		src.stop_sustained_notes()
+		src.sustained_notes = null
+		. = ..()
 
 
 	attack_self(mob/user as mob)
@@ -231,6 +300,8 @@
 			ui_interact(user)
 		else
 			src.play(user)
+
+#undef INSTRUMENT_NOTE_MAX_VOICE_LENGTH
 
 /* -------------------- Large Instruments -------------------- */
 
@@ -299,6 +370,7 @@
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
 	use_new_interface = TRUE
+	supports_sustain = TRUE
 
 /* -------------------- Grand Piano -------------------- */
 
@@ -355,6 +427,7 @@
 	sounds_instrument = null
 	randomized_pitch = 0
 	use_new_interface = TRUE
+	supports_sustain = TRUE
 	//Start at G
 	key_offset = 8
 
@@ -405,6 +478,7 @@
 	sounds_instrument = null
 	randomized_pitch = 0
 	use_new_interface = TRUE
+	supports_sustain = TRUE
 
 	New()
 		..()

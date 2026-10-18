@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Box, Button, Flex, Input } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -13,17 +13,106 @@ type MusicInstrumentData = {
   notes: string[];
   keybindToggle: boolean;
   noteKeysString: string;
+  supportsSustain: boolean;
+  legacyMode: boolean;
 };
+
+type HeldNote = {
+  index: number;
+  voice: string;
+};
+
+let instrumentInstanceCounter = 0;
 
 export const MusicInstrument = () => {
   const { act, data } = useBackend<MusicInstrumentData>();
-  const { name, notes, volume, transpose, keybindToggle, noteKeysString } =
-    data;
+  const {
+    name,
+    notes,
+    volume,
+    transpose,
+    keybindToggle,
+    noteKeysString,
+    supportsSustain,
+    legacyMode,
+  } = data;
 
   const [noteKeysOrder, setNoteKeysOrder] = useState(noteKeysString.split(''));
 
-  const [activeKeys, setActiveKeys] = useState({}); // new Array(notes.length)
+  const [activeKeys, setActiveKeys] = useState<Record<number, boolean>>({});
   const [keyOffset, setKeyOffset] = useState(0);
+  const heldKeyboardNotes = useRef(new Map<string, HeldNote>());
+  const heldMouseNotes = useRef(new Map<number, HeldNote>());
+  const activeNoteCounts = useRef(new Map<number, number>());
+  const voiceCounter = useRef(0);
+  const [instanceId] = useState(() => ++instrumentInstanceCounter);
+  const actRef = useRef(act);
+  const stopHeldNotesRef = useRef<() => void>(() => {});
+  actRef.current = act;
+
+  const setNoteActive = (index: number, active: boolean) => {
+    const count = activeNoteCounts.current.get(index) || 0;
+    const nextCount = active ? count + 1 : Math.max(0, count - 1);
+    if (nextCount) activeNoteCounts.current.set(index, nextCount);
+    else activeNoteCounts.current.delete(index);
+    setActiveKeys((current) => ({ ...current, [index]: Boolean(nextCount) }));
+  };
+
+  const stopHeldNotes = () => {
+    heldKeyboardNotes.current.clear();
+    heldMouseNotes.current.clear();
+    activeNoteCounts.current.clear();
+    setActiveKeys({});
+    actRef.current('stop_notes', {});
+  };
+
+  stopHeldNotesRef.current = stopHeldNotes;
+
+  const beginNote = (
+    index: number,
+    heldNotes: Map<string | number, HeldNote>,
+    id: string | number,
+  ) => {
+    if (index < 0 || index >= notes.length || heldNotes.has(id)) return;
+    const note = index + transpose;
+    if (note < 0 || note >= notes.length) return;
+    const voice = `instrument-${instanceId}-note-${++voiceCounter.current}`;
+    heldNotes.set(id, {
+      index,
+      voice,
+    });
+    setNoteActive(index, true);
+    act('start_note', { note, volume, voice });
+  };
+
+  const endNote = (
+    heldNotes: Map<string | number, HeldNote>,
+    id: string | number,
+  ) => {
+    const held = heldNotes.get(id);
+    if (!held) return;
+    heldNotes.delete(id);
+    setNoteActive(held.index, false);
+    actRef.current('stop_note', { voice: held.voice });
+  };
+
+  useEffect(() => {
+    const releaseAll = () => stopHeldNotesRef.current();
+    const releasePointer = (ev: PointerEvent) => {
+      endNote(heldMouseNotes.current, ev.pointerId);
+    };
+    window.addEventListener('blur', releaseAll);
+    window.addEventListener('pagehide', releaseAll);
+    window.addEventListener('pointerup', releasePointer);
+    window.addEventListener('pointercancel', releasePointer);
+    return () => {
+      releaseAll();
+      window.removeEventListener('blur', releaseAll);
+      window.removeEventListener('pagehide', releaseAll);
+      window.removeEventListener('pointerup', releasePointer);
+      window.removeEventListener('pointercancel', releasePointer);
+    };
+  }, []);
 
   const setVolume = (value: number) => {
     act('set_volume', { value });
@@ -34,6 +123,7 @@ export const MusicInstrument = () => {
   };
 
   const setKeybindToggle = (value: boolean) => {
+    if (!value) stopHeldNotes();
     if (value) {
       act('play_keyboard_on');
     } else {
@@ -45,51 +135,48 @@ export const MusicInstrument = () => {
     setKeybindToggle(!keybindToggle);
   };
 
-  const keyIndexWithinRange = (index: number) =>
-    index + transpose >= 0 && index + transpose < notes.length;
-
-  const playNote = (index: number) => {
-    if (keyIndexWithinRange(index) && !activeKeys[index]) {
-      act('play_note', { note: index + transpose, volume: volume });
-      const newKeys = activeKeys;
-      const note = notes[index];
-      newKeys[note] = true;
-      setActiveKeys(newKeys);
-    }
-  };
-
-  const playNoteRelease = (index: number) => {
-    if (keyIndexWithinRange(index)) {
-      const newKeys = activeKeys;
-      const note = notes[index];
-      newKeys[note] = false;
-      setActiveKeys(newKeys);
-    }
+  const setLegacyMode = (enabled: boolean) => {
+    stopHeldNotes();
+    act('set_legacy_mode', { enabled });
   };
 
   const getKeyboardIndex = (key: string) => {
-    const keyboardIndex =
-      keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key);
-    if (keyboardIndex >= 0) return keyboardIndex;
-    return -1;
+    const bindingIndex = noteKeysOrder.findIndex(
+      (keyOrder) => keyOrder === key,
+    );
+    return bindingIndex < 0 ? -1 : keyOffset + bindingIndex;
+  };
+
+  const isTypingTarget = (target: EventTarget | null) => {
+    const element = target as HTMLElement | null;
+    return (
+      element?.tagName === 'INPUT' ||
+      element?.tagName === 'TEXTAREA' ||
+      element?.isContentEditable
+    );
   };
 
   return (
     <Window title={name} width={50 + notes.length * 30} height={410}>
       <Window.Content
-        // Focusable so key events reach this after clicking/refocusing the window.
-        // Spread because BoxProps omits tabIndex currently
+        // BoxProps does not expose tabIndex.
         {...{ tabIndex: -1 }}
         onKeyUp={(ev) => {
-          if (keybindToggle) {
-            let index = getKeyboardIndex(ev.key);
-            playNoteRelease(index);
-          }
+          endNote(heldKeyboardNotes.current, ev.code || ev.key);
         }}
         onKeyDown={(ev) => {
-          if (keybindToggle) {
-            let index = getKeyboardIndex(ev.key);
-            playNote(index);
+          if (
+            keybindToggle &&
+            !isTypingTarget(ev.target) &&
+            !ev.ctrlKey &&
+            !ev.altKey &&
+            !ev.metaKey
+          ) {
+            beginNote(
+              getKeyboardIndex(ev.key),
+              heldKeyboardNotes.current,
+              ev.code || ev.key,
+            );
           }
 
           if (ev.key === 'Control') {
@@ -156,6 +243,14 @@ export const MusicInstrument = () => {
                   />
                   <span>Transpose</span>
                 </Box>
+                {supportsSustain && (
+                  <Button.Checkbox
+                    checked={legacyMode}
+                    onClick={() => setLegacyMode(!legacyMode)}
+                  >
+                    Legacy Mode
+                  </Button.Checkbox>
+                )}
               </Box>
               <Box className="instrument__keyorder">
                 <Box className="instrument__instructions" fontSize="1.1em">
@@ -195,15 +290,15 @@ export const MusicInstrument = () => {
                     'instruments__piano-key',
                     keyClass,
                     whiteKeyOffsetClass,
-                    activeKeys[notes[index]]
+                    activeKeys[index]
                       ? isBlackKey
                         ? 'instruments__piano-key-black-active'
                         : 'instruments__piano-key-white-active'
                       : '',
                   ])}
-                  onMouseDown={() => playNote(index)}
-                  onMouseLeave={() => playNoteRelease(index)}
-                  onMouseUp={() => playNoteRelease(index)}
+                  onPointerDown={(ev) =>
+                    beginNote(index, heldMouseNotes.current, ev.pointerId)
+                  }
                 >
                   <Box className="instruments__notedetails">
                     {keybind && (

@@ -88,7 +88,10 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 	if( channel == VOLUME_CHANNEL_ADMIN )
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
-/proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+/// sound_listeners and sound_listener_packets capture each listener's onset for release fades.
+/// volume_scale adjusts playback gain after audibility checks; limiter_id separates voices sharing a file.
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0, \
+	list/sound_listeners = null, list/sound_listener_packets = null, volume_scale = 1, limiter_id = null)
 	if(isarea(source))
 		CRASH("playsound(): source is an area [source.name], sound is [soundin]")
 
@@ -99,7 +102,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 		return
 
 	// don't play if over the per-tick sound limit
-	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
+	var/sound_id = isnull(limiter_id) ? SOUNDIN_ID : limiter_id
+	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [sound_id]"
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
@@ -204,8 +208,12 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 					continue
 
 			//sadly, we must generate
-			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
+			if (!S)
+				S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
 			if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
+			storedVolume *= volume_scale
+			ourvolume *= volume_scale
+			clear_instrument_note_listener(C, S.channel)
 			C.sound_playing[ S.channel ][1] = storedVolume
 			C.sound_playing[ S.channel ][2] = channel
 
@@ -231,6 +239,10 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 			S.z = source_turf.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
 			S.y = 0
 
+			if (sound_listeners)
+				sound_listeners[C] = storedVolume
+			if (sound_listener_packets)
+				sound_listener_packets[C] = sound_update_packet(S, S.volume)
 			C << S
 
 			S.frequency = orig_freq
@@ -288,6 +300,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 	var/sound/S = generate_sound(source, soundin, ourvolume, vary, extrarange, pitch)
 	if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
+	clear_instrument_note_listener(src.client, S.channel)
 	client.sound_playing[ S.channel ][1] = ourvolume
 	client.sound_playing[ S.channel ][2] = channel
 
@@ -311,6 +324,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
 
+				clear_instrument_note_listener(M.client, S.channel)
 				M.client.sound_playing[ S.channel ][1] = ourvolume
 				M.client.sound_playing[ S.channel ][2] = channel
 
@@ -337,6 +351,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 	var/sound/S = generate_sound(null, soundin, vol, vary, 0, pitch)
 	if (!S) CRASH("Did not manage to generate sound \"[soundin]\". Likely that the filename is misnamed or does not exist.")
+	clear_instrument_note_listener(src.client, S.channel)
 	client.sound_playing[ S.channel ][1] = vol
 	client.sound_playing[ S.channel ][2] = channel
 	if(wait)
@@ -352,6 +367,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 		for (var/mob/M in src.observers)
 			if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 				continue
+			clear_instrument_note_listener(M.client, S.channel)
 			M.client.sound_playing[ S.channel ][1] = vol
 			M.client.sound_playing[ S.channel ][2] = channel
 			S.volume = vol * M.client.getVolume(channel) / 100
@@ -429,6 +445,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 		if (!S) S = generate_sound(source, soundin, vol, vary, extrarange=0, pitch=pitch)
 		if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
+		clear_instrument_note_listener(C, S.channel)
 		C.sound_playing[ S.channel ][1] = storedVolume
 		C.sound_playing[ S.channel ][2] = channel
 
