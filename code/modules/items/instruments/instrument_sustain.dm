@@ -57,8 +57,11 @@ var/global/list/instrument_note_channels = list()
 	src.requested_volume = requested_volume
 	src.sound_path = soundin
 	src.is_release_voice = !isnull(override_sample)
-	var/list/sample_data = override_sample || get_instrument_piano_sample(soundin, velocity, resonant) \
-		|| global.instrument_sustain_samples?[soundin]
+	var/list/sample_data = override_sample || get_instrument_piano_sample(soundin, velocity, resonant)
+	var/velocity_gain = 1
+	if (!sample_data)
+		sample_data = global.instrument_sustain_samples?[soundin]
+		velocity_gain = instrument_velocity_gain(velocity)
 	if (!islist(sample_data) || !sample_data["file"] || !isnum(sample_data["duration"]) || sample_data["duration"] <= 0)
 		return
 	src.last_sent_volumes = list()
@@ -66,7 +69,7 @@ var/global/list/instrument_note_channels = list()
 	src.duration = sample_data["duration"]
 	src.pitch = isnum(sample_data["pitch"]) && sample_data["pitch"] > 0 ? sample_data["pitch"] : 1
 	var/gain = isnum(sample_data["gain"]) ? max(sample_data["gain"], 0) : 1
-	src.volume = requested_volume * gain
+	src.volume = requested_volume * gain * velocity_gain
 	if (isnum(sample_data["release"]))
 		src.release_time = sample_data["release"] * (1 SECOND)
 	src.listeners = list()

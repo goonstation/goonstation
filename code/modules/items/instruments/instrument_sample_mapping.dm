@@ -29,7 +29,7 @@
 		regions[adjacent_key] += list(adjacent_sample)
 
 /// SFZ amp_veltrack=100 response.
-/proc/instrument_piano_velocity_gain(velocity)
+/proc/instrument_velocity_gain(velocity)
 	return (velocity / 127) ** 2
 
 /proc/get_instrument_piano_sample(soundin, velocity = 127, resonant = FALSE, release_sample = FALSE)
@@ -44,6 +44,6 @@
 		if (velocity < region["velocity_min"] || velocity > region["velocity_max"])
 			continue
 		var/list/selected = region.Copy()
-		selected["gain"] *= instrument_piano_velocity_gain(velocity)
+		selected["gain"] *= instrument_velocity_gain(velocity)
 		return selected
 	return null
