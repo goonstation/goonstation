@@ -112,25 +112,19 @@
 	icon_state = "nothing"
 	invisibility = INVIS_ALWAYS
 	var/canmove = 1 // can be used to completely stop movement
-	var/movecd = 0 // used in relaymove, so people don't move too quickly
 	density = 0
 	anchored = ANCHORED
+	event_handler_flags = MOVE_NOCLIP
 
 /obj/dummy/spell_invis/relaymove(var/mob/user, direction, delay)
-	if (!src.canmove || src.movecd)
+	if (!src.canmove || ON_COOLDOWN(src, "relaymove", 0.2 SECONDS))
 		return
-
-	if(direction & NORTH)
-		src.y = min(src.y+1, world.maxy)
-	if(direction & SOUTH)
-		src.y = max(src.y-1, 1)
-	if(direction & EAST)
-		src.x = min(src.x+1, world.maxx)
-	if(direction & WEST)
-		src.x = max(src.x-1, 1)
-
-	src.movecd = 1
-	SPAWN(0.2 SECONDS) src.movecd = 0
+	var/turf/target = get_step(src, direction)
+	if(istype(get_area(target), /area/listeningpost))
+		if(iswall(target) || (locate(/obj/machinery/door/airlock) in target.contents))
+			src.event_handler_flags &= ~MOVE_NOCLIP
+	step(src, direction)
+	src.event_handler_flags |= MOVE_NOCLIP
 
 /obj/dummy/spell_invis/ex_act(severity, last_touched)
 	return

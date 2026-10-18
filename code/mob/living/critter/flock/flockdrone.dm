@@ -336,6 +336,10 @@
 				controller.mind.current = controller
 				ticker.minds += controller.mind
 		src.flock.system_say_source.say("Connection to drone [src.real_name] lost.", atom_listeners_override = list(controller))
+		var/datum/abilityHolder/composite/composite = src.abilityHolder
+		composite.removeHolder(/datum/abilityHolder/flockmind)
+		var/datum/abilityHolder/flockmind/AH = controller.abilityHolder
+		AH.updateText()
 		controller = null
 	src.is_npc = TRUE // To ensure right message formatting.
 	src.say("Error: Out of signal range. Disconnecting.")
