@@ -69,6 +69,7 @@
 	signal.data["command"] = "text_message"
 	signal.data["sender_name"] = "SEC-MAILBOT"
 	signal.data["sender"] = "00000000"
+	signal.data["group"] = list(MGD_SECURITY, MGA_ARREST)
 	signal.data["message"] = "An arrest warrant for crew member \"[target]\" has been closed by [closer], with resolution: \"[resolution]\""
 	global.radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
