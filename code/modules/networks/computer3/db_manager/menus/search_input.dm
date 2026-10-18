@@ -9,24 +9,23 @@
 		return
 
 	if (search_text == "0")
-		src.parent.switch_menu_to("main")
+		src.parent.switch_menu_to(src.parent.current_record_group.main_menu)
 		return
 
-	var/datum/record_database/main_database = src.parent.current_record_group.get_main_database()
-	var/alist/databases = src.parent.current_record_group.get_all_databases()
-
+	var/list/datum/db_record/records = src.parent.current_record_group.get_records()
 	var/list/datum/db_record/results = list()
-	for (var/datum/db_record/record as anything in main_database.records)
-		var/record_id = record["id"]
+
+	for (var/datum/db_record/record as anything in records)
 		var/haystack = ""
-		for (var/db_id as anything in src.parent.current_record_group.keys_to_search_by_db)
-			var/datum/record_database/db = databases[db_id]
-			var/datum/db_record/R = db.find_record("id", record_id)
-			if (!istype(R))
+
+		var/list/datum/db_record/linked_records = src.parent.current_record_group.get_linked_records(record)
+		for (var/db_id as anything in linked_records)
+			var/datum/db_record/db_record = linked_records[db_id]
+			if (!istype(db_record))
 				continue
 
 			for (var/key as anything in src.parent.current_record_group.keys_to_search_by_db[db_id])
-				haystack += ckey(R[key]) + " "
+				haystack += ckey("[db_record[key]]") + " "
 
 		if (findtext(haystack, search_text))
 			results += record
@@ -35,6 +34,6 @@
 		if (0)
 			src.parent.print_text("No results found.")
 		if (1)
-			src.parent.switch_menu_to("record_view", results[1]["id"])
+			src.parent.switch_menu_to("record_view", results[1])
 		else
 			src.parent.switch_menu_to("search_results", text, results)

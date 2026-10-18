@@ -1,7 +1,7 @@
 /datum/db_record_group/security
 	search_input_prompt = "Please enter target name, ID, DNA, rank, fingerprint, or criminal status:"
-	field_data = alist(
-		"gen" = list(
+	field_data = list(
+		"General" = list(
 			alist(key = "name",			write = TRUE,	search = TRUE),
 			alist(key = "id",			write = FALSE,	search = TRUE),
 			alist(key = "full_name",	write = TRUE,	search = FALSE),
@@ -16,9 +16,10 @@
 			alist(key = "p_stat",		write = FALSE,	search = FALSE),
 			alist(key = "m_stat",		write = FALSE,	search = FALSE),
 		),
-		"sec" = list(
+		"Security" = list(
 			alist(key = "criminal",		write = TRUE,	search = TRUE),
 			alist(key = "sec_flag",		write = TRUE,	search = FALSE),
+			alist(key = "citations",	write = TRUE,	search = FALSE),
 			alist(key = "mi_crim",		write = TRUE,	search = FALSE),
 			alist(key = "mi_crim_d",	write = TRUE,	search = FALSE),
 			alist(key = "ma_crim",		write = TRUE,	search = FALSE),
@@ -31,7 +32,7 @@
 	return global.data_core.general
 
 /datum/db_record_group/security/get_all_databases()
-	return alist(
-		"gen" = global.data_core.general,
-		"sec" = global.data_core.security,
+	return list(
+		"General" = global.data_core.general,
+		"Security" = global.data_core.security,
 	)
