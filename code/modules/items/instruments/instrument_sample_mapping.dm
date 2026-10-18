@@ -32,7 +32,7 @@
 /proc/instrument_piano_velocity_gain(velocity)
 	return (velocity / 127) ** 2
 
-/proc/get_instrument_piano_sample(soundin, velocity = 80, resonant = FALSE, release_sample = FALSE)
+/proc/get_instrument_piano_sample(soundin, velocity = 127, resonant = FALSE, release_sample = FALSE)
 	var/list/regions = global.instrument_piano_regions?[soundin]
 	if (!islist(regions))
 		return null

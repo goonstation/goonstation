@@ -41,7 +41,7 @@ var/global/list/instrument_note_channels = list()
 	var/start_time = 0
 	var/active = FALSE
 	var/releasing = FALSE
-	var/velocity = 80
+	var/velocity = 127
 	var/requested_volume = 0
 	var/sound_path
 	var/release_time = INSTRUMENT_NOTE_RELEASE_TIME
@@ -51,7 +51,7 @@ var/global/list/instrument_note_channels = list()
 	var/list/last_sent_volumes
 
 /datum/instrument_note/New(atom/source, soundin, requested_volume, mob/user, \
-	velocity = 80, resonant = FALSE, list/override_sample = null)
+	velocity = 127, resonant = FALSE, list/override_sample = null)
 	. = ..()
 	src.velocity = velocity
 	src.requested_volume = requested_volume
@@ -231,7 +231,7 @@ var/global/list/instrument_note_channels = list()
 		|| !(resonant == TRUE || resonant == FALSE))
 		return FALSE
 	if (isnull(velocity))
-		velocity = 80
+		velocity = 127
 
 	src.sustained_notes ||= list()
 	var/list/user_notes = src.sustained_notes[user]
