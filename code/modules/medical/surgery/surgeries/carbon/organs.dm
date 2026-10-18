@@ -160,6 +160,7 @@
 	id = "lower_back_surgery"
 	name = "Lower Back Surgery"
 	desc = "Remove the patients' tail or butt."
+	affected_zone = "chest"
 	default_sub_surgeries = list(/datum/surgery/carbon/organ/butt, /datum/surgery/carbon/organ_replace/butt,
 		/datum/surgery/carbon/organ/tail, /datum/surgery/carbon/organ_replace/tail
 	)
@@ -253,6 +254,11 @@
 		desc = "Remove the patients' heart."
 		icon_state = "heart"
 		organ_var_name = "heart"
+		generate_surgery_steps()
+			src.add_next_step(new /datum/surgery_step/chest/cut(src))
+			src.add_next_step(new /datum/surgery_step/fluff/snip(src))
+			src.add_next_step(new /datum/surgery_step/fluff/saw(src))
+			src.add_next_step(new /datum/surgery_step/chest/cut(src))
 	liver
 		id = "liver_surgery"
 		name = "Liver Surgery"
@@ -271,12 +277,22 @@
 		desc = "Remove the patients' left lung."
 		icon_state = "left_lung"
 		organ_var_name = "left_lung"
+		generate_surgery_steps()
+			src.add_next_step(new /datum/surgery_step/fluff/cut(src))
+			src.add_next_step(new /datum/surgery_step/fluff/snip(src))
+			src.add_next_step(new /datum/surgery_step/fluff/saw(src))
+			src.add_next_step(new /datum/surgery_step/chest/cut(src))
 	right_lung
 		id = "right_lung_surgery"
 		name = "Right Lung Surgery"
 		desc = "Remove the patients' right lung."
 		icon_state = "right_lung"
 		organ_var_name = "right_lung"
+		generate_surgery_steps()
+			src.add_next_step(new /datum/surgery_step/fluff/cut(src))
+			src.add_next_step(new /datum/surgery_step/fluff/snip(src))
+			src.add_next_step(new /datum/surgery_step/fluff/saw(src))
+			src.add_next_step(new /datum/surgery_step/chest/cut(src))
 	stomach
 		id = "stomach_surgery"
 		name = "Stomach Surgery"
@@ -295,12 +311,19 @@
 		desc = "Remove the patients' appendix."
 		icon_state = "appendix"
 		organ_var_name = "appendix"
+		generate_surgery_steps()
+			src.add_next_step(new /datum/surgery_step/fluff/snip(src))
+			src.add_next_step(new /datum/surgery_step/chest/cut(src))
 	intestine
 		id = "intestines_surgery"
 		name = "Intestine Surgery"
 		desc = "Remove the patients' intestines."
 		icon_state = "intestines"
 		organ_var_name = "intestines"
+		generate_surgery_steps()
+			src.add_next_step(new /datum/surgery_step/chest/cut(src))
+			src.add_next_step(new /datum/surgery_step/fluff/saw(src))
+			src.add_next_step(new /datum/surgery_step/chest/cut(src))
 	left_kidney
 		id = "left_kidney_surgery"
 		name = "Left Kidney Surgery"
@@ -681,20 +704,12 @@
 			desc = "Replace the patients' left eye."
 			organ_var_name = "left_eye"
 			organ_pretty_name = "left eye"
-			step_possible(mob/living/surgeon, obj/item/I, implicit=FALSE)
-				if (surgeon.find_in_hand(I) != surgeon.l_hand)
-					return FALSE
-				return ..()
 		right
 			id = "right_eye_replacement"
 			name = "Right Eye Replacement"
 			desc = "Replace the patients' right eye."
 			organ_var_name = "right_eye"
 			organ_pretty_name = "right eye"
-			step_possible(mob/living/surgeon, obj/item/I, implicit=FALSE)
-				if (surgeon.find_in_hand(I) != surgeon.r_hand)
-					return FALSE
-				return ..()
 	brain
 		id = "brain_replacement"
 		name = "Brain Replacement"

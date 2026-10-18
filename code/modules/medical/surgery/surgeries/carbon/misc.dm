@@ -3,6 +3,7 @@
 	name = "Implant Surgery"
 	desc = "Remove an implant from the patients' body."
 	icon_state = "implant"
+	affected_zone = "chest"
 	cancel_possible()
 		return FALSE
 
@@ -40,6 +41,7 @@
 	name = "Parasite Surgery"
 	desc = "Cut out one or multiple parasites."
 	icon_state = "parasite"
+	affected_zone = "chest"
 	visible = FALSE
 	implicit = TRUE
 

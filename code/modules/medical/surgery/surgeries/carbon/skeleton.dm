@@ -101,7 +101,7 @@
 /datum/surgery/carbon/organ/skeleton_tail
 	implicit = TRUE
 	visible = FALSE
-	affected_zone = "head"
+	affected_zone = "chest"
 	id = "skeleton_tail_removal"
 	name = "Tail Removal (Skeleton)"
 	desc = "Remove the patients' tail."

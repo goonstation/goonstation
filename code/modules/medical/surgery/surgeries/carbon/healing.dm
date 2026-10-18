@@ -5,12 +5,14 @@
 
 /datum/surgery/carbon/heal_generic
 	name = "First Aid"
-	desc = "Heal BRUTE, BURN, or bleeding damage with surgery."
-	default_sub_surgeries = list(/datum/surgery/carbon/heal_brute,	/datum/surgery/carbon/heal_burn, /datum/surgery/carbon/tend_bleeding)
+	desc = "Heal BRUTE or BURN damage with surgery."
+	affected_zone = "chest"
+	default_sub_surgeries = list(/datum/surgery/carbon/heal_brute,	/datum/surgery/carbon/heal_burn)
 
 /datum/surgery/carbon/heal_brute
 	name = "Tend wounds"
 	desc = "Heal BRUTE damage."
+	affected_zone = "chest"
 
 	generate_surgery_steps()
 		if(prob(50))
@@ -32,6 +34,7 @@
 /datum/surgery/carbon/heal_burn
 	name = "Tend burns"
 	desc = "Heal BURN damage with bandages."
+	affected_zone = "chest"
 
 	generate_surgery_steps()
 		src.add_next_step(new /datum/surgery_step/fluff/bandage(src))
@@ -43,25 +46,6 @@
 		regenerate_surgery_steps()
 	surgery_possible(mob/living/surgeon)
 		if (patient.get_burn_damage() > 0)
-			return TRUE
-		return FALSE
-
-/datum/surgery/carbon/tend_bleeding
-	name = "Tend bleeding"
-	desc = "Mend bleeding wounds with a suture."
-
-	check_surgery_stage()
-		surgery_steps[1].completed = (patient.bleeding == 0)
-		..()
-
-	generate_surgery_steps()
-		src.add_next_step(new /datum/surgery_step/fluff/suture(src))
-
-	on_complete(mob/living/surgeon, obj/item/tool)
-		patient.bleeding = 0
-
-	surgery_possible(mob/living/surgeon)
-		if (patient.bleeding > 0)
 			return TRUE
 		return FALSE
 
@@ -108,6 +92,7 @@
 
 /datum/surgery/carbon/sutures
 	default_sub_surgeries = list(/datum/surgery/carbon/suture/head, /datum/surgery/carbon/suture/torso, /datum/surgery/carbon/suture/r_leg, /datum/surgery/carbon/suture/l_leg, /datum/surgery/carbon/suture/r_arm, /datum/surgery/carbon/suture/l_arm, /datum/surgery/carbon/suture/bleeding)
+	sub_surgeries_always_accessible = TRUE
 	name = "Suture"
 	desc = "Suture wounds on the head, torso, legs, or arms."
 	cancel_possible()
@@ -167,7 +152,12 @@
 			src.add_next_step(new /datum/surgery_step/suture/l_arm(src))
 	bleeding
 		desc = "Suture a bleeding wound."
-		affected_zone = "bleeding"
+		surgery_conditions_met(mob/surgeon, obj/item/tool)
+			if (!patient)
+				return FALSE
+			if (!ishuman(patient))
+				return FALSE
+			return TRUE
 		generate_surgery_steps()
 			src.add_next_step(new /datum/surgery_step/suture/bleeding(src))
 
