@@ -38,6 +38,7 @@
 			return ..()
 
 /datum/surgery/carbon/parasite
+	id = "parasite_surgery"
 	name = "Parasite Surgery"
 	desc = "Cut out one or multiple parasites."
 	icon_state = "parasite"

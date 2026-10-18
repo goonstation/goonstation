@@ -366,7 +366,7 @@
 				organ_var_name = "left_eye"
 				organ_pretty_name = "left eye"
 				step_possible(mob/living/surgeon, obj/item/I, implicit=FALSE)
-					if (surgeon.find_in_hand(I) != surgeon.l_hand)
+					if (!surgeon.find_in_hand(I, "left"))
 						return FALSE
 					return ..()
 				on_cancel(mob/living/surgeon, obj/item/tool, quiet, forced = FALSE)
@@ -382,7 +382,7 @@
 				organ_var_name = "right_eye"
 				organ_pretty_name = "right eye"
 				step_possible(mob/living/surgeon, obj/item/I, implicit=FALSE)
-					if (surgeon.find_in_hand(I) != surgeon.r_hand)
+					if (!surgeon.find_in_hand(I, "right"))
 						return FALSE
 					return ..()
 				on_cancel(mob/living/surgeon, obj/item/tool, quiet, forced = FALSE)

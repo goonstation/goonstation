@@ -17,9 +17,9 @@
 	)
 
 /datum/surgery/carbon/limb
+	id = "limb_surgery_base"
 	name = "Base Limb Surgery"
 	desc = "Call a coder if you see this!"
-	id = "limb_surgery_base"
 	icon_state = "heart"
 	var/limb_var_name = "limb_var_name"
 	exit_when_completed = TRUE
@@ -91,9 +91,9 @@
 
 
 /datum/surgery/carbon/limb_replace
+	id = "limb_replacement_base"
 	name = "Base Limb Replacement"
 	desc = "Call a coder if you see this!"
-	id = "limb_replacement_base"
 	icon_state = "heart"
 	var/limb_var_name = "limb_var_name"
 	exit_when_completed = TRUE

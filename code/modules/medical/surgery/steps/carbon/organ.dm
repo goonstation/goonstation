@@ -148,6 +148,10 @@
 		desc = "Attempt to violently rip the organ out of the patient."
 		icon_state = "harm"
 		optional = TRUE
+		can_operate(mob/surgeon, obj/item/tool, quiet = TRUE)
+			if (issilicon(surgeon))
+				return FALSE
+			return ..(surgeon, tool, quiet)
 		do_surgery_step(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			var/obj/item/organ = patient.organHolder.get_organ(affected_organ)
@@ -219,10 +223,10 @@
 
 		do_surgery_step(mob/surgeon, obj/item/tool)
 			if (affected_organ == "left_eye")
-				if (surgeon.find_in_hand(tool) != surgeon.l_hand)
+				if (!surgeon.find_in_hand(tool, "left"))
 					return FALSE
 			if (affected_organ == "right_eye")
-				if (surgeon.find_in_hand(tool) != surgeon.r_hand)
+				if (!surgeon.find_in_hand(tool, "right"))
 					return FALSE
 			if (!parent_surgery.patient.organHolder.head)
 				boutput(surgeon, SPAN_ALERT("[parent_surgery.patient] doesn't have a head!"))
@@ -346,6 +350,7 @@
 	success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 	optional = FALSE
 	success_damage = 0
+	can_fail = FALSE
 	on_complete(mob/surgeon, obj/item/tool)
 		var/obj/item/organ/O = tool
 		O.attach_organ(parent_surgery.patient, surgeon)

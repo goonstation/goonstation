@@ -117,6 +117,8 @@
 	surgery_conditions_met(mob/surgeon, obj/item/tool)
 		return (isskeleton(patient) && patient.organHolder)
 
+	cancel_possible()
+		return FALSE
 	surgery_possible(mob/living/surgeon)
 		if (!isskeleton(patient) || !patient.organHolder)
 			return FALSE

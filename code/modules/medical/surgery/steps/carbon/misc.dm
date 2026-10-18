@@ -5,6 +5,7 @@
 		desc = "Insert the item."
 		icon_state = "in"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+		can_fail = FALSE
 		tool_suitable(mob/surgeon, obj/item/tool)
 			if(tool.w_class > W_CLASS_NORMAL && !(tool.type in global.chestitem_whitelist))
 				boutput(surgeon, SPAN_ALERT("[tool] is too big to fit into [parent_surgery.patient]'s chest cavity."))
