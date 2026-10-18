@@ -59,7 +59,7 @@
 						return TRUE
 
 		if (src.should_prevent_harm(surgeon,tool) && surgeon.a_intent != INTENT_HARM)
-			boutput(surgeon, SPAN_ALERT("[patient == surgeon ? "You have" : "[patient] has"] no wounds or incisions on [patient == surgeon ? "your" : his_or_her(patient)] [zone_sel2name[surgeon.zone_sel]]  to close!"))
+			boutput(surgeon, SPAN_ALERT("[patient == surgeon ? "You have" : "[patient] has"] no wounds or incisions on [patient == surgeon ? "your" : his_or_her(patient)] [zone_sel2name[surgeon.zone_sel.selecting]]  to close!"))
 			return TRUE
 		return FALSE
 
@@ -241,7 +241,7 @@
 			base_surgeries += new/datum/surgery/carbon/category/lower_back(patient, src)
 			base_surgeries += new/datum/surgery/carbon/implant(patient, src)
 			base_surgeries += new/datum/surgery/carbon/parasite(patient, src)
-			base_surgeries += new/datum/surgery/carbon/sutures(patient, src)
+			base_surgeries += new/datum/surgery/carbon/category/sutures(patient, src)
 			// put skeleton surgeries up here, as they can all be performed at any time
 			base_surgeries += new/datum/surgery/carbon/skeleton(patient, src)
 			base_surgeries += new/datum/surgery/carbon/cauterize/bleeding(patient, src)

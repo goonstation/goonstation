@@ -59,20 +59,15 @@
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		success_damage = 0
+		can_fail = FALSE
 		do_surgery_step(mob/surgeon, obj/item/tool)
-			if (tool.object_flags & NO_ARM_ATTACH || tool.cant_drop || tool.two_handed)
-				boutput(surgeon, SPAN_ALERT("You try to attach [tool] to [parent_surgery.patient]'s stump, but it politely declines!"))
-				return FALSE
-			var/mob/living/carbon/human/C = parent_surgery.patient
-			if (C.limbs?.get_limb(affected_limb))
-				boutput(surgeon, SPAN_ALERT("[C.name] already has one of those!"))
-				return FALSE
-			if (!istype(tool,/obj/item/parts/human_parts))
-				return FALSE
-			return ..()
-
-		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
+			if (tool.object_flags & NO_ARM_ATTACH || tool.cant_drop || tool.two_handed)
+				boutput(surgeon, SPAN_ALERT("You try to attach [tool] to [patient]'s stump, but it politely declines!"))
+				return FALSE
+			if (patient.limbs?.get_limb(affected_limb))
+				boutput(surgeon, SPAN_ALERT("[patient.name] already has one of those!"))
+				return FALSE
 			if (surgeon.find_in_hand(tool))
 				surgeon.u_equip(tool)
 			var/obj/item/parts/human_parts/arm/limb = null
@@ -85,7 +80,7 @@
 				limb:set_item(tool)
 			else
 				limb = tool
-			limb.attach(patient, surgeon)
+			return limb.attach(patient, surgeon)
 
 		tool_suitable(mob/surgeon, obj/item/tool)
 			if (tool.can_arm_attach())
@@ -96,14 +91,20 @@
 		desc = "Add the limb."
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+		can_fail = FALSE
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			if (surgeon.find_in_hand(tool))
 				surgeon.u_equip(tool)
-			var/obj/item/parts/human_parts/arm/limb = tool
-			limb.attach(C)
+			var/obj/item/parts/human_parts/leg/limb = tool
+			limb.attach(C, surgeon)
 			var/can_secure = ismob(surgeon) && (limb.easy_attach || surgeon?.find_type_in_hand(/obj/item/suture) || surgeon?.find_type_in_hand(/obj/item/staple_gun))
 			limb.remove_stage = can_secure ? 0 : 2
+		tool_suitable(mob/surgeon, obj/item/tool)
+			var/obj/item/parts/part = tool
+			if (istype(tool, /obj/item/parts) && (part.slot == "r_leg" || part.slot == "l_leg"))
+				return TRUE
+			return FALSE
 
 	skeleton
 		can_fail = FALSE

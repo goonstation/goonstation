@@ -26,7 +26,7 @@
 	/// Surgeries to add to this surgery by default.
 	var/list/default_sub_surgeries
 	/// The body zone this surgery affects, for suturing and checking what surgeries can be performed.
-	var/affected_zone = "chest"
+	var/affected_zone = ""
 
 	var/last_surgery_step = 0 //! Do not modify - Tracks the last step ID added, used for ordering steps.
 	var/complete = FALSE //! If TRUE, the surgery is complete.
@@ -192,10 +192,11 @@
 
 	/// Returns the surgery (or sub-surgery) that will be performed with the given tool. Returns FALSE if no implicit surgery is possible.
 	proc/get_implicit_surgery(mob/surgeon, obj/item/tool)
-		if (!can_perform_surgery(surgeon, tool))
+		var/can_perform = can_perform_surgery(surgeon, tool)
+		if (!can_perform && !sub_surgeries_accessible(surgeon, tool))
 			return FALSE
 		// If not complete & this is an implicit surgery, return the first possible step.
-		if ( implicit)
+		if (can_perform && implicit)
 			var/datum/surgery_step/step = step_possible(surgeon, tool)
 			if (step)
 				return src
@@ -372,6 +373,7 @@
 			return TRUE
 		return FALSE
 	/// Checks if the surgery can be canceled.
+	/// Should generally return FALSE if the first step can auto-complete in check_surgery_stage
 	proc/cancel_possible()
 		return (cancel_steps && get_surgery_progress() > 0)
 
@@ -394,7 +396,7 @@
 
 	///Whether this surgery is possible on the target - Otherwise, will be hidden from the context menu
 	proc/surgery_possible(mob/living/surgeon)
-		if (surgeon.zone_sel.selecting != affected_zone)
+		if (affected_zone != "" && surgeon.zone_sel.selecting != affected_zone)
 			return FALSE
 		return TRUE
 
@@ -763,3 +765,21 @@
 					take_bleeding_damage(surgeon, damage)
 					return TRUE
 		return FALSE
+
+	// you found the secret horrible proc! you're winner!
+	// this handles all 3 of these kludged tools. : ) ) )
+	// i have just untangled surgery so if you hate this and think 'its not THAT big of a change to fix'. I pass the torch to you!!! - hooligan
+	proc/can_use_stapler_bandage_shitfuck(mob/living/surgeon, obj/item/tool)
+		if (istype(tool, /obj/item/staple_gun))
+			var/obj/item/staple_gun/stapler = tool
+			if (stapler.ammo < 1)
+				boutput(surgeon, SPAN_ALERT("Your staple gun is out of staples!"))
+				return FALSE
+			stapler.ammo--
+		if (istype(tool, /obj/item/bandage))
+			var/obj/item/bandage/bandage = tool
+			if (bandage.amount < 1)
+				boutput(surgeon, SPAN_ALERT("No bandages left!"))
+				return FALSE
+			bandage.amount--
+		return TRUE

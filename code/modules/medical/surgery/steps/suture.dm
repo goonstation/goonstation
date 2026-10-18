@@ -2,12 +2,21 @@
 	name = "Suture"
 	icon_state = "suture"
 	success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-	tool_types_required = list(/obj/item/suture, /obj/item/staple_gun)
+	tool_types_required = list(/obj/item/suture, /obj/item/staple_gun, /obj/item/bandage)
 	repeatable = TRUE
 	var/loc = ""
 	success_damage = 0
+	can_fail = FALSE // matching old behaviour. this could be changed in future... :getin:
 
-	// Generic suture step for cancelling
+	proc/mark_stupid_thing_as_used(obj/item/tool)
+		if (istype(tool, /obj/item/suture))
+			var/obj/item/suture/suture = tool
+			suture.in_use = 1
+		if (istype(tool, /obj/item/bandage))
+			var/obj/item/bandage/bandage = tool
+			bandage.in_use = 1
+
+	// Suture step for cancelling all surgeries in a zone.
 	do_surgery_step(mob/living/surgeon, obj/item/tool)
 		var/mob/living/patient = parent_surgery.patient
 		var/list/datum/surgery/surgeries = parent_surgery.holder.get_surgeries_by_zone(loc)
@@ -18,7 +27,7 @@
 					repair_bleeding_damage(patient, 50, rand(1,3))
 				return TRUE
 
-	cancel
+	cancel // Generic 'Cancel' step for surgeries
 		desc = "Suture or staple the patient and cancel this surgery."
 		repeatable = FALSE
 		optional = TRUE
@@ -28,12 +37,8 @@
 			if (!istype(tool, /obj/item/suture) && !istype(tool, /obj/item/staple_gun))
 				boutput(surgeon, SPAN_ALERT("You need a suture or staple gun to cancel surgery!"))
 				return FALSE
-			if (istype(tool, /obj/item/staple_gun))
-				var/obj/item/staple_gun/stapler = tool
-				if (stapler.ammo < 1)
-					boutput(surgeon, SPAN_ALERT("Your staple gun is out of staples!"))
-					return FALSE
-				stapler.ammo--
+			if (!can_use_stapler_bandage_shitfuck(surgeon, tool))
+				return FALSE
 			if (istype(tool, /obj/item/staple_gun))
 				playsound(patient, "sound/items/med_staple.ogg", 50, TRUE)
 			else
@@ -61,10 +66,16 @@
 		desc = "Suture the left arm shut."
 		loc = "l_arm"
 	bleeding
-		do_surgery_step(mob/living/surgeon, obj/item/tool)
-			surgeon.tri_message(parent_surgery.patient, SPAN_NOTICE("<b>[surgeon]</b> sews [parent_surgery.patient == surgeon ? "[his_or_her(parent_surgery.patient)]" : "[parent_surgery.patient]'s"] wounds closed with [tool]."),\
-			"You sew [surgeon == parent_surgery.patient ? "your" : "[parent_surgery.patient]'s"] wounds closed with [tool].",\
-			SPAN_NOTICE("[parent_surgery.patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your wounds closed with [tool]."))
-			repair_bleeding_damage(parent_surgery.patient, 100, 10)
 		desc = "Suture a bleeding wound."
-		loc = "bleeding"
+		do_surgery_step(mob/living/surgeon, obj/item/tool)
+			if (!can_use_stapler_bandage_shitfuck(surgeon, tool))
+				return FALSE
+			var/patient = parent_surgery.patient
+			mark_stupid_thing_as_used(tool)
+			var/brute_heal = 0
+			var/burn_heal = 0
+			if (istype(tool, /obj/item/bandage))
+				var/obj/item/bandage/bandage = tool
+				brute_heal = bandage.brute_heal
+				burn_heal = bandage.burn_heal
+			actions.start(new /datum/action/bar/icon/medical_suture_bandage(patient, tool, 15, 0,0, 5, brute_heal, burn_heal, Vrb = "sutur"), surgeon)
