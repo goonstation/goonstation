@@ -217,7 +217,7 @@ TYPEINFO(/obj/item/swords/sord)
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "Greyhold Mercenary Operative"
-			C.name = "[C.registered]’s ID Card ([C.assignment])"
+			C.update_name()
 
 		update_clothing()
 
