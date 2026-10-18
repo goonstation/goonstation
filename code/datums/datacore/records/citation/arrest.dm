@@ -33,6 +33,16 @@
 
 	logTheThing(LOG_ADMIN, usr, "issues an arrest warrant using [issuer] ([issuer_job])'s ID. It is a warrant for <b>[target]</b> with the reason: [reason].")
 
+	var/turf/T = null
+	for_by_tcl(H, /mob/living/carbon/human)
+		if (H.real_name == target)
+			T = get_turf(H)
+			break
+
+	var/where_text = T ? global.showCoords(T.x, T.y, T.z, ghostjump = TRUE) : "?,?,?"
+	var/ghost_message = "An arrest warrant for crew member \"[target]\" ([where_text]) has been issued by [issuer], with reason: \"[reason]\""
+	global.message_ghosts(ghost_message)
+
 	var/datum/signal/signal = global.get_free_signal()
 	signal.data["command"] = "text_message"
 	signal.data["sender_name"] = "SEC-MAILBOT"
@@ -65,6 +75,16 @@
 			record["sec_flag"] = "None"
 
 	logTheThing(LOG_ADMIN, usr, "closes an arrest warrant using [closer] ([closer_job])'s ID. It was a warrant for <b>[target]</b> with the resolution: [resolution].")
+
+	var/turf/T = null
+	for_by_tcl(H, /mob/living/carbon/human)
+		if (H.real_name == target)
+			T = get_turf(H)
+			break
+
+	var/where_text = T ? global.showCoords(T.x, T.y, T.z, ghostjump = TRUE) : "?,?,?"
+	var/ghost_message = "An arrest warrant for crew member \"[target]\" ([where_text]) has been closed by [closer], with resolution: \"[resolution]\""
+	global.message_ghosts(ghost_message)
 
 	var/datum/signal/signal = global.get_free_signal()
 	signal.data["command"] = "text_message"
