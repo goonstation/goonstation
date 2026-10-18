@@ -1,5 +1,35 @@
 
+(t)sat oct 17 26
+(u)JORJ949
+(p)28057
+(e)🆕🎨🔨|C-Feature, C-Sprites, A-Player-Actions
+(+)Changeling ability icon borders have been resprited, with a writhing animation when you hover over the ability.
+(t)fri oct 16 26
+(u)Mr. Moriarty
+(p)27986
+(e)🆕⚙👮🖥️|C-Feature, A-Internal, A-Security, A-Computers
+(*)SecMate now has a citations database that tracks tickets and fines. Citations can also now be issued, approved, and printed from SecMate.
+(u)JORJ949
+(p)28009
+(e)🎨|C-Sprites
+(*)Medal rewards now have their own unique menu with many options for filtering and a preview of the item/skin you're redeeming!
+(u)Rubicubie
+(p)28032
+(e)🆕👮|C-Feature, A-Security
+(*)Tickets now look newer in a receipt-style!
+(t)thu oct 15 26
+(u)AronBattlnode
+(p)28103
+(e)💊👽|A-Medical, A-Mutantraces
+(+)Frog dehydration can no longer be asymptomatic.
+(u)JORJ949
+(p)28060
+(e)🪲🧛🔨|C-Bug, A-Gamemodes, A-Player-Actions
+(+)Phaseshifting (from either wizard spell or gene) will no longer let you pass through walls and doors in the listening post.
 (t)mon oct 12 26
+(u)ZeWaka
+(e)🪲|C-Bug, A-Player-Actions
+(+)Hand labelers no longer accept emoji.
 (u)Sovexe
 (p)28066
 (e)🪲⚙|C-Bug, A-Internal

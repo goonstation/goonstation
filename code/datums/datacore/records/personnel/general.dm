@@ -48,8 +48,12 @@
 		if (!istype(I))
 			return
 
+		var/icon/file_icon = icon('icons/turf/floors.dmi', "white")
+		file_icon.Blend(I, ICON_OVERLAY)
+
 		var/datum/computer/file/image/IMG = new()
-		IMG.ourIcon = I
+		IMG.ourImage = image(file_icon)
+		IMG.ourIcon = file_icon
 		IMG.img_name = "photo of [H.real_name]"
 		IMG.img_desc = "You can see [H.real_name] in the photo."
 		src["photo"] = IMG
