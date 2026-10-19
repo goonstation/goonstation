@@ -152,9 +152,7 @@
 				boutput(user, SPAN_HINT("Cell: [master.cell.charge]/[master.cell.maxcharge]"))
 
 			if ("status")
-				// Change status
-				master.ai_statuschange()
-				master.ai_colorchange()
+				master.ai_update_status_menu()
 				update()
 			if ("deploy")
 				// Deploy menu
