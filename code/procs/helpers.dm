@@ -2642,7 +2642,7 @@ var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
 		if (istype(container, /obj/storage/secure) || istype(container, /obj/storage/crate/loot))
 			continue
 		// listening posts everywhere or martian ship (in station Z-level on Oshan)
-		if (istype(get_area(container), /area/listeningpost) || istype(get_area(container), /area/evilreaver))
+		if (!istype(get_area(container), /area/station))
 			continue
 
 		if (breathable)
