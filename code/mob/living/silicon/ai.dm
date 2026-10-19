@@ -1754,13 +1754,13 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 /mob/living/silicon/ai/proc/ai_update_status_menu()
 	var/u_roll = pick("color", "colour") // hehe
-	var/list/status_options = list("Screen emotion", "Screen [u_roll]", "Status message", "Toggle lock", "Change name", "Go offline")
+	var/list/status_options = list("Screen emotion", "Screen [u_roll]", "Status message", "Toggle Monospace", "Change name", "Go offline")
 	var/mob/message_mob = src.get_message_mob()
 
 	if (!message_mob.client || isdead(src))
 		return
 
-	var/chosen_option = tgui_input_list(message_mob, "Select an option.", "Choose Option", status_options)
+	var/chosen_option = tgui_input_list(message_mob, "Select customization.", "Choose Status", status_options)
 
 	switch(chosen_option)
 		if ("Screen emotion")
@@ -1775,8 +1775,8 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		if ("Status message")
 			src.ai_change_message()
 
-		if ("Toggle lock")
-			src.toggle_lock()
+		if ("Toggle Monospace")
+			src.toggle_monospace_mode()
 
 		if ("Change name")
 			src.rename_self()
