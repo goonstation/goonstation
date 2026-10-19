@@ -125,6 +125,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 	var/dist
 	var/sound/S
+	var/list/replaced_notes
+	var/capture_playback = sound_listeners || sound_listener_packets || volume_scale != 1
 	var/turf/Mloc
 	var/ourvolume
 	var/scaled_dist
@@ -210,10 +212,11 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 			//sadly, we must generate
 			if (!S)
 				S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
+				if (S)
+					replaced_notes = global.instrument_note_channels[S.channel]
 			if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
-			storedVolume *= volume_scale
-			ourvolume *= volume_scale
-			clear_instrument_note_listener(C, S.channel)
+			if (length(replaced_notes))
+				clear_instrument_note_listener(C, replaced_notes)
 			C.sound_playing[ S.channel ][1] = storedVolume
 			C.sound_playing[ S.channel ][2] = channel
 
@@ -239,10 +242,15 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 			S.z = source_turf.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
 			S.y = 0
 
-			if (sound_listeners)
-				sound_listeners[C] = storedVolume
-			if (sound_listener_packets)
-				sound_listener_packets[C] = sound_update_packet(S, S.volume)
+			if (capture_playback)
+				if (volume_scale != 1)
+					storedVolume *= volume_scale
+					S.volume *= volume_scale
+					C.sound_playing[S.channel][1] = storedVolume
+				if (sound_listeners)
+					sound_listeners[C] = storedVolume
+				if (sound_listener_packets)
+					sound_listener_packets[C] = sound_update_packet(S, S.volume)
 			C << S
 
 			S.frequency = orig_freq
@@ -300,7 +308,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 	var/sound/S = generate_sound(source, soundin, ourvolume, vary, extrarange, pitch)
 	if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
-	clear_instrument_note_listener(src.client, S.channel)
+	var/list/replaced_notes = global.instrument_note_channels[S.channel]
+	if (length(replaced_notes))
+		clear_instrument_note_listener(src.client, replaced_notes)
 	client.sound_playing[ S.channel ][1] = ourvolume
 	client.sound_playing[ S.channel ][2] = channel
 
@@ -324,7 +334,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
 
-				clear_instrument_note_listener(M.client, S.channel)
+				if (length(replaced_notes))
+					clear_instrument_note_listener(M.client, replaced_notes)
 				M.client.sound_playing[ S.channel ][1] = ourvolume
 				M.client.sound_playing[ S.channel ][2] = channel
 
@@ -351,7 +362,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 	var/sound/S = generate_sound(null, soundin, vol, vary, 0, pitch)
 	if (!S) CRASH("Did not manage to generate sound \"[soundin]\". Likely that the filename is misnamed or does not exist.")
-	clear_instrument_note_listener(src.client, S.channel)
+	var/list/replaced_notes = global.instrument_note_channels[S.channel]
+	if (length(replaced_notes))
+		clear_instrument_note_listener(src.client, replaced_notes)
 	client.sound_playing[ S.channel ][1] = vol
 	client.sound_playing[ S.channel ][2] = channel
 	if(wait)
@@ -367,7 +380,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 		for (var/mob/M in src.observers)
 			if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 				continue
-			clear_instrument_note_listener(M.client, S.channel)
+			if (length(replaced_notes))
+				clear_instrument_note_listener(M.client, replaced_notes)
 			M.client.sound_playing[ S.channel ][1] = vol
 			M.client.sound_playing[ S.channel ][2] = channel
 			S.volume = vol * M.client.getVolume(channel) / 100
@@ -426,6 +440,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 	if(isatom(target))
 		source = target
 	var/sound/S
+	var/list/replaced_notes
 	var/ourvolume
 	var/storedVolume
 
@@ -443,9 +458,13 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 		EARLY_CONTINUE_IF_QUIET(ourvolume)
 
-		if (!S) S = generate_sound(source, soundin, vol, vary, extrarange=0, pitch=pitch)
+		if (!S)
+			S = generate_sound(source, soundin, vol, vary, extrarange=0, pitch=pitch)
+			if (S)
+				replaced_notes = global.instrument_note_channels[S.channel]
 		if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
-		clear_instrument_note_listener(C, S.channel)
+		if (length(replaced_notes))
+			clear_instrument_note_listener(C, replaced_notes)
 		C.sound_playing[ S.channel ][1] = storedVolume
 		C.sound_playing[ S.channel ][2] = channel
 

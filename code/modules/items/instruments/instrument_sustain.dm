@@ -2,11 +2,10 @@
 #define INSTRUMENT_NOTE_MAX_POLYPHONY 32
 #define INSTRUMENT_NOTE_RELEASE_STEPS 16
 
-/// Channel ownership is tracked per listener because the ordinary sound pool reuses channels.
-var/global/list/instrument_note_channels = list()
+/// Listener ownership indexed by BYOND sound channel (1–1024).
+var/global/list/instrument_note_channels = new/list(1024)
 
-/proc/clear_instrument_note_listener(client/listener, sound_channel)
-	var/list/notes = global.instrument_note_channels?["[sound_channel]"]
+/proc/clear_instrument_note_listener(client/listener, list/notes)
 	if (!listener || !notes)
 		return
 	for (var/datum/instrument_note/note as anything in notes)
@@ -21,13 +20,12 @@ var/global/list/instrument_note_channels = list()
 /proc/release_instrument_note_channel(datum/instrument_note/note)
 	if (!note?.sound_channel || !global.instrument_note_channels)
 		return
-	var/channel_key = "[note.sound_channel]"
-	var/list/notes = global.instrument_note_channels[channel_key]
+	var/list/notes = global.instrument_note_channels[note.sound_channel]
 	if (!notes)
 		return
 	notes -= note
 	if (!length(notes))
-		global.instrument_note_channels -= channel_key
+		global.instrument_note_channels[note.sound_channel] = null
 
 /datum/instrument_note
 	var/datum/weakref/instrument_ref
@@ -83,9 +81,8 @@ var/global/list/instrument_note_channels = list()
 	src.sound_channel = note_sound.channel
 	if (!src.sound_channel)
 		return
-	var/channel_key = "[src.sound_channel]"
-	global.instrument_note_channels[channel_key] ||= list()
-	global.instrument_note_channels[channel_key] += src
+	global.instrument_note_channels[src.sound_channel] ||= list()
+	global.instrument_note_channels[src.sound_channel] += src
 	for (var/client/listener as anything in src.listener_packets)
 		var/sound/packet = src.listener_packets[listener]
 		src.last_sent_volumes[listener] = packet.volume
@@ -97,7 +94,7 @@ var/global/list/instrument_note_channels = list()
 			natural_note.finish_recording()
 
 /datum/instrument_note/proc/channel_is_owned()
-	return src.sound_channel && (src in global.instrument_note_channels?["[src.sound_channel]"])
+	return src.sound_channel && (src in global.instrument_note_channels[src.sound_channel])
 
 /// Keep the note identity after playback ends so key-up can trigger its release recording.
 /datum/instrument_note/proc/finish_recording()
