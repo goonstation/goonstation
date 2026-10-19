@@ -168,10 +168,16 @@ TYPEINFO(/obj/item/card/emag)
 	registered = "Captain"
 	assignment = "Captain"
 
-	New()
-		..()
-		src.access = get_access("Captain")
-		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
+/obj/item/card/id/gold/captains_spare/New()
+	..()
+	START_TRACKING
+	src.access = get_access("Captain")
+	src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
+	
+/obj/item/card/id/gold/captains_spare/disposing()
+	STOP_TRACKING
+	. = ..()
+
 
 /obj/item/card/id/nanotrasen
 	name = "Nanotrasen identification card"
