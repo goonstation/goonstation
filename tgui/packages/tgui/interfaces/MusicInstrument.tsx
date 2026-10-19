@@ -243,14 +243,14 @@ export const MusicInstrument = () => {
                   />
                   <span>Transpose</span>
                 </Box>
-                {supportsSustain && (
+                {supportsSustain ? (
                   <Button.Checkbox
                     checked={legacyMode}
                     onClick={() => setLegacyMode(!legacyMode)}
                   >
                     Legacy Mode
                   </Button.Checkbox>
-                )}
+                ) : null}
               </Box>
               <Box className="instrument__keyorder">
                 <Box className="instrument__instructions" fontSize="1.1em">
