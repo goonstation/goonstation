@@ -32,13 +32,15 @@
 		repeatable = FALSE
 		optional = TRUE
 		success_sound = FALSE
-		do_surgery_step(mob/living/surgeon, obj/item/tool)
-			var/mob/living/patient = parent_surgery.patient
+		can_operate(mob/living/surgeon, obj/item/tool, quiet)
 			if (!istype(tool, /obj/item/suture) && !istype(tool, /obj/item/staple_gun))
-				boutput(surgeon, SPAN_ALERT("You need a suture or staple gun to cancel surgery!"))
+				if (!quiet)
+					boutput(surgeon, SPAN_ALERT("You need a suture or staple gun to cancel surgery!"))
 				return FALSE
 			if (!can_use_stapler_bandage_shitfuck(surgeon, tool))
 				return FALSE
+		do_surgery_step(mob/living/surgeon, obj/item/tool)
+			var/mob/living/patient = parent_surgery.patient
 			if (istype(tool, /obj/item/staple_gun))
 				playsound(patient, "sound/items/med_staple.ogg", 50, TRUE)
 			else
@@ -67,9 +69,10 @@
 		loc = "l_arm"
 	bleeding
 		desc = "Suture a bleeding wound."
-		do_surgery_step(mob/living/surgeon, obj/item/tool)
-			if (!can_use_stapler_bandage_shitfuck(surgeon, tool))
+		can_operate(mob/living/surgeon, obj/item/tool, quiet)
+			if (!can_use_stapler_bandage_shitfuck(surgeon, tool, quiet))
 				return FALSE
+		do_surgery_step(mob/living/surgeon, obj/item/tool)
 			var/patient = parent_surgery.patient
 			mark_stupid_thing_as_used(tool)
 			var/brute_heal = 0

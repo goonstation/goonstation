@@ -785,8 +785,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (ishuman(over_object) && ishuman(usr) && !src.storage)
 		var/mob/living/carbon/human/patient = over_object
 		var/mob/living/carbon/human/surgeon = usr
-		if (patient.surgeryHolder?.is_surgery_complete("torso_surgery"))
-			var/datum/surgery/carbon/item/chest_surgery = patient.surgeryHolder.get_surgery("chest_item_surgery")
+		var/datum/surgery/carbon/item/chest_surgery = patient.surgeryHolder?.get_surgery("chest_item_surgery")
+		if (chest_surgery && chest_surgery.surgery_accessible(surgeon, src))
 			if (chest_surgery.attempt_implicit(surgeon, src))
 				return
 

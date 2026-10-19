@@ -6,11 +6,16 @@
 		icon_state = "in"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		can_fail = FALSE
-		tool_suitable(mob/surgeon, obj/item/tool)
+		can_operate(mob/surgeon, obj/item/tool, quiet = FALSE)
 			if(tool.w_class > W_CLASS_NORMAL && !(tool.type in global.chestitem_whitelist))
-				boutput(surgeon, SPAN_ALERT("[tool] is too big to fit into [parent_surgery.patient]'s chest cavity."))
+				if (!quiet)
+					boutput(surgeon, SPAN_ALERT("[tool] is too big to fit into [parent_surgery.patient]'s chest cavity."))
 				return FALSE
-			return TRUE
+			if(!ishuman(surgeon) && surgeon.find_in_hand(tool))
+				if (!quiet)
+					boutput(surgeon, SPAN_ALERT("You can't insert your tools into people!"))
+				return FALSE
+			return ..()
 
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient

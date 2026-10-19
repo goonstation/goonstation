@@ -310,6 +310,15 @@
 	// Surgery logic
 	// ----------
 
+	/// Checks if this surgery is accessible (IE: all prerequisite/parent surgeries are complete)
+	proc/surgery_accessible(mob/living/surgeon, obj/item/tool)
+		if (super_surgery)
+			if (!super_surgery.sub_surgeries_accessible(surgeon, tool))
+				return FALSE
+			return super_surgery.surgery_accessible(surgeon, tool)
+		return TRUE
+
+
 	/// Check if all steps are complete.
 	proc/surgery_complete()
 		for(var/datum/surgery_step/step in surgery_steps)
@@ -600,7 +609,6 @@
 		else
 			screw_up_prob = clamp(screw_up_prob, 5, 100) // otherwise there'll always be a slight chance
 
-		DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) has screw_up_prob set to [screw_up_prob]</b>")
 		return screw_up_prob
 
 	/// Mark this step as completed. It's better to override on_complete unless you know what you're doing.
@@ -682,7 +690,7 @@
 
 	/// If types and/or tool flags aren't enough - override this to determine if the provided tool is suitable for this surgery step.
 	/// NOTE: If the tool is 'correct' but missing something like ammo or charge, this should be TRUE.
-	/// Instead, return the error message in the step's 'do_surgery_step()'!
+	/// Instead, return the error message in the step's 'can_operate'!
 	proc/tool_suitable(mob/surgeon, obj/item/tool)
 		return TRUE
 
@@ -767,19 +775,21 @@
 		return FALSE
 
 	// you found the secret horrible proc! you're winner!
-	// this handles all 3 of these kludged tools. : ) ) )
+	// this handles the usage checks for staplers and bandages used across a lot of places.
 	// i have just untangled surgery so if you hate this and think 'its not THAT big of a change to fix'. I pass the torch to you!!! - hooligan
-	proc/can_use_stapler_bandage_shitfuck(mob/living/surgeon, obj/item/tool)
+	proc/can_use_stapler_bandage_shitfuck(mob/living/surgeon, obj/item/tool, quiet = FALSE)
 		if (istype(tool, /obj/item/staple_gun))
 			var/obj/item/staple_gun/stapler = tool
 			if (stapler.ammo < 1)
-				boutput(surgeon, SPAN_ALERT("Your staple gun is out of staples!"))
+				if (!quiet)
+					boutput(surgeon, SPAN_ALERT("Your staple gun is out of staples!"))
 				return FALSE
 			stapler.ammo--
 		if (istype(tool, /obj/item/bandage))
 			var/obj/item/bandage/bandage = tool
 			if (bandage.amount < 1)
-				boutput(surgeon, SPAN_ALERT("No bandages left!"))
+				if (!quiet)
+					boutput(surgeon, SPAN_ALERT("No bandages left!"))
 				return FALSE
 			bandage.amount--
 		return TRUE

@@ -221,7 +221,7 @@
 				src.target_side = "right"
 			..(parent_surgery, the_organ)
 
-		do_surgery_step(mob/surgeon, obj/item/tool)
+		can_operate(mob/surgeon, obj/item/tool, quiet)
 			if (affected_organ == "left_eye")
 				if (!surgeon.find_in_hand(tool, "left"))
 					return FALSE
@@ -229,10 +229,12 @@
 				if (!surgeon.find_in_hand(tool, "right"))
 					return FALSE
 			if (!parent_surgery.patient.organHolder.head)
-				boutput(surgeon, SPAN_ALERT("[parent_surgery.patient] doesn't have a head!"))
+				if (!quiet)
+					boutput(surgeon, SPAN_ALERT("[parent_surgery.patient] doesn't have a head!"))
 				return FALSE
 			if (surgeon.find_in_hand(tool, "middle"))
-				surgeon.show_text("Hey, there's no middle eye!")
+				if (!quiet)
+					surgeon.show_text("Hey, there's no middle eye!")
 				return FALSE
 			. = ..()
 
