@@ -136,7 +136,7 @@ TYPEINFO(/mob/living)
 	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
-	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	src.AddElement(/datum/element/ghost_observable)
 	// The silhouette is created before atom.New() loads runtime artwork.
 	src.load_runtime_icon()
 	src.create_mob_silhouette()
@@ -174,7 +174,6 @@ TYPEINFO(/mob/living)
 	vision.flash(duration)
 
 /mob/living/disposing()
-	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
