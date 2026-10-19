@@ -229,7 +229,7 @@
 					return FALSE
 				var/sound_path = src.sounds_instrument[note + 1]
 				if (src.legacy_mode || !src.supports_sustain \
-					|| (!global.instrument_piano_regions?[sound_path] && !global.instrument_sustain_samples?[sound_path]))
+					|| !global.instrument_sustain_samples?[sound_path])
 					if (!isnull(velocity))
 						volume *= instrument_velocity_gain(velocity)
 					return src.play_note(note + 1, ui.user, volume_override = clamp(volume, 0, 100), use_cooldown = FALSE)
