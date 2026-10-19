@@ -25,7 +25,7 @@
 
 /datum/observe_menu/proc/is_valid_observable(atom/observable, list/atom/all_observables=null)
 	if(isnull(all_observables))
-		all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
+		all_observables = by_cat[TR_CAT_GHOST_OBSERVABLES]
 	if(!(observable in all_observables))
 		return FALSE
 
@@ -48,7 +48,7 @@
 	return TRUE
 
 /datum/observe_menu/ui_static_data(mob/user)
-	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
+	var/list/all_observables = by_cat[TR_CAT_GHOST_OBSERVABLES]
 	var/DNRSet = user.mind?.get_player()?.dnr || isadminghost(user)
 
 	var/list/uidata = list()
