@@ -303,7 +303,11 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 
 						DEBUG_MESSAGE("Now moving shuttle!")
-						start_location.move_contents_to(end_location, map_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
+						var/filler_turf = text2path(start_location.filler_turf)
+						if (!filler_turf)
+							filler_turf = map_turf
+
+						start_location.move_contents_to(end_location, filler_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
 
 						if(station_repair.station_generator)
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
