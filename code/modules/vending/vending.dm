@@ -463,14 +463,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		return
 	if (istype(W, /obj/item/currency/spacecash))
 		if (src.pay)
-			if(user.traitHolder?.hasTrait("wasitsomethingisaid") && prob(10)) // it rips up your cash.
-				W.amount = 0
-				user.u_equip(W)
-				W.dropped(user)
-				qdel( W )
-				boutput(user, SPAN_NOTICE("You insert [W]."))
-				playsound(src.loc, 'sound/machines/shredder.ogg', 40, TRUE)
-				return
 			src.credit += W.amount
 			W.amount = 0
 			boutput(user, SPAN_NOTICE("You insert [W]."))
