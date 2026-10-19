@@ -75,7 +75,6 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 	proc/process()
 
 	emergency_shuttle
-		var/station_turf //! The turf type used to replace turfs on the station-Z, needed for indoor shuttle bays
 
 		New()
 			..()
@@ -83,7 +82,6 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 				if (S.emergency && !(S in src.airbridges))
 					src.airbridges += S
 			src.map_turf = map_settings.shuttle_map_turf
-			src.station_turf = map_settings.escape_station_floor_turf
 			src.sound_turf = pick_landmark(LANDMARK_SHUTTLE_SOUND)
 			if (!istype(src.sound_turf))
 				logTheThing(LOG_DEBUG, null, "Shuttle sound landmark not found, trying station shuttle area turfs")
@@ -305,15 +303,16 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 
 						DEBUG_MESSAGE("Now moving shuttle!")
-						start_location.move_contents_to(end_location, map_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
+						var/filler_turf = text2path(start_location.filler_turf)
+						if (!filler_turf)
+							filler_turf = map_turf
 
-						var/list/turf/turfs_to_fix = get_area_turfs(start_location)
-						if(length(turfs_to_fix))
-							if(station_repair.station_generator)
+						start_location.move_contents_to(end_location, filler_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
+
+						if(station_repair.station_generator)
+							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+							if(length(turfs_to_fix))
 								station_repair.repair_turfs(turfs_to_fix, force_floor=TRUE)
-							else if(src.station_turf)
-								for (var/turf/O in turfs_to_fix)
-									O.ReplaceWith(src.station_turf, keep_old_material = 0, handle_air=FALSE, force = 1)
 
 						start_location.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
 
