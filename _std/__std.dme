@@ -249,3 +249,5 @@
 #include "zlevel.dm"
 
 #include "packets.dm" // requires types.dm
+
+#include "namespaces\ghost.dm" // Requires map.dm

@@ -1366,18 +1366,11 @@ proc/outermost_movable(atom/movable/target)
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
 //Shoves a jump to link or whatever in the thing :effort:
-/proc/showCoords(x, y, z, plaintext, holder, ghostjump)
-	var text
-	if(isrestrictedz(z) && ghostjump)
-		ghostjump = FALSE
-		plaintext = TRUE
+/proc/showCoords(x, y, z, plaintext, holder)
 	if (plaintext)
-		text += "[x], [y], [z]"
-	else if(ghostjump)
-		text += "<a href='byond://winset?command=.ghostjump [x] [y] [z]' title='Jump to Coords'>[x],[y],[z]</a>"
+		return "[x],[y],[z]"
 	else
-		text += "<a href='byond://?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
-	return text
+		return "<a href='byond://?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
 
 // hi I'm haine -throws more crap onto the pile-
 /proc/rand_deci(var/num1 = 1, var/num2 = 0, var/num3 = 2, var/num4 = 0)
@@ -2606,18 +2599,9 @@ proc/total_cross(turf/T, atom/movable/mover)
 			return
 
 
-// Used to send a message to all ghosts when something Interesting has happened
-// Any message sent to this should just be a funny comment on something logged elsewhere,
-// so they probably don't need to be logged here again (e.g. death alerts)
-
-var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
-
-/proc/message_ghosts(message, show_wraith = FALSE)
-	var/list/mob/living/intangible/wraith/wraiths = list()
-	for (var/datum/antagonist/antagonist_datum as anything in global.get_all_antagonists(ROLE_WRAITH))
-		wraiths[antagonist_datum.owner.current] = TRUE
-
-	global.deadchat_announcer.say(message, flags = SAYFLAG_IGNORE_HTML, message_params = list("atom_listeners_to_be_excluded" = wraiths))
+// Stub for +secret. To be removed.
+/proc/message_ghosts()
+	return
 
 /// Find a client based on ckey
 /proc/find_client(ckey)
