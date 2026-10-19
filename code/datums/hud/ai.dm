@@ -14,6 +14,8 @@
 		viewport
 		hologram
 		map
+		lock
+		unlock
 		core
 		coreatk
 
@@ -63,10 +65,17 @@
 		map = create_screen("map", "Show Map", 'icons/mob/hud_ai.dmi', "map", "WEST, NORTH-3.5", HUD_LAYER)
 		map.underlays += "button"
 
-		core = create_screen("core", "Return to Core", 'icons/mob/hud_ai.dmi', "core", "WEST, NORTH-4", HUD_LAYER)
+		lock = create_screen("lock", "Interface Lock", 'icons/mob/hud_ai.dmi', "lock", "WEST, NORTH-4", HUD_LAYER)
+		lock.underlays += "button"
+		lock.invisibility = INVIS_ALWAYS
+
+		unlock = create_screen("unlock", "Interface Unlock", 'icons/mob/hud_ai.dmi', "unlock", "WEST, NORTH-4", HUD_LAYER)
+		unlock.underlays += "button"
+
+		core = create_screen("core", "Return to Core", 'icons/mob/hud_ai.dmi', "core", "WEST, NORTH-4.5", HUD_LAYER)
 		core.underlays += "button"
 
-		coreatk = create_screen("coreatk", "Core Damaged!", 'icons/mob/hud_ai.dmi', "core", "WEST, NORTH-4", HUD_LAYER)
+		coreatk = create_screen("coreatk", "Core Damaged!", 'icons/mob/hud_ai.dmi', "core", "WEST, NORTH-4.5", HUD_LAYER)
 		coreatk.underlays += "killswitchu"
 		coreatk.invisibility = INVIS_ALWAYS
 
@@ -98,6 +107,11 @@
 			update_health()
 			update_charge()
 			update_tracking()
+			update_lock()
+
+		update_lock()
+			lock.invisibility = master.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::LOCKED ? INVIS_ALWAYS : INVIS_NONE
+			unlock.invisibility = master.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::LOCKED ? INVIS_NONE : INVIS_ALWAYS
 
 		update_charge()
 			if (master.cell)
@@ -165,7 +179,7 @@
 				master.access_internal_radio()
 
 			if ("laws")
-				master.show_laws()
+				master.interact_laws()
 
 			if ("viewport")
 				if(master.deployed_to_eyecam)
@@ -179,6 +193,10 @@
 					boutput(master, SPAN_ALERT("Deploy to an AI Eye first to create a hologram."))
 			if ("map")
 				master.open_map()
+			if ("lock")
+				master.toggle_lock()
+			if ("unlock")
+				master.toggle_lock()
 			if ("core")
 				master.return_to(user)
 			if ("coreatk")

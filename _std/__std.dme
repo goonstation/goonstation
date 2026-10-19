@@ -217,6 +217,7 @@
 #include "namespaces\radio.dm"
 #include "namespaces\RCD.dm"
 #include "namespaces\security.dm"
+#include "namespaces\silicon.dm"
 #include "namespaces\soulguard.dm"
 #include "namespaces\manufacturer.dm"
 #include "namespaces\uplink.dm"

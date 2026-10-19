@@ -686,45 +686,12 @@ Frequency:
 	onclose(src, "radio")
 	return
 
-/mob/living/silicon/hivebot/verb/cmd_show_laws()
+/mob/living/silicon/hivebot/verb/cmd_interact_laws()
 	set category = "Robot Commands"
-	set name = "Show Laws"
+	set name = "Laws"
 
-	src.show_laws()
+	src.interact_laws()
 	return
-
-/mob/living/silicon/hivebot/verb/cmd_state_standard_laws()
-	set category = "Robot Commands"
-	set name = "State Standard Laws"
-
-	src.state_standard_laws()
-
-/mob/living/silicon/hivebot/verb/cmd_state_laws()
-	set category = "Robot Commands"
-	set name = "State All Laws"
-
-	src.state_all_laws()
-
-/mob/living/silicon/hivebot/verb/robot_set_fake_laws()
-	set category = "Robot Commands"
-	set name = "Set Fake Laws"
-
-	if (src.dependent)
-		src.mainframe.set_fake_laws()
-	else
-		src.set_fake_laws()
-
-/mob/living/silicon/hivebot/verb/robot_state_fake_laws()
-	set category = "Robot Commands"
-	set name = "State Fake Laws"
-
-	src.state_fake_laws() //already handles being a shell
-
-/mob/living/silicon/hivebot/verb/robot_show_fake_laws()
-	set category = "Robot Commands"
-	set name = "Show Fake Laws"
-
-	src.show_fake_laws() //already handles being a shell
 
 /mob/living/silicon/hivebot/verb/open_nearest_door()
 	set category = "Robot Commands"

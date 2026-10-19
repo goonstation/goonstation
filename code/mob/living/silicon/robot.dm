@@ -1232,6 +1232,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					if (src.locking)
 						src.locking = 0
 					locked = !locked
+					hud?.update_lock()
 					boutput(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
 					boutput(src, SPAN_NOTICE("[user] [ locked ? "locks" : "unlocks"] your interface."))
 				else
@@ -1667,6 +1668,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		src.locking = 0
 		src.opened = 0
 		src.brainexposed = 1
+		hud?.update_lock()
 
 		if (user)
 			user.put_in_hand_or_drop(src.part_head.brain)
@@ -1863,22 +1865,6 @@ TYPEINFO(/mob/living/silicon/robot)
 			C.apply_keybind("robot_tg")
 			if (C.preferences.use_azerty)
 				C.apply_keybind("robot_tg_azerty")
-
-	show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
-		var/who
-
-		if (everyone)
-			who = world
-		else
-			who = src
-			boutput(who, "<b>Obey these laws:</b>")
-		if(src.dependent && src?.mainframe?.law_rack_connection)
-			src.mainframe.law_rack_connection.show_laws(who)
-		else if(!src.dependent && src.law_rack_connection)
-			src.law_rack_connection.show_laws(who)
-		else
-			boutput(src,"You have no laws!")
-		return
 
 	get_equipped_ore_scoop()
 		if(src.module_states[1] && istype(src.module_states[1],/obj/item/ore_scoop))
@@ -2181,6 +2167,7 @@ TYPEINFO(/mob/living/silicon/robot)
 	proc/spellopen()
 		if (src.locked)
 			locked = 0
+			hud?.update_lock()
 		if (src.locking)
 			src.locking = 0
 		if (src.opened)
@@ -2200,42 +2187,83 @@ TYPEINFO(/mob/living/silicon/robot)
 		src.TakeDamage("All", 30, 0)
 		return 1
 
-	verb/cmd_show_laws()
+	verb/cmd_interact_laws()
 		set category = "Robot Commands"
-		set name = "Show Laws"
+		set name = "Laws"
 
-		src.show_laws(0)
+		src.interact_laws()
 		return
 
-	verb/cmd_state_standard_laws()
+	verb/cmd_customize_status()
 		set category = "Robot Commands"
-		set name = "State Standard Laws"
+		set name = "Customize Status"
 
-		src.state_standard_laws()
+		src.customize_status()
+		return
 
-	verb/cmd_state_laws()
-		set category = "Robot Commands"
-		set name = "State All Laws"
+	proc/customize_status()
+		var/list/custom_options = list()
+		var/obj/item/parts/robot_parts/head/screen/targethead = locate(/obj/item/parts/robot_parts/head/screen) in src.contents
+		if (istype(targethead))
+			custom_options += SILICON::CYBORG::CUSTOMIZE::FACEPLATE
+			custom_options += SILICON::CYBORG::CUSTOMIZE::DISPLAY
+		custom_options += list(SILICON::CYBORG::CUSTOMIZE::SCREAM, SILICON::CYBORG::CUSTOMIZE::PITCH, SILICON::CYBORG::CUSTOMIZE::MONOSPACE)
+		var/chosen_option = tgui_input_list(src, "Select an option to customize.", "Customize Status", custom_options)
+		if (isnull(chosen_option))
+			return
 
-		src.state_all_laws()
+		switch(chosen_option)
+			if(SILICON::CYBORG::CUSTOMIZE::FACEPLATE)
+				var/new_faceplate = tgui_input_list(src, "Select your faceplate", SILICON::CYBORG::CUSTOMIZE::FACEPLATE, sortList(targethead.expressions, /proc/cmp_text_asc))
+				if (!new_faceplate)
+					return
+				new_faceplate = (new_faceplate ? lowertext(new_faceplate) : targethead.face)
+				targethead.face = new_faceplate
+				boutput(src, SPAN_NOTICE("Faceplate swapped to [new_faceplate]."))
+				update_bodypart(part = "head")
 
-	verb/robot_set_fake_laws()
-		set category = "Robot Commands"
-		set name = "Set Fake Laws"
-		if (src.shell)
-			src.mainframe.set_fake_laws()
-		else
-			src.set_fake_laws()
 
-	verb/ai_state_fake_laws()
-		set category = "Robot Commands"
-		set name = "State Fake Laws"
-		src.state_fake_laws() //already handles being a shell
+			if(SILICON::CYBORG::CUSTOMIZE::DISPLAY)
+				var/new_displaymode = tgui_input_list(src, "Select a display mode", SILICON::CYBORG::CUSTOMIZE::DISPLAY, list("light-on-dark", "dark-on-light"))
+				if (!new_displaymode)
+					return
+				new_displaymode = (new_displaymode == "light-on-dark" ? "lod" : "dol")
+				new_displaymode = (new_displaymode ? new_displaymode : targethead.mode)
+				targethead.mode = new_displaymode
+				boutput(src, SPAN_NOTICE("Display mode set to [new_displaymode]."))
+				update_bodypart(part = "head")
 
-	verb/robot_show_fake_laws()
-		set category = "Robot Commands"
-		set name = "Show Fake Laws"
-		src.show_fake_laws() //already handles being a shell
+			if(SILICON::CYBORG::CUSTOMIZE::SCREAM)
+				var/list/notes_list = list()
+				if (src.scream_instrument.pick_random_note || !src.scream_instrument.use_new_interface)
+					for (var/i in 1 to length(src.scream_instrument.sounds_instrument))
+						notes_list += i
+				else
+					notes_list = src.scream_instrument.notes
+
+				var/note = tgui_input_list(src, "Select a scream note", "Select scream", notes_list)
+				if (!note || !(note in notes_list))
+					return
+
+				src.scream_note = note
+				boutput(src, SPAN_NOTICE("Scream set to [note]."))
+
+			if(SILICON::CYBORG::CUSTOMIZE::PITCH)
+				var/vocal_pitch_choice = tgui_input_list(src, "Select a vocal pitch:", "Robot Voice", list("Low", "Medium", "High"))
+				if (!vocal_pitch_choice)
+					return
+				switch(vocal_pitch_choice)
+					if("Low")
+						vocal_pitch = 0.9
+					if("Medium")
+						vocal_pitch = 1
+					if("High")
+						vocal_pitch = 1.25
+
+				boutput(src, SPAN_NOTICE("Vocal pitch set to [vocal_pitch_choice]."))
+
+			if(SILICON::CYBORG::CUSTOMIZE::MONOSPACE)
+				src.toggle_monospace_mode()
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
@@ -2244,6 +2272,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (src.locked)
 			src.locked = 0
 			boutput(src, SPAN_ALERT("You have unlocked your interface."))
+			hud?.update_lock()
 		else if (src.opened)
 			boutput(src, SPAN_ALERT("Your chest compartment is open."))
 		else if (src.wiresexposed)
@@ -2262,43 +2291,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					src.locked = 1
 					src.locking = 0
 					boutput(src, SPAN_ALERT("You have locked your interface."))
-
-	verb/cmd_alter_head_screen()
-		set category = "Robot Commands"
-		set name = "Change facial expression (screen head only)"
-		var/obj/item/parts/robot_parts/head/screen/targethead = locate(/obj/item/parts/robot_parts/head/screen) in src.contents
-		if (!istype(targethead))
-			boutput(src, SPAN_ALERT("You're not equipped with a suitable head to use this command!"))
-			return 0
-
-		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions, /proc/cmp_text_asc))
-		if (!newFace) return 0
-		var/newMode = tgui_input_list(usr, "Select a display mode", "Face settings", list("light-on-dark", "dark-on-light"))
-		if (!newMode) return 0
-		newFace = (newFace ? lowertext(newFace) : targethead.face)
-		newMode = (newMode == "light-on-dark" ? "lod" : "dol")
-		newMode = (newMode ? newMode : targethead.mode)
-		targethead.face = newFace
-		targethead.mode = newMode
-		update_bodypart(part = "head")
-		return 1
-
-	verb/cmd_pick_scream()
-		set category = "Robot Commands"
-		set name = "Change scream note"
-
-		var/list/notes_list = list()
-		if (src.scream_instrument.pick_random_note || !src.scream_instrument.use_new_interface)
-			for (var/i in 1 to length(src.scream_instrument.sounds_instrument))
-				notes_list += i
-		else
-			notes_list = src.scream_instrument.notes
-
-		var/note = tgui_input_list(usr, "Select a scream note", "Select scream", notes_list)
-		if (!note || !(note in notes_list))
-			return
-
-		src.scream_note = note
+					hud?.update_lock()
 
 	verb/access_internal_pda()
 		set category = "Robot Commands"
@@ -2309,20 +2302,6 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.internal_pda.AttackSelf(src)
 		else
 			boutput(usr, SPAN_ALERT("<b>Internal PDA not found!"))
-
-	verb/change_voice_pitch()
-		set category = "Robot Commands"
-		set name = "Change vocal pitch"
-
-		var/list/vocal_pitches = list("Low", "Medium", "High")
-		var/vocal_pitch_choice = tgui_input_list(src, "Select a vocal pitch:", "Robot Voice", vocal_pitches)
-		switch(vocal_pitch_choice)
-			if("Low")
-				vocal_pitch = 0.9
-			if("Medium")
-				vocal_pitch = 1
-			if("High")
-				vocal_pitch = 1.25
 
 	// hacky, but this is used for says etc.
 	get_age_pitch_for_talk()

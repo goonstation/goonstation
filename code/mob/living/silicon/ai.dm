@@ -1,9 +1,3 @@
-#define AI_DISMANTLE_STAGE_LOCKED 0
-#define AI_DISMANTLE_STAGE_UNLOCKED 1
-#define AI_DISMANTLE_STAGE_COVER_OPEN 2
-#define AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE 3
-#define AI_DISMANTLE_STAGE_BRAINLESS 4
-
 var/global/list/available_ai_shells = list()
 var/atom/movable/minimap_ui_handler/ai_minimap_ui
 var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
@@ -142,7 +136,7 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/bought_hat = FALSE
 	var/last_announcement = -INFINITY
 	var/announcement_cooldown = 1200
-	var/dismantle_stage = AI_DISMANTLE_STAGE_LOCKED
+	var/dismantle_stage = SILICON::AI::DISMANTLE_STAGE::LOCKED
 	var/datum/light/light
 	//var/death_timer = 100
 	var/power_mode = 0
@@ -280,17 +274,17 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 /mob/living/silicon/ai/get_help_message(dist, mob/user)
 	switch(src.dismantle_stage)
-		if(AI_DISMANTLE_STAGE_LOCKED)
+		if(SILICON::AI::DISMANTLE_STAGE::LOCKED)
 			. = "You can swipe an <b>ID card</b> to unlock the cover."
-		if(AI_DISMANTLE_STAGE_UNLOCKED)
+		if(SILICON::AI::DISMANTLE_STAGE::UNLOCKED)
 			. = "You can use a <b>crowbar</b> to pry open the cover, or swipe an <b>ID card</b> to lock it."
-		if(AI_DISMANTLE_STAGE_COVER_OPEN)
+		if(SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			. = "You can use a <b>wrench</b> to undo the CPU bolts, <b>cable coil</b> to repair damage, or a <b>crowbar</b> to close the cover."
-		if(AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE)
+		if(SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE)
 			. = "You can use a <b>wrench</b> to tighten the CPU bolts, or an <b>empty hand</b> to remove the CPU unit."
-		if(AI_DISMANTLE_STAGE_BRAINLESS)
+		if(SILICON::AI::DISMANTLE_STAGE::BRAINLESS)
 			. = "You can insert a <b>brain</b> to activate the AI."
-	if(src.dismantle_stage < AI_DISMANTLE_STAGE_BRAINLESS && isdead(src))
+	if(src.dismantle_stage < SILICON::AI::DISMANTLE_STAGE::BRAINLESS && isdead(src))
 		. += " You can use an <b>empty hand</b> to reboot the AI."
 	. += " You can also use a <b>screwdriver</b> to [src.anchored ? "unscrew" : "screw down"] the floor bolts."
 
@@ -437,7 +431,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 /mob/living/silicon/ai/proc/setup_verbs()
 	src.verbs |= /mob/living/silicon/ai/proc/ai_call_shuttle
-	src.verbs |= /mob/living/silicon/ai/proc/show_laws_verb
 	src.verbs |= /mob/living/silicon/ai/proc/reset_apcs
 	src.verbs |= /mob/living/silicon/ai/proc/de_electrify_verb
 	src.verbs |= /mob/living/silicon/ai/proc/unbolt_all_airlocks
@@ -445,10 +438,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.verbs |= /mob/living/silicon/ai/proc/ai_alerts
 	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_list
 	src.verbs |= /mob/living/silicon/ai/proc/ai_statuschange
-	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_all
-	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_standard
-	src.verbs |= /mob/living/silicon/ai/proc/ai_set_fake_laws
-	src.verbs |= /mob/living/silicon/ai/proc/ai_state_fake_laws
+	src.verbs |= /mob/living/silicon/ai/proc/ai_interact_laws
 	src.verbs |= /mob/living/silicon/ai/verb/deploy_to
 	src.verbs |= /mob/living/silicon/ai/proc/ai_view_crew_manifest
 	src.verbs |= /mob/living/silicon/ai/proc/toggle_alerts_verb
@@ -461,9 +451,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.verbs |= /mob/living/silicon/ai/verb/go_offline
 
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
-/mob/living/silicon/ai/proc/get_message_mob()
-	RETURN_TYPE(/mob)
-
+/mob/living/silicon/ai/get_message_mob()
 	if (deployed_to_eyecam)
 		return src.eyecam
 	return src
@@ -505,7 +493,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 /mob/living/silicon/ai/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
-		if(src.dismantle_stage < AI_DISMANTLE_STAGE_COVER_OPEN)
+		if(src.dismantle_stage < SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
 			return
 
@@ -534,24 +522,24 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.update_terminal()
 
 	else if (ispryingtool(W))
-		if (src.dismantle_stage == AI_DISMANTLE_STAGE_UNLOCKED)
+		if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::UNLOCKED)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> opens [src.name]'s chassis cover."))
 			src.locking = 0
-			src.dismantle_stage = AI_DISMANTLE_STAGE_COVER_OPEN
-		else if (src.dismantle_stage == AI_DISMANTLE_STAGE_COVER_OPEN)
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::COVER_OPEN
+		else if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> closes [src.name]'s chassis cover."))
-			src.dismantle_stage = AI_DISMANTLE_STAGE_UNLOCKED
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::UNLOCKED
 		else ..()
 
 	else if (iswrenchingtool(W))
-		if (src.dismantle_stage == AI_DISMANTLE_STAGE_COVER_OPEN)
+		if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins undoing [src.name]'s CPU bolts."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
 				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
-		else if (src.dismantle_stage == AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE)
+		else if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins affixing [src.name]'s CPU bolts."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
@@ -566,7 +554,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s chassis."))
 		else boutput(user, SPAN_ALERT("There's no structural damage on [src.name] to mend."))
 
-	else if(istype(W, /obj/item/cable_coil) && dismantle_stage >= AI_DISMANTLE_STAGE_COVER_OPEN)
+	else if(istype(W, /obj/item/cable_coil) && dismantle_stage >= SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 		var/obj/item/cable_coil/coil = W
 		src.add_fingerprint(user)
 		if(src.fireloss)
@@ -577,19 +565,20 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		else boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 
 	else if (istype(get_id_card(W), /obj/item/card/id))
-		if (src.dismantle_stage >= AI_DISMANTLE_STAGE_COVER_OPEN)
+		if (src.dismantle_stage >= SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			boutput(user, SPAN_ALERT("You must close the cover to swipe an ID card."))
 		else
 			if(src.allowed(user))
-				if (src.dismantle_stage == AI_DISMANTLE_STAGE_UNLOCKED)
-					src.dismantle_stage = AI_DISMANTLE_STAGE_LOCKED
+				if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::UNLOCKED)
+					src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::LOCKED
 				else
-					src.dismantle_stage = AI_DISMANTLE_STAGE_UNLOCKED
+					src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::UNLOCKED
+				src.hud.update_lock()
 				src.locking = 0
 				user.visible_message(SPAN_ALERT("<b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock."))
 			else boutput(user, SPAN_ALERT("Access denied."))
 
-	else if (istype(W, /obj/item/organ/brain/) && src.dismantle_stage == AI_DISMANTLE_STAGE_BRAINLESS)
+	else if (istype(W, /obj/item/organ/brain/) && src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::BRAINLESS)
 		if (src.brain)
 			boutput(user, SPAN_ALERT("There's already a brain in there!"))
 		else
@@ -610,7 +599,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 					src.make_syndicate("brain added by [user]")
 			W.set_loc(src)
 			src.brain = W
-			src.dismantle_stage = AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE
 			if (!src.emagged && !src.syndicate) // The antagonist proc does that too.
 				src.show_text("<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 				src.show_text("<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
@@ -628,7 +617,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		if (src.moustache_mode == 0)
 			src.moustache_mode = 1
 			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
-		else if (src.dismantle_stage == AI_DISMANTLE_STAGE_BRAINLESS || isdead(src))
+		else if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::BRAINLESS || isdead(src))
 			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
 		return
 	else if(istype(W,/obj/item/ai_plating_kit))
@@ -671,7 +660,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		C.apply_keybind("robot_tg")
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user, var/fling = FALSE)
-	src.dismantle_stage = AI_DISMANTLE_STAGE_BRAINLESS
+	src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::BRAINLESS
 	if (user)
 		src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU unit!"))
 		logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
@@ -740,19 +729,19 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 /// for dismantle action bar
 /mob/living/silicon/ai/proc/toggle_CPU_bolts(mob/user)
 	switch(src.dismantle_stage)
-		if(AI_DISMANTLE_STAGE_COVER_OPEN)
+		if(SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
-			src.dismantle_stage = AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE
-		if(AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE)
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE
+		if(SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
-			src.dismantle_stage = AI_DISMANTLE_STAGE_COVER_OPEN
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::COVER_OPEN
 
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
 
-	if (src.dismantle_stage == AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE)
+	if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE)
 		actions += "Remove CPU Unit"
-	if (src.dismantle_stage < AI_DISMANTLE_STAGE_BRAINLESS && isdead(src))
+	if (src.dismantle_stage < SILICON::AI::DISMANTLE_STAGE::BRAINLESS && isdead(src))
 		actions += "Restart AI"
 
 	if (length(actions) > 1)
@@ -920,28 +909,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		if ((O.icon_state == "flaming"))
 			src.fireloss += 40
 		health_update_queue |= src
-	return
-
-/mob/living/silicon/ai/show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
-	var/who
-
-	if (everyone)
-		who = world
-	else if (relay_laws_for_shell && ismob(relay_laws_for_shell))
-		who = relay_laws_for_shell
-		boutput(who, "<b>Obey these laws:</b>")
-	else
-		who = src
-		boutput(who, "<b>Obey these laws:</b>")
-
-	if (relay_laws_for_shell != src.eyecam && src.deployed_to_eyecam)
-		who = src.eyecam
-		boutput(who, "<b>Obey these laws:</b>")
-
-	if(src.law_rack_connection)
-		src.law_rack_connection.show_laws(who)
-	else
-		boutput(src,"You have no laws!")
 	return
 
 /mob/living/silicon/ai/triggerAlarm(var/class, area/alarm_area, var/list/camera_list, var/alarmsource)
@@ -1594,13 +1561,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		target = src.eyecam
 	tgui_message(target, "<b>Crew Manifest:</b><hr>[get_manifest()]", "Crew Manifest")
 
-
-/mob/living/silicon/ai/proc/show_laws_verb()
-	set category = "AI Commands"
-	set name = "Show Laws"
-
-	src.show_laws(0)
-
 /mob/living/silicon/ai/proc/view_messageLog()
 	set name = "View Message Log"
 	set desc = "View all messages sent by terminal connections."
@@ -1653,115 +1613,13 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.announcearrival = 1
 		boutput(src, "Now announcing new arrivals to the station.")
 */
-#define AI_LAW_STATE_DELAY 1 SECOND
-/mob/living/silicon/ai/proc/ai_state_laws_standard()
+
+/mob/living/silicon/ai/proc/ai_interact_laws()
 	set category = "AI Commands"
-	set name = "State Standard Laws"
+	set name = "Laws"
 
-	if (GET_COOLDOWN(src, "state_laws"))
-		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	var/list/say_targets = list()
-
-	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-		var/prefix_choice = prefix_module.get_prefix_choices()
-		if(!length(prefix_choice))
-			continue
-		say_targets += prefix_choice
-
-	say_targets += "Local"
-
-	var/choice
-	if (length(say_targets) == 1)
-		choice = say_targets[1]
-	else
-		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State Standard Laws", say_targets)
-
-	if (!choice)
-		return
-
-	var/prefix = ""
-	if (choice != "Local")
-		prefix = say_targets[choice]
-
-	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
-	sleep(AI_LAW_STATE_DELAY)
-	src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
-	sleep(AI_LAW_STATE_DELAY)
-	src.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
-	sleep(AI_LAW_STATE_DELAY)
-	src.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
-
-
-/mob/living/silicon/ai/proc/ai_set_fake_laws()
-	set category = "AI Commands"
-	set name = "Set Fake Laws"
-	src.set_fake_laws()
-
-/mob/living/silicon/ai/proc/ai_state_fake_laws()
-	set category = "AI Commands"
-	set name = "State Fake Laws"
-	src.state_fake_laws()
-
-/mob/living/silicon/ai/proc/ai_show_fake_laws()
-	set category = "AI Commands"
-	set name = "Show Fake Laws"
-	src.show_fake_laws()
-
-/mob/living/silicon/ai/proc/ai_state_laws_all()
-	set category = "AI Commands"
-	set name = "State All Laws"
-
-	if (GET_COOLDOWN(src, "state_laws"))
-		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	if(!src.law_rack_connection)
-		boutput(src.get_message_mob(), "You have no laws!")
-		return
-
-	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
-		return
-
-	var/list/say_targets = list()
-
-	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-		var/prefix_choice = prefix_module.get_prefix_choices()
-		if(!length(prefix_choice))
-			continue
-		say_targets += prefix_choice
-
-	say_targets += "Local"
-
-	var/choice
-	if (length(say_targets) == 1)
-		choice = say_targets[1]
-	else
-		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State All Laws", say_targets)
-
-	if (!choice)
-		return
-
-	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	var/prefix = ""
-	if (choice != "Local")
-		prefix = say_targets[choice]
-
-	logTheThing(LOG_SAY, usr, "states all their current laws.")
-	var/laws = src.law_rack_connection.format_for_irc()
-	for (var/number in laws)
-		src.say("[prefix] [number]. [laws[number]]")
-		sleep(AI_LAW_STATE_DELAY)
-
-#undef AI_LAW_STATE_DELAY
+	src.interact_laws()
+	return
 
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
@@ -1818,24 +1676,26 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	set category = "AI Commands"
 	set name = "Toggle Cover Lock"
 
-	if (src.dismantle_stage >= AI_DISMANTLE_STAGE_COVER_OPEN)
+	if (src.dismantle_stage >= SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 		boutput(src.get_message_mob(), SPAN_ALERT("You can't lock your cover when it's open!"))
 	else
 		if (src.locking)
 			boutput(src.get_message_mob(), SPAN_ALERT("Your cover is currently locking, please be patient."))
-		else if (src.dismantle_stage == AI_DISMANTLE_STAGE_UNLOCKED)
+		else if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::UNLOCKED)
 			src.locking = 1
 			boutput(src.get_message_mob(), SPAN_ALERT("Locking cover..."))
 			SPAWN(12 SECONDS)
 				if (!src.locking)
 					boutput(src.get_message_mob(), SPAN_ALERT("The lock was interrupted before it could finish!"))
 				else
-					src.dismantle_stage = AI_DISMANTLE_STAGE_LOCKED
+					src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::LOCKED
 					src.locking = 0
+					src.hud.update_lock()
 					boutput(src.get_message_mob(), SPAN_ALERT("You lock your cover lock."))
 
 		else
-			src.dismantle_stage = AI_DISMANTLE_STAGE_UNLOCKED
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::UNLOCKED
+			src.hud.update_lock()
 			boutput(src.get_message_mob(), SPAN_ALERT("You unlock your cover lock."))
 
 /mob/living/silicon/ai/proc/eye_view()
@@ -1891,6 +1751,66 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 					R.dependent = 0
 				user.name = user.real_name
 		return
+
+/mob/living/silicon/ai/proc/ai_update_status_menu()
+	var/u_roll = pick("color", "colour") // hehe
+	var/list/status_options = list("Screen emotion", "Screen [u_roll]", "Status message", "Toggle lock", "Change name", "Go offline")
+	var/mob/message_mob = src.get_message_mob()
+
+	if (!message_mob.client || isdead(src))
+		return
+
+	var/chosen_option = tgui_input_list(message_mob, "Select an option.", "Choose Option", status_options)
+
+	switch(chosen_option)
+		if ("Screen emotion")
+			src.ai_change_emotion()
+
+		// paying for our crimes
+		if ("Screen color")
+			src.ai_change_color()
+		if ("Screen colour")
+			src.ai_change_color()
+
+		if ("Status message")
+			src.ai_change_message()
+
+		if ("Toggle lock")
+			src.toggle_lock()
+
+		if ("Change name")
+			src.rename_self()
+
+		if ("Go offline")
+			src.go_offline()
+
+/mob/living/silicon/ai/proc/ai_change_message()
+	if (isdead(src))
+		boutput(usr, "You cannot change your message status because you are dead!")
+		return
+	var/mob/message_mob = src.get_message_mob()
+	var/newMessage = tgui_input_text(message_mob, "Enter a message for your status displays!", "AI Message", src.status_message)
+	if (newMessage)
+		src.status_message = newMessage
+
+/mob/living/silicon/ai/proc/ai_change_emotion()
+	if (isdead(src))
+		boutput(usr, "You cannot change your emotional status because you are dead!")
+		return
+	var/mob/message_mob = src.get_message_mob()
+	var/list/available_emotions = src.custom_emotions || global.ai_emotions	//In case an AI uses the reward, use a local list instead
+	var/chosen_emotion = tgui_input_list(message_mob, "Select a status!", "AI Status", sortList(available_emotions, /proc/cmp_text_asc))
+	if(!(chosen_emotion in available_emotions)) //Ffff
+		return
+	src.faceEmotion = available_emotions[chosen_emotion]
+	src.update_appearance()
+
+/mob/living/silicon/ai/proc/ai_change_color()
+	if(isdead(src))
+		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your colour, because you are dead!"))
+		return
+	var/fColor = input("Pick color:","Color", faceColor) as null|color
+	set_color(fColor)
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"
@@ -2301,7 +2221,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 			src.UpdateOverlays(null, "moustache")
 
 // ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
-	if (src.dismantle_stage >= AI_DISMANTLE_STAGE_COVER_OPEN)
+	if (src.dismantle_stage >= SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock"|| coreSkin == "pumpkin")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
 		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
@@ -2407,13 +2327,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 	src.open_nearest_door_silicon()
 	return
-
-/mob/living/silicon/ai/toggle_monospace(mob/user = src)
-	set category = "Robot Commands"
-	set name = "Toggle Monospace Speech"
-	set desc = "Switches your speech between normal and forced-monospace mode."
-
-	src.toggle_monospace_mode(src)
 
 //just use this proc to make click-track checking easier
 proc/is_mob_trackable_by_AI(var/mob/M)
@@ -2841,7 +2754,7 @@ proc/get_mobs_trackable_by_AI()
 				src.cell.set_loc(A)
 				src.cell = null
 			A.anchored = UNANCHORED
-			A.dismantle_stage = AI_DISMANTLE_STAGE_BRAINLESS
+			A.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::BRAINLESS
 			A.update_appearance()
 			qdel(src)
 			return
@@ -3014,9 +2927,3 @@ proc/get_mobs_trackable_by_AI()
 		src.stop_intercom_override()
 		src.intercom = null
 		. = ..()
-
-#undef AI_DISMANTLE_STAGE_LOCKED
-#undef AI_DISMANTLE_STAGE_UNLOCKED
-#undef AI_DISMANTLE_STAGE_COVER_OPEN
-#undef AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE
-#undef AI_DISMANTLE_STAGE_BRAINLESS
