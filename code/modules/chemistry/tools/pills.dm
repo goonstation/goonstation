@@ -384,3 +384,12 @@
 	New()
 		..()
 		reagents.add_reagent("ipecac", 5)
+
+/obj/item/reagent_containers/pill/antihistamine
+	name = "hay fever pill"
+	desc = "Commonly used to treat allergic conditions."
+	icon_state = "pill24"
+
+	New()
+		..()
+		reagents.add_reagent("antihistamine", 10)
