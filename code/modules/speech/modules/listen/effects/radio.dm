@@ -68,8 +68,9 @@
 		return
 
 	// Circumvent the packet network completely and directly route this message to the radio.
-	message.speaker = radio
-	message.message_origin = radio
-	message.heard_range = radio.speaker_range
+	var/datum/say_message/radio_message = message.Copy()
+	radio_message.speaker = radio
+	radio_message.message_origin = radio
+	radio_message.heard_range = radio.speaker_range
 
-	radio.ensure_speech_tree().process(message)
+	radio.ensure_speech_tree().process(radio_message)

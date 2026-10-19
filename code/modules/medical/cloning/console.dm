@@ -304,12 +304,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	clone_file["holder"] = H
 
 	clone_file["abilities"] = null
-	var/datum/abilityHolder/source_abilities = subject.abilityHolder
-	if (!source_abilities)
-		var/datum/antagonist/changeling/ling_antag = subjMind.get_antagonist(ROLE_CHANGELING)
-		source_abilities = ling_antag?.ability_holder
-	if (source_abilities && !QDELETED(source_abilities))
-		clone_file["abilities"] = source_abilities.deepCopy()
+	if (subject.abilityHolder)
+		var/datum/abilityHolder/A = subject.abilityHolder.deepCopy()
+		clone_file["abilities"] = A
 
 	clone_file["traits"] = null
 	if(!isnull(subject.traitHolder))

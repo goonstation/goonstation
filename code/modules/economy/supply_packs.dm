@@ -381,6 +381,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/condiment/ketchup = 4,
 					/obj/item/reagent_containers/food/snacks/condiment/mayo = 4,
 					/obj/item/reagent_containers/food/snacks/condiment/syrup = 2,
+					/obj/item/reagent_containers/food/snacks/condiment/jam/blueberryjam = 1,
+					/obj/item/reagent_containers/food/snacks/condiment/jam/peachjam = 1,
+					/obj/item/reagent_containers/food/snacks/condiment/jam/strawberryjam = 1,
 					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 2,
 					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2,
 					/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 2)

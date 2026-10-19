@@ -27,6 +27,7 @@ ABSTRACT_TYPE(/obj/item/cloth)
 	name = "cloth"
 	icon = 'icons/obj/items/cloths.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_cloths.dmi'
+	default_material = "cotton"
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 10
@@ -69,6 +70,7 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	name = "towel"
 	desc = "About the most massively useful thing a spacefaring traveler can have."
 	w_class = W_CLASS_SMALL
+	material_amt = 0.8 // Matches manufacturing recipe
 
 /obj/item/cloth/towel/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!..())
@@ -184,6 +186,7 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 	name = "handkerchief"
 	desc = "Probably bought from an upscale boutique somewhere."
 	w_class = W_CLASS_TINY
+	material_amt = 0.4 // Matches manufacturing recipe
 	var/obj/item/clothing/mask/bandana/bandana = null
 
 /obj/item/cloth/handkerchief/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)

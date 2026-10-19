@@ -1025,8 +1025,6 @@
 
 		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
-		src.next_click = world.time + src.combat_click_delay
-
 /mob/living/carbon/human/click(atom/target, list/params)
 	if (src.client)
 		if (src.client.experimental_intents)
@@ -1558,17 +1556,17 @@
 		return FALSE
 
 /**
-Attempts to put an item in the hand of a mob, if not possible then stow it, then by default delete the item.
+Attempts to put an item in the hand of a mob, if not possible then stow it, then by default drop the item at the mob's feet.
 
  * @param I The item to put in the hand.
 
  * @param hand The hand to put the item in.
 
- * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE, the item is dropped at the current location.
+ * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE (by default), the item is dropped at the current location.
 
  * @return TRUE if the item was successfully put in hand or stowed, FALSE otherwise.
 **/
-/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = TRUE)
+/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = FALSE)
 	if (!src.put_in_hand(I, hand))
 		if(!src.stow_in_available(I, delete_item))
 			return FALSE
@@ -1924,15 +1922,15 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 	return TRUE
 
 /**
-Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will delete items that cannot be placed by default.
+Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will drop items that cannot be placed at the mob's feet by default.
 
  * @param I The item to stow.
 
- * @param delete_item If TRUE, the item will be deleted if it cannot be stowed. If FALSE, the item is dropped at the current location.
+ * @param delete_item If TRUE, the item will be deleted if it cannot be stowed, for items being replaced by another. If FALSE (by default), the item is dropped at the current location.
 
  * @return TRUE if the item was stowed, FALSE if it was not.
 **/
-/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = TRUE)
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = FALSE)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return TRUE
 	if (src.autoequip_slot(I, SLOT_IN_BELT))
@@ -2614,20 +2612,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	else // updates are called by the mutantrace datum. lets not call it a million times
 		src.update_body()
 		src.update_clothing()
-
-/mob/living/carbon/human/verb/change_hud_style()
-	set name = "Change HUD Style"
-	set desc = "Selects what style HUD you would like to use."
-	set category = "Commands"
-
-	if (!src.hud) // uh?
-		return src.show_text("<b>Somehow you have no HUD! Please alert a coder!</b>", "red")
-
-	var/selection = tgui_input_list(usr, "What style HUD style would you like?", "Selection", hud_style_selection)
-	if (!selection)
-		return
-
-	src.force_hud_style(selection)
 
 /mob/living/carbon/human/proc/force_hud_style(var/selection)
 	if (!selection)

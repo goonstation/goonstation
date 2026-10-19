@@ -362,8 +362,10 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	. = html_encode(t)
 
 ///Strip out weird illegal characters that TGUI discards anyway, see `\improper` and other Byond lunacy
+///Building for UI-display-only. Names use `remove_bad_name_characters()`
 /proc/strip_illegal_characters(text)
-	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
+	// keeps everything printable, including emoji
+	var/static/regex/whitelistedWords = regex("\[^ -[ascii2text(0xFFFC)][ascii2text(0x10000)]-[ascii2text(0x10FFFF)]\]+")
 	return whitelistedWords.Replace("[text]", "")
 
 ///Cleans up data passed in from network packets for display so it doesn't mess with formatting
@@ -455,7 +457,9 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	. = sanitize(tgui_input_text(usr, Message, Title, Default), length)
 
 /proc/scrubbed_input(var/user, var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = strip_html(tgui_input_text(user, Message, Title, Default), length)
+	. = tgui_input_text(user, Message, Title, Default)
+	if (!isnull(.))
+		. = strip_html(., length)
 
 /proc/LinkBlocked(turf/A, turf/B)
 	if(A == null || B == null) return 1
@@ -2477,8 +2481,8 @@ proc/client_has_cap_grace(var/client/C)
 proc/can_act(var/mob/M, var/include_cuffs = 1)
 	return !((include_cuffs && M.restrained()) || is_incapacitated(M))
 
-/// Returns true if the given mob is incapacitated
-proc/is_incapacitated(mob/M)
+/// Returns true if the given mob is incapacitated. `ignore_no_power` skips the cyborg no-power/no-cell statuses.
+proc/is_incapacitated(mob/M, ignore_no_power = FALSE)
 	var/datum/statusEffect/lockdown/lockdown_effect = M.hasStatus("lockdown_robot") || M.hasStatus("lockdown_ai")
 	if(!istype(lockdown_effect) || lockdown_effect?.fake)
 		lockdown_effect = null
@@ -2489,8 +2493,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
 		lockdown_effect || \
-		M.hasStatus("no_power_robot") || \
-		M.hasStatus("no_cell_robot") || \
+		(!ignore_no_power && (M.hasStatus("no_power_robot") || M.hasStatus("no_cell_robot"))) || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
@@ -2639,7 +2642,7 @@ var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
 		if (istype(container, /obj/storage/secure) || istype(container, /obj/storage/crate/loot))
 			continue
 		// listening posts everywhere or martian ship (in station Z-level on Oshan)
-		if (istype(get_area(container), /area/listeningpost) || istype(get_area(container), /area/evilreaver))
+		if (!istype(get_area(container), /area/station))
 			continue
 
 		if (breathable)
@@ -2827,3 +2830,58 @@ proc/area_table_spawn(area_type, spawn_type)
 	if (istype(parent, type))
 		return parent
 	return null
+
+/**
+ * Returns an ordered associative list [mob = distance (euclidean)] (ascending) of all mobs within a target radius from a provided center.
+ * Will effectively search from the center of target_turf unless pixel_x/y are specified.
+ * range (also euclidean) should be a positive real number. The search radius can in fact be a 1.337 tile radius, if you so desire.
+ * The center of the turf a mob is occupying must fall within the specified range for it to consider that mob 'in range'.
+ */
+proc/get_nearest_mobs_list(turf/target_turf, range = 1, pixel_x = 1, pixel_y = 1)
+	if(range < 0)
+		CRASH("Range ([range]) cannot be a negative number!")
+	pixel_x -= 16 // offsets to pretend like 1,1 corresponds to the center of a tile
+	pixel_y -= 16 // instead of the bottom left corner
+	var/clicked_scaled_x = (target_turf.x * 32) + pixel_x
+	var/clicked_scaled_y = (target_turf.y * 32) + pixel_y
+	var/list/return_list = list()
+	// we increase search range to make extra sure we catch everything, since we filter out invalid results later anyways
+	for(var/mob/target in range(ceil(range + 1), target_turf))
+	// nothing is stopping us from searching for any arbitary atom type, the use case is just for mobs right now
+		var/target_scaled_x = target.x * 32
+		var/target_scaled_y = target.y * 32
+		// calculating distance to center of the mob's tile is good enough tbh
+		var/scaled_distance = sqrt(((target_scaled_x - clicked_scaled_x)**2) + ((target_scaled_y - clicked_scaled_y)**2))
+		var/distance = scaled_distance / 32 // back down to each unit being 1 tile instead of 1 pixel
+		if(distance > range)
+			continue
+		return_list[target] = distance
+	if(length(return_list))
+		sortList(L = return_list, cmp=/proc/cmp_numeric_asc, associative = TRUE)
+		return return_list
+
+/// Returns the turf and pixel_x and pixel_y of said turf a user's cursor was over when they clicked
+/// Returns as list("turf" = turf, "pixel_x" = pixel_x, "pixel_y" = pixel_y)
+/// Code shamelessly stolen from Zewaka. Like, the whole thing.
+proc/get_turf_pixel_clicked_over(mob/user, list/params)
+	RETURN_TYPE(/list)
+	var/client/C = user?.client
+	if (!C)
+		return FALSE
+	var/static/regex/screen_loc_parser = regex(@"^(\d+):(\d*),(\d+):(\d*)$")
+	if (!screen_loc_parser.Find(params["screen-loc"]))
+		return FALSE
+	var/turf/eye = get_turf(C.virtual_eye)
+	if (!eye)
+		return FALSE
+	var/tile_x = text2num(screen_loc_parser.group[1])
+	var/pixel_x = text2num(screen_loc_parser.group[2])
+	var/tile_y = text2num(screen_loc_parser.group[3])
+	var/pixel_y = text2num(screen_loc_parser.group[4])
+	// screen-loc columns are viewport tiles, so the centre column depends on how wide the viewport is:
+	// client.view is the text "21x15" while widescreen is on, and a plain number otherwise.
+	var/view_width = istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH
+	var/turf/T = locate(eye.x + (C.pixel_x / world.icon_size) + (tile_x - 1 - (view_width - 1) / 2),\
+		eye.y + (C.pixel_y / world.icon_size) + (tile_y - 1 - (TILE_HEIGHT - 1) / 2),\
+		eye.z)
+	return list("turf" = T, "pixel_x" = pixel_x, "pixel_y" = pixel_y)

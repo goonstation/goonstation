@@ -82,6 +82,14 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					src.link = test_link
 					src.link.master = src
 
+	was_deconstructed_to_frame(mob/user)
+		src.remove_portals()
+		. = ..()
+
+	disposing()
+		src.remove_portals()
+		. = ..()
+
 	ex_act()
 		return
 
@@ -380,12 +388,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 
 					if ("portal")
 						if (src.start_portal || src.end_portal)
-							if (start_portal)
-								qdel(start_portal)
-								start_portal = null
-							if (end_portal)
-								qdel(end_portal)
-								end_portal = null
+							src.remove_portals()
 
 							message_host("command=ack")
 							return
@@ -1000,6 +1003,14 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					/obj/critter/ancient_thing)
 				new summon(src.loc)
 				return
+
+	proc/remove_portals()
+		if (start_portal)
+			qdel(start_portal)
+			start_portal = null
+		if (end_portal)
+			qdel(end_portal)
+			end_portal = null
 
 TYPEINFO(/obj/machinery/networked/teleconsole)
 	mats = 14

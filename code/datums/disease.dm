@@ -23,6 +23,12 @@
 	var/resistance_prob = 0				// how likely this disease is to grant immunity once cured
 	var/max_stacks = 1					// how many times at once you can have this ailment
 	var/can_be_asymptomatic = TRUE
+	/// Reagent IDs mapped to minimum units that reverse progression rolls into regression, stopping at stage 1
+	/// Any one qualifying reagent suppresses the ailment without preventing normal cures
+	/// ex: reagent_suppressants = list("plasma" = 1, "water" = 10)
+	var/list/reagent_suppressants = null
+	/// How long suppression lasts after a qualifying reagent dose wears off
+	var/suppression_linger_duration = 0
 
 	///If we need a specific ailment_data type
 	var/datum/ailment_data/strain_type = /datum/ailment_data
@@ -42,6 +48,10 @@
 		return
 
 	proc/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
+		return
+
+	/// Respond to progression changing an ailment's stage
+	proc/on_stage_change(var/mob/living/affected_mob, var/datum/ailment_data/D, previous_stage)
 		return
 
 	// This is still subject to serious change. For now it's mostly a mockup.
@@ -119,6 +129,10 @@
 	var/recureprob = 8						// probability per tick that the reagent will cure the disease
 	var/temperature_cure = 406				// this temp or higher will cure the disease
 	var/resistance_prob = 0					// how likely this disease is to grant immunity once cured
+	/// Whether the last suppression check found a qualifying reagent dose in this patient
+	var/suppressant_active = FALSE
+	/// Time when this patient's lingering suppression expires
+	var/suppression_until = 0
 
 	proc/copy_other(datum/ailment_data/other)
 		SHOULD_CALL_PARENT(TRUE)
@@ -135,6 +149,9 @@
 		src.recureprob = other.recureprob
 		src.temperature_cure = other.temperature_cure
 		src.resistance_prob = other.resistance_prob
+		// Treatment belongs to the patient, not to a transmitted copy of their ailment
+		src.suppressant_active = FALSE
+		src.suppression_until = 0
 		//phew
 
 	disposing()
@@ -168,19 +185,32 @@
 		return 0
 
 	proc/stage_increment(mult)
-		if (probmult(src.stage_prob) && src.stage < master.max_stages)
-			src.stage++
-			return TRUE
+		var/is_suppressed = src.is_suppressed()
+		if (probmult(src.stage_prob))
+			return src.advance_stage(is_suppressed)
 		return FALSE
+
+	/// Apply a successful progression roll, returning TRUE only when the stage advances
+	/// Callers refresh suppression before rolling so treatment history also updates on failed rolls
+	proc/advance_stage(is_suppressed)
+		var/previous_stage = src.stage
+		if (is_suppressed)
+			src.stage = max(1, src.stage - 1)
+		else if (src.stage < src.master.max_stages)
+			src.stage++
+		if (src.stage != previous_stage)
+			src.master.on_stage_change(src.affected_mob, src, previous_stage)
+		return src.stage > previous_stage
 
 
 	proc/scan_info()
 		var/text = "<span class='alert'><b>"
-		if (istype(src.master,/datum/ailment/disease) || istype(src.master,/datum/ailment/malady))
-			if (src.state == "Active" || src.state == "Acute")
-				text += "[src.state] "
+		var/scan_state = src.get_scan_state()
+		if (scan_state == "Suppressed" || istype(src.master,/datum/ailment/disease) || istype(src.master,/datum/ailment/malady))
+			if (scan_state == "Active" || scan_state == "Acute")
+				text += "[scan_state] "
 			else
-				text += SPAN_NOTICE("[src.state] ")
+				text += SPAN_NOTICE("[scan_state] ")
 		text += "[src.scantype ? src.scantype : src.master.scantype]:"
 
 		text += " [src.name ? src.name : src.master.name]</b> <small>(Stage [src.stage]/[src.master.max_stages])<br>"
@@ -189,6 +219,9 @@
 		if (istype(src.master,/datum/ailment/disease) && src.spread)
 			text += "Spread: [src.spread]<br>"
 		text += src.get_cure_method()
+		var/suppression_info = src.get_suppression_info()
+		if (suppression_info)
+			text += "<br>[suppression_info]"
 		text += "</small></span>"
 		return text
 
@@ -217,17 +250,50 @@
 				cures += "Heart transplant"
 			. += english_list(cures, and_text=" or ")
 
+	/// Refresh suppression from live reagents and share its lingering state with medical scans
+	proc/is_suppressed()
+		if (!istype(src.master, /datum/ailment/) || !length(src.master.reagent_suppressants) || !src.affected_mob)
+			return FALSE
+		for (var/reagent_id in src.master.reagent_suppressants)
+			if (src.affected_mob.reagents?.has_reagent(reagent_id, src.master.reagent_suppressants[reagent_id]))
+				src.suppressant_active = TRUE
+				src.suppression_until = 0
+				return TRUE
+		if (src.suppressant_active)
+			// Start the full grace period when depletion is first observed
+			src.suppressant_active = FALSE
+			src.suppression_until = TIME + src.master.suppression_linger_duration
+		return src.master.suppression_linger_duration > 0 && TIME < src.suppression_until
+
+	/// Medical scan status
+	proc/get_scan_state()
+		if (src.is_suppressed())
+			if (src.state == "Remissive")
+				return "Remissive (Suppressed)"
+			return "Suppressed"
+		return src.state
+
+	/// Optional suppressant reagent listing for medical scans
+	proc/get_suppression_info()
+		if (!istype(src.master, /datum/ailment/) || !length(src.master.reagent_suppressants))
+			return null
+		var/list/suppressants = list()
+		for (var/reagent_id in src.master.reagent_suppressants)
+			suppressants += reagent_id_to_name(reagent_id)
+		return "Suppressant: [english_list(suppressants, and_text = " or ")]"
+
 	/// Package disease data for use in TGUI health interfaces
 	proc/ui_disease_data()
 		. = list(
-			"state" = src.state,
+			"state" = src.get_scan_state(),
 			"disease_name" = src.name ? src.name : src.master.name,
 			"scantype" = src.scantype ? src.scantype : src.master.scantype,
 			"spread" = src.spread,
 			"info" = src.info,
 			"stage" = src.stage,
 			"max_stage" = src.master.max_stages,
-			"cure_method" = src.get_cure_method()
+			"cure_method" = src.get_cure_method(),
+			"suppression_info" = src.get_suppression_info()
 		)
 
 	proc/on_infection()
@@ -269,18 +335,23 @@
 			affected_mob.cure_disease(src)
 			return 1
 
+		var/is_suppressed = src.is_suppressed()
+
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
 
 		if (probmult(advance_prob))
 			if (state == "Remissive")
-				stage--
-				if (stage < 1)
+				var/previous_stage = src.stage
+				src.stage--
+				if (src.stage < 1)
 					affected_mob.cure_disease(src)
+				else
+					src.master.on_stage_change(src.affected_mob, src, previous_stage)
 				return 1
-			else if (stage < master.max_stages)
-				stage++
+			else
+				src.advance_stage(is_suppressed)
 
 		// Common cures
 		if (!(src.cure_flags & CURE_INCURABLE))
@@ -457,8 +528,7 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (probmult(stage_prob) && stage < master.max_stages)
-			stage++
+		src.stage_increment(mult)
 
 
 		if(!stealth_asymptomatic)
@@ -600,6 +670,7 @@
 	if (src.ailments) //ZeWaka: Fix for null.ailments
 		src.ailments -= strain
 	strain.master.on_remove(src,strain)
+	SEND_SIGNAL(src, COMSIG_MOB_DISEASE_CURED, strain.master, strain)
 	qdel(strain)
 	return 1
 
@@ -612,6 +683,7 @@
 				src.add_ailment_resistance(strain.master.type, strain.master.type)
 			src.ailments -= strain
 			strain.master.on_remove(src,strain)
+			SEND_SIGNAL(src, COMSIG_MOB_DISEASE_CURED, strain.master, strain)
 			qdel(strain)
 			return 1
 	return 0

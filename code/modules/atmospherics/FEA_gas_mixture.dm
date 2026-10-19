@@ -10,8 +10,8 @@ What are the archived variables for?
 ABSTRACT_TYPE(/datum/gas_mixture)
 /datum/gas_mixture
 	/// Bitfield representing gas graphics on our tile.
-	var/graphic
-	var/tmp/graphic_archived // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
+	var/graphic = 0
+	var/tmp/graphic_archived = 0 // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
 	/// Rough representation of oxygen and plasma used. Actual usage of plasma is currectly divided by 3 for balance.
 	var/tmp/fuel_burnt = 0
 
@@ -196,9 +196,11 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	//returns TRUE if graphic changed
 	graphic = 0
 
-	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_PLASMA, src.gases[GAS_TOXINS])
-	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_RAD, src.gases[GAS_RADGAS])
-	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_N2O, src.gases[GAS_NITROUS_OXIDE])
+	#define _UPDATE_GRAPHIC_FOR_GAS(GAS, OVERLAY_ID, VISIBLE_ABOVE, ALPHA_BASE, ALPHA_DIV, ALPHA_MUL, ...) \
+		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, OVERLAY_ID, GAS, VISIBLE_ABOVE, ALPHA_BASE, ALPHA_DIV, ALPHA_MUL);
+
+	APPLY_TO_GRAPHIC_GASES(_UPDATE_GRAPHIC_FOR_GAS)
+	#undef _UPDATE_GRAPHIC_FOR_GAS
 
 	. = graphic != graphic_archived
 	graphic_archived = graphic
@@ -606,4 +608,4 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 /// * Returns: gas_mixture with the gases removed.
 /datum/gas_mixture/normal/remove_ratio(ratio)
 	//no read only here, handled in rust
-	
+

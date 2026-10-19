@@ -339,6 +339,7 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 	icon_state = "lboard"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
+	default_material = "wood"
 	w_class = W_CLASS_NORMAL
 	var/emoji_prob = 30
 	var/emoji_min = 1

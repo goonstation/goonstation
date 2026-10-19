@@ -924,6 +924,13 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		src.show_laws_drone()
 		return
 
+	toggle_monospace()
+		set category = "Drone Commands"
+		set name = "Toggle Monospace Speech"
+		set desc = "Switches your speech between normal and forced-monospace mode."
+
+		src.toggle_monospace_mode(src)
+
 	bullet_act(var/obj/projectile/P)
 		var/dmgtype = 0 // 0 for brute, 1 for burn
 		var/dmgmult = 1.2

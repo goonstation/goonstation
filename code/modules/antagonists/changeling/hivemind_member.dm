@@ -5,8 +5,7 @@
 	wiki_link = "https://wiki.ss13.co/Changeling"
 
 	give_equipment()
-		var/datum/antagonist/changeling/master_changeling = src.master?.get_antagonist(ROLE_CHANGELING)
-		var/datum/abilityHolder/changeling/master_ability_holder = master_changeling?.ability_holder
+		var/datum/abilityHolder/changeling/master_ability_holder = src.master.current.get_ability_holder(/datum/abilityHolder/changeling)
 		var/mob/current_mob = src.owner.current
 		var/mob/dead/target_observer/hivemind_observer/hivemind_observer = new/mob/dead/target_observer/hivemind_observer(src.master.current)
 		hivemind_observer.name = src.owner.current.name

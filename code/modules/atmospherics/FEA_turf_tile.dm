@@ -27,7 +27,7 @@
 	var/tmp/list/atom/movable/hotspot/active_hotspots
 	/// Gas mixture used to access this turf.
 	VAR_PRIVATE/tmp/datum/gas_mixture/turf_tied/air
-	
+
 	VAR_PRIVATE/tmp/gas_impermeability_count = 0
 	/// Starting heat capacity. Represented in Kilojoules per Kelvin
 	VAR_PROTECTED/heat_capacity = 1
@@ -98,15 +98,9 @@
 /turf/simulated
 	pass_unstable = FALSE
 	var/static/list/mutable_appearance/gas_overlays = list(
-			#ifdef ALPHA_GAS_OVERLAYS
 			mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 			mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 			mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
-			#else
-			mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
-			mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
-			mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
-			#endif
 		)
 	/// The overlay used to show gases on us such as plasma.
 	var/tmp/atom/movable/tile_gas_effect/gas_icon_overlay
@@ -150,9 +144,9 @@
 				src.gas_icon_overlay.overlays.len = 0
 
 			src.visuals_state = model.graphic
-			UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_PLASMA)
-			UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_N2O)
-			UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_RAD)
+			#define _ADD_TILE_GAS_OVERLAY(GAS, OVERLAY_ID, ...) UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, OVERLAY_ID);
+			APPLY_TO_GRAPHIC_GASES(_ADD_TILE_GAS_OVERLAY)
+			#undef _ADD_TILE_GAS_OVERLAY
 			src.gas_icon_overlay.dir = pick(cardinal)
 	else
 		if (src.gas_icon_overlay)

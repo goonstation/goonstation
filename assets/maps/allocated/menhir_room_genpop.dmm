@@ -1,0 +1,763 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/void,
+/area/unspace/genpop)
+"b" = (
+/obj/machinery/computer/arcade,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"c" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/genpop)
+"d" = (
+/obj/table/auto,
+/obj/menhir_room_objs/hidey_helper,
+/obj/machinery/computer/television/small,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"e" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"g" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"h" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/snacks/one,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/genpop)
+"i" = (
+/obj/map/light/cyan/menhir,
+/obj/table/auto,
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/boardgame/chess{
+	pixel_y = 4
+	},
+/obj/random_item_spawner/snacks/one,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"j" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/genpop)
+"k" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/dressup/one,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/genpop)
+"l" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"m" = (
+/obj/stool/chair/office/red,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"n" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/device/radio/headset/security{
+	pixel_y = -7;
+	pixel_x = -3
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"o" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/storage/secure/closet/brig,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"q" = (
+/obj/stool,
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/junk/two,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"r" = (
+/obj/item/device/prisoner_scanner,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/genpop)
+"t" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/genpop)
+"v" = (
+/obj/map/light/cyan/menhir,
+/obj/machinery/flasher/portable,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/genpop)
+"w" = (
+/obj/machinery/door/unpowered/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"y" = (
+/obj/stool,
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/dressup/one,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"z" = (
+/obj/stool,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"A" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/genpop)
+"B" = (
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/genpop)
+"C" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/junk/one,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/genpop)
+"D" = (
+/obj/item/reagent_containers/food/drinks/water,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/genpop)
+"E" = (
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
+	pixel_y = 1;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_y = -9;
+	pixel_x = 4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/genpop)
+"F" = (
+/obj/submachine/slot_machine,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"G" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	icon_state = "black";
+	density = 1;
+	desc = "The silence is deafening.";
+	name = "nothing"
+	},
+/area/unspace/genpop)
+"H" = (
+/obj/stool/chair/red{
+	dir = 4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/genpop)
+"I" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/dressup/one,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/genpop)
+"J" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_genpop"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"K" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"L" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/tableware/one,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/genpop)
+"M" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/genpop)
+"O" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/storage/secure/closet/personal,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"Q" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/storage/secure/closet/security/equipment,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"R" = (
+/obj/menhir_room_objs/hidey_helper_trigger,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/genpop)
+"S" = (
+/obj/stool/chair/red{
+	dir = 1
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/genpop)
+"T" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/storage/closet/wardrobe/orange,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"V" = (
+/obj/map/light/cyan/menhir,
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/security,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/genpop)
+"W" = (
+/obj/machinery/vending/snack,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+"X" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/mask/one,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/genpop)
+"Z" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/genpop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(5,1,1) = {"
+a
+a
+c
+c
+c
+c
+c
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+"}
+(6,1,1) = {"
+a
+a
+c
+A
+K
+A
+c
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+c
+A
+l
+A
+c
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+c
+A
+g
+A
+c
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+c
+A
+K
+A
+c
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+c
+A
+g
+A
+c
+a
+a
+a
+a
+a
+a
+c
+t
+t
+t
+c
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+c
+c
+c
+w
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+J
+c
+c
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+c
+c
+Z
+c
+Z
+c
+T
+c
+G
+G
+G
+G
+G
+G
+c
+j
+c
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+c
+Q
+M
+I
+j
+L
+M
+c
+G
+G
+G
+G
+G
+G
+c
+K
+c
+c
+c
+c
+a
+a
+a
+"}
+(14,1,1) = {"
+c
+c
+A
+z
+q
+W
+A
+c
+G
+G
+H
+G
+G
+c
+c
+g
+c
+E
+V
+c
+a
+a
+a
+"}
+(15,1,1) = {"
+c
+Z
+X
+d
+i
+F
+R
+e
+K
+g
+r
+g
+K
+e
+g
+K
+m
+g
+S
+c
+a
+a
+a
+"}
+(16,1,1) = {"
+c
+c
+k
+y
+z
+b
+C
+c
+G
+G
+B
+G
+G
+c
+c
+c
+c
+j
+v
+c
+a
+a
+a
+"}
+(17,1,1) = {"
+c
+Z
+M
+j
+D
+h
+M
+c
+G
+G
+G
+G
+G
+G
+c
+a
+c
+c
+c
+c
+a
+a
+a
+"}
+(18,1,1) = {"
+c
+c
+o
+c
+n
+c
+O
+c
+G
+G
+G
+G
+G
+G
+c
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
+"}

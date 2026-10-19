@@ -142,8 +142,8 @@
 
 	proc/generate_icon()
 		//this is mildly cursed, I am sorry
-		var/icon/base_icon = new(initial(src.icon), "turbine_spin")
-		var/icon/result_icon = new(initial(src.icon), "turbine_spin")
+		var/icon/base_icon = new(get_initial_icon(src), "turbine_spin")
+		var/icon/result_icon = new(get_initial_icon(src), "turbine_spin")
 		result_icon.Insert(base_icon, "turbine_spin_speed", delay=max(2*(src.best_RPM/(8*src.RPM)), 0.125))
 		return result_icon
 
@@ -155,14 +155,14 @@
 			src.ruined = TRUE
 		if(src.ruined)
 			if(src.icon_state != "ruined")
-				src.icon = initial(src.icon)
+				src.icon = get_initial_icon(src)
 				src.icon_state = "ruined"
 				UpdateIcon()
 			src.RPM = 0
 		else if(src.RPM < 1)
 			src._last_rpm_icon_update = -100 //force an update as soon as it starts moving
 			if(src.icon_state != "turbine_main")
-				src.icon = initial(src.icon)
+				src.icon = get_initial_icon(src)
 				src.icon_state = "turbine_main"
 				UpdateIcon()
 		else
@@ -551,7 +551,7 @@
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel/turbine_blade(), rand(-10,10), rand(-10,10))
 		//destroy the turbine
 		src.ruined = TRUE
-		src.icon = initial(src.icon)
+		src.icon = get_initial_icon(src)
 		src.icon_state = "ruined"
 		UpdateIcon()
 		src.current_blade = null

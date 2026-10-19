@@ -468,14 +468,21 @@ var/global/list/module_editors = list()
 
 	src.UpdateName()
 
+// since silicons can update their names on a whim, we need to make sure the botcard is updated as well
 /mob/living/silicon/UpdateName()
 	..()
 	src.botcard.registered = src.name
+	src.botcard.update_name()
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
 	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
+
+// borgs and ai shells can be turned into one another, so this makes sure the botcard is up to date in those cases
+/mob/living/silicon/robot/UpdateName()
+	..()
+	src.botcard.assignment = src.dependent ? "AI Shell" : "Cyborg"
 
 /proc/borgify_name(var/start_name = "Robot")
 	if (!start_name) // somehow
@@ -566,6 +573,97 @@ var/global/list/module_editors = list()
 /mob/living/silicon/proc/remove_radio_upgrade()
 	return FALSE
 
+/mob/living/silicon/proc/state_standard_laws()
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/list/say_targets = list()
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	say_targets += "Local"
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(src, "Select output channel", "State Standard Laws", say_targets)
+
+	if (!choice)
+		return
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
+
+	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
+	src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
+	sleep(1 SECOND)
+	src?.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
+	sleep(1 SECOND)
+	src?.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
+
+/mob/living/silicon/proc/state_all_laws()
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
+		return
+
+	var/list/say_targets = list()
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	say_targets += "Local"
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(src, "Select output channel", "State All Laws", say_targets)
+
+	if (!choice)
+		return
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
+
+	var/laws = null
+	if(src.dependent) //are you a shell?
+		if(!src?.mainframe?.law_rack_connection)
+			boutput(src, "You have no laws!")
+			return
+		laws = src.mainframe.law_rack_connection.format_for_irc()
+	else
+		if(!src.law_rack_connection)
+			boutput(src, "You have no laws!")
+			return
+		laws = src.law_rack_connection.format_for_irc()
+
+	logTheThing(LOG_SAY, usr, "states all their current laws.")
+	for (var/number in laws)
+		src.say("[prefix] [number]. [laws[number]]")
+		sleep(1 SECOND)
+
 /mob/living/silicon/proc/set_fake_laws()
 	#define FAKE_LAW_LIMIT 12
 	var/fake_lawset_choices = list ("Real Laws", "Fake Laws", "Asimov Laws (Default)", "Robocop Laws", "Corporate Laws", "Syndicate Laws")
@@ -653,7 +751,7 @@ var/global/list/module_editors = list()
 	if (!choice)
 		return
 
-	var/list/laws = src.shell ? src.mainframe.fake_laws : src.fake_laws
+	var/list/laws = src.dependent ? src.mainframe.fake_laws : src.fake_laws
 
 	if (length(laws) == 0)
 		boutput(message_mob, SPAN_ALERT("Fake laws not set!"))
@@ -679,7 +777,7 @@ var/global/list/module_editors = list()
 		var/mob/living/silicon/ai/AI = src
 		message_mob = AI.get_message_mob()
 
-	var/list/laws = src.shell ? src.mainframe.fake_laws : src.fake_laws
+	var/list/laws = src.dependent ? src.mainframe.fake_laws : src.fake_laws
 
 	if (length(laws) == 0)
 		boutput(message_mob, SPAN_ALERT("Fake laws not set!"))
@@ -716,6 +814,28 @@ var/global/list/module_editors = list()
 /mob/living/silicon/clear_offline_indicator()
 	..()
 	src.mainframe?.clear_offline_indicator()
+
+/mob/living/silicon/proc/set_always_monospaced(do_monospaced = TRUE, mob/user = src)
+	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	if(!do_monospaced)
+		decorator.inverted = FALSE
+		boutput(user, SPAN_NOTICE("All speech now regular text by default."))
+	else
+		decorator.inverted = TRUE
+		boutput(user, SPAN_NOTICE("All speech now monospaced by default."))
+	if(src.mainframe && !isAI(src)) // safety check to prevent possible infinite loop if mainframe is ever accidentally set on an ai
+		src.mainframe.set_always_monospaced(do_monospaced = do_monospaced)
+
+/mob/living/silicon/proc/toggle_monospace_mode(mob/user = src)
+	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	src.set_always_monospaced(!decorator.inverted, user)
+
+/mob/living/silicon/verb/toggle_monospace()
+	set category = "Robot Commands"
+	set name = "Toggle Monospace Speech"
+	set desc = "Switches your speech between normal and forced-monospace mode."
+
+	src.toggle_monospace_mode(src)
 
 /datum/statusEffect/low_power
 	id = "low_power"
