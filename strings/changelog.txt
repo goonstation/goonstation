@@ -1,4 +1,7 @@
 
+(t)mon oct 19 26
+(u)Sord
+(+)Sunglasses now play a funny sound the first time a vampire equips them.
 (t)sat oct 17 26
 (u)JORJ949
 (p)28057
