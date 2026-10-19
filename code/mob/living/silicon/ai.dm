@@ -437,14 +437,13 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_track
 	src.verbs |= /mob/living/silicon/ai/proc/ai_alerts
 	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_list
-	src.verbs |= /mob/living/silicon/ai/proc/ai_statuschange
+	src.verbs |= /mob/living/silicon/ai/proc/ai_update_status_menu
 	src.verbs |= /mob/living/silicon/ai/proc/ai_interact_laws
 	src.verbs |= /mob/living/silicon/ai/verb/deploy_to
 	src.verbs |= /mob/living/silicon/ai/proc/ai_view_crew_manifest
 	src.verbs |= /mob/living/silicon/ai/proc/toggle_alerts_verb
 	src.verbs |= /mob/living/silicon/ai/verb/access_internal_radio
 	src.verbs |= /mob/living/silicon/ai/verb/access_internal_pda
-	src.verbs |= /mob/living/silicon/ai/proc/ai_colorchange
 	src.verbs |= /mob/living/silicon/ai/proc/ai_station_announcement
 	src.verbs |= /mob/living/silicon/ai/proc/view_messageLog
 	src.verbs |= /mob/living/silicon/ai/verb/rename_self
@@ -1753,8 +1752,11 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		return
 
 /mob/living/silicon/ai/proc/ai_update_status_menu()
+	set name = "Customize Status"
+	set category = "AI Commands"
+
 	var/u_roll = pick("color", "colour") // hehe
-	var/list/status_options = list("Screen emotion", "Screen [u_roll]", "Status message", "Toggle Monospace", "Change name", "Go offline")
+	var/list/status_options = list("Screen emotion", "Screen [u_roll]", "Status message", "Toggle monospace", "Change name", "Go offline")
 	var/mob/message_mob = src.get_message_mob()
 
 	if (!message_mob.client || isdead(src))
@@ -1768,14 +1770,14 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 		// paying for our crimes
 		if ("Screen color")
-			src.ai_change_color()
+			src.ai_colorchange()
 		if ("Screen colour")
-			src.ai_change_color()
+			src.ai_colorchange()
 
 		if ("Status message")
 			src.ai_change_message()
 
-		if ("Toggle Monospace")
+		if ("Toggle monospace")
 			src.toggle_monospace_mode()
 
 		if ("Change name")
@@ -1805,47 +1807,15 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.faceEmotion = available_emotions[chosen_emotion]
 	src.update_appearance()
 
-/mob/living/silicon/ai/proc/ai_change_color()
+/mob/living/silicon/ai/proc/ai_colorchange() //It's "colour", though :( "color" sounds like some kinda ass-themed He-Man villain
+	var/u_roll = list("color", "colour")
 	if(isdead(src))
-		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your colour, because you are dead!"))
-		return
-	var/fColor = input("Pick color:","Color", faceColor) as null|color
-	set_color(fColor)
-
-/mob/living/silicon/ai/proc/ai_statuschange()
-	set category = "AI Commands"
-	set name = "AI status"
-
-	if (isdead(src))
-		boutput(usr, "You cannot change your emotional status because you are dead!")
-		return
-	var/list/L = custom_emotions || ai_emotions	//In case an AI uses the reward, use a local list instead
-
-	var/newEmotion = tgui_input_list(src.get_message_mob(), "Select a status!", "AI Status", sortList(L, /proc/cmp_text_asc))
-	var/newMessage = scrubbed_input(usr, "Enter a message for your status displays!", "AI Message", src.status_message)
-	if (!newEmotion && !newMessage)
-		return
-	if(!(newEmotion in L)) //Ffff
+		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your [u_roll], because you are dead!"))
 		return
 
-	if (newEmotion)
-		src.faceEmotion = L[newEmotion]
-		update_appearance()
-	if (newMessage)
-		src.status_message = newMessage
+	var/fColour = input("Pick [u_roll]:","[u_roll]", faceColor) as null|color
 
-/mob/living/silicon/ai/proc/ai_colorchange()
-	set category = "AI Commands"
-	set name = "AI Color" //It's "colour", though :( "color" sounds like some kinda ass-themed He-Man villain
-
-	if(isdead(src))
-		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your colour, because you are dead!"))
-		return
-
-	var/fColor = input("Pick color:","Color", faceColor) as null|color
-
-	set_color(fColor)
-
+	set_color(fColour)
 
 /mob/living/silicon/ai/proc/set_color(var/color)
 	DEBUG_MESSAGE("Setting colour on [src] to [color]")
@@ -2001,10 +1971,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	ai_minimap_ui.ui_interact(message_mob)
 
 /mob/living/silicon/ai/verb/rename_self()
-	set category = "AI Commands"
-	set name = "Change Designation"
-	set desc = "Change your name."
-
 	var/mob/message_mob = src.get_message_mob()
 	if (!message_mob.client || isdead(src))
 		return

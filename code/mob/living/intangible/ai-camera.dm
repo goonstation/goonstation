@@ -387,17 +387,11 @@ TYPEINFO(/mob/living/intangible/aieye)
 		set name = "Laws"
 		mainframe?.interact_laws()
 
-	verb/ai_statuschange()
+	verb/ai_customization()
 		set category = "AI Commands"
-		set name = "AI status"
-		if (mainframe)
-			mainframe.ai_statuschange()
+		set name = "Customize Status"
 
-	verb/ai_colorchange()
-		set category = "AI Commands"
-		set name = "AI Color"
-		if (mainframe)
-			mainframe.ai_colorchange()
+		mainframe?.ai_update_status_menu()
 
 	verb/reset_apcs()
 		set category = "AI Commands"
