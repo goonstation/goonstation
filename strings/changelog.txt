@@ -1,4 +1,30 @@
 
+(t)tue oct 20 26
+(u)LorrMaster
+(p)26597
+(e)🔄👮|C-Rework, A-Security
+(*)More reliable ballistic forensics
+(u)Nexusuxen
+(p)26929
+(e)🆕🧱📦|C-Feature, A-Materials, A-Game-Objects
+(+)Airlock panels include a lights wire, which controls the red/green lights you see when it's opening/bolted/etc.
+(u)JORJ949
+(p)28130
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)The Gang Announcer now has its own radio icon. Don't upset the boss....
+(u)JORJ949
+(p)28043
+(f)https://forum.ss13.co/showthread.php?tid=25459
+(e)🆕🐣|C-Feature, A-Respawning
+(*)Permanently cryoing as a "unique" role (Command/NTSC/Detective) will now open up the slot again after a 5 minute delay.
+(t)mon oct 19 26
+(u)Sord
+(+)Sunglasses now play a funny sound the first time a vampire equips them.
+(t)sat oct 17 26
+(u)JORJ949
+(p)28057
+(e)🆕🎨🔨|C-Feature, C-Sprites, A-Player-Actions
+(+)Changeling ability icon borders have been resprited, with a writhing animation when you hover over the ability.
 (t)fri oct 16 26
 (u)Mr. Moriarty
 (p)27986

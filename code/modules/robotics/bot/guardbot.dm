@@ -641,8 +641,6 @@
 				else if (lowertext(R["rank"]))
 					law_prints = R["name"]
 					break
-			if (!law_prints)	// If we didn't get anything
-				law_prints = "[pick(NT)]"	// I dunno just pick someone
 		var/dothevoice = "[src] puts on their best impression of [law_prints ? law_prints : "a big mean security person"]."
 		var/saytheline = "I am the law."
 		if (loose)

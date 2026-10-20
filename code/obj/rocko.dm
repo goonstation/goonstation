@@ -27,19 +27,13 @@
 		choose_rocko_material()
 		UpdateIcon()
 		START_TRACKING_CAT(TR_CAT_PETS)
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 		processing_items |= src
 
 	disposing()
 		processing_items -= src
 		STOP_TRACKING_CAT(TR_CAT_PETS)
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-
-		var/turf/where = get_turf(src)
-		var/where_text = "Unknown (?, ?, ?)"
-		if (where)
-			where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
-		message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] has died at [GHOST.MESSAGE.format_loc(src)].")
 		..()
 
 	proc/can_mob_observe(mob/M)
