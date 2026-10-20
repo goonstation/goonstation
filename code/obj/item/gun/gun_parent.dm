@@ -100,7 +100,7 @@
 
 	New()
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
-		src.forensic_profile = register_id("=[build_id(FORENSIC_CHARS_BALLISTICS, 9)]=")
+		src.forensic_profile = register_id("=[build_id_unique(/proc/build_id, list(FORENSIC_CHARS_BALLISTICS, 9))]=")
 		return ..()
 
 	// equip handling for weapons that fit on your back
