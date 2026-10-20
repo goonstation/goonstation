@@ -329,6 +329,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
 
+	clamp_values()
+		. = ..()
+		src.stuttering = 0
+		src.druggy = 0
+		src.jitteriness = 0
+
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
 		message_admins("something tried to gib the AI Eye - if this wasn't an admin action, something has gone badly wrong")
@@ -536,6 +542,13 @@ TYPEINFO(/mob/living/intangible/aieye)
 		set desc = "Automatically opens the nearest door to a selected individual, if possible."
 		if(mainframe)
 			mainframe.open_nearest_door_silicon()
+
+	verb/toggle_monospace()
+		set category = "AI Commands"
+		set name = "Toggle Monospace Speech"
+		set desc = "Switches your speech between normal and forced-monospace mode."
+
+		src.mainframe?.toggle_monospace(src)
 
 	proc/ai_alerts()
 		set category = "AI Commands"

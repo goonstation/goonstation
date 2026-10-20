@@ -53,8 +53,9 @@
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
 		return TRUE
-	src.material_on_attack_use(thr?.user, hit_atom)
-	hit_atom.material_trigger_when_attacked(src, thr?.user, 2)
+	if (!(thr?.throw_type & THROW_DELIVERY))
+		src.material_on_attack_use(thr?.user, hit_atom)
+		hit_atom.material_trigger_when_attacked(src, thr?.user, 2)
 	if(ismob(hit_atom))
 		var/mob/hit_mob = hit_atom
 		for(var/atom/A in hit_mob)

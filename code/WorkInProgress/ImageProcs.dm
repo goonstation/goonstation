@@ -1,5 +1,5 @@
 
-/image/proc/apply_material_appearance(var/datum/material/material)
+/image/proc/apply_material_appearance(var/datum/material/material, var/ignore_trigger = FALSE)
 	if(material.getTexture())
 		var/icon/icon_tex = GetTexturedIcon(src.icon, material.getTexture())
 		if(!isnull(icon_tex))
@@ -10,4 +10,5 @@
 	src.alpha = material.getAlpha()
 	if(material.hsl_color)
 		src.filters += filter(type="color", color=material.hsl_color, space = FILTER_COLOR_HSL)
-	material.triggerOnImage(src)
+	if(!ignore_trigger)
+		material.triggerOnImage(src)

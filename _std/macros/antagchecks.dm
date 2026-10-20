@@ -7,7 +7,8 @@
 #define issleeperagent(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_SLEEPER_AGENT))
 #define issyndicateagent(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_SYNDICATE_AGENT) || x:mind:get_antagonist(ROLE_SYNDICATE_COMMANDER) || x:mind:get_antagonist(ROLE_SYNDICATE_MONKEY)))
 #define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:get_antagonist(ROLE_NUKEOP_GUNBOT))
-#define istrainedsyndie(x) (istraitor(x) || isnukeop(x) || issleeperagent(x) || issyndicateagent(x) || isnukeopgunbot(x) || isomnitraitor(x))
+#define issyndicatecyborg(x) (istype(x, /mob/living/silicon/robot) && x:syndicate)
+#define istrainedsyndie(x) (istraitor(x) || isnukeop(x) || issleeperagent(x) || issyndicateagent(x) || isnukeopgunbot(x) || isomnitraitor(x) || issyndicatecyborg(x))
 
 #define isomnitraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_OMNITRAITOR))
 #define issawflybuddy(x) (istrainedsyndie(x) || isspythief(x))
@@ -46,3 +47,10 @@
 #define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
 #define issawfly(x) (istype(x, /mob/living/critter/robotic/sawfly))
 #define iszombie(x) (istype(x, /mob/living/critter/zombie) || istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/zombie))
+
+// Should any revs spawned follow roleplay behaviour?
+#ifdef RP_MODE
+#define ROLEPLAY_REVOLUTIONARIES (!istype_exact(ticker.mode, /datum/game_mode/revolution))
+#else
+#define ROLEPLAY_REVOLUTIONARIES (istype(ticker.mode, /datum/game_mode/revolution/extended))
+#endif

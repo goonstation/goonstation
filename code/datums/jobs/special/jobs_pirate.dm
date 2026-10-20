@@ -28,7 +28,7 @@
 		if (!M)
 			return
 
-		for (var/datum/antagonist/antag in M.mind.antagonists)
+		for (var/datum/antagonist/pirate/antag in M.mind.antagonists)
 			if (antag.id == ROLE_PIRATE || antag.id == ROLE_PIRATE_FIRST_MATE || antag.id == ROLE_PIRATE_CAPTAIN)
 				antag.give_equipment()
 				return

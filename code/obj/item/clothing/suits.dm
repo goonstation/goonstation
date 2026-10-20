@@ -132,7 +132,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 /obj/item/clothing/suit/hoodie/random
 	New()
-		src.hcolor = pick(null, "blue", "darkblue", "white", "pink", "blank", "grey", "dullgrey", "magenta", "green", "yellow", "red")
+		src.hcolor = pick(null, "blue", "darkblue", "white", "pink", "black", "grey", "dullgrey", "magenta", "green", "yellow", "red")
 		..()
 
 /obj/item/clothing/suit/hoodie/large
@@ -539,8 +539,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 /obj/item/clothing/suit/det_suit/beepsky
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
-	icon_state = "ntjacket_o"
-	coat_style = "ntjacket"
+	icon_state = "wornjacket_o"
+	coat_style = "wornjacket"
 
 	setupProperties()
 		..()
@@ -820,6 +820,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	icon_state = "bedsheet"
 	item_state = "bedsheet"
 	layer = MOB_LAYER
+	default_material = "cotton"
+	material_amt = 3 // Matches materials produced when torn
 	throwforce = 1
 	w_class = W_CLASS_TINY
 	throw_speed = 2
@@ -854,7 +856,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	New()
 		..()
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("cotton"), appearance = FALSE, setname = FALSE)
 
 	attack_hand(mob/user)
 		if (src.bed)
@@ -1530,6 +1531,28 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		setProperty("space_movespeed", 0)  // ntso space suits don't suffer from slowdown
 
+/obj/item/clothing/suit/space/ntso/medic // Human sprites by TekoTheTeapot
+	name = "NT field medic pressure suit"
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit a medical insignia. The fabric on this model is highly chemically and biologically resistant."
+	icon_state = "ntso_medic"
+	item_state = "ntso_medic"
+
+	setupProperties()
+		..()
+		setProperty("viralprot", 50)
+		setProperty("chemprot", 60)
+
+/obj/item/clothing/suit/space/ntso/engineer
+	name = "NT engineering pressure suit"
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit an insignia to mark its protection against radiation. The fabric on this model is highly fire resistant and houses batiline plating."
+	icon_state = "ntso_engineer"
+	item_state = "ntso_engineer"
+
+/obj/item/clothing/suit/space/ntso/engineer/setupProperties()
+		..()
+		src.setProperty("radprot", 50)
+		src.setProperty("heatprot", 45)
+
 /obj/item/clothing/suit/space/ntso/bellona
 	name = "NTSO combat dress"
 	desc = "A modernized NTSO combat suit, with an integrated energy shield."
@@ -2150,7 +2173,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	name = "hi-vis vest"
 	desc = "For when you just have to be seen!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi' // 32x32 so the reflection, which renders on its own plane, turns with the body when lying down
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "hi-vis"
 	item_state = "hi-vis"
@@ -2190,7 +2213,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	desc = "A coat that makes you even more visible!"
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	icon_state = "puffer-hivis"
 	item_state = "puffer-hivis"
 	body_parts_covered = TORSO|LEGS|ARMS

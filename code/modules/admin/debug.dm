@@ -1263,6 +1263,32 @@ var/datum/flock/testflock
 		fdel(fname)
 #endif
 
+/client/proc/debugAddElement(datum/target)
+	var/partial_type = global.tgui_input_text(usr, "Part of element path:", "Add Element") || "/"
+	var/element_type = global.get_one_match(partial_type, /datum/element)
+	if (!element_type)
+		return
+
+	var/typeinfo/datum/element/typeinfo = global.get_type_typeinfo(element_type)
+	var/list/arguments = src.get_proccall_arglist(typeinfo.initialization_args)
+	arguments.Insert(1, element_type)
+
+	target._AddElement(arguments)
+	boutput(usr, SPAN_NOTICE("Added [element_type] to [target]."))
+
+/client/proc/debugRemoveElement(datum/target)
+	var/list/de = target.datum_elements
+	if (!de)
+		boutput(usr, SPAN_NOTICE("No elements present on [target]."))
+		return
+
+	var/id = global.tgui_input_list(usr, "Select an element to remove:", "Remove Element", de)
+	if (!id)
+		return
+
+	target.RemoveElement(DCS._elements_by_id[id])
+	boutput(usr, SPAN_NOTICE("Removed [id] from [target]."))
+
 /client/proc/debugAddComponent(var/datum/target = null)
 	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
 	if(!pathpart)

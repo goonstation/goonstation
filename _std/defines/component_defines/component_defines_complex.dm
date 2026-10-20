@@ -9,8 +9,16 @@
 	#define XSIG_MOVABLE_Z_CHANGED /datum/xsig/outermost_movable/z_level_changed
 	/// When the outermost movable in the `.loc` chain moves to a new area. (thing, old_area, new_area)
 	#define XSIG_MOVABLE_AREA_CHANGED /datum/xsig/outermost_movable/area_changed
+
+
 	/// When the outermost movable in the `.loc` chain moves to a new turf. (thing, old_turf, new_turf)
 	#define XSIG_MOVABLE_TURF_CHANGED /datum/xsig/outermost_movable/turf_changed
+	/// When the outermost movable in the `.loc` chain moves to a new turf, provided both the old and new turfs exist. (thing, old_turf, new_turf)
+	#define XSIG_MOVABLE_TURF_CHANGED_SAFE /datum/xsig/outermost_movable/turf_changed/safe
+	/// When the outermost movable in the `.loc` chain moves from a turf to nullspace. (thing, old_turf)
+	#define XSIG_MOVABLE_TURF_TO_NULLSPACE /datum/xsig/outermost_movable/turf_changed/to_null
+	/// When the outermost movable in the `.loc` chain moves from nullspace to a turf. (thing, new_turf)
+	#define XSIG_MOVABLE_NULLSPACE_TO_TURF /datum/xsig/outermost_movable/turf_changed/to_turf
 
 
 
@@ -46,3 +54,12 @@ ALWAYS_ABSTRACT(/datum/xsig)
 /datum/xsig/outermost_movable/turf_changed
 	id = "mov_turf_changed"
 	track_movable_moved = TRUE
+
+/datum/xsig/outermost_movable/turf_changed/safe
+	id = "mov_turf_changed_safe"
+
+/datum/xsig/outermost_movable/turf_changed/to_null
+	id = "mov_turf_to_nullspace"
+
+/datum/xsig/outermost_movable/turf_changed/to_turf
+	id = "mov_nullspace_to_turf"

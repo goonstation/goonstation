@@ -334,10 +334,19 @@ ABSTRACT_TYPE(/obj/item)
 		return
 
 /obj/item/New()
+	if (istext(src.wear_image_icon))
+		src.wear_image_icon = file(src.wear_image_icon)
+	if (istext(src.inhand_image_icon))
+		src.inhand_image_icon = file(src.inhand_image_icon)
 	// this is dumb but it won't let me initialize vars to image() for some reason
 	wear_image = image(wear_image_icon)
 	wear_image.icon_state = icon_state //Why was this null until someone actually wore it? Made manipulation impossible.
 	inhand_image = image(inhand_image_icon)
+	// Clothing compares these fields with the resources in its rendered images.
+	if (isfile(src.wear_image_icon))
+		src.wear_image_icon = src.wear_image.icon
+	if (isfile(src.inhand_image_icon))
+		src.inhand_image_icon = src.inhand_image.icon
 	if (src.rand_pos)
 		if (!src.pixel_x) // just in case
 			src.pixel_x = rand(-8,8)
@@ -577,6 +586,9 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/combust(obj/item/W) // cogwerks- flammable items project
 	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
 		return
+	var/area/area = get_area(src)
+	if (!area || area.virtual)
+		return
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	src.burning = TRUE
 	src.firesource = FIRESOURCE_OPEN_FLAME
@@ -770,7 +782,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!src.anchored)
 		click_drag_tk(over_object, src_location, over_location, over_control, params)
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostdrone(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || iszombie(usr) || isghostdrone(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
 		return
 
 	var/on_turf = isturf(src.loc)

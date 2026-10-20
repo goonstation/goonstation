@@ -224,7 +224,6 @@
 	New()
 		..()
 		src.root.add_file( new /datum/computer/file/mainframe_program/shell(src) )
-		src.root.add_file( new /datum/computer/file/document(src) )
 		src.root.add_file( new /datum/computer/file/record/c3help(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/nuke_interface(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/test_interface(src) )

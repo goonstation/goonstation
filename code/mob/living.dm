@@ -117,8 +117,7 @@ TYPEINFO(/mob/living)
 	var/stamina_max = STAMINA_MAX
 	var/stamina_regen = STAMINA_REGEN
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE
-	var/list/stamina_mods_regen = list()
-	var/list/stamina_mods_max = list()
+	var/alist/stamina_mods_max = alist()
 
 	var/last_sleep = 0 //used for sleep_bubble
 
@@ -137,7 +136,9 @@ TYPEINFO(/mob/living)
 	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
-	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	src.AddElement(/datum/element/ghost_observable)
+	// The silhouette is created before atom.New() loads runtime artwork.
+	src.load_runtime_icon()
 	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
@@ -173,7 +174,6 @@ TYPEINFO(/mob/living)
 	vision.flash(duration)
 
 /mob/living/disposing()
-	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
@@ -1565,6 +1565,13 @@ TYPEINFO(/mob/living)
 	return shock_damage
 
 /mob/living/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	if(isitem(AM) && src.juggling() && prob(60))
+		if (prob(src.juggling.len * 5))
+			src.drop_juggle()
+		else
+			SPAWN(0)
+				src.add_juggle(AM)
+		return ..()
 	. = 'sound/impact_sounds/Generic_Hit_2.ogg'
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	if (src.can_bleed && isitem(AM))
@@ -1576,12 +1583,6 @@ TYPEINFO(/mob/living)
 				src.was_harmed(thr.user, AM)
 	if (AM.throwforce > 5) //number
 		src.changeStatus("staggered", 5 SECONDS)
-	if(isobj(AM) && src.can_juggle)
-		if (src.juggling() && prob(src.juggling.len * 5))
-			src.drop_juggle()
-		else
-			SPAWN(0)
-				src.add_juggle(AM)
 	..()
 
 /mob/living/relaymove(mob/user, direction, delay, running)
@@ -1739,10 +1740,12 @@ TYPEINFO(/mob/living)
 	src.vision.set_scan(1)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(src)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(src)
 
 /mob/living/proc/unmeson(atom/source)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(src)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(src)
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
@@ -1795,13 +1798,14 @@ TYPEINFO(/mob/living)
 			return AM
 	return picked_item
 
-/mob/living/clamp_act()
+/mob/living/clamp_act(mob/clamper, obj/item/clamp)
 	if (isintangible(src))
 		return FALSE
 	src.TakeDamage("All", 10)
 	src.setStatusMin("slowed", 2 SECONDS, 15)
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
+	logTheThing(LOG_COMBAT, clamper, "CLAMPS [key_name(src)] with [clamp] at [log_loc(src)]")
 	return TRUE
 
 /mob/living/HealBleeding(amt)
@@ -1817,6 +1821,10 @@ TYPEINFO(/mob/living)
 /mob/living/proc/handle_perma_cryo()
 	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 		antagonist.handle_perma_cryo()
+	var/datum/job/job = find_job_in_controller_by_string(src.mind?.assigned_role)
+	if(istype(job) && job.unique)
+		SPAWN(5 MINUTES)
+			job.assigned = max(0, job.assigned - 1)
 
 /mob/living/proc/handle_cryo()
 	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)

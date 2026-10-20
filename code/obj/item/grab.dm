@@ -533,6 +533,8 @@
 		if (G.state < GRAB_AGGRESSIVE)
 			duration += 25 //takes longer if you dont have a good gripp
 
+		duration = max(0.1, duration)
+
 		..()
 
 	onUpdate()
@@ -736,11 +738,17 @@
 
 /obj/item/grab/force_mask
 
+	proc/get_internal_tank()
+		var/obj/item/clothing/mask/medical/mask = src.loc
+		if (istype(mask) && mask.attached_tank)
+			return mask.attached_tank
+		return locate(/obj/item/tank) in src.assailant.equipped_list(check_for_magtractor = 0)
+
 	proc/get_breath(volume_needed)
 		.= null
 		if (src.state == GRAB_CHOKE)
-			for (var/obj/item/tank/use_internal in src.assailant.equipped_list(check_for_magtractor = 0))
-				return use_internal.remove_air_volume(volume_needed)
+			var/obj/item/tank/use_internal = src.get_internal_tank()
+			return use_internal?.remove_air_volume(volume_needed)
 
 	upgrade_to_choke()
 		var/list/clothing = list(src.affecting.wear_mask)
@@ -757,10 +765,7 @@
 
 		..(msg_overridden = 1)
 
-		var/obj/item/tank/use_internal = null
-		for (var/obj/item/tank/T in src.assailant.equipped_list(check_for_magtractor = 0))
-			use_internal = T
-			break
+		var/obj/item/tank/use_internal = src.get_internal_tank()
 
 		if (use_internal)
 			for (var/mob/O in AIviewers(src.assailant, null))

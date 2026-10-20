@@ -39,6 +39,7 @@
 		if (user.a_intent == INTENT_HARM)
 			return
 
+		A.ensure_analyzable_component()
 		var/datum/computer/file/electronics_scan/theScan = new
 		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user, scannable_tags, scanned, theScan)
 
@@ -53,7 +54,7 @@
 
 /obj/item/electronics/scanner/syndicate
 	scannable_tags = DEVICE_ANALYZER_ALLOWED_TAGS | ANALYSER_SYNDIE_ONLY //We allow anything we can scan including syndie items
-	SYNDICATE_STEALTH_DESCRIPTION("The internal circuitry has been jailbroken.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("The internal circuitry has been jailbroken.")
 	tooltip_flags = REBUILD_USER
 
 

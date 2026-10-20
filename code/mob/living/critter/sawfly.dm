@@ -65,7 +65,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new/datum/limb/sawfly_blades
 		HH.name = "sawfly blades"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "sawflysaw"
 		HH.limb_name = HH.name
 		HH.can_hold_items = FALSE

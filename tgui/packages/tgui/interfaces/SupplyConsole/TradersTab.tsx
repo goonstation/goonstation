@@ -19,12 +19,13 @@ import {
 
 import { useBackend, useSharedState } from '../../backend';
 import { formatMoney } from '../../format';
-import { resource } from '../../goonstation/cdn';
+import { useResource } from '../../goonstation/cdn';
 import { CommodityEntry } from '../Trader/index';
 import { capitalize } from './../common/stringUtils';
 import { SupplyConsoleData } from './type';
 
 export const SupplyConsoleTradersTab = () => {
+  const resource = useResource();
   const { data } = useBackend<SupplyConsoleData>();
   const [viewing_trader, setTrader] = useSharedState('viewtrader', -1);
   return (
@@ -197,6 +198,7 @@ const TraderView = (props) => {
 };
 
 const SupplyTraderInfo = (props) => {
+  const resource = useResource();
   const { act } = useBackend<SupplyConsoleData>();
   const { trader } = props;
   return (

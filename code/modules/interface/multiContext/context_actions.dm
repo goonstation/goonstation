@@ -2506,3 +2506,9 @@
 		desc = "Patient is deceased and cannot be cloned."
 		background_color = "#ab00e3"
 		level = TRIAGE_UNREVIVABLE
+	cloned
+		name = "Cloned"
+		icon_state = "letter_c"
+		desc = "Patient is deceased, but has been cloned and can safely be disposed of."
+		background_color = "#3dB8ff"
+		level = TRIAGE_CLONED

@@ -25,6 +25,9 @@
 		desc = "These handcuffs are perfect for containing evil creatures, but they're fragile otherwise as a result."
 		strength = 1
 
+/obj/item/handcuffs/on_material_scan()
+	return "Resist time increases with material hardness and density"
+
 /obj/item/handcuffs/examine()
 	. = ..()
 	if (src.delete_on_last_use)

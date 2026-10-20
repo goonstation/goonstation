@@ -91,7 +91,9 @@ A-Science:
   - any-glob-to-any-file: code/obj/artifacts/*
   - any-glob-to-any-file: code/modules/telescience/*
 # A-Secret:
-# A-Security:
+A-Security:
+- changed-files:
+  - any-glob-to-any-file: code/modules/security/*
 A-Silicons:
 - changed-files:
   - any-glob-to-any-file: code/mob/living/intangible/ai-camera.dm

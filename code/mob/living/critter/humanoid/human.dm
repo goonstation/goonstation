@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.name = "left hand"
 		HH.suffix = "-L"
@@ -128,7 +128,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/gun/kinetic/rifle
 		HH.name = "rifle"
 		HH.suffix = "-LR"
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/sword
 			HH.name = "left hand"
 			HH.suffix = "-L"
@@ -202,7 +202,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"
@@ -236,7 +236,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/sword
 			HH.name = "left hand"
 			HH.suffix = "-L"
@@ -258,7 +258,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"
@@ -292,7 +292,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/sword
 			HH.name = "left hand"
 			HH.suffix = "-L"
@@ -314,7 +314,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"
@@ -366,7 +366,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/sword
 			HH.name = "left hand"
 			HH.suffix = "-L"
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"

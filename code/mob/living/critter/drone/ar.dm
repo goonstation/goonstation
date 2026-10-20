@@ -10,7 +10,7 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/artillery
 		HH.name = "S-42 Cluster Munition Shells"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handart"
 		HH.limb_name = "S-42 Cluster Munition Shells"
 		HH.can_hold_items = 0

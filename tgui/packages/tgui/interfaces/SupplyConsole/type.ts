@@ -22,8 +22,14 @@ export interface SupplyConsoleData {
   market_data: MarketEntryData[];
   trader_data: SupplyTraderData[];
   requisition_data: RequisitionData[];
+  account_data: AccountData;
 }
 
+interface AccountData {
+  scanned_name: string;
+  scanned_job: string;
+  scanned_credits: number;
+}
 interface SupplyRequestData {
   supply_name: string;
   order_ref: string;
@@ -93,3 +99,12 @@ export enum SupplyConsoleTabKeys {
   Traders,
   Requisitions,
 }
+
+export const SupplyConsoleTabKeysToTitles: string[] = [
+  'Requests', // Edited for rendering to show pending request count
+  'Place Order',
+  'Order History',
+  'Shipping Market',
+  'Traders',
+  'Requisitions',
+];

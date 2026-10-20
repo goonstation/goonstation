@@ -445,7 +445,7 @@ TYPEINFO(/obj/machinery/recharge_station/syndicate)
 	conversion_chamber = 1
 	anchored = UNANCHORED
 	p_class = 1.5
-	SYNDICATE_STEALTH_DESCRIPTION("It is full of sharp instruments designed to tear open human flesh.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("It is full of sharp instruments designed to tear open human flesh.")
 
 /obj/machinery/recharge_station/syndicate/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
@@ -997,6 +997,9 @@ TYPEINFO(/obj/machinery/recharge_station/syndicate)
 			if(clothingRef)
 				var/obj/item/clothing/cloth = locate(clothingRef) in src.clothes
 				if (istype(cloth, /obj/item/clothing))
+					if (!cloth.can_equip(R))
+						boutput(user, SPAN_ALERT("[cloth] can't be fitted onto [R]."))
+						return
 					if (istype(cloth, /obj/item/clothing/under))
 						if (R.clothes["under"] != null)
 							var/obj/old = R.clothes["under"]

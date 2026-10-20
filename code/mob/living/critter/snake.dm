@@ -43,7 +43,7 @@
 		HH.limb = new /datum/limb/mouth	// if not null, the special limb to use when attack_handing
 		var/datum/limb/mouth/M = HH.limb
 		M.stam_damage_mult = 0.5
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder

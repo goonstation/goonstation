@@ -208,30 +208,35 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			var/obj/item/implant/implant = the_object
 			if (implant.owner)
 				implant.on_remove(implant.owner)
+		var/hunger_restored = 0
 		if (ishuman(src.owner) && isitem(the_object))
-			var/mob/living/carbon/human/H = src.owner
 			var/obj/item/the_item = the_object
-			// First, restore a little hunger, and heal our organs
-			H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
+			hunger_restored = (the_item.w_class + 1) * 5 // +1 so tiny items still give a small boost
+
+		if (!QDELETED(the_object))
+			// Finally, ensure that the item is deleted regardless of what it is
+			var/obj/item/I = the_object
+			var/eaten = I.Eat(src.owner, src.owner, TRUE)
+			if (eaten == EAT_CANCELLED)
+				src.using = FALSE
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+			if(eaten) //eating can return false to indicate it failed
+				I.storage?.hide_hud(src.owner)
+				// Organs and body parts have special behaviors we need to account for
+				if (!handle_organs(the_object))
+					handle_parts(the_object)
+			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
+				src.owner.visible_message(SPAN_ALERT("[src.owner] eats [the_object]."))
+				playsound(src.owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
+				qdel(the_object)
+			logTheThing(LOG_COMBAT, src.owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(src.owner)].")
+
+		// Restore a little hunger, and heal our organs
+		if (hunger_restored)
+			var/mob/living/carbon/human/H = src.owner
+			H.sims?.affectMotive("Hunger", hunger_restored)
 			src.owner.HealDamage("All", 5, 0)
 			src.owner.UpdateDamageIcon()
-
-		if (QDELETED(the_object))
-			src.using = FALSE
-			return CAST_ATTEMPT_SUCCESS
-		// Finally, ensure that the item is deleted regardless of what it is
-		var/obj/item/I = the_object
-		if(I.Eat(src.owner, src.owner, TRUE)) //eating can return false to indicate it failed
-			I.storage?.hide_hud(src.owner)
-			// Organs and body parts have special behaviors we need to account for
-			if (!handle_organs(the_object))
-				handle_parts(the_object)
-		else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
-			src.owner.visible_message(SPAN_ALERT("[src.owner] eats [the_object]."))
-			playsound(src.owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
-			qdel(the_object)
-
-		logTheThing(LOG_COMBAT, src.owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(src.owner)].")
 		src.using = FALSE
 		return CAST_ATTEMPT_SUCCESS
 
@@ -563,10 +568,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 	///Returns true if a turf blocks xray vision in some way
 	proc/blocks_xray(turf/T)
-		if (T.density && T.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+		if (T.density && HAS_ATOM_PROPERTY(T, PROP_ATOM_NEVER_RADIOACTIVE))
 			return TRUE
 		for (var/obj/O in T)
-			if (O.density && O.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+			if (O.density && HAS_ATOM_PROPERTY(O, PROP_ATOM_NEVER_RADIOACTIVE))
 				return TRUE
 		return FALSE
 
@@ -2094,10 +2099,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 			L.UpdateOverlays(overlay_image, id)
 		else
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 			L.UpdateOverlays(null, id)
 
 	OnAdd()
@@ -2189,7 +2194,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (isliving(owner))
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 		if (src.active)
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
@@ -2201,14 +2206,14 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 
 	proc/decloak()
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
 			L.UpdateOverlays(null, id)
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"

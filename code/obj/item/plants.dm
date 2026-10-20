@@ -15,11 +15,13 @@ ABSTRACT_TYPE(/obj/item/plant)
 		..()
 		make_reagents()
 
-	get_desc(dist, mob/user)
+	examine(mob/user)
 		. = ..()
-		if (dist >= 5)
+		if (GET_DIST(src, user) >= 5)
 			return
-		HYPphytoscopic_scan(user, src)
+		var/scan = HYPphytoscopic_scan(user, src)
+		if (scan)
+			. += scan
 
 	proc/make_reagents()
 		if (!src.reagents)
@@ -71,7 +73,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			var/obj/item/bluntwrap/B = W
 			if(B.flavor)
 				doink.flavor = B.flavor
-			doink.name = "[reagent_id_to_name(doink.flavor)]-flavored [src.name] [pick("doink","'Rillo","cigarillo","brumbpo")]"
+			doink.name = reagent_id_to_name(doink.flavor) + "-flavored " + src.name + " " + pick("doink","'Rillo","cigarillo","brumbpo")
 			doink.transform = src.transform
 			doink.reagents.clear_reagents()
 			doink.reagents.maximum_volume = (src.reagents.total_volume + 50)
@@ -508,6 +510,15 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 		disperse_seeds(user,user)
 
 	attackby(var/obj/item/W, mob/user)
+		if (istype(W, /obj/item/cable_coil))
+			var/obj/item/cable_coil/C = W
+			if (!C.use(1))
+				return
+			user.visible_message("[user] weaves [src] and [W] into a makeshift sunflower mask.")
+			var/obj/item/clothing/mask/sunflowermask/M = new /obj/item/clothing/mask/sunflowermask(get_turf(src))
+			qdel(src)
+			user.put_in_hand_or_drop(M)
+			return
 		. = ..()
 		disperse_seeds(src,user)
 

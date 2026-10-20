@@ -19,7 +19,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { resource } from '../../goonstation/cdn';
+import { useResource } from '../../goonstation/cdn';
 import { Window } from '../../layouts';
 import {
   ChangeEntryData,
@@ -134,6 +134,8 @@ export const Changelog = () => {
 };
 
 const Header = (props: HeaderData) => {
+  const resource = useResource();
+
   return (
     <Stack vertical>
       <Stack.Item>

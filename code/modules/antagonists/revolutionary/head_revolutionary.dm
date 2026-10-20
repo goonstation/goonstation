@@ -117,6 +117,12 @@
 			logTheThing(LOG_DEBUG, H, "Head revolutionary standalone uplink created: [uplink_source.name]. Location given: [loc_string]. Frequency: [uplink.lock_code]")
 			src.owner.store_memory("<b>Uplink frequency:</b> [uplink.lock_code].")
 
+		if(ROLEPLAY_REVOLUTIONARIES)
+			var/obj/item/device/radio/headset/headset = H.ears
+			if(headset && istype(headset))
+				headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/syndicatechannel)
+				boutput(H, SPAN_NOTICE(SPAN_BOLD("The syndicate has granted \the [headset] on your head access to the syndicate channel to speak with your fellow revolutionaries.")))
+
 	add_to_image_groups()
 		. = ..()
 		var/datum/client_image_group/image_group = get_image_group(ROLE_REVOLUTIONARY)
@@ -153,7 +159,7 @@
 				var/obj/item_type = initial(purchased_item.items[1])
 				purchased_items += list(
 					list(
-						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"iconBase64" = "[icon2base64(icon(get_initial_icon(item_type), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
 						"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
 					)
 				)

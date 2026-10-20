@@ -44,8 +44,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		Uid = CreateUid()
 		bioUids[Uid] = null
 
-		var/fprint_id = build_id_separate(build_id_norepeat(FORENSIC_CHARS_FINGERPRINTS, 16), 4)
-		src.default_fingerprints = register_id(fprint_id)
+		src.build_fingerprints()
 
 		mobAppearance = new/datum/appearanceHolder()
 
@@ -62,9 +61,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return ..()
 
 	proc/build_fingerprints()
-		var/id_text = build_id_norepeat(FORENSIC_CHARS_FINGERPRINTS, 16)
-		id_text = build_id_separate(id_text, 4)
-		src.default_fingerprints = register_id(id_text)
+		src.default_fingerprints = register_id(build_id_unique(/proc/build_id_fingerprint, FORENSIC_CHARS_FINGERPRINTS))
 
 	disposing()
 		for(var/D in effects)

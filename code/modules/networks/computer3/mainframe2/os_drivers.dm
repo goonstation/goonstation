@@ -141,7 +141,7 @@
 		signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name, "link"="term"))
 		return
 
-	add_file(var/datum/computer/file/a_file, var/datum/mainframe2_user_data/user)
+	add_file(datum/computer/file/a_file, datum/mainframe2_user_data/user)
 		if (!initialized || !istype(a_file) || !istype(user) || !user.user_id)
 			return 0
 
@@ -408,11 +408,11 @@
 		R.holding_folder = driver
 		return driver.add_file(R, misc)
 
-	remove_file(datum/computer/R, misc)
+	remove_file(datum/computer/R)
 		if(!driver || driver.holder != src.holder)
 			return 0
 
-		return driver.remove_file(R, misc)
+		return driver.remove_file(R)
 
 /datum/computer/file/mainframe_program/driver/mountable/printer
 	name = "printdevc"
@@ -496,6 +496,10 @@
 			else
 				message_device("command=print", printFile)
 				return
+
+		else if (astype(printFile, /datum/computer/file/image)?.ourIcon)
+			message_device("command=print", printFile)
+			return
 
 		else if (istype(printFile, /datum/computer/file) && printFile.asText() != null)
 			var/datum/computer/file/oldPrintFile = printFile
@@ -2907,7 +2911,7 @@
 					if (!dd_hasprefix(toPrintPath, "/"))
 						toPrintPath = "/[toPrintPath]"
 
-					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"=toPrintPath))
+					var/datum/computer/file/toPrintFile = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"=toPrintPath))
 					if (istype(toPrintFile))
 						if (signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/lp-[printerName]"), toPrintFile) == DWAINE::ERR::SIG::SUCCESS)
 							message_user("ack")

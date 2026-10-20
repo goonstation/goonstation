@@ -457,6 +457,9 @@
 /obj/item/paper/pipebombs{
 	pixel_y = -9
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Dy" = (
