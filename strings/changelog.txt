@@ -1,6 +1,10 @@
 
 (t)tue oct 20 26
 (u)JORJ949
+(p)28130
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)The Gang Announcer now has its own radio icon. Don't upset the boss....
+(u)JORJ949
 (p)28043
 (f)https://forum.ss13.co/showthread.php?tid=25459
 (e)🆕🐣|C-Feature, A-Respawning
