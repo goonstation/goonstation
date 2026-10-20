@@ -1071,3 +1071,53 @@ datum/fishing_spot/golden_toilet
 	rod_tier_required = 3
 	fish_available = list(/obj/item/raw_material/rock = 30,
 	/obj/item/reagent_containers/food/fish/starstonefish = 5)
+
+/datum/fishing_spot/ballpit
+	fishing_atom_type = /turf/unsimulated/floor/ballpit
+	rod_tier_required = 3
+	fish_available = list(/obj/item/beach_ball = 25, //BALL pit
+	/obj/item/basketball = 25,
+	/obj/item/football = 25,
+	/obj/item/dice/magic8ball = 25,
+	/obj/item/toy/plush/small/stress_ball = 25,
+	/obj/item/paper/folded/ball = 25,
+	/obj/item/reagent_containers/food/snacks/rice_ball = 25,
+	/obj/item/reagent_containers/food/snacks/meatball = 25,
+	/obj/item/reagent_containers/food/fish/clownfish = 20,
+	/obj/item/clothing/shoes/clown_shoes = 10, //they fell in :(
+	/mob/living/critter/spider/baby/nice = 5,
+	/obj/item/reagent_containers/food/fish/toonclown_fish = 5)
+
+// The many ID computers, subtypes need their own spot so the hop id computer exclusive loot doesn't spawn at departmentals - ANNmagedon
+/datum/fishing_spot/id_computer_engineering
+	fishing_atom_type = /obj/machinery/computer/card/department/engineering
+	rod_tier_required = 2
+	fish_available = list(/obj/item/card/id = 15, /obj/item/card/id/engineering = 15)
+
+/datum/fishing_spot/id_computer_medical
+	fishing_atom_type = /obj/machinery/computer/card/department/medical
+	rod_tier_required = 2
+	fish_available = list(/obj/item/card/id = 15, /obj/item/card/id/medical = 15)
+
+/datum/fishing_spot/id_computer_research
+	fishing_atom_type = /obj/machinery/computer/card/department/research
+	rod_tier_required = 2
+	fish_available = list(/obj/item/card/id = 15, /obj/item/card/id/research = 15)
+
+/datum/fishing_spot/id_computer_security
+	fishing_atom_type = /obj/machinery/computer/card/department/security
+	rod_tier_required = 2
+	fish_available = list(/obj/item/card/id = 15, /obj/item/card/id/security = 15)
+
+/datum/fishing_spot/id_computer
+	fishing_atom_type = /obj/machinery/computer/card
+	rod_tier_required = 2
+	fish_available = list(/obj/item/card/id = 15,
+	/obj/item/card/id/engineering = 15,
+	/obj/item/card/id/medical = 15,
+	/obj/item/card/id/research = 15,
+	/obj/item/card/id/security = 15,
+	/obj/item/card/id/civilian = 15,
+	/obj/item/card/id/command = 10,
+	/obj/item/card/id/gold = 1,
+	/obj/item/reagent_containers/food/fish/hopfish = 5)

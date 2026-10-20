@@ -1,7 +1,6 @@
 //Firebot
 //Firebot assembly
 
-#define FIREBOT_MOVE_SPEED 8
 #define FIREBOT_SEARCH_COOLDOWN "look4fire"
 #define FIREBOT_SPRAY_COOLDOWN "spraycooldown"
 #define EXTINGUISH_HOTSPOTS 1
@@ -22,7 +21,7 @@
 	health = 20
 	locked = 1
 	access_lookup = "Captain"
-	bot_move_delay = FIREBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::FIREBOT
 	var/atom/movable/hotspot/target = null
 	var/atom/movable/hotspot/oldtarget = null
 	var/oldloc = null
@@ -226,7 +225,7 @@
 		if(reachable_in_n_steps(get_turf(src), get_turf(src.target), 3, use_gas_cross=TRUE))
 			spray_at(src.target)
 		else
-			src.navigate_to(get_turf(src.target), FIREBOT_MOVE_SPEED, max_dist = 30)
+			src.navigate_to(get_turf(src.target), src.bot_move_delay, max_dist = 30)
 			if (!src.path)
 				src.KillPathAndGiveUp(1)
 
@@ -447,6 +446,8 @@
 
 /obj/item/toolbox_arm/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/extinguisher)) && (!src.extinguisher))
+		src.setMaterial(W.material)
+		W.forensic_holder.copy_to(src.forensic_holder)
 		src.extinguisher = 1
 		boutput(user, "You add the fire extinguisher to [src]!")
 		src.name = "Toolbox/robot arm/fire extinguisher assembly"
@@ -456,6 +457,9 @@
 	else if ((istype(W, /obj/item/device/prox_sensor)) && (src.extinguisher))
 		boutput(user, "You complete the Firebot! Beep boop.")
 		var/obj/machinery/bot/firebot/S = new /obj/machinery/bot/firebot
+		S.setMaterial(src.material)
+		S.forensic_holder = src.forensic_holder
+		W.forensic_holder.copy_to(S.forensic_holder)
 		S.set_loc(get_turf(src))
 		S.name = src.created_name
 		qdel(W)
@@ -473,5 +477,3 @@
 			return
 
 		src.created_name = t
-
-#undef FIREBOT_MOVE_SPEED

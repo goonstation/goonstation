@@ -237,6 +237,56 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		. -= entry
 
 /**
+ *	Returns the contents of the cell that contains the `(T.x, T.y)` point on the `T.z` layer of the hashmap.
+ */
+/datum/spatial_hashmap/proc/point(turf/T)
+	RETURN_TYPE(/alist)
+	. = alist()
+
+	if (!T?.z || (T.z > src.z_order))
+		return
+
+	// Return the cell corresponding to the `(T.x, T.y, T.z)` point.
+	// A new alist is created so that the hashmap isn't exposed by directly returning the cell alist.
+	var/grid_x = ceil(T.x / src.cell_size)
+	var/grid_y = ceil(T.y / src.cell_size)
+	. += src.hashmap[T.z][grid_y][grid_x]
+
+/**
+ *	Returns the contents of the cell that contains the `(T.x, T.y)` point on the `T.z` layer of the hashmap.
+ *
+ *	If present, takes into consideration the vistarget of the turf as a second point.
+ */
+/datum/spatial_hashmap/proc/vistarget_point(turf/T)
+	RETURN_TYPE(/alist)
+	. = alist()
+
+	if (!T)
+		return
+
+	if (!T.vistarget)
+		return src.point(T)
+
+	var/alist/cells = alist()
+
+	// Add the cell corresponding to the `(T.x, T.y, T.z)` point.
+	if (T.z && (T.z <= src.z_order))
+		var/grid_x = ceil(T.x / src.cell_size)
+		var/grid_y = ceil(T.y / src.cell_size)
+		cells[src.hashmap[T.z][grid_y][grid_x]] = null
+
+	// Add the cell corresponding to the `(T.vistarget.x, T.vistarget.y, T.vistarget.z)` point.
+	T = T.vistarget
+	if (T.z && (T.z <= src.z_order))
+		var/grid_x = ceil(T.x / src.cell_size)
+		var/grid_y = ceil(T.y / src.cell_size)
+		cells[src.hashmap[T.z][grid_y][grid_x]] = null
+
+	// Concatenate the contents of each cell into a single list.
+	for (var/alist/cell as anything in cells)
+		. += cell
+
+/**
  *	Adds an entry to the hashmap using a tracked atom representing the entry's physical position.
  *	If `entry` is an atom and no `tracked_atom` is passed, `entry` will be used in its place.
  */
@@ -257,13 +307,15 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	else
 		src.tracked_atoms_with_subcount[tracked_atom] += 1
 
+	// Get the turf of the tracked atom directly from the XSIG component.
+	var/turf/T = tracked_atom.GetComponent(/datum/component/complexsignal/outermost_movable).previous_turf
+
 	// Associate the hashmap entry with the tracked atom and vice versa.
 	src.atoms_by_entry[entry] = tracked_atom
 	src.entries_by_atom[tracked_atom] ||= list()
 	src.entries_by_atom[tracked_atom] += entry
 
 	// Provided the tracked atom isn't in nullspace, add it to the hashmap data structure.
-	var/turf/T = get_turf(tracked_atom)
 	if (T?.z && (T.z <= src.z_order))
 		var/x = ceil(T.x / src.cell_size)
 		var/y = ceil(T.y / src.cell_size)
@@ -276,6 +328,10 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	var/atom/tracked_atom = src.atoms_by_entry[entry]
 	if (!istype(tracked_atom))
 		return
+
+	// Get the turf of the tracked atom directly from the XSIG component.
+	// This ensures that the entry is removed from the correct cell in cases where it is removed after its loc is updated but before the hashmap is.
+	var/turf/T = tracked_atom.GetComponent(/datum/component/complexsignal/outermost_movable).previous_turf
 
 	// Decrement a tracked atom's signal subscription count.
 	src.tracked_atoms_with_subcount[tracked_atom] -= 1
@@ -292,7 +348,6 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		src.entries_by_atom -= tracked_atom
 
 	// Provided the tracked atom isn't in nullspace, remove it from the hashmap data structure.
-	var/turf/T = get_turf(tracked_atom)
 	if (T?.z && (T.z <= src.z_order))
 		var/x = ceil(T.x / src.cell_size)
 		var/y = ceil(T.y / src.cell_size)

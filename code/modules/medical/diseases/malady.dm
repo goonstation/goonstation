@@ -34,20 +34,24 @@
 			affected_mob.cure_disease(src)
 			return 1
 
+		var/is_suppressed = src.is_suppressed()
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
 
 		if (probmult(advance_prob))
 			if (state == "Remissive")
-				stage--
-				if (stage < 1)
+				var/previous_stage = src.stage
+				src.stage--
+				if (src.stage < 1)
 					affected_mob.cure_disease(src)
+				else
+					src.master.on_stage_change(src.affected_mob, src, previous_stage)
 				return 1
-			else if (stage < master.max_stages)
-				if (master.tickcount >= master.min_advance_ticks)
+			else if (is_suppressed || master.tickcount >= master.min_advance_ticks)
+				// The minimum delay limits worsening, while suppression can regress on any successful roll
+				if (src.advance_stage(is_suppressed))
 					master.tickcount = 0
-					stage++
 
 		// Common cures
 		if (!(cure_flags & CURE_INCURABLE))

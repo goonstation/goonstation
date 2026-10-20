@@ -52,7 +52,7 @@ TYPEINFO(/obj/machinery/bot)
 
 	var/tmp/frustration = 0
 	/// How slowly the bot moves by default -- higher is slower!
-	var/bot_move_delay = 6
+	var/bot_move_delay = BOT::SPEED::DEFAULT
 	var/tmp/list/path = null	// list of path turfs
 	var/tmp/datum/robot_mover/bot_mover
 	var/moving = 0 // Are we ON THE MOVE??
@@ -79,6 +79,7 @@ TYPEINFO(/obj/machinery/bot)
 	New()
 		..()
 		START_TRACKING
+		src.AddElement(/datum/element/ghost_observable)
 		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)

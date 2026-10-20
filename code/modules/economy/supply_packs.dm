@@ -381,6 +381,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/condiment/ketchup = 4,
 					/obj/item/reagent_containers/food/snacks/condiment/mayo = 4,
 					/obj/item/reagent_containers/food/snacks/condiment/syrup = 2,
+					/obj/item/reagent_containers/food/snacks/condiment/jam/blueberryjam = 1,
+					/obj/item/reagent_containers/food/snacks/condiment/jam/peachjam = 1,
+					/obj/item/reagent_containers/food/snacks/condiment/jam/strawberryjam = 1,
 					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 2,
 					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2,
 					/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 2)
@@ -1854,7 +1857,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Basic Power Kit"
 
-/datum/supply_packs/complex/basic_power_kit/crew
+/datum/supply_packs/complex/emergency_power_equipment
 	name = "Emergency Power Equipment"
 	desc = "x2 Circular Power Treadmill Deployers."
 	category = "Engineering"

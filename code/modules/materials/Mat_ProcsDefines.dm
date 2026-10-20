@@ -2,7 +2,7 @@
 var/global/list/material_cache
 
 /atom/var/datum/material/material = null
-/atom/var/material_amt = 1
+/atom/var/material_amt = MATERIAL::AMOUNT::DEFAULT
 
 /proc/isExploitableObject(var/atom/A)
 	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
@@ -192,6 +192,8 @@ proc/get_icon_states(icon)
 	// higher on this list means higher priority, be careful with it!
 	if (MAT.getMaterialFlags() & MATERIAL_CRYSTAL)
 		return /obj/item/material_piece/block
+	if (MAT.getMaterialFlags() & MATERIAL_ROCK)
+		return /obj/item/material_piece/brick
 	if (MAT.getMaterialFlags() & MATERIAL_METAL)
 		return /obj/item/material_piece/metal
 	if (MAT.getMaterialFlags() & MATERIAL_ORGANIC)

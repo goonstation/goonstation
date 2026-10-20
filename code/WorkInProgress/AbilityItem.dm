@@ -456,6 +456,19 @@
 
 ////////////////////////////////////////////////////////////
 
+/obj/ability_button/ntso_engineer_toggle
+	name = "Cycle Helmet Scanner"
+	icon_state = "meson0"
+
+	execute_ability()
+		var/obj/item/clothing/head/helmet/space/ntso/engineer/J = the_item
+		J.AttackSelf(the_mob)
+		if(!J.should_icon_use_disabled_sprite()) icon_state = "meson1"
+		else  icon_state = "meson0"
+		..()
+
+////////////////////////////////////////////////////////////
+
 /obj/ability_button/atmos_goggle_toggle //goggle toggle
 	name = "Toggle Atmos Goggles"
 	icon_state = "meson1"
@@ -958,6 +971,7 @@ TYPEINFO(/obj/ability_button)
 
 	//please call back to parent to trigger handle cooldown
 	proc/execute_ability()
+		// todo: SHOULD_CALL_PARENT(TRUE)
 		src.handle_cooldown()
 		return
 

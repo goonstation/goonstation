@@ -1840,7 +1840,7 @@ TYPEINFO(/obj/item/gun/energy/signifer2)
 				"metal_superdense" = 20)
 /obj/item/gun/energy/signifer2
 	name = "\improper Signifer II"
-	desc = "It's a handgun? Or an smg? You can't tell."
+	desc = "It's a handgun? Or an SMG? You can't tell."
 	icon_state = "signifer_2"
 	w_class = W_CLASS_NORMAL		//for clarity
 	object_flags = NO_ARM_ATTACH

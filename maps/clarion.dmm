@@ -18159,6 +18159,10 @@
 /obj/item/clipboard,
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
+/obj/item/stamp/md{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/medical/head)
 "icY" = (
@@ -18830,6 +18834,7 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
+/obj/item/clothing/glasses/healthgoggles/upgraded,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/medical/head)
 "ixl" = (
@@ -23368,6 +23373,10 @@
 "lIB" = (
 /obj/stool/bee_bed/heisenbee,
 /obj/critter/domestic_bee/heisenbee,
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_x = 9;
+	pixel_y = 7
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/station/science/research_director)
 "lJj" = (
@@ -24052,13 +24061,7 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
+/obj/pool/ladder,
 /obj/channel{
 	required_to_pass = 210
 	},
@@ -25162,6 +25165,12 @@
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
+/obj/machinery/recharger/wall{
+	dir = 4;
+	pixel_x = 28;
+	pixel_y = 0
 	},
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/captain)
@@ -27098,6 +27107,9 @@
 /obj/decal/tile_edge/line/green{
 	dir = 10;
 	icon_state = "line1"
+	},
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
@@ -35010,7 +35022,7 @@
 /area/ghostdrone_factory)
 "tBS" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security,
 /obj/item/kitchen/utensil/fork{
 	pixel_x = 9;
 	pixel_y = 3
@@ -36414,10 +36426,6 @@
 /obj/item/bell/hop{
 	pixel_x = 4;
 	pixel_y = -9
-	},
-/obj/item/stamp/hop{
-	pixel_y = 11;
-	pixel_x = -4
 	},
 /obj/item/hand_labeler{
 	pixel_x = -3;
@@ -38823,7 +38831,10 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 10
 	},
-/obj/item/pen/crayon/golden,
+/obj/item/stamp/hop{
+	pixel_x = 3;
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/hop)
 "wbm" = (
@@ -66321,7 +66332,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 kYD
 kYD
 kYD
@@ -66337,8 +66347,9 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -66622,8 +66633,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -66639,8 +66648,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -66924,8 +66935,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -66942,8 +66951,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -67223,8 +67234,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -67244,8 +67253,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -67524,8 +67535,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -67546,8 +67555,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -67826,8 +67837,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -67847,8 +67856,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -68128,8 +68139,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -68148,8 +68157,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -68430,8 +68441,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 kYD
 kYD
 kYD
@@ -68451,8 +68464,6 @@ kYD
 kYD
 kYD
 ajO
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -68732,8 +68743,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -68753,8 +68762,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -69034,8 +69045,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -69056,8 +69065,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -69337,8 +69348,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -69358,8 +69367,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -69642,8 +69653,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -69660,8 +69669,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -69944,8 +69955,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -69961,8 +69970,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -70247,7 +70258,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 kYD
 kYD
 kYD
@@ -70263,8 +70273,9 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa

@@ -693,6 +693,39 @@ Frequency:
 	src.show_laws()
 	return
 
+/mob/living/silicon/hivebot/verb/cmd_state_standard_laws()
+	set category = "Robot Commands"
+	set name = "State Standard Laws"
+
+	src.state_standard_laws()
+
+/mob/living/silicon/hivebot/verb/cmd_state_laws()
+	set category = "Robot Commands"
+	set name = "State All Laws"
+
+	src.state_all_laws()
+
+/mob/living/silicon/hivebot/verb/robot_set_fake_laws()
+	set category = "Robot Commands"
+	set name = "Set Fake Laws"
+
+	if (src.dependent)
+		src.mainframe.set_fake_laws()
+	else
+		src.set_fake_laws()
+
+/mob/living/silicon/hivebot/verb/robot_state_fake_laws()
+	set category = "Robot Commands"
+	set name = "State Fake Laws"
+
+	src.state_fake_laws() //already handles being a shell
+
+/mob/living/silicon/hivebot/verb/robot_show_fake_laws()
+	set category = "Robot Commands"
+	set name = "Show Fake Laws"
+
+	src.show_fake_laws() //already handles being a shell
+
 /mob/living/silicon/hivebot/verb/open_nearest_door()
 	set category = "Robot Commands"
 	set name = "Open Nearest Door to..."
@@ -1120,6 +1153,7 @@ Frequency:
 	else if (istype(W, /obj/item/device/radio))
 		if (src.build_step >= 2)
 			if (!src.has_radio)
+				W.forensic_holder.copy_to(src.forensic_holder)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
@@ -1137,6 +1171,7 @@ Frequency:
 	else if (istype(W, /obj/item/ai_interface))
 		if (src.build_step >= 2)
 			if (!src.has_interface)
+				W.forensic_holder.copy_to(src.forensic_holder)
 				src.build_step++
 				boutput(user, "You add the [W] to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
@@ -1156,6 +1191,8 @@ Frequency:
 			boutput(user, "You activate the shell!  Beep bop!")
 			var/mob/living/silicon/hivebot/eyebot/S = new /mob/living/silicon/hivebot/eyebot(get_turf(src))
 			S.cell = src.cell
+			S.setMaterial(src.material)
+			S.forensic_holder = src.forensic_holder
 			src.cell.set_loc(S)
 			src.cell = null
 			qdel(src)
