@@ -149,7 +149,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		src.net_id = generate_net_id(src)
-		src.forensic_pattern = register_id("[src.forensic_pattern_prefix]-[build_id_pattern("L###")]")
+		src.forensic_pattern = register_id("[src.forensic_pattern_prefix]-[build_id_unique(/proc/build_id_pattern, list("L###"))]")
 
 		if(!src.link)
 			var/turf/T = get_turf(src)

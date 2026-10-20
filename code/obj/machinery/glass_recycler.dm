@@ -62,7 +62,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	New()
 		..()
 		src.get_products()
-		src.forensic_pattern = register_id("GLASS-[build_id_pattern("L###")]")
+		src.forensic_pattern = register_id("GLASS-[build_id_unique(/proc/build_id_pattern, list("L###"))]")
 		UnsubscribeProcess()
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)

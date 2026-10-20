@@ -418,7 +418,7 @@ TYPEINFO(/obj/machinery/rkit)
 	. = ..()
 	known_rucks = new
 	ruck_controls = new
-	src.forensic_pattern = register_id("RUCK-[build_id_pattern("L###")]")
+	src.forensic_pattern = register_id("RUCK-[build_id_unique(/proc/build_id_pattern, list("L###"))]")
 	MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	if(isnull(mechanic_controls)) mechanic_controls = ruck_controls //For objective tracking and admin

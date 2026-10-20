@@ -1733,7 +1733,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
 			src.print_id = "GENERIC"
-		src.forensic_pattern = register_id("[src.forensic_pattern_prefix]-[build_id_pattern("L###")]")
+		src.forensic_pattern = register_id("[src.forensic_pattern_prefix]-[build_id_unique(/proc/build_id_pattern, list("L###"))]")
 
 		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
