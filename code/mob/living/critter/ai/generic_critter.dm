@@ -479,7 +479,7 @@
 /datum/aiTask/sequence/goalbased/critter/smash_stuff
 	name = "smash stuff"
 	weight = 0.1 // low weight so if any nerds are reachable they get attacked normally
-	ai_turbo = FALSE // unsure really. If this is set to TRUE then they smash shit up MUCH faster which is really funny.
+	ai_turbo = TRUE // have gorillas gone too far...
 	max_dist = 7
 
 /datum/aiTask/sequence/goalbased/critter/smash_stuff/New(parentHolder, transTask)
@@ -504,7 +504,7 @@
 			. += W
 
 	for (var/obj/O in view(src.max_dist, holder.owner))
-		if (istype(O, /obj/mesh/grille) || istype(O, /obj/table) || istype (O, /obj/blob))
+		if (istype(O, /obj/mesh/grille) || istype(O, /obj/table) || istype (O, /obj/blob)) // gorillas HATE blobs
 			. += O
 
 /datum/aiTask/succeedable/critter/smash_stuff
