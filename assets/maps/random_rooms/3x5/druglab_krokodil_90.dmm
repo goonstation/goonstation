@@ -5,7 +5,6 @@
 	pixel_x = -10
 	},
 /obj/decal/cleanable/vomit,
-/obj/decal/cleanable/blood/drip/low,
 /obj/item/reagent_containers/syringe{
 	pixel_x = 4;
 	pixel_y = 2;
@@ -30,18 +29,13 @@
 /obj/item/reagent_containers/syringe{
 	pixel_x = -6
 	},
-/obj/item/chem_pill_bottle{
-	name = "empty pill bottle (hay fever)";
-	desc = An empty pill bottle labelled "hay fever".;
-	pixel_x = 3;
-	pixel_y = -8
-	},
 /obj/item/kitchen/utensil/spoon{
 	pixel_y = 4;
 	pixel_x = -7
 	},
 /obj/item/cigbutt,
 /obj/item/cigbutt,
+/obj/item/storage/pill_bottle,
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "j" = (
@@ -76,12 +70,10 @@
 	pixel_x = 4;
 	pixel_y = -5
 	},
-/obj/item/reagent_containers/glass/bottle/morphine{
-	pixel_x = 1
-	},
-/obj/random_item_spawner/dressup/one_or_zero,
 /obj/item/crowbar,
 /obj/item/matchbook,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/random_item_spawner/dressup/one_or_zero,
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "x" = (
@@ -147,9 +139,6 @@
 /obj/item/reagent_containers/glass/beaker/large/round{
 	pixel_x = -6
 	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 7
-	},
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_y = 32
 	},
@@ -164,6 +153,9 @@
 	name = "Krokodil recipe";
 	info = "<h2>Krokodil - Last Batch</h2><p><em>NOTE: Equal amounts of everything. Don't get clever.</em></p><ul>  <li>Get a small beaker and stick it in the chem dispenser.</li>  <li>Put in <em>Phosphorus</em> and <em>Potassium</em>.</li>  <li>Pour it all into the round-bottom flask. Chuck in one Hay Fever Pill. Cheap ones are fine, no reason to waste money on the good stuff.</li>  <li>Add equal amounts of:    <ul>      <li><em>Welding Fuel</em></li>      <li><em>Space Cleaner</em></li>      <li><em>Morphine</em></li>    </ul>  </li>  <li>Heat it until it starts bubbling and turns blue. Should be obvious enough.</li></ul><p><em>If Security asks, it's just a new kind of space cleaner.</em></p>";
 	layer = 4
+	},
+/obj/item/reagent_containers/glass/bottle/morphine{
+	pixel_x = 10
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
