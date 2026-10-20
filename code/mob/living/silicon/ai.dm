@@ -437,7 +437,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_track
 	src.verbs |= /mob/living/silicon/ai/proc/ai_alerts
 	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_list
-	src.verbs |= /mob/living/silicon/ai/proc/ai_update_status_menu
+	src.verbs |= /mob/living/silicon/ai/proc/ai_customize_options_menu
 	src.verbs |= /mob/living/silicon/ai/proc/ai_interact_laws
 	src.verbs |= /mob/living/silicon/ai/verb/deploy_to
 	src.verbs |= /mob/living/silicon/ai/proc/ai_view_crew_manifest
@@ -1751,30 +1751,30 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 				user.name = user.real_name
 		return
 
-/mob/living/silicon/ai/proc/ai_update_status_menu()
-	set name = "Customize Status"
+/mob/living/silicon/ai/proc/ai_customize_options_menu()
+	set name = "Customization Options"
 	set category = "AI Commands"
 
 	var/u_roll = pick("color", "colour") // hehe
-	var/list/status_options = list("Screen emotion", "Screen [u_roll]", "Status message", "Toggle monospace", "Change name", "Go offline")
+	var/list/status_options = list("Display emotion", "Background [u_roll]", "Status Display message", "Toggle monospace", "Change name", "Go offline")
 	var/mob/message_mob = src.get_message_mob()
 
 	if (!message_mob.client || isdead(src))
 		return
 
-	var/chosen_option = tgui_input_list(message_mob, "Select customization.", "Choose Status", status_options)
+	var/chosen_option = tgui_input_list(message_mob, "Select an option to customize.", "Customization Options", status_options)
 
 	switch(chosen_option)
-		if ("Screen emotion")
+		if ("Display emotion")
 			src.ai_change_emotion()
 
 		// paying for our crimes
-		if ("Screen color")
+		if ("Background color")
 			src.ai_colorchange()
-		if ("Screen colour")
+		if ("Background colour")
 			src.ai_colorchange()
 
-		if ("Status message")
+		if ("Status Display message")
 			src.ai_change_message()
 
 		if ("Toggle monospace")

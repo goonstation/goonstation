@@ -36,7 +36,7 @@
 		gravity
 
 		pda
-		status
+		option
 		laws
 		lock
 		unlock
@@ -280,8 +280,8 @@
 		pda = create_screen("pda", "Cyborg PDA", 'icons/mob/hud_ai.dmi', "pda", "WEST, NORTH+0.5", HUD_LAYER)
 		pda.underlays += "button"
 
-		status = create_screen("status", "Change Status", 'icons/mob/hud_ai.dmi', "status", "WEST, NORTH", HUD_LAYER)
-		status.underlays += "button"
+		option = create_screen("option", "Customization Options", 'icons/mob/hud_ai.dmi', "option", "WEST, NORTH", HUD_LAYER)
+		option.underlays += "button"
 
 		laws = create_screen("laws", "Show Laws", 'icons/mob/hud_ai.dmi', "laws", "WEST, NORTH-0.5", HUD_LAYER)
 		laws.underlays += "button"
@@ -425,8 +425,8 @@
 				last_health = -1
 			if ("pda")
 				master.access_internal_pda()
-			if ("status")
-				master.customize_status()
+			if ("option")
+				master.customize_options()
 			if ("laws")
 				master.interact_laws()
 			if ("lock")

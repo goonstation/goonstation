@@ -7,7 +7,7 @@
 		tracking
 		deploy
 		apc
-		status
+		option
 		radio
 		pda
 		laws
@@ -38,8 +38,8 @@
 		cell.maptext_x = -96
 		cell.maptext_y = -1
 
-		status = create_screen("status", "Change Status", 'icons/mob/hud_ai.dmi', "status", "WEST, NORTH+0.5", HUD_LAYER)
-		status.underlays += "button"
+		option = create_screen("option", "Customization Options", 'icons/mob/hud_ai.dmi', "option", "WEST, NORTH+0.5", HUD_LAYER)
+		option.underlays += "button"
 
 		deploy = create_screen("deploy", "Deploy to Shell", 'icons/mob/hud_ai.dmi', "deploy", "WEST, NORTH", HUD_LAYER)
 		deploy.underlays += "button"
@@ -151,8 +151,8 @@
 				// Output cell info
 				boutput(user, SPAN_HINT("Cell: [master.cell.charge]/[master.cell.maxcharge]"))
 
-			if ("status")
-				master.ai_update_status_menu()
+			if ("option")
+				master.ai_customize_options_menu()
 				update()
 			if ("deploy")
 				// Deploy menu

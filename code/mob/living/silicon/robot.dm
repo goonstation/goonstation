@@ -2194,32 +2194,32 @@ TYPEINFO(/mob/living/silicon/robot)
 		src.interact_laws()
 		return
 
-	verb/cmd_customize_status()
+	verb/cmd_customize_options()
 		set category = "Robot Commands"
-		set name = "Customize Status"
+		set name = "Customization Options"
 
-		src.customize_status()
+		src.customize_options()
 		return
 
-	proc/customize_status()
+	proc/customize_options()
 		var/list/custom_options = list()
 		var/obj/item/parts/robot_parts/head/screen/targethead = locate(/obj/item/parts/robot_parts/head/screen) in src.contents
 		if (istype(targethead))
 			custom_options += SILICON::CYBORG::CUSTOMIZE::FACEPLATE
 			custom_options += SILICON::CYBORG::CUSTOMIZE::DISPLAY
 		custom_options += list(SILICON::CYBORG::CUSTOMIZE::SCREAM, SILICON::CYBORG::CUSTOMIZE::PITCH, SILICON::CYBORG::CUSTOMIZE::MONOSPACE)
-		var/chosen_option = tgui_input_list(src, "Select an option to customize.", "Customize Status", custom_options)
+		var/chosen_option = tgui_input_list(src, "Select an option to customize.", "Customization Options", custom_options)
 		if (isnull(chosen_option))
 			return
 
 		switch(chosen_option)
 			if(SILICON::CYBORG::CUSTOMIZE::FACEPLATE)
-				var/new_faceplate = tgui_input_list(src, "Select your faceplate", SILICON::CYBORG::CUSTOMIZE::FACEPLATE, sortList(targethead.expressions, /proc/cmp_text_asc))
+				var/new_faceplate = tgui_input_list(src, "Select your screen expression.", SILICON::CYBORG::CUSTOMIZE::FACEPLATE, sortList(targethead.expressions, /proc/cmp_text_asc))
 				if (!new_faceplate)
 					return
 				new_faceplate = (new_faceplate ? lowertext(new_faceplate) : targethead.face)
 				targethead.face = new_faceplate
-				boutput(src, SPAN_NOTICE("Faceplate swapped to [new_faceplate]."))
+				boutput(src, SPAN_NOTICE("Screen expression swapped to [new_faceplate]."))
 				update_bodypart(part = "head")
 
 

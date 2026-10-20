@@ -391,7 +391,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 		set category = "AI Commands"
 		set name = "Customize Status"
 
-		mainframe?.ai_update_status_menu()
+		mainframe?.ai_customize_options_menu()
 
 	verb/reset_apcs()
 		set category = "AI Commands"
