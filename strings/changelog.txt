@@ -1,5 +1,9 @@
 
 (t)tue oct 20 26
+(u)Nexusuxen
+(p)26929
+(e)🆕🧱📦|C-Feature, A-Materials, A-Game-Objects
+(+)Airlock panels include a lights wire, which controls the red/green lights you see when it's opening/bolted/etc.
 (u)JORJ949
 (p)28130
 (e)🆕🧛|C-Feature, A-Gamemodes
