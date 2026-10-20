@@ -481,6 +481,7 @@
 	weight = 0.1 // low weight so if any nerds are reachable they get attacked normally
 	ai_turbo = TRUE // have gorillas gone too far...
 	max_dist = 7
+	score_by_distance_only = FALSE
 
 /datum/aiTask/sequence/goalbased/critter/smash_stuff/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -497,15 +498,25 @@
 		C.set_a_intent(INTENT_HARM)
 
 /datum/aiTask/sequence/goalbased/critter/smash_stuff/get_targets()
-	. = list()
-	//kind of dumb but we want windows in the list first or they target the grille beneath them instead
-	for (var/obj/window/W in view(src.max_dist, holder.owner))
-		if (istype(W, /obj/window))
-			. += W
+	var/list/windows = list()
+	var/list/other_shit = list()
 
 	for (var/obj/O in view(src.max_dist, holder.owner))
-		if (istype(O, /obj/mesh/grille) || istype(O, /obj/table) || istype (O, /obj/blob)) // gorillas HATE blobs
-			. += O
+
+		if(istype(O, /obj/window)) // windows gotta go above grilles in return or they magically punch the grille beneath the window.
+			if(istype(O, /obj/window/auto/reinforced/indestructible)) // please stop punching an indestructible window forever
+				continue
+			windows += O
+
+		else if(istype(O, /obj/mesh/grille) || istype(O, /obj/table) || istype(O, /obj/blob))
+			other_shit += O
+
+	return windows + other_shit
+
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/score_target(atom/target)
+	. = ..()
+	if(istype(target, /obj/blob))
+		. += 100 // gorillas HATE blobs. Never forget the gorilla-blob war.
 
 /datum/aiTask/succeedable/critter/smash_stuff
 	name = "smashing stuff subtask"
