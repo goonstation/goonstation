@@ -160,7 +160,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
-			message_ghosts("<b>[src]</b> has become loose at [log_loc(src, ghostjump=TRUE)].")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] has become loose at [GHOST.MESSAGE.format_loc(src)].")
 
 
 /obj/machinery/the_singularity/emp_act()

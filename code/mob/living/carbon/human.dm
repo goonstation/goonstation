@@ -673,12 +673,7 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
-			var/turf/where = get_turf(src)
-			var/where_text = "Unknown (?, ?, ?)"
-			if (where)
-				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
-
-			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] has died at [GHOST.MESSAGE.format_loc(src)].")
 #ifdef DATALOGGER
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
