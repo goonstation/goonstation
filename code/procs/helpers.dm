@@ -2599,10 +2599,6 @@ proc/total_cross(turf/T, atom/movable/mover)
 			return
 
 
-// Stub for +secret. To be removed.
-/proc/message_ghosts()
-	return
-
 /// Find a client based on ckey
 /proc/find_client(ckey)
 	for (var/client/C in clients)

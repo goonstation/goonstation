@@ -413,8 +413,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		log_health += "No clue! Report this to a coder!"
 	return "(<b>Damage:</b> <i>[log_health]</i>)"
 
-// `ghostjump` is a stub for +secret. To be removed.
-/proc/log_loc(atom/A, ghostjump)
+/proc/log_loc(atom/A)
 	if (!A)
 		return
 	var/turf/our_turf = get_turf(A)
