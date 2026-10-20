@@ -385,9 +385,9 @@
 		..()
 		reagents.add_reagent("ipecac", 5)
 
-/obj/item/reagent_containers/pill/antihistamine
-	name = "hay fever pill"
-	desc = "Commonly used to treat allergic conditions."
+/obj/item/reagent_containers/pill/bronadyl
+	name = "Bronadyl pill"
+	desc = "A cheap hay fever medication."
 	icon_state = "pill24"
 
 	New()
