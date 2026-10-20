@@ -57,7 +57,6 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	var/casing = null
 	var/reagent_payload = null
-	var/forensic_ID = null
 	var/precalculated = 1
 
 	var/hit_object_sound = 0

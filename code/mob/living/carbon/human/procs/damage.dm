@@ -39,12 +39,10 @@
 						implanted.set_loc(src)
 						if (istype(implanted))
 							implanted.owner = src
-							if (P.forensic_ID)
-								implanted.forensic_ID = P.forensic_ID
 							src.implant += implanted
-							implanted.forensic_holder = P.forensic_holder // Give projectile forensics to the implanted bullet
 							if (P.proj_data.material)
 								implanted.setMaterial(P.proj_data.material)
+							implanted.forensic_holder = P.forensic_holder
 							implanted.implanted(src, null, 60)
 							//extra damage from silver for werewolves
 							if (istype(implanted, /datum/material/metal/silver) && iswerewolf(src))
@@ -73,8 +71,6 @@
 					if (istype(implanted))
 						implanted.owner = src
 						src.implant += implanted
-						if (P.forensic_ID)
-							implanted.forensic_ID = P.forensic_ID
 						implanted.forensic_holder = P.forensic_holder
 						if (P.proj_data.material)
 							implanted.setMaterial(P.proj_data.material)
@@ -127,8 +123,6 @@
 						implanted.set_loc(src)
 						if (istype(implanted))
 							implanted.owner = src
-							if (P.forensic_ID)
-								implanted.forensic_ID = P.forensic_ID
 							implanted.forensic_holder = P.forensic_holder
 							implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 0)

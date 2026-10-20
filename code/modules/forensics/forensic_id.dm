@@ -69,7 +69,7 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 
 	while (iterations < 100)
 		iterations++
-		new_id = call(forensic_proc)(proc_arguments)
+		new_id = call(forensic_proc)(arglist(proc_arguments))
 		if (reg_list[new_id])
 			continue
 		break
