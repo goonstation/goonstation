@@ -1,5 +1,9 @@
 
 (t)tue oct 20 26
+(u)LorrMaster
+(p)26597
+(e)🔄👮|C-Rework, A-Security
+(*)More reliable ballistic forensics
 (u)Nexusuxen
 (p)26929
 (e)🆕🧱📦|C-Feature, A-Materials, A-Game-Objects
