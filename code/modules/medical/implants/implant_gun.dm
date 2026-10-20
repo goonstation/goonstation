@@ -186,7 +186,6 @@ TYPEINFO(/obj/item/gun/implanter/infinite)
 	hit_type = DAMAGE_STAB
 	casing = /obj/item/casing/small
 	impact_image_state = "bullethole-small"
-	shot_number = 1
 	fullauto_valid = TRUE
 	//no_hit_message = 1
 	var/obj/item/implant/my_implant = null
