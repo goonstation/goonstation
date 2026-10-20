@@ -115,13 +115,13 @@
 		var/max_allowed_step = completed_count + 1
 		for (var/datum/surgery_step/step in surgery_steps)
 			if (step.step_number <= max_allowed_step)
-				if (!step.completed && step.can_operate(surgeon, tool))
+				if (!step.completed && step.can_operate(surgeon, tool, TRUE))
 					return step
 
 		if (implicit && src.implicit)
 			if (cancel_possible())
 				for (var/datum/surgery_step/step in cancel_steps)
-					if (!step.completed && step.can_operate(surgeon, tool))
+					if (!step.completed && step.can_operate(surgeon, tool, TRUE))
 						return step
 		return FALSE
 
@@ -454,7 +454,6 @@
 			if (from_context_menu)
 				parent_surgery.show_contexts(surgeon)
 			return FALSE
-
 		var/mess_up_odds = calculate_failure_chance(surgeon,tool)
 		if (surgeon.a_intent == INTENT_DISARM && can_fail)
 			if (from_context_menu)

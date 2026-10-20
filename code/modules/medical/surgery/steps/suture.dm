@@ -33,12 +33,14 @@
 		optional = TRUE
 		success_sound = FALSE
 		can_operate(mob/living/surgeon, obj/item/tool, quiet)
+			. = ..(surgeon, tool, quiet)
 			if (!istype(tool, /obj/item/suture) && !istype(tool, /obj/item/staple_gun))
 				if (!quiet)
 					boutput(surgeon, SPAN_ALERT("You need a suture or staple gun to cancel surgery!"))
 				return FALSE
 			if (!can_use_stapler_bandage_shitfuck(surgeon, tool))
 				return FALSE
+
 		do_surgery_step(mob/living/surgeon, obj/item/tool)
 			var/mob/living/patient = parent_surgery.patient
 			if (istype(tool, /obj/item/staple_gun))
@@ -72,6 +74,7 @@
 		can_operate(mob/living/surgeon, obj/item/tool, quiet)
 			if (!can_use_stapler_bandage_shitfuck(surgeon, tool, quiet))
 				return FALSE
+			. = ..(surgeon, tool, quiet)
 		do_surgery_step(mob/living/surgeon, obj/item/tool)
 			var/patient = parent_surgery.patient
 			mark_stupid_thing_as_used(tool)
