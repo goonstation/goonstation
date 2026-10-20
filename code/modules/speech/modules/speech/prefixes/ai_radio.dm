@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 
 	. = list()
 
-	var/general_channel_name = global.headset_channel_lookup["[radio.frequency]"] || "(Unknown)"
+	var/general_channel_name = RADIO.frequencies_to_names[radio.frequency] || "(Unknown)"
 	var/general_channel_frequency = global.format_frequency(radio.frequency)
 	.["[general_channel_frequency] - [general_channel_name]"] = src.prefix_id
 
@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 
 	for (var/prefix in radio.secure_frequencies)
 		var/frequency = radio.secure_frequencies[prefix]
-		var/channel_name = global.headset_channel_lookup["[frequency]"] || "(Unknown)"
+		var/channel_name = RADIO.frequencies_to_names[frequency] || "(Unknown)"
 		var/channel_frequency = global.format_frequency(frequency)
 		.["[channel_frequency] - [channel_name]"] = ":3[prefix]"
 

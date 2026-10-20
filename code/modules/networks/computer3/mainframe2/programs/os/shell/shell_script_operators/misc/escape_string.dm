@@ -17,4 +17,4 @@
 	if (result)
 		src.shell.stack.Add(result)
 
-	return SCRIPT_SUCCESS
+	return DWAINE::ERR::SHELL::SCRIPT::SUCCESS

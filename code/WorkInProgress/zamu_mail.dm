@@ -48,9 +48,8 @@
 		var/atom/movable/prize = src.open(M)
 		logTheThing(LOG_STATION, M, "opened their [src] and got \a [prize] ([src.spawn_type]).")
 		game_stats.Increment("mail_opened")
-		// 100 credits + 10 more for every successful delivery after the first,
-		// capping at 1000 per letter delivered
-		shippingmarket.mail_delivery_payout += 90 + 10 * min(91, game_stats.GetStat("mail_opened"))
+		// 50 credits + 10 more for every successful delivery after the first, capped at 500 per letter delivered
+		shippingmarket.mail_delivery_payout += 50 + 10 * min(45, game_stats.GetStat("mail_opened"))
 
 		return
 
@@ -231,9 +230,9 @@
 
 		// these are all things we will want later
 		crew[M] = list(
-			name = manifest_record.get_field("name"),
-			job = manifest_record.get_field("rank"),
-			dna = manifest_record.get_field("dna"),
+			name = manifest_record["name"],
+			job = manifest_record["rank"],
+			dna = manifest_record["dna"],
 			)
 
 	// nobody here

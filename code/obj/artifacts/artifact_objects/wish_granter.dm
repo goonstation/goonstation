@@ -99,3 +99,7 @@
 							R.cell.genrate = 100
 							R.cell.maxcharge = 1000000
 							R.cell.charge = R.cell.maxcharge
+							if(istype(R.cell, /obj/item/cell/artifact))
+								var/obj/item/cell/artifact/artcell = R.cell
+								artcell.chargeCap = 1000000
+								artcell.activation_genrate = 100

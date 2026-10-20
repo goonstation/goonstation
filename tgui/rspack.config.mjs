@@ -31,6 +31,8 @@ const createStats = (verbose) => ({
   colors: true,
   entrypoints: false, // |GOONSTATION-CHANGE| secret interfaces
   hash: false,
+  // Rspack's build-dependency resolver has no PnP support, so it warns on every bare import
+  logging: 'error',
   modules: false,
   performance: false,
   timings: verbose,
@@ -40,19 +42,18 @@ const createStats = (verbose) => ({
 export default (env = {}, argv) => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
+  const rsdoctor = env.RSDOCTOR || process.env.RSDOCTOR;
 
   /** @type {import('@rspack/core').Configuration} */
   const config = defineConfig({
-    cache: true,
-    experiments: {
-      cache: {
-        type: 'persistent',
-        storage: {
-          type: 'filesystem',
-          directory: path.resolve(__dirname, '.yarn/rspack'),
-        },
+    cache: {
+      type: 'persistent',
+      // Package imports can't be tracked under PnP
+      buildDependencies: [path.resolve(__dirname, 'yarn.lock')],
+      storage: {
+        type: 'filesystem',
+        directory: path.resolve(__dirname, '.yarn/rspack'),
       },
-      css: true,
     },
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
@@ -63,7 +64,6 @@ export default (env = {}, argv) => {
     ],
     entry: {
       tgui: ['./packages/tgui'],
-      // 'tgui-panel': ['./packages/tgui-panel'], // |GOONSTATION-CHANGE| Not used by us yet
       // 'tgui-say': ['./packages/tgui-say'], // |GOONSTATION-CHANGE| Not used by us yet
     },
     output: {
@@ -164,6 +164,9 @@ export default (env = {}, argv) => {
     },
     optimization: {
       emitOnErrors: false,
+      // |GOONSTATION-CHANGE| Define `process.env.NODE_ENV` from build mode.
+      // Keeps React's JSX runtime in sync with Rspack.
+      nodeEnv: env.NODE_ENV || mode,
     },
     performance: {
       hints: false,
@@ -173,9 +176,13 @@ export default (env = {}, argv) => {
     stats: createStats(true),
     plugins: [
       new rspack.EnvironmentPlugin({
-        NODE_ENV: env.NODE_ENV || mode,
+        // |GOONSTATION-CHANGE| NODE_ENV comes from `optimization.nodeEnv`.
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
+      }),
+      new rspack.IgnorePlugin({
+        resourceRegExp: /\.test\.tsx?$/,
+        contextRegExp: /__mocks__/,
       }),
       new SecretInterfaceSyncPlugin(), // |GOONSTATION-ADD| secret interfaces
       new SecretBundleStoragePlugin(), // |GOONSTATION-ADD| secret interfaces
@@ -183,6 +190,12 @@ export default (env = {}, argv) => {
   });
 
   addSecretInterfaceEntries(config); // |GOONSTATION-ADD| secret interface entrypoints
+
+  if (rsdoctor) {
+    const { RsdoctorRspackPlugin } = require('@rsdoctor/rspack-plugin');
+
+    config.plugins.push(new RsdoctorRspackPlugin());
+  }
 
   if (bench) {
     config.entry = {
@@ -208,12 +221,12 @@ export default (env = {}, argv) => {
 
   // Development server specific options
   if (argv.devServer) {
+    config.stats = createStats(false);
     config.devServer = {
-      progress: false,
-      quiet: false,
-      noInfo: false,
-      clientLogLevel: 'silent',
-      stats: createStats(false),
+      client: {
+        logging: 'none',
+        progress: false,
+      },
     };
   }
 

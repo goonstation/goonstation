@@ -4,6 +4,7 @@ TYPEINFO(/obj/storage/closet/dresser)
 /obj/storage/closet/dresser
 	name = "dresser"
 	desc = "It's got room for all your fanciest or shabbiest outfits!"
+	icon = 'icons/obj/storage/closet.dmi'
 	icon_state = "dresser"
 	icon_closed = "dresser"
 	icon_opened = "dresser-open"

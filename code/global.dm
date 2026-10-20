@@ -301,7 +301,6 @@ var/global
 	remote_music_announcements = 0
 
 
-	outpost_destroyed = 0
 	signal_loss = 0
 	solar_gen_rate = DEFAULT_SOLARGENRATE
 	fart_attack = 0
@@ -329,6 +328,7 @@ var/global
 	netpass_medical = null
 	netpass_banking = null
 	netpass_cargo = null
+	netpass_login = null
 	netpass_syndicate = null //Detomatix
 
 	//
@@ -366,6 +366,7 @@ var/global
 
 	datum/dj_panel/dj_panel = new()
 	datum/player_panel/player_panel = new()
+	datum/forced_assignment_panel/forced_assignment_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
 	bioele_accidents = 0
@@ -379,10 +380,7 @@ var/global
 	datum/configuration/config = null
 	datum/sun/sun = null
 
-	datum/changelog/legacy_changelog = null
 	datum/changelog/changelog = null
-	datum/admin_changelog/legacy_admin_changelog = null
-	datum/admin_changelog/admin_changelog = null
 
 	list/datum/powernet/powernets = null
 
@@ -533,7 +531,7 @@ var/global
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
-	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD, R_FREQ_SALVAGER)
+	list/protected_frequencies = list(RADIO::FREQ::SYNDICATE, RADIO::FREQ::WIZARD, RADIO::FREQ::SALVAGER)
 	///base movedelay threshold for slipping
 	base_slip_delay = BASE_SPEED_SUSTAINED
 
@@ -582,7 +580,7 @@ var/global
 
 /// Generates item icons for manufacturers and other things, used in UI dialogs.
 /proc/getItemIcon(var/atom/A, var/state, var/dir)
-	return "\ref[initial(A.icon)]?state=[state || initial(A.icon_state)]&dir=[dir || initial(A.dir)]"
+	return "\ref[get_initial_icon(A)]?state=[state || initial(A.icon_state)]&dir=[dir || initial(A.dir)]"
 
 #ifdef TWITCH_BOT_ALLOWED
 var/global/mob/twitch_mob = 0

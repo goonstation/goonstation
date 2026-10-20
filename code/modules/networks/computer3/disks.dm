@@ -75,7 +75,7 @@
 		D.title = src.title
 		D.file_amount = src.file_amount
 		if (src.root)
-			D.root = src.root.copy_folder()
+			D.root = src.root.copy_file()
 			D.root.holder = D
 
 		return D
@@ -90,6 +90,8 @@
 			src.root = new /datum/computer/folder
 			src.root.holder = src
 			src.root.name = "root"
+			src.name_suffixes = list()
+			src.UpdateName()
 		else
 			user.visible_message(SPAN_ALERT("<b>[user] is zapped as the multitool sparks off [src]'s write-protect tab! The [src.name] seems unphased.</b>"))
 			elecflash(user,0, power=2, exclude_center = 0)
@@ -251,7 +253,7 @@
 
 	New()
 		. = ..()
-		src.root.add_file( new /datum/computer/file/terminal_program/medical_records(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/medtrak(src))
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/security_progs
@@ -261,7 +263,7 @@
 
 	New()
 		. = ..()
-		src.root.add_file( new /datum/computer/file/terminal_program/secure_records(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/secmate(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
 		src.read_only = 1
 
@@ -272,7 +274,7 @@
 
 	New()
 		. = ..()
-		src.root.add_file( new /datum/computer/file/terminal_program/bank_records(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/bankboss(src))
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/research_progs
@@ -330,6 +332,7 @@
 #endif
 
 TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 15
 
 /obj/item/disk/data/floppy/read_only/authentication
@@ -349,12 +352,15 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	New()
 		. = ..()
 		START_TRACKING
+		// I'm not including the captain here so you can see when they recollect it.
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, message_admins_too=FALSE)
 		SPAWN(1 SECOND) //Give time to actually generate network passes I guess.
 			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",
 								"SEC"="[netpass_security]",
-								"MED"="[netpass_medical]")
+								"MED"="[netpass_medical]",
+								"LOGIN"="[netpass_login]")
 
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))

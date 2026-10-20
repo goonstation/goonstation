@@ -1,10 +1,37 @@
-var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
-var/regex/emoji_regex = regex(@{"([^\u0020-\u8000]+)"})
+// markup chars, removed from names only
+#define NAME_PUNCTUATION @{"[_<>;\[\]{}|\\/]+|"}
+// quotes break out of single/double-quoted HTML attributes, as names are often put unescaped into browse windows
+// TODO: allow them by mapping ' and " to ’ and ” here, in choose_name()'s strip_html()
+// TODO: the problem is then we need to replace them everywhere where they would be searched for like sec records
+#define NAME_QUOTES @{"['"]+|"}
+// 1: control chars, anything above \u8000 (emoji, cuneiform, etc), plus invisible and text-direction chars
+#define NAME_REMOVED @{"[^\u0020-\u8000]+|[\u00AD\u115F\u1160\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u3164]+)"}
+// 2: odd or repeated spaces to turn into one normal space (PRECIS nickname profile, RFC 8266)
+// 3: stacked combining marks (diacritics, Cyrillic, Thai). Trimmed to keep accents but stop zalgo
+#define NAME_SPACES_AND_MARKS @{"|([ \u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]{2,}|[\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000])|([\u0300-\u036F\u0483-\u0489\u0E31\u0E34-\u0E3A\u0E47-\u0E4E\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF]{2,})"}
+var/regex/name_cleanup_regex = regex("(" + NAME_PUNCTUATION + NAME_QUOTES + NAME_REMOVED + NAME_SPACES_AND_MARKS, "g")
+var/regex/text_cleanup_regex = regex("(" + NAME_QUOTES + NAME_REMOVED + NAME_SPACES_AND_MARKS, "g")
+#undef NAME_QUOTES
+#undef NAME_PUNCTUATION
+#undef NAME_REMOVED
+#undef NAME_SPACES_AND_MARKS
 
-proc/remove_bad_name_characters(string)
-	for (var/char in bad_name_characters)
-		string = replacetext(string, char, "")
-	return emoji_regex.Replace_char(string, "")
+/// Enforces what a player name may contain
+/// Too aggressive for general text, see `strip_illegal_characters()` for that
+/// `keep_punctuation` keeps ASCII punctuation, for text that ends up in names (e.g. labels)
+proc/remove_bad_name_characters(string, keep_punctuation = FALSE)
+	var/regex/cleanup = keep_punctuation ? text_cleanup_regex : name_cleanup_regex
+	return cleanup.Replace(string, /proc/clean_name_match)
+
+/proc/clean_name_match(match, removed, spaces, marks)
+	if (removed)
+		return ""
+	if (spaces)
+		return " "
+	// at most two marks per letter, and never the same mark twice (UTS #39)
+	var/first = copytext_char(marks, 1, 2)
+	var/second = copytext_char(marks, 2, 3)
+	return first == second ? first : first + second
 
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
@@ -112,6 +139,8 @@ var/list/removed_jobs = list(
 
 	var/font_size = null
 
+	var/observer_dnr = FALSE //Automatically set DNR when spawn as observer?
+
 	///An associative list of slots to part IDs, see part_customization.dm
 	var/list/custom_parts = null
 
@@ -125,6 +154,7 @@ var/list/removed_jobs = list(
 		src.randomize_name()
 		src.randomizeLook()
 		src.profile_names = new/list(SAVEFILE_PROFILES_MAX)
+		src.client_settings = global.client_setting_defaults.Copy()
 		..()
 		if (isnull(src.custom_parts)) //I feel like there should be a better place to init this
 			src.custom_parts = list(
@@ -183,8 +213,15 @@ var/list/removed_jobs = list(
 				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
 				"points" = trait.points,
 			)
+		var/list/hudThemes = list()
+		for (var/name in hud_style_selection)
+			hudThemes += list(list(
+				"name" = name,
+				"icon" = get_tgui_icon(hud_style_selection[name]),
+			))
 		. = list(
 			"traitsData" = traitsData,
+			"hudThemes" = hudThemes,
 		)
 
 		. += src.GetJobStaticData(user)
@@ -219,8 +256,18 @@ var/list/removed_jobs = list(
 				"id" = customization.id,
 				"name" = customization.get_name(),
 				"points" = customization.trait_cost,
-				"img" = customization.get_base64_icon(),
-			)
+			) + customization.get_ui_icon()
+
+		var/list/volume_channels = list()
+		var/list/volume_names = list("Master") + client.getVolumeNames()
+		var/list/volume_descriptions = client.getVolumeDescriptions()
+		for (var/i in 1 to length(volume_names))
+			volume_channels += list(list(
+				"name" = volume_names[i],
+				"description" = volume_descriptions[i],
+				"volume" = client.volumes[i],
+				"default" = client.getDefaultVolume(i - 1),
+			))
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -305,9 +352,8 @@ var/list/removed_jobs = list(
 			"autoCapitalization" = src.auto_capitalization,
 			"localDeadchat" = src.local_deadchat,
 			"hudTheme" = src.hud_style,
-			"hudThemePreview" = icon2base64(icon(hud_style_selection[src.hud_style], "preview")),
 			"targetingCursor" = src.target_cursor,
-			"targetingCursorPreview" = icon2base64(icon(cursors_selection[src.target_cursor])),
+			"targetingCursorIcon" = get_tgui_icon(cursors_selection[src.target_cursor]),
 			"tooltipOption" = src.tooltip_option,
 			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
 			"middleMouseSwap" = src.middle_mouse_swap,
@@ -321,6 +367,10 @@ var/list/removed_jobs = list(
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"observerDnr" = src.observer_dnr,
+			"clientSettings" = src.client_settings,
+			"volumeChannels" = volume_channels,
+			"saturation" = text2num(client.player?.cloudSaves.getData("saturation")) || 1,
 			"traitsAvailable" = traits,
 			"traitsMax" = src.traitPreferences.max_traits,
 			"traitsPointsTotal" = src.traitPreferences.calcTotal(src.traitPreferences.traits_selected, src.custom_parts),
@@ -453,9 +503,7 @@ var/list/removed_jobs = list(
 			if ("update-profileName")
 				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
 
-				for (var/c in bad_name_characters)
-					new_profile_name = replacetext(new_profile_name, c, "")
-
+				new_profile_name = remove_bad_name_characters(new_profile_name)
 				new_profile_name = trimtext(new_profile_name)
 
 				if (new_profile_name)
@@ -605,9 +653,9 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-age")
-				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
+				var/new_age = tgui_input_number(usr, "Please select type in age: 20-100", "Character Generation", src.age, 100, 20)
 				if (new_age)
-					src.age = clamp(round(text2num(new_age)), 20, 80)
+					src.age = clamp(round(text2num(new_age)), 20, 100)
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -934,15 +982,11 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-fontSize")
-				if (params["reset"])
-					src.font_size = initial(src.font_size)
+				var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 200, 1)
+				if (!isnull(new_font_size))
+					src.font_size = new_font_size
+					src.profile_modified = TRUE
 					return TRUE
-				else
-					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 200, 1)
-					if (!isnull(new_font_size))
-						src.font_size = new_font_size
-						src.profile_modified = TRUE
-						return TRUE
 
 			if ("update-seeMentorPms")
 				src.see_mentor_pms = !src.see_mentor_pms
@@ -975,10 +1019,13 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-hudTheme")
-				var/new_hud = tgui_input_list(usr, "Please select a HUD style:", "New", hud_style_selection)
-				if (new_hud)
+				var/new_hud = params["value"]
+				if (new_hud in hud_style_selection)
 					src.hud_style = new_hud
 					src.profile_modified = TRUE
+					var/mob/living/carbon/human/H = usr
+					if (istype(H))
+						H.force_hud_style(new_hud)
 					return TRUE
 
 			if ("update-targetingCursor")
@@ -1051,6 +1098,36 @@ var/list/removed_jobs = list(
 			if ("update-preferredMap")
 				src.preferred_map = mapSwitcher.clientSelectMap(usr.client, pickable=TRUE)
 				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-observerDnr")
+				src.observer_dnr = !src.observer_dnr
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-clientSetting")
+				return src.set_client_setting(client, params["setting"], params["value"])
+
+			if ("update-volume")
+				var/channel = params["channel"]
+				if (!isnum(channel) || channel < VOLUME_CHANNEL_MASTER || channel > VOLUME_CHANNEL_FARTS || !isnum(params["value"]))
+					return
+				client.setVolume(channel, params["value"] / 100)
+				return TRUE
+
+			if ("reset-volumes")
+				for (var/channel in VOLUME_CHANNEL_MASTER to VOLUME_CHANNEL_FARTS)
+					client.setVolume(channel, client.getDefaultVolume(channel))
+				return TRUE
+
+			if ("update-saturation")
+				var/current = text2num(client.player?.cloudSaves.getData("saturation")) || 1
+				var/new_saturation = tgui_input_number(usr, "Saturation (in percent):", "Saturation", round(current * 100), 150, 50)
+				if (isnull(new_saturation))
+					return
+				var/saturation = clamp(new_saturation, 50, 150) / 100
+				client.set_saturation(saturation)
+				client.player?.cloudSaves.putDataSoon("saturation", saturation)
 				return TRUE
 
 			if ("select-trait")
@@ -1306,7 +1383,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
+			if (jobban_isbanned(user, J.name, J) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1321,7 +1398,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
+			if (jobban_isbanned(user, J.name, J) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1348,7 +1425,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
+			if (jobban_isbanned(user, J.name, J) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1447,7 +1524,7 @@ var/list/removed_jobs = list(
 
 				// If the user cannot play as this job.
 				var/reason_tooltip = null
-				if (global.jobban_isbanned(user, job_datum.name))
+				if (global.jobban_isbanned(user, job_datum.name, job_datum))
 					reason_tooltip = "You have been banned from playing this job."
 				else if (job_datum.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					reason_tooltip = "This job requires the <i>\"Unlike the director, I went to college\"</i> medal, which you do not possess."
@@ -1752,8 +1829,4 @@ var/list/removed_jobs = list(
 			else
 				boutput(C, "<h3 class='alert'>Something went wrong. Maybe the game isn't done loading yet, give it a minute!</h3>")
 				return
-		if (C.preferences.use_wasd)
-			winset(C, "menu.wasd_controls", "is-checked=true")
-		else
-			winset(C, "menu.wasd_controls", "is-checked=false")
 		C.mob.reset_keymap()

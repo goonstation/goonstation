@@ -231,6 +231,7 @@
 		reagents.add_reagent("water",10000)
 
 TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 8
 
 /obj/reagent_dispensers/watertank/fountain

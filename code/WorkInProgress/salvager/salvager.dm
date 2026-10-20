@@ -484,13 +484,14 @@
 /obj/item/device/radio/headset/salvager
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew. The headset is covered in scratch marks and the screws look nearly stripped."
 	protected_radio = TRUE
-	secure_frequencies = list("z" = R_FREQ_SALVAGER)
+	secure_frequencies = list("z" = RADIO::FREQ::SALVAGER)
 
 /obj/item/device/powersink/salvager
 	desc = "A nulling power sink which drains energy from electrical systems.  Installed with high capacity cells to steal away power."
 	drain_rate = 100000		// amount of power to drain per tick
 	max_power = 2e7		// maximum power that can be drained before exploding
 	color = list(1,0,0,-0.00168067,0.998559,0.00168067,0.213445,0.182953,0.786555)
+	tooltip_flags = 0 // no flags. REBUILD_ALWAYS is added conditionally
 
 	New()
 		. = ..()
@@ -512,11 +513,17 @@
 			src.light.set_color(1, 1, 1)
 		. = ..()
 		if(attached)
+			ADD_FLAG(src.tooltip_flags, REBUILD_ALWAYS)
 			var/datum/powernet/PN = attached.get_powernet()
 			if(PN)
 				if(!ON_COOLDOWN(src,"noise",rand(1 SECOND, 5 SECONDS)))
 					playsound(src,'sound/machines/engine_highpower.ogg', on_station ? 70 : 50, 1, 3, -2)
 		drain_rate = previous_drain_rate
+
+	attackby(obj/item/I, mob/user)
+		. = ..()
+		if (src.mode != POWERSINK::OPERATING)
+			REMOVE_FLAG(src.tooltip_flags, REBUILD_ALWAYS)
 
 
 /obj/item/deployer/barricade/barbed
@@ -579,6 +586,7 @@
 	spawn_contents = list(/obj/item/old_grenade/smoke=3,/obj/item/chem_grenade/flashbang = 2)
 
 TYPEINFO(/obj/item/salvager_hand_tele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("MET-1" = 5, "POW-1"=5, "CON-2" = 5, "telecrystal" = 30)
 
 /obj/item/salvager_hand_tele
@@ -719,7 +727,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 /obj/item/device/radio_upgrade/salvager
 	name = "private radio channel upgrade"
 	desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
-	secure_frequencies = list("z" = R_FREQ_SALVAGER)
+	secure_frequencies = list("z" = RADIO::FREQ::SALVAGER)
 
 
 // Stubs for the public

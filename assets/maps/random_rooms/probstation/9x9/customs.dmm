@@ -1,0 +1,501 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/carpet/green,
+/area/station/bridge/customs)
+"b" = (
+/turf/simulated/floor/blue/corner{
+	dir = 1
+	},
+/area/station/bridge/customs)
+"c" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/bridge/customs)
+"d" = (
+/obj/stool/chair,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/bridge/customs)
+"e" = (
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/carpet/green,
+/area/station/bridge/customs)
+"f" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/bridge/customs)
+"g" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/blue/side{
+	dir = 9
+	},
+/area/station/bridge/customs)
+"h" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/head_of_personnel,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/blue,
+/area/station/bridge/customs)
+"i" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/bridge/customs)
+"j" = (
+/obj/decal/tile_edge/floorguide/arrow_n,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 1
+	},
+/obj/item/bell/hop{
+	pixel_y = 24
+	},
+/turf/simulated/floor/blue/side{
+	dir = 9
+	},
+/area/station/bridge/customs)
+"k" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction/right/east,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/bridge/customs)
+"l" = (
+/obj/stool/chair,
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/bridge/customs)
+"m" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/green,
+/area/station/bridge/customs)
+"n" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/bridge/customs)
+"p" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/blue/side,
+/area/station/bridge/customs)
+"q" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/head_of_personnel,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/simulated/floor/blue,
+/area/station/bridge/customs)
+"r" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/blue/side,
+/area/station/bridge/customs)
+"s" = (
+/obj/stool/chair,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/bridge/customs)
+"t" = (
+/obj/storage/crate/bin/lostandfound,
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/blue/side{
+	dir = 10
+	},
+/area/station/bridge/customs)
+"u" = (
+/obj/machinery/door/airlock/pyro/security/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/mapping_helper/access/head_of_personnel,
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/blue,
+/area/station/bridge/customs)
+"v" = (
+/obj/machinery/manufacturer/personnel,
+/obj/item/storage/wall/office{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/simulated/floor/carpet/green/standard/edge/nw,
+/area/station/bridge/customs)
+"w" = (
+/obj/machinery/computer/card,
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 31
+	},
+/turf/simulated/floor/carpet/green/standard/edge/ne,
+/area/station/bridge/customs)
+"x" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/customs)
+"y" = (
+/obj/machinery/vending/coffee,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/blue/side{
+	dir = 6
+	},
+/area/station/bridge/customs)
+"z" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/customs)
+"A" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/bridge/customs)
+"B" = (
+/obj/machinery/manufacturer/uniform,
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/carpet/green/standard/edge/north,
+/area/station/bridge/customs)
+"C" = (
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/green/standard/edge/east,
+/area/station/bridge/customs)
+"D" = (
+/obj/railing/blue{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/arrow_n,
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/bridge/customs)
+"E" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/shrub{
+	dir = 1
+	},
+/turf/simulated/floor/blue/side,
+/area/station/bridge/customs)
+"F" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/green/standard/edge/south,
+/area/station/bridge/customs)
+"G" = (
+/obj/railing/blue{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/arrow_n,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/bridge/customs)
+"I" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/carpet/green/standard/edge/sw,
+/area/station/bridge/customs)
+"J" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/bridge/customs)
+"K" = (
+/obj/machinery/computer3/generic/personnel_management,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet/green/standard/edge/se,
+/area/station/bridge/customs)
+"L" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/green,
+/area/station/bridge/customs)
+"M" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/customs)
+"N" = (
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/blue/side{
+	dir = 5
+	},
+/area/station/bridge/customs)
+"O" = (
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/shredder,
+/turf/simulated/floor/carpet/green/standard/edge/south,
+/area/station/bridge/customs)
+"P" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/green/standard/edge/east,
+/area/station/bridge/customs)
+"Q" = (
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/bridge/customs)
+"R" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/bridge/customs)
+"S" = (
+/obj/storage/closet/law,
+/obj/item/storage/box/accessimp_kit{
+	pixel_y = 9
+	},
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/carpet/green/standard/edge/north,
+/area/station/bridge/customs)
+"T" = (
+/obj/machinery/photocopier,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/carpet/green/standard/edge/west,
+/area/station/bridge/customs)
+"U" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/bridge/customs)
+"V" = (
+/obj/item_dispenser/idcarddispenser{
+	pixel_y = 0;
+	pixel_x = -24
+	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/carpet/green/standard/edge/west,
+/area/station/bridge/customs)
+"W" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/blue/side,
+/area/station/bridge/customs)
+"X" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/bridge/customs)
+"Y" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/machinery/cashreg,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/head_of_personnel,
+/obj/item/stamp,
+/turf/simulated/floor/blue,
+/area/station/bridge/customs)
+"Z" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/bridge/customs)
+
+(1,1,1) = {"
+R
+R
+R
+R
+h
+R
+J
+J
+J
+"}
+(2,1,1) = {"
+R
+v
+V
+T
+I
+R
+g
+t
+Z
+"}
+(3,1,1) = {"
+R
+B
+e
+L
+F
+u
+k
+W
+Z
+"}
+(4,1,1) = {"
+R
+S
+a
+m
+O
+x
+d
+p
+Z
+"}
+(5,1,1) = {"
+f
+w
+C
+P
+K
+z
+l
+r
+X
+"}
+(6,1,1) = {"
+R
+M
+q
+Y
+i
+R
+s
+p
+Z
+"}
+(7,1,1) = {"
+J
+j
+D
+D
+G
+D
+b
+E
+Z
+"}
+(8,1,1) = {"
+J
+N
+n
+Q
+U
+c
+c
+y
+Z
+"}
+(9,1,1) = {"
+J
+Z
+Z
+Z
+A
+Z
+Z
+Z
+J
+"}

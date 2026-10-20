@@ -177,7 +177,7 @@
 	switch (grade)
 		if (1)
 			common_ores = list(/datum/ore/pharosium, /datum/ore/molitz, /datum/ore/mauxite)
-			rare_ores = list(/datum/ore/claretine, /datum/ore/bohrum)
+			rare_ores = list(/datum/ore/claretine, /datum/ore/bohrum, /datum/ore/batiline)
 
 		if (2)
 			common_ores = list(/datum/ore/claretine, /datum/ore/bohrum, /datum/ore/viscerite, /datum/ore/koshmarite)
@@ -382,12 +382,15 @@
 	boutput(world, "<b><span color='red'>The construction is over. There will be some obscure scoring shit here.</span></b>")
 
 /datum/game_mode/construction/post_setup()
-	wagesystem.budgets[BUDGET_CAT_STATION] = 0
-	wagesystem.budgets[BUDGET_CAT_SHIPPING] = 7000
+	wagesystem.budgets[BUDGET_CAT_PAYROLL] = 0
+	wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] = 7000
 	wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] = 0
 	wagesystem.budgets[BUDGET_CAT_UNION] = 0
 	random_events.events_enabled = 0
 	random_events.minor_events_enabled = 0
+#ifdef MAP_OVERRIDE_MENHIR
+	random_events.menhir_events_enabled = 0
+#endif
 	for (var/tp in childrentypesof(/datum/supply_control))
 		var/datum/supply_control/S = new tp()
 		if (S.current_stock < S.maximum_stock && S.replenishment_time)

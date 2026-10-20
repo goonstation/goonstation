@@ -27,13 +27,12 @@
 		choose_rocko_material()
 		UpdateIcon()
 		START_TRACKING_CAT(TR_CAT_PETS)
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 		processing_items |= src
 
 	disposing()
 		processing_items -= src
 		STOP_TRACKING_CAT(TR_CAT_PETS)
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 		var/turf/where = get_turf(src)
 		var/where_text = "Unknown (?, ?, ?)"
@@ -181,7 +180,7 @@
 		src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
 
 		// Use ore sprites if available
-		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium","veranium")
+		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium","veranium","batiline")
 		if(!rock_list.Find(src.material.getID()))
 			return
 		src.icon = src.material.getIconFile()

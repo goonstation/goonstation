@@ -1,0 +1,446 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/supernorn/colored/green,
+/area/station/ranch)
+"c" = (
+/obj/chicken_nesting_box,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
+"d" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/ranch)
+"e" = (
+/obj/burning_barrel,
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor,
+/area/station/ranch)
+"f" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/ranch)
+"g" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/rancher,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"h" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/ranch)
+"i" = (
+/obj/machinery/camera/ranch/directional/east,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
+"j" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"k" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"l" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"m" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"n" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"o" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"q" = (
+/obj/machinery/camera/ranch/directional/west{
+	pixel_y = -10
+	},
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
+"r" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/ranch)
+"s" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
+"t" = (
+/obj/storage/secure/closet/civilian/ranch,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
+"u" = (
+/obj/railing/orange/reinforced,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"v" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"w" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/interdictor/ranch,
+/obj/machinery/phone/wall{
+	pixel_x = 22;
+	pixel_y = 5
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
+"y" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"z" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
+"A" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"B" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
+"C" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
+"E" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/ranch)
+"F" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"G" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
+"H" = (
+/obj/stool/chair/green{
+	dir = 8
+	},
+/obj/landmark/start/job/rancher,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
+"I" = (
+/obj/machinery/hydro_growlamp,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"J" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/submachine/ranch_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
+"K" = (
+/obj/blind_switch/directional/west{
+	pixel_y = 4
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -7
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"L" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"M" = (
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
+"N" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/rancher,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"P" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/ranch)
+"Q" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"R" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"T" = (
+/obj/submachine/seed_vendor,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
+"U" = (
+/obj/chicken_nesting_box,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
+"V" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/rancher,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"W" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/rancher,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"X" = (
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"Y" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
+"Z" = (
+/obj/reagent_dispensers/watertank/big,
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 9
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
+
+(1,1,1) = {"
+a
+E
+f
+a
+N
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+r
+z
+M
+q
+A
+K
+m
+I
+a
+"}
+(3,1,1) = {"
+d
+c
+s
+M
+o
+Q
+k
+m
+a
+"}
+(4,1,1) = {"
+a
+M
+M
+M
+R
+e
+L
+X
+a
+"}
+(5,1,1) = {"
+V
+n
+y
+y
+l
+v
+F
+j
+g
+"}
+(6,1,1) = {"
+a
+J
+B
+Y
+u
+M
+M
+M
+a
+"}
+(7,1,1) = {"
+a
+Z
+H
+C
+u
+M
+M
+z
+r
+"}
+(8,1,1) = {"
+a
+T
+t
+w
+u
+i
+G
+U
+d
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+W
+a
+P
+h
+a
+"}

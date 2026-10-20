@@ -4,7 +4,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 6
 	},
 /turf/simulated/floor/engine/caution/north,
@@ -24,7 +23,6 @@
 /area/station/engine/inner)
 "fi" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 10
 	},
 /turf/simulated/floor/engine,
@@ -103,7 +101,6 @@
 /area/station/engine/inner)
 "nM" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 9
 	},
 /turf/simulated/floor/engine/caution/south,
@@ -127,7 +124,8 @@
 /area/station/engine/inner)
 "qf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 10
+	dir = 10;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
@@ -175,7 +173,6 @@
 /area/station/engine/inner)
 "vv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 5
 	},
 /obj/machinery/meter{
@@ -222,7 +219,6 @@
 /area/station/engine/inner)
 "AX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 10
 	},
 /obj/machinery/meter{
@@ -352,7 +348,6 @@
 /area/station/engine/inner)
 "TM" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 5
 	},
 /turf/simulated/floor/engine/caution/south,

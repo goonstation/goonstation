@@ -1,0 +1,1472 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"bA" = (
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"bM" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"eV" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "It is still kinda warm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "busted machine"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"eZ" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"fA" = (
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"fI" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
+"gV" = (
+/obj/item/cable_coil/cut,
+/obj/structure/girder/displaced,
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"hl" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"iG" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/obj/structure/girder/displaced,
+/turf/space,
+/area/space)
+"kT" = (
+/obj/decal/glow{
+	brightness = 2;
+	color_b = 0.1;
+	color_g = 0.3;
+	color_r = 0.5;
+	invisibility = 101;
+	name = "glow - REACTOR"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"ld" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Yikes.";
+	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon_state = "broken";
+	name = "damaged reactor"
+	},
+/obj/decal/glow{
+	brightness = 2;
+	color_b = 0.1;
+	color_g = 0.3;
+	color_r = 0.5;
+	invisibility = 101;
+	name = "glow - REACTOR"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"mG" = (
+/obj/fakeobject/airmonitor_broken,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
+"mT" = (
+/obj/decal/cleanable/dirt,
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"nx" = (
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"nM" = (
+/obj/lattice,
+/turf/space,
+/area/space)
+"ou" = (
+/obj/fakeobject{
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"pf" = (
+/obj/item/raw_material/shard/glass{
+	icon_state = "small"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"pJ" = (
+/obj/decal/floatingtiles{
+	dir = 1
+	},
+/obj/structure/girder,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"tb" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_3_trans"
+	},
+/area/abandonedship)
+"vj" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
+"vH" = (
+/obj/storage/crate,
+/obj/item/clothing/suit/hazard/rad,
+/obj/item/clothing/head/rad_hood,
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"wu" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/space)
+"yi" = (
+/obj/decal/cleanable/oil,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
+"yY" = (
+/turf/space,
+/area/space)
+"zx" = (
+/obj/decal/cleanable/machine_debris,
+/obj/item/device/light/glowstick,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"zK" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"Aw" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"AE" = (
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
+"DY" = (
+/obj/lattice,
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/space,
+/area/space)
+"EJ" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"ER" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles6"
+	},
+/turf/space,
+/area/space)
+"GK" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/robot_debris,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"GX" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"Ii" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/abandonedship)
+"IY" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles6"
+	},
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"Jb" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall_3_trans"
+	},
+/area/abandonedship)
+"Ky" = (
+/obj/decal/floatingtiles{
+	dir = 4
+	},
+/obj/structure/girder,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"Mc" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/obj/item/mine/radiation/armed,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"Mo" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/space)
+"Mx" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/space)
+"OC" = (
+/obj/decal/cleanable/machine_debris,
+/turf/space,
+/area/space)
+"Pw" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"QT" = (
+/turf/simulated/wall/auto/asteroid,
+/area/space)
+"RS" = (
+/obj/decal/cleanable/machine_debris,
+/obj/item/motherboard,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"SC" = (
+/turf/space/asteroid,
+/area/space)
+"Tq" = (
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = 6;
+	pixel_y = -28
+	},
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"Vg" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"Xe" = (
+/obj/decal/cleanable/machine_debris,
+/obj/item/device/guardbot_tool/tesla,
+/obj/item/device/guardbot_tool/tesla,
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
+"Xq" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/structure/girder/displaced,
+/turf/space,
+/area/space)
+"XS" = (
+/obj/lattice,
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"XV" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/space)
+"YE" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/crate/bloody,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"YI" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 4
+	},
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/space)
+"YV" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"ZE" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
+
+(1,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(2,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(3,1,1) = {"
+SC
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(4,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(5,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(6,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(7,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(8,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(9,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(10,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(11,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+yY
+"}
+(12,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+"}
+(13,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+wu
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+"}
+(14,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+OC
+QT
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+yY
+"}
+(15,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+Ii
+Ii
+yY
+yY
+Ii
+QT
+QT
+QT
+QT
+SC
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(16,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+ZE
+ZE
+yY
+fI
+ZE
+QT
+QT
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(17,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+fI
+fI
+yi
+fI
+fI
+fI
+fI
+QT
+QT
+QT
+QT
+yY
+yY
+SC
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(18,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+fI
+hl
+ou
+nx
+fI
+fI
+fI
+fI
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(19,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+fI
+bA
+mT
+nx
+Mc
+Aw
+ER
+fI
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(20,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+fI
+vH
+ld
+zK
+yi
+af
+gV
+yi
+yY
+OC
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(21,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+SC
+yY
+yY
+yY
+fI
+YV
+kT
+EJ
+fI
+pJ
+Ky
+fI
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(22,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+fI
+IY
+AE
+Tq
+fI
+fI
+fA
+fI
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(23,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+fI
+Xe
+eV
+hl
+fI
+vj
+eZ
+fI
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(24,1,1) = {"
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+fI
+RS
+pf
+hl
+fI
+Mx
+nM
+fI
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(25,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+fI
+YE
+YE
+YI
+yi
+GX
+DY
+fI
+yY
+yY
+yY
+SC
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(26,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+yY
+yY
+yY
+yY
+fI
+fI
+fI
+fI
+fI
+Vg
+fI
+fI
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}
+(27,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+yY
+yY
+yY
+yY
+yY
+fI
+yY
+XS
+fI
+Mo
+nM
+zx
+fI
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+XV
+yY
+yY
+yY
+yY
+"}
+(28,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+tb
+yY
+nM
+fI
+Xq
+yi
+fI
+Jb
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+yY
+yY
+yY
+yY
+yY
+"}
+(29,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+mG
+iG
+fI
+GK
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+QT
+yY
+yY
+yY
+"}
+(30,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+fI
+bM
+Pw
+nM
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+QT
+QT
+yY
+yY
+"}
+(31,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+wu
+yY
+QT
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+yY
+yY
+yY
+yY
+"}
+(32,1,1) = {"
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+QT
+QT
+QT
+yY
+yY
+QT
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+yY
+"}

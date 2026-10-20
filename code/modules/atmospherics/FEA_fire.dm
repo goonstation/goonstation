@@ -409,6 +409,8 @@
 	var/color_set = FALSE
 	var/over_state
 	var/under_state
+	/// connectdir the current overlays were built from
+	var/last_connectdir = -1
 
 // chemfire - use a chem_fire define
 /atom/movable/hotspot/chemfire/New(turf/newLoc, chemfire)
@@ -438,8 +440,16 @@
 	for (var/atom/movable/hotspot/chemfire/C in orange(1,T))
 		C.UpdateIcon()
 
+/// Alpha mask shared by every chemfire overlay filter
+var/global/icon/chemfire_alpha_mask = icon('icons/effects/fire_chemical.dmi', "alpha")
+
 /atom/movable/hotspot/chemfire/update_icon()
-	var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), null, TRUE, FALSE)
+	var/connectdir = get_connected_directions_bitflag(list(src.type = TRUE), null, TRUE, FALSE)
+	// fire_color/over_/under_state are static, only connectdir changes
+	if(connectdir == src.last_connectdir)
+		return
+	src.last_connectdir = connectdir
+
 	var/side_connect = connectdir & (EAST | WEST)
 	var/third_row = connectdir & (SOUTH)
 
@@ -452,7 +462,7 @@
 		im2 = image(src.icon, src, src.fire_color + "_over-[over_state]", NOLIGHT_EFFECTS_LAYER_BASE - 0.02)
 
 	im2.plane = PLANE_NOSHADOW_ABOVE
-	im2.filters += filter(type="alpha", icon=icon('icons/effects/fire_chemical.dmi', "alpha"), y=-10)
+	im2.filters += filter(type="alpha", icon=global.chemfire_alpha_mask, y=-10)
 	src.AddOverlays(im2, "fire-over")
 
 	if(third_row)
@@ -465,11 +475,10 @@
 			im3 = image(src.icon, src, src.fire_color + "_under-[over_state]", OBJ_LAYER - 0.2, pixel_y=-20)
 			im4 = image(src.icon, src, src.fire_color + "_under-[over_state]", NOLIGHT_EFFECTS_LAYER_BASE - 0.02, pixel_y=-20)
 
-
 		//Seperate overlay into two parts, one that overlays this one and one that is below
 		src.AddOverlays(im3, "fire-under2")
 		im4.plane = PLANE_NOSHADOW_ABOVE
-		im4.filters += filter(type="alpha", icon=icon('icons/effects/fire_chemical.dmi', "alpha"), y=20)
+		im4.filters += filter(type="alpha", icon=global.chemfire_alpha_mask, y=20)
 		src.AddOverlays(im4, "fire-over2")
 	else
 		src.ClearSpecificOverlays("fire-under2")

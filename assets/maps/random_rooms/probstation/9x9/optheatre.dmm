@@ -1,0 +1,458 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"b" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay/treatment)
+"c" = (
+/obj/disposalpipe/segment/bent/east,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"d" = (
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/medbay/treatment)
+"e" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/treatment)
+"f" = (
+/obj/machinery/door/airlock/pyro/glass/med,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
+"g" = (
+/obj/machinery/atmospherics/pipe/quadway/overfloor,
+/obj/landmark/start/job/medical_trainee,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/treatment)
+"h" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 22
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/treatment)
+"j" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"k" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"l" = (
+/obj/machinery/computer/operating/small,
+/obj/machinery/light/incandescent/cool,
+/obj/storage/secure/closet/medical/anesthetic{
+	pixel_x = 7
+	},
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"m" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 8
+	},
+/obj/item/scalpel,
+/obj/item/scissors/surgical_scissors,
+/obj/item/suture,
+/obj/item/hemostat,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"n" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/surgery)
+"o" = (
+/obj/table/reinforced/auto,
+/obj/item/robodefibrillator,
+/obj/item/robodefibrillator,
+/obj/item/wrench,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"p" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/med_data{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"r" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay/treatment)
+"s" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
+"t" = (
+/obj/machinery/optable,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"u" = (
+/obj/machinery/computer/operating/small,
+/obj/storage/secure/closet/fridge/blood{
+	pixel_x = 5
+	},
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"v" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
+"w" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/surgery)
+"x" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay/treatment)
+"y" = (
+/obj/table/auto,
+/obj/machinery/defib_mount,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"z" = (
+/obj/machinery/optable,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"A" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay/treatment)
+"B" = (
+/obj/machinery/sleeper/compact{
+	dir = 8
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay/treatment)
+"C" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"D" = (
+/obj/machinery/door/airlock/pyro/glass/med,
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"E" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/camera/directional/east{
+	pixel_y = 6
+	},
+/obj/machinery/light_switch/directional/east{
+	pixel_y = -6
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/treatment)
+"F" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"G" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/treatment)
+"H" = (
+/obj/machinery/vending/medical,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
+	},
+/area/station/medical/medbay/treatment)
+"I" = (
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"J" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/landmark/start/job/medical_doctor,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"K" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"L" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/treatment)
+"M" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"N" = (
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/medbay/surgery)
+"O" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/medbay/surgery)
+"Q" = (
+/obj/storage/cart/medcart/crash,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"R" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay/treatment)
+"S" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/treatment)
+"T" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"U" = (
+/obj/machinery/camera/directional/west,
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"V" = (
+/obj/machinery/dialysis,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"W" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/landmark/start/job/medical_trainee,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"X" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
+"Y" = (
+/obj/machinery/disposal/small/west{
+	pixel_x = 8
+	},
+/obj/disposalpipe/trunk/west,
+/obj/machinery/sleeper/port_a_medbay{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/treatment)
+"Z" = (
+/obj/table/auto,
+/obj/machinery/defib_mount,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+
+(1,1,1) = {"
+N
+N
+N
+N
+O
+N
+N
+N
+N
+"}
+(2,1,1) = {"
+N
+t
+U
+m
+n
+z
+J
+m
+N
+"}
+(3,1,1) = {"
+N
+l
+I
+y
+w
+u
+j
+Z
+N
+"}
+(4,1,1) = {"
+N
+w
+k
+w
+w
+w
+K
+w
+N
+"}
+(5,1,1) = {"
+f
+x
+R
+B
+H
+a
+c
+C
+D
+"}
+(6,1,1) = {"
+d
+v
+G
+e
+A
+F
+T
+V
+L
+"}
+(7,1,1) = {"
+d
+X
+g
+S
+r
+M
+W
+Q
+L
+"}
+(8,1,1) = {"
+d
+v
+h
+E
+b
+p
+Y
+o
+L
+"}
+(9,1,1) = {"
+d
+d
+d
+d
+s
+d
+d
+d
+d
+"}

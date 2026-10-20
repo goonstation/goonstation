@@ -665,8 +665,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 #define RESONATOR_CABLE_REPAIR_COST 3
 
 /obj/machinery/siphon/resonator
-	name = "\improper Type-AX siphon resonator"
-	desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
+	name = "axial resonator"
+	desc = "Type-AX field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
 	icon = 'icons/obj/machines/neodrill_32x32.dmi'
 	icon_state = "res-closed"
 	density = 1
@@ -704,8 +704,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/obj/machinery/siphon/core/paired_core = null
 
 	//descriptions for wrenching
-	var/regular_desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
-	var/wrenched_desc = "Field-emitting device used to amplify and direct a harmonic siphon. It's been manually secured to the floor."
+	var/regular_desc = "Type-AX field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
+	var/wrenched_desc = "Type-AX field-emitting device used to amplify and direct a harmonic siphon. It's been manually secured to the floor."
 
 	New()
 		light = new /datum/light/point
@@ -932,11 +932,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 //stabilizing resonator, provides purely reduction to shear based on lowest torque value
 /obj/machinery/siphon/resonator/stabilizer
-	name = "\improper Type-SM siphon resonator"
-	desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
+	name = "shear moderator"
+	desc = "Type-SM field-emitting device used to mitigate resonant shear in a harmonic siphon."
 	icon_state = "stab-closed"
-	regular_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
-	wrenched_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon. It's been manually secured to the floor."
+	regular_desc = "Type-SM field-emitting device used to mitigate resonant shear in a harmonic siphon."
+	wrenched_desc = "Type-SM field-emitting device used to mitigate resonant shear in a harmonic siphon. It's been manually secured to the floor."
 	max_intensity = 3
 	resclass = "stab"
 	netname = "RES_SM"
@@ -955,11 +955,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 //field dilation resonator, slows down cycle time and wreaks havoc on the lateral and vertical resonance
 /obj/machinery/siphon/resonator/field_dilation
-	name = "\improper Type-FQ siphon resonator"
-	desc = "A prototype field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
+	name = "field quantizer"
+	desc = "The prototype Type-FQ field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
 	icon_state = "fq-closed"
-	regular_desc = "A prototype field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
-	wrenched_desc = "A prototype field-emitting device used to delay resonant-field reharmonization. It's been manually secured to the floor."
+	regular_desc = "The prototype Type-FQ field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
+	wrenched_desc = "The prototype Type-FQ field-emitting device used to delay resonant-field reharmonization. It's been manually secured to the floor."
 	field_dilation = 6
 	max_intensity = 7
 	resclass = "fq"

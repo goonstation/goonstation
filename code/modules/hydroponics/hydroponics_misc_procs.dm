@@ -243,8 +243,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 	var/generation = 0
 
 	if(P.cantscan)
-		boutput(user, SPAN_ALERT("<B>ERROR:</B> Genetic structure not recognized. Cannot scan."))
-		return
+		return SPAN_ALERT("<B>ERROR:</B> Genetic structure not recognized. Cannot scan.")
 
 	if(istype(scanned, /obj/machinery/plantpot))
 		var/obj/machinery/plantpot/PP = scanned
@@ -319,8 +318,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		if(gene_strains.len)
 			message += "[MUT ? "" : "<br>"]<font color='red'><b>Gene strains detected[show_gene_strain ? ": " + gene_strains.Join(", ") : ", advanced analysis required."]</b></font>"
 
-	boutput(user, message)
-	return
+	return message
 
 proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/machinery/plantpot/PP, var/frequencymult = 1, var/obj/item/seed/S = null)
 	// The check to see if a new mutation will be generated. The criteria check for whether
@@ -461,9 +459,7 @@ proc/HYPstat_rounding(var/input_number)
 	return trunc(input_number) + (prob(fract(input_number) * 100) * sign(input_number))
 
 // Quick proc for phytoscopic glasses
-proc/HYPphytoscopic_scan(var/mob/user, var/atom/target, var/do_return = FALSE)
+proc/HYPphytoscopic_scan(var/mob/user, var/atom/target)
 	var/show_gene_strain = GET_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) >= PHYTOVISION_UPGRADED ? TRUE : FALSE
 	if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) || show_gene_strain)
-		if(do_return)
-			return scan_plant(target, user, FALSE, show_gene_strain)
-		boutput(user, scan_plant(target, user, FALSE, show_gene_strain))
+		return scan_plant(target, user, FALSE, show_gene_strain)

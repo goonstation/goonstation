@@ -1,5 +1,6 @@
 //Motherboard is just used in assembly/disassembly, doesn't exist in the actual computer object.
 TYPEINFO(/obj/item/motherboard)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/motherboard
@@ -42,7 +43,7 @@ TYPEINFO(/obj/item/motherboard)
 	name = "Computer-frame"
 	icon = 'icons/obj/computer_frame.dmi'
 	icon_state = "0"
-	material_amt = 0.5
+	material_amt = MATERIAL::AMOUNT::SHEET * 5
 	var/state = 0
 	var/obj/item/motherboard/mainboard = null
 	var/obj/item/disk/data/fixed_disk/hd = null
@@ -59,7 +60,7 @@ TYPEINFO(/obj/item/motherboard)
 		icon = 'icons/obj/terminal_frame.dmi'
 		created_icon_state = "dterm"
 		computer_type = /obj/machinery/computer3/terminal
-		material_amt = 0.3
+		material_amt = MATERIAL::AMOUNT::SHEET * 3
 		max_peripherals = 2
 		metal_given = 3
 		glass_needed = 1

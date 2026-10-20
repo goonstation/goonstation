@@ -116,6 +116,9 @@
 				var/obj/fluid/F = new // used for underwater breathing check
 				F.reagents = owner.loc.reagents
 				underwater = F
+		else if (istype(owner.loc, /mob/living/critter))
+			src.update_breath_hud(status_updates)
+			return
 
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
@@ -139,6 +142,14 @@
 			if (owner.get_oxygen_deprivation())
 				owner.take_oxygen_deprivation(-50 * mult)
 			return
+
+#ifdef UNDERWATER_MAP
+		if (!underwater && human_owner?.mutantrace?.aquatic && isturf(owner.loc))
+			var/turf/aquatic_turf = owner.loc
+			if (aquatic_turf.turf_flags & FLUID_MOVE) // asteroid floors on underwater maps are submerged
+				src.update_breath_hud(status_updates)
+				return
+#endif
 
 		if (underwater)
 			if (human_owner?.mutantrace && human_owner?.mutantrace.aquatic)
@@ -211,10 +222,20 @@
 
 	proc/get_breath_from_internal(volume_needed)
 		if (human_owner?.internal)
-			if (!(human_owner.internal in owner.contents))
+			if (!((human_owner.internal in owner.contents) || (human_owner.internal in human_owner.wear_mask)))
 				human_owner?.internal = null
 			if (!human_owner?.wear_mask || !(human_owner?.wear_mask.c_flags & MASKINTERNALS) )
 				human_owner?.internal = null
+			if (istype(human_owner.wear_mask, /obj/item/clothing/mask/medical))
+
+				var/atom/A = human_owner.loc
+				var/datum/gas_mixture/atmosphere = A.return_air()
+				// medical masks don't work in low-atmos enviornments
+				if (MIXTURE_PRESSURE(atmosphere) < ONE_ATMOSPHERE * 0.5)
+					human_owner.internal = null
+				// medical masks automatically shut off if not enough pressure remaining
+				if (MIXTURE_PRESSURE(human_owner.internal.air_contents) < human_owner.internal.distribute_pressure)
+					human_owner.internal = null
 			if (human_owner?.internal)
 				if (human_owner?.internals)
 					human_owner?.internals.icon_state = "internal1"

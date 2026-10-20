@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 /datum/job/medical/medical_doctor
 	name = "Medical Doctor"
 	limit = 5
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	trait_list = list("training_medical")
 	access_string = "Medical Doctor"
 	slot_back = list(/obj/item/storage/backpack/medic)
@@ -46,7 +46,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 /datum/job/medical/geneticist
 	name = "Geneticist"
 	limit = 2
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	access_string = "Geneticist"
 	slot_back = list(/obj/item/storage/backpack/genetics)
 	slot_belt = list(/obj/item/device/pda2/genetics)
@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 /datum/job/medical/roboticist
 	name = "Roboticist"
 	limit = 3
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	trait_list = list("training_medical")
 	access_string = "Roboticist"
 	slot_back = list(/obj/item/storage/backpack/robotics)
@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 /datum/job/medical/medical_assistant
 	name = "Medical Trainee"
 	limit = 2
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_medical")
 	access_string = "Medical Doctor"
 	rounds_allowed_to_play = ROUNDS_MAX_MEDASS
@@ -95,7 +95,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 
 /datum/job/medical/pharmacist
 	name = "Pharmacist"
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	limit = 1 // limited workspace
 	access_string = "Pharmacist"
 	slot_back = list(/obj/item/storage/backpack/pharmacist)

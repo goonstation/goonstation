@@ -14,7 +14,7 @@
 	name = "Restricted Manufacturer Recipes"
 	dont_copy = 1
 TYPEINFO(/obj/item/disk/data/floppy/manudrive)
-	mats = 0 // These things arent intended to be reproducible (god I butchered that) due to things like fablimits.
+	analyser_flags = ANALYSER_BLACKLIST // These things arent intended to be reproducible (god I butchered that) due to things like fablimits.
 
 /obj/item/disk/data/floppy/manudrive // This one should be the parent of manudrives that dont have a fabrication limit.
 	name = "Standard ManuDrive: Empty"

@@ -30,8 +30,8 @@ var/global/list/cycling_airlocks = list()
 	var/cyborgBumpAccess = TRUE
 	var/spawnPowerRestoreRunning = 0
 	var/welded = null
-	var/wires = 1023 //goddd use bitflag defines please
-	var/list/wire_colors = list("Orange" = 1, "Pink" = 2, "White" = 3, "Yellow" = 4, "Red" = 5, "Blue" = 6, "Green" = 7, "Grey" = 8, "Olive" = 9, "Teal" = 10)
+	var/wires = 2047 //goddd use bitflag defines please
+	var/list/wire_colors = list("Orange" = 1, "Pink" = 2, "White" = 3, "Yellow" = 4, "Red" = 5, "Blue" = 6, "Green" = 7, "Grey" = 8, "Olive" = 9, "Teal" = 10, "Purple" = 11)
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = 0
@@ -39,7 +39,7 @@ var/global/list/cycling_airlocks = list()
 	var/cycle_id = ""	//! Which airlocks this door is connected too.
 	var/cycle_enter_id = ""	//! An ID for double doors sharing a direction in a cycling airlock system.
 
-	var/list/signalers[10]
+	var/list/signalers[11]
 	var/lockdownbyai = 0
 	var/net_id = null
 	var/sound_airlock = 'sound/machines/airlock_swoosh_temp.ogg'
@@ -49,6 +49,7 @@ var/global/list/cycling_airlocks = list()
 	var/id = null
 	var/radiorange = AIRLOCK_CONTROL_RANGE
 	var/safety = 1
+	var/lights = 1
 	var/can_shock = TRUE
 	var/hackingProgression = 0
 	var/has_panel = TRUE
@@ -254,6 +255,10 @@ var/global/list/cycling_airlocks = list()
 			SPAWN(1 DECI SECOND)
 				src.shock(usr, 25)
 
+		if(AIRLOCK_WIRE_LIGHTS)
+			if(src.density && !src.operating) // only play the animation while fully closed
+				play_animation("deny")
+
 /obj/machinery/door/airlock/proc/attach_signaler(var/wire_color, mob/user)
 	if(!istype(user.equipped(), /obj/item/device/radio/signaler))
 		boutput(user, "You need a signaler!")
@@ -345,6 +350,11 @@ var/global/list/cycling_airlocks = list()
 			logTheThing(LOG_STATION, usr, "permanently disabled the safety of an airlock at [log_loc(src)] by cutting the safety wire.")
 			src.safety = 0
 
+		if(AIRLOCK_WIRE_LIGHTS)
+			logTheThing(LOG_STATION, usr, "permanently disabled the lights of an airlock at [log_loc(src)] by cutting the lights wire.")
+			src.lights = 0
+			src.update_icon()
+
 	tgui_process.update_uis(src)
 
 /obj/machinery/door/airlock/proc/try_mend(var/wire_color, mob/user)
@@ -386,6 +396,11 @@ var/global/list/cycling_airlocks = list()
 		if(AIRLOCK_WIRE_SAFETY)
 			logTheThing(LOG_STATION, usr, "re-enabled the safety of an airlock at [log_loc(src)] by mending the safety wire.")
 			src.safety = 1
+
+		if(AIRLOCK_WIRE_LIGHTS)
+			logTheThing(LOG_STATION, usr, "re-enabled the lights of an airlock at [log_loc(src)] by mending the lights wire.")
+			src.lights = 1
+			src.update_icon()
 
 	tgui_process.update_uis(src)
 
@@ -497,7 +512,7 @@ var/global/list/cycling_airlocks = list()
 
 /obj/machinery/door/airlock/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling ? !density : density)
-		if (locked)
+		if (locked && src.lights)
 			icon_state = "[icon_base]_locked"
 		else
 			icon_state = "[icon_base]_closed"
@@ -523,19 +538,21 @@ var/global/list/cycling_airlocks = list()
 	switch (animation)
 		if ("opening")
 			src.UpdateIcon()
-			if (src.panel_open)
+			if (src.panel_open || !src.lights)
 				FLICK("o_[icon_base]_opening", src) // there's an issue with the panel overlay not being gone by the time the animation is nearly done but I can't make that stop, despite my best efforts
 			else
 				FLICK("[icon_base]_opening", src)
 		if ("closing")
 			src.UpdateIcon()
-			if (src.panel_open)
+			if (src.panel_open || !src.lights)
 				FLICK("o_[icon_base]_closing", src)
 			else
 				FLICK("[icon_base]_closing", src)
 		if ("spark")
 			FLICK("[icon_base]_spark", src)
 		if ("deny")
+			if(!src.lights)
+				return
 			FLICK("[icon_base]_deny", src)
 	return
 
@@ -933,6 +950,26 @@ var/global/list/cycling_airlocks = list()
 			..()
 	return
 
+/obj/machinery/door/airlock/proc/bolt_open(senderid = null)
+	set waitfor = FALSE
+
+	if(src.locked && !src.density)
+		sleep(src.operation_time)
+		if (senderid)
+			src.send_status(,senderid)
+		return
+	if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		src.set_unlocked()
+
+	src.open(surpress_send = 1)
+	sleep(0.5 SECONDS)
+
+	if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		src.set_locked()
+	sleep(src.operation_time)
+	if (senderid)
+		src.send_status(,senderid)
+
 // ========== mechcomp duplicate code ============
 
 TYPEINFO(/obj/machinery/door/airlock)
@@ -1045,21 +1082,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 				src.send_status()
 
 			if("secure_open")
-				SPAWN(0)
-					if(src.locked && !src.density)
-						sleep(src.operation_time)
-						send_status(,senderid)
-						return
-					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_unlocked()
-
-					src.open(surpress_send = 1)
-					sleep(0.5 SECONDS)
-
-					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_locked()
-					sleep(src.operation_time)
-					src.send_status(,senderid)
+				src.bolt_open(senderid)
 
 			if("secure_close")
 				SPAWN(0)
@@ -1191,6 +1214,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 	if (prob(20) && (src.density && src.cant_emag != 1 && src.isblocked() != 1))
 		src.open()
 		src.operating = -1
+		src.deconstruct_flags |= DECON_NO_ACCESS
 	if(prob(40))
 		if(src.secondsElectrified == 0)
 			src.secondsElectrified = -1
@@ -1310,6 +1334,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 			"idScanner" = !src.isWireCut(AIRLOCK_WIRE_IDSCAN),
 			"bolts" = !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS),
 			"safe" = !src.isWireCut(AIRLOCK_WIRE_SAFETY),
+			"lights" = !src.isWireCut(AIRLOCK_WIRE_LIGHTS),
 		),
 	)
 
@@ -1520,15 +1545,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 //This generates the randomized airlock wire assignments for the game.
 /proc/RandomAirlockWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
-	var/list/wires = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-	airlockIndexToFlag = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-	airlockIndexToWireColor = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-	airlockWireColorToIndex = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	var/list/wires = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	airlockIndexToFlag = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	airlockIndexToWireColor = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	airlockWireColorToIndex = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 	var/flagIndex = 1
-	for (var/flag=1, flag<1024, flag+=flag)
+	for (var/flag=1, flag<2048, flag+=flag)
 		var/valid = 0
 		while (!valid)
-			var/colorIndex = rand(1, 10)
+			var/colorIndex = rand(1, 11)
 			if (wires[colorIndex]==0)
 				valid = 1
 				wires[colorIndex] = flag

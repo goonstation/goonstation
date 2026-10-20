@@ -28,7 +28,7 @@
 		return
 
 	var/AI_speaker = isAI(message.original_speaker)
-	if ((!intercom.forced_maptext && !AI_speaker) || (intercom.frequency == R_FREQ_DEFAULT))
+	if ((!intercom.forced_maptext && !AI_speaker) || (intercom.frequency == RADIO::FREQ::DEFAULT))
 		return ..()
 
 	message.flags &= ~SAYFLAG_NO_MAPTEXT

@@ -61,7 +61,8 @@ TYPEINFO(/mob/dead)
 	else
 		if (GET_DIST(src, target) > 0)
 			src.set_dir(get_dir_accurate(src, target))
-		src.examine_verb(target)
+		if (params["alt"])
+			src.examine_verb(target)
 
 /mob/dead/process_move(keys)
 	if(keys && src.move_dir && !src.get_active_movement_controller() && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!

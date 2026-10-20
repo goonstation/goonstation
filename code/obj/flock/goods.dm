@@ -55,6 +55,8 @@
 ////////////////
 // INCAPACITOR
 ////////////////
+TYPEINFO(/obj/item/gun/energy/flock)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY // it's less that this is a syndicate weapon and more that replicating it isn't trivial
 /obj/item/gun/energy/flock
 	name = "incapacitor"
 	desc = "A clunky projectile weapon of alien machine origin. It appears to have been based off of a couple pictures of regular human guns, but with no clear understanding of ergonomics."
@@ -67,7 +69,6 @@
 	can_swap_cell = FALSE // No
 	cell_type = /obj/item/ammo/power_cell/self_charging/flockdrone
 	projectiles = null
-	is_syndicate = TRUE // it's less that this is a syndicate weapon and more that replicating it isn't trivial
 	custom_cell_max_capacity = 100
 
 /obj/item/gun/energy/flock/New()

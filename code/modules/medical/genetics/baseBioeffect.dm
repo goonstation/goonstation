@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/msgGain = "" //Message shown when effect is added.
 	var/msgLose = "" //Message shown when effect is removed.
 
-	var/timeLeft = -1//Time left for temporary effects.
+	var/tmp/timeLeft = -1//Time left for temporary effects.
 
 	var/cooldown = 0 //For effects that come with verbs
 	var/can_reclaim = 1 // Can this gene be turned into mats with the reclaimer?
@@ -63,12 +63,12 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/safety = 0
 	var/degrade_to = null // what this mutation turns into if stability is too low
 	///if this mutation should degrade after timing out
-	var/degrade_after = FALSE
+	var/tmp/degrade_after = FALSE
 
 	///groups of mutually exclusive bioeffects
 	var/effect_group = null
 
-	var/datum/dnaBlocks/dnaBlocks = null
+	var/tmp/datum/dnaBlocks/dnaBlocks = null
 
 	var/data = null //Should be used to hold custom user data or it might not be copied correctly with injectors and all these things.
 	var/image/overlay_image = null

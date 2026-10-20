@@ -15,13 +15,14 @@
 #define WORN_LIGHT_BREAKPROB 5
 
 TYPEINFO(/obj/item/light_parts)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/light_parts
 	name = "fixture parts"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	can_arcplate = FALSE
 
 	var/installed_icon_state = "tube-empty"
@@ -188,7 +189,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	flags = FLUID_SUBMERGE | USEDELAY
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	var/on = 0 // 1 if on, 0 if off
 	var/brightness = 1.6 // luminosity when on, also used in power calculation
@@ -725,6 +726,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 	desc = "A large portable light tripod."
 	density = 1
 	anchored = ANCHORED
+	plane = PLANE_DEFAULT
 	icon_state = "tripod1"
 	base_state = "tripod"
 	fitting = "bulb"
@@ -1367,6 +1369,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 // will fit into empty /obj/machinery/light of the corresponding type
 
 TYPEINFO(/obj/item/light)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 1
 
 /obj/item/light

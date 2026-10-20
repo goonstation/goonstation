@@ -6,9 +6,9 @@
  * @license ISC
  */
 
-import { Section } from 'tgui-core/components';
+import { Button, Input, Section, Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
+import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { AIStatuses } from './AiStatuses';
 import { CyborgStatuses } from './CyborgStatuses';
@@ -16,18 +16,68 @@ import { GhostdroneStatuses } from './GhostdroneStatuses';
 import type { RoboticsControlData } from './type';
 
 export const RoboticsControl = () => {
-  const { data } = useBackend<RoboticsControlData>();
-  const { user_is_ai, user_is_cyborg, ais, cyborgs, ghostdrones } = data;
+  const { data, act } = useBackend<RoboticsControlData>();
+  const [broadcast_message, setBroadcastMessage] = useSharedState(
+    'broadcast_message',
+    '',
+  );
+  const {
+    user_is_ai,
+    user_is_cyborg,
+    ais,
+    cyborgs,
+    ghostdrones,
+    can_killswitch,
+    can_lockdown,
+  } = data;
 
   return (
-    <Window title="Robotics Control" width={870} height={590}>
+    <Window
+      title={can_killswitch ? 'Robotics Control' : 'Robotics Monitoring'}
+      width={870}
+      height={590}
+    >
       <Window.Content>
+        {(!!can_lockdown || !!can_killswitch) &&
+          !(user_is_ai || user_is_cyborg) && (
+            <Section>
+              Swipe a valid ID to activate/cancel lockdown or killswitch.
+            </Section>
+          )}
+
+        <Section title="Silicon Broadcast">
+          <Stack>
+            <Stack.Item>
+              <Button
+                icon="bullhorn"
+                color="green"
+                onClick={() =>
+                  act('silicon_broadcast', {
+                    message: broadcast_message,
+                  })
+                }
+              >
+                Broadcast
+              </Button>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Input
+                fluid
+                onChange={setBroadcastMessage}
+                placeholder="Enter message"
+              />
+            </Stack.Item>
+          </Stack>
+        </Section>
+
         <Section fill scrollable>
           <Section title="Located AI Units">
             {ais?.length ? (
               <AIStatuses
                 ais={ais}
                 user_is_robot={!!(user_is_ai || user_is_cyborg)}
+                can_killswitch={!!can_killswitch}
+                can_lockdown={!!can_lockdown}
               />
             ) : (
               'No AI units located'
@@ -39,6 +89,8 @@ export const RoboticsControl = () => {
                 cyborgs={cyborgs}
                 user_is_ai={user_is_ai}
                 user_is_cyborg={user_is_cyborg}
+                can_killswitch={!!can_killswitch}
+                can_lockdown={!!can_lockdown}
               />
             ) : (
               'No cyborgs located'
@@ -46,7 +98,10 @@ export const RoboticsControl = () => {
           </Section>
           <Section title="Ghostdrones">
             {ghostdrones?.length ? (
-              <GhostdroneStatuses ghostdrones={ghostdrones} />
+              <GhostdroneStatuses
+                ghostdrones={ghostdrones}
+                user_is_cyborg={!!user_is_cyborg}
+              />
             ) : (
               'No ghostdrones located'
             )}

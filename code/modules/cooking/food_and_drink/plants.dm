@@ -24,11 +24,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		src.plantgenes = new /datum/plantgenes(src)
 		src.make_reagents()
 
-	get_desc(dist, mob/user)
+	examine(mob/user)
 		. = ..()
-		if (dist >= 5)
+		if (GET_DIST(src, user) >= 5)
 			return
-		HYPphytoscopic_scan(user, src)
+		var/scan = HYPphytoscopic_scan(user, src)
+		if (scan)
+			. += scan
 
 	clamp_act(mob/clamper, obj/item/clamp)
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
@@ -1625,6 +1627,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		src.reagents.add_reagent("currypowder",10)
 
+/obj/item/reagent_containers/food/snacks/plant/ginger
+	name = "ginger"
+	crop_suffix = " root"
+	desc = "An aromatic root from the ginger plant, a hotter relative of turmeric"
+	icon_state = "ginger"
+	planttype = /datum/plant/veg/ginger
+	edible = TRUE //You really should peel it first!!!!
+	validforhat = 1
+	food_color = "#C58C66"
+	brew_result = "ginger_ale"
+
+	make_reagents()
+		..()
+		src.reagents.add_reagent("ginger", 10)
+
 /obj/item/reagent_containers/food/snacks/plant/cinnamon
 	name = "cinnamon stick"
 	crop_suffix = " stick"
@@ -1655,6 +1672,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		src.reagents.add_reagent("booster_enzyme", 5)
 
+/obj/item/reagent_containers/food/snacks/plant/sundew
+	name = "sundew slime"
+	crop_suffix = " slime"
+	desc = "The sticky, syrupy secretions of a sundew. Most of the time it attracts mindless insects- but sometimes it works on people too."
+	icon_state = "sundew"
+	planttype = /datum/plant/weed/sundew
+	bites_left = 1
+	heal_amt = 0
+	food_color = "#d8eef2"
+	initial_volume = 25
+	food_effects = list("food_disease_resist")
+
+	make_reagents()
+		..()
+		src.reagents.add_reagent("simplesyrup", 5)
+
 /obj/item/reagent_containers/food/snacks/plant/mustard
 	name = "mustard seed pod"
 	crop_suffix = " seed pod"
@@ -1684,6 +1717,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	make_reagents()
 		..()
 		src.reagents.add_reagent("yuck", 20)
+
 
 /obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
 	name = "orange goop"

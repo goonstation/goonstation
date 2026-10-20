@@ -38,6 +38,11 @@
 		overlay_image_url = "images/titlecards/battleroyale_titlecard.png"
 		is_game_mode = TRUE
 
+	//nations mode titlecard by Wis!
+	nations
+		image_url = "images/titlecards/nations.png"
+		is_game_mode = TRUE
+
 	//Made by Thrush in a day for a one off event, kept because it's so so cool
 	test
 		image_url = "images/titlecards/testcard.png"

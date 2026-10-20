@@ -46,7 +46,9 @@
 		operating = 1
 		FLICK("launcher_loader_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
-		SPAWN(0.3 SECONDS)
+
+		var/delay = global.instant_pipe_network ? (0) : (0.3 SECONDS)
+		SPAWN(delay)
 			for(var/atom/movable/AM in src.loc)
 				if(AM.anchored || AM == src || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || isflockmob(AM)) continue
 				if(trash && AM.delivery_destination != "Disposals")
@@ -71,7 +73,8 @@
 							if (door)
 								door.close()
 
-				SPAWN(door ? door_delay : 2 SECONDS) driver_operating = FALSE
+				var/delay = global.instant_pipe_network ? (0) : (door ? door_delay : 2 SECONDS)
+				SPAWN(delay) driver_operating = FALSE
 
 				sleep(door ? 20 : 10)
 				if (driver)
@@ -397,7 +400,7 @@
 				"name" = scan.registered,
 				"role" = scan.assignment,
 				"icon" = icon_src,
-				"balance" = account?.get_field("current_money"),
+				"balance" = account?["current_money"],
 			)
 		else
 			.["card"] = null
@@ -499,7 +502,7 @@
 
 	src.destinations["Third Party"] = "REQ-THIRDPARTY"
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
-		src.destinations[RC.name] = RC.req_code
+		src.destinations["[RC.name] ([RC.req_code])"] = RC.req_code
 
 /obj/item/portable_barcoder/attack_self(mob/user)
 	src.select_destination(user)

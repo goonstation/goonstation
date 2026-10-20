@@ -152,7 +152,7 @@
 					if(new_tag in src.mail_tag)
 						boutput(user, SPAN_ALERT("[new_tag] is already included in the mailtags!"))
 						return
-					if(contains_chars(new_tag, list("*")))
+					if(findtext(new_tag, "*"))
 						boutput(user, SPAN_ALERT("\"*\" cannot be used in mailtags!"))
 						return
 					if(is_blank_string(new_tag))
@@ -182,7 +182,7 @@
 						src.mail_tag.Remove(to_remove)
 			return
 		var/turf/T = src.loc
-		if(T.intact && (iswrenchingtool(I) || isweldingtool(I))) //to stop it from screaming about it when rotating the pipe with crowbar
+		if(T.intact && !istype(T, /turf/space) && (iswrenchingtool(I) || isweldingtool(I))) //to stop it from screaming about it when rotating the pipe with crowbar
 			boutput(user, "You can only attach the pipe if the floor plating is removed.")
 			return
 

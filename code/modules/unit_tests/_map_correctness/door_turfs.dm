@@ -7,4 +7,4 @@
 	for_by_tcl(door, /obj/machinery/door)
 		var/turf/T = door.loc
 		if ((istype(T, /turf/space) && !istype(door, /obj/machinery/door/poddoor)) || T.density)
-			. += src.format_position(door)
+			. += CI.format_position(door)

@@ -1,0 +1,434 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/fitness)
+"b" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"c" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"d" = (
+/obj/fitness/speedbag/captain,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/crew_quarters/fitness)
+"e" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"f" = (
+/obj/machinery/computer/arcade{
+	icon_state = "arcadeb";
+	status = 1
+	},
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"g" = (
+/obj/machinery/computer/tetris,
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/station/crew_quarters/arcade)
+"h" = (
+/obj/item/cable_coil/cut/small,
+/obj/decal/cleanable/oil,
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"i" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+"j" = (
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+"k" = (
+/obj/machinery/vending/capsule,
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"l" = (
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"n" = (
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	layer = 3
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+"o" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+"p" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/arcade)
+"q" = (
+/obj/item/screwdriver{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/wrench{
+	pixel_x = 4
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"r" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"s" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"t" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"u" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"v" = (
+/obj/fitness/weightlifter,
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+"w" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/junction/middle/south,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"x" = (
+/obj/fitness/speedbag/syndie,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/crew_quarters/fitness)
+"y" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/station/crew_quarters/arcade)
+"z" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/arcade)
+"A" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"B" = (
+/obj/submachine/claw_machine,
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/station/crew_quarters/arcade)
+"C" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"D" = (
+/obj/fitness/weightlifter,
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+"F" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"G" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"H" = (
+/obj/fitness/speedbag/clown,
+/obj/decal/stripe_caution,
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+"I" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"L" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/station/crew_quarters/arcade)
+"N" = (
+/obj/machinery/computer/arcade,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/station/crew_quarters/arcade)
+"O" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"P" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"Q" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"R" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/fitness)
+"T" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"U" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/station/crew_quarters/arcade)
+"V" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/arcade)
+"W" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"X" = (
+/obj/fitness/speedbag/wizard,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/crew_quarters/fitness)
+"Y" = (
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"Z" = (
+/obj/rack,
+/obj/item/bballbasket,
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+
+(1,1,1) = {"
+z
+z
+z
+z
+s
+z
+R
+R
+a
+"}
+(2,1,1) = {"
+z
+B
+U
+k
+W
+p
+H
+n
+R
+"}
+(3,1,1) = {"
+z
+N
+L
+e
+r
+p
+D
+i
+R
+"}
+(4,1,1) = {"
+z
+g
+y
+t
+u
+p
+Z
+j
+R
+"}
+(5,1,1) = {"
+c
+e
+I
+p
+V
+p
+v
+o
+O
+"}
+(6,1,1) = {"
+z
+f
+q
+p
+w
+P
+A
+T
+a
+"}
+(7,1,1) = {"
+z
+h
+Y
+p
+F
+l
+l
+l
+a
+"}
+(8,1,1) = {"
+z
+C
+b
+p
+Q
+X
+x
+d
+a
+"}
+(9,1,1) = {"
+z
+z
+z
+z
+G
+a
+a
+a
+a
+"}

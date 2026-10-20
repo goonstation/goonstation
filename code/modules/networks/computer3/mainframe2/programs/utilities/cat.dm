@@ -15,7 +15,7 @@
 	var/message = ""
 	var/current = src.read_user_field("curpath")
 	for (var/path as anything in initlist)
-		var/datum/computer/file/target = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = ABSOLUTE_PATH(path, current)))
+		var/datum/computer/file/target = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = ABSOLUTE_PATH(path, current)))
 		if (!istype(target))
 			break
 

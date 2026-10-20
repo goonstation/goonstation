@@ -21,6 +21,21 @@
 		if(!isdead(target))
 			boutput(holder.owner, SPAN_ALERT("That person is still alive! Find a corpse."))
 			return TRUE // No cooldown when it fails.
+		if (ismobcritter(target))
+			if(!istypes(target, list(
+				/mob/living/critter/human,
+				/mob/living/critter/brullbar,
+				/mob/living/critter/zombie,
+				/mob/living/critter/gorilla,
+				/mob/living/critter/bear,
+				/mob/living/critter/townguard,
+				)))
+				boutput(holder.owner, SPAN_ALERT("That doesn't seem to be a humanoid corpse!"))
+				return TRUE
+
+		else if(!ishuman(target))
+			boutput(holder.owner, SPAN_ALERT("That doesn't seem to be a humanoid corpse!"))
+			return TRUE
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("EI NECRIS", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()

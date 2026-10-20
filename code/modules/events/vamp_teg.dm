@@ -62,7 +62,7 @@
 			grump_to_overcome = 100
 
 		var/list/obj/machinery/station_switches = list()
-		for(var/area_key as() in stationAreas)
+		for(var/area_key as anything in stationAreas)
 			var/obj/machinery/light_switch/S
 			var/area/SA = stationAreas[area_key]
 			S = locate(/obj/machinery/light_switch) in SA?.machines
@@ -99,7 +99,7 @@
 		SPAWN(event_duration)
 			if(event_active)
 				event_active = FALSE
-				for (var/obj/machinery/light_switch/L as() in station_switches)
+				for (var/obj/machinery/light_switch/L as anything in station_switches)
 					if(L.on && prob(50))
 						elecflash(L)
 						L.Attackhand(null)
@@ -140,7 +140,7 @@
 							animate_levitate(pick(generator,generator.circ1,generator.circ2), 1, 50, random_side = FALSE)
 						if(3)
 							// Turn off light switches
-							for (var/obj/machinery/light_switch/L as() in station_switches)
+							for (var/obj/machinery/light_switch/L as anything in station_switches)
 								if(L.on && prob(5))
 									elecflash(L)
 									L.Attackhand(null)

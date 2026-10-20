@@ -117,7 +117,8 @@ TYPEINFO(/mob/living/silicon/robot)
 		SPAWN(0) //Delay PDA spawning until the client is in the borg, so it respects preferences
 			src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 			src.internal_pda.name = "[src]’s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
+			src.internal_pda.owner = "[src.name]"
+			src.internal_pda.insert_id_card(src.botcard, src)
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule
@@ -196,7 +197,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.part_head.ai_interface = new(src)
 
 		if (!src.dependent && !src.shell)
-			boutput(src, SPAN_NOTICE("Your icons have been generated!"))
+			// boutput(src, SPAN_NOTICE("Your icons have been generated!"))
 			src.syndicate = syndie
 			src.emagged = frame_emagged
 
@@ -807,12 +808,14 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.real_name = borgify_name(src.real_name)
 			src.UpdateName()
 			src.internal_pda?.name = "[src.name]’s Internal PDA Unit"
-			src.internal_pda?.owner = "[src]"
+			src.internal_pda?.owner = "[src.name]"
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.real_name = "SHELL/[src.mainframe.name]"
 			src.UpdateName()
 			src.update_name_tag()
+			src.internal_pda?.name = "[src.name]’s Internal PDA Unit"
+			src.internal_pda?.owner = "[src.name]"
 
 		update_clothing()
 		update_appearance()
@@ -1002,12 +1005,17 @@ TYPEINFO(/mob/living/silicon/robot)
 			boutput(user, SPAN_ALERT("You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!"))
 			return FALSE
 
+		src.delStatus("lockdown_robot")
+		src.delStatus("killswitch_robot")
+
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, SPAN_ALERT("You need to get the wires out of the way."))
 			else
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
+				src.req_access = list()
+				boutput(src, SPAN_ALERT("Your interface lock access limiter has been disabled!"))
 				src.visible_message(SPAN_ALERT("<b>[src]</b> buzzes oddly!"))
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
@@ -2206,98 +2214,13 @@ TYPEINFO(/mob/living/silicon/robot)
 		set category = "Robot Commands"
 		set name = "State Standard Laws"
 
-		if (GET_COOLDOWN(src, "state_laws"))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		var/list/say_targets = list()
-
-		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-			var/prefix_choice = prefix_module.get_prefix_choices()
-			if(!length(prefix_choice))
-				continue
-			say_targets += prefix_choice
-
-		say_targets += "Local"
-
-		var/choice
-		if (length(say_targets) == 1)
-			choice = say_targets[1]
-		else
-			choice = tgui_input_list(src, "Select output channel", "State Standard Laws", say_targets)
-
-		if (!choice)
-			return
-
-		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		var/prefix = ""
-		if (choice != "Local")
-			prefix = say_targets[choice]
-
-		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
-		src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
-		sleep(1 SECOND)
-		src?.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
-		sleep(1 SECOND)
-		src?.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
+		src.state_standard_laws()
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
 		set name = "State All Laws"
 
-		if (GET_COOLDOWN(src, "state_laws"))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
-			return
-
-		var/list/say_targets = list()
-
-		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-			var/prefix_choice = prefix_module.get_prefix_choices()
-			if(!length(prefix_choice))
-				continue
-			say_targets += prefix_choice
-
-		say_targets += "Local"
-
-		var/choice
-		if (length(say_targets) == 1)
-			choice = say_targets[1]
-		else
-			choice = tgui_input_list(src, "Select output channel", "State All Laws", say_targets)
-
-		if (!choice)
-			return
-
-		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		var/prefix = ""
-		if (choice != "Local")
-			prefix = say_targets[choice]
-
-		var/laws = null
-		if(src.dependent) //are you a shell?
-			if(!src?.mainframe?.law_rack_connection)
-				boutput(src, "You have no laws!")
-				return
-			laws = src.mainframe.law_rack_connection.format_for_irc()
-		else
-			if(!src.law_rack_connection)
-				boutput(src, "You have no laws!")
-				return
-			laws = src.law_rack_connection.format_for_irc()
-
-		logTheThing(LOG_SAY, usr, "states all their current laws.")
-		for (var/number in laws)
-			src.say("[prefix] [number]. [laws[number]]")
-			sleep(1 SECOND)
+		src.state_all_laws()
 
 	verb/robot_set_fake_laws()
 		set category = "Robot Commands"
@@ -2884,6 +2807,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				var/image/clothed_image = U.wear_image
 				if (!clothed_image)
 					continue
+				U.copy_appearance_to_image(clothed_image)
 				if (U.wear_state)
 					clothed_image.icon_state = U.wear_state
 				else
@@ -2891,6 +2815,9 @@ TYPEINFO(/mob/living/silicon/robot)
 				clothed_image.alpha = U.alpha
 				clothed_image.color = U.color
 				clothed_image.layer = U.wear_layer
+				if (U.worn_material_texture_image)
+					U.worn_material_texture_image.layer = clothed_image.layer + 0.1
+					clothed_image.overlays += U.worn_material_texture_image
 
 				if (istype(U, /obj/item/clothing/under))
 					src.i_under = clothed_image
@@ -2936,12 +2863,6 @@ TYPEINFO(/mob/living/silicon/robot)
 			AddOverlays(src.i_panel, "panel", TRUE)
 		else
 			ClearSpecificOverlays("panel")
-
-		if (src.emagged)
-			src.i_details.icon_state = "emagged"
-			AddOverlays(src.i_details, "emagged", TRUE)
-		else
-			ClearSpecificOverlays("emagged")
 
 		if (length(src.upgrades))
 			if (!src.i_upgrades)
@@ -3747,8 +3668,12 @@ TYPEINFO(/mob/living/silicon/robot)
 		. = ..()
 
 	onAdd(optional)
-		. = ..()
 		src.robot = src.owner
+		if(src.robot.syndicate || src.robot.emagged)
+			src.fake = TRUE
+		. = ..()
+		if(src.fake)
+			return
 		src.robot.uneq_all()
 		for (var/obj/item/roboupgrade/R in src.robot.contents)
 			if (R.activated)
@@ -3758,6 +3683,8 @@ TYPEINFO(/mob/living/silicon/robot)
 
 	onUpdate(timePassed)
 		. = ..()
+		if(src.fake)
+			return
 		src.robot.uneq_all()
 		for (var/obj/item/roboupgrade/R in src.robot.contents)
 			if (R.activated)

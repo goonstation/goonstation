@@ -5,7 +5,8 @@
 #define ENSURE_TYPE(VAR) if(!istype(VAR)) VAR = null;
 
 #define ABSTRACT_TYPE(type) /_is_abstract ## type
-#define IS_ABSTRACT(type) text2path("/_is_abstract[type]")
+#define ALWAYS_ABSTRACT(type) type/var/final/_always_abstract = TRUE
+#define IS_ABSTRACT(type) (text2path("/_is_abstract[type]") || type:_always_abstract)
 /*
 usage:
 

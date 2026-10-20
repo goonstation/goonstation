@@ -34,7 +34,7 @@
 			src.product_img = img_check
 		else
 			var/atom/dummy_atom = path
-			var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state))
+			var/icon/dummy_icon = icon(get_initial_icon(dummy_atom), initial(dummy_atom.icon_state))
 			src.product_img = icon2base64(dummy_icon)
 			product_base64_cache[path] = src.product_img
 

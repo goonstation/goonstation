@@ -88,7 +88,7 @@
 
 		// step 3 of uplinkification: inform the player about it and store the code in their memory
 		if (istype(uplink_source, /obj/item/device/pda2))
-			boutput(H, "The Syndicate have cunningly disguised an uplink as your [uplink_source.name] [loc_string]. Simply enter the the code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
+			boutput(H, "The Syndicate have cunningly disguised an uplink as your [uplink_source.name] [loc_string]. Simply enter code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
 			logTheThing(LOG_DEBUG, H, "Traitor PDA uplink created: [uplink_source.name]. Location given: [loc_string]. Code: [uplink.lock_code]")
 			src.owner.store_memory("<b>Uplink password:</b> [uplink.lock_code].")
 		else if (istype(uplink_source, /obj/item/device/radio))
@@ -126,7 +126,7 @@
 				var/obj/item_type = initial(purchased_item.items[1])
 				purchased_items += list(
 					list(
-						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"iconBase64" = "[icon2base64(icon(get_initial_icon(item_type), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
 						"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
 					)
 				)
@@ -146,7 +146,7 @@
 					var/obj/item_type = initial(crate_item.items[1])
 					crate_items += list(
 						list(
-							"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+							"iconBase64" = "[icon2base64(icon(get_initial_icon(item_type), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
 							"name" = "[crate_item.name]",
 						)
 					)

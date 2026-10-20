@@ -56,6 +56,7 @@
 			deep_count--
 			clone = semi_deep_copy(H, O, copy_flags=COPY_SKIP_EXPLOITABLE) // admins made me do it
 			clone.remove_filter("cloner_art_outline")
+			clone.is_npc = TRUE
 		else
 			// a bunch of stolen cloner code
 			clone = new /mob/living/carbon/human/clone(O)

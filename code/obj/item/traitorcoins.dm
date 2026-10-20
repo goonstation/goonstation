@@ -2,7 +2,11 @@
 	name = "pure telecrystal"
 	desc = "A pure Telecrystal, useful for creating small, precise warps in space."
 	icon = 'icons/obj/items/materials/telecrystal.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "telecrystal_pure"
+#else
+	icon_state = "telecrystal_pure_1"
+#endif
 	max_stack = INFINITY
 	var/icon_stack_value = 0 //! Used for updating the icon_state as stack amount changes
 

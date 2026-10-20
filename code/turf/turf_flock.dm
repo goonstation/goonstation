@@ -198,6 +198,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	default_material = "gnesis"
 	broken = FALSE
 	var/on = FALSE
+	help_message = null
 
 	// update_icon()
 	// 	..()

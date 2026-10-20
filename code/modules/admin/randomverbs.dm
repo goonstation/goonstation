@@ -690,9 +690,7 @@
 
 		else if (href_list["real_name"])
 			var/new_name = input(usr, "Please select a name:", "Polymorph Menu")  as null|text
-			//var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\")
-			for(var/c in bad_name_characters)
-				new_name = replacetext(new_name, c, "")
+			new_name = remove_bad_name_characters(new_name)
 
 			if(new_name)
 				//Shit guys can name a dude into the entire play of hamlet, if they want.
@@ -747,7 +745,7 @@
 				src.tf_holder.age = clamp(round(text2num(new_age)), minage, maxage)
 
 		else if (href_list["blType"])
-			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list("AB+-", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Zesty Ranch")
 
 			if (blTypeNew)
 				src.tf_holder.bloodType = blTypeNew
@@ -1574,6 +1572,9 @@
 	set desc = "We can't stop here!"
 	ADMIN_ONLY
 	SHOW_VERB_DESC
+
+	if(!tgui_confirm(usr, "Are you sure you would like to replace every segway with a rideable cat and spawn a bunch of cats?"))
+		return
 
 	var/catcounter = 0
 	for(var/obj/vehicle/segway/S in by_type[/obj/vehicle])
@@ -2451,7 +2452,8 @@ var/global/night_mode_enabled = 0
 		old_key = input("Enter old account ckey", "Old account ckey", null) as null|text
 	if (!new_key)
 		new_key = input("Enter new account ckey", "New account ckey", null) as null|text
-
+	old_key = ckey(old_key)
+	new_key = ckey(new_key)
 	try
 		var/datum/apiRoute/players/medals/transfer/transferMedals = new
 		transferMedals.buildBody(old_key, new_key)
@@ -3066,6 +3068,27 @@ var/global/force_radio_maptext = FALSE
 		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
 		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
 	usr.put_in_hand_or_drop(container)
+
+/// Expell an object from every mail chute on-station.
+/client/proc/expell_object_from_mail_chutes()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Expell Object From Mail Chutes"
+	ADMIN_ONLY
+
+	var/partial_type = global.tgui_input_text(usr, "Object type:", "Expell Object From Mail Chutes")
+	if (!partial_type)
+		return
+
+	var/type = global.get_one_match(partial_type, /atom/movable)
+	if (!type)
+		return
+
+	for_by_tcl(chute, /obj/machinery/disposal/mail)
+		if (chute.z != Z_LEVEL_STATION)
+			continue
+
+		new type(chute)
+		chute.expel_contents()
 
 /client/proc/show_mining_map()
 	set name = "Show Mining Map"

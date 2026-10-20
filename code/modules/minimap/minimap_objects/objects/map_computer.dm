@@ -144,3 +144,15 @@
 	disposing()
 		STOP_TRACKING
 		. = ..()
+
+/obj/minimap/map_computer/station
+	name = "Station Map"
+	desc = "A cutting-edge cathode ray tube monitor, actively rendering many dozens of terabytes of structural data." //nukies have it in kilobytes
+
+/obj/minimap/map_computer/station/New()
+	. = ..()
+	START_TRACKING
+
+/obj/minimap/map_computer/station/disposing()
+	STOP_TRACKING
+	. = ..()

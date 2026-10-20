@@ -242,9 +242,10 @@ Turfs and decal for the space rift
 #undef WD_SOLARIUM
 #undef WD_SOVBUDDY
 
+TYPEINFO(/obj/machinery/sleeper/future)
+	manufactured_type = /obj/machinery/sleeper
 /obj/machinery/sleeper/future
 	desc = "This sleeper pod looks futuristic, but also really old.  Kinda like, um, a scifi novel from the 1890s suggesting we'd all be riding time blimps by now."
-	mechanics_type_override = /obj/machinery/sleeper
 
 
 	dead_man_sleeping

@@ -1,0 +1,362 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/turret_protected/ai_upload)
+"d" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
+"e" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"f" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
+"j" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
+"k" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
+"l" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
+"n" = (
+/obj/machinery/door/airlock/pyro/command{
+	req_access = null
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
+"o" = (
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/ai_experimental/one,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_y = 5
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"p" = (
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"t" = (
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
+"u" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
+"v" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"w" = (
+/obj/machinery/turretid/ai_upload{
+	pixel_y = 24
+	},
+/obj/table/reinforced/auto,
+/obj/item/aiModule/oneHuman{
+	pixel_y = 8
+	},
+/obj/item/aiModule/notHuman{
+	pixel_y = -6
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"y" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
+"B" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
+"C" = (
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
+"E" = (
+/obj/machinery/turret{
+	dir = 6
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"H" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
+"I" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
+"J" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/freeform{
+	pixel_y = 9
+	},
+/obj/item/aiModule/makeCaptain{
+	pixel_y = -5
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"M" = (
+/obj/machinery/ai_status_display,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"Q" = (
+/obj/machinery/camera/directional/east,
+/obj/machinery/light_switch/directional/east{
+	pixel_y = 14
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"S" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"T" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
+"U" = (
+/obj/machinery/turret{
+	dir = 6
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"V" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
+"W" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"Z" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/removeCrew{
+	pixel_y = 13
+	},
+/obj/item/aiModule/emergency{
+	pixel_y = -1
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+
+(1,1,1) = {"
+a
+j
+I
+I
+u
+I
+I
+C
+a
+"}
+(2,1,1) = {"
+l
+a
+a
+a
+f
+a
+a
+a
+l
+"}
+(3,1,1) = {"
+k
+a
+U
+J
+e
+p
+U
+a
+k
+"}
+(4,1,1) = {"
+k
+a
+w
+t
+T
+t
+v
+a
+k
+"}
+(5,1,1) = {"
+B
+n
+S
+d
+V
+d
+Y
+n
+y
+"}
+(6,1,1) = {"
+k
+a
+M
+t
+T
+t
+o
+a
+k
+"}
+(7,1,1) = {"
+k
+a
+E
+Q
+e
+Z
+E
+a
+k
+"}
+(8,1,1) = {"
+H
+a
+a
+a
+f
+a
+a
+a
+H
+"}
+(9,1,1) = {"
+a
+j
+I
+I
+W
+I
+I
+C
+a
+"}

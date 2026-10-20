@@ -33,8 +33,10 @@
 		if (pixel_x == 9)
 			pixel_x = rand(-8, 8)
 
-	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
+	afterattack(atom/A as mob|obj|turf, mob/user as mob, reach, params)
 		if (!A)
+			return
+		if (isintangible(A))
 			return
 		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /atom/movable/screen) || istype(A, /obj/ability_button))
 			return
@@ -699,8 +701,8 @@
 
 /obj/item/device/radio/spy/det_only
 	locked_frequency = 1
-	frequency = R_FREQ_DETECTIVE
-	chat_class = RADIOCL_DETECTIVE
+	frequency = RADIO::FREQ::DETECTIVE
+	chat_class = RADIO::CSS::DETECTIVE
 
 ABSTRACT_TYPE(/obj/item/sticker/glow)
 /obj/item/sticker/glow

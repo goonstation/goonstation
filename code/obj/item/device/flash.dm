@@ -428,7 +428,7 @@ obj/item/device/flash/cyborg/handle_animations(var/mob/user, var/obj/item_in_use
 	spawn_contents = list(/obj/item/assembly/flash_cell = 5)
 
 TYPEINFO(/obj/item/device/flash/revolution)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/device/flash/revolution
 	name = "revolutionary flash"
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."

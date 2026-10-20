@@ -9,7 +9,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Remarkable } from 'remarkable';
+import { Remarkable } from 'remarkable/dist/esm/index.js';
 import { Box, Flex, Tabs, TextArea } from 'tgui-core/components';
 import { KEY } from 'tgui-core/keys';
 
@@ -320,7 +320,10 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       const value = textarea.value;
-      textarea.value = value.substring(0, start) + '\n' + value.substring(end);
+      setTextAreaText(value.substring(0, start) + '\n' + value.substring(end));
+      // this is a SPAWN(0) to bypass tgui-core textarea being hardcoded to unfocus on enter
+      // ideally tgui-core would properly handle multiline textareas but alas this is not a perfect world
+      setTimeout(() => textarea.focus(), 0);
       textarea.selectionStart = textarea.selectionEnd = start + 1;
     }
   };

@@ -54,7 +54,7 @@
 		// start with obscured name
 		src.artifactName = O.real_name
 		// get an instance of the artifact origin
-		for(var/datum/artifact_origin/origin as() in artifact_controls.artifact_origins)
+		for(var/datum/artifact_origin/origin as anything in artifact_controls.artifact_origins)
 			if(origin.type_name == src.artifactOrigin)
 				// have we already generated a name for that origin?
 				// the actual name with the actual origin should be in the list by default
@@ -128,7 +128,7 @@
 		. = ..()
 		if (.)
 			return
-		if (!usr.find_type_in_hand(/obj/item/pen))
+		if (!src.hasWritingItem(usr.equipped()))
 			boutput(usr, "You can't write without a pen!")
 			return FALSE
 
@@ -199,3 +199,11 @@
 			var/obj/O = src.attached
 			O.remove_suffixes("\[[src.artifactType]\]")
 			O.UpdateName()
+
+	proc/hasWritingItem(obj/item/I)
+		if(istype(I, /obj/item/pen))
+			return TRUE
+		if(istype(I, /obj/item/tool/omnitool))
+			var/obj/item/tool/omnitool/TOOL = I
+
+			return TOOL.mode?.mode_id ==  OMNITOOL::MODE_PEN

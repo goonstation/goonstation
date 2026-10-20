@@ -44,7 +44,7 @@
 	pixel_y = -6
 	},
 /obj/item/reagent_containers/emergency_injector/random,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 6
 	},
 /area/prefab/adrift_cargorouter)
@@ -159,7 +159,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/prefab/adrift_cargorouter)
@@ -171,7 +171,7 @@
 /obj/machinery/conveyor/WE{
 	id = "lostrouter"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/prefab/adrift_cargorouter)
@@ -209,7 +209,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/prefab/adrift_cargorouter)
 "oB" = (
 /obj/lattice{
@@ -228,7 +228,7 @@
 /obj/critter/bat/buff,
 /obj/critter/bat/buff,
 /mob/living/critter/fermid,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/prefab/adrift_cargorouter)
@@ -244,7 +244,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "rP" = (
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/prefab/adrift_cargorouter)
@@ -253,7 +253,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/prefab/adrift_cargorouter)
@@ -265,7 +265,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "tJ" = (
-/turf/simulated/floor/orangeblack/corner{
+/turf/simulated/floor/caution/corner{
 	dir = 1
 	},
 /area/prefab/adrift_cargorouter)
@@ -293,7 +293,7 @@
 /area/noGenerate)
 "vz" = (
 /obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/prefab/adrift_cargorouter)
 "vM" = (
 /obj/machinery/disposal/transport{
@@ -302,7 +302,7 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 8
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 5
 	},
 /area/prefab/adrift_cargorouter)
@@ -399,7 +399,7 @@
 	open = 1;
 	locked = 0
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/prefab/adrift_cargorouter)
@@ -407,7 +407,7 @@
 /obj/railing/yellow{
 	dir = 8
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 10
 	},
 /area/prefab/adrift_cargorouter)
@@ -416,7 +416,7 @@
 /area/prefab/adrift_cargorouter)
 "Eo" = (
 /obj/machinery/manufacturer/qm,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/prefab/adrift_cargorouter)
 "Er" = (
 /obj/disposaloutlet{
@@ -485,7 +485,7 @@
 /obj/railing/yellow{
 	dir = 8
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/prefab/adrift_cargorouter)
@@ -521,7 +521,7 @@
 /obj/item/reagent_containers/food/fish/mahimahi,
 /obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/snacks/swedish_fish,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/prefab/adrift_cargorouter)
@@ -539,7 +539,7 @@
 /obj/random_item_spawner/cola,
 /obj/random_item_spawner/cola,
 /obj/random_item_spawner/cola,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/prefab/adrift_cargorouter)
@@ -558,7 +558,7 @@
 /obj/item/storage/wall/office{
 	pixel_x = -7
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/prefab/adrift_cargorouter)
@@ -595,7 +595,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/prefab/adrift_cargorouter)

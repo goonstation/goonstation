@@ -130,7 +130,7 @@
 /area/prefab/ranch)
 "J" = (
 /obj/table/auto,
-/obj/item/paper/ranch_guide,
+/obj/item/paper/image/ranch_guide,
 /obj/item/kitchen/egg_box,
 /turf/simulated/floor/green,
 /area/prefab/ranch)

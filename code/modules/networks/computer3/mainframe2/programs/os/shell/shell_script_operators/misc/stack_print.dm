@@ -13,7 +13,7 @@
 	src.shell.message_user("<[stack_length]>")
 
 	if (stack_length < 1)
-		return SCRIPT_SUCCESS
+		return DWAINE::ERR::SHELL::SCRIPT::SUCCESS
 
 	src.shell.message_user(jointext(src.shell.stack, "|n") + "|n", "multiline")
-	return SCRIPT_SUCCESS
+	return DWAINE::ERR::SHELL::SCRIPT::SUCCESS

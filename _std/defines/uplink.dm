@@ -4,3 +4,8 @@
 #define UPLINK_HEAD_REV (1<<3)
 #define UPLINK_NUKE_OP (1<<4)
 #define UPLINK_NUKE_COMMANDER (1<<5)
+
+/// Which UI an uplink uses
+#define UPLINK_UI_CUSTOM 0
+#define UPLINK_UI_TGUI 1
+#define UPLINK_UI_HTML 2

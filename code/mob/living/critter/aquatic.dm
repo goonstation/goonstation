@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	..()
 	var/datum/handHolder/HH = hands[1]
 	HH.limb = new /datum/limb/mouth/fish
-	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon = 'icons/mob/critter_hands.dmi'
 	HH.icon_state = "mouth"
 	HH.name = "mouth"
 	HH.limb_name = "mouth"
@@ -549,14 +549,14 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	..()
 	var/datum/handHolder/HH = hands[1]
 	HH.limb = new /datum/limb/mouth/fish/jellyfish
-	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon = 'icons/mob/critter_hands.dmi'
 	HH.icon_state = "mouth"
 	HH.name = "mouth"
 	HH.limb_name = "mouth"
 
 	HH = hands[2]
 	HH.limb = new /datum/limb/small_critter
-	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon = 'icons/mob/critter_hands.dmi'
 	HH.icon_state = "handn"
 	HH.name = "tendrils"
 	HH.limb_name = "tendrils"
@@ -588,7 +588,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth/shark
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "jaws"

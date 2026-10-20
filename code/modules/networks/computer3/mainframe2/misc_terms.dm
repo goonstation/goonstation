@@ -1034,6 +1034,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 				"metal_superdense" = 25,
 				"conductive_high" = 13,
 				"crystal_dense" = 15) //haha this is a bad idea
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //^ Agreed
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = ANCHORED_ALWAYS
@@ -1051,7 +1052,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
 	deconstruct_flags = DECON_NONE
-	is_syndicate = 1 //^ Agreed
 
 	New()
 		..()
@@ -1150,7 +1150,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 			src.time--
 			post_display_status(src.time)
 			if(src.time <= 0)
-				outpost_destroyed = 1
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
@@ -1806,6 +1805,14 @@ TYPEINFO(/obj/machinery/networked/printer)
 			src.updateUsrDialog()
 			return
 
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/jam/paperjam)) //Jam the printer with jam!
+			src.jam()
+			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
+			user.visible_message(SPAN_NOTICE("[user] jams the printer with the jam."), SPAN_NOTICE("You jam the printer with the jam."))
+			src.updateUsrDialog()
+			qdel(W)
+			return
+
 		else
 			return attack_hand(user)
 
@@ -1990,7 +1997,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 						var/buffer_add = null
 						if (istype(signal.data_file, /datum/computer/file/image)) // pic-a-ture
-							buffer_add = signal.data_file:data
+							buffer_add = signal.data_file
 							if (!buffer_add)
 								src.post_status(target,"command","term_message","data","command=status&status=badfile")
 								return
@@ -2443,12 +2450,15 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		return output
 
+TYPEINFO(/obj/machinery/networked/secdetector)
+	mats = 12
 
 //IR tripwire/threat analyzer.
 /obj/machinery/networked/secdetector
 	name = "IR Detector"
 	desc = "An infrared tripwire and video camera coupled with a sophisticated threat-analysis system."
 	icon_state = "secdetector0"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	device_tag = "PNET_IR_DETECT"
 
 	var/detector_id = null
@@ -2585,7 +2595,9 @@ TYPEINFO(/obj/machinery/networked/printer)
 		if (active_time > 0)
 			active_time--
 			if (!active_time)
-				//src.state = src.online
+				qdel(src.scan_beam)
+				src.scan_beam = null
+				src.state = src.online
 				src.UpdateIcon(src.online)
 
 		switch (src.state)
@@ -4064,6 +4076,11 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					src.electrify_contents()
 					message_host("command=ack")
 					src.UpdateIcon()
+					SPAWN(5 SECONDS)
+						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
+						playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
+						active = 0
+						src.UpdateIcon()
 				else
 					message_host("command=nack")
 

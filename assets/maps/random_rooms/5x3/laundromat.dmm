@@ -52,7 +52,7 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/obj/machinery/light_switch/north{
+/obj/machinery/light_switch/directional/north{
 	pixel_x = 13
 	},
 /turf/simulated/floor/black,

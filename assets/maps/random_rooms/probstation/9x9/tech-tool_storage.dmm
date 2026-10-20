@@ -1,0 +1,630 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"b" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"c" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"d" = (
+/obj/machinery/vending/floppy,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"e" = (
+/turf/simulated/floor,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"f" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"h" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"i" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"j" = (
+/obj/table/auto,
+/obj/item/extinguisher{
+	pixel_x = -8;
+	pixel_y = 18
+	},
+/obj/machinery/cell_charger{
+	pixel_y = 4
+	},
+/obj/item/cell/supercell/charged{
+	pixel_y = 10;
+	pixel_x = 3
+	},
+/obj/item/cell/supercell/charged{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"k" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/device/gps{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/device/gps{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"l" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/storage/tech)
+"m" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"n" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"o" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"p" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"r" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"s" = (
+/obj/rack/organized/techstorage_med,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"t" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/yellow/corner,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"u" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"v" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/vending/computer3,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"w" = (
+/obj/table/auto,
+/obj/item/sheet/glass/fullstack{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/sheet/steel/fullstack{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"x" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/yellow/side,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"y" = (
+/obj/table/auto,
+/obj/item/device/flash{
+	pixel_x = -7
+	},
+/obj/machinery/computer3/luggable{
+	pixel_y = 10;
+	pixel_x = 5
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/item/screwdriver{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"z" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"A" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/storage/tech)
+"B" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/item/device/net_sniffer,
+/obj/machinery/light/small,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"C" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/item/disk/data/floppy/read_only/security_progs{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/item/disk/data/floppy/computer3boot{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/table/auto,
+/obj/item/disk/data/floppy/read_only/terminal_os{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/disk/data/floppy/read_only/medical_progs{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"D" = (
+/obj/machinery/camera/directional/north,
+/obj/disposalpipe/trunk/west,
+/obj/machinery/disposal,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"E" = (
+/obj/blind_switch/directional/east,
+/obj/rack/organized/techstorage_eng/transception,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"F" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"G" = (
+/turf/simulated/floor/yellow/side,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"H" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"I" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction/left/south,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"J" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/yellow/side,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"K" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"L" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/storage/tech)
+"M" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"N" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/table/auto,
+/obj/item/device/multitool{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/screwdriver{
+	pixel_y = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"O" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/mapping_helper/access/tech_storage,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"P" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"Q" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"R" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"S" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"T" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"U" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+"V" = (
+/obj/machinery/light_switch/directional/west,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/radio{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"W" = (
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/storage/tech)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/mapping_helper/access/tech_storage,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/storage/tech)
+"Z" = (
+/obj/storage/closet/office,
+/obj/blind_switch/directional/west{
+	pixel_y = -5
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = 5
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
+
+(1,1,1) = {"
+r
+r
+r
+r
+T
+A
+A
+A
+A
+"}
+(2,1,1) = {"
+K
+i
+Z
+j
+n
+W
+V
+m
+A
+"}
+(3,1,1) = {"
+z
+k
+e
+e
+R
+A
+f
+S
+A
+"}
+(4,1,1) = {"
+c
+w
+e
+e
+J
+A
+C
+h
+A
+"}
+(5,1,1) = {"
+o
+M
+F
+t
+b
+Y
+I
+P
+O
+"}
+(6,1,1) = {"
+r
+D
+a
+G
+A
+A
+H
+B
+A
+"}
+(7,1,1) = {"
+r
+U
+a
+x
+L
+v
+u
+s
+A
+"}
+(8,1,1) = {"
+r
+p
+N
+Q
+l
+d
+y
+E
+A
+"}
+(9,1,1) = {"
+r
+r
+r
+r
+l
+A
+A
+A
+A
+"}

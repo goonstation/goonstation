@@ -12,7 +12,7 @@
 	else
 		initparams = "/home/usr[src.read_user_field("name")]"
 
-	var/datum/computer/folder/F = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initparams))
+	var/datum/computer/folder/F = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = initparams))
 	if (!istype(F))
 		src.message_user("Error: Invalid path.")
 

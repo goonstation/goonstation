@@ -1579,9 +1579,9 @@
 	name = "Space Diner Backhall"
 	})
 "XJ" = (
-/obj/machinery/vending/coffee,
 /obj/decal/tile_edge/check/purple,
 /obj/decal/cleanable/dirt,
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "XK" = (

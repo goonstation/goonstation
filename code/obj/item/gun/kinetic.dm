@@ -188,7 +188,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src)
+							var/atom/casing = new src.current_projectile.casing(T, src)
+							var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+							casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -204,7 +206,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src)
+							var/atom/casing = new src.current_projectile.casing(T, src)
+							var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+							casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -269,7 +273,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if(T)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
 				while (src.casings_to_eject > 0)
-					new src.current_projectile.casing(T, src)
+					var/atom/casing = new src.current_projectile.casing(T, src)
+					var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+					casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 					src.casings_to_eject--
 		return
 
@@ -307,6 +313,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			return FALSE
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		. = ..()
+		hammer_cocked = FALSE
+		src.UpdateIcon()
+
+	shoot_point_blank(atom/target, mob/user, second_shot = 0)
 		. = ..()
 		hammer_cocked = FALSE
 		src.UpdateIcon()
@@ -483,7 +494,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	src.pixel_x += rand(-12,12)
 	src.set_dir(pick(alldirs))
 	if(firearm)
-		src.forensic_ID = firearm.forensic_ID
 		//Only include the default name of the gun, some special names set randomly in new are confusing and labels shouldnt be readable
 		src.fired_by = initial(firearm.name)
 
@@ -668,7 +678,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.22
 /obj/item/gun/kinetic/faith
 	name = "Faith"
-	desc = "'Cause ya gotta have Faith. A custom upgrade to the the Auklet .22 pocket pistol from Cormorant Precision Arms."
+	desc = "'Cause ya gotta have Faith. A custom upgrade to the Auklet .22 pocket pistol from Cormorant Precision Arms."
 	icon_state = "faith"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_22)
@@ -2581,7 +2591,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	attackby(obj/item/b, mob/user)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
 			if(src.ammo.amount_left > 0)
-				boutput(user, SPAN_ALERT("The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!"))
+				boutput(user, SPAN_ALERT("The [src.name] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src.name]!"))
 				return
 			else
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)
@@ -3021,6 +3031,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
 	recoil_strength = 8
+	
+	HELP_MESSAGE_OVERRIDE("Can be held with two hands to reduce recoil and improve accuracy.")
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -3423,12 +3435,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	attackby(obj/item/b, mob/user)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
 			if((src.ammo.amount_left > 0 && !istype(current_projectile, /datum/projectile/bullet/grenade_shell)) || src.ammo.amount_left >= src.max_ammo_capacity)
-				boutput(user, SPAN_ALERT("The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!"))
+				boutput(user, SPAN_ALERT("The [src.name] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src.name]!"))
 				return
 			else
 				var/datum/projectile/bullet/grenade_shell/custom_shell = src.current_projectile
 				if(src.ammo.amount_left > 0 && istype(custom_shell) && custom_shell.get_nade().type != b.type)
-					boutput(user, SPAN_ALERT("The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!"))
+					boutput(user, SPAN_ALERT("The [src.name] has a different kind of grenade in the conversion chamber, and refuses to mix and match!"))
 					return
 				else
 					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)

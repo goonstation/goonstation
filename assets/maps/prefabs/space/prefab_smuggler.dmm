@@ -82,7 +82,7 @@
 	icon_state = "ashtray";
 	name = "grubby old ashtray"
 	},
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	icon_state = "light0";
 	on = 0
 	},

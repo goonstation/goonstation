@@ -10,4 +10,4 @@
 	. = list()
 	. += "There should be exactly 1 xmas tree, but there are [tree_num]!"
 	for_by_tcl(tree, /obj/xmastree)
-		. += src.format_position(tree)
+		. += CI.format_position(tree)

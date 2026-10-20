@@ -126,7 +126,7 @@
 
 /obj/landmark/newbee/emergency_supply_closet
 	name = LANDMARK_TUTORIAL_NEWBEE_EMERGENCY_SUPPLY_CLOSET
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_state = "emergency"
 
 /obj/landmark/newbee/enter_space

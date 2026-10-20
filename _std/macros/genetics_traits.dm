@@ -1,2 +1,2 @@
 //for trait / genetics checks
-#define isalcoholresistant(x) ((x.bioHolder && x.bioHolder.HasEffect("resist_alcohol")) || (x.traitHolder && x.traitHolder.hasTrait("training_drinker")))
+#define isalcoholresistant(x) (GET_ATOM_PROPERTY(x, PROP_MOB_ALCOHOL_RESIST) >= 100)

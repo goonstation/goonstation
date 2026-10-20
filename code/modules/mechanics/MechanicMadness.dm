@@ -17,10 +17,12 @@
 //
 
 TYPEINFO(/obj/item/storage/mechanics/housing_large)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("bohrum" = 100,
 				"conductive" = 50)
 
 TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("bohrum" = 80,
 				"conductive_high" = 40)
 
@@ -2844,6 +2846,14 @@ TYPEINFO(/obj/item/mechanics)
 		STOP_TRACKING
 		return ..()
 
+	check_wrenching_conditions(mob/user)
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			if(T.density)
+				boutput(user, SPAN_ALERT("[src] cannot be placed in a solid wall!"))
+				return FALSE
+		return ..()
+
 	proc/setID(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter ID:","ID setting",teleID) as text
 		if(!in_interact_range(src, user) || user.stat)
@@ -3076,7 +3086,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 	desc = ""
 	icon_state = "comp_radioscanner"
 
-	var/frequency = R_FREQ_DEFAULT
+	var/frequency = RADIO::FREQ::DEFAULT
 
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Current Frequency: [frequency]")]"
@@ -3095,7 +3105,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 		src.hear_radio(message)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
+		var/inp = input(user, "New frequency ([RADIO::FREQ::MINIMUM] - [RADIO::FREQ::MAXIMUM]):", "Enter new frequency", frequency) as num
 		if(!in_interact_range(src, user) || user.stat)
 			return FALSE
 		if(!isnull(inp))
@@ -3127,7 +3137,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 			return
 
 		LIGHT_UP_HOUSING
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "name=[message.speaker_to_display]&message=[message.content]")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "name=[message.speaker_to_display]&message=[message.get_content_parsable()]")
 		animate_flash_color_fill(src, "#00FF00", 2, 2)
 
 	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
@@ -4712,7 +4722,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
-		step(S, direction, (32 / move_lag) * world.tick_lag)
+		if (step(S, direction, (32 / move_lag) * world.tick_lag))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[direction]")
+		else
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"0")
 		UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
 
 	/// set our glide size in case it was changed

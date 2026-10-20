@@ -19,4 +19,4 @@ ABSTRACT_TYPE(/datum/dwaine_shell_builtin)
 
 /// Execute this shell builtin.
 /datum/dwaine_shell_builtin/proc/execute(list/command_list, list/piped_list)
-	return BUILTIN_SUCCESS
+	return DWAINE::ERR::SHELL::BUILTIN::SUCCESS

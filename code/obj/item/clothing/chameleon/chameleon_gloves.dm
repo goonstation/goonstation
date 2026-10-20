@@ -89,7 +89,9 @@
 				var/list/fiber_chars = list("c","f","g","h","i","j","k","r","s","t","v","w","x","y","z")
 				fibers = register_id("[src.material_prints]: [build_id(fiber_chars, 7)]")
 			src.tooltip_rebuild = TRUE
-			usr.set_clothing_icon_dirty()
+			if(ismob(src.loc))
+				var/mob/mob_loc = src.loc
+				mob_loc.set_clothing_icon_dirty()
 
 /datum/chameleon_gloves_pattern
 	var/name = "black gloves"

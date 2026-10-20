@@ -32,14 +32,10 @@
 
 
 /datum/map_correctness_check/area_contents/chemistry/neon
-	check_name = "Chemistry Contents Check"
 	only_check_on = list(
 		/datum/map_settings/neon,
 	)
 	skip_check_on = null
-	target_areas = list(
-		/area/station/science/chemistry,
-	)
 	expected_contents = list(
 		// Equipment
 		CONTENTS_GT(/obj/machinery/chem_dispenser/chemical, 0),

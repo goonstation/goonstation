@@ -1,0 +1,400 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hydroponics/bay)
+"c" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hydro,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"d" = (
+/obj/submachine/chem_extractor,
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"f" = (
+/turf/simulated/wall/auto/supernorn/colored/green,
+/area/station/hydroponics/bay)
+"g" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"i" = (
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"l" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"m" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/table/auto,
+/obj/machinery/coffeemaker/botany,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"n" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hydro,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"o" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/machinery/camera/directional/east,
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"p" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"q" = (
+/obj/submachine/seed_manipulator,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"r" = (
+/obj/stool/chair/couch/green{
+	dir = 10
+	},
+/obj/landmark/start/job/botanist,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"s" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"t" = (
+/obj/stool/chair/green{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"u" = (
+/obj/stool/chair/couch/green{
+	dir = 9
+	},
+/obj/landmark/start/job/botanist,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"v" = (
+/obj/storage/secure/closet/civilian/hydro,
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"w" = (
+/turf/simulated/floor/stairs/wide/middle,
+/area/station/hydroponics/bay)
+"x" = (
+/obj/reagent_dispensers/watertank/big,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"y" = (
+/obj/machinery/firealarm/directional/east,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/stairs/wide/green/other,
+/area/station/hydroponics/bay)
+"z" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hydro,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"A" = (
+/obj/stool/chair/couch/green{
+	dir = 5
+	},
+/obj/landmark/start/job/botanist,
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"B" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"C" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/drink_rack/mug{
+	pixel_x = 28;
+	pixel_y = 3
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"D" = (
+/obj/machinery/hydro_growlamp,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"E" = (
+/obj/storage/secure/closet/civilian/hydro,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"F" = (
+/obj/reagent_dispensers/compostbin,
+/turf/simulated/floor/stairs/wide/green,
+/area/station/hydroponics/bay)
+"G" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"H" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"I" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/submachine/cargopad/hydroponic,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"K" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"L" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs/wide/middle,
+/area/station/hydroponics/bay)
+"P" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"R" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"S" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"T" = (
+/obj/submachine/seed_vendor,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"U" = (
+/obj/machinery/vending/hydroponics,
+/obj/machinery/phone/wall{
+	pixel_x = 25;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"V" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hydro,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"W" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"X" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"Z" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+
+(1,1,1) = {"
+f
+f
+f
+f
+z
+f
+a
+a
+f
+"}
+(2,1,1) = {"
+f
+v
+x
+F
+W
+Z
+K
+B
+a
+"}
+(3,1,1) = {"
+f
+E
+I
+L
+S
+i
+B
+H
+a
+"}
+(4,1,1) = {"
+f
+d
+t
+w
+i
+i
+B
+B
+f
+"}
+(5,1,1) = {"
+V
+X
+s
+L
+m
+l
+Y
+p
+n
+"}
+(6,1,1) = {"
+f
+q
+u
+w
+W
+i
+B
+G
+f
+"}
+(7,1,1) = {"
+f
+T
+r
+w
+P
+i
+B
+D
+a
+"}
+(8,1,1) = {"
+f
+U
+A
+y
+g
+C
+R
+o
+a
+"}
+(9,1,1) = {"
+f
+f
+f
+f
+c
+f
+a
+a
+f
+"}

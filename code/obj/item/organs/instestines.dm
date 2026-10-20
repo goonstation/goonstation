@@ -36,6 +36,8 @@
 			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_DIGESTION_EFFICIENCY, src)
 
 	disposing()
+		if (src.donor) // force-replaced organs get deleted without on_removal()
+			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_DIGESTION_EFFICIENCY, src)
 		if (holder)
 			if (holder.intestines == src)
 				holder.intestines = null
@@ -52,6 +54,7 @@
 		src.icon_state = pick("plant_intestines", "plant_intestines_bloom")
 
 TYPEINFO(/obj/item/organ/intestines/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/intestines/cyber

@@ -56,7 +56,9 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-			LAGCHECK(LAG_HIGH)
+
+			if (!global.instant_pipe_network)
+				LAGCHECK(LAG_HIGH)
 
 
 	// start the movement process
@@ -76,25 +78,25 @@
 
 	// movement process, persists while holder is moving through pipes
 	proc/process()
-		var/obj/disposalpipe/last
-		while(active)
-			sleep(0.1 SECONDS)		// was 1
-			if(slowed > 0)
-				slowed--
-				slowed = max(slowed,0)
-				sleep(1 SECONDS)
-			else
-				if (!loc)
-					return
-				var/obj/disposalpipe/curr = loc
-				last = curr
-				curr = curr.transfer(src)
-				if(!curr)
-					last.expel(src, get_turf(loc), dir)
+		var/delay = global.instant_pipe_network ? (0) : (0.1 SECONDS)
 
-				if(!(count--))
-					active = 0
-		return
+		while (src.active)
+			sleep(delay)
+
+			if (src.slowed > 0)
+				src.slowed = max(src.slowed - 1, 0)
+				sleep(1 SECONDS)
+
+			else if (src.loc)
+				var/obj/disposalpipe/current = src.loc
+				if (!current.transfer(src))
+					current.expel(src, get_turf(src.loc), src.dir)
+
+				if (!(src.count--))
+					src.active = FALSE
+
+			else
+				return
 
 	// find the turf which should contain the next pipe
 	proc/nextloc()
@@ -162,10 +164,22 @@
 		damage_pipe(5)
 		slowed++
 
+	assume_air(datum/air_group/giver)
+		src.gas.merge(giver)
+
+	remove_air(amount)
+		return src.gas.remove(amount)
+
+	return_air(direct)
+		if(direct)
+			return src.gas
+		. = ..()
+
 	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		if (src.gas && breath_request > 0)
-			return src.gas
-		..()
+			return src.remove_air(breath_request * mult)
+		else
+			..()
 
 	proc/damage_pipe(var/amount = 3)
 		var/obj/disposalpipe/P = src.loc
@@ -1101,9 +1115,6 @@
 
 		qdel(src)
 
-TYPEINFO(/obj/disposalpipe/loafer)
-	mats = 100
-
 /obj/disposalpipe/chicken_disposal_pipe
 	name = "humane chicken processor"
 	desc = "a pipe segment designed to convert alive chickens into dead chickens"
@@ -1177,11 +1188,13 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 		return P
 
+TYPEINFO(/obj/disposalpipe/loafer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+	mats = 100
 /obj/disposalpipe/loafer
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
-	is_syndicate = 1
 	weldable = FALSE
 	var/is_doing_stuff = FALSE
 	HELP_MESSAGE_OVERRIDE("The disciplinary loaf processor cannot be detached by welding.")
@@ -1353,10 +1366,6 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		src.reagents.add_reagent("space_fungus",3)
 		src.reagents.add_reagent("synthflesh",10)
 
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) // only relevant if strangelet
-
 	proc/update()
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
@@ -1450,7 +1459,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				src.throwforce = 88
 				src.throw_range = 0
 				src.reagents.add_reagent("george_melonium",50)
-				START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+				src.AddElement(/datum/element/ghost_observable)
 
 				if (!src.processing)
 					src.processing = TRUE
@@ -2053,6 +2062,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 // the disposal outlet machine
 
 TYPEINFO(/obj/disposaloutlet)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/disposaloutlet
@@ -2076,6 +2086,8 @@ TYPEINFO(/obj/disposaloutlet)
 	var/frequency = FREQ_PDA
 	var/flusher_id = null
 	throw_speed = 1
+	/// Items thrown per tick when expelling
+	var/eject_batch_size = 15
 
 
 	ex_act(var/severity)
@@ -2167,13 +2179,22 @@ TYPEINFO(/obj/disposaloutlet)
 		FLICK("outlet-open", src)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
-		sleep(2 SECONDS)	//wait until correct animation frame
+		if (!global.instant_pipe_network)
+			sleep(2 SECONDS)
+
 		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 
 		var/turf/expel_loc = get_turf(src)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
 			expel_loc = get_step(expel_loc, src.dir)
+		var/ejected = 0
 		for(var/atom/movable/AM in H)
+			if (ejected >= src.eject_batch_size && !global.instant_pipe_network)
+				ejected = 0
+				sleep(1 TICK)
+			if (AM.loc != H) // may have left or been deleted while we slept :(
+				continue
+			ejected++
 			ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)

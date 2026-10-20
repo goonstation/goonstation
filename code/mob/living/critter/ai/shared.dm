@@ -99,6 +99,12 @@
 	holder?.stop_move() // Just in case they yeet themselves out of existance
 	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
 
+/datum/aiTask/timed/wander/floor_only/less
+
+/datum/aiTask/timed/wander/floor_only/less/on_tick()
+	if (prob(30))
+		..()
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
 // a timed task that also relates to a target and the acquisition of said target

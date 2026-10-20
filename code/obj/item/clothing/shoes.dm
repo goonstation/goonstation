@@ -196,6 +196,7 @@
 	icon_state = "pink"
 
 TYPEINFO(/obj/item/clothing/shoes/magnetic)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 4,
 			"conductive" = 8,
 			"fabric" = 3,
@@ -266,7 +267,7 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		return TRUE
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.
@@ -285,6 +286,7 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 		delProperty("chemprot")
 
 TYPEINFO(/obj/item/clothing/shoes/industrial)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 15,
 				"conductive_high" = 10,
 				"energy_high" = 10)
@@ -460,6 +462,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
 TYPEINFO(/obj/item/clothing/shoes/moon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 2
 
 /obj/item/clothing/shoes/moon
@@ -483,6 +486,8 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	icon_state = "cowboy"
 	compatible_species = list("human", "cow")
 
+TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
@@ -490,7 +495,6 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999
-	is_syndicate = 1
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -557,6 +561,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "chef's clogs"
 	desc = "Sturdy shoes that minimize injury from falling objects or knives."
 	icon_state = "chef"
+	default_material = "wood"
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
@@ -572,7 +577,6 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	protective_temperature = 1250
 	step_sound = "step_military"
 	step_priority = STEP_PRIORITY_LOW
-	step_lots = 1
 	kick_bonus = 2
 
 	setupProperties()
@@ -625,6 +629,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if(src.step_sound != "clownstep")
+			src.step_lots = 1
 			src.step_sound = "clownstep"
 			src.step_priority = /obj/item/clothing/shoes/clown_shoes::step_priority
 			boutput(user, SPAN_NOTICE("You scramble the speakers installed in [src]"))

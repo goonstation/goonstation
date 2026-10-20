@@ -177,6 +177,10 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 			if (user in reachable)
 				return TRUE
 
+/// Check if three items are all in interact range (i.e. item, source, target click-drags)
+/proc/in_interact_range_tri(atom/source, atom/user, atom/target)
+	return in_interact_range(source, user) && in_interact_range(source, target) && in_interact_range(target, user)
+
 /proc/test_click(turf/from, turf/target, actually_test_entering=FALSE)
 	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
 	click_dummy.set_loc(from)
@@ -537,6 +541,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/effects/precipitation)) continue
 			if (istype(AM, /obj/overlay/tile_effect)) continue
+			if (istype(AM, /obj/forcefield/event)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			if (istype(AM, /obj/decal/tile_edge) && istypes(S, turf_to_skip)) continue
 			AM.set_loc(T)

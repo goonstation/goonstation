@@ -4,7 +4,7 @@
 ABSTRACT_TYPE(/datum/job/special/clown)
 /datum/job/special/clown
 	job_category = JOB_CLOWN
-	wages = PAY_DUMBCLOWN
+	wages = PAY::DUMBCLOWN
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	ui_colour = TGUI_COLOUR_PINK
@@ -20,6 +20,7 @@ ABSTRACT_TYPE(/datum/job/special/clown)
 	slot_belt = list(/obj/item/storage/fanny/funny)
 	slot_poc1 = list(/obj/item/device/pda2/clown)
 	slot_lhan = list(/obj/item/instrument/bikehorn)
+	items_in_mob = /datum/job/civilian/clown::items_in_mob
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Clown"
 	faction = list(FACTION_CLOWN)

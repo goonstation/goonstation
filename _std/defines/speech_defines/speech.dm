@@ -42,7 +42,7 @@ var/regex/mutable_tags_regex = regex(@"(\<\/?mutable\>)", "g")
 #define STRIP_MUTABLE_CONTENT_TAGS(CONTENT) global.mutable_tags_regex.Replace(CONTENT, "")
 /// Selects the immutable content from a string, alongside mutable tags.
 var/regex/immutable_content_regex = regex(@"<\/mutable>.*?<mutable>|<mutable>|<\/mutable>", "g")
-/// Strips immutable tags and content from a string.
+/// Strips mutable tags and immutable content from a string.
 #define STRIP_IMMUTABLE_CONTENT(CONTENT) global.immutable_content_regex.Replace(CONTENT, "")
 /// Selects all the HTML tags present in a string.
 var/regex/html_tags_regex = regex(@"(\<.*?\>)", "g")
@@ -55,7 +55,9 @@ var/regex/mutable_content_regex = regex(@"(?<=\<mutable\>).*?(?=\<\/mutable\>)",
 /// Ensures that the content of a string is immutable.
 #define MAKE_CONTENT_IMMUTABLE(CONTENT) "</mutable>[CONTENT]<mutable>"
 /// Applies a proc to the mutable content of a say message datum in the form of a callback.
-#define APPLY_CALLBACK_TO_MESSAGE_CONTENT(_MESSAGE, _CALLBACK) _MESSAGE.content = global.mutable_content_regex.ReplaceWithCallback(_MESSAGE.content, _CALLBACK)
+#define APPLY_CALLBACK_TO_MESSAGE_CONTENT(_MESSAGE, _CALLBACK) _MESSAGE.content = APPLY_CALLBACK_TO_CONTENT(_MESSAGE.content, _CALLBACK)
+/// Applies a proc to the mutable content of a string in the form of a callback.
+#define APPLY_CALLBACK_TO_CONTENT(_CONTENT, _CALLBACK) global.mutable_content_regex.ReplaceWithCallback(_CONTENT, _CALLBACK)
 
 //-------- Soundproofing --------//
 /// Spoken lines from contents will not be emitted

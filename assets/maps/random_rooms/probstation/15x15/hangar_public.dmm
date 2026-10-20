@@ -1,0 +1,713 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ag" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"dk" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"fX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/machinery/door_control{
+	id = "podbay_public2";
+	name = "Pod Bay Blast Door Control";
+	pixel_y = -24
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"ga" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/hand_labeler{
+	pixel_x = 6
+	},
+/obj/item/crowbar{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"gi" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "podbay_public2"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"gO" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"iV" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"kt" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"kL" = (
+/obj/machinery/vehicle/pod_smooth/light,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"nm" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/alarm/directional/north,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"om" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
+"pp" = (
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"pN" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"qL" = (
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/bad_mining,
+/obj/item/shipcomponent/mainweapon/bad_mining,
+/obj/item/shipcomponent/mainweapon/bad_mining,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/shipcomponent/secondary_system/gps,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"qT" = (
+/obj/storage/closet/fire,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"uy" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"vC" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/obj/machinery/door_control{
+	id = "podbay_public1";
+	name = "Pod Bay Blast Door Control";
+	pixel_x = 22;
+	pixel_y = 8
+	},
+/obj/machinery/door_control{
+	id = "podbay_public2";
+	name = "Pod Bay Blast Door Control";
+	pixel_x = 22;
+	pixel_y = -8
+	},
+/turf/space,
+/area/space)
+"wc" = (
+/obj/table/auto,
+/obj/item/sheet/steel{
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/sheet/glass/reinforced{
+	amount = 50;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"wd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/machinery/r_door_control{
+	id = "podbay_public2";
+	pixel_y = -24
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"wZ" = (
+/obj/reagent_dispensers/foamtank,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent,
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"xE" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"xM" = (
+/obj/table/auto,
+/obj/item/storage/belt/utility{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/wrench{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
+"yy" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"zq" = (
+/obj/machinery/vehicle/miniputt/armed,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"Bh" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"Ea" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
+"EX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"FD" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"GH" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"Hq" = (
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"Ia" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"IH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/door_control{
+	id = "podbay_public1";
+	name = "Pod Bay Blast Door Control";
+	pixel_x = -22;
+	pixel_y = 8
+	},
+/obj/machinery/door_control{
+	id = "podbay_public2";
+	name = "Pod Bay Blast Door Control";
+	pixel_x = -22;
+	pixel_y = -8
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"JI" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/south,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"JS" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"Lj" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"Lq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"No" = (
+/obj/storage/closet/welding_supply,
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"NW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/machinery/r_door_control{
+	id = "podbay_public1";
+	pixel_y = 24
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"PK" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hangar/main)
+"PM" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
+"PY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/machinery/door_control{
+	id = "podbay_public1";
+	name = "Pod Bay Blast Door Control";
+	pixel_y = 24
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"Qa" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"Qd" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
+"Sz" = (
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
+"SI" = (
+/turf/simulated/floor,
+/area/station/hangar/main)
+"Ty" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"Um" = (
+/obj/machinery/r_door_control{
+	id = "podbay_public2";
+	pixel_x = 24
+	},
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"UH" = (
+/turf/space,
+/area/space)
+"Vf" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"VD" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hangar/main)
+"Wk" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
+"WM" = (
+/obj/machinery/r_door_control{
+	id = "podbay_public1";
+	pixel_x = 24
+	},
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Xg" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "podbay_public1"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"Xh" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
+"XT" = (
+/obj/warp_beacon{
+	name = "Pod Bay Dock"
+	},
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"XZ" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/space)
+
+(1,1,1) = {"
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+XT
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+"}
+(2,1,1) = {"
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+XZ
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+"}
+(3,1,1) = {"
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+Lj
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+"}
+(4,1,1) = {"
+WM
+UH
+UH
+UH
+UH
+UH
+UH
+vC
+UH
+UH
+UH
+UH
+UH
+UH
+Um
+"}
+(5,1,1) = {"
+PK
+Xg
+Xg
+Xg
+Xg
+Xg
+Xg
+PK
+gi
+gi
+gi
+gi
+gi
+gi
+PK
+"}
+(6,1,1) = {"
+PK
+NW
+Lq
+Lq
+Lq
+Lq
+Lq
+IH
+Lq
+Lq
+Lq
+Lq
+Lq
+wd
+PK
+"}
+(7,1,1) = {"
+PK
+EX
+kL
+Hq
+Hq
+Xh
+xE
+Bh
+uy
+Xh
+Hq
+zq
+Hq
+Qa
+PK
+"}
+(8,1,1) = {"
+PK
+dk
+Hq
+Hq
+Hq
+Hq
+Vf
+FD
+dk
+Hq
+Hq
+Hq
+Hq
+GH
+PK
+"}
+(9,1,1) = {"
+PK
+nm
+Hq
+Hq
+Hq
+Hq
+Vf
+iV
+dk
+Hq
+Hq
+zq
+Hq
+pN
+PK
+"}
+(10,1,1) = {"
+PK
+EX
+kL
+Hq
+Hq
+Xh
+Vf
+ag
+dk
+Xh
+Hq
+Hq
+Hq
+Qa
+PK
+"}
+(11,1,1) = {"
+PK
+gO
+Hq
+Hq
+Hq
+Hq
+Ty
+Lq
+Ia
+Hq
+Hq
+zq
+Hq
+Vf
+PK
+"}
+(12,1,1) = {"
+PK
+PY
+Bh
+Bh
+Bh
+Bh
+Bh
+Bh
+Bh
+Bh
+Bh
+Bh
+Bh
+fX
+PK
+"}
+(13,1,1) = {"
+PK
+VD
+SI
+SI
+SI
+SI
+SI
+Qd
+om
+om
+om
+om
+om
+kt
+PK
+"}
+(14,1,1) = {"
+PK
+No
+xM
+wc
+qL
+JI
+JS
+wZ
+SI
+qT
+pp
+Sz
+yy
+ga
+PK
+"}
+(15,1,1) = {"
+PK
+PK
+Ea
+Ea
+Ea
+PK
+Wk
+PM
+Wk
+PK
+Ea
+Ea
+Ea
+PK
+PK
+"}

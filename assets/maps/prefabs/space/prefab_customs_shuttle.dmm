@@ -387,7 +387,7 @@
 	pixel_y = 11
 	},
 /obj/item/cigarbox/gold,
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen2"

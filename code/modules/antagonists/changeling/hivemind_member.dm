@@ -23,8 +23,11 @@
 			dead_mob.corpse = null
 			hivemind_observer.corpse = null
 		else if (istype(current_mob, /mob/living/critter/changeling))
+			var/mob/living/critter/changeling/critter = current_mob
 			hivemind_observer.corpse = current_mob
 			current_mob.ghost = hivemind_observer
+			if (critter.original_name)
+				hivemind_observer.real_name = critter.original_name
 
 		src.owner.transfer_to(hivemind_observer)
 
@@ -35,6 +38,8 @@
 
 	remove_equipment()
 		var/mob/dead/target_observer/hivemind_observer/hivemind_observer = src.owner.current
+		if (!istype(hivemind_observer))
+			return //they're something else somehow, give up
 		var/mob/dead/observer/ghost_mob = src.owner.current.ghostize()
 
 		if (!hivemind_observer.corpse)

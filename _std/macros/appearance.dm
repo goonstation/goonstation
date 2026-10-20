@@ -94,5 +94,8 @@
 // The head has a custom nose
 #define HAS_LONG_NOSE						(1<<21)
 
+/// The eyes are fixed to lightness values above 50 to preserve overlay contrast
+#define LIGHT_EYES							(1<<22)
+
 /// Default normal standard human appearance flags
 #define HUMAN_APPEARANCE_FLAGS (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS )

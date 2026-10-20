@@ -12,14 +12,14 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 
 ## Adding a secret UI
 1) Create an interface in `tgui/packages/tgui/interfaces-secret/<Name>.tsx`. The file name (or `Name/index.tsx`) determines the interface name.
-2) Build (`bin/tgui --build` or `yarn run tgui:build`). Sync → build → mirror happens automatically.
+2) Build (`bin/tgui --build` or `yarn run tgui:build`). Sync -> build -> mirror happens automatically.
 3) Open it from DM by interface name as normal.
 
 ## Files
 - `+secret/tgui/interfaces/` – secret UIs
 - `tgui/packages/tgui/interfaces-secret/` – build-time mirror + auto-generated wrappers + runtime loader
 - `+secret/tgui/secret-salt.txt` – salt (and 11 herbs and spices)
-- `+secret/tgui/secret-mapping.json` – interface name → id mapping
+- `+secret/tgui/secret-mapping.json` – interface name -> id mapping
 - `+secret/browserassets/src/tgui/` – built secret bundles stored in `+secret`
 
 ## Build flow (rspack)
@@ -34,10 +34,10 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 3) Post-build storage:
 	- `secret-*.bundle.js` bundles are moved into `+secret/browserassets/src/tgui/`.
 
-## Runtime flow (DM → client)
+## Runtime flow (DM -> client)
 1) DM checks access and obtains the id (token) for the interface from `+secret/tgui/secret-mapping.json`.
 2) The server provides the secret JS bundle to the client.
-3) The UI config includes `config.secretInterfaces[name] = id` (flat name → id mapping). The client persists this in `sessionStorage` to survive reloads.
+3) The UI config includes `config.secretInterfaces[name] = id` (flat name -> id mapping). The client persists this in `sessionStorage` to survive reloads.
 4) The loader injects `/secret-<id>.bundle.js` and waits for the bundle to self-register in `globalThis.__SECRET_TGUI_INTERFACES__[id]`.
 
 ## Deleting a secret UI

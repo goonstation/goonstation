@@ -19,4 +19,4 @@
 		. = list()
 
 		for (var/name in duplicates)
-			. += "\"[name || "***EMPTY STRING***"]\": [src.area_list(area_names[name])]"
+			. += "\"[name || "***EMPTY STRING***"]\": [CI.area_list(area_names[name])]"

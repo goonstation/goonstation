@@ -485,6 +485,8 @@ file_save - Save file to local disk."}
 				udat.dispose()
 				return
 
+			udat.fields["code"] = netpass_login
+
 			var/datum/signal/termsignal = get_free_signal()
 			//termsignal.encryption = "\ref[netcard]"
 			termsignal.data["address_1"] = serv_id

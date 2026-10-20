@@ -1,6 +1,8 @@
-import { describe, it } from 'vitest';
+import { afterEach, describe, it } from 'vitest';
 
-import { sanitizeText } from './sanitize';
+import { configAtom, store } from './events/store';
+import type { Config } from './events/types';
+import { sanitizeDefAllowTags, sanitizeText } from './sanitize';
 
 describe('sanitizeText', () => {
   it('should sanitize basic HTML input', ({ expect }) => {
@@ -40,5 +42,143 @@ describe('sanitizeText', () => {
       '<b>Hello, world!</b><iframe src="https://example.com"></iframe>';
     const result = sanitizeText(input, true, undefined, undefined, advTags);
     expect(result).toBe(expected);
+  });
+
+  describe('paper sheet config (input tags + style allowed)', () => {
+    const PAPER_ALLOWED_TAGS = [...sanitizeDefAllowTags, 'input'];
+    const PAPER_FORBID_ATTRS = ['class', 'background', 'src'];
+
+    it('strips script tags', ({ expect }) => {
+      const input = '<b>hi</b><script>alert(1)</script>';
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
+      expect(result).toBe('<b>hi</b>');
+    });
+
+    it('strips event handler attributes', ({ expect }) => {
+      const input = '<b onclick="alert(1)">hi</b>';
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
+      expect(result).toBe('<b>hi</b>');
+    });
+
+    it('strips javascript: hrefs', ({ expect }) => {
+      const input = '<a href="javascript:alert(1)">click</a>';
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
+      // <a> is not in PAPER_ALLOWED_TAGS so the tag itself is stripped too
+      expect(result).not.toContain('javascript:');
+    });
+
+    it('preserves input tags with style, id, type, size, maxlength, disabled', ({
+      expect,
+    }) => {
+      const input =
+        '[<input type="text" style="color:red;min-width:50px;" id="paperfield_0" size="5" maxlength="5" disabled />]';
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
+      expect(result).toContain('<input');
+      expect(result).toContain('type="text"');
+      expect(result).toContain('id="paperfield_0"');
+      expect(result).toContain('style=');
+      expect(result).toContain('disabled');
+    });
+
+    it('preserves inline style on span', ({ expect }) => {
+      const input = '<span style="color:blue;font-family:Arial;">text</span>';
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
+      expect(result).toContain('style=');
+      expect(result).toContain('color:blue');
+    });
+
+    it('strips class attributes', ({ expect }) => {
+      const input = '<span class="evil" style="color:red;">text</span>';
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
+      expect(result).not.toContain('class=');
+      expect(result).toContain('style=');
+    });
+
+    it('strips background attributes', ({ expect }) => {
+      const input = '<div background="http://evil.com/x.png">text</div>';
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
+      expect(result).not.toContain('background=');
+    });
+
+    it('strips src attributes (input type=image)', ({ expect }) => {
+      const input = '<input type="image" src="http://evil.com/x.png">';
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
+      expect(result).not.toContain('evil.com');
+    });
+
+    describe('style url() whitelist', () => {
+      const CDN = 'https://cdn.example.test/goon';
+      const paper = (style: string) =>
+        sanitizeText(
+          `<div style="${style}">x</div>`,
+          false,
+          PAPER_ALLOWED_TAGS,
+          PAPER_FORBID_ATTRS,
+        );
+
+      afterEach(() => store.set(configAtom, { cdn: '' } as Config));
+
+      it('keeps paper assets from the CDN or local cache', ({ expect }) => {
+        expect(paper('background: url(un.png)')).toContain('un.png');
+        store.set(configAtom, { cdn: CDN } as Config);
+        const url = `${CDN}/images/tgui/paper/un.png?v=1`;
+        expect(paper(`color: red; background: url('${url}')`)).toContain(url);
+      });
+
+      it.for([
+        'background: url(https://evil.test/x.png)',
+        `background: url(${CDN}.evil.test/x.png)`,
+        `background: url(${CDN}/images/tgui/stamp_icons/x.png)`,
+        `background: url(${CDN}/images/tgui/paper/../x.png)`,
+        `background: url(${CDN}/images/tgui/paper/%2E%2E/x.png)`,
+        `background: url(${CDN}/images/tgui/paper/x.png); cursor: url(//evil.test/c), auto`,
+        'background: \\75 rl(https://evil.test/x.png)',
+        '--a: url(https://evil.test/x.png); background: var(--a)',
+        'background: image-set("https://evil.test/x.png" 1x)',
+      ])('drops the url for %s', (style, { expect }) => {
+        store.set(configAtom, { cdn: CDN } as Config);
+        expect(paper(style)).not.toContain('x.png');
+      });
+    });
   });
 });

@@ -69,8 +69,6 @@ var/datum/magpie_manager/magpie_man = new
 
 // MAGPIE Equipment
 /obj/machinery/vehicle/miniputt/armed/salvager
-	desc = "A repeatedly rebuilt and refitted pod.  Looks like it has seen some things."
-	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 
 	health = 250
@@ -84,6 +82,9 @@ var/datum/magpie_manager/magpie_man = new
 		myhud.update_systems()
 		myhud.update_states()
 
+/obj/machinery/vehicle/miniputt/armed/salvager/tinted
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
+
 /datum/manufacture/pod/armor_light/salvager
 	name = "Salvager Pod Armor"
 	item_requirements = list("metal_dense" = 30,
@@ -91,15 +92,17 @@ var/datum/magpie_manager/magpie_man = new
 	item_outputs = list(/obj/item/podarmor/salvager)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /obj/item/podarmor/salvager
 	name = "Salvager Pod Armor"
 	desc = "Exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager,
-						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub )
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager/tinted,
+						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub/tinted,
+						 "/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager/tinted,
+						 "/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub/tinted )
 
 /datum/manufacture/communications/salvager
 	name = "Salvager Communication Array"
@@ -107,7 +110,7 @@ var/datum/magpie_manager/magpie_man = new
 	item_outputs = list(/obj/item/shipcomponent/communications/salvager)
 	time = 12 SECONDS
 	create = 1
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /obj/item/shipcomponent/communications/salvager
 	name = "Salvager Communication Array"
@@ -296,15 +299,15 @@ var/datum/magpie_manager/magpie_man = new
 	maxhealth = 150
 	acid_damage_multiplier = 0.5
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
-	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 
 	New()
 		..()
-		name = "salvager minisub"
 		src.install_part(null, new /obj/item/shipcomponent/mainweapon/taser(src), POD_PART_MAIN_WEAPON)
 		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
 		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/bioscan(src), POD_PART_LOCK)
 
+/obj/machinery/vehicle/tank/minisub/salvsub/tinted
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 
 
 /obj/machinery/manufacturer/hangar/magpie
@@ -540,7 +543,7 @@ TYPEINFO(/obj/npc/trader/salvager)
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
 	currency = "Salvage Points"
-	speech_verb_say = "beeps"
+	speech_verb_say = "states"
 	use_speech_bubble = TRUE
 	voice_sound_override = 'sound/misc/talk/bottalk_1.ogg'
 
@@ -555,29 +558,29 @@ TYPEINFO(/obj/npc/trader/salvager)
 		for(var/buy_type in (concrete_typesof(/datum/commodity/magpie/buy) - concrete_typesof(/datum/commodity/magpie/buy/random_buy)))
 			src.goods_buy += new buy_type(src)
 
-		greeting= {"[src.name]'s light flash, and he states, \"Greetings, welcome to my shop. Please select from my available equipment.\""}
+		greeting= {"Greetings, welcome to my shop. Please select from my available equipment."}
 
-		sell_dialogue = "[src.name] states, \"There are several individuals in my database that are looking to procure goods."
+		sell_dialogue = "There are several individuals in my database that are looking to procure goods."
 
-		buy_dialogue = "[src.name] states,\"Please select what you would like to buy\"."
+		buy_dialogue = "Please select what you would like to buy."
 
-		successful_sale_dialogue = list("[src.name] states, \"Thank you for the business organic.\"",
-			"[src.name], \"I am adding you to the Good Customer Database.\"")
+		successful_sale_dialogue = list("Thank you for the business organic.",
+			"[src.name], I am adding you to the Good Customer Database.")
 
-		failed_sale_dialogue = list("[src.name] states, \"<ERROR> Item not in purchase database.\"",
-			"[src.name] states, \"I'm sorry I currently have no interest in that item, perhaps you should try another trader.\"",
-			"[src.name] starts making a loud and irritating noise. [src.name] states, \"Fatal Exception Error: Cannot locate item\"",
-			"[src.name] states, \"Invalid Input\"")
+		failed_sale_dialogue = list("<ERROR> Item not in purchase database.",
+			"I'm sorry I currently have no interest in that item, perhaps you should try another trader.",
+			"Fatal Exception Error: Cannot locate item.",
+			"Invalid Input.")
 
-		successful_purchase_dialogue = list("[src.name] states, \"Thank you for your business\".",
-			"[src.name] states, \"Looking forward to future transactions\".")
+		successful_purchase_dialogue = list("Thank you for your business.",
+			"Looking forward to future transactions.")
 
-		failed_purchase_dialogue = list("[src.name] states, \"I am sorry, but you currenty do not have enough funds to purchase this.\"",
-			"[src.name] states, \"Funds not found.\"")
+		failed_purchase_dialogue = list("I am sorry, but you currenty do not have enough funds to purchase this.",
+			"Funds not found.")
 
-		pickupdialogue = "[src.name] states, \"Thank you for your business. Please come again\"."
+		pickupdialogue = "Thank you for your business. Please come again."
 
-		pickupdialoguefailure = "[src.name] states, \"I'm sorry, but you don't have anything to pick up\"."
+		pickupdialoguefailure = "I'm sorry, but you don't have anything to pick up."
 
 	sold_item(datum/commodity/C, obj/S, amount, mob/user as mob)
 		. = ..()
@@ -1037,8 +1040,8 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		comname = "Power Sink and Storage"
 		comtype = /obj/item/device/powersink/salvager
 		desc = "A device that can be used to drain power and sell it back to the M4GP13."
-		price = 1000
-		amount = 4
+		price = 5000
+		amount = 3
 
 	crank
 		comname = "Crank (5x pills)"

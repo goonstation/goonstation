@@ -153,6 +153,11 @@ var/list/dirty_keystates = list()
 
 		return
 
+	MouseDrop(src_object, over_object, turf/src_location, turf/over_location, src_control, over_control, params)
+		if (src.mob && SEND_SIGNAL(src.mob, COMSIG_MOB_MOUSEDROP, src_object, over_object, src_location, over_location, src_control, over_control, params))
+			return
+		return ..()
+
 	DblClick(atom/target, location, control, params)
 		var/list/paramslist = params2list(params)
 		if (paramslist["button"] == "left")
@@ -345,10 +350,10 @@ var/list/dirty_keystates = list()
 			last_input_loop_time = TIME
 			process_keystates()
 
-			for(var/client/C as anything in clients) // as() is ok here since we nullcheck
+			for(var/client/C as anything in clients) // as anything is ok here since we nullcheck
 				C?.mob?.internal_process_move(C.key_state)
 
-			for(var/datum/aiHolder/ai as anything in ai_move_scheduled) // as() is ok here since we nullcheck
+			for(var/datum/aiHolder/ai as anything in ai_move_scheduled) // as anything is ok here since we nullcheck
 				if (ai?.move_target)
 					ai.move_step()
 

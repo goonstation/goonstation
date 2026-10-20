@@ -11,13 +11,14 @@ var/list/admin_verbs = list(
 
 	list(
 		// LEVEL_MOD, moderator
-		/client/proc/admin_changes,
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
 		/client/proc/admin_invisible,
 		/client/proc/game_panel,
 		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
+		/client/proc/cmd_forced_assignment_panel,
+		/client/proc/cmd_notify_forced_assignment_holders,
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/cmd_whois,
 		/client/proc/cmd_whodead,
@@ -66,6 +67,9 @@ var/list/admin_verbs = list(
 		/client/proc/enableDrunkMode,
 		/client/proc/forceDrunkMode,
 
+#ifdef MAP_OVERRIDE_MENHIR
+		/client/proc/cmd_admin_vislayer,
+#endif
 		/client/proc/cmd_unshame_cube,
 		/client/proc/cmd_shame_cube,
 		/client/proc/removeSelf,
@@ -307,6 +311,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
 		/client/proc/spawn_custom_transmutation,
+		/client/proc/expell_object_from_mail_chutes,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
 		/client/proc/cmd_move_lobby,
@@ -500,7 +505,6 @@ var/list/admin_verbs = list(
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
 		/client/proc/persistent_lag,
-		/client/proc/dbg_disposal_system,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -1348,8 +1352,7 @@ var/list/fun_images = list()
 
 	var/confirm6 = automated ? "Yes" : tgui_alert(src.mob, "Disable drop shadowing?", "Dropshadows?", list("Yes", "No"))
 	if (confirm6 == "Yes")
-		winset(src, "menu.set_shadow", "is-checked=false")
-		src.apply_depth_filter()
+		src.apply_depth_filter(FALSE, src.preferences.client_settings[CLIENT_SETTING_DISTORTION])
 
 	var/confirm7 = automated ? "Yes" : tgui_alert(src.mob, "Reset client color matrix to identity matrix?", "Reset Color Matrix?", list("Yes", "No"))
 	if (confirm7 == "Yes")
@@ -1528,40 +1531,6 @@ var/list/fun_images = list()
 	logTheThing(LOG_ADMIN, src, "spawned a custom grenade at [usr.loc]")
 	logTheThing(LOG_DIARY, src, "spawned a custom grenade at [usr.loc]", "admin")
 	message_admins("[key_name(src)] spawned a custom grenade at [usr.loc].")
-
-/client/proc/admin_changes()
-	set category = "Commands"
-	set name = "Admin Changelog"
-	set desc = "Show or hide the admin changelog"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
-		src.Browse(null, "window=adminchanges")
-	else
-		var/changelogHtml
-		var/data
-		if (src.byond_version >= 516)
-			changelogHtml = grabResource("html/changelog.html")
-			data = admin_changelog.html
-		else
-			changelogHtml = grabResource("html/legacy_changelog.html")
-			data = legacy_admin_changelog.html
-		var/fontcssdata = {"
-				<style type="text/css">
-				@font-face {
-					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
-					text-rendering: optimizeLegibility;
-				}
-				</style>
-		"}
-		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
-		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		if (src.byond_version >= 516 && global.tgui_process)
-			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
-		else
-			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
 
 /client/proc/removeSelf()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -2239,6 +2208,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.cmd_emag_target(A)
 		if ("Pixel Offset")
 			new /datum/pixel_offset(A, C.mob)
+		if ("Debug Appearance")
+			C.cmd_debug_appearance(A)
 		if ("Set Material")
 			C.cmd_set_material(A)
 		if ("Activate Artifact")
@@ -2305,12 +2276,7 @@ proc/alert_all_ghosts(atom/target, message)
 	var/dur = input(usr, "Input duration (in seconds)", "lightsout duration", 0) as null|num
 
 	if(dur)
-		var i = 0
-		for_by_tcl(apc, /obj/machinery/power/apc)
-			if(apc.z == 1)
-				if((i++ % 5) == 0)
-					sleep(1 SECOND)
-				apc.setStatus("lightsout", dur SECONDS)
+		ADMIN.lights_out(dur SECONDS)
 
 /client/proc/flock_cheat()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

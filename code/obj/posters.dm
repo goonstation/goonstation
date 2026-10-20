@@ -400,6 +400,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	icon_state = "wall_poster_nt-rip2"
 
 TYPEINFO(/obj/submachine/poster_creator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/submachine/poster_creator
@@ -568,7 +569,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 			if (!istype(R))
 				boutput(usr, SPAN_ALERT("No record found for \"[ptext]\"."))
 				return
-			var/datum/computer/file/image/IMG = R["file_photo"]
+			var/datum/computer/file/image/IMG = R["photo"]
 			if (!istype(IMG) || !IMG.ourIcon)
 				boutput(usr, SPAN_ALERT("No photo exists on file for \"[ptext]\"."))
 				return

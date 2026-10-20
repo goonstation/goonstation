@@ -395,6 +395,8 @@
 
 			if(href_list["mode"])
 				var/newmode = text2num_safe(href_list["mode"])
+				if((newmode == MODE_NOTE) && src.master.uplink?.active)
+					logTheThing(LOG_DEBUG, usr, "opens [src.master.uplink.owner_ckey]'s unlocked uplink via notekeeper program.")
 				src.mode = max(newmode, 0)
 
 			if(href_list["delTone"])

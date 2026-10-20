@@ -118,8 +118,6 @@
 		if (state == ACTIONSTATE_RUNNING)
 			if (HH.blood_volume <= 0)
 				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
-			else if (!H.can_take_blood_from(H, HH))
-				boutput(M, SPAN_ALERT("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
 			else
 				boutput(M, SPAN_ALERT("Your feast was interrupted."))
 

@@ -1,0 +1,33 @@
+/datum/map_correctness_check/misrouted_mail_chutes
+	check_name = "Misrouted Mail Chutes"
+	check_prefabs = FALSE
+
+/datum/map_correctness_check/misrouted_mail_chutes/run_check()
+	. = list()
+
+	global.instant_pipe_network()
+
+	var/list/obj/item/pipenet_test_dummy/mail/dummy_list = list()
+	for_by_tcl(chute, /obj/machinery/disposal/mail)
+		if (chute.z != Z_LEVEL_STATION)
+			continue
+
+		for (var/destination as anything in chute.destinations)
+			dummy_list += new /obj/item/pipenet_test_dummy/mail(chute, destination)
+			chute.destination_tag = destination
+			chute.flush(destination)
+
+	sleep(5 SECONDS)
+	for (var/obj/item/pipenet_test_dummy/mail/dummy as anything in dummy_list)
+		if (istype(dummy.ejection_chute) && (dummy.ejection_chute.mail_tag == dummy.destination_tag))
+			continue
+
+		var/endpoint = null
+		if (istype(dummy.ejection_chute))
+			endpoint = "[CI.format_position(dummy.ejection_chute, FALSE)] with mail_tag \"[dummy.ejection_chute.mail_tag]\""
+		else if (dummy.ejection_turf)
+			endpoint = "([dummy.ejection_turf.x], [dummy.ejection_turf.y], [dummy.ejection_turf.z]) in [dummy.ejection_turf.loc]"
+		else
+			endpoint = "(null)"
+
+		. += "[CI.format_position(dummy.chute)] misroutes objects addressed to \"[dummy.destination_tag]\" to [endpoint]."

@@ -3,7 +3,7 @@
 
 /datum/dwaine_shell_builtin/who/execute(list/command_list, list/piped_list)
 	var/whotext = null
-	var/list/user_list = src.shell.signal_program(1, list("command" = DWAINE_COMMAND_ULIST))
+	var/list/user_list = src.shell.signal_program(1, list("command" = DWAINE::SYSCALL::ULIST))
 
 	if (istype(user_list))
 		for (var/uid as anything in user_list)
@@ -18,4 +18,4 @@
 		whotext ||= "Error: Unable to determine current users."
 		src.shell.message_user(whotext, "multiline")
 
-	return BUILTIN_SUCCESS
+	return DWAINE::ERR::SHELL::BUILTIN::SUCCESS

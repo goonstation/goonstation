@@ -102,7 +102,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.name = "Syringe Injector"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "syringegun"				// the icon state of the hand UI background
 		HH.limb_name = "Injector"					// name for the dummy holder
 		HH.limb = new /datum/limb/gun/kinetic/syringe	// if not null, the special limb to use when attack_handing
@@ -112,7 +112,7 @@
 
 		HH = hands[2]
 		HH.name = "Dual Saw"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "saw"				// the icon state of the hand UI background
 		HH.limb_name = "Dual Saw"					// name for the dummy holder
 		HH.limb = new /datum/limb/dualsaw	// if not null, the special limb to use when attack_handing
@@ -470,7 +470,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.icon_state = "blade"
 		HH.limb_name = "serrated claws"

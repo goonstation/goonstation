@@ -100,8 +100,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/stored_previous_blueprint_data = "" //! JSON-encoded string of the blueprint data. used for comparisons in get_producibility_for_blueprints
 
 	/* Production options */
-	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
-	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Organ", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
+	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned MANUFACTURER::CATEGORY::MISCELLANEOUS. Defined in New()
+	var/list/categories = null
 	var/accept_blueprints = TRUE //! Whether or not we accept blueprints from the ruk kit into this manufacturer.
 
 	var/list/available = list() //! A list of every manufacture datum typepath available in this unit subtype by default
@@ -134,6 +134,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	New()
 		START_TRACKING
+		categories = MANUFACTURER.CATEGORY._get_namespace_constants()
+
 		if (src.share_id)
 			var/tracking_id = TR_CAT_MANUFACTURER_LINK + src.share_id
 			for (var/obj/machinery/manufacturer/other as anything in by_cat[tracking_id])
@@ -448,7 +450,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
 			if (isnull(M.category) || !(M.category in src.categories)) // fix for not displaying blueprints/manudrives
-				M.category = "Miscellaneous"
+				M.category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 				logTheThing(LOG_DEBUG, src, "Manufacturing blueprint [M] has category [M.category], which is not on the list of categories for [src]!")
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
@@ -570,6 +572,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
+		src.add_fingerprint(user)
 		src.ui_interact(user)
 
 	proc/is_electrified()
@@ -847,7 +850,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 					var/datum/signal/minerSignal = get_free_signal()
 					minerSignal.source = src
-					//any non-divisible amounts go to the shipping budget
+					//any non-divisible amounts go to the supply budget
 					var/leftovers = 0
 					if(length(accounts))
 						leftovers = subtotal % length(accounts)
@@ -861,8 +864,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
 					else
 						leftovers = subtotal
-						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")
-					wagesystem.budgets[BUDGET_CAT_SHIPPING] += (leftovers + sum_taxes)
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the supply budget.")
+					wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 					src.should_update_static = TRUE
 				else
@@ -1232,7 +1235,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/bank_info = list()
 		var/list/keys_of_interest = list("name", "current_money")
 		for (var/key in keys_of_interest)
-			bank_info[key] = src.account.get_field(key)
+			bank_info[key] = src.account[key]
 		return bank_info
 
 	mouse_drop(over_object, src_location, over_location)
@@ -1554,6 +1557,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		switch(wireIndex)
 			if(WIRE_EXTEND)
 				src.hacked = FALSE
+				src.UpdateOverlays(null, "indicator-hacked")
 			if(WIRE_SHOCK)
 				src.time_left_electrified = 0
 			if(WIRE_MALF)
@@ -1586,6 +1590,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.hacked = !src.hacked
 				if(src.hacked)
 					src.AddOverlays(image(src.icon, null, "indicator-hacked", layer = src.layer + 0.0001), "indicator-hacked")
+				else
+					src.UpdateOverlays(null, "indicator-hacked")
 			if (WIRE_SHOCK)
 				src.time_left_electrified = 30
 			if (WIRE_MALF)
@@ -1838,12 +1844,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (ispath(product))
 			if (istype(M,/datum/manufacture/))
 				A = new product(src)
-				if (isitem(A))
-					var/obj/item/I = A
-					M.modify_output(src, I, materials_used)
-					I.set_loc(src.get_output_location(I))
-				else
-					A.set_loc(src.get_output_location(A))
+				M.modify_output(src, A, materials_used)
+				A.set_loc(src.get_output_location(A))
 			else
 				A = new product(get_output_location())
 

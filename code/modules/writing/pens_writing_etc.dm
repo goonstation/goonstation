@@ -224,6 +224,12 @@
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
+/obj/item/pen/NT
+	name = "\improper NanoTrasen Pen"
+	desc = "The National Notary 'Magistratus' model pen, with a cobryl alloy nib, high-grade polymer barrel and patented TrueBlue(TM) ink."
+	icon_state = "pen_nt"
+	item_state = "pen_nt"
+	font_color = "#0047ab"
 /obj/item/pen/odd
 	name = "odd pen"
 	desc = "There's something strange about this pen. Inscriptions indicate it is a National Notary 'Francis Scott' model with an electrum nib and lignum vitae barrel. Huh."
@@ -431,15 +437,12 @@
 		font_color = "#FF00FF"
 
 	random
-		var/picked_color
-
 		New()
 			..()
-			src.picked_color = random_color()
+			src.color = random_color()
 			src.reset_color()
 
 		reset_color()
-			src.color = picked_color
 			src.font_color = src.color
 			src.name = "[hex2color_name(src.color)] marker"
 
@@ -452,6 +455,7 @@
 	color = "#333333"
 	font = "Comic Sans MS"
 	clicknoise = 0
+	custom_suicide = 1
 	var/maptext_crayon = FALSE
 	var/font_size = 32
 
@@ -535,40 +539,32 @@
 		font_color = "#D20040"
 		default_cleanable = /obj/decal/cleanable/writing/infrared
 
-	random
-		var/picked_color
+	robot
+		desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
+		HELP_MESSAGE_OVERRIDE("Use on your character's sprite to choose a new color for your crayon.")
 
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+			if (target == user)
+				src.color = input("Pick crayon color:","Crayon color") as null|color
+				src.reset_color()
+				user.visible_message(SPAN_NOTICE("Your crayon becomes [hex2color_name(src.color)]!"))
+				return
+			return ..()
+
+	random
 		New()
 			..()
-			src.picked_color = random_color()
+			src.color = random_color()
 			src.reset_color()
-
-		reset_color()
-			src.color = src.picked_color
-			src.font_color = src.color
-			src.color_name = hex2color_name(src.color)
-			src.name = "[src.color_name] crayon"
 
 		choose
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you.  You might not get it back. Spin it, go ahead, you know you want to."
 
 			on_spin_emote(var/mob/living/carbon/human/user as mob)
 				..()
-				src.picked_color = random_color()
+				src.color = random_color()
 				src.reset_color()
 				user.visible_message(SPAN_NOTICE("<b>\"Something\" special happens to [src]!</b>"))
-
-		robot
-			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
-
-			attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-				if (target == user)
-					src.picked_color = random_color()
-					src.reset_color()
-					user.visible_message(SPAN_NOTICE("<b>\"Something\" special happens to [src]!</b>"))
-					return
-
-				return ..()
 
 		pixel
 			maptext_crayon = TRUE
@@ -577,7 +573,6 @@
 			New()
 				..()
 				src.name = "[src.color_name] pixel crayon"
-
 
 	rainbow
 		name = "strange crayon"
@@ -601,7 +596,6 @@
 			src.color = src.font_color
 			..()
 
-	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
@@ -620,6 +614,10 @@
 		. = ..()
 		src.create_inventory_counter()
 
+	reset_color()
+		src.font_color = src.color
+		src.color_name = hex2color_name(src.color)
+		src.name = "[src.color_name] crayon"
 
 	proc/write_input(mob/user)
 		if(src.in_use)
@@ -862,6 +860,7 @@
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
+	w_class = W_CLASS_POCKET_SIZED
 	flags = TABLEPASS | SUPPRESSATTACK
 	c_flags = ONBELT
 	rand_pos = 1
@@ -904,7 +903,9 @@
 			return
 		tooltip_rebuild = TRUE
 		var/holder = src.loc
+		// labels become part of names, so no emoji etc
 		var/str = copytext(strip_html_tags(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
+		str = remove_bad_name_characters(str, keep_punctuation = TRUE)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
@@ -982,6 +983,8 @@
 	item_state = "clipboard0"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
+	default_material = "wood"
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	throw_speed = 3
 	throw_range = 10
 	desc = "You can put paper on it. Ah, technology!"
@@ -1109,6 +1112,9 @@
 		src.add_stuff(O, user)
 
 	proc/add_stuff(obj/item/I, mob/user)
+		if(istype(I) && I.cant_drop)
+			return
+
 		if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
 			if (length(src.contents) >= src.max_items)
 				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))

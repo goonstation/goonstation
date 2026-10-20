@@ -10,9 +10,9 @@
 /datum/dwaine_shell_script_operator/rand/execute(list/token_stream)
 	var/stack_length = length(src.shell.stack)
 	if (stack_length < 1)
-		return SCRIPT_STACK_UNDERFLOW
+		return DWAINE::ERR::SHELL::SCRIPT::STACK_UNDERFLOW
 
 	var/operand_1 = global.text2num_if_num(src.shell.stack[stack_length])
 
 	src.shell.stack.Splice(-1, 0, SCRIPT_CLAMPVALUE(rand(1, operand_1)))
-	return SCRIPT_SUCCESS
+	return DWAINE::ERR::SHELL::SCRIPT::SUCCESS

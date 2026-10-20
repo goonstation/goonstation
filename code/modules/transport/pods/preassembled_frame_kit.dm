@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 				user.visible_message("[user] begins screwing down the frame's circuit boards and its engine...")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				action_bar.proc_path = /obj/structure/preassembeled_vehicleframe/proc/step_screw_1
-				action_bar.end_message = "[user] finishes screwing the the frame's circuit boards and its engine."
+				action_bar.end_message = "[user] finishes screwing the frame's circuit boards and its engine."
 				actions.start(action_bar, user)
 			else
 				boutput(user, "You need a screwdriver to screw the circuit boards and the engine together.")

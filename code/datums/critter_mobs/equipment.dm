@@ -35,11 +35,12 @@
 		return 0
 
 	proc/equip(var/obj/item/I)
-		if (item || !can_equip(I))
+		if (item || !can_equip(I) || !I.can_equip(src.holder))
 			return 0
 		if (screenObj)
 			I.screen_loc = screenObj.screen_loc
 		item = I
+		item.equipped(src.holder)
 		item.set_loc(holder)
 		holder.update_clothing()
 		on_equip()
@@ -53,6 +54,7 @@
 		item.set_loc(get_turf(holder))
 		item.master = null
 		item.layer = initial(item.layer)
+		item.unequipped(src.holder)
 		on_unequip()
 		item = null
 		holder.update_clothing()
@@ -65,6 +67,7 @@
 			return 0
 		if (!holder.put_in_hand(item))
 			return 0
+		item.unequipped(src.holder)
 		on_unequip()
 		item = null
 		return 1

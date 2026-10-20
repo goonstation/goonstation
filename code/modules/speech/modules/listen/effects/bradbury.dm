@@ -7,5 +7,5 @@
 		return
 
 	SPAWN(0)
-		bradbury.say(message.content, message_params = list("can_relay" = FALSE))
+		bradbury.say(message.get_content_parsable(), message_params = list("can_relay" = FALSE))
 		playsound(bradbury, 'sound/machines/modem.ogg', 80, TRUE)

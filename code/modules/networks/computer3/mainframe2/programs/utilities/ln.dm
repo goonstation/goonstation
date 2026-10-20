@@ -16,14 +16,14 @@
 	initlist[1] = ABSOLUTE_PATH(initlist[1], current)
 	initlist[2] = ABSOLUTE_PATH(initlist[2], current)
 
-	var/datum/computer/folder/target_folder = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initlist[1]))
+	var/datum/computer/folder/target_folder = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = initlist[1]))
 	if (!istype(target_folder))
 		src.message_user("Error: Invalid target path.")
 		mainframe_prog_exit
 		return
 
-	var/link_check = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initlist[2]))
-	if (link_check != ESIG_NOFILE)
+	var/link_check = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = initlist[2]))
+	if (link_check != DWAINE::ERR::SIG::NOFILE)
 		src.message_user("Error: Invalid link path (Path already taken?).")
 		mainframe_prog_exit
 		return
@@ -38,8 +38,8 @@
 	var/datum/computer/folder/link/symlink = new /datum/computer/folder/link(target_folder)
 	symlink.name = link_name
 	symlink.metadata["owner"] = src.read_user_field("name")
-	symlink.metadata["permission"] = COMP_ALLACC & ~(COMP_WOTHER | COMP_DOTHER)
-	if (src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = initlist[2]), symlink) != ESIG_SUCCESS)
+	symlink.metadata["permission"] = DWAINE::PERM::DEFAULT::ALLACCESS & ~(DWAINE::PERM::BIT::OTHER_WRITE | DWAINE::PERM::BIT::OTHER_EXECUTE)
+	if (src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = initlist[2]), symlink) != DWAINE::ERR::SIG::SUCCESS)
 		symlink.dispose()
 		src.message_user("Error: Could not create link.")
 

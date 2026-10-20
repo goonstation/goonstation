@@ -22,10 +22,9 @@
 /mob/living/add_stam_mod_max(var/key, var/value)
 	if (!src.use_stamina) return
 	if(!isnum(value)) return
-	if(key in stamina_mods_max)
+	if(!isnull(src.stamina_mods_max[key]))
 		return 0
-	stamina_mods_max.Add(key)
-	stamina_mods_max[key] = value
+	src.stamina_mods_max[key] = value
 	return 1
 
 ///Removes a stamina max modifier with the given key.
@@ -34,10 +33,7 @@
 
 /mob/living/remove_stam_mod_max(var/key)
 	if (!src.use_stamina) return
-	if(!(key in stamina_mods_max))
-		return 0
-	stamina_mods_max.Remove(key)
-	return 1
+	return src.stamina_mods_max.Remove(key)
 
 ///Returns the total modifier for stamina max
 /mob/proc/get_stam_mod_max()
@@ -45,9 +41,7 @@
 
 /mob/living/get_stam_mod_max()
 	if (!src.use_stamina) return
-	var/val = 0
-	for(var/x in stamina_mods_max)
-		val += stamina_mods_max[x]
+	var/val = values_sum(src.stamina_mods_max)
 
 	var/stam_mod_items = 0
 	for (var/obj/item/C as anything in src.get_equipped_items())

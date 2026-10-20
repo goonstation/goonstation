@@ -18,6 +18,7 @@
 	<a href='byond://?src=\ref[src];action=traitorhard'>Hard Mode</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_OMNITRAITOR]'>Omnitraitor</a> |
 	<a href='byond://?src=\ref[src];action=traitorgeneric'>Generic</a> |
+	<a href='byond://?src=\ref[src];action=traitormonkey'>Syndicate Monkey</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_SLEEPER_AGENT]'>Sleeper agent</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindhack</b>

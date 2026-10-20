@@ -1,0 +1,815 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cT" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"dk" = (
+/obj/warp_beacon/engineering,
+/obj/lattice,
+/turf/space,
+/area/space)
+"ew" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/storage/belt/utility,
+/obj/item/extinguisher,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
+"fs" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"fF" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/caution/side,
+/area/station/hangar/engine)
+"fT" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/hangar/engine)
+"fV" = (
+/obj/machinery/vending/air_vendor/plasma,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/caution/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
+"iF" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"iG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
+"jA" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/space,
+/area/space)
+"kY" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "podbay_eng4"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
+"mZ" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"nj" = (
+/obj/reagent_dispensers/fueltank,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
+"nt" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/hangar/engine)
+"ox" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"oW" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = s
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
+"pf" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/caution,
+/area/station/hangar/engine)
+"pT" = (
+/obj/reagent_dispensers/foamtank,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/caution/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
+"pW" = (
+/obj/lattice,
+/turf/space,
+/area/space)
+"qH" = (
+/turf/space,
+/area/space)
+"qN" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/caution/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
+"rM" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
+"sY" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment/bent/south,
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/caution/side{
+	dir = 6
+	},
+/area/station/hangar/engine)
+"tw" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/door_control/west{
+	id = "podbay_eng3"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/caution/side{
+	dir = 9
+	},
+/area/station/hangar/engine)
+"tU" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"ul" = (
+/obj/machinery/r_door_control/podbay{
+	pixel_y = 8;
+	id = "podbay_eng1"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/hangar/engine)
+"uV" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"uX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/storage/cart/mechcart/breach,
+/obj/item/device/radio/intercom/engineering,
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"vc" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/door_control/west{
+	id = "podbay_eng2"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/caution/side{
+	dir = 10
+	},
+/area/station/hangar/engine)
+"vh" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"vD" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"vE" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/door_control/west{
+	pixel_y = -6;
+	id = "podbay_eng4"
+	},
+/turf/simulated/floor/caution/side{
+	dir = 8
+	},
+/area/station/hangar/engine)
+"xl" = (
+/obj/submachine/cargopad/engineering{
+	name = "Engineering Hangar Pad"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/hangar/engine)
+"xZ" = (
+/obj/machinery/r_door_control/podbay{
+	pixel_y = -8;
+	id = "podbay_eng4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/hangar/engine)
+"yc" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/space)
+"zF" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/caution/side{
+	dir = 1
+	},
+/area/station/hangar/engine)
+"zV" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "podbay_eng1"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
+"AZ" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "podbay_eng2"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
+"Bp" = (
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"BI" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/caution,
+/area/station/hangar/engine)
+"EE" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"EV" = (
+/obj/machinery/r_door_control/podbay{
+	id = "podbay_eng2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/hangar/engine)
+"EZ" = (
+/obj/machinery/vehicle/miniputt/indyputt/armed{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
+"Fb" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/caution/side{
+	dir = 1
+	},
+/area/station/hangar/engine)
+"FX" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/caution/side,
+/area/station/hangar/engine)
+"Gm" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"HW" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
+"IE" = (
+/obj/machinery/r_door_control/podbay{
+	id = "podbay_eng3"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/hangar/engine)
+"IP" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
+"Jt" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"Jz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"Kl" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"Lt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/caution/side{
+	dir = 1
+	},
+/area/station/hangar/engine)
+"LA" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/south,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"Md" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/caution/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
+"NK" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "podbay_eng3"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
+"NX" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/engineering_storage,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"OP" = (
+/obj/machinery/vehicle/pod_smooth/industrial{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
+"Py" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hangar/engine)
+"PQ" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/door_control/west{
+	pixel_y = 6;
+	id = "podbay_eng1"
+	},
+/turf/simulated/floor/caution/side{
+	dir = 8
+	},
+/area/station/hangar/engine)
+"Qi" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/caution/side,
+/area/station/hangar/engine)
+"QC" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"Rp" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"Sm" = (
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
+"Sv" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
+"Sw" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/hangar/engine)
+"SZ" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"VI" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
+"WO" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable,
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/caution/side{
+	dir = 5
+	},
+/area/station/hangar/engine)
+"YQ" = (
+/obj/storage/secure/closet/engineering/welding,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/caution/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
+"Zl" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/caution/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
+
+(1,1,1) = {"
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+yc
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+"}
+(2,1,1) = {"
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+jA
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+"}
+(3,1,1) = {"
+qH
+qH
+qH
+qH
+qH
+QC
+cT
+dk
+cT
+uV
+qH
+qH
+qH
+qH
+qH
+"}
+(4,1,1) = {"
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+jA
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+"}
+(5,1,1) = {"
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+vD
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+"}
+(6,1,1) = {"
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+jA
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+"}
+(7,1,1) = {"
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+Kl
+qH
+qH
+qH
+qH
+qH
+qH
+qH
+"}
+(8,1,1) = {"
+qH
+qH
+qH
+qH
+qH
+qH
+mZ
+pW
+SZ
+qH
+qH
+qH
+qH
+qH
+qH
+"}
+(9,1,1) = {"
+qH
+nt
+zV
+zV
+ul
+AZ
+EV
+HW
+IE
+NK
+xZ
+kY
+oW
+nt
+qH
+"}
+(10,1,1) = {"
+qH
+nt
+Sm
+OP
+PQ
+EZ
+vc
+pf
+tw
+EZ
+vE
+Sm
+OP
+nt
+qH
+"}
+(11,1,1) = {"
+qH
+nt
+Sv
+Sm
+tU
+Jz
+FX
+fT
+zF
+Jz
+Jt
+Sm
+Sv
+nt
+qH
+"}
+(12,1,1) = {"
+qH
+nt
+uX
+Jz
+ox
+Bp
+fF
+Sw
+Lt
+Bp
+vh
+Jz
+Jz
+nt
+qH
+"}
+(13,1,1) = {"
+qH
+nt
+LA
+iF
+Gm
+fs
+Qi
+xl
+Fb
+EE
+VI
+Bp
+Rp
+nt
+qH
+"}
+(14,1,1) = {"
+qH
+nt
+Zl
+Md
+ew
+YQ
+sY
+BI
+WO
+pT
+nj
+qN
+fV
+nt
+qH
+"}
+(15,1,1) = {"
+Py
+nt
+nt
+IP
+iG
+rM
+nt
+NX
+nt
+IP
+iG
+rM
+nt
+nt
+Py
+"}

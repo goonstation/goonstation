@@ -3,6 +3,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
+	can_hold = list(/obj/item/photo)
 
 /obj/item/storage/photo_album/attackby(obj/item/W, mob/user)
 	if (!istype(W,/obj/item/photo))
@@ -12,6 +13,7 @@
 	return ..()
 
 TYPEINFO(/obj/item/camera)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 15
 
 TYPEINFO(/obj/item/camera/large)
@@ -77,6 +79,9 @@ TYPEINFO(/obj/item/camera/large)
 
 		else if (istype(W, /obj/item/parts/robot_parts/arm))
 			var/obj/item/camera_arm_assembly/B = new /obj/item/camera_arm_assembly
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(B.forensic_holder)
 			B.set_loc(user)
 			user.u_equip(W)
 			user.u_equip(src)
@@ -178,6 +183,7 @@ TYPEINFO(/obj/item/camera/large)
 		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
 
 TYPEINFO(/obj/item/camera_film)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 TYPEINFO(/obj/item/camera_film/large)

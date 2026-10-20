@@ -140,6 +140,9 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 	satchel_variant = /obj/item/storage/backpack/satchel/NT
 
+	ERT
+		spawn_contents = list(/obj/item/storage/box/starternt)
+
 /obj/item/storage/backpack/syndie
 	name = "\improper Syndicate backpack"
 	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
@@ -502,6 +505,9 @@
 	item_state = "NTsatchel"
 	spawn_contents = list(/obj/item/storage/box/starter)
 
+	ERT
+		spawn_contents = list(/obj/item/storage/box/starternt)
+
 /obj/item/storage/backpack/satchel/captain
 	name = "Captain's Satchel"
 	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
@@ -863,7 +869,8 @@
 	spawn_contents = list(
 		/obj/item/rcd/construction,
 		/obj/item/rcd_ammo/medium,
-		/obj/item/tool/omnitool,
+		/obj/item/tool/omnitool/NT,
+		/obj/item/tool/omnitool/dualconstruction_device/NT,
 		/obj/item/device/analyzer/atmospheric/upgraded
 	)
 
@@ -916,6 +923,19 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/atmos
+	name = "atmospheric technican's belt"
+	desc = "A modified utility belt with a holsters for an HPD & a fire extinguisher"
+	can_hold = list(/obj/item/places_pipes, /obj/item/extinguisher)
+
+	spawn_contents = list(/obj/item/crowbar/yellow,
+	/obj/item/weldingtool/yellow,
+	/obj/item/wrench/yellow,
+	/obj/item/device/multitool,
+	/obj/item/places_pipes,
+	/obj/item/device/analyzer/atmospheric/upgraded,
+	/obj/item/extinguisher)
+
 /obj/item/storage/belt/utility/virtual
 	name = "virtual utility belt"
 	desc = "Are these tools DLC?"
@@ -956,6 +976,15 @@
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
 	/obj/item/robodefibrillator)
+
+/obj/item/storage/belt/medical/prepared/NT
+	spawn_contents = list(/obj/item/robodefibrillator,
+	/obj/item/device/analyzer/healthanalyzer/upgraded,
+	/obj/item/reagent_containers/mender/both/high_capacity,
+	/obj/item/reagent_containers/mender_refill_cartridge/both/high_capacity,
+	/obj/item/storage/pill_bottle/mutadone,
+	/obj/item/reagent_containers/hypospray,
+	/obj/item/paper/iou_ntso_medic)
 
 /obj/item/storage/belt/roboticist
 	icon_state = "utilrobotics"
@@ -1116,7 +1145,6 @@
 		spawn_contents = list(/obj/item/gun/energy/cornicen3,
 		/obj/item/old_grenade/energy_frag = 2,
 		/obj/item/old_grenade/energy_concussion = 2,
-		/obj/item/tank/pocket/extended/oxygen,
 		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
@@ -1238,6 +1266,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /* -------------------- Wrestling Belt -------------------- */
 
 TYPEINFO(/obj/item/storage/belt/wrestling)
+	analyser_flags =  parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
 				"hauntium" = 20)
@@ -1247,7 +1276,6 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	icon_state = "machobelt"
 	item_state = "machobelt"
 	contraband = 8
-	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
 	var/fake = 0		//So the moves are all fake.
 	HELP_MESSAGE_OVERRIDE({"In addition to granting the wearer wrestler abilities, it also gives them the wrestler passives detailed "} + EXTERNAL_LINK("https://wiki.ss13.co/Wrestler#Passives", "here") + ".")
@@ -1263,6 +1291,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 			user.remove_wrestle_powers(src.fake)
 
 TYPEINFO(/obj/item/storage/belt/wrestling/fake)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //For whatever reason, inhereting tags from parent crashes game
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
 				"fabric" = 5
@@ -1271,11 +1300,11 @@ TYPEINFO(/obj/item/storage/belt/wrestling/fake)
 	name = "fake wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
 	contraband = 0
-	is_syndicate = 0
 	fake = 1
 
 // I dunno where else to put these vOv
 TYPEINFO(/obj/item/inner_tube)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER //Something tells me these have never been scanned
 	mats = 5 // I dunno???
 
 /obj/item/inner_tube

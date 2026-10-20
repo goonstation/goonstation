@@ -42,7 +42,7 @@ change the direction of created objects.<br>
 			AM.gift_wrap(FALSE, FALSE)
 		else
 			AM.gift_wrap(FALSE, TRUE)
-		if (isobj(AM) || ismob(AM))
+		if ((isobj(AM) || ismob(AM)) && src.holder.dir)
 			AM.set_dir(holder.dir)
 			AM.onVarChanged("dir", SOUTH, AM.dir)
 

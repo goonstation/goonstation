@@ -6,7 +6,6 @@
 /atom/movable/screen/parallax_render_source
 	plane = PLANE_PARALLAX
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
-	screen_loc = "CENTER,CENTER"
 
 	name = null
 	desc = null

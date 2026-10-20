@@ -943,6 +943,19 @@ datum/pump_ui/circulator_ui
 		return (efficiency_scale * 0.01)
 
 	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/bible)) // god bless this spess
+			if(ON_COOLDOWN(src, "bless_teg", 3 SECONDS)) return
+			else if (!istype(src.active_form, /datum/teg_transformation/vampire) && user.traitHolder?.hasTrait("training_chaplain"))
+				playsound(src.loc, 'sound/impact_sounds/generic_punch_5.ogg', 50, 1)
+				if(src.grump && prob(80) && get_chaplain_faith(user) > FAITH_TEG_BLESS)
+					playsound(user.loc, 'sound/effects/faithbiblewhack.ogg', 50, 1)
+					user.visible_message(SPAN_ALERT("<B>[user] blesses [src]!</B>"))
+					src.grump -= rand(10, 50)
+					modify_chaplain_faith(user, -FAITH_TEG_BLESS)
+				else
+					playsound(src.loc, pick(sounds_enginegrump), 70, 0)
+					user.visible_message(SPAN_ALERT("<B>[src] makes an awful noise!</B>"))
+			return
 		// Weld > Crowbar > Rods > Weld
 		switch(semiconductor_state)
 			if(TEG_SEMI_STATE_INSTALLED)

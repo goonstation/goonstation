@@ -34,13 +34,13 @@
 			artifact.faults -= pick(artifact.faults)
 			if (prob(5))
 				for (var/i in 1 to rand(1, 3))
-					O.ArtifactDevelopFault(100)
+					O.ArtifactDevelopFault(100, 100)
 				boutput(user, SPAN_ALERT("[art] burns your hand! Fuck that hurt!"))
 				user.TakeDamage("All", burn = rand(1, 10))
 			else
-				O.ArtifactDevelopFault(100)
+				O.ArtifactDevelopFault(100, 100)
 		else
-			O.ArtifactDevelopFault(100) // bad effect guaranteed if fault didn't exist before
+			O.ArtifactDevelopFault(100, 100) // bad effect guaranteed if fault didn't exist before
 
 		for (var/datum/artifact_fault/fault in artifact.faults)
 			if (fault.trigger_prob == initial(fault.trigger_prob))

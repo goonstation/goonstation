@@ -1,0 +1,590 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aO" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/hallway/secondary/shuttle)
+"cE" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/neutral/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/shuttle)
+"cI" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"dW" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"ec" = (
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"ei" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/hallway/secondary/shuttle)
+"ez" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"fY" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/shuttle)
+"hm" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay4,
+/turf/space,
+/area/space)
+"ju" = (
+/turf/simulated/floor/neutral/corner,
+/area/station/hallway/secondary/shuttle)
+"ky" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/stool,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/hallway/secondary/shuttle)
+"kH" = (
+/turf/space,
+/area/space)
+"ly" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
+"lS" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"ms" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"nh" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"nQ" = (
+/obj/machinery/computer/transit_shuttle/mining,
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/hallway/secondary/shuttle)
+"pD" = (
+/obj/table/glass/auto,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/secondary/shuttle)
+"pY" = (
+/turf/simulated/floor/stairs/wide{
+	dir = 4
+	},
+/area/station/hallway/secondary/shuttle)
+"qr" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/neutral/side,
+/area/station/hallway/secondary/shuttle)
+"qz" = (
+/turf/simulated/floor/stairs/wide/other{
+	dir = 4
+	},
+/area/station/hallway/secondary/shuttle)
+"rv" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"rC" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
+/area/space)
+"rM" = (
+/obj/table/glass/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/hallway/secondary/shuttle)
+"ub" = (
+/obj/shrub/random,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/hallway/secondary/shuttle)
+"us" = (
+/obj/machinery/disposal,
+/obj/machinery/firealarm/directional/south,
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"xz" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"yv" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs/wide{
+	dir = 4
+	},
+/area/station/hallway/secondary/shuttle)
+"zh" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay5,
+/turf/space,
+/area/space)
+"zO" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/shuttle)
+"Ar" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"Bg" = (
+/turf/simulated/floor/neutral,
+/area/station/hallway/secondary/shuttle)
+"BQ" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hallway/secondary/shuttle)
+"Cc" = (
+/obj/machinery/alarm/directional/east,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/secondary/shuttle)
+"CG" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/hallway/secondary/shuttle)
+"CQ" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"CY" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/neutral,
+/area/station/hallway/secondary/shuttle)
+"DT" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/neutral,
+/area/station/hallway/secondary/shuttle)
+"EJ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"ES" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/neutral,
+/area/station/hallway/secondary/shuttle)
+"FV" = (
+/turf/space,
+/area/shuttle/mining/station)
+"Gr" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/hallway/secondary/shuttle)
+"ID" = (
+/obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/stairs/wide/middle{
+	dir = 4
+	},
+/area/station/hallway/secondary/shuttle)
+"Jl" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"KG" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/shuttle)
+"NL" = (
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/secondary/shuttle)
+"OM" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	name = "Mining Shuttle Airlock"
+	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
+"Pg" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/neutral,
+/area/station/hallway/secondary/shuttle)
+"Rh" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"Ua" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cell_charger,
+/turf/simulated/floor/neutral,
+/area/station/hallway/secondary/shuttle)
+"UM" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
+"Vr" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/hallway/secondary/shuttle)
+"YY" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/secondary/shuttle)
+
+(1,1,1) = {"
+kH
+kH
+kH
+kH
+kH
+kH
+kH
+kH
+kH
+kH
+kH
+kH
+kH
+kH
+kH
+"}
+(2,1,1) = {"
+kH
+kH
+kH
+lS
+zh
+EJ
+dW
+dW
+EJ
+zh
+EJ
+zh
+Rh
+kH
+kH
+"}
+(3,1,1) = {"
+kH
+kH
+kH
+hm
+FV
+FV
+FV
+FV
+FV
+FV
+kH
+kH
+hm
+kH
+kH
+"}
+(4,1,1) = {"
+kH
+kH
+kH
+ez
+FV
+FV
+FV
+FV
+FV
+FV
+FV
+kH
+ez
+kH
+kH
+"}
+(5,1,1) = {"
+kH
+kH
+kH
+rC
+FV
+FV
+FV
+FV
+FV
+FV
+FV
+FV
+rC
+kH
+kH
+"}
+(6,1,1) = {"
+kH
+kH
+kH
+ez
+FV
+FV
+FV
+FV
+FV
+FV
+FV
+FV
+ez
+kH
+kH
+"}
+(7,1,1) = {"
+kH
+kH
+kH
+ly
+FV
+FV
+FV
+FV
+FV
+FV
+FV
+FV
+ly
+kH
+kH
+"}
+(8,1,1) = {"
+kH
+kH
+kH
+ez
+FV
+FV
+FV
+FV
+FV
+FV
+FV
+kH
+ez
+kH
+kH
+"}
+(9,1,1) = {"
+kH
+kH
+kH
+UM
+FV
+FV
+FV
+FV
+FV
+FV
+kH
+kH
+UM
+kH
+kH
+"}
+(10,1,1) = {"
+kH
+kH
+kH
+BQ
+fY
+BQ
+OM
+OM
+BQ
+fY
+fY
+fY
+BQ
+kH
+kH
+"}
+(11,1,1) = {"
+BQ
+fY
+fY
+BQ
+nQ
+ky
+pY
+qz
+ub
+ei
+Gr
+rM
+BQ
+kH
+kH
+"}
+(12,1,1) = {"
+BQ
+Ua
+CY
+YY
+ec
+xz
+ms
+ms
+CQ
+ec
+ec
+Ar
+fY
+kH
+kH
+"}
+(13,1,1) = {"
+BQ
+DT
+Bg
+NL
+ec
+ju
+aO
+CG
+Vr
+cE
+Jl
+cI
+fY
+kH
+kH
+"}
+(14,1,1) = {"
+BQ
+ES
+Bg
+pD
+rv
+qr
+yv
+ID
+qz
+Cc
+nh
+us
+BQ
+kH
+kH
+"}
+(15,1,1) = {"
+BQ
+BQ
+zO
+zO
+zO
+BQ
+Pg
+KG
+Pg
+BQ
+zO
+zO
+BQ
+BQ
+BQ
+"}

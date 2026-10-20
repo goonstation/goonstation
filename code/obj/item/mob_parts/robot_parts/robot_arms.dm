@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 			boutput(user, SPAN_ALERT("[H.name] already has one of those!"))
 			return
 
-		if(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
+		if(src.appearanceString == "heavy")
 			boutput(user, SPAN_ALERT("That arm is too big to fit on [H]'s body!"))
 			return
 
@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		return
 
 	can_arm_attach()
-		return ..() && !(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
+		return ..() && !(src.appearanceString == "heavy")
 
 	on_holder_examine()
 		if (!isrobot(src.holder)) // probably a human, probably  :p
@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 			src.robot_emag_effect()
 
 	get_limb_print()
-		return build_id_fingerprint(FORENSIC_CHARS_HEX)
+		return build_id_unique(/proc/build_id_fingerprint, list(FORENSIC_CHARS_HEX))
 
 	proc/human_emag_effect()
 		var/mob/living/carbon/human/H = src.holder
@@ -175,6 +175,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 
 /obj/item/parts/robot_parts/arm/left/standard
 	name = "standard cyborg left arm"
+	breaks_cuffs = FALSE
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
@@ -186,6 +187,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
 	icon_state = "l_arm-sturdy"
+	handlistPart = "armL-sturdy"
 	material_amt = ROBOT_LIMB_COST + ROBOT_STURDY_COST
 	max_health = 115
 	weight = 0.2
@@ -231,6 +233,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 
 /obj/item/parts/robot_parts/arm/right/standard
 	name = "standard cyborg right arm"
+	breaks_cuffs = FALSE
+
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -241,6 +245,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
 	icon_state = "r_arm-sturdy"
+	handlistPart = "armR-sturdy"
 	material_amt = ROBOT_LIMB_COST + ROBOT_STURDY_COST
 	max_health = 115
 	weight = 0.2

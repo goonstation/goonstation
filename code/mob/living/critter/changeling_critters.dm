@@ -268,7 +268,7 @@ TYPEINFO(/mob/living/critter/changeling)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.name = "mouth"				 // designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"			 // the icon state of the hand UI background
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.limb = new /datum/limb
@@ -411,7 +411,7 @@ TYPEINFO(/mob/living/critter/changeling)
 					C.organHolder.receive_organ(E, "right_eye", 2)
 					C.update_body()
 			else
-				dna_gain = 2 // bad_ideas.txt
+				dna_gain = CHANGELING_EYESPIDER_COST // bad_ideas.txt
 
 		boutput(hivemind_owner.owner, SPAN_NOTICE("An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]"))
 		hivemind_owner.points += dna_gain
@@ -503,7 +503,7 @@ TYPEINFO(/mob/living/critter/changeling)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.name = "mouth"				 // designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"			 // the icon state of the hand UI background
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.limb = new /datum/limb/leg_hand
@@ -673,7 +673,7 @@ TYPEINFO(/mob/living/critter/changeling)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.name = "mouth"				 // designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"			 // the icon state of the hand UI background
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.limb = new /datum/limb
@@ -681,7 +681,7 @@ TYPEINFO(/mob/living/critter/changeling)
 
 	New()
 		..()
-		abilityHolder.addAbility(/datum/targetable/critter/slam)
+		abilityHolder.addAbility(/datum/targetable/critter/slam/headspider)
 		abilityHolder.updateButtons()
 		src.flags ^= TABLEPASS | DOORPASS
 

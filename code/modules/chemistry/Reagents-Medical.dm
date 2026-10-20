@@ -1100,13 +1100,16 @@ datum
 			fluid_b = 240
 			transparency = 50
 			value = 6
+			target_organs = list("pancreas")
+
 			var/list/flushed_reagents = list("sugar")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				flush(holder, 5 * mult, flushed_reagents)
-				//if(holder.has_reagent("cholesterol")) //probably doesnt actually happen but whatever
-					//holder.remove_reagent("cholesterol", 2)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.organHolder?.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
 				..()
 				return
 

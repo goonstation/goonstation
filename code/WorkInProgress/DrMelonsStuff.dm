@@ -95,6 +95,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
 	flags = OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	anchored = TRUE
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
@@ -113,6 +115,12 @@
 			O.set_loc(get_turf(src))
 		src.occupant = null
 		..()
+
+	was_deconstructed_to_frame(mob/user)
+		src.on = FALSE
+		if (src.reagents.total_volume)
+			src.reagents.trans_to(src.last_turf, src.reagents.total_volume)
+		. = ..()
 
 	mob_flip_inside(var/mob/user)
 		if (src.reagents.total_volume)

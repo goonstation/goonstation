@@ -69,7 +69,7 @@
   ..()
   var/datum/handHolder/HH = hands[1]
   HH.limb = new /datum/limb/singularity
-  HH.icon = 'icons/mob/critter_ui.dmi'
+  HH.icon = 'icons/mob/critter_hands.dmi'
   HH.icon_state = "handzap"
   HH.name = "gravitational pull"
   HH.limb_name = "gravitational pull"

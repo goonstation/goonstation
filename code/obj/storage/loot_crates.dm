@@ -93,7 +93,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 
 	New()
 		..()
-		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
+		src.light = image('icons/obj/storage/crate.dmi',"lootcratelocklight")
 		new /obj/item/antitamper(
 			src,
 			TRUE, // Attach it to crate being spawned
@@ -140,7 +140,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 /obj/item/antitamper
 	name = "anti-tamper device"
 	desc = "Space pirates hate these!"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "antitamper-off"
 	w_class = W_CLASS_SMALL
 	force = 4

@@ -382,12 +382,6 @@
 /turf/simulated/floor/airless/darkblue
 	icon_state = "fulldblue"
 
-/turf/simulated/floor/airless/darkblue/checker
-	icon_state = "blue-dblue"
-
-/turf/simulated/floor/airless/darkblue/checker/other
-	icon_state = "blue-dblue2"
-
 /turf/simulated/floor/airless/darkblue/side
 	icon_state = "dblue"
 
@@ -531,6 +525,23 @@
 /turf/simulated/floor/airless/yellowblack/corner
 	icon_state = "yellowblackcorner"
 
+/turf/simulated/floor/airless/yellowwhite
+	icon_state = "yellowwhite"
+
+/turf/simulated/floor/airless/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/airless/lightyellow
+	icon_state = "fulllyellow"
+
+/turf/simulated/floor/airless/lightyellow/side
+	icon_state = "lyellow"
+
+/turf/simulated/floor/airless/lightyellow/corner
+	icon_state = "lyellowcorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/airless/orange
@@ -542,20 +553,36 @@
 /turf/simulated/floor/airless/orange/corner
 	icon_state = "orangecorner"
 
+/turf/simulated/floor/airless/orange/checker
+	icon_state = "orangechecker"
 
 /turf/simulated/floor/airless/orangeblack
-	icon_state = "fullcaution"
-
-/turf/simulated/floor/airless/orangeblack/side
-	icon_state = "caution"
-
-/turf/simulated/floor/airless/orangeblack/side/white
-	icon_state = "cautionwhite"
+	icon_state = "orangeblack"
 
 /turf/simulated/floor/airless/orangeblack/corner
+	icon_state = "orangeblackcorner"
+
+/turf/simulated/floor/airless/orangewhite
+	icon_state = "orangewhite"
+
+/turf/simulated/floor/airless/orangewhite/corner
+	icon_state = "orangewhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/airless/caution
+	icon_state = "fullcaution"
+
+/turf/simulated/floor/airless/caution/side
+	icon_state = "caution"
+
+/turf/simulated/floor/airless/caution/white
+	icon_state = "cautionwhite"
+
+/turf/simulated/floor/airless/caution/corner
 	icon_state = "cautioncorner"
 
-/turf/simulated/floor/airless/orangeblack/corner/white
+/turf/simulated/floor/airless/caution/corner/white
 	icon_state = "cautionwhitecorner"
 
 /////////////////////////////////////////

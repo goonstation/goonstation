@@ -52,6 +52,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	for (var/client/C)
 		var/mob/new_player/player = C.mob
 		if (!istype(player) || !player.mind) continue
+		if (length(job_controls.forced_assignments) && (player.ckey in job_controls.forced_assignments))
+			unassigned += player
+			continue
 		if ((player.mind.special_role == ROLE_WRAITH) || (player.mind.special_role == ROLE_BLOB) || (player.mind.special_role == ROLE_FLOCKMIND))
 			continue //If they aren't spawning in as crew they shouldn't take a job slot.
 		if (player.ready_play && !player.mind.assigned_role)
@@ -62,12 +65,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (!length(unassigned))
 		return 0
-
-	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
-	if (master_mode == "construction")
-		for (var/mob/new_player/player in unassigned)
-			player.mind.assigned_role = "Construction Worker"
-		return
 
 	#ifdef I_WANNA_BE_THE_JOB
 	for (var/mob/new_player/player in unassigned)
@@ -94,6 +91,16 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		// If it's hi-pri, add it to that list. Simple enough
 		if (JOB.high_priority_job)
 			high_priority_jobs.Add(JOB)
+
+	// Handle forced assignment first, even if someone set the mode to construction for some reason.
+	if (length(job_controls.forced_assignments))
+		unassigned = global.handle_forced_job_assignments(unassigned)
+
+	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
+	if (master_mode == "construction")
+		for (var/mob/new_player/player in unassigned)
+			player.mind.assigned_role = "Construction Worker"
+		return
 
 	// Wiggle the players too so that priority isn't determined by key alphabetization
 	shuffle_list(unassigned)
@@ -205,7 +212,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			item_path = weighted_pick(items)
 	if (!H.equip_new_if_possible(item_path, slot))
 		var/obj/item/I = new item_path(src)
-		H.stow_in_available(I, TRUE)
+		H.stow_in_available(I)
 
 /// Attempt to equip all job items
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
@@ -223,6 +230,10 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
 				H.equip_new_if_possible(X, SLOT_IN_BELT)
+	// Things spawned directly in the mob
+	for(var/type in JOB.items_in_mob)
+		if(ispath(type))
+			new type(H)
 	// Footwear
 	equip_job_item_slot(JOB.slot_foot, H, SLOT_SHOES)
 	// Suit
@@ -463,7 +474,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				H.force_laydown_standup()
 
 			if (H.head)
-				H.stow_in_available(H.head)
+				H.stow_in_available(H.head, TRUE)
 			H.equip_if_possible(new /obj/item/clothing/head/party/random(H), SLOT_HEAD) // hehehe funny hat
 
 		// This should be here (overriding most other things), probably? - #11215
@@ -494,6 +505,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 					if (!A.status && A.announces_arrivals)
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
 							return
+						else if (JOB.change_name_on_spawn) // Announced later after they've chosen their name so they dont get announced twice
+							return
 						else
 							A.announce_arrival(src)
 
@@ -512,13 +525,13 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
 		if (src.glasses)
-			src.stow_in_available(src.glasses)
+			src.stow_in_available(src.glasses, TRUE)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
 	else // if you're blind and have missing eyes, you don't get a cool patch sorry
 		var/missing_left = src.traitHolder.hasTrait("eye_missing_left")
 		var/missing_right =  src.traitHolder.hasTrait("eye_missing_right")
 		if (src.glasses && (missing_left || missing_right))
-			src.stow_in_available(src.glasses)
+			src.stow_in_available(src.glasses, TRUE)
 		if (missing_left && missing_right)
 			src.equip_if_possible(new /obj/item/clothing/glasses/blindfold(src), SLOT_GLASSES)
 		else if (missing_left)
@@ -531,11 +544,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (src.traitHolder.hasTrait("shortsighted"))
 		if (src.glasses)
-			src.stow_in_available(src.glasses)
+			src.stow_in_available(src.glasses, TRUE)
 		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("deaf"))
 		if (src.ears)
-			src.stow_in_available(src.ears)
+			src.stow_in_available(src.ears, TRUE)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /**
@@ -547,7 +560,7 @@ Equip items from body traits.
 /mob/living/carbon/human/proc/equip_body_traits(extended_tank=FALSE)
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
-			src.stow_in_available(src.wear_mask)
+			src.stow_in_available(src.wear_mask, TRUE)
 
 		if(!src.wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
@@ -631,7 +644,7 @@ Equip items from body traits.
 		#endif
 
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
-			src.stow_in_available(src.wear_mask)
+			src.stow_in_available(src.wear_mask, TRUE)
 		if(!src.wear_mask)
 			src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 
@@ -673,13 +686,34 @@ Equip items from body traits.
 		carrier.trap_mob(pet, src)
 		trinket = carrier
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
-		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
-		trinket = new random_lunchbox_path(src)
+		if (!src.traitHolder.hasTrait("picky_eater"))
+			var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
+			trinket = new random_lunchbox_path(src)
+		else // Picky eater trait holders get a custom lunchbox with 3 of their favourite foods
+			var/lunchbox = new /obj/item/storage/lunchbox(src)
+			trinket = lunchbox
+			var/datum/trait/picky_eater/picky_trait = src.traitHolder.getTrait("picky_eater")
+			var/list/fav_foods = picky_trait.fav_foods
+			for (var/i in 1 to 3)
+				var/obj/item/food = fav_foods[i]
+				trinket.storage.add_contents(new food(src))
+			var/list/lunch_list = list(/obj/item/reagent_containers/food/drinks/water,\
+			/obj/item/kitchen/utensil/fork,\
+			/obj/item/kitchen/utensil/spoon,\
+			/obj/item/paper/lunchbox_note)
+			for (var/lunch_item_type in lunch_list)
+				trinket.storage.add_contents(new lunch_item_type(src))
 	else if (src.traitHolder && src.traitHolder.hasTrait("wheelchair"))
 		SPAWN(0) // Ensures wheelchair spawns with you even if you aren't latejoining at arrivals.
 			var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 			trinket = the_chair
+			var/datum/trait/artisan/trait_artisan = src.traitHolder?.getTrait("artisan")
+			if(trait_artisan)
+				trait_artisan.apply_trinket_material(src, trinket)
 			the_chair.buckle_in(src, src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("cane"))
+		var/picked = pick(typesof(/obj/item/cane/wooden))
+		trinket = new picked(src)
 	else
 		trinket = new T(src)
 
@@ -706,6 +740,21 @@ Equip items from body traits.
 		allergic_pen.quality = rand(5,80)
 		trinkets_to_equip += allergic_pen
 
+	var/datum/trait/artisan/trait_artisan = src.traitHolder?.getTrait("artisan")
+	if(trait_artisan)
+		if(src.traitHolder.hasTrait("wheelchair"))
+			// Do nothing. Material will be applied to the wheelchair.
+		else if(trinket)
+			trait_artisan.apply_trinket_material(src, trinket)
+		else if(length(trinkets_to_equip) > 0)
+			trait_artisan.apply_trinket_material(src, pick(trinkets_to_equip))
+		else
+			var/datum/material/mat = trait_artisan.choose_trinket_material(null)
+			var/bar_type = getProcessedMaterialForm(mat)
+			var/obj/item/material_piece/bar = new bar_type
+			bar.setMaterial(mat)
+			trinkets_to_equip += bar
+
 	for (var/obj/item/I in trinkets_to_equip)
 		var/equipped = 0
 		if (src.back?.storage && src.equip_if_possible(I, SLOT_IN_BACKPACK))
@@ -716,6 +765,8 @@ Equip items from body traits.
 			if (!src.l_store && src.equip_if_possible(I, SLOT_L_STORE))
 				equipped = 1
 			else if (!src.r_store && src.equip_if_possible(I, SLOT_R_STORE))
+				equipped = 1
+			else if (!src.head && src.equip_if_possible(I, SLOT_HEAD))
 				equipped = 1
 			else if (!src.l_hand && src.equip_if_possible(I, SLOT_L_HAND))
 				equipped = 1
@@ -762,7 +813,7 @@ Equip items from body traits.
 
 		C.registered = realName
 		C.assignment = JOB.name
-		C.name = "[C.registered]’s ID Card ([C.assignment])"
+		C.update_name()
 		C.access = JOB.access.Copy()
 		C.pronouns = src.get_pronouns()
 
@@ -784,7 +835,7 @@ Equip items from body traits.
 		if(src.mind)
 			src.mind.originalPDA = PDA
 
-		if(src.client?.preferences?.id_starts_in_pda)
+		if(src.client?.preferences?.id_starts_in_pda || JOB.put_id_in_pda)
 			PDA.insert_id_card(C, src)
 			src.u_equip(PDA)
 			src.equip_if_possible(PDA, SLOT_WEAR_ID)

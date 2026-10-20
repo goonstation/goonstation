@@ -37,7 +37,8 @@
 			if (T)
 				var/obj/adventurepuzzle/triggerer/button/button = new /obj/adventurepuzzle/triggerer/button(T)
 				button.name = button_name
-				button.set_dir(holder.dir)
+				if(holder.dir)
+					button.set_dir(holder.dir)
 				button.icon_state = "button_[button_type]_unpressed"
 				if(startswith(button_type, "comp")) //crimes
 					button.icon = 'icons/misc/mechanicsExpansion.dmi'

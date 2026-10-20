@@ -40,7 +40,8 @@
 				P.proj_type = proj_type
 				P.trap_delay = trap_delay
 				P.invisibility = invisibility
-				P.set_dir(holder.dir)
+				if(holder.dir)
+					P.set_dir(holder.dir)
 		else if ("right" in pa)
 			if (isturf(object))
 				if (target == object)

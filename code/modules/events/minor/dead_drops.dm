@@ -312,7 +312,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 	items = list(/obj/item/card/id/syndicate=100,
 				/obj/item/gun/kinetic/pistol=25,
 				/obj/item/radiojammer=25,
-				/obj/item/tool/omnitool=10,
+				/obj/item/tool/omnitool/syndicate=10,
 				/obj/item/assembly/flash_cell=5,
 				/obj/item/handcuffs/guardbot=5
 				)
@@ -325,7 +325,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 				/obj/item/breaching_charge=50,
 				/obj/item/gun/kinetic/pistol=10,
 				/obj/item/storage/landmine_pouch=10,
-				/obj/item/tool/omnitool=5
+				/obj/item/tool/omnitool/syndicate=5
 				)
 
 /datum/dead_drop/assassin

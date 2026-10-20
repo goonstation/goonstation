@@ -356,7 +356,7 @@
 		animate(pixel_x = (diff_x*32) + target.pixel_x, pixel_y = (diff_y*32)  + target.pixel_y, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
 		sleep(0.5 SECONDS)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
-		M.attack_particle.alpha = 0
+		M.attack_particle?.alpha = 0
 
 
 

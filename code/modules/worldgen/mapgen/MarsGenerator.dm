@@ -180,7 +180,7 @@
 	stone_color = "#c96433"
 	replace_type = /turf/unsimulated/floor/plating/asteroid/mars
 
-	destroy_asteroid(var/dropOre=1, var/mob/user)
+	destroy_asteroid(var/dropOre=1, var/mob/user, var/mining_type)
 		var/image/ambient_light = src.GetOverlayImage("ambient")
 		var/image/weather = src.GetOverlayImage("weather")
 		..()

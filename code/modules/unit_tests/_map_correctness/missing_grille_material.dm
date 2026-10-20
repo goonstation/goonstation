@@ -8,7 +8,7 @@
 		if (!isnull(grille.material))
 			continue
 
-		. += src.format_position(grille)
+		. += CI.format_position(grille)
 
 
 SET_UP_CI_TRACKING(/obj/mesh/grille)
