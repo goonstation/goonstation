@@ -9,6 +9,7 @@
 	pixel_y = 10
 	},
 /obj/random_item_spawner/junk/maybe_few,
+/obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "d" = (
@@ -52,8 +53,7 @@
 /obj/table/auto,
 /obj/item/spraybottle/cleaner{
 	pixel_x = -8;
-	pixel_y = 4;
-	layer = 5
+	pixel_y = 4
 	},
 /obj/item/reagent_containers/syringe/krokodil{
 	pixel_x = 4;
@@ -83,15 +83,13 @@
 /obj/decal/cleanable/vomit,
 /obj/item/reagent_containers/syringe{
 	pixel_x = 4;
-	pixel_y = 2;
-	layer = 4
-	},
-/obj/item/paper{
-	name = "Suspicious note";
-	info = "<h3>That's it!</h3><p>This Clown completely made me lose my patience!</p><p>They were supposed to sell the produce and not give it away for free!</p><p>I'll cook up the last batch and use the space cash to abandon this place for good before Security gets my ass!</p><p>Good thing I scribbled the recipe this time. And switching to the cheaper hay fever pills? Genius. The margins on this batch are gonna be <em>beautiful</em>.</p><p>But first, I'm gonna take a shot and make that Clown pay!</p>";
-	layer = 5
+	pixel_y = 2
 	},
 /obj/fakeobject/skeleton,
+/obj/item/paper{
+	name = "Suspicious note";
+	info = "<h3>That's it!</h3><p>This Clown completely made me lose my patience!</p><p>They were supposed to sell the produce and not give it away for free!</p><p>I'll cook up the last batch and use the space cash to abandon this place for good before Security gets my ass!</p><p>Good thing I scribbled the recipe this time. And switching to the cheaper hay fever pills? Genius. The margins on this batch are gonna be <em>beautiful</em>.</p><p>But first, I'm gonna take a shot and make that Clown pay!</p>"
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "F" = (
@@ -100,6 +98,7 @@
 /area/dmm_suite/clear_area)
 "G" = (
 /obj/random_item_spawner/junk/maybe_few,
+/obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "K" = (
@@ -112,9 +111,10 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "M" = (
-/obj/item/chair/folded,
 /obj/decal/cleanable/dirt/jen,
-/obj/random_item_spawner/gross_with_junk/maybe_few,
+/obj/stool/chair{
+	dir = 1
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "O" = (
@@ -132,26 +132,19 @@
 /area/dmm_suite/clear_area)
 "Q" = (
 /obj/storage/crate/pryable,
-/obj/item/reagent_containers/glass/beaker/large/round{
-	pixel_x = -6
-	},
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_y = 32
 	},
-/obj/item/storage/pill_bottle/antihistamine{
-	pixel_y = 10
+/obj/item/reagent_containers/glass/bottle/morphine{
+	pixel_x = 10
 	},
-/obj/item/reagent_containers/glass/beaker{
-	pixel_x = -4;
-	pixel_y = -6
+/obj/item/storage/pill_bottle/bronadyl,
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -10
 	},
 /obj/item/paper{
 	name = "Krokodil recipe";
-	info = "<h2>Krokodil - Last Batch</h2><p><em>NOTE: Equal amounts of everything. Don't get clever.</em></p><ul>  <li>Get a small beaker and stick it in the chem dispenser.</li>  <li>Put in <em>Phosphorus</em> and <em>Potassium</em>.</li>  <li>Pour it all into the round-bottom flask. Chuck in one Hay Fever Pill. Cheap ones are fine, no reason to waste money on the good stuff.</li>  <li>Add equal amounts of:    <ul>      <li><em>Welding Fuel</em></li>      <li><em>Space Cleaner</em></li>      <li><em>Morphine</em></li>    </ul>  </li>  <li>Heat it until it starts bubbling and turns blue. Should be obvious enough.</li></ul><p><em>If Security asks, it's just a new kind of space cleaner.</em></p>";
-	layer = 4
-	},
-/obj/item/reagent_containers/glass/bottle/morphine{
-	pixel_x = 10
+	info = "<h2>Drug recipe - Krokodil</h2><p><em>NOTE: Equal amounts of everything. Don't get clever.</em></p><ul><li>Get a large beaker and chuck in one hay fever pill. Cheap ones are fine, no reason to waste money on the good stuff.</li><li>Add equal amounts of:<ul><li><em>Welding Fuel</em></li><li><em>Space Cleaner</em></li><li><em>Morphine</em></li></ul></li><li>Stick the beaker in the chem dispenser and put in <em>Phosphorus</em> and <em>Potassium</em>.</li><li>Heat it until it starts bubbling and turns blue. Should be obvious enough.</li></ul><p><em>If Security asks, it's just a new kind of space cleaner.</em></p>"
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
