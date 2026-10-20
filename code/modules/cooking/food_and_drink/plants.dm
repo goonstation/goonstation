@@ -877,6 +877,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Whether or not you like the taste, its freshness is appearant."
 	icon_state = "pear"
 	planttype = /datum/plant/fruit/pear
+	bites_left = 1
 	heal_amt = 2
 	brew_result = list("cider"=20) // pear cider is delicious, fuck you.
 	food_color = "#3FB929"
