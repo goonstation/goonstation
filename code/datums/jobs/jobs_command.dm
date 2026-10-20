@@ -50,8 +50,7 @@ ABSTRACT_TYPE(/datum/job/command)
 			logTheThing(LOG_DEBUG, M, "would have spawned with the authentication disk, but one already existed! Giving them a pinpointer instead.")
 			M.l_store.safe_delete()
 
-			var/obj/item/pinpointer/disk/find_what_the_previous_moron_lost = new(M)
-			M.equip_if_possible(find_what_the_previous_moron_lost, SLOT_L_STORE)
+			M.equip_new_if_possible(/obj/item/pinpointer/disk, SLOT_L_STORE)
 
 	derelict
 		//name = "NT-SO Commander"
