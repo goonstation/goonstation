@@ -630,6 +630,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 
 	hidden = list(
 		/datum/manufacture/crate/class,
+		/datum/manufacture/crate/secure/command_gear_replacement,
 		/datum/manufacture/crate/secure/syndicate,
 		/datum/manufacture/cart/hotdog,
 		/datum/manufacture/locker/secure/nanotrasen,
