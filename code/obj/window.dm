@@ -790,6 +790,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		/turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen,
 		/turf/simulated/wall/auto/reinforced/jen,
+		/turf/simulated/wall/auto/walp,
+		/turf/simulated/wall/auto/reinforced/walp,
 		/turf/simulated/wall/auto/supernorn/wood,
 		/turf/unsimulated/wall/auto/supernorn/wood,
 
@@ -879,6 +881,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			src.damage_image.icon_state = null
 		src.AddOverlays(src.damage_image, "damage")
 
+TYPEINFO(/obj/window/auto/walp)
+    mat_appearances_to_ignore = list("glass","plasmaglass")
+/obj/window/auto/walp
+	icon = 'icons/obj/window_walp.dmi'
+	alpha = 255
+
 /obj/window/auto/the_tuff_stuff
 	explosion_resistance = 3
 
@@ -890,6 +898,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	health_max = 50
 	the_tuff_stuff
 		explosion_resistance = 5
+
+TYPEINFO(/obj/window/auto/reinforced/walp)
+    mat_appearances_to_ignore = list("glass","plasmaglass")
+/obj/window/auto/reinforced/walp
+	icon = 'icons/obj/window_walp.dmi'
+	alpha = 255
 
 /obj/window/auto/reinforced/indestructible
 	desc = "A window. A particularly robust one at that."
@@ -962,6 +976,13 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	health_max = 80
 	deconstruct_time = 2 SECONDS
 
+TYPEINFO(/obj/window/auto/crystal/walp)
+    mat_appearances_to_ignore = list("glass","plasmaglass")
+/obj/window/auto/crystal/walp
+	icon = 'icons/obj/window_walp.dmi'
+	mod = "WP-"
+	alpha = 255
+
 /obj/window/auto/crystal/reinforced
 	icon_state = "mapwin_r"
 	mod = "R-"
@@ -969,6 +990,13 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	health = 100
 	health_max = 100
 	deconstruct_time = 5 SECONDS
+
+TYPEINFO(/obj/window/auto/crystal/reinforced/walp)
+    mat_appearances_to_ignore = list("glass","plasmaglass")
+/obj/window/auto/crystal/reinforced/walp
+	icon = 'icons/obj/window_walp.dmi'
+	mod = "RP-"
+	alpha = 255
 
 /obj/window/auto/bulletproof
 	name = "bulletproof window"

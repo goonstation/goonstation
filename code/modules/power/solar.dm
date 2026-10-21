@@ -2,6 +2,7 @@
 - Solar tracker
 - Solar panel
 - Solar control computer
+- Solar configuration subtypes
 */
 
 /////////////////////////////////// Solar tracker //////////////////////////////////////////////////////
@@ -462,3 +463,28 @@ TYPEINFO(/obj/machinery/power/solar/owl_cheat)
 				UpdateIcon()
 
 			update_solar_exposure()
+
+/////////////////////////////////////////////////// Solar Subtypes /////////////////////////////////////////
+
+#define DEFINE_SOLARS(_PATH, _ID) \
+	/obj/machinery/power/tracker/_PATH{id=_ID};\
+	/obj/machinery/power/solar/_PATH{id=_ID};\
+	/obj/machinery/computer/solar_control/_PATH{id=_ID};
+
+DEFINE_SOLARS(north, "north")
+DEFINE_SOLARS(south, "south")
+DEFINE_SOLARS(alt, "alt")
+DEFINE_SOLARS(east, "east")
+DEFINE_SOLARS(west, "west")
+DEFINE_SOLARS(small_backup1, "small_backup1")
+DEFINE_SOLARS(small_backup2, "small_backup2")
+DEFINE_SOLARS(small_backup3, "small_backup3")
+DEFINE_SOLARS(small_backup4, "small_backup4")
+DEFINE_SOLARS(diner, "diner")
+DEFINE_SOLARS(silverglass, "silverglass")
+DEFINE_SOLARS(zeta, "zeta")
+DEFINE_SOLARS(zeta_east, "zeta_east")
+DEFINE_SOLARS(zeta_west, "zeta_west")
+DEFINE_SOLARS(aisat, "aisat")
+
+#undef DEFINE_SOLARS

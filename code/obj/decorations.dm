@@ -60,13 +60,18 @@
 	var/falling = FALSE
 	var/fallen = FALSE
 	var/fall_time = 2 SECONDS
-	var/season_affected = TRUE
+	var/season_affected = TRUE //! Will this tree change colors with the autumn season
+	var/list/autumn_icon_states //! Which alternative tree icon states should this tree use
 
 #ifdef SEASON_AUTUMN
 	New()
 		..()
+		src.autumn_icon_states = list("tree_red", "tree_yellow", "tree_orange")
+
+	initialize(player_caused_init)
+		. = ..()
 		if(src.season_affected)
-			src.icon_state = pick("tree_red", "tree_yellow", "tree_orange")
+			src.icon_state = pick(src.autumn_icon_states)
 #endif
 
 	attackby(obj/item/I, mob/user)
@@ -119,6 +124,23 @@
 		New()
 			. = ..()
 			src.dir = pick(cardinal)
+
+	birch
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
+		icon_state = "tree_birch"
+		name = "birch tree"
+
+#ifdef SEASON_AUTUMN
+		New()
+			..()
+			src.autumn_icon_states = list("tree_birchautumn")
+#endif
+
+	birchautumn
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
+		icon_state = "tree_birchautumn"
+		name = "autumny birch tree"
+		season_affected = FALSE
 
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
