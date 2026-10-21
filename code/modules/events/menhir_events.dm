@@ -1467,9 +1467,9 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 /obj/anomaly/pale
 	name = "pale anomaly"
 	desc = "The air around it shudders as though caught in a spider's web."
-	icon = 'icons/effects/particles.dmi'
-	icon_state = "sparkle"
-	color = "#a4aaac"
+	icon = 'icons/effects/electile.dmi'
+	icon_state = "6b"
+	color = "#CCCCEE"
 	alpha = 0
 	plane = PLANE_NOSHADOW_BELOW
 	anchored = ANCHORED_ALWAYS
