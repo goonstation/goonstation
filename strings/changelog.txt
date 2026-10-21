@@ -1,6 +1,10 @@
 
 (t)tue oct 20 26
 (u)LorrMaster
+(p)26602
+(e)🆕👮|C-Feature, A-Security
+(*)Fabricators, glass recyclers, network printers, and ruck kits now apply a forensic ID to items they print/create.
+(u)LorrMaster
 (p)26597
 (e)🔄👮|C-Rework, A-Security
 (*)More reliable ballistic forensics
