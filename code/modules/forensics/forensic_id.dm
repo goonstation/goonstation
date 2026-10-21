@@ -52,6 +52,22 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 		final_text += separation_text + copytext(text, pos, pos + bunch_size)
 	return final_text
 
+/proc/build_id_pattern(var/str_pattern)
+	// L = Uppercase Letter | l = Lowercase Letter | # = Number
+	var/result = ""
+	for(var/i in 1 to length(str_pattern))
+		var/char = copytext(str_pattern, i, i + 1)
+		switch(char)
+			if("L") // Uppercase letters
+				result += pick(FORENSIC_CHARS_UPPER_LIMITED)
+			if("l")
+				result += pick(FORENSIC_CHARS_LOWER_LIMITED)
+			if("#") // Uppercase letters
+				result += pick(FORENSIC_CHARS_NUMBERS)
+			else
+				result += char
+	return result
+
 /// Builds a forensic ID with the given proc and charcter list, ensures it is unique in the given registry list, and returns the corresponding forensic string.
 ///
 /// You must register the returned datum/forensic_id with register_id() to ensure it is stored in the global list of IDs.
@@ -78,6 +94,7 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 
 /proc/build_id_fingerprint(list/char_list)
 	return build_id_separate(build_id_norepeat(char_list, 16), 4, "-")
+
 
 // -----| Forensic Display |-----
 
