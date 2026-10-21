@@ -593,6 +593,5 @@
 						qdel(butt)
 						return
 
-		H.skeletonize()
 		ranch_critter.visible_message(SPAN_ALERT("[src.owner] finished eating \the [H]!"), SPAN_NOTICE("You finished eating \the [H]."))
 
