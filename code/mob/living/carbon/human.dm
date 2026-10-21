@@ -673,12 +673,7 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
-			var/turf/where = get_turf(src)
-			var/where_text = "Unknown (?, ?, ?)"
-			if (where)
-				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
-
-			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] has died at [GHOST.MESSAGE.format_loc(src)].")
 #ifdef DATALOGGER
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
@@ -1556,17 +1551,17 @@
 		return FALSE
 
 /**
-Attempts to put an item in the hand of a mob, if not possible then stow it, then by default delete the item.
+Attempts to put an item in the hand of a mob, if not possible then stow it, then by default drop the item at the mob's feet.
 
  * @param I The item to put in the hand.
 
  * @param hand The hand to put the item in.
 
- * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE, the item is dropped at the current location.
+ * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE (by default), the item is dropped at the current location.
 
  * @return TRUE if the item was successfully put in hand or stowed, FALSE otherwise.
 **/
-/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = TRUE)
+/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = FALSE)
 	if (!src.put_in_hand(I, hand))
 		if(!src.stow_in_available(I, delete_item))
 			return FALSE
@@ -1922,15 +1917,15 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 	return TRUE
 
 /**
-Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will delete items that cannot be placed by default.
+Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will drop items that cannot be placed at the mob's feet by default.
 
  * @param I The item to stow.
 
- * @param delete_item If TRUE, the item will be deleted if it cannot be stowed. If FALSE, the item is dropped at the current location.
+ * @param delete_item If TRUE, the item will be deleted if it cannot be stowed, for items being replaced by another. If FALSE (by default), the item is dropped at the current location.
 
  * @return TRUE if the item was stowed, FALSE if it was not.
 **/
-/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = TRUE)
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = FALSE)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return TRUE
 	if (src.autoequip_slot(I, SLOT_IN_BELT))
@@ -2613,20 +2608,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.update_body()
 		src.update_clothing()
 
-/mob/living/carbon/human/verb/change_hud_style()
-	set name = "Change HUD Style"
-	set desc = "Selects what style HUD you would like to use."
-	set category = "Commands"
-
-	if (!src.hud) // uh?
-		return src.show_text("<b>Somehow you have no HUD! Please alert a coder!</b>", "red")
-
-	var/selection = tgui_input_list(usr, "What style HUD style would you like?", "Selection", hud_style_selection)
-	if (!selection)
-		return
-
-	src.force_hud_style(selection)
-
 /mob/living/carbon/human/proc/force_hud_style(var/selection)
 	if (!selection)
 		return
@@ -3298,7 +3279,7 @@ mob/living/carbon/human/has_genetics()
 			if (istype(I, /obj/item/implant/projectile))
 				wound_count++
 		if(wound_count)
-			scan.add_text("Gunshot wounds: [wound_count] fragments detected")
+			scan.add_text("Gunshot wounds: [wound_count] fragments detected") // Seems to double-count for some reason?
 
 /mob/living/carbon/human/proc/get_fingerprint(var/ignore_gloves = FALSE, force_hand = -1)
 	RETURN_TYPE(/datum/forensic_data/fingerprint)

@@ -748,13 +748,11 @@
 				access.access = get_access("Admin")
 
 /obj/item/implant/confetti
-	var/datum/component/my_comp = null
 
 	implanted(mob/M, mob/I)
 		. = ..()
-		src.my_comp = M.AddComponent(/datum/component/death_confetti)
+		M.AddElement(/datum/element/death_confetti)
 
 	on_remove(mob/M)
+		M.RemoveElement(/datum/element/death_confetti)
 		. = ..()
-		src.my_comp?.RemoveComponent()
-		src.my_comp = null

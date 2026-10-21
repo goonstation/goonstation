@@ -543,7 +543,7 @@ TYPEINFO(/obj/npc/trader/salvager)
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
 	currency = "Salvage Points"
-	speech_verb_say = "beeps"
+	speech_verb_say = "states"
 	use_speech_bubble = TRUE
 	voice_sound_override = 'sound/misc/talk/bottalk_1.ogg'
 
@@ -558,29 +558,29 @@ TYPEINFO(/obj/npc/trader/salvager)
 		for(var/buy_type in (concrete_typesof(/datum/commodity/magpie/buy) - concrete_typesof(/datum/commodity/magpie/buy/random_buy)))
 			src.goods_buy += new buy_type(src)
 
-		greeting= {"[src.name]'s light flash, and he states, \"Greetings, welcome to my shop. Please select from my available equipment.\""}
+		greeting= {"Greetings, welcome to my shop. Please select from my available equipment."}
 
-		sell_dialogue = "[src.name] states, \"There are several individuals in my database that are looking to procure goods."
+		sell_dialogue = "There are several individuals in my database that are looking to procure goods."
 
-		buy_dialogue = "[src.name] states,\"Please select what you would like to buy\"."
+		buy_dialogue = "Please select what you would like to buy."
 
-		successful_sale_dialogue = list("[src.name] states, \"Thank you for the business organic.\"",
-			"[src.name], \"I am adding you to the Good Customer Database.\"")
+		successful_sale_dialogue = list("Thank you for the business organic.",
+			"[src.name], I am adding you to the Good Customer Database.")
 
-		failed_sale_dialogue = list("[src.name] states, \"<ERROR> Item not in purchase database.\"",
-			"[src.name] states, \"I'm sorry I currently have no interest in that item, perhaps you should try another trader.\"",
-			"[src.name] starts making a loud and irritating noise. [src.name] states, \"Fatal Exception Error: Cannot locate item\"",
-			"[src.name] states, \"Invalid Input\"")
+		failed_sale_dialogue = list("<ERROR> Item not in purchase database.",
+			"I'm sorry I currently have no interest in that item, perhaps you should try another trader.",
+			"Fatal Exception Error: Cannot locate item.",
+			"Invalid Input.")
 
-		successful_purchase_dialogue = list("[src.name] states, \"Thank you for your business\".",
-			"[src.name] states, \"Looking forward to future transactions\".")
+		successful_purchase_dialogue = list("Thank you for your business.",
+			"Looking forward to future transactions.")
 
-		failed_purchase_dialogue = list("[src.name] states, \"I am sorry, but you currenty do not have enough funds to purchase this.\"",
-			"[src.name] states, \"Funds not found.\"")
+		failed_purchase_dialogue = list("I am sorry, but you currenty do not have enough funds to purchase this.",
+			"Funds not found.")
 
-		pickupdialogue = "[src.name] states, \"Thank you for your business. Please come again\"."
+		pickupdialogue = "Thank you for your business. Please come again."
 
-		pickupdialoguefailure = "[src.name] states, \"I'm sorry, but you don't have anything to pick up\"."
+		pickupdialoguefailure = "I'm sorry, but you don't have anything to pick up."
 
 	sold_item(datum/commodity/C, obj/S, amount, mob/user as mob)
 		. = ..()

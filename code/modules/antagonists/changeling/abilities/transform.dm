@@ -17,6 +17,9 @@
 			boutput(holder.owner, SPAN_ALERT("That ability is incompatible with our abilities. We should report this to a coder."))
 			return 1
 
+		if (!H.current_ident) // cloning copies the holder without our identity, so take it from the body we have now
+			H.set_up_identities(holder.owner)
+
 		if (length(H.absorbed_dna) < 2)
 			boutput(holder.owner, SPAN_ALERT("We need to absorb more DNA to use this ability."))
 			return 1

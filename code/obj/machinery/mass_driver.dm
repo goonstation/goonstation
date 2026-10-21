@@ -37,6 +37,6 @@
 	return
 
 /obj/machinery/mass_driver/proc/get_throw_range()
-	if (global.zlevels[src.z].gforce > 0)
+	if (global.zlevels[src.z].gforce > 0 || (src.z == Z_LEVEL_STATION && station_repair.station_generator?.requires_full_cargo_launch_range))
 		return src.drive_range * src.power
 	return src.power + src.bonus_range

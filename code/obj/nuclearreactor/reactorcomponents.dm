@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		if (img_check)
 			src.ui_image = img_check
 		else
-			var/icon/dummy_icon = icon(initial(src.icon), initial(src.icon_state_inserted))
+			var/icon/dummy_icon = icon(get_initial_icon(src), initial(src.icon_state_inserted))
 			src.ui_image = icon2base64(dummy_icon)
 			ui_image_base64_cache[src.type] = src.ui_image
 

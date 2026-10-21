@@ -76,6 +76,8 @@
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
+	default_material = "cotton"
+	material_amt = 0.4 // Matches manufacturing recipe
 	block_vision = 1
 	nudge_compatible = FALSE
 	var/pinhole = FALSE
@@ -238,6 +240,10 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 				src.already_worn = 1
 				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, FALSE)
 				user.visible_message(SPAN_ALERT("<B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B>"))
+			else if(H.mind.special_role == ROLE_VAMPIRE && !src.already_worn)
+				src.already_worn = 1
+				playsound(user, 'sound/voice/guy_in_shades.ogg', 100, FALSE)
+				user.visible_message(SPAN_ALERT("<B><font size=3>I wear my sunglasses in space...</font></B>"))
 	..()
 	return
 
@@ -454,6 +460,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	desc = "Only the coolest eye-wear around."
 	icon_state = "eyepatch-R"
 	item_state = "headset"
+	default_material = "cotton"
+	material_amt = 0.5 // Matches manufacturing recipe
 	block_eye = "R"
 	nudge_compatible = FALSE
 	var/pinhole = FALSE
@@ -989,6 +997,9 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 		if(src.equipped_in_slot == SLOT_GLASSES)
 			user.RemoveComponentsOfType(/datum/component/pressure_vision)
 		..()
+
+/obj/item/clothing/glasses/toggleable/atmos/starts_off //! Used on atmos tech to prevent immident information spam
+	on = FALSE
 
 /obj/item/clothing/glasses/eyestrain
 	name = "blue-light filtering glasses"

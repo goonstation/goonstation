@@ -22,6 +22,7 @@
  * * theme - The TGUI theme used for the window.
  */
 /proc/tgui_input_number(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, timeout = 0, round_input = TRUE, theme = null)
+	UNIT_TEST_TGUI_RESPONSE
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -61,6 +62,7 @@
  * * theme - The TGUI theme used for the window.
  */
 /proc/tgui_input_number_async(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, datum/callback/callback, timeout = 60 SECONDS, round_input = TRUE, theme = null)
+	UNIT_TEST_TGUI_RESPONSE_ASYNC(callback)
 	if (!user)
 		user = usr
 	if (!istype(user))

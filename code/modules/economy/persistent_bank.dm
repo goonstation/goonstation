@@ -30,7 +30,7 @@
 				list(
 					"pname" = p.name,
 					"cost" = p.cost,
-					"img" = icon2base64(icon(initial(p.icon), initial(p.icon_state), dir=p.icon_dir, frame=p.icon_frame, moving=0)),
+					"img" = icon2base64(icon(get_initial_icon(p), initial(p.icon_state), dir=p.icon_dir, frame=p.icon_frame, moving=0)),
 				)
 			)
 			//If you have a purchased item: set held
