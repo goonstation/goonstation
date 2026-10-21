@@ -188,14 +188,6 @@
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		tool_flags_required = TOOL_CUTTING
-		on_complete(mob/surgeon, obj/item/tool)
-			var/patient = parent_surgery.patient
-			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> takes out [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] [O.name]."),\
-				SPAN_NOTICE("You take out [surgeon == patient ? "your" : "[patient]'s"] [O.name]."),\
-				SPAN_ALERT("[patient == surgeon ? "You take" : "<b>[surgeon]</b> takes"] out your [O.name]!"))
-			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [affected_organ].")
-			parent_surgery.patient.organHolder.drop_organ(affected_organ)
 		saw
 			tool_flags_required = TOOL_SAWING
 			icon_state = "saw"

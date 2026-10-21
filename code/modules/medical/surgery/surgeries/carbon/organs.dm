@@ -230,6 +230,12 @@
 				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your [organ_name] back  into place closed with [tool]."))
 
 	on_complete(mob/surgeon, obj/item/I)
+		var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
+		surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> takes out [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] [O.name]."),\
+			SPAN_NOTICE("You take out [surgeon == patient ? "your" : "[patient]'s"] [O.name]."),\
+			SPAN_ALERT("[patient == surgeon ? "You take" : "<b>[surgeon]</b> takes"] out your [O.name]!"))
+		logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [organ_var_name].")
+		patient.organHolder.drop_organ(organ_var_name)
 		. = ..()
 		// Re-open context buttons for the surgeon, so the replaced organ shows up for surgery again.
 		for (var/atom/movable/screen/contextButton/C in surgeon.contextButtons)
@@ -255,10 +261,10 @@
 		icon_state = "heart"
 		organ_var_name = "heart"
 		generate_surgery_steps()
-			src.add_next_step(new /datum/surgery_step/chest/cut(src))
-			src.add_next_step(new /datum/surgery_step/fluff/snip(src))
-			src.add_next_step(new /datum/surgery_step/fluff/saw(src))
-			src.add_next_step(new /datum/surgery_step/chest/cut(src))
+			src.add_next_step(new /datum/surgery_step/organ/cut(src))
+			src.add_next_step(new /datum/surgery_step/organ/snip(src))
+			src.add_next_step(new /datum/surgery_step/organ/saw(src))
+			src.add_next_step(new /datum/surgery_step/organ/remove(src))
 	liver
 		id = "liver_surgery"
 		name = "Liver Surgery"
@@ -278,10 +284,10 @@
 		icon_state = "left_lung"
 		organ_var_name = "left_lung"
 		generate_surgery_steps()
-			src.add_next_step(new /datum/surgery_step/fluff/cut(src))
-			src.add_next_step(new /datum/surgery_step/fluff/snip(src))
-			src.add_next_step(new /datum/surgery_step/fluff/saw(src))
-			src.add_next_step(new /datum/surgery_step/chest/cut(src))
+			src.add_next_step(new /datum/surgery_step/organ/cut(src))
+			src.add_next_step(new /datum/surgery_step/organ/snip(src))
+			src.add_next_step(new /datum/surgery_step/organ/saw(src))
+			src.add_next_step(new /datum/surgery_step/organ/remove(src))
 	right_lung
 		id = "right_lung_surgery"
 		name = "Right Lung Surgery"
@@ -289,10 +295,10 @@
 		icon_state = "right_lung"
 		organ_var_name = "right_lung"
 		generate_surgery_steps()
-			src.add_next_step(new /datum/surgery_step/fluff/cut(src))
-			src.add_next_step(new /datum/surgery_step/fluff/snip(src))
-			src.add_next_step(new /datum/surgery_step/fluff/saw(src))
-			src.add_next_step(new /datum/surgery_step/chest/cut(src))
+			src.add_next_step(new /datum/surgery_step/organ/cut(src))
+			src.add_next_step(new /datum/surgery_step/organ/snip(src))
+			src.add_next_step(new /datum/surgery_step/organ/saw(src))
+			src.add_next_step(new /datum/surgery_step/organ/remove(src))
 	stomach
 		id = "stomach_surgery"
 		name = "Stomach Surgery"
@@ -312,8 +318,8 @@
 		icon_state = "appendix"
 		organ_var_name = "appendix"
 		generate_surgery_steps()
-			src.add_next_step(new /datum/surgery_step/fluff/snip(src))
-			src.add_next_step(new /datum/surgery_step/chest/cut(src))
+			src.add_next_step(new /datum/surgery_step/organ/snip(src))
+			src.add_next_step(new /datum/surgery_step/organ/cut(src))
 	intestine
 		id = "intestines_surgery"
 		name = "Intestine Surgery"
@@ -321,9 +327,9 @@
 		icon_state = "intestines"
 		organ_var_name = "intestines"
 		generate_surgery_steps()
-			src.add_next_step(new /datum/surgery_step/chest/cut(src))
-			src.add_next_step(new /datum/surgery_step/fluff/saw(src))
-			src.add_next_step(new /datum/surgery_step/chest/cut(src))
+			src.add_next_step(new /datum/surgery_step/organ/cut(src))
+			src.add_next_step(new /datum/surgery_step/organ/saw(src))
+			src.add_next_step(new /datum/surgery_step/organ/cut(src))
 	left_kidney
 		id = "left_kidney_surgery"
 		name = "Left Kidney Surgery"
