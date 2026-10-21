@@ -183,11 +183,11 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 					qdel(M)
 					sleep(1)
 			deployed_probes = list()
-			logTheThing(LOG_STATION, null, "Menhir probes event concluded.")
-			message_admins("Menhir probes event concluded.")
+			logTheThing(LOG_STATION, null, "Menhir event [src.name] concluded.")
+			message_admins("Menhir event [src.name] concluded.")
 
-		logTheThing(LOG_STATION, null, "Menhir probes event deployed [probe_deployments] probes.")
-		message_admins("Menhir probes event deployed [probe_deployments] probes.")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] deployed [probe_deployments] probes.")
+		message_admins("Menhir event [src.name] deployed [probe_deployments] probes.")
 
 		message_delay = rand(2 SECONDS, 4 SECONDS)
 		..()
@@ -225,8 +225,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			if (!istype(nodelandmark,/turf/simulated/floor) || is_blocked_turf(nodelandmark))
 				nodelandmark = get_open_outreach()
 				if(!nodelandmark)
-					logTheThing(LOG_DEBUG, null, "Menhir gift event couldn't find an outreach turf; aborting event.")
-					message_admins("Menhir gift event couldn't find an outreach turf; aborting event.")
+					logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't find an outreach turf; aborting event.")
+					message_admins("Menhir event [src.name] couldn't find an outreach turf; aborting event.")
 					return
 		else //node mode: pick a ball, any ball
 			nodelandmark = pick_landmark(LANDMARK_MENHIR_NODE)
@@ -250,8 +250,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 							eligibility_flags |= SOUTH
 
 			if (eligibility_flags < (NORTH|SOUTH|EAST|WEST))
-				logTheThing(LOG_DEBUG, null, "Menhir gift event didn't find all directions for the [node_tag] node! This shouldn't happen.")
-				message_admins("Menhir gift event didn't find all directions for the [node_tag] node! This shouldn't happen. Aborting event")
+				logTheThing(LOG_DEBUG, null, "Menhir event [src.name] didn't find all directions for the [node_tag] node! This shouldn't happen.")
+				message_admins("Menhir event [src.name] didn't find all directions for the [node_tag] node! This shouldn't happen. Aborting event")
 				return
 
 		if(prob(60))
@@ -278,11 +278,11 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		..() //don't send out the message until we have confirmed we can do the event
 
 		if(node_tag)
-			logTheThing(LOG_STATION, null, "Menhir gift event at [node_tag] arm - [log_loc(nodelandmark)]")
-			message_admins("Menhir gift event triggered at [node_tag] arm - [log_loc(nodelandmark)]")
+			logTheThing(LOG_STATION, null, "Menhir event [src.name] at [node_tag] arm - [log_loc(nodelandmark)]")
+			message_admins("Menhir event [src.name] triggered at [node_tag] arm - [log_loc(nodelandmark)]")
 		else
-			logTheThing(LOG_STATION, null, "Menhir gift event (out-of-node) at [log_loc(nodelandmark)]")
-			message_admins("Menhir gift event triggered (out-of-node) - [log_loc(nodelandmark)]")
+			logTheThing(LOG_STATION, null, "Menhir event [src.name] (out-of-node) at [log_loc(nodelandmark)]")
+			message_admins("Menhir event [src.name] triggered (out-of-node) - [log_loc(nodelandmark)]")
 
 		src.weight = 50 //After we've had one artifact, weight it down
 		src.has_noded = TRUE //and avoid using up scarce nodes
@@ -311,8 +311,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		var/candidate_num = length(eligible_examinees)
 
 		if (candidate_num < src.required_candidates)
-			logTheThing(LOG_STATION, null, "Menhir analysis event has inadequate candidates ([candidate_num]/[src.required_candidates]); skipping event.")
-			message_admins("Menhir analysis event has inadequate candidates ([candidate_num]/[src.required_candidates]); skipping event.")
+			logTheThing(LOG_STATION, null, "Menhir event [src.name] has inadequate candidates ([candidate_num]/[src.required_candidates]); skipping event.")
+			message_admins("Menhir event [src.name] has inadequate candidates ([candidate_num]/[src.required_candidates]); skipping event.")
 			return
 
 		//Then see where we can put them
@@ -358,8 +358,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		..()
 
 		src.required_candidates = min(src.required_candidates + 2, 15)
-		logTheThing(LOG_STATION, null, "Menhir analysis event: [return_string]")
-		message_admins("Menhir analysis event: [return_string]")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] triggered: [return_string]")
+		message_admins("Menhir event [src.name] triggered: [return_string]")
 
 	proc/visit_scheduling(var/mob/living/carbon/human/our_guest,var/turf/selected_node)
 		var/hold_attempts = 0
@@ -458,8 +458,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 					moved_objects++
 
 			if(moved_objects)
-				logTheThing(LOG_STATION, null, "Menhir analysis event relocated [moved_objects] atoms out of node post-event.")
-				message_admins("Menhir analysis event relocated [moved_objects] atoms out of node post-event.")
+				logTheThing(LOG_STATION, null, "Menhir event [src.name] relocated [moved_objects] atoms out of node post-event.")
+				message_admins("Menhir event [src.name] relocated [moved_objects] atoms out of node post-event.")
 
 //it appears you may need a top up! let's help with that
 /datum/random_event/menhir/supercharge
@@ -484,8 +484,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 		var/zones_to_electrify = rand(6,8)
 		if(length(candidate_apcs) < zones_to_electrify)
-			logTheThing(LOG_DEBUG, null, "Menhir supercharge event couldn't find enough APCs to electrify! This shouldn't happen.")
-			message_admins("Menhir supercharge event couldn't find enough APCs to electrify! This shouldn't happen. Aborting event")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't find enough APCs to electrify! This shouldn't happen.")
+			message_admins("Menhir event [src.name] couldn't find enough APCs to electrify! This shouldn't happen. Aborting event")
 			return
 
 		SPAWN(1) //don't hold up other operations
@@ -504,8 +504,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 					if(i != zones_to_electrify) report_string += ", "
 				sleep(2)
 
-			logTheThing(LOG_STATION, null, "Menhir supercharge event triggered at: [report_string]")
-			message_admins("Menhir supercharge event triggered at: [report_string]")
+			logTheThing(LOG_STATION, null, "Menhir event [src.name] triggered at: [report_string]")
+			message_admins("Menhir event [src.name] triggered at: [report_string]")
 
 		message_delay = rand(6 SECONDS,9 SECONDS)
 		..()
@@ -533,8 +533,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	event_effect()
 		var/obj/machinery/door/unpowered/blue/entrance = locate("menhir_entrance_bluedoor")
 		if (!entrance) //in case of manual call
-			logTheThing(LOG_DEBUG, null, "Menhir closure event couldn't find the Crown's entrance door; aborting event.")
-			message_admins("Menhir closure event couldn't find the Crown's entrance door; aborting event.")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't find the Crown's entrance door; aborting event.")
+			message_admins("Menhir event [src.name] couldn't find the Crown's entrance door; aborting event.")
 			return
 		var/turf/eventlandmark = get_turf(entrance)
 		entrance.locks_on_open = FALSE
@@ -552,8 +552,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 		..()
 
-		logTheThing(LOG_STATION, null, "Menhir closure event at [log_loc(eventlandmark)]")
-		message_admins("Menhir closure event triggered at [log_loc(eventlandmark)]")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] at [log_loc(eventlandmark)]")
+		message_admins("Menhir event [src.name] triggered at [log_loc(eventlandmark)]")
 
 #define RAND_3_BY_3 1
 #define RAND_3_BY_5 2
@@ -632,8 +632,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 		landmarks[LANDMARK_MENHIR_EXTRUSION].Remove(extlandmark)
 
-		logTheThing(LOG_STATION, null, "Menhir extrusion event at [log_loc(extlandmark)]")
-		message_admins("Menhir extrusion event triggered at [log_loc(extlandmark)]")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] at [log_loc(extlandmark)]")
+		message_admins("Menhir event [src.name] triggered at [log_loc(extlandmark)]")
 
 	///Retrieves the turfs to frame out the new room.
 	proc/get_walls(var/turf/T, var/offset_to_west, var/roomtype)
@@ -706,8 +706,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 		var/anomaly_count = rand(10,14)
 		if(length(candidate_landmarks) < anomaly_count)
-			logTheThing(LOG_DEBUG, null, "Menhir gravity event couldn't find enough anomaly sites! This shouldn't happen.")
-			message_admins("Menhir gravity event couldn't find enough anomaly sites! This shouldn't happen. Aborting event")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't find enough anomaly sites! This shouldn't happen.")
+			message_admins("Menhir event [src.name] couldn't find enough anomaly sites! This shouldn't happen. Aborting event")
 			return
 
 		playsound_global(Z_LEVEL_STATION, 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 65, 0, pitch = 0.3)
@@ -717,8 +717,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 					if (M.z == Z_LEVEL_STATION && !inafterlife(M) && !isVRghost(M))
 						shake_camera(M, 6, 6)
 
-		logTheThing(LOG_STATION, null, "Menhir gravity event triggered for [anomaly_count] locations. Baseline gravity amplified.")
-		message_admins("Menhir gravity event triggered for [anomaly_count] locations. Baseline gravity amplified.")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] triggered for [anomaly_count] locations. Baseline gravity amplified.")
+		message_admins("Menhir event [src.name] triggered for [anomaly_count] locations. Baseline gravity amplified.")
 
 		var/list/station_areas = get_accessible_station_areas()
 
@@ -740,8 +740,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				LAGCHECK(LAG_LOW)
 				var/area/A = station_areas[area_name]
 				A.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
-			logTheThing(LOG_STATION, null, "Menhir gravity event has finished spawning anomalies. Baseline gravity reset.")
-			message_admins("Menhir gravity event has finished spawning anomalies. Baseline gravity reset.")
+			logTheThing(LOG_STATION, null, "[src.name] has finished spawning anomalies. Baseline gravity reset.")
+			message_admins("[src.name] has finished spawning anomalies. Baseline gravity reset.")
 
 		message_delay = rand(12 SECONDS, 18 SECONDS)
 		..()
@@ -796,8 +796,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 						eligibility_flags |= SOUTH
 
 		if (eligibility_flags < (NORTH|SOUTH|EAST|WEST))
-			logTheThing(LOG_DEBUG, null, "Menhir dreamcatcher event didn't find all directions for the [node_tag] node! This shouldn't happen.")
-			message_admins("Menhir dreamcatcher event didn't find all directions for the [node_tag] node! This shouldn't happen. Aborting event")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] didn't find all directions for the [node_tag] node! This shouldn't happen.")
+			message_admins("Menhir event [src.name] didn't find all directions for the [node_tag] node! This shouldn't happen. Aborting event")
 			return
 
 		if(prob(60))
@@ -828,8 +828,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 		..()
 
-		logTheThing(LOG_STATION, null, "Menhir dreamcatcher event at [node_tag] arm - [log_loc(nodelandmark)]")
-		message_admins("Menhir dreamcatcher event triggered at [node_tag] arm - [log_loc(nodelandmark)]")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] at [node_tag] arm - [log_loc(nodelandmark)]")
+		message_admins("Menhir event [src.name] triggered at [node_tag] arm - [log_loc(nodelandmark)]")
 
 //////////////////////////////////////////////
 ///////////////////////////////////////////////////////
@@ -858,8 +858,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	event_effect()
 		var/turf/farlandmark = pick(landmarks[LANDMARK_MENHIR_BEYOND])
 		if(!farlandmark)
-			logTheThing(LOG_DEBUG, null, "Menhir tractorbeam event couldn't find a turf to happen at; this shouldn't happen if event is random. Aborting event.")
-			message_admins("Menhir tractorbeam event couldn't find a turf to happen at; this shouldn't happen if event is random. Aborting event.")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't find a turf to happen at; this shouldn't happen if event is random. Aborting event.")
+			message_admins("Menhir event [src.name] couldn't find a turf to happen at; this shouldn't happen if event is random. Aborting event.")
 			return
 
 		var/list/wanted_tags = get_prefab_tags()
@@ -869,8 +869,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				break
 			mprefab = pick_map_prefab(/datum/mapPrefab/mining, wanted_tags_any=wanted_tags)
 		if (!mprefab)
-			logTheThing(LOG_DEBUG, null, "Menhir tractorbeam event had no mining-Z prefab to select; event was unable to fully conclude.")
-			message_admins("Menhir tractorbeam event had no mining-Z prefab to select; event was unable to fully conclude.")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] had no mining-Z prefab to select; event was unable to fully conclude.")
+			message_admins("Menhir event [src.name] had no mining-Z prefab to select; event was unable to fully conclude.")
 			return
 
 		centcom_message = "TOREADOR-7I-22408 has begun to project an unusually intense electromagnetic field on the "
@@ -885,8 +885,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 		landmarks[LANDMARK_MENHIR_BEYOND].Remove(farlandmark)
 
-		logTheThing(LOG_STATION, null, "Menhir tractorbeam event at [log_loc(farlandmark)]")
-		message_admins("Menhir tractorbeam event triggered at [log_loc(farlandmark)]")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] at [log_loc(farlandmark)]")
+		message_admins("Menhir event [src.name] triggered at [log_loc(farlandmark)]")
 
 		var/turf/focal_nexus = locate(MENHIR_CORE_X, MENHIR_CORE_Y, Z_LEVEL_STATION)
 		new /obj/effects/menhir_tractor_field(focal_nexus,8)
@@ -935,8 +935,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			var/turf/target = locate(x_target_adj, y_target_adj, Z_LEVEL_STATION)
 			var/ret = mprefab.applyTo(target)
 			if(ret == 0)
-				logTheThing(LOG_DEBUG, null, "Menhir tractorbeam event couldn't apply prefab (applyTo failure); event was unable to fully conclude.")
-				message_admins("Menhir tractorbeam event couldn't apply prefab (applyTo failure); event was unable to fully conclude.")
+				logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't apply prefab (applyTo failure); event was unable to fully conclude.")
+				message_admins("Menhir event [src.name] couldn't apply prefab (applyTo failure); event was unable to fully conclude.")
 				return
 
 /obj/effects/menhir_tractor_field
@@ -975,8 +975,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		var/candidate_num = length(eligible_examinees)
 
 		if (candidate_num < 3)
-			logTheThing(LOG_STATION, null, "Menhir resight event has inadequate candidates ([candidate_num]/3); skipping event.")
-			message_admins("Menhir resight event has inadequate candidates ([candidate_num]/3); skipping event.")
+			logTheThing(LOG_STATION, null, "Menhir event [src.name] has inadequate candidates ([candidate_num]/3); skipping event.")
+			message_admins("Menhir event [src.name] has inadequate candidates ([candidate_num]/3); skipping event.")
 			return
 
 		//And consider how many we'll swap. This is, at most, how many PAIRS of people will have their perspective exchanged.
@@ -1006,8 +1006,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		message_delay = rand(18 SECONDS, 24 SECONDS)
 		..()
 
-		logTheThing(LOG_STATION, null, "Menhir resight event - perceptions swapped: [return_string]")
-		message_admins("Menhir resight event - perceptions swapped: [return_string]")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] - perceptions swapped: [return_string]")
+		message_admins("Menhir event [src.name] - perceptions swapped: [return_string]")
 
 	proc/perception_swap(var/mob/swapped_A,var/mob/swapped_B)
 		var/swap_duration = rand(40 SECONDS,50 SECONDS)
@@ -1042,8 +1042,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		var/list/walls_to_door = list()
 
 		if(!landmarks[LANDMARK_MENHIR_NODE] || length(landmarks[LANDMARK_MENHIR_NODE]) < 1) //fallback mode: pick a curated station tile instead
-			logTheThing(LOG_DEBUG, null, "Menhir knot event couldn't find a fallback turf after all nodes expended; aborting event.")
-			message_admins("Menhir knot event couldn't find a fallback turf after all nodes expended; aborting event.")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't trigger due to a lack of available node; aborting event.")
+			message_admins("Menhir event [src.name] couldn't trigger due to a lack of available node; aborting event.")
 			return
 
 		nodelandmark = pick_landmark(LANDMARK_MENHIR_NODE)
@@ -1054,8 +1054,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				walls_to_door += T
 
 		if (length(walls_to_door) < 4)
-			logTheThing(LOG_DEBUG, null, "Menhir knot event couldn't find expected door count! This shouldn't happen.")
-			message_admins("Menhir knot event couldn't find expected door count! This shouldn't happen. Aborting event")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't find expected door count! This shouldn't happen.")
+			message_admins("Menhir event [src.name] couldn't find expected door count! This shouldn't happen. Aborting event")
 			return
 
 		landmarks[LANDMARK_MENHIR_NODE].Remove(nodelandmark) //"expend" the node in node spawns, so future events won't select it again
@@ -1100,8 +1100,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		message_delay = rand(2 MINUTES, 3 MINUTES)
 		..() //don't send out the message until we have confirmed we can do the event
 
-		logTheThing(LOG_STATION, null, "Menhir knot event at [node_tag] arm - [log_loc(nodelandmark)]")
-		message_admins("Menhir knot event triggered at [node_tag] arm - [log_loc(nodelandmark)]")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] at [node_tag] arm - [log_loc(nodelandmark)]")
+		message_admins("Menhir event [src.name] triggered at [node_tag] arm - [log_loc(nodelandmark)]")
 
 //////////////////////////////////////////////
 ///////////////////////////////////////////////////////
@@ -1131,8 +1131,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		if (!istype(eventlandmark,/turf/simulated/floor) || is_blocked_turf(eventlandmark))
 			eventlandmark = get_open_outreach()
 			if(!eventlandmark)
-				logTheThing(LOG_DEBUG, null, "Menhir powersink event couldn't find a turf to happen at; aborting event.")
-				message_admins("Menhir powersink event couldn't find a turf to happen at; aborting event.")
+				logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't find a turf to happen at; aborting event.")
+				message_admins("Menhir event [src.name] couldn't find a turf to happen at; aborting event.")
 				return
 
 		showswirl(eventlandmark)
@@ -1153,8 +1153,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			SPAWN(message_delay + 20)
 				playsound_global(world, 'sound/misc/announcement_ominous.ogg', MENHIR_STANDARD_ALERT_VOLUME)
 
-		logTheThing(LOG_STATION, null, "Menhir powersink event at [log_loc(eventlandmark)]")
-		message_admins("Menhir powersink event triggered at [log_loc(eventlandmark)]")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] at [log_loc(eventlandmark)]")
+		message_admins("Menhir event [src.name] triggered at [log_loc(eventlandmark)]")
 
 //////////////////////////////////////////////
 ///////////////////////////////////////////////////////
@@ -1186,8 +1186,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		var/list/eligibility_flags = 0
 
 		if(!landmarks[LANDMARK_MENHIR_NODE] || length(landmarks[LANDMARK_MENHIR_NODE]) < 1) //fallback mode: pick a curated station tile instead
-			logTheThing(LOG_DEBUG, null, "Menhir schism event couldn't find a fallback turf after all nodes expended; aborting event.")
-			message_admins("Menhir schism event couldn't find a fallback turf after all nodes expended; aborting event.")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] couldn't find a fallback turf after all nodes expended; aborting event.")
+			message_admins("Menhir event [src.name] couldn't find a fallback turf after all nodes expended; aborting event.")
 			return
 
 		nodelandmark = pick_landmark(LANDMARK_MENHIR_NODE)
@@ -1211,8 +1211,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 						eligibility_flags |= SOUTH
 
 		if (eligibility_flags < (NORTH|SOUTH|EAST|WEST))
-			logTheThing(LOG_DEBUG, null, "Menhir gift event didn't find all directions for the [node_tag] node! This shouldn't happen.")
-			message_admins("Menhir gift event didn't find all directions for the [node_tag] node! This shouldn't happen. Aborting event")
+			logTheThing(LOG_DEBUG, null, "Menhir event [src.name] didn't find all directions for the [node_tag] node! This shouldn't happen.")
+			message_admins("Menhir event [src.name] didn't find all directions for the [node_tag] node! This shouldn't happen. Aborting event")
 			return
 
 		landmarks[LANDMARK_MENHIR_NODE].Remove(nodelandmark) //"expend" the node in node spawns, so future events won't select it again
@@ -1237,8 +1237,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		message_delay = rand(15 SECONDS, 35 SECONDS)
 		..() //don't send out the message until we have confirmed we can do the event
 
-		logTheThing(LOG_STATION, null, "Menhir schism event at [node_tag] arm - [log_loc(nodelandmark)]")
-		message_admins("Menhir schism event triggered at [node_tag] arm - [log_loc(nodelandmark)]")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] at [node_tag] arm - [log_loc(nodelandmark)]")
+		message_admins("Menhir event [src.name] triggered at [node_tag] arm - [log_loc(nodelandmark)]")
 
 //an intolerable imbalance has developed within. it must be purged.
 /datum/random_event/menhir/radwave
@@ -1268,8 +1268,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			SPAWN(message_delay + 96)
 				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
 
-		logTheThing(LOG_STATION, null, "Menhir radwave event triggered.")
-		message_admins("Menhir radwave event triggered.")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] triggered.")
+		message_admins("Menhir event [src.name] triggered.")
 		src.weight = 1 //should have the agitation worked out by now... usually.
 
 		var/turf/focal_nexus = locate(MENHIR_CORE_X, MENHIR_CORE_Y, Z_LEVEL_STATION)
@@ -1391,8 +1391,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			SPAWN(message_delay)
 				playsound_global(world, 'sound/misc/announcement_curious.ogg', MENHIR_STANDARD_ALERT_VOLUME)
 
-		logTheThing(LOG_STATION, null, "Menhir road event triggered.")
-		message_admins("Menhir road event triggered.")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] triggered.")
+		message_admins("Menhir event [src.name] triggered.")
 
 //the ancient ones remembered in the deep of the Crown have noticed your presence. and SHIT IS GOIN DOWN
 /datum/random_event/menhir/shadow
@@ -1455,8 +1455,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.3)
 
 		landmarks[LANDMARK_MENHIR_DARK] = null
-		logTheThing(LOG_STATION, null, "Menhir shadow event triggered.")
-		message_admins("Menhir shadow event triggered.")
+		logTheThing(LOG_STATION, null, "Menhir event [src.name] triggered.")
+		message_admins("Menhir event [src.name] triggered.")
 
 #undef EVFILTER_HUMAN
 #undef EVFILTER_ONTURF
