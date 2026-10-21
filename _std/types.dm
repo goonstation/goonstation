@@ -212,6 +212,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_TIMING_TIMERS "timing_timers" //item timers that are actively timing right now
 #define TR_CAT_GRAVITY_TETHERS "gravity_tethers" //! Station, single-area, and multi-area gravity tethers
 #define TR_CAT_SHUTTLE_COMPUTERS "shuttle_computer" //! Shuttle computers
+#define TR_CAT_REPLACED_ON_CRYO "replace_on_cryo" //! Items that will have replacements shipped to cargo if cryod with.
 
 // powernets? processing_items?
 // mobs? ai-mobs?
