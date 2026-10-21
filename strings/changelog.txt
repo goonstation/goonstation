@@ -1,4 +1,10 @@
 
+(t)wed oct 21 26
+(u)LorrMaster
+(p)27574
+(e)🔄🧱⚗|C-Rework, A-Materials, A-Chemistry
+(*)Silver bullets are no longer created using the reagent. Any type of ammo can be coated using silver bars in the nanofabricator instead.
+(*)Silver appearance is now added to silver projectiles and applies the material to casings.
 (t)tue oct 20 26
 (u)LorrMaster
 (p)26602
