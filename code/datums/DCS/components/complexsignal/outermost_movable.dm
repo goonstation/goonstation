@@ -58,26 +58,37 @@
 	var/turf/new_turf = get_turf(outermost_movable)
 	src.previous_turf = new_turf
 
-	if (old_turf != new_turf)
-		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED, old_turf, new_turf)
+	if (old_turf == new_turf)
+		return
 
-		if (old_turf)
-			if (new_turf)
-				SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED_SAFE, old_turf, new_turf)
-			else
-				SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_TO_NULLSPACE, old_turf)
+#ifdef CHECK_MORE_RUNTIMES
+	var/atom/A = src.parent
+	APPLY_ATOM_PROPERTY(A, PROP_MOVABLE_DO_NOT_SET_LOC, src)
+#endif
+
+	SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED, old_turf, new_turf)
+
+	if (old_turf)
+		if (new_turf)
+			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED_SAFE, old_turf, new_turf)
 		else
-			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_NULLSPACE_TO_TURF, new_turf)
+			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_TO_NULLSPACE, old_turf)
+	else
+		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_NULLSPACE_TO_TURF, new_turf)
 
-		var/area/old_area = get_area(previous_loc)
-		var/area/new_area = get_area(outermost_movable)
-		if (old_area != new_area)
-			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_AREA_CHANGED, old_area, new_area)
+	var/area/old_area = get_area(previous_loc)
+	var/area/new_area = get_area(outermost_movable)
+	if (old_area != new_area)
+		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_AREA_CHANGED, old_area, new_area)
 
-		var/old_z = isnull(old_turf) ? 0 : old_turf.z
-		var/new_z = isnull(new_turf) ? 0 : new_turf.z
-		if (old_z != new_z)
-			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_Z_CHANGED, old_z, new_z)
+	var/old_z = isnull(old_turf) ? 0 : old_turf.z
+	var/new_z = isnull(new_turf) ? 0 : new_turf.z
+	if (old_z != new_z)
+		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_Z_CHANGED, old_z, new_z)
+
+#ifdef CHECK_MORE_RUNTIMES
+	REMOVE_ATOM_PROPERTY(A, PROP_MOVABLE_DO_NOT_SET_LOC, src)
+#endif
 
 /datum/component/complexsignal/outermost_movable/Initialize()
 	if (!ismovable(src.parent))

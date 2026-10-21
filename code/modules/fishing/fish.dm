@@ -718,7 +718,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/swordfish)
 TYPEINFO(/obj/item/reagent_containers/food/fish/literal_swordfish)
 	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/literal_swordfish
-	name = " literal swordfish"
+	name = "literal swordfish"
 	desc = "Reforged through fire and flounder, the swordfish now resembles its namesake."
 	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
 	icon_state = "literal_swordfish"
@@ -1093,3 +1093,18 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/toonclown_fish)
 
 	get_scent_color()
 		return "minty green"
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/hopfish)
+	fish_collection_type = FISH::COLLECTION::NORMAL
+/obj/item/reagent_containers/food/fish/hopfish
+	name = "Head of Piscinel"
+	desc = "This fish subjects other fish to the horror of employment and paperwork as a survival mechanism, mother nature truly is cruel."
+	icon_state = "hopfish"
+	inhand_color = "#398f3d"
+	food_color = "#FFECB7"
+	slice_product = /obj/item/stamp/angler
+	category = FISH::CATEGORY::FRESHWATER
+	rarity = ITEM_RARITY_UNCOMMON
+
+	get_scent_color()
+		return "money green"

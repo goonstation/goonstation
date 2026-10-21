@@ -1,5 +1,6 @@
 /datum/random_event
 	var/name = null                      // What is this event called?
+	var/description = null               // What does this event do?
 	var/centcom_headline = null          // The title of the displayed message.
 	var/centcom_message = null           // A message displayed to the crew.
 	var/centcom_origin = null			 // The origin of the message

@@ -1366,10 +1366,6 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		src.reagents.add_reagent("space_fungus",3)
 		src.reagents.add_reagent("synthflesh",10)
 
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) // only relevant if strangelet
-
 	proc/update()
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
@@ -1463,7 +1459,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				src.throwforce = 88
 				src.throw_range = 0
 				src.reagents.add_reagent("george_melonium",50)
-				START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+				src.AddElement(/datum/element/ghost_observable)
 
 				if (!src.processing)
 					src.processing = TRUE
@@ -2090,6 +2086,8 @@ TYPEINFO(/obj/disposaloutlet)
 	var/frequency = FREQ_PDA
 	var/flusher_id = null
 	throw_speed = 1
+	/// Items thrown per tick when expelling
+	var/eject_batch_size = 15
 
 
 	ex_act(var/severity)
@@ -2189,7 +2187,14 @@ TYPEINFO(/obj/disposaloutlet)
 		var/turf/expel_loc = get_turf(src)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
 			expel_loc = get_step(expel_loc, src.dir)
+		var/ejected = 0
 		for(var/atom/movable/AM in H)
+			if (ejected >= src.eject_batch_size && !global.instant_pipe_network)
+				ejected = 0
+				sleep(1 TICK)
+			if (AM.loc != H) // may have left or been deleted while we slept :(
+				continue
+			ejected++
 			ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)

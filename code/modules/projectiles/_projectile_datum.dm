@@ -58,7 +58,6 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	var/casing = null
 	var/reagent_payload = null
-	var/forensic_ID = null
 	var/precalculated = 1
 
 	var/hit_object_sound = 0
@@ -109,6 +108,8 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	New()
 		. = ..()
+		if (istext(src.icon))
+			src.icon = file(src.icon)
 		generate_stats()
 		var/icon/fuck_you_byond = icon(src.icon)
 		src.x_offset = -(fuck_you_byond.Width() - 32)/2

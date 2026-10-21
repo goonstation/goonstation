@@ -163,7 +163,7 @@
 			..()
 			if (length(src.rod.storage.stored_items))
 				var/obj/item/lure = src.rod.storage.stored_items[1]
-				boutput(user, SPAN_NOTICE("The [lure] was bit and is no longer stuck to the [src.rod]."))
+				boutput(user, SPAN_NOTICE("[lure] was bit and is no longer stuck to [src.rod]."))
 				qdel(lure)
 			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()

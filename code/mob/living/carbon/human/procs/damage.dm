@@ -39,8 +39,6 @@
 						implanted.set_loc(src)
 						if (istype(implanted))
 							implanted.owner = src
-							if (P.forensic_ID)
-								implanted.forensic_ID = P.forensic_ID
 							src.implant += implanted
 							implanted.forensic_holder = P.forensic_holder // Give projectile forensics to the implanted bullet
 							if (P.proj_data.coating)
@@ -74,8 +72,6 @@
 					if (istype(implanted))
 						implanted.owner = src
 						src.implant += implanted
-						if (P.forensic_ID)
-							implanted.forensic_ID = P.forensic_ID
 						implanted.forensic_holder = P.forensic_holder
 						if (P.proj_data.coating)
 							implanted.material_amt = P.material_amount_total()
@@ -129,8 +125,6 @@
 						implanted.set_loc(src)
 						if (istype(implanted))
 							implanted.owner = src
-							if (P.forensic_ID)
-								implanted.forensic_ID = P.forensic_ID
 							implanted.forensic_holder = P.forensic_holder
 							implanted.material_amt = P.material_amount_total()
 							implanted.setMaterial(P.proj_data.coating)

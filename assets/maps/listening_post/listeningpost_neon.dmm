@@ -755,6 +755,9 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
 "EI" = (

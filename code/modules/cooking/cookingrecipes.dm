@@ -1635,7 +1635,8 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cereal_box)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
-	/obj/item/reagent_containers/food/snacks/condiment/chocchips = 1)
+	/obj/item/reagent_containers/food/snacks/condiment/chocchips = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
 	output = /obj/item/reagent_containers/food/snacks/cereal_box
 
 /datum/recipe/cereal_honey
@@ -2116,3 +2117,81 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
 	/obj/item/reagent_containers/food/drinks/bowl = 1)
 	output = /obj/item/reagent_containers/food/snacks/bowl_of_dulce_de_leche
+
+/datum/recipe/cherryjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/cherry = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/cherryjam
+
+/datum/recipe/grapejam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/grape = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/grapejam
+
+/datum/recipe/strawberryjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/strawberry = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/strawberryjam
+
+/datum/recipe/applejam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/apple = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/applejam
+
+/datum/recipe/bluebrryjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/blueberry = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/blueberryjam
+
+/datum/recipe/pearjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/pear = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/pearjam
+
+/datum/recipe/peachjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/peach = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/peachjam
+
+/datum/recipe/orangejam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/orange = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/orangejam
+
+/datum/recipe/raspberryjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/raspberry = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/raspberryjam
+
+/datum/recipe/signaljam
+	ingredients = list(\
+	/obj/item/device/radio = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/signaljam
+
+/datum/recipe/mintjam
+	ingredients = list(\
+	/obj/item/plant/herb/mint = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/mintjam
+
+/datum/recipe/spacejam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/glowfruit = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/spacejam
+
+/datum/recipe/paperjam
+	ingredients = list(\
+	/obj/item/paper = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/paperjam

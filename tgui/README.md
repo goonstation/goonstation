@@ -25,7 +25,7 @@ This project uses React. Take your time to read the guide:
 - [Component Reference](docs/component-reference.md) - UI building blocks
 - [Tgui Core](https://github.com/tgstation/tgui-core) - The component library for tgui.
 - [Using TGUI and Byond API for custom HTML popups](docs/tgui-for-custom-html-popups.md)
-- [Chat Embedded Components](docs/chat-embedded-components.md)
+- [Tgui Event Dispatch](packages/tgui/events/README.md) - how DM messages reach the store
 - [Writing Tests](docs/writing-tests.md)
 
 ## Pre-requisites
@@ -82,7 +82,7 @@ Run `bin/tgui.bat` with any of the options listed below.
   - `bin/tgui --dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
   - `bin/tgui --dev --no-tmp` - Don't use the tmp folder
 - `bin/tgui --lint` - Show problems with the code.
-- `bin/tgui --lint-fix` - Show (and auto-fix) problems with the code.
+- `bin/tgui --format` - Format code.
 - `bin/tgui --test` - Run unit and integration tests.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --bench` - Run benchmarks. *Windows Only*

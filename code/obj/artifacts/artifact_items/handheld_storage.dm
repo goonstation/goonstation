@@ -77,11 +77,11 @@
 
 	// reset state to pre-worn state
 	proc/reset_visible_state()
-		if (src.icon == initial(src.icon))
+		if (src.icon == get_initial_icon(src))
 			return
 
 		// reset icons and wear layer
-		src.icon = initial(src.icon)
+		src.icon = get_initial_icon(src)
 		src.icon_state = src.base_icon_state
 		src.item_state = src.base_item_state
 		src.wear_image_icon = initial(src.wear_image_icon)

@@ -18,15 +18,15 @@ ABSTRACT_TYPE(/datum/map_correctness_check/area_contents)
 /datum/map_correctness_check/area_contents/run_check()
 	var/list/area_check_results = list()
 
-	var/alist/summed_contents = alist()
+	var/alist/summed_contents_by_type = alist()
 	for (var/target_area_type in src.target_areas)
 		for (var/area/A as anything in global.by_type[target_area_type])
 			for (var/type in A.mapload_contents)
-				summed_contents[type] ||= list()
-				summed_contents[type] += A.mapload_contents[type]
+				summed_contents_by_type[type] ||= list()
+				summed_contents_by_type[type] += A.mapload_contents[type]
 
 	for (var/datum/area_contents_condition/condition as anything in src.expected_contents)
-		if (!condition.evaluate(summed_contents))
+		if (!condition.evaluate(summed_contents_by_type))
 			area_check_results += condition.output
 
 	if (length(area_check_results))

@@ -936,7 +936,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	var/image/image_sugar = null
 	var/image/image_tray = null
 	event_handler_flags = USE_FLUID_ENTER
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	w_class = W_CLASS_BULKY
 	two_handed = TRUE
 	dropped_item = /obj/item/plate/tray
@@ -1069,7 +1069,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	initial_volume = 40
 	initial_reagents = list("chocolate" = 20)
 	use_bite_mask = FALSE
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	w_class = W_CLASS_BULKY
 
 /obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs

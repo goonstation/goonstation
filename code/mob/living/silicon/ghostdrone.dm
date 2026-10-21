@@ -151,7 +151,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
-		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] was destroyed at [GHOST.MESSAGE.format_loc(src)].")
 		setdead(src)
 		if (src.mind)
 			var/mob/dead/observer/ghost = src.ghostize()
@@ -923,6 +923,13 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 
 		src.show_laws_drone()
 		return
+
+	toggle_monospace()
+		set category = "Drone Commands"
+		set name = "Toggle Monospace Speech"
+		set desc = "Switches your speech between normal and forced-monospace mode."
+
+		src.toggle_monospace_mode(src)
 
 	bullet_act(var/obj/projectile/P)
 		var/dmgtype = 0 // 0 for brute, 1 for burn

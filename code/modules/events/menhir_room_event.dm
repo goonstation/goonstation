@@ -143,6 +143,32 @@ ABSTRACT_TYPE(/area/unspace)
 		icon_state = "blue"
 		sound_loop = null
 
+/area/unspace/hangar
+	name = "Fabrication Receptacle"
+	local_facing = WEST
+	seek_tag = "menhir_room_hangar"
+
+/area/unspace/genpop
+	name = "Cold Oubliette"
+	local_facing = WEST
+	seek_tag = "menhir_room_genpop"
+
+/area/unspace/arcade
+	name = "Peculiar Annex"
+	local_facing = WEST
+	seek_tag = "menhir_room_arcade"
+
+/area/unspace/depths
+	name = "Abyssal Byway"
+	local_facing = EAST
+	seek_tag = "menhir_room_depths"
+
+/area/unspace/enigma
+	name = "Enigmatic Promenade"
+	local_facing = WEST
+	seek_tag = "menhir_room_enigma"
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/observatory
+
 /area/unspace/bball
 	name = "Reverberating Arena"
 	local_facing = WEST
@@ -343,7 +369,7 @@ ABSTRACT_TYPE(/datum/menhir_room_roll)
 	base_weight = 80
 	area_busy_checks = list(/area/station/crew_quarters = 5,\
 		/area/station/hallway/secondary = 2)
-	stole_from = list("rec room","cafeteria","bar")
+	stole_from = list("rec room","cafeteria","bar") //overlaps a bit with arcade on purpose, ambiguity is fun
 
 /datum/menhir_room_roll/botany
 	name = "damp antechamber (botany)"
@@ -372,6 +398,44 @@ ABSTRACT_TYPE(/datum/menhir_room_roll)
 					playsound(plinth.loc, 'sound/musical_instruments/artifact/Artifact_Precursor_4.ogg', 55, 0)
 					. = TRUE
 					return
+
+/datum/menhir_room_roll/hangar
+	name = "fabrication receptacle (hangar)"
+	entrance_side = WEST
+	map_path = /datum/mapPrefab/allocated/menhir_room_hangar
+	base_weight = 40
+	area_busy_checks = list(/area/station/hangar = 12)
+	stole_from = list("vehicle bay","drop bay","hangar","workshop")
+
+/datum/menhir_room_roll/genpop
+	name = "cold oubliette (genpop)"
+	entrance_side = WEST
+	map_path = /datum/mapPrefab/allocated/menhir_room_genpop
+	base_weight = 30
+	area_busy_checks = list(/area/station/security/brig = 20)
+	stole_from = list("genpop","holding cell","brig")
+
+/datum/menhir_room_roll/arcade
+	name = "peculiar annex (arcade)"
+	entrance_side = WEST
+	map_path = /datum/mapPrefab/allocated/menhir_room_arcade
+	base_weight = 50
+	stole_from = list("arcade","game room","rec room") //overlaps a bit with lounge on purpose, ambiguity is fun
+
+/datum/menhir_room_roll/depths
+	name = "abyssal byway (depths)"
+	entrance_side = EAST
+	map_path = /datum/mapPrefab/allocated/menhir_room_depths
+	base_weight = 21 //this is not, contrary to popular opinion, nine plus ten
+	area_busy_checks = list(/area/station/crew_quarters/pool = 5)
+	stole_from = list("teleporter","LRT system","transception array")
+
+/datum/menhir_room_roll/enigma
+	name = "enigmatic promenade (enigma)"
+	entrance_side = WEST
+	map_path = /datum/mapPrefab/allocated/menhir_room_enigma
+	base_weight = 10
+	area_busy_checks = list(/area/station/crown = 3)
 
 /datum/menhir_room_roll/bball
 	name = "reverberating arena (bball)"

@@ -76,6 +76,34 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		owner.set_density(0)
 		return
 
+/datum/materialProc/outline_add
+	max_generations = 0
+	var/outline_color = null
+	var/outline_size = 1
+
+	New(var/outline_color, var/outline_size = 1)
+		. = ..()
+		src.outline_color = outline_color
+		src.outline_size = outline_size
+
+	execute(var/atom/location)
+		if(isturf(location))
+			return
+		var/mat_id = location.material.getID()
+		if(!location.uses_default_material_appearance && location.default_material == "[mat_id]")
+			return
+		if(endswith(location.icon_state, "$$[mat_id]") || ("[mat_id]" in location.get_typeinfo().mat_appearances_to_ignore))
+			return
+		var/outline_filter = outline_filter(src.outline_size, src.outline_color)
+		location.add_filter("[mat_id]_outline", 4, outline_filter)
+		return
+
+/datum/materialProc/outline_remove
+	execute(var/atom/location)
+		var/mat_id = location.material.getID()
+		location.remove_filter("[mat_id]_outline")
+		return
+
 /datum/materialProc/ffart_add
 	desc = "It's very hard to move around."
 	max_generations = 1
@@ -285,19 +313,21 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	execute(var/atom/location)
 		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
 		rad_comp?.RemoveComponent()
+		APPLY_ATOM_PROPERTY(location, PROP_ATOM_NEVER_RADIOACTIVE, "never_radioactive")
 		if(ismob(location))
 			// Have mobs made out of batiline be immune to radiation
 			var/mob/M = location
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "never_radioactive", 100)
 		return
 
 /datum/materialProc/radiation_immune_remove
 	execute(var/atom/location)
 		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
 		rad_comp?.RemoveComponent() // Can still get a radiation component after the material is added
+		REMOVE_ATOM_PROPERTY(location, PROP_ATOM_NEVER_RADIOACTIVE, "never_radioactive")
 		if(ismob(location))
 			var/mob/M = location
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "never_radioactive")
 		return
 
 /datum/materialProc/telecrystal_entered

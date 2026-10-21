@@ -1560,7 +1560,7 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 
 	New()
 		. = ..()
-		AddElement(/datum/element/biodegradable)
+		src.AddElement(/datum/element/biodegradable)
 
 /obj/item/reagent_containers/glass/petridish
 	name = "Petri Dish"

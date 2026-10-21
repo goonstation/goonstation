@@ -597,12 +597,12 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 				icon_state = pick(special_parrot_species)
 				P = special_parrot_species[icon_state]
 				if (ispath(P))
-					icon = initial(P.icon)
+					icon = get_initial_icon(P)
 			else if (islist(parrot_species))
 				icon_state = pick(parrot_species)
 				P = parrot_species[icon_state]
 				if (ispath(P))
-					icon = initial(P.icon)
+					icon = get_initial_icon(P)
 
 		var/pickprename = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer", "Old", "Ol'", "Zesty", "Sassy", "Bargain", "Discount", "Uncle", "Big", "Little")
 		//var/pickfirstname = pick(first_names)
@@ -1005,6 +1005,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/podparts/skin_flames(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_uniform(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
+		src.goods_sell += new /datum/commodity/contraband/nt_flag(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
 		src.goods_sell += new /datum/commodity/contraband/swatmask/NT(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/methamphetamine(src)
@@ -1194,6 +1195,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/costume/rabbitsuit(src)
 		src.goods_sell += new /datum/commodity/costume/baseball_clown(src)
 		src.goods_sell += new /datum/commodity/costume/baseball_mime(src)
+		src.goods_sell += new /datum/commodity/costume/mouse(src)
 
 
 
