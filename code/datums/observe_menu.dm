@@ -19,44 +19,17 @@
 	var/mob/dead/observer/user = ui.user
 	if(istype(user) && params["targetref"])
 		var/atom/target = locate(params["targetref"])
-		if(is_valid_observable(target))
+		if (GHOST.can_observe(target))
 			user.insert_observer(target)
 			ui.close()
 
-/datum/observe_menu/proc/is_valid_observable(atom/observable, list/atom/all_observables=null)
-	if(isnull(all_observables))
-		all_observables = by_cat[TR_CAT_GHOST_OBSERVABLES]
-	if(!(observable in all_observables))
-		return FALSE
-
-	if(isnull(observable.loc))
-		return FALSE
-
-	if(ismob(observable))
-		var/mob/M = observable
-		// admins aren't observable unless they're in player mode
-		if (M.client?.holder && !M.client.player_mode)
-			return FALSE
-		// remove any secret mobs that someone is controlling
-		if (M.unobservable)
-			return FALSE
-
-		var/is_npc = M.client == null && M.ghost == null
-		if(is_npc && !(M.z == Z_LEVEL_STATION || M.z == Z_LEVEL_DEBRIS || M.z == Z_LEVEL_MINING))
-			return FALSE //don't display azone NPCs outside of station, debris, and mining z levels
-
-	return TRUE
-
 /datum/observe_menu/ui_static_data(mob/user)
-	var/list/all_observables = by_cat[TR_CAT_GHOST_OBSERVABLES]
 	var/DNRSet = user.mind?.get_player()?.dnr || isadminghost(user)
 
 	var/list/uidata = list()
 	var/list/namecounts = list()
 
-	for(var/atom/observable in all_observables)
-		if(!is_valid_observable(observable, all_observables))
-			continue
+	for (var/atom/observable as anything in GHOST.get_observables())
 		var/list/obs_data = list()
 		var/mob/observable_mob = observable
 		ENSURE_TYPE(observable_mob)

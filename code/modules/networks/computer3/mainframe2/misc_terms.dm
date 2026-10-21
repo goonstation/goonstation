@@ -1324,7 +1324,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		var/turf/T = get_turf(src)
 		if(T)
 			admessage += "<b> ([T.x],[T.y],[T.z])</b>"
-		message_ghosts("Network Nuclear Charge armed. [log_loc(T, ghostjump=TRUE)]")
+		GHOST.MESSAGE.send("<b>Networked nuclear charge</b> armed at [GHOST.MESSAGE.format_loc(src)].")
 		message_admins(admessage)
 		//World announcement.
 		if (src.z == Z_LEVEL_STATION)
@@ -1338,7 +1338,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		src.timing = 0
 		src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
 		src.icon_state = "net_nuke0"
-		message_ghosts("<b>Network Nuclear Charge DISARMED.")
+		GHOST.MESSAGE.send("<b>Networked nuclear charge</b> DISARMED at [GHOST.MESSAGE.format_loc(src)].")
 		//World announcement.
 		if (src.z == Z_LEVEL_STATION)
 			command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
@@ -1349,7 +1349,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		post_display_status(-1)
 
 	proc/detonate()
-		message_ghosts("<b> Network Nuclear Charge blew the FUCK UP! [log_loc(src, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("<b>Networked nuclear charge</b> DETONATES at [GHOST.MESSAGE.format_loc(src)].")
 		playsound_global(world, 'sound/effects/kaboom.ogg', 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)

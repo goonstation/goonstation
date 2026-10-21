@@ -202,7 +202,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	var/mob/living/carbon/human/H = victim
 	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
-	message_ghosts("<b>[H]</b> has been shoved into a cyborg conversion chamber at [log_loc(src, ghostjump = TRUE)]!")
+	GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(H)] has been shoved into a cyborg conversion chamber at [GHOST.MESSAGE.format_loc(src)]!")
 
 	H.remove_pulling()
 	H.set_loc(src)
