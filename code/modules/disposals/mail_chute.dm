@@ -47,8 +47,9 @@
 
 	switch (action)
 		if ("select-destination")
-			if (src.destinations)
-				src.destination_tag = params["destination"]
+			var/destination = params["destination"]
+			if (src.destinations && src.destination_tag != destination)
+				src.destination_tag = destination
 				src.update()
 				. = TRUE
 

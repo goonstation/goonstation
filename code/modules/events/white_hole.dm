@@ -88,7 +88,7 @@ TYPEINFO(/datum/random_event/major/white_hole)
 		var/obj/whitehole/whitehole = new (T, grow_duration, duration, source_location, TRUE)
 		whitehole.activity_modifier = activity_modifier
 		message_admins("White Hole anomaly with origin [whitehole.source_location.name] spawning in [log_loc(T)]")
-		message_ghosts("<b>\A [whitehole.source_location.name] white hole</b> is spawning at [log_loc(T, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("<b>\A [whitehole.source_location.name] white hole</b> is spawning at [GHOST.MESSAGE.format_loc(T)].")
 		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location.name] at [log_loc(T)]")
 		src.cleanup()
 

@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/recipe)
 	VAR_PROTECTED/list/tools /// An associative list of [paths = amounts] representing tools used for this recipe. Any ingredients
 							 /// in the input list which match with these get put into the output list. The intention is that these will not
 							 /// be deleted, but the recipe is not responsible for object deletion so exceptions might exist depending on usage.
-	VAR_PROTECTED/output = null /// what you get from this recipe. This can be a path, a list of paths, or an associative list of [paths = amounts]
+	var/output = null /// what you get from this recipe. This can be a path, a list of paths, or an associative list of [paths = amounts]
 	var/category = "Unsorted" /// category for sorting, use null to hide
 	VAR_PROTECTED/list/variants = null
 	VAR_PROTECTED/variant_quantity = 1
@@ -205,7 +205,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			var/amount = src.ingredients[item_path]
 			var/list/item = list(
 				"name" = initial(item_path.name),
-				"icon" = initial(item_path.icon),
+				"icon" = get_initial_icon(item_path),
 				"icon_state" = initial(item_path.icon_state),
 				"amount" = amount
 			)
@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/datum/recipe)
 		var/amount = islist(src.output) ? src.output[mascot] : 1
 		var/list/item = list(
 		"name" = initial(mascot.name),
-		"icon" = initial(mascot.icon),
+		"icon" = get_initial_icon(mascot),
 		"icon_state" = initial(mascot.icon_state),
 		"amount" = amount
 		)

@@ -786,6 +786,9 @@ SYNDICATE DRONE FACTORY AREAS
 	afterattack(atom/target, mob/user)
 		if(target == user) return
 
+		if (ON_COOLDOWN(src, "whip", 1 SECOND))
+			return
+
 		if(GET_DIST(user, target) > 5)
 			boutput(user, SPAN_ALERT("That is too far away!"))
 			return

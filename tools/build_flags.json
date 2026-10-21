@@ -1,0 +1,296 @@
+{
+	"categories": [
+		"Options to Go Fast",
+		"Convenience Options",
+		"Stop Distractions",
+		"Profiling",
+		"Debugging Toggles",
+		"Map Overrides",
+		"Unit Test Framework",
+		"Holidays and Such"
+	],
+	"flags": [
+		{
+			"define": "SKIP_FEA_SETUP",
+			"label": "Skip FEA (atmos) Setup"
+		},
+		{
+			"define": "IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME",
+			"label": "Skip Changelogs"
+		},
+		{
+			"define": "I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO",
+			"label": "Skip pregame"
+		},
+		{
+			"id": "I_WANNA_BE_THE_JOB",
+			"define": "I_WANNA_BE_THE_JOB",
+			"label": "Spawn as a specific job",
+			"category": "Convenience Options",
+			"type": "text",
+			"valueFormat": "quoted",
+			"default": "IMCODER"
+		},
+		{
+			"id": "I_WANNA_DO_CRIME",
+			"define": "I_WANNA_DO_CRIME",
+			"label": "Spawn as an antagonist",
+			"category": "Convenience Options",
+			"type": "text",
+			"valueFormat": "raw",
+			"default": "ROLE_TRAITOR"
+		},
+		{
+			"id": "profile_full_round",
+			"define": "SERVER_SIDE_PROFILING_FULL_ROUND",
+			"label": "Profile full round",
+			"category": "Profiling",
+			"conflictsWith": [
+				"profile_pregame",
+				"profile_ingame_only"
+			]
+		},
+		{
+			"id": "profile_pregame",
+			"define": "SERVER_SIDE_PROFILING_PREGAME",
+			"label": "Profile pregame",
+			"category": "Profiling",
+			"conflictsWith": [
+				"profile_full_round"
+			]
+		},
+		{
+			"id": "profile_ingame_only",
+			"define": "SERVER_SIDE_PROFILING_INGAME_ONLY",
+			"label": "Profile in-game only",
+			"category": "Profiling",
+			"conflictsWith": [
+				"profile_full_round"
+			]
+		},
+		{
+			"id": "abstract_violation_crash",
+			"define": "ABSTRACT_VIOLATION_CRASH",
+			"label": "Abstract violation: crash",
+			"category": "Debugging Toggles",
+			"conflictsWith": [
+				"abstract_violation_warn"
+			]
+		},
+		{
+			"id": "abstract_violation_warn",
+			"define": "ABSTRACT_VIOLATION_WARN",
+			"label": "Abstract violation: warn",
+			"category": "Debugging Toggles",
+			"conflictsWith": [
+				"abstract_violation_crash"
+			]
+		},
+		{
+			"define": "STOP_DISTRACTING_ME",
+			"description": "Everything in the category."
+		},
+		{
+			"define": "MAP_OVERRIDE",
+			"label": "Map Override",
+			"category": "Map Overrides",
+			"description": "Overrides the map used for round start instead of the normal map rotation.",
+			"type": "select",
+			"valueIsDefine": true,
+			"options": [
+				{
+					"value": "",
+					"label": "Default"
+				},
+				{
+					"value": "MAP_OVERRIDE_DEVTEST",
+					"label": "Devtest (by cringe)"
+				},
+				{
+					"value": "MAP_OVERRIDE_CONSTRUCTION",
+					"label": "Construction"
+				},
+				{
+					"value": "MAP_OVERRIDE_POD_WARS",
+					"label": "Pod Wars (500x500)"
+				},
+				{
+					"value": "MAP_OVERRIDE_EVENT",
+					"label": "Event (misc. event maps)"
+				},
+				{
+					"value": "MAP_OVERRIDE_WRESTLEMAP",
+					"label": "Wrestlemap (by Overtone)"
+				},
+				{
+					"value": "MAP_OVERRIDE_COGMAP",
+					"label": "Cogmap1 (by Dr. Cogwerks)"
+				},
+				{
+					"value": "MAP_OVERRIDE_COGMAP2",
+					"label": "Cogmap2 (by Dr. Cogwerks)"
+				},
+				{
+					"value": "MAP_OVERRIDE_DONUT2",
+					"label": "Donut Station 2 (updated, by committee)"
+				},
+				{
+					"value": "MAP_OVERRIDE_DONUT3",
+					"label": "Donut Station 3 (by Ryumi)"
+				},
+				{
+					"value": "MAP_OVERRIDE_KONDARU",
+					"label": "Kondaru Station (by Kubius)"
+				},
+				{
+					"value": "MAP_OVERRIDE_CLARION",
+					"label": "NSS Clarion (by Dionsu and a69andahalf)"
+				},
+				{
+					"value": "MAP_OVERRIDE_OSHAN",
+					"label": "Oshan Laboratory, Abzu (by committee)"
+				},
+				{
+					"value": "MAP_OVERRIDE_NADIR",
+					"label": "Nadir Extraction Site (by Kubius)"
+				},
+				{
+					"value": "MAP_OVERRIDE_NEON",
+					"label": "Neon (by Sord)"
+				},
+				{
+					"value": "MAP_OVERRIDE_MENHIR",
+					"label": "Menhir Research Enclave (by Kubius)"
+				},
+				{
+					"value": "MAP_OVERRIDE_ATLAS",
+					"label": "NCS Atlas (by Gannets and Kubius, discontinued/gimmick)"
+				},
+				{
+					"value": "MAP_OVERRIDE_CRASH",
+					"label": "Crash (discontinued/gimmick)"
+				},
+				{
+					"value": "MAP_OVERRIDE_MUSHROOM",
+					"label": "Mushroom (updated, discontinued/gimmick)"
+				},
+				{
+					"value": "MAP_OVERRIDE_DENSITY2",
+					"label": "Density2 (second smallest, by Emily, discontinued/gimmick)"
+				},
+				{
+					"value": "MAP_OVERRIDE_PROBSTATION",
+					"label": "Probstation (Randomly generated map hell)"
+				}
+			]
+		},
+		{
+			"id": "generate_goonhub_map",
+			"define": "GENERATE_GOONHUB_MAP",
+			"label": "Generate Goonhub map screenshots",
+			"category": "Map Overrides"
+		},
+		{
+			"define": "UNIT_TESTS",
+			"label": "Enable unit tests"
+		},
+		{
+			"id": "unit_tests_run_till_completion",
+			"define": "UNIT_TESTS_RUN_TILL_COMPLETION",
+			"label": "Bypass 10 second unit test limit",
+			"requires": [
+				"unit_tests"
+			]
+		},
+		{
+			"id": "unit_tests_regression_only",
+			"define": "UNIT_TESTS_REGRESSION_ONLY",
+			"label": "Regression tests only",
+			"requires": [
+				"unit_tests"
+			]
+		},
+		{
+			"define": "UNIT_TEST_TYPES",
+			"label": "Unit Test Types",
+			"type": "text",
+			"valueFormat": "raw",
+			"default": "/datum/unit_test/explosion_test, /datum/unit_test/monkey_thunderdome"
+		},
+		{
+			"id": "season_override",
+			"define": "SEASON",
+			"label": "Season override",
+			"category": "Holidays and Such",
+			"description": "Overrides the season instead of picking one based on the build month.",
+			"type": "select",
+			"valueIsDefine": true,
+			"options": [
+				{
+					"value": "",
+					"label": "None (based on build month)"
+				},
+				{
+					"value": "SEASON_WINTER",
+					"label": "Winter"
+				},
+				{
+					"value": "SEASON_SPRING",
+					"label": "Spring"
+				},
+				{
+					"value": "SEASON_SUMMER",
+					"label": "Summer"
+				},
+				{
+					"value": "SEASON_AUTUMN",
+					"label": "Autumn"
+				}
+			]
+		},
+		{
+			"define": "RP_MODE",
+			"label": "RP Mode"
+		},
+		{
+			"define": "XMAS",
+			"label": "Christmas"
+		},
+		{
+			"define": "CANADADAY",
+			"label": "Canada Day"
+		}
+	],
+	"presets": [
+		{
+			"id": "go_fast",
+			"label": "Go Fast",
+			"flags": [
+				"GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW",
+				"IM_REALLY_IN_A_FUCKING_HURRY_HERE"
+			]
+		},
+		{
+			"id": "stop_distracting_me",
+			"label": "Stop Distracting Me",
+			"flags": [
+				"STOP_DISTRACTING_ME"
+			]
+		},
+		{
+			"id": "unit_tests",
+			"label": "Unit Tests",
+			"flags": [
+				"UNIT_TESTS",
+				"UNIT_TESTS_RUN_TILL_COMPLETION"
+			]
+		},
+		{
+			"id": "extra_runtime_checking",
+			"label": "Extra Runtime Checking",
+			"flags": [
+				"CHECK_MORE_RUNTIMES"
+			]
+		}
+	]
+}

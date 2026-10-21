@@ -1,6 +1,7 @@
 /datum/unit_test/reagent_id_typos
 	var/static/list/reagent_vars = list(
 		list(/datum/ailment/disease, "associated_reagent"),
+		list(/datum/ailment, "reagent_suppressants"),
 		list(/datum/ailment, "reagentcure"),
 		list(/obj/item/reagent_containers, "initial_reagents"),
 		list(/datum/chemical_reaction, "result"),

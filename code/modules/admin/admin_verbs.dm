@@ -1352,8 +1352,7 @@ var/list/fun_images = list()
 
 	var/confirm6 = automated ? "Yes" : tgui_alert(src.mob, "Disable drop shadowing?", "Dropshadows?", list("Yes", "No"))
 	if (confirm6 == "Yes")
-		winset(src, "menu.set_shadow", "is-checked=false")
-		src.apply_depth_filter()
+		src.apply_depth_filter(FALSE, src.preferences.client_settings[CLIENT_SETTING_DISTORTION])
 
 	var/confirm7 = automated ? "Yes" : tgui_alert(src.mob, "Reset client color matrix to identity matrix?", "Reset Color Matrix?", list("Yes", "No"))
 	if (confirm7 == "Yes")
@@ -1824,7 +1823,8 @@ proc/alert_all_ghosts(atom/target, message)
 						O.set_loc(target)
 					else if (istype(M, /mob/dead/target_observer))
 						var/mob/dead/target_observer/TO = M
-						TO.ghostjump(target.x, target.y, target.z)
+						var/mob/dead/observer/O = TO.to_ghost()
+						O.set_loc(target)
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts()
@@ -2277,12 +2277,7 @@ proc/alert_all_ghosts(atom/target, message)
 	var/dur = input(usr, "Input duration (in seconds)", "lightsout duration", 0) as null|num
 
 	if(dur)
-		var i = 0
-		for_by_tcl(apc, /obj/machinery/power/apc)
-			if(apc.z == 1)
-				if((i++ % 5) == 0)
-					sleep(1 SECOND)
-				apc.setStatus("lightsout", dur SECONDS)
+		ADMIN.lights_out(dur SECONDS)
 
 /client/proc/flock_cheat()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

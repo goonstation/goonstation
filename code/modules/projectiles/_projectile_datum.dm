@@ -53,11 +53,11 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 	var/affected_by_gravity = FALSE	 // If a projectile should go shorter or further based on turf G-forces
 
-	var/datum/material/material = null
+	var/datum/material/coating = null
+	var/coating_amount = 0.1 // How much material is in each bullet
 
 	var/casing = null
 	var/reagent_payload = null
-	var/forensic_ID = null
 	var/precalculated = 1
 
 	var/hit_object_sound = 0
@@ -108,6 +108,8 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	New()
 		. = ..()
+		if (istext(src.icon))
+			src.icon = file(src.icon)
 		generate_stats()
 		var/icon/fuck_you_byond = icon(src.icon)
 		src.x_offset = -(fuck_you_byond.Width() - 32)/2
@@ -120,6 +122,10 @@ ABSTRACT_TYPE(/datum/projectile)
 				generate_stats()
 			if("power", "ks_ratio")
 				generate_inverse_stats()
+
+	/// Returns true of the two ammo types are effectively the same.
+	proc/is_same_ammo(datum/projectile/other)
+		return (src.type == other.type) && (src.coating == other.coating)
 
 	proc
 		generate_stats()

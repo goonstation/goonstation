@@ -238,7 +238,7 @@
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
 
 		//Trigger material on attack.
-		proj_data?.material?.triggerOnAttack(src, src.shooter, A)
+		proj_data?.coating?.triggerOnAttack(src, src.shooter, A)
 
 		if (istype(A,/turf))
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
@@ -308,15 +308,14 @@
 			src.icon = proj_data.icon
 			src.icon_state = proj_data.icon_state
 			src.invisibility = proj_data.invisibility
-			if (!proj_data.override_color)
+			if (!proj_data.override_color && !proj_data.coating)
 				src.color = proj_data.color_icon
 		else
 			src.icon = 'icons/obj/projectiles.dmi'
 			src.icon_state = null
 			src.invisibility = INVIS_NONE
-			if (!proj_data) return //ZeWaka: Fix for null.override_color
-			if (!proj_data.override_color)
-				src.color = "#ffffff"
+			src.color = "#ffffff"
+
 	proc/get_len()
 		return sqrt(src.xo**2 + src.yo**2)
 	// Awful var names. TODO rename pretty much everything here, or at least document the functions
@@ -564,6 +563,9 @@
 		var/dy = loc.y - orig_turf.y
 		var/pixel_dx = dx * 32
 		var/pixel_dy = dy * 32
+		// Cosmetic animations can change pixel_x/y independently of projectile travel.
+		var/previous_pixel_x = src.next_wx
+		var/previous_pixel_y = src.next_wy
 		src.next_wx = wx - pixel_dx
 		src.next_wy = wy - pixel_dy
 		if (!dx && !dy) 	//smooth movement within a tile
@@ -575,6 +577,42 @@
 				pixel_y += 32 * -(loc.y - curr_turf.y)
 
 			animate(src,pixel_x = src.next_wx, pixel_y = src.next_wy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
+
+		if (!length(src.contents))
+			return
+		var/tile_dx = world.icon_size * (src.x - curr_turf.x)
+		var/tile_dy = world.icon_size * (src.y - curr_turf.y)
+		for (var/mob/M in src.contents)
+			if (M.eye)
+				continue
+			src.animate_passenger_camera(M.client, previous_pixel_x, previous_pixel_y, tile_dx, tile_dy)
+			if (isliving(M))
+				var/mob/living/L = M
+				for (var/mob/dead/target_observer/observer in L.observers)
+					src.animate_passenger_camera(observer.client, previous_pixel_x, previous_pixel_y, tile_dx, tile_dy)
+
+	proc/animate_passenger_camera(client/C, start_pixel_x, start_pixel_y, tile_dx, tile_dy)
+		if (!C || C.eye != src)
+			return
+		// Native scrolling must finish in one frame even when several eye updates arrive together.
+		C.glide_size = ceil(vector_magnitude(world.maxx, world.maxy) * world.icon_size * \
+			max(C.fps / world.fps, 1))
+		// Round endpoints before subtracting- BYOND truncates fractional relative pixel offsets, if we don't account for that by rounding we accumulate
+		// a small error each tick. Those errors add up which can desync the camera over long distances, causing it to lag behind the player
+		var/step_pixel_x = round(src.next_wx + C.passenger_camera_loc_pixel_x, 1) - \
+			round(start_pixel_x + C.passenger_camera_loc_pixel_x, 1) + tile_dx
+		var/step_pixel_y = round(src.next_wy + C.passenger_camera_loc_pixel_y, 1) - \
+			round(start_pixel_y + C.passenger_camera_loc_pixel_y, 1) + tile_dy
+		// Like parallax movement, overlapping steps must finish rather than replace one another.
+		C.passenger_camera_animation_count++
+		var/animation_tag = "passenger_camera_[C.passenger_camera_animation_count]"
+		if (!tile_dx && !tile_dy)
+			animate(C, pixel_x = step_pixel_x, pixel_y = step_pixel_y, time = 1 DECI SECOND, \
+				flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE, tag = animation_tag)
+			return
+		animate(C, pixel_x = -tile_dx, pixel_y = -tile_dy, time = 0, \
+			flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE, tag = animation_tag)
+		animate(pixel_x = step_pixel_x, pixel_y = step_pixel_y, time = 1 DECI SECOND, flags = ANIMATION_RELATIVE)
 
 	track_blood()
 		src.tracked_blood = null

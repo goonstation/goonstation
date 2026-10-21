@@ -1,4 +1,3 @@
-var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder uID stuff
 
 /obj/item/gun
 	name = "gun"
@@ -92,6 +91,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/camera_recoil_sway_min = 0 //! Minimum recoil variance
 	var/camera_recoil_sway_max = 20 //! Maximum recoil variance
 
+	var/datum/forensic_id/forensic_profile = null
+
 
 	buildTooltipContent()
 		. = ..() + src.current_projectile?.get_tooltip_content()
@@ -99,9 +100,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	New()
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
-		SPAWN(2 SECONDS)
-			src.forensic_ID = src.CreateID()
-			forensic_IDs.Add(src.forensic_ID)
+		src.forensic_profile = register_id("=[build_id_unique(/proc/build_id, list(FORENSIC_CHARS_BALLISTICS, 9))]=")
 		return ..()
 
 	// equip handling for weapons that fit on your back
@@ -118,6 +117,12 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (user.back.storage.check_can_hold(src) == STORAGE_CAN_HOLD)
 			user.back.Attackby(src, user)
 			return TRUE
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.forensic_profile)
+			var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+			scan.add_data(gun_profile_data)
 
 ///CHECK_LOCK
 ///Call to run a weaponlock check vs the users implant
@@ -161,6 +166,34 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/obj/ability_button/toggle_scope/scope = locate(/obj/ability_button/toggle_scope) in src.ability_buttons
 	scope?.icon_state = "scope_off"
 	..()
+
+/obj/item/gun/proc/calculate_spread(mob/user as mob)
+	var/spread = 0
+	if (ismob(user) )
+		if (user.reagents)
+			var/how_drunk = 0
+			var/amt = user.reagents.get_reagent_amount("ethanol")
+			switch(amt)
+				if (110 to INFINITY)
+					how_drunk = 2
+				if (1 to 110)
+					how_drunk = 1
+			how_drunk = max(0, how_drunk - isalcoholresistant(user))
+			spread += 5 * how_drunk
+
+	spread = max(spread, spread_angle)
+	spread += (recoil/recoil_max) * recoil_inaccuracy_max
+
+	if (ismob(user))
+		if (user.bioHolder.HasEffect("clumsy"))
+			spread += 5
+		if (user.bioHolder.HasEffect("hulk"))
+			spread += 8
+
+	return spread
+
+
+
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
 		return 0
@@ -320,21 +353,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			sleep(slowdown_time)
 			user.movement_delay_modifier -= slowdown
 
-	var/spread = 0
-	if (ismob(user) && user.reagents)
-		var/how_drunk = 0
-		var/amt = user.reagents.get_reagent_amount("ethanol")
-		switch(amt)
-			if (110 to INFINITY)
-				how_drunk = 2
-			if (1 to 110)
-				how_drunk = 1
-		how_drunk = max(0, how_drunk - isalcoholresistant(user))
-		spread += 5 * how_drunk
-	spread = max(spread, spread_angle)
-
-	spread += (recoil/recoil_max) * recoil_inaccuracy_max
-
+	var/spread = src.calculate_spread(user)
 	for (var/i = 0; i < current_projectile.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 		if (!P)
@@ -343,10 +362,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			P.shooter = null
 			P.mob_shooter = user
 
-		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
 		if(isobj(P.implanted))
 			var/obj/O = P.implanted
-			O.forensic_holder = P.forensic_holder
+			O.forensic_holder = P.forensic_holder // Any evidence applied to the projectile will also be applied to the bullet
 		if(BOUNDS_DIST(user, target) == 0)
 			P.was_pointblank = 1
 			hit_with_existing_projectile(P, target) // Includes log entry.
@@ -367,6 +385,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 
 /obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
+	if(P && src.forensic_profile)
+		var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+		P.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 	return
 
 /obj/item/gun/proc/Shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
@@ -412,24 +433,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				sleep(slowdown_time)
 				M.movement_delay_modifier -= slowdown
 
-	var/spread = is_dual_wield*10
-	if (user.reagents)
-		var/how_drunk = 0
-		var/amt = user.reagents.get_reagent_amount("ethanol")
-		switch(amt)
-			if (110 to INFINITY)
-				how_drunk = 2
-			if (1 to 110)
-				how_drunk = 1
-		how_drunk = max(0, how_drunk - isalcoholresistant(user))
-		spread += 5 * how_drunk
-	spread = max(spread, spread_angle)
-
-	spread += (recoil/recoil_max) * recoil_inaccuracy_max
+	var/spread = src.calculate_spread(user)
 
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
-		P.forensic_ID = src.forensic_ID
 		if(isobj(P.implanted))
 			var/obj/O = P.implanted
 			O.forensic_holder = P.forensic_holder
@@ -466,6 +473,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 0
 
 /obj/item/gun/proc/log_shoot(mob/user, turf/T, obj/projectile/P)
+	if(!P)
+		return
 	logTheThing(LOG_COMBAT, user, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir_accurate(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
 
 /obj/item/gun/examine()
@@ -581,7 +590,18 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		recoil_stacks += 1
 		stacked_recoil = clamp(round(recoil_stacks) - recoil_stacking_safe_stacks,0,recoil_stacking_max_stacks) * recoil_stacking_amount
 
-	recoil += (recoil_strength + stacked_recoil)
+
+	var/recoil_mult = 1
+	if (ismob(user))
+		var/is_strong = user.bioHolder.HasEffect("strong")
+		var/is_hulk = user.bioHolder.HasEffect("hulk")
+
+		if (is_strong)
+			recoil_mult *= 0.6
+		if (is_hulk)
+			recoil_mult *= 0.15 // Basically zero recoil, but flat inaccuracy penalty
+
+	recoil += (recoil_strength + stacked_recoil)*recoil_mult
 	recoil = clamp(recoil, 0, recoil_max)
 	recoil_last_shot = TIME
 	if (camera_recoil_enabled)
