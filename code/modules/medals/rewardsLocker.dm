@@ -1179,7 +1179,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	required_medal = "Ol' buddy ol' pal"
 	once_per_round = 1
 	category = MEDAL::REWARD::CATEGORY::ITEM
-	COPY_ATOM_ICON(/obj/item/guardbot_frame/old/golden)
+	icon = 'icons/obj/bots/robuddy/pr-4.dmi'
+	icon_state = "skin-gold"
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
