@@ -238,14 +238,14 @@
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may overload")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent overload.")
-					message_ghosts("<b>[src]</b> is getting dangerously hot! [log_loc(src.loc, ghostjump=TRUE)].")
+					GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] is getting dangerously hot at [GHOST.MESSAGE.format_loc(src)].")
 			if(temperature >= REACTOR_ON_FIRE_TEMP && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message(SPAN_ALERT("<b>The [src] begins to burn!</b>"))
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to overload")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. OVERLOAD IMMINENT.", crisis = TRUE)
-					message_ghosts("<b>[src]</b> is extremely close to overloading! [log_loc(src.loc, ghostjump=TRUE)].")
+					GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] is extremely close to overloading at [GHOST.MESSAGE.format_loc(src)].")
 			else if(temperature < REACTOR_ON_FIRE_TEMP && src.GetParticles("overheat_fire"))
 				src.visible_message(SPAN_ALERT("<b>The [src] stops burning.</b>"))
 				logTheThing(LOG_STATION, src, "[src] is cooling from 2500K")
@@ -420,7 +420,7 @@
 		for(var/i = 1 to rand(10,30))
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
 
-		message_ghosts("<b>[src]</b> is going BOOM! [log_loc(src.loc, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] is going BOOM at [GHOST.MESSAGE.format_loc(src)]!")
 		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")
 
 		explosion_new(src, current_loc, max(100, meltdown_badness*5), TRUE, 0, 360, TRUE)

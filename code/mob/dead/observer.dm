@@ -781,13 +781,4 @@ TYPEINFO(/mob/dead/observer)
 	set_loc(newobs)
 	return newobs
 
-
-/mob/dead/observer/verb/ghostjump(x as num, y as num, z as num)
-	set name = ".ghostjump"
-	set hidden = TRUE
-
-	var/turf/T = locate(x, y, z)
-	if (can_ghost_be_here(src, T))
-		src.set_loc(T)
-
 #undef GHOST_HAIR_ALPHA

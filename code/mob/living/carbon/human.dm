@@ -673,12 +673,7 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
-			var/turf/where = get_turf(src)
-			var/where_text = "Unknown (?, ?, ?)"
-			if (where)
-				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
-
-			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] has died at [GHOST.MESSAGE.format_loc(src)].")
 #ifdef DATALOGGER
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
@@ -3284,7 +3279,7 @@ mob/living/carbon/human/has_genetics()
 			if (istype(I, /obj/item/implant/projectile))
 				wound_count++
 		if(wound_count)
-			scan.add_text("Gunshot wounds: [wound_count] fragments detected")
+			scan.add_text("Gunshot wounds: [wound_count] fragments detected") // Seems to double-count for some reason?
 
 /mob/living/carbon/human/proc/get_fingerprint(var/ignore_gloves = FALSE, force_hand = -1)
 	RETURN_TYPE(/datum/forensic_data/fingerprint)

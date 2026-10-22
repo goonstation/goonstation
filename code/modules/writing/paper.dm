@@ -68,6 +68,7 @@
 	var/field_counter = 1
 	///Some subtypes might want to hide the scrollbar
 	var/scrollbar = TRUE
+	var/paper_color // UI color without sprite change
 
 /obj/item/paper/New()
 	..()
@@ -259,7 +260,7 @@
 		"sizeY" = src.sizey,
 		"text" = src.info,
 		"max_length" = PAPER_MAX_LENGTH,
-		"paperColor" = src.color || "white",	// color might not be set
+		"paperColor" = src.paper_color || src.color || "white",	// color might not be set
 		"stamps" = src.stamps,
 		"stampable" = src.stampable,
 		"sealed" = src.sealed,
