@@ -1287,7 +1287,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			for(var/i in 1 to extent_radius)
 				playsound(focal_nexus, 'sound/items/med_scanner.ogg', 90, 0, pitch = 0.55, extrarange = i)
 				burst_turfs += rangefind_diamond(focal_nexus,i)
-				var/fadetime = 20
+				var/fadetime = 25
 				if(i == extent_radius) fadetime = 40 //special finishing flash
 				var/volmod = ceil(i * 0.4)
 				var/radmod = (1 + radpeak - abs(i-radpeak)) CENTI SIEVERTS //.15 when it first breaches the crown, peaks at .51 late in the wave, comes down to .39 at end
