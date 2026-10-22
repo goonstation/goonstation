@@ -1249,7 +1249,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
 	centcom_headline = "ARTIFACT CONDITION ALERT"
 	centcom_message = "VACATE SITE IMMEDIATELY. IONISING RADIATION BUILDUP IN CASING OF TOREADOR-7I-22408. IF UNABLE TO VACATE SITE, MOVE WITHIN TOREADOR-7I-22408 OR AS FAR FROM IT AS POSSIBLE."
-	required_elapsed_round_time = 10 MINUTES
+	required_elapsed_round_time = 22 MINUTES
 
 	event_effect()
 		message_delay = rand(2 SECONDS, 3 SECONDS)
@@ -1275,18 +1275,22 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		var/turf/focal_nexus = locate(MENHIR_CORE_X, MENHIR_CORE_Y, Z_LEVEL_STATION)
 		///Key is turf; value is whether it is shielded
 		var/list/burst_turfs = list()
+		///Maximum radius pulses stretch to
+		var/extent_radius = 62
+		///Range at which pulses are strongest
+		var/radpeak = 50
 
 		SPAWN(1)
-			for(var/i in 1 to 9)
+			for(var/i in 1 to 9) //windup
 				playsound(focal_nexus, 'sound/items/med_scanner.ogg', i*8, 0, pitch = 0.55, extrarange = 48)
 				sleep(12)
-			for(var/i in 1 to 63)
+			for(var/i in 1 to extent_radius)
 				playsound(focal_nexus, 'sound/items/med_scanner.ogg', 90, 0, pitch = 0.55, extrarange = i)
 				burst_turfs += rangefind_diamond(focal_nexus,i)
-				var/fadetime = 10
-				if(i == 63) fadetime = 40 //special finishing flash
+				var/fadetime = 20
+				if(i == extent_radius) fadetime = 40 //special finishing flash
 				var/volmod = ceil(i * 0.4)
-				var/radmod = (51 - abs(i-50)) SIEVERTS //15 when it first breaches the crown, peaks at 51 late in the wave, comes down to 38 at end
+				var/radmod = (1 + radpeak - abs(i-radpeak)) CENTI SIEVERTS //.15 when it first breaches the crown, peaks at .51 late in the wave, comes down to .39 at end
 				SPAWN(1)
 					for (var/turf/T in burst_turfs)
 						irradiate_turf(T,radmod,fadetime,burst_turfs[T])
@@ -1301,33 +1305,18 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			var/bandwidth = radius - abs(i) //example: you're radius 3. this is 0 at Y-peaks, and 3 at Y-center. diamond!
 			if(bandwidth)
 				seekspot = locate(T.x - bandwidth, T.y + i, T.z)
-				if(seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
-					for(var/obj/machinery/light/L in seekspot)
-						if (L.type == /obj/machinery/light/emergency) continue
-						L.on = 1
-						L.broken()
 				if(istype(seekspot.loc,/area/station/crown))
 					.[seekspot] = TRUE
 				else
 					.[seekspot] = FALSE
 
 				seekspot = locate(T.x + bandwidth, T.y + i, T.z)
-				if(seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
-					for(var/obj/machinery/light/L in seekspot)
-						if (L.type == /obj/machinery/light/emergency) continue
-						L.on = 1
-						L.broken()
 				if(istype(seekspot.loc,/area/station/crown))
 					.[seekspot] = TRUE
 				else
 					.[seekspot] = FALSE
 			else
 				seekspot = locate(T.x, T.y + i, T.z)
-				if(seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
-					for(var/obj/machinery/light/L in seekspot)
-						if (L.type == /obj/machinery/light/emergency) continue
-						L.on = 1
-						L.broken()
 				if(istype(seekspot.loc,/area/station/crown))
 					.[seekspot] = TRUE
 				else
