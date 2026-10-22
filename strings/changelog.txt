@@ -1,5 +1,9 @@
 
 (t)wed oct 21 26
+(u)Temthrush
+(p)28146
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Resprites most kitchen assets.
 (u)bamlord
 (p)28151
 (e)⚖👮|C-Balance, A-Security
