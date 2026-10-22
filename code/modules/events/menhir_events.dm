@@ -1298,7 +1298,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				LAGCHECK(LAG_LOW)
 				sleep(12)
 
-	///Fetch a "ring" of turfs in a diamond based on target radius, and index their rad-safety while shattering any present lights
+	///Fetch a "ring" of turfs in a diamond based on target radius, and index their rad-safety
 	proc/rangefind_diamond(var/turf/T, var/radius = 1)
 		. = list()
 		var/turf/seekspot = null
