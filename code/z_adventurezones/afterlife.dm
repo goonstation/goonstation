@@ -112,7 +112,7 @@ var/global/list/afterlife_announcements = list()
 proc/announce_ghost_afterlife(var/ckey, var/text)
 	if (!afterlife_announcements[ckey] || afterlife_announcements[ckey] < (TIME - 5 MINUTES))
 		afterlife_announcements[ckey] = TIME
-		message_ghosts(text)
+		GHOST.MESSAGE.send(text)
 
 
 #ifndef SECRETS_ENABLED

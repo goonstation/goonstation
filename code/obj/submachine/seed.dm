@@ -219,14 +219,14 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					if (!istype(S.planttype,/datum/plant/) || !istype(S.plantgenes,/datum/plantgenes/))
 						boutput(ui.user, SPAN_ALERT("Genetic structure of seed corrupted. Cannot scan."))
 					else
-						HYPgeneticanalysis(ui.user,S,S.planttype,S.plantgenes)
+						boutput(ui.user, HYPgeneticanalysis(ui.user,S,S.planttype,S.plantgenes))
 
 				else if (istype(I,/obj/item/reagent_containers/food/snacks/plant/))
 					var/obj/item/reagent_containers/food/snacks/plant/P = I
 					if (!istype(P.planttype,/datum/plant/) || !istype(P.plantgenes,/datum/plantgenes/))
 						boutput(ui.user, SPAN_ALERT("Genetic structure of item corrupted. Cannot scan."))
 					else
-						HYPgeneticanalysis(ui.user,P,P.planttype,P.plantgenes)
+						boutput(ui.user, HYPgeneticanalysis(ui.user,P,P.planttype,P.plantgenes))
 				else
 					boutput(ui.user, SPAN_ALERT("Item cannot be scanned."))
 

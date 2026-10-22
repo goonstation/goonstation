@@ -193,7 +193,8 @@
 					if(3)
 						new /obj/item/organ/intestines(src)
 					if(4)
-						new /obj/item/organ/kidney(src)
+						var/kidney_type = pick(/obj/item/organ/kidney/left, /obj/item/organ/kidney/right)
+						new kidney_type(src)
 					if(5)
 						new /obj/item/organ/liver(src)
 					if(6)
@@ -203,7 +204,8 @@
 					if(8)
 						new /obj/item/organ/pancreas(src)
 					if(9)
-						new /obj/item/organ/eye(src)
+						var/eye_type = pick(/obj/item/organ/eye/left, /obj/item/organ/eye/right)
+						new eye_type(src)
 			return TRUE
 
 /obj/storage/crate/freezer/milk

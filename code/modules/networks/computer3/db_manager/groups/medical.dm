@@ -1,7 +1,7 @@
 /datum/db_record_group/medical
 	search_input_prompt = "Please enter target name, ID, DNA, rank, or fingerprint:"
-	field_data = alist(
-		"gen" = list(
+	field_data = list(
+		"General" = list(
 			alist(key = "name",			write = TRUE,	search = TRUE),
 			alist(key = "id",			write = FALSE,	search = TRUE),
 			alist(key = "full_name",	write = TRUE,	search = FALSE),
@@ -16,7 +16,7 @@
 			alist(key = "p_stat",		write = TRUE,	search = FALSE),
 			alist(key = "m_stat",		write = TRUE,	search = FALSE),
 		),
-		"med" = list(
+		"Medical" = list(
 			alist(key = "h_imp",		write = FALSE,	search = FALSE),
 			alist(key = "blood_type",	write = TRUE,	search = FALSE),
 			alist(key = "mi_dis",		write = TRUE,	search = FALSE),
@@ -37,7 +37,7 @@
 	return global.data_core.general
 
 /datum/db_record_group/medical/get_all_databases()
-	return alist(
-		"gen" = global.data_core.general,
-		"med" = global.data_core.medical,
+	return list(
+		"General" = global.data_core.general,
+		"Medical" = global.data_core.medical,
 	)

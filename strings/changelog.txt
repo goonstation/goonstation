@@ -1,4 +1,95 @@
 
+(t)wed oct 21 26
+(u)Temthrush
+(p)28146
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Resprites most kitchen assets.
+(u)bamlord
+(p)28151
+(e)⚖👮|C-Balance, A-Security
+(+)A landmark legal case has restored the Lawyer's security access.
+(u)Kubius
+(p)27681
+(e)🆕🌠|C-Feature, A-Events
+(+)Updated Menhir's event cycle with two more rare events.
+(u)LorrMaster
+(p)27574
+(e)🔄🧱⚗|C-Rework, A-Materials, A-Chemistry
+(*)Silver bullets are no longer created using the reagent. Any type of ammo can be coated using silver bars in the nanofabricator instead.
+(*)Silver appearance is now added to silver projectiles and applies the material to casings.
+(t)tue oct 20 26
+(u)LorrMaster
+(p)26602
+(e)🆕👮|C-Feature, A-Security
+(*)Fabricators, glass recyclers, network printers, and ruck kits now apply a forensic ID to items they print/create.
+(u)LorrMaster
+(p)26597
+(e)🔄👮|C-Rework, A-Security
+(*)More reliable ballistic forensics
+(u)Nexusuxen
+(p)26929
+(e)🆕🧱📦|C-Feature, A-Materials, A-Game-Objects
+(+)Airlock panels include a lights wire, which controls the red/green lights you see when it's opening/bolted/etc.
+(u)JORJ949
+(p)28130
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)The Gang Announcer now has its own radio icon. Don't upset the boss....
+(u)JORJ949
+(p)28043
+(f)https://forum.ss13.co/showthread.php?tid=25459
+(e)🆕🐣|C-Feature, A-Respawning
+(*)Permanently cryoing as a "unique" role (Command/NTSC/Detective) will now open up the slot again after a 5 minute delay.
+(t)mon oct 19 26
+(u)Sord
+(+)Sunglasses now play a funny sound the first time a vampire equips them.
+(t)sat oct 17 26
+(u)JORJ949
+(p)28057
+(e)🆕🎨🔨|C-Feature, C-Sprites, A-Player-Actions
+(+)Changeling ability icon borders have been resprited, with a writhing animation when you hover over the ability.
+(t)fri oct 16 26
+(u)Mr. Moriarty
+(p)27986
+(e)🆕⚙👮🖥️|C-Feature, A-Internal, A-Security, A-Computers
+(*)SecMate now has a citations database that tracks tickets and fines. Citations can also now be issued, approved, and printed from SecMate.
+(u)JORJ949
+(p)28009
+(e)🎨|C-Sprites
+(*)Medal rewards now have their own unique menu with many options for filtering and a preview of the item/skin you're redeeming!
+(u)Rubicubie
+(p)28032
+(e)🆕👮|C-Feature, A-Security
+(*)Tickets now look newer in a receipt-style!
+(t)thu oct 15 26
+(u)AronBattlnode
+(p)28103
+(e)💊👽|A-Medical, A-Mutantraces
+(+)Frog dehydration can no longer be asymptomatic.
+(u)JORJ949
+(p)28060
+(e)🪲🧛🔨|C-Bug, A-Gamemodes, A-Player-Actions
+(+)Phaseshifting (from either wizard spell or gene) will no longer let you pass through walls and doors in the listening post.
+(t)mon oct 12 26
+(u)ZeWaka
+(e)🪲|C-Bug, A-Player-Actions
+(+)Hand labelers no longer accept emoji.
+(u)Sovexe
+(p)28066
+(e)🪲⚙|C-Bug, A-Internal
+(+)Smoothed passenger camera movement for mechanics telepads, bubble guns, and other projectile based vehicles
+(t)sun oct 11 26
+(u)ANNmagedon
+(p)28051
+(e)🪲💪|C-Bug, A-Traits
+(+)Salvagers now keep the player decided mutantrace.
+(u)Cheekybrdy
+(p)27803
+(e)💅🐣|C-QoL, A-Respawning
+(*)Roundstart timer is 180 again on classic.
+(u)Sovexe
+(p)28062
+(e)🔄📄|C-Rework, A-UI
+(*)Respawn as Animal now allows you to choose the animal from your available options.
 (t)fri oct 09 26
 (u)ZeWaka
 (e)🪲🔄📄|C-Bug, C-Rework`, A-UI

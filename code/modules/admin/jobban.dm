@@ -42,7 +42,8 @@
 
 
 ///Can be provided with a mob, a raw cache list, or a ckey. Prefer providing a cache if you can't use a mob, as that reduces API load.
-/proc/jobban_isbanned(M, rank)
+///If the matching job datum is already available, pass it to avoid resolving its name again.
+/proc/jobban_isbanned(M, rank, datum/job/existing_job = null)
 	var/list/cache
 	if(!M)
 		return FALSE
@@ -64,7 +65,10 @@
 	else //If we aren't a string this is going to explode.
 		cache = jobban_get_for_player(M)
 
-	var/datum/job/J = find_job_in_controller_by_string(rank)
+	if (!length(cache))
+		return FALSE
+
+	var/datum/job/J = existing_job || find_job_in_controller_by_string(rank)
 	if(J)
 		if (J.no_jobban_from_this_job)
 			return FALSE
