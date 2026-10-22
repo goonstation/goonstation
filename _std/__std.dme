@@ -211,6 +211,7 @@
 #include "namespaces\helper_color.dm"
 #include "namespaces\icon.dm"
 #include "namespaces\material.dm"
+#include "namespaces\medal.dm"
 #include "namespaces\omnitool.dm"
 #include "namespaces\pay.dm"
 #include "namespaces\powersink.dm"
@@ -249,3 +250,5 @@
 #include "zlevel.dm"
 
 #include "packets.dm" // requires types.dm
+
+#include "namespaces\ghost.dm" // Requires map.dm

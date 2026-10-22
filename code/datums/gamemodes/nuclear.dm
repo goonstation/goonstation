@@ -235,7 +235,7 @@ var/global/list/nuke_op_camo_matrix = null
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	the_bomb.gives_medal = TRUE
-	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
+	the_bomb.AddElement(/datum/element/ghost_observable)
 
 	for_by_tcl(computer,/obj/machinery/computer/battlecruiser_podbay)
 		auth_computer = computer

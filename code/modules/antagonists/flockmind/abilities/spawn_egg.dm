@@ -51,7 +51,7 @@
 			return TRUE
 
 	logTheThing(LOG_GAMEMODE, holder.get_controlling_mob(), "spawns a rift at [log_loc(src.holder.owner)].")
-	message_ghosts("<b>A flockmind</b> has spawned a rift at [log_loc(src.holder.owner, ghostjump=TRUE)].")
+	GHOST.MESSAGE.send("<b>A flockmind</b> has spawned a rift at [GHOST.MESSAGE.format_loc(src.holder.owner)].")
 	F.spawnEgg()
 
 /datum/targetable/flockmindAbility/spawnEgg/logCast(atom/target)

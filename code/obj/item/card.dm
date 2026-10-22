@@ -499,7 +499,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "loading arena matches..."
 				tag = "gauntlet-id-[user.client.key]"
 				queryGauntletMatches(user.client.key)
-		name = "[registered]’s ID Card ([assignment])"
+		src.update_name()
 
 	proc/SetMatchCount(var/matches)
 		switch (matches)
@@ -526,7 +526,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "Legendary Gladiator ([matches] rounds played)"
 			else
 				assignment = "what the fuck ([matches] rounds played)"
-		name = "[registered]’s ID Card ([assignment])"
+		src.update_name()
 
 // Experimental item that may be made into a 100k spacebux reward in the future?
 /obj/item/card/license_to_kill
