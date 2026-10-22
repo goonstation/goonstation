@@ -24,9 +24,6 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/syringe{
-	pixel_x = -6
-	},
 /obj/item/kitchen/utensil/spoon{
 	pixel_y = 4;
 	pixel_x = -7
@@ -57,10 +54,28 @@
 	},
 /obj/random_item_spawner/junk/maybe_few,
 /obj/decal/cleanable/dirt/dirt3,
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "s" = (
-/obj/machinery/chem_dispenser/chemical,
+/obj/table/reinforced/chemistry/auto,
+/obj/random_item_spawner/junk/maybe_few{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/glass/bottle{
+	pixel_y = 8;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/glass/vial{
+	initial_reagents = "potassium";
+	name = "vial (potassium)";
+	pixel_x = -6;
+	pixel_y = 8;
+	layer = 2.9
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "t" = (
@@ -72,8 +87,13 @@
 	},
 /obj/item/crowbar,
 /obj/item/matchbook,
-/obj/item/reagent_containers/food/drinks/fueltank,
 /obj/random_item_spawner/dressup/one_or_zero,
+/obj/item/reagent_containers/glass/vial{
+	initial_reagents = "phosphorus";
+	name = "vial (phosphorus)";
+	pixel_x = -6;
+	pixel_y = 8
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
 "x" = (
@@ -139,16 +159,17 @@
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_y = 32
 	},
-/obj/item/reagent_containers/glass/bottle/morphine{
-	pixel_x = 10
-	},
-/obj/item/storage/pill_bottle/bronadyl,
-/obj/item/reagent_containers/glass/beaker/large{
-	pixel_x = -10
+/obj/item/storage/pill_bottle/bronadyl{
+	pixel_x = -8
 	},
 /obj/item/paper{
 	name = "Krokodil recipe";
-	info = "<h2>Drug recipe - Krokodil</h2><p><em>NOTE: Equal amounts of everything. Don't get clever.</em></p><ul><li>Get a large beaker and chuck in one hay fever pill. Cheap ones are fine, no reason to waste money on the good stuff.</li><li>Add equal amounts of:<ul><li><em>Welding Fuel</em></li><li><em>Space Cleaner</em></li><li><em>Morphine</em></li></ul></li><li>Stick the beaker in the chem dispenser and put in <em>Phosphorus</em> and <em>Potassium</em>.</li><li>Heat it until it starts bubbling and turns blue. Should be obvious enough.</li></ul><p><em>If Security asks, it's just a new kind of space cleaner.</em></p>"
+	info = "<h2>Drug recipe - Krokodil</h2><p><em>NOTE: Equal amounts of everything. Don't get clever.</em></p><ul><li>Get a large beaker and chuck in one hay fever pill. Cheap ones are fine, no reason to waste money on the good stuff.</li><li>Add equal amounts of:<ul><li><em>Welding Fuel</em></li><li><em>Space Cleaner</em></li><li><em>Morphine</em></li></ul></li><li>Throw in <em>Phosphorus</em> and <em>Potassium</em>. I have&nbsp;the vials lying around somewhere.</li><li>Heat it until it starts bubbling and turns blue. Should be obvious enough.</li></ul><p><em>If Security asks, it's just a new kind of space cleaner.</em></p>";
+	pixel_x = 1
+	},
+/obj/item/reagent_containers/glass/bottle/morphine{
+	pixel_x = 10;
+	initial_volume = 10
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/dmm_suite/clear_area)
