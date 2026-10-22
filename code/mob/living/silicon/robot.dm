@@ -2190,9 +2190,37 @@ TYPEINFO(/mob/living/silicon/robot)
 	verb/cmd_interact_laws()
 		set category = "Robot Commands"
 		set name = "Laws"
-
 		src.interact_laws()
-		return
+
+	verb/cmd_show_laws()
+		set category = "Robot Commands"
+		set name = "View Real Laws (Current)"
+		src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::VIEW)
+
+	verb/cmd_state_laws()
+		set category = "Robot Commands"
+		set name = "State Real Laws (Current)"
+		src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::STATE)
+
+	verb/cmd_state_standard_laws()
+		set category = "Robot Commands"
+		set name = "State Asimov Laws (Default)"
+		src.interact_laws(SILICON::LAWS::SET::ASIMOV, SILICON::LAWS::ACTION::STATE)
+
+	verb/robot_set_fake_laws()
+		set category = "Robot Commands"
+		set name = "Edit Fake Laws"
+		src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::EDIT)
+
+	verb/ai_state_fake_laws()
+		set category = "Robot Commands"
+		set name = "State Fake Laws"
+		src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::STATE)
+
+	verb/robot_show_fake_laws()
+		set category = "Robot Commands"
+		set name = "View Fake Laws"
+		src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::VIEW)
 
 	verb/cmd_customize_options()
 		set category = "Robot Commands"
@@ -2293,6 +2321,43 @@ TYPEINFO(/mob/living/silicon/robot)
 					boutput(src, SPAN_ALERT("You have locked your interface."))
 					hud?.update_lock()
 
+	verb/cmd_alter_head_screen()
+		set category = "Robot Commands"
+		set name = "Change facial expression (screen head only)"
+		var/obj/item/parts/robot_parts/head/screen/targethead = locate(/obj/item/parts/robot_parts/head/screen) in src.contents
+		if (!istype(targethead))
+			boutput(src, SPAN_ALERT("You're not equipped with a suitable head to use this command!"))
+			return 0
+
+		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions, /proc/cmp_text_asc))
+		if (!newFace) return 0
+		var/newMode = tgui_input_list(usr, "Select a display mode", "Face settings", list("light-on-dark", "dark-on-light"))
+		if (!newMode) return 0
+		newFace = (newFace ? lowertext(newFace) : targethead.face)
+		newMode = (newMode == "light-on-dark" ? "lod" : "dol")
+		newMode = (newMode ? newMode : targethead.mode)
+		targethead.face = newFace
+		targethead.mode = newMode
+		update_bodypart(part = "head")
+		return 1
+
+	verb/cmd_pick_scream()
+		set category = "Robot Commands"
+		set name = "Change scream note"
+
+		var/list/notes_list = list()
+		if (src.scream_instrument.pick_random_note || !src.scream_instrument.use_new_interface)
+			for (var/i in 1 to length(src.scream_instrument.sounds_instrument))
+				notes_list += i
+		else
+			notes_list = src.scream_instrument.notes
+
+		var/note = tgui_input_list(usr, "Select a scream note", "Select scream", notes_list)
+		if (!note || !(note in notes_list))
+			return
+
+		src.scream_note = note
+
 	verb/access_internal_pda()
 		set category = "Robot Commands"
 		set name = "Cyborg PDA"
@@ -2303,6 +2368,20 @@ TYPEINFO(/mob/living/silicon/robot)
 		else
 			boutput(usr, SPAN_ALERT("<b>Internal PDA not found!"))
 
+	verb/change_voice_pitch()
+		set category = "Robot Commands"
+		set name = "Change vocal pitch"
+
+		var/list/vocal_pitches = list("Low", "Medium", "High")
+		var/vocal_pitch_choice = tgui_input_list(src, "Select a vocal pitch:", "Robot Voice", vocal_pitches)
+		switch(vocal_pitch_choice)
+			if("Low")
+				vocal_pitch = 0.9
+			if("Medium")
+				vocal_pitch = 1
+			if("High")
+				vocal_pitch = 1.25
+z
 	// hacky, but this is used for says etc.
 	get_age_pitch_for_talk()
 		return vocal_pitch

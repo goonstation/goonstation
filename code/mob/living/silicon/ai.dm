@@ -439,6 +439,12 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_list
 	src.verbs |= /mob/living/silicon/ai/proc/ai_customize_options_menu
 	src.verbs |= /mob/living/silicon/ai/proc/ai_interact_laws
+	src.verbs |= /mob/living/silicon/ai/proc/ai_show_laws_all
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_all
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_standard
+	src.verbs |= /mob/living/silicon/ai/proc/ai_set_fake_laws
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_fake_laws
+	src.verbs |= /mob/living/silicon/ai/proc/ai_show_fake_laws
 	src.verbs |= /mob/living/silicon/ai/verb/deploy_to
 	src.verbs |= /mob/living/silicon/ai/proc/ai_view_crew_manifest
 	src.verbs |= /mob/living/silicon/ai/proc/toggle_alerts_verb
@@ -1619,6 +1625,36 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 	src.interact_laws()
 	return
+
+/mob/living/silicon/ai/proc/ai_show_laws_all()
+	set category = "AI Commands"
+	set name = "View Real Laws (Current)"
+	src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::VIEW)
+
+/mob/living/silicon/ai/proc/ai_state_laws_all()
+	set category = "AI Commands"
+	set name = "State Real Laws (Current)"
+	src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::STATE)
+
+/mob/living/silicon/ai/proc/ai_state_laws_standard()
+	set category = "AI Commands"
+	set name = "State Asimov Laws (Default)"
+	src.interact_laws(SILICON::LAWS::SET::ASIMOV, SILICON::LAWS::ACTION::STATE)
+
+/mob/living/silicon/ai/proc/ai_set_fake_laws()
+	set category = "AI Commands"
+	set name = "Edit Fake Laws"
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::EDIT)
+
+/mob/living/silicon/ai/proc/ai_state_fake_laws()
+	set category = "AI Commands"
+	set name = "State Fake Laws"
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::STATE)
+
+/mob/living/silicon/ai/proc/ai_show_fake_laws()
+	set category = "AI Commands"
+	set name = "View Fake Laws"
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::VIEW)
 
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
