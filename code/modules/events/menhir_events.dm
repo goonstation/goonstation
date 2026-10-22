@@ -1295,6 +1295,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 					for (var/turf/T in burst_turfs)
 						irradiate_turf(T,radmod,fadetime,burst_turfs[T])
 					playsound_global(Z_LEVEL_STATION, 'sound/weapons/ACgun2.ogg', volmod+3, 0)
+				LAGCHECK(LAG_LOW)
 				sleep(12)
 
 	///Fetch a "ring" of turfs in a diamond based on target radius, and index their rad-safety while shattering any present lights
