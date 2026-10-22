@@ -336,7 +336,7 @@
 		if(prob(4))
 			boutput(C, SPAN_ALERT("You feel a [pick("sharp", "stabbing", "startling", "worrying")] pain in your chest![pick("", " It feels like there's something lodged in there!", " There's gotta be something stuck in there!", " You feel something shift around painfully!")]"))
 		//werewolf silver implants handling
-		if (prob(60) && iswerewolf(C) && istype(src:material, /datum/material/metal/silver))
+		if (prob(60) && iswerewolf(C) && (src.material?.getID() == "silver"))
 			random_burn_damage(C, rand(5,10))
 			C.take_toxin_damage(rand(1,3))
 			C.stamina -= 30

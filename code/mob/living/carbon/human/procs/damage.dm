@@ -46,7 +46,7 @@
 								implanted.setMaterial(P.proj_data.coating)
 							implanted.implanted(src, null, 60)
 							//extra damage from silver for werewolves
-							if (istype(implanted.material, /datum/material/metal/silver) && iswerewolf(src))
+							if(iswerewolf(src) && (implanted.material?.getID() == "silver"))
 								src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 								if (src.organHolder)//Damage the organ again for more.
 									src.organHolder.damage_organ(0, (damage/armor_value_bullet)*2, 0, target_organ)
@@ -78,7 +78,7 @@
 							implanted.setMaterial(P.proj_data.coating)
 						implanted.implanted(src, null, 100)
 						//extra damage from silver for werewolves
-						if (istype(implanted.material, /datum/material/metal/silver) && iswerewolf(src))
+						if (iswerewolf(src) && (implanted.material?.getID() == "silver"))
 							src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 							if (src.organHolder)//Damage the organ again for more burn.
 								src.organHolder.damage_organ(0, (damage/armor_value_bullet)*2, 0, target_organ)
