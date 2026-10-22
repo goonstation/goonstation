@@ -37,8 +37,8 @@ TYPEINFO(/obj/kitchenspike)
 		return
 	if(!src.occupied)
 		src.occupied = TRUE
-		src.UpdateIcon()
 		src.meat = 5
+		src.UpdateIcon()
 		if (user)
 			src.visible_message(SPAN_ALERT("[user] forces [victim] onto the spike, killing [him_or_her(victim)] instantly!"))
 		else
@@ -63,6 +63,7 @@ TYPEINFO(/obj/kitchenspike)
 		new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat(src.loc)
 		if (src.meat >= 1)
 			boutput(user, "You remove some meat from the monkey.")
+			src.UpdateIcon()
 		else
 			boutput(user, "You remove the last piece of meat from the monkey!")
 			src.occupied = FALSE
@@ -71,6 +72,6 @@ TYPEINFO(/obj/kitchenspike)
 /obj/kitchenspike/update_icon()
 	. = ..()
 	if (src.occupied)
-		src.icon_state = "spikebloody"
+		src.icon_state = "spike[meat]"
 	else
 		src.icon_state = "spike"
