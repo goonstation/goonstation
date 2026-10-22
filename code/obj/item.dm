@@ -1385,6 +1385,12 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			sleep(3 SECONDS)
 			click_delay += frenzy
 
+	var/impact_type = MATERIAL::IMPACT::MELEE
+	if(src.hit_type == DAMAGE_CUT || src.hit_type == DAMAGE_STAB)
+		impact_type |= MATERIAL::IMPACT::CUT
+	src.material_trigger_when_hit(target, user, impact_type)
+	target.material_trigger_when_hit(src, user, impact_type)
+
 	src.material_on_attack_use(user, target)
 	for (var/atom/A in target)
 		A.material_trigger_on_mob_attacked(user, target, src, hit_area)
