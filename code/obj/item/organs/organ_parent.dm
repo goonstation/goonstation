@@ -125,7 +125,7 @@
 
 		..()
 
-	add_fingerprint(mob/living/M as mob, hidden_only = TRUE)
+	add_fingerprint(mob/living/M as mob)
 		. = ..()
 
 	New(loc, datum/organHolder/nholder)
