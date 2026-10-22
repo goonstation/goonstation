@@ -392,4 +392,4 @@
 
 	New()
 		..()
-		reagents.add_reagent("antihistamine", 10)
+		reagents.add_reagent("antihistamine", 5)
