@@ -2384,7 +2384,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				vocal_pitch = 1
 			if("High")
 				vocal_pitch = 1.25
-z
+
 	// hacky, but this is used for says etc.
 	get_age_pitch_for_talk()
 		return vocal_pitch
