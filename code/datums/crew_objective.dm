@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/objective/crew/captain)
 			return 0
 
 /datum/objective/crew/captain/spare
-	explanation_text = "Have your spare ID sitting in the open at your office and or quaters."
+	explanation_text = "Ensure your captain-level spare ID is in your office when the shuttle arrives at central command."
 	var/static/is_spare_in_office = null
 
 	check_completion(c)
