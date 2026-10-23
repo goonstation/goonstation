@@ -1,5 +1,9 @@
 
 (t)thu oct 22 26
+(u)AronBattlnode
+(p)28125
+(e)🪲👽|C-Bug, A-Mutantraces
+(+)Frog dehydration no longer carries over to other mutantraces.
 (u)glowbold
 (p)28104
 (e)💅🐣|C-QoL, A-Respawning
