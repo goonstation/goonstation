@@ -509,3 +509,11 @@ TYPEINFO(/turf/simulated/wall)
 
 /turf/simulated/wall/auto/asteroid
 	HELP_MESSAGE_OVERRIDE("")
+
+/turf/simulated/wall/auto/reinforced/brick_wall
+	name = "brick wall"
+	icon = 'icons/misc/aprilfools.dmi'
+	icon_state = "brick_wall"
+	opacity = 1
+	density = 1
+	pathable = 0
