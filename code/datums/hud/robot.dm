@@ -36,6 +36,12 @@
 		gravity
 
 		pda
+		option
+		laws
+		lock
+		unlock
+		map
+
 		eyecam
 
 	var/list/screen_tools = list()
@@ -274,9 +280,25 @@
 		pda = create_screen("pda", "Cyborg PDA", 'icons/mob/hud_ai.dmi', "pda", "WEST, NORTH+0.5", HUD_LAYER)
 		pda.underlays += "button"
 
+		option = create_screen("option", "Customization Options", 'icons/mob/hud_ai.dmi', "option", "WEST, NORTH", HUD_LAYER)
+		option.underlays += "button"
+
+		laws = create_screen("laws", "Show Laws", 'icons/mob/hud_ai.dmi', "laws", "WEST, NORTH-0.5", HUD_LAYER)
+		laws.underlays += "button"
+
+		lock = create_screen("lock", "Interface Lock", 'icons/mob/hud_ai.dmi', "lock", "WEST, NORTH-1", HUD_LAYER)
+		lock.underlays += "button"
+		lock.invisibility = INVIS_ALWAYS
+		unlock = create_screen("unlock", "Interface Lock", 'icons/mob/hud_ai.dmi', "unlock", "WEST, NORTH-1", HUD_LAYER)
+		unlock.underlays += "button"
+
+		map = create_screen("map", "Alert Map", 'icons/mob/hud_ai.dmi', "map", "WEST, NORTH-1.5", HUD_LAYER)
+		map.underlays += "button"
+
 		eyecam = create_screen("eyecam", "Eject to eyecam", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
 		eyecam.underlays += "block"
 
+		update_lock()
 
 	scrolled(id, dx, dy, user, parms, atom/movable/screen/hud/scr)
 		if(!master || user != master) return
@@ -403,6 +425,16 @@
 				last_health = -1
 			if ("pda")
 				master.access_internal_pda()
+			if ("option")
+				master.customize_options()
+			if ("laws")
+				master.interact_laws()
+			if ("lock")
+				master.cmd_toggle_lock()
+			if ("unlock")
+				master.cmd_toggle_lock()
+			if ("map")
+				master.open_alert_minimap()
 			if ("eyecam")
 				master.become_eye()
 
@@ -662,6 +694,10 @@
 					add_object(upgrade, HUD_LAYER+2, "CENTER+[startx+i]:24, SOUTH+1:4")
 					i++
 			last_upgrades = master.upgrades.Copy()
+
+		update_lock()
+			lock.invisibility = master.locked ? INVIS_ALWAYS : INVIS_NONE
+			unlock.invisibility = master.locked ? INVIS_NONE : INVIS_ALWAYS
 
 	proc/handle_event(var/event, var/sender)
 		if (event == "icon_updated") // this is only ever emitted by atoms
