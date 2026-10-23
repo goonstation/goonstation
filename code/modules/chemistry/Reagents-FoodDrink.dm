@@ -5099,6 +5099,16 @@ datum
 			thirst_value = 1
 			caffeine_content = 0.8
 
+		fooddrink/dulcedeleche
+			name = "dulce de leche"
+			id = "dulcedeleche"
+			fluid_r = 184
+			fluid_g = 123
+			fluid_b = 57
+			description = "A thick, velvety spread that clings to everything it touches."
+			reagent_state = SOLID
+			taste = list("rich", "sweet")
+
 		fooddrink/caramelsauce
 			name = "caramel sauce"
 			id = "caramelsauce"
