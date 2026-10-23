@@ -16,4 +16,4 @@ ADD_TO_NAMESPACE(MATERIAL, IMPACT)(var/const/MELEE = (1 << 0))
 ADD_TO_NAMESPACE(MATERIAL, IMPACT)(var/const/THROW = (1 << 1))
 ADD_TO_NAMESPACE(MATERIAL, IMPACT)(var/const/PROJECTILE = (1 << 2))
 
-ADD_TO_NAMESPACE(MATERIAL, IMPACT)(var/const/CUT = (1 << 3))
+ADD_TO_NAMESPACE(MATERIAL, IMPACT)(var/const/CUT = (1 << 3)) // Flag indicates that the impact is with a sharp object (such as a blade or spear)
