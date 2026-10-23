@@ -1,4 +1,9 @@
 
+(t)thu oct 22 26
+(u)glowbold
+(p)28141
+(e)🎨🧛🤖|C-Sprites, A-Gamemodes, A-Silicons
+(*)Silicons have HUD buttons to interact with laws, lock/unlock interfaces, and change customizations.
 (t)wed oct 21 26
 (u)Temthrush
 (p)28146
