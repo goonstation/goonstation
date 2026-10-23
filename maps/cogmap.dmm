@@ -8396,13 +8396,7 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
+/obj/pool/ladder,
 /obj/channel{
 	required_to_pass = 210
 	},
@@ -15031,7 +15025,6 @@
 	},
 /obj/machinery/light_switch/directional/east,
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/storage/firstaid/brain{
 	pixel_x = 4;
 	pixel_y = 8
@@ -30186,7 +30179,7 @@
 	pixel_y = 5;
 	id = "crewq_a1"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "ctz" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -32495,7 +32488,7 @@
 /obj/item/clothing/under/misc/vice,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "cWP" = (
 /obj/cable{
@@ -33925,7 +33918,7 @@
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "dRa" = (
 /obj/lattice{
@@ -35013,7 +35006,7 @@
 	pixel_y = 5;
 	id = "crewq_b2"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "eyE" = (
 /obj/disposalpipe/segment{
@@ -36582,7 +36575,7 @@
 /area/station/engine/elect)
 "fuJ" = (
 /obj/machinery/light,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "fuL" = (
 /obj/machinery/light_switch/directional/south,
@@ -37654,7 +37647,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "gfy" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "gfN" = (
 /obj/machinery/light{
@@ -38791,7 +38784,7 @@
 /area/station/crew_quarters/kitchen)
 "gTS" = (
 /obj/machinery/light,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "gUi" = (
 /obj/machinery/light/emergency{
@@ -40278,7 +40271,7 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "hMs" = (
 /obj/table/wood/auto,
@@ -43389,7 +43382,7 @@
 	pixel_y = 5;
 	id = "crewq_b1"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "jUw" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals{
@@ -44870,7 +44863,7 @@
 	pixel_y = 5;
 	id = "crewq_a2"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "kYc" = (
 /obj/decal/poster/wallsign/hazard_coldloop,
@@ -46092,7 +46085,7 @@
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
 /obj/item/clothing/gloves/princess,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "lRw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -48454,7 +48447,7 @@
 /obj/storage/closet/wardrobe/pink,
 /obj/item/clothing/shoes/fuzzy,
 /obj/item/clothing/suit/bathrobe,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "nvh" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -50977,7 +50970,7 @@
 	})
 "pbx" = (
 /obj/landmark/pest,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "pbG" = (
 /obj/machinery/door/airlock/pyro/medical,
@@ -51106,7 +51099,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "peK" = (
 /obj/disposalpipe/segment{
@@ -53896,7 +53889,7 @@
 "qWf" = (
 /obj/storage/crate,
 /obj/item/clothing/mask/horse_mask,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "qWh" = (
 /obj/cable{
@@ -57549,7 +57542,7 @@
 /obj/storage/closet/wardrobe/blue,
 /obj/item/clothing/shoes/fuzzy,
 /obj/item/clothing/suit/bathrobe,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "tCI" = (
 /obj/machinery/conveyor/NS{
@@ -59802,7 +59795,7 @@
 "uUO" = (
 /obj/table/auto,
 /obj/linen_bin/bedsheet,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "uVp" = (
 /obj/cable{
@@ -61243,7 +61236,7 @@
 /area/station/chapel/sanctuary)
 "vSE" = (
 /obj/landmark/pest,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "vSV" = (
 /obj/machinery/turret,
@@ -63012,7 +63005,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "wZu" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "xaa" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -63725,7 +63718,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "xBd" = (
 /obj/machinery/light_switch/directional/south,

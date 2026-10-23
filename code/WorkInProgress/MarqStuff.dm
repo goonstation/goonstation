@@ -450,6 +450,7 @@
 				var/obj/item/implant/projectile/body_visible/arrow/A = new
 				A.material = fusedmaterial
 				A.setMaterial(fusedmaterial, appearance = 0, setname = 0)
+				src.forensic_holder.copy_to(A.forensic_holder)
 				A.arrow = src
 				A.name = name
 				set_loc(A)
@@ -788,7 +789,7 @@
 		current_projectile.name = loaded.name
 		loaded.set_loc(A)
 		current_projectile.implanted = A
-		current_projectile.material = loaded.head_material
+		current_projectile.coating = loaded.head_material
 		var/default_damage = 7
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))

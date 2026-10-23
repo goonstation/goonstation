@@ -1366,10 +1366,6 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		src.reagents.add_reagent("space_fungus",3)
 		src.reagents.add_reagent("synthflesh",10)
 
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) // only relevant if strangelet
-
 	proc/update()
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
@@ -1463,7 +1459,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				src.throwforce = 88
 				src.throw_range = 0
 				src.reagents.add_reagent("george_melonium",50)
-				START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+				src.AddElement(/datum/element/ghost_observable)
 
 				if (!src.processing)
 					src.processing = TRUE

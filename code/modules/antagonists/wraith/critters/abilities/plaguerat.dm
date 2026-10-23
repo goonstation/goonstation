@@ -1,12 +1,7 @@
 ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 /datum/targetable/critter/plague_rat
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+	border_icon = 'icons/mob/wraith_ui.dmi'
+	border_icon_state = "plague_frame"
 
 /datum/targetable/critter/plague_rat/eat_filth
 	name = "Eat filth"

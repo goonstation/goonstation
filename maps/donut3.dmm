@@ -253,7 +253,7 @@
 	dir = 6
 	},
 /obj/landmark/kudzu,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "abX" = (
 /obj/cable{
@@ -9261,7 +9261,7 @@
 /obj/machinery/light/small/warm{
 	dir = 1
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "cLU" = (
 /obj/decal/cleanable/dirt/jen,
@@ -18067,7 +18067,7 @@
 /obj/decorative_pot{
 	anchored = 1
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "fCP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -20684,7 +20684,7 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "gtX" = (
 /obj/stool/chair/couch{
@@ -25384,7 +25384,7 @@
 /mob/living/critter/small_animal/bird/timberdoodle{
 	name = "Noodle"
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
 "hSc" = (
 /obj/machinery/light/incandescent/warm,
@@ -30932,7 +30932,7 @@
 	},
 /area/station/engine/storage)
 "jFH" = (
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
 "jFQ" = (
 /obj/machinery/loudspeaker,
@@ -31463,13 +31463,7 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
+/obj/pool/ladder,
 /obj/channel{
 	required_to_pass = 210
 	},
@@ -31752,7 +31746,7 @@
 	dir = 1
 	},
 /obj/landmark/kudzu,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "jQX" = (
 /obj/disposalpipe/segment,
@@ -37343,7 +37337,7 @@
 /obj/shrub{
 	dir = 4
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
 "lFJ" = (
 /obj/machinery/conveyor/EN{
@@ -46494,7 +46488,7 @@
 /area/station/medical/medbooth)
 "oys" = (
 /obj/machinery/light/small/floor/greenish,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
 "oyE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -48270,7 +48264,7 @@
 	dir = 10
 	},
 /obj/landmark/kudzu,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "paI" = (
 /obj/decal/tile_edge/line/purple{
@@ -53916,7 +53910,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "qNn" = (
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "qND" = (
 /obj/stool/chair/green,
@@ -54725,7 +54719,7 @@
 	},
 /obj/landmark/pest,
 /obj/shrub,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/hallway/primary/northwest)
 "qZZ" = (
 /obj/disposalpipe/segment/mail,
@@ -58346,7 +58340,7 @@
 	dir = 1;
 	pixel_y = 16
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "sfd" = (
 /obj/decal/stripe_delivery,
@@ -63393,6 +63387,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/phone,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/reception)
 "tHX" = (
@@ -70019,7 +70014,7 @@
 /obj/decorative_pot{
 	anchored = 1
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "vHo" = (
 /obj/cable{
@@ -71380,7 +71375,7 @@
 	max_health = 20;
 	name = "Charlie"
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "wbI" = (
 /obj/disposalpipe/segment{
