@@ -628,9 +628,8 @@ TYPEINFO(/mob/dead/observer)
 		var/atom/movable/brain_loc = global.outermost_movable(src.mind.brain)
 		if (istype(brain_loc, /mob))
 			src.insert_observer(brain_loc)
-			return
-
-		src.set_loc(get_turf(src.mind.brain.loc))
+		else
+			src.set_loc(get_turf(src.mind.brain))
 		return
 
 	if(src.client && src.client.holder && src.client.holder.state == 2)
