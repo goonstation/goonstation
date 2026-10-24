@@ -1,8 +1,5 @@
+ABSTRACT_TYPE(/datum/db_record/personnel)
 /datum/db_record/personnel
-	fields = alist(
-		"id"	= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
-		"name"	= new /datum/record_field/string("Name", "New Record"),
-	)
 
 /datum/db_record/personnel/New(source)
 	. = ..()
