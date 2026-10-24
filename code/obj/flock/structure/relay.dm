@@ -41,7 +41,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	var/shuttle_departure_delayed = FALSE
 
 /obj/flock_structure/relay/New()
-	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	src.AddElement(/datum/element/ghost_observable)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 9)
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
@@ -83,7 +83,6 @@ TYPEINFO(/obj/flock_structure/relay)
 		turfs_to_convert["[dist]"] |= T
 
 /obj/flock_structure/relay/disposing()
-	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] is destroyed at [log_loc(src)].")

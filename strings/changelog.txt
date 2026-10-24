@@ -1,4 +1,78 @@
 
+(t)thu oct 22 26
+(u)AronBattlnode
+(p)28125
+(e)🪲👽|C-Bug, A-Mutantraces
+(+)Frog dehydration no longer carries over to other mutantraces.
+(u)glowbold
+(p)28104
+(e)💅🐣|C-QoL, A-Respawning
+(*)Observers using "Return to Corpse" will try to find your brain if you don't have a corpse (including silicons).
+(u)glowbold
+(p)28141
+(e)🎨🧛🤖|C-Sprites, A-Gamemodes, A-Silicons
+(*)Silicons have HUD buttons to interact with laws, lock/unlock interfaces, and change customizations.
+(t)wed oct 21 26
+(u)Temthrush
+(p)28146
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Resprites most kitchen assets.
+(u)bamlord
+(p)28151
+(e)⚖👮|C-Balance, A-Security
+(+)A landmark legal case has restored the Lawyer's security access.
+(u)Kubius
+(p)27681
+(e)🆕🌠|C-Feature, A-Events
+(+)Updated Menhir's event cycle with two more rare events.
+(u)LorrMaster
+(p)27574
+(e)🔄🧱⚗|C-Rework, A-Materials, A-Chemistry
+(*)Silver bullets are no longer created using the reagent. Any type of ammo can be coated using silver bars in the nanofabricator instead.
+(*)Silver appearance is now added to silver projectiles and applies the material to casings.
+(t)tue oct 20 26
+(u)LorrMaster
+(p)26602
+(e)🆕👮|C-Feature, A-Security
+(*)Fabricators, glass recyclers, network printers, and ruck kits now apply a forensic ID to items they print/create.
+(u)LorrMaster
+(p)26597
+(e)🔄👮|C-Rework, A-Security
+(*)More reliable ballistic forensics
+(u)Nexusuxen
+(p)26929
+(e)🆕🧱📦|C-Feature, A-Materials, A-Game-Objects
+(+)Airlock panels include a lights wire, which controls the red/green lights you see when it's opening/bolted/etc.
+(u)JORJ949
+(p)28130
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)The Gang Announcer now has its own radio icon. Don't upset the boss....
+(u)JORJ949
+(p)28043
+(f)https://forum.ss13.co/showthread.php?tid=25459
+(e)🆕🐣|C-Feature, A-Respawning
+(*)Permanently cryoing as a "unique" role (Command/NTSC/Detective) will now open up the slot again after a 5 minute delay.
+(t)mon oct 19 26
+(u)Sord
+(+)Sunglasses now play a funny sound the first time a vampire equips them.
+(t)sat oct 17 26
+(u)JORJ949
+(p)28057
+(e)🆕🎨🔨|C-Feature, C-Sprites, A-Player-Actions
+(+)Changeling ability icon borders have been resprited, with a writhing animation when you hover over the ability.
+(t)fri oct 16 26
+(u)Mr. Moriarty
+(p)27986
+(e)🆕⚙👮🖥️|C-Feature, A-Internal, A-Security, A-Computers
+(*)SecMate now has a citations database that tracks tickets and fines. Citations can also now be issued, approved, and printed from SecMate.
+(u)JORJ949
+(p)28009
+(e)🎨|C-Sprites
+(*)Medal rewards now have their own unique menu with many options for filtering and a preview of the item/skin you're redeeming!
+(u)Rubicubie
+(p)28032
+(e)🆕👮|C-Feature, A-Security
+(*)Tickets now look newer in a receipt-style!
 (t)thu oct 15 26
 (u)AronBattlnode
 (p)28103
