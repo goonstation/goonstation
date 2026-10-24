@@ -564,37 +564,8 @@
 
 	//april fools start
 
-			if ("inhale", "exhale")
+			if ("inhale", "exhale", "closeeyes", "openeyes")
 				; // Handled by signals.
-
-			if ("closeeyes")
-				if (!manualblinking)
-					src.show_text("Why would you want to do that?")
-					return
-
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
-				if (S)
-					if (S.blinkstate)
-						src.show_text("You just closed your eyes, try opening them now dumbo!")
-						return
-					S.blinkstate = 1
-					S.blinktimer = 0
-
-				src.show_text("You close your eyes.")
-
-			if ("openeyes")
-				if (!manualblinking)
-					src.show_text("Your eyes are already open!")
-					return
-
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
-				if (S)
-					if (!S.blinkstate)
-						src.show_text("Your eyes are already open, try closing them next moron!")
-						return
-					S.blinkstate = 0
-
-				src.show_text("You open your eyes.")
 
 	//april fools end
 

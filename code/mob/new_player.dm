@@ -356,8 +356,8 @@ TYPEINFO(/mob/new_player)
 
 			if (global.manual_breathing)
 				character.AddComponent(/datum/component/manual_breathing)
-			if (manualblinking)
-				boutput(character, "<B>You must blink manually using the *closeeyes and *openeyes commands!</B>")
+			if (global.manual_blinking)
+				character.AddComponent(/datum/component/manual_blinking)
 
 			if (ticker && character.mind)
 				character.mind.join_time = world.time

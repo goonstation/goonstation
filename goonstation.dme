@@ -358,6 +358,7 @@
 #include "code\datums\DCS\components\light.dm"
 #include "code\datums\DCS\components\loc_invisibility.dm"
 #include "code\datums\DCS\components\log_item_pickup.dm"
+#include "code\datums\DCS\components\manual_blinking.dm"
 #include "code\datums\DCS\components\manual_breathing.dm"
 #include "code\datums\DCS\components\mat_triggersonlife.dm"
 #include "code\datums\DCS\components\mechComp_signals.dm"
