@@ -279,16 +279,14 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	commuts = list(/datum/plant_gene_strain/quality, /datum/plant_gene_strain/commutblocker)
 
 
-/*
 	mutations = list(/datum/plantmutation/pear/sickly)
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
 		..()
 		var/datum/plantgenes/DNA = S.plantgenes
 		if (!DNA) return
-		if(reagent == "urine")
-			if (prob(50))
+		if(reagent == "e.coli")
+			if (prob(25))
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/pear/sickly)
-*/
 
 /datum/plant/fruit/peach
 	name = "Peach"

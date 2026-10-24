@@ -5662,7 +5662,7 @@
 		required_reagents = list("frothedmilk" = 1, "espresso" = 1)
 		result_amount = 2
 		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
-    
+
 	dulcedeleche
 		name = "Dulce de leche"
 		id = "dulcedeleche"
