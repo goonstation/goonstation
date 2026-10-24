@@ -68,7 +68,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.power = max(20, (src.material.getProperty("hard") - 3) * 66)
+			src.power = max(20, (src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) - 3) * 66)
 		if(blasting)
 			src.power *= 0.9
 		return
@@ -93,8 +93,8 @@
 		..()
 		if(istype(src.material))
 			src.power = 0
-			src.power += max(10, (src.material.getProperty("density") - 3) * 33)
-			src.power += max(10, (src.material.getProperty("hard") - 3) * 33)
+			src.power += max(10, (src.material.getProperty(MATERIAL::PROPERTY::DENSITY) - 3) * 33)
+			src.power += max(10, (src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) - 3) * 33)
 			src.power *= 2.5
 			if(blasting)
 				src.power *= 0.9
@@ -137,7 +137,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.power = max(20, (src.material.getProperty("electrical") - 4) * 80)
+			src.power = max(20, (src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) - 4) * 80)
 			src.power *= 0.8
 			if(blasting)
 				src.power *= 0.9
@@ -220,7 +220,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.power = max(20, (src.material.getProperty("density") - 3) * 66)
+			src.power = max(20, (src.material.getProperty(MATERIAL::PROPERTY::DENSITY) - 3) * 66)
 			if(blasting)
 				src.power *= 0.9
 			src.power = round(src.power)
@@ -276,7 +276,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.power = max(20, (src.material.getProperty("hard") - 3) * 66)
+			src.power = max(20, (src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) - 3) * 66)
 			if(blasting)
 				src.power *= 0.9
 			src.power = round(src.power)
