@@ -2588,6 +2588,7 @@
 #include "code\obj\lattice.dm"
 #include "code\obj\linen_bin.dm"
 #include "code\obj\machinery.dm"
+#include "code\obj\mannequin.dm"
 #include "code\obj\map.dm"
 #include "code\obj\martian.dm"
 #include "code\obj\medical_privacy_divider.dm"
