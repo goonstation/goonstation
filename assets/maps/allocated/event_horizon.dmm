@@ -1,0 +1,126 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/timeplug,
+/turf/unsimulated/wall/void/timewarp,
+/area/timewarp/event_horizon)
+"c" = (
+/obj/decal/timeplug{
+	dir = 5
+	},
+/turf/unsimulated/wall/void/timewarp,
+/area/timewarp/event_horizon)
+"e" = (
+/obj/decal/timeplug{
+	dir = 8
+	},
+/turf/unsimulated/wall/void/timewarp,
+/area/timewarp/event_horizon)
+"i" = (
+/obj/decal/timeplug{
+	dir = 1
+	},
+/turf/unsimulated/wall/void/timewarp,
+/area/timewarp/event_horizon)
+"k" = (
+/obj/decal/timeplug{
+	dir = 4
+	},
+/turf/unsimulated/wall/void/timewarp,
+/area/timewarp/event_horizon)
+"p" = (
+/obj/item/device/audio_log/timewarp_03,
+/turf/unsimulated/floor/void/timewarp,
+/area/timewarp/event_horizon)
+"u" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/timewarp/event_horizon)
+"z" = (
+/obj/decal/timeplug{
+	dir = 10
+	},
+/turf/unsimulated/wall/void/timewarp,
+/area/timewarp/event_horizon)
+"E" = (
+/obj/decal/timeplug{
+	dir = 6
+	},
+/turf/unsimulated/wall/void/timewarp,
+/area/timewarp/event_horizon)
+"K" = (
+/mob/living/critter/small_animal/bee/trauma,
+/turf/unsimulated/floor/void/timewarp,
+/area/timewarp/event_horizon)
+"O" = (
+/obj/decal/timeplug{
+	dir = 9
+	},
+/turf/unsimulated/wall/void/timewarp,
+/area/timewarp/event_horizon)
+"V" = (
+/obj/map/light/cyan,
+/turf/unsimulated/floor/void/timewarp,
+/area/timewarp/event_horizon)
+
+(1,1,1) = {"
+O
+e
+e
+e
+e
+e
+z
+"}
+(2,1,1) = {"
+i
+u
+u
+u
+u
+u
+a
+"}
+(3,1,1) = {"
+i
+u
+u
+u
+p
+u
+a
+"}
+(4,1,1) = {"
+i
+u
+u
+V
+u
+u
+a
+"}
+(5,1,1) = {"
+i
+u
+K
+u
+u
+u
+a
+"}
+(6,1,1) = {"
+i
+u
+u
+u
+u
+u
+a
+"}
+(7,1,1) = {"
+c
+k
+k
+k
+k
+k
+E
+"}
