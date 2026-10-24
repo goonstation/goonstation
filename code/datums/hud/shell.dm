@@ -5,6 +5,7 @@
 	var/atom/movable/screen/hud/charge
 	var/atom/movable/screen/hud/intent
 	var/atom/movable/screen/hud/pulling
+	var/atom/movable/screen/hud/laws
 	var/atom/movable/screen/hud/eyecam
 
 	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
@@ -26,6 +27,9 @@
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-4:16, SOUTH", HUD_LAYER, EAST)
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+5:16, SOUTH+1", HUD_LAYER, SOUTHEAST)
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+5:16, SOUTH", HUD_LAYER, WEST)
+
+		laws = create_screen("laws", "Show Laws", 'icons/mob/hud_ai.dmi', "laws", "WEST, NORTH+0.5", HUD_LAYER)
+		laws.underlays += "button"
 
 		tool1 = create_screen("tool1", "Tool 1", icon_hud, "mod10", "CENTER-3:16, SOUTH", HUD_LAYER+1)
 		tool2 = create_screen("tool2", "Tool 2", icon_hud, "mod20", "CENTER-2:16, SOUTH", HUD_LAYER+1)
@@ -117,6 +121,8 @@
 						to_pull.pull(master)
 			if ("eyecam")
 				master.become_eye()
+			if ("laws")
+				master.interact_laws()
 
 	proc
 		update_charge()
