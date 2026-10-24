@@ -50,9 +50,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 			var/obj/item/pen/P = W
 			P.write_on_turf(src, user, params)
 			return
-
 		else
-			src.material_trigger_when_attacked(W, user, 1)
+			src.material_trigger_when_hit(W, user, MATERIAL::IMPACT::MELEE)
 			attack_particle(user, src)
 			src.visible_message(SPAN_ALERT("[user ? user : "Someone"] hits [src] with [W]."), SPAN_ALERT("You hit [src] with [W]."))
 			src.take_damage(W.force / 2)
