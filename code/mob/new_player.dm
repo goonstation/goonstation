@@ -354,8 +354,8 @@ TYPEINFO(/mob/new_player)
 				ticker.generate_individual_objectives(character.mind)
 #endif
 
-			if (manualbreathing)
-				boutput(character, "<B>You must breathe manually using the *inhale and *exhale commands!</B>")
+			if (global.manual_breathing)
+				character.AddComponent(/datum/component/manual_breathing)
 			if (manualblinking)
 				boutput(character, "<B>You must blink manually using the *closeeyes and *openeyes commands!</B>")
 

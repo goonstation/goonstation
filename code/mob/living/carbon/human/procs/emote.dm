@@ -564,34 +564,8 @@
 
 	//april fools start
 
-			if ("inhale")
-				if (!manualbreathing)
-					src.show_text("You are already breathing!")
-					return
-
-				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
-				if (B)
-					if (B.breathstate)
-						src.show_text("You just breathed in, try breathing out next dummy!")
-						return
-					B.breathtimer = 0
-					B.breathstate = 1
-
-				src.show_text("You breathe in.")
-
-			if ("exhale")
-				if (!manualbreathing)
-					src.show_text("You are already breathing!")
-					return
-
-				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
-				if (B)
-					if (!B.breathstate)
-						src.show_text("You just breathed out, try breathing in next silly!")
-						return
-					B.breathstate = 0
-
-				src.show_text("You breathe out.")
+			if ("inhale", "exhale")
+				; // Handled by signals.
 
 			if ("closeeyes")
 				if (!manualblinking)
