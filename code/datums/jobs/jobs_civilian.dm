@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	access_string = "Chaplain"
 	slot_jump = list(/obj/item/clothing/under/rank/chaplain)
 	slot_belt = list(/obj/item/device/pda2/chaplain)
-	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_foot = list(/obj/item/clothing/shoes/sandal/magic)
 	slot_ears = list(/obj/item/device/radio/headset/civilian/chaplain)
 	slot_lhan = list(/obj/item/bible/loaded)
 	wiki_link = "https://wiki.ss13.co/Chaplain"
