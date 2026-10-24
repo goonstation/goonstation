@@ -46,7 +46,6 @@
 	/// If our organ's been severed and reattached. Used by heads to preserve their appearance across icon updates if reattached
 	var/transplanted = FALSE
 
-	var/op_stage = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0
@@ -83,20 +82,6 @@
 	var/region = null
 	///Can this organ be inserted on either side? (literally just kidneys, wegh)
 	var/either_side = FALSE
-
-	attack(var/mob/living/carbon/M, var/mob/user)
-		if (!ismob(M))
-			return
-
-		src.add_fingerprint(user)
-
-		var/attach_result = src.attach_organ(M, user)
-		if (attach_result == 1) // success
-			return
-		else if (isnull(attach_result)) // failure but don't attack
-			return
-		else // failure and attack them with the organ
-			return ..()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer))
@@ -379,32 +364,10 @@
 		if (!can_act(user))
 			return FALSE
 
-		if (!surgeryCheck(M, user))
-			return FALSE
-
 		var/mob/living/carbon/human/H = M
 		if (!H.organHolder)
 			return FALSE
-		switch (src.region)
-			//Check if our relevant region is opened up. For example hearts need the ribs to be opened up
-			if (null)
-				return TRUE
-			if (RIBS)
-				if (H.organHolder.ribs_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-					return TRUE
-				return FALSE
-			if (ABDOMINAL)
-				if (H.organHolder.abdominal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-					return TRUE
-				return FALSE
-			if (SUBCOSTAL)
-				if (H.organHolder.subcostal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-					return TRUE
-			if (FLANKS)
-				if (H.organHolder.flanks_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-					return TRUE
-
-		return FALSE
+		return TRUE
 
 	proc/attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Attempts to attach this organ to the target mob M, if sucessful, displays surgery notifications and updates states in both user and target.
@@ -415,26 +378,38 @@
 			return 0
 
 		var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-		var/obj/item/organ/organ_location = H.organHolder.get_organ(src.organ_holder_location)
 		src.removal_stage = 0
 
 		var/full_organ_name = src.organ_holder_name
+		var/side = ""
 		if (src.either_side)//Kidneys can go on the left or right, doesn't matter. Useful for cyber/synth kidneys
-			if (!H.organHolder.get_organ("left_kidney"))
+			// Prefer the side the organ is being held in by the user, since this is harmless and silly
+			var/left_preferred = user.find_in_hand(src) == user.l_hand
+			if (left_preferred && !H.organHolder.get_organ("left_kidney"))
 				full_organ_name = "left_kidney"
+				side = "left"
+			else if (!left_preferred && !H.organHolder.get_organ("right_kidney"))
+				full_organ_name = "right_kidney"
+				side = "right"
+			else if (!H.organHolder.get_organ("left_kidney"))
+				full_organ_name = "left_kidney"
+				side = "left"
 			else if (!H.organHolder.get_organ("right_kidney"))
 				full_organ_name = "right_kidney"
+				side = "right"
 			else
 				return 0
 		if (!H.organHolder.get_organ(full_organ_name))
-
-			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!"),\
-				SPAN_ALERT("You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!"),\
-				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your [src.organ_holder_location]!"))
+			var/side_string = ""
+			if (side != "")
+				side_string = " the [side] side of"
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into[side_string] [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!"),\
+				SPAN_ALERT("You [fluff] [src] into[side_string] [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into[side_string] your [src.organ_holder_location]!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, full_organ_name, organ_location.op_stage)
+			H.organHolder.receive_organ(src, full_organ_name)
 			H.update_body()
 
 			return 1
@@ -478,16 +453,6 @@
 				return
 
 			src.surgery_contexts = list()
-
-			if (surgery_flags & SURGERY_CUTTING)
-				var/datum/contextAction/organ_surgery/cut/action = new
-				surgery_contexts += action
-			if (surgery_flags & SURGERY_SNIPPING)
-				var/datum/contextAction/organ_surgery/snip/action = new
-				surgery_contexts += action
-			if (surgery_flags & SURGERY_SAWING)
-				var/datum/contextAction/organ_surgery/saw/action = new
-				surgery_contexts += action
 
 			.+= length(surgery_contexts)
 
