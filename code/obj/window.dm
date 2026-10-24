@@ -543,28 +543,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		qdel(src)
 
 	proc/update_nearby_tiles(need_rebuild, var/selfnotify = 0)
-		if(!air_master) return 0
-
-		var/list/turf/simulated/affected_simturfs = list()
-		if (issimulatedturf(src.loc))
-			affected_simturfs += src.loc
-		if (is_cardinal(src.dir) && issimulatedturf(get_step(src, src.dir)))
-			affected_simturfs += get_step(src, src.dir)
-		else if (!is_cardinal(src.dir))
-			for (var/neigh_dir in cardinal)
-				if (issimulatedturf(get_step(src, neigh_dir)))
-					affected_simturfs += get_step(src, neigh_dir)
-
-		if(need_rebuild)
-			for(var/turf/simulated/T as anything in affected_simturfs)
-				if(T.parent) //Rebuild/update nearby group geometry
-					air_master.groups_to_rebuild[T.parent] = null
-				else
-					air_master.tiles_to_update[T] = null
-		else
-			for(var/turf/simulated/T as anything in affected_simturfs)
-				air_master.tiles_to_update[T] = null
-
 		if (map_currently_underwater)
 			var/turf/space/fluid/n = get_step(src,NORTH)
 			var/turf/space/fluid/s = get_step(src,SOUTH)

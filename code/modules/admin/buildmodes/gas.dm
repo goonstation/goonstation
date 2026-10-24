@@ -30,13 +30,13 @@ Ctrl + Right Click on Buildmode Button - Select amount
 		if (hasvar(object, "air_contents"))
 			var/datum/gas_mixture/air_contents = object:air_contents
 			if (air_contents)
-				var/datum/gas_mixture/mixture = new()
-				mixture.vars[src.gas] = src.amount
+				var/datum/gas_mixture/normal/mixture = new()
+				call(mixture, "set_[src.gas]")(src.amount)
 				air_contents.merge(mixture)
 				boutput(usr, "Added [src.amount] mols of [src.gas] to [object]")
 		else if (issimulatedturf(object))
 			var/turf/simulated/T = object
-			var/datum/gas_mixture/mixture = new()
-			mixture.vars[src.gas] = src.amount
+			var/datum/gas_mixture/normal/mixture = new()
+			call(mixture, "set_[src.gas]")(src.amount)
 			T.assume_air(mixture)
 			boutput(usr, "Released [src.amount] mols of [src.gas] on [T]")
