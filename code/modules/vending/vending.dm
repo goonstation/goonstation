@@ -141,6 +141,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	var/uses_mechcomp = TRUE //Can this vending machine take mechcomp inputs?
 
+	var/company_name = "Nanotrasen" // the company that owns/made this vending machine
+
+	var/list/atom/movable/stuck_items = null // items that have got stuck whilst vending
 
 	power_usage = 50
 
@@ -428,6 +431,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			boutput(user, SPAN_ALERT("PIN incorrect."))
 			src.scan = null
 	else
+		if(!ON_COOLDOWN(src, "vending_insult", 4 SECONDS))
+			src.say(pick("Please come back when you have a bank account!", \
+			"[src.company_name] does not tolerate financial fraud!", \
+			"No bank account detected. [src.company_name] does not accept vagrancy.", \
+			"Your attempt to defraud this machine has been noted in [src.company_name] records."))
 		boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
 		src.scan = null
 
@@ -531,7 +539,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		hit_twitch(src)
 		attack_particle(user,src)
 		playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
+		if(prob(40))
+			src.say(pick("[src.company_name] frowns upon vandalism!", \
+			"I'm sorry you're having trouble.", \
+			"Please remain calm and step away from the vending zone.", \
+			"Discordant customer detected. Please remain calm.", \
+			"[src.company_name] does not tolerate antisocial behaviour!"))
 		..()
+		if(src.stuck_items && prob(25))
+			src.dislodge_item()
 		if (W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
@@ -719,21 +735,39 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
+					if(!ON_COOLDOWN(src, "vending_insult", 4 SECONDS))
+						src.say(pick("Please come back when you have sufficient access!", "Access denied. Have a nice day!"))
 					boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
 					FLICK(src.icon_deny,src)
 					return
 				if (src.pay)
 					if (src.acceptcard && src.scan)
 						if (!account)
+							if(!ON_COOLDOWN(src, "vending_insult", 4 SECONDS))
+								src.say(pick("Please come back when you have a bank account!", \
+								"[src.company_name] does not tolerate financial fraud!", \
+								"No bank account detected. [src.company_name] does not accept vagrancy.", \
+								"Your attempt to defraud this machine has been noted in [src.company_name] records."))
 							boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
 							FLICK(src.icon_deny,src)
 							return
 						if (account["current_money"] < params["cost"])
+							if(!ON_COOLDOWN(src, "vending_insult", 4 SECONDS))
+								src.say(pick("Please come back when you can afford to make a purchase.", \
+								"You are impoverished. Please step away from the vending zone.", \
+								"You have insufficient funds. [src.company_name] does not accept vagrancy.", \
+								"Your lack of funds has been noted in [src.company_name] records."))
 							boutput(usr, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
 							FLICK(src.icon_deny,src)
 							return
+
 					else
 						if (src.credit < params["cost"])
+							if(!ON_COOLDOWN(src, "vending_insult", 4 SECONDS))
+								src.say(pick("Please come back when you can afford to make a purchase.", \
+								"You are impoverished. Please step away from the vending zone.", \
+								"You have insufficient funds. [src.company_name] does not accept vagrancy.", \
+								"Your lack of funds has been noted in [src.company_name] records."))
 							boutput(usr, SPAN_ALERT("Insufficient Credit."))
 							FLICK(src.icon_deny,src)
 							return
@@ -748,6 +782,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 						product = R
 				if(product_amount <= 0 || isnull(product))
 					return
+				if((usr.traitHolder?.hasTrait("wasitsomethingisaid") && prob(20)) || prob(10)) // product becomes stuck, you're charged anyway.
+					if(src.pay)
+						if(src.acceptcard && account)
+							account["current_money"] -= product.product_cost
+						else
+							src.credit -= product.product_cost
+						src.stuck_product(product)
+						playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
+						src.say(pick("Thank you for your purchase! Your account has been charged.", \
+						"Thank you for choosing [src.company_name]. You have been charged [product.product_cost] credits.", \
+						"Vending malfunction detected. Please contact [src.company_name] customer support!", \
+						"[src.company_name] values your custom! Your account has been charged [product.product_cost] credits."))
+						FLICK(src.icon_deny,src)
+						update_static_data(usr)
+						return
 				src.vend_ready = 0
 				src.prevend_effect()
 				src.currently_vending = product
@@ -823,7 +872,71 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.shock(user, 100))
 			return
 
+	if(user.traitHolder?.hasTrait("wasitsomethingisaid") && prob(5))
+		if(src.can_fall && !src.fallen)
+			src.say(pick("Antisocial customer detected!", "Fuck you!", "Please contact [src.company_name] support!"))
+			src.fall(user)
+			return
+
+	if(user.a_intent == INTENT_HARM)
+		if(!src.stuck_items)
+			return ..()
+		boutput(user, SPAN_NOTICE("You kick [src] to try and dislodge the stuck item!"))
+		user.lastattacked = get_weakref(src)
+		hit_twitch(src)
+		attack_particle(user, src)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50, TRUE)
+
+		if(prob(40))
+			src.say(pick("[src.company_name] frowns upon vandalism!", \
+			"I'm sorry you're having trouble.", \
+			"Please remain calm and step away from the vending zone.", \
+			"Discordant customer detected. Please remain calm.", \
+			"[src.company_name] does not tolerate antisocial behaviour!"))
+
+		if(prob(25))
+			src.dislodge_item()
+		return
+
 	return ..()
+
+/// Makes product become stuck within the vending machine
+/obj/machinery/vending/proc/stuck_product(var/datum/data/vending_product/product)
+	if((!product.infinite && product.product_amount <= 0) || !product.product_path)
+		return
+
+	var/atom/movable/stuck
+	if(istype(product, /datum/data/vending_product/player_product))
+		var/datum/data/vending_product/player_product/playerProduct = product
+		stuck = playerProduct.contents[1]
+		playerProduct.contents -= stuck
+
+	else
+		stuck = new product.product_path(src)
+
+	stuck.set_loc(src)
+	LAZYLISTADD(src.stuck_items, stuck)
+
+	if(!product.infinite)
+		product.product_amount --
+		if(src.player_list && product.product_amount <=0)
+			src.player_list -= product
+			qdel(product)
+
+/// Unstucks a stuck item
+/obj/machinery/vending/proc/dislodge_item()
+	if(!length(src.stuck_items))
+		return FALSE
+
+	var/atom/movable/freed_item = src.stuck_items[1]
+	LAZYLISTREMOVE(src.stuck_items, freed_item)
+	if(QDELETED(freed_item) || freed_item.loc != src)
+		return FALSE
+	freed_item.set_loc(src.get_output_location())
+	freed_item.layer = src.layer + 0.1
+	src.visible_message(SPAN_NOTICE("[freed_item] comes unstuck and drops out of [src]!"))
+	src.postvend_effect()
+	return TRUE
 
 /obj/machinery/vending/Topic(href, href_list)
 	if (src.fallen || (status & (BROKEN|NOPOWER)))
@@ -1076,6 +1189,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	else
 		src.visible_message("<b>[SPAN_ALERT("[src.name] tips over!")]</b>")
 
+	while(length(src.stuck_items))
+		src.dislodge_item()
+
 	src.power_change()
 	src.anchored = UNANCHORED
 	src.provides_grip = FALSE
@@ -1313,6 +1429,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	light_r =1
 	light_g = 0.88
 	light_b = 0.3
+	company_name = "Robust Coffee"
 
 	create_products(restocked)
 		..()
@@ -1349,6 +1466,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	light_r =1
 	light_g = 0.4
 	light_b = 0.4
+	company_name = "Discount Dans"
 
 	create_products(restocked)
 		..()
@@ -1381,6 +1499,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	light_r =0.55
 	light_g = 1
 	light_b = 0.5
+	company_name = "United Space Tobacco"
 
 	create_products(restocked)
 		..()
@@ -1667,6 +1786,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		light_r =1
 		light_g = 0.4
 		light_b = 0.4
+		company_name = "Robust-Eez"
 
 		create_products(restocked)
 			..()
@@ -1689,6 +1809,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		light_r =0.5
 		light_g = 0.5
 		light_b = 1
+		company_name = "Grife-O"
 
 		create_products(restocked)
 			..()
@@ -1713,6 +1834,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	light_r =1
 	light_g = 0.88
 	light_b = 0.3
+	company_name = "ElecTek"
 
 	create_products(restocked)
 		..()
@@ -2705,6 +2827,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 	vend_delay = 15
 	vend_reply = "Have an enchanted evening!"
+	company_name = "The Wizard Federation"
 
 	create_products(restocked)
 		..()
@@ -2961,6 +3084,7 @@ TYPEINFO(/obj/machinery/vending/hydroponics/mean_solarium_bullshit)
 	light_r =1
 	light_g = 0.3
 	light_b = 0.95
+	company_name = "Cap'n Bubs"
 
 	create_products(restocked)
 		..()
@@ -3116,6 +3240,7 @@ TYPEINFO(/obj/machinery/vending/chem)
 	vend_delay = 20
 	slogan_list = list("Look snappy in seconds!",
 	"Style over substance.")
+	company_name = "FancyPantsCo"
 
 	prevend_effect()
 		playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
