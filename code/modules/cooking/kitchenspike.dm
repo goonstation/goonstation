@@ -12,6 +12,7 @@ TYPEINFO(/obj/kitchenspike)
 	var/meat = 0
 	var/occupied = FALSE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
+	HELP_MESSAGE_OVERRIDE({"If you click on the spike while holding a monkey in your active hand, the monkey will be instantly killed, giving you five steaks in return. The steaks can then be harvested by clicking on the spike again until you run out of meat."})
 
 /obj/kitchenspike/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/grab))
