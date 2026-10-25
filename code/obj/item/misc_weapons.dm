@@ -666,7 +666,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	New()
 		..()
-		src.setMaterial(getMaterial("silver"))
+		src.setMaterial(getMaterial("silver"), appearance = FALSE, setname = FALSE)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		..()
@@ -689,18 +689,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			H.changeStatus("knockdown", 4 SECONDS)
 			H.force_laydown_standup()
 			H.changeStatus("werewolf_bane", 15 SECONDS)
-
-
-	attack_hand(var/mob/user)
-		if(iswerewolf(user))
-			var/mob/living/carbon/human/H = user
-			H.emote("scream")
-			H.changeStatus("knockdown", 1 SECONDS)
-			H.force_laydown_standup()
-			H.visible_message(SPAN_ALERT("[H] is burned by the silver!"))
-			return
-
-		return ..(user)
+		A.material_trigger_when_hit(src, thr?.user, MATERIAL::IMPACT::THROW)
+		src.material_trigger_when_hit(A, thr?.user, MATERIAL::IMPACT::THROW)
 
 // Revolutionary sign.
 /obj/item/revolutionary_sign

@@ -308,6 +308,126 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			particleMaster.RemoveSystem(/datum/particleSystem/sparkles, location)
 		return
 
+/datum/materialProc/silver
+	max_generations = 0 // Limiting the effect to pure silver, at least for now.
+	desc_scan = "Burns undead and other supernatural beings."
+
+	proc/get_vulnerability(var/atom/owner, var/atom/target)
+		// Return how vulnerable the target is to the silver
+		var/vulnerability_mult = GET_ATOM_PROPERTY(target, PROP_ATOM_SILVER_VULNERABILITY)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(H.l_hand == owner && H.limbs?.l_arm)
+				vulnerability_mult = max(vulnerability_mult, GET_ATOM_PROPERTY(H.limbs.l_arm, PROP_ATOM_SILVER_VULNERABILITY))
+			else if(H.r_hand == owner && H.limbs?.r_arm)
+				vulnerability_mult = max(vulnerability_mult, GET_ATOM_PROPERTY(H.limbs.r_arm, PROP_ATOM_SILVER_VULNERABILITY))
+		return vulnerability_mult / 100
+
+	on_pickup
+		execute(var/mob/M, var/obj/item/I)
+			var/vulnerability_mult = src.get_vulnerability(I, M)
+			if(vulnerability_mult <= 0)
+				return
+
+			if(vulnerability_mult < 0.20)
+				boutput(M, SPAN_ALERT("The [I] sorta feels like it is burning your hand."))
+				return
+
+			SPAWN(0.1 SECONDS)
+				// Need to wait for all the pickup code to finish before we can actually drop the item
+				M.temperature_expose(null, 1200 KELVIN, 1000 * vulnerability_mult , TRUE)
+				if(M.l_hand == I)
+					M.TakeDamage("l_arm", 0, vulnerability_mult * 5, 0, DAMAGE_BURN)
+				else if(M.r_hand == I)
+					M.TakeDamage("r_arm", 0, vulnerability_mult * 5, 0, DAMAGE_BURN)
+				else
+					return
+				M.changeStatus("knockdown", 1 SECONDS)
+				M.force_laydown_standup()
+				M.emote("scream")
+				M.visible_message(SPAN_ALERT("[M]'s hand is burned by the silver!"))
+				playsound(M, 'sound/impact_sounds/burn_sizzle.ogg', 100 * vulnerability_mult, TRUE, pitch = 1.25)
+
+	on_life
+		execute(var/mob/M, var/obj/item/I, mult)
+			if(prob(40))
+				return
+			if(M.handcuffs == I) // Silver handcuffs shouldn't kill you.
+				return
+			var/vulnerability_mult = src.get_vulnerability(I, M)
+			var/burn_damage = (min(I.material_amount_total(), 1) * 3) * vulnerability_mult * mult
+			if(burn_damage <= 0)
+				return
+
+			M.TakeDamage("All", 0, burn_damage, 0, DAMAGE_BURN)
+			M.temperature_expose(null, 1200 KELVIN, 1000 * vulnerability_mult , TRUE)
+			if(isliving(M))
+				var/mob/living/L = M
+				L.stamina -= burn_damage
+
+			if(prob(1))
+				M.emote("faint")
+			if(prob(4))
+				M.emote(pick("pale", "shiver", "groan"))
+			if(prob(4) && vulnerability_mult >= 0.20)
+				boutput(M, SPAN_ALERT("You feel a [pick("searing", "hot", "burning")] pain![pick("", " That's gotta be silver!")]"))
+
+	on_hit
+		execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/impact_type)
+			var/vulnerability_mult = src.get_vulnerability(owner, attackatom)
+			if(vulnerability_mult <= 0)
+				return
+
+			if(isobj(attackatom))
+				var/obj/O = attackatom
+				if(O.artifact)
+					O.visible_message(SPAN_ALERT("The [owner] appears to burn the artifact!"))
+					// Eldritch fault rate is doubled, so this is actually 20%
+					O.ArtifactDevelopFault(10 * vulnerability_mult, 100)
+			attackatom.temperature_expose(null, 1200 KELVIN, 1000 * vulnerability_mult , TRUE)
+
+			if(!ismob(attackatom))
+				playsound(attackatom, 'sound/impact_sounds/burn_sizzle.ogg', 80 * vulnerability_mult, TRUE, pitch = 1.25)
+				return
+			var/mob/target_mob = attackatom
+			var/burn_damage = 0
+			var/damage_zone = "All"
+			var/impact_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+			if(HAS_FLAG(impact_type, MATERIAL::IMPACT::PROJECTILE))
+				if(!istype(owner, /obj/projectile))
+					return
+				var/obj/projectile/projectile = owner
+				damage_zone = "chest"
+				var/armor_value_bullet = target_mob.get_ranged_protection()
+				if(projectile.proj_data)
+					armor_value_bullet = max(armor_value_bullet * (1 - projectile.proj_data.armor_ignored), 1)
+				burn_damage = (projectile.material_amount_total() * vulnerability_mult * 80) / armor_value_bullet
+				impact_sound = 'sound/impact_sounds/crunchy_sizzle.ogg'
+			else
+				burn_damage = 2 * min(owner.material_amount_total(), 1) * vulnerability_mult
+				if(HAS_FLAG(impact_type, MATERIAL::IMPACT::CUT))
+					burn_damage *= 5
+					impact_sound = 'sound/impact_sounds/crunchy_sizzle.ogg'
+			if(burn_damage)
+				target_mob.TakeDamage(damage_zone, 0, burn_damage, 0, DAMAGE_BURN)
+				playsound(target_mob, impact_sound, 125 * vulnerability_mult, TRUE, pitch = 1.5)
+
+	on_eat
+		execute(var/mob/M, var/obj/item/I)
+			M.reagents.add_reagent("silver", 20 * I.material_amt)
+
+			var/vulnerability_mult = src.get_vulnerability(I, M)
+			if(vulnerability_mult <= 0)
+				return
+			M.temperature_expose(null, 1200 KELVIN, 1000 * vulnerability_mult , TRUE)
+			M.TakeDamage("chest", 0, vulnerability_mult * 35 * I.material_amt, 0, DAMAGE_BURN)
+			playsound(M, 'sound/impact_sounds/burn_sizzle.ogg', 100 * vulnerability_mult, TRUE, pitch = 1.25)
+			if(vulnerability_mult >= 0.2)
+				M.changeStatus("knockdown", 1 SECONDS)
+				M.force_laydown_standup()
+				M.emote("scream")
+			return
+
 /datum/materialProc/radiation_immune_add
 	desc_scan = "Cannot be irradiated"
 	// Radiation component will check for this matProc to prevent radiation effects from being added later

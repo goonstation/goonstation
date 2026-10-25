@@ -1403,6 +1403,7 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf", 40)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf", 40)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf", 100)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_ATOM_SILVER_VULNERABILITY, "werewolf", 100)
 			src.mob.max_health += 50
 			health_update_queue |= src.mob
 			src.original_name = src.mob.real_name
@@ -1425,6 +1426,7 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_ATOM_SILVER_VULNERABILITY, "werewolf")
 			src.mob.max_health -= 50
 			health_update_queue |= src.mob
 			src.mob.bioHolder.RemoveEffect("protanopia")

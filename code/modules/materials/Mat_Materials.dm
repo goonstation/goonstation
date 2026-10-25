@@ -936,6 +936,10 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("reflective", 6)
 		setProperty("electrical", 6)
 		setProperty("melting_point", 1235 KELVIN)
+		addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/silver/on_pickup())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/silver/on_life())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/silver/on_hit())
+		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/silver/on_eat())
 
 /datum/material/metal/batiline
 	mat_id = "batiline"
