@@ -96,8 +96,6 @@ var/global/manual_breathing = FALSE
 			C.mob.AddComponent(/datum/component/manual_breathing)
 
 	else
-		for (var/client/C as anything in global.clients)
-			if (!ishuman(C?.mob))
-				continue
+		for_by_tcl(H, /mob/living/carbon/human)
+			H.RemoveComponentsOfType(/datum/component/manual_breathing)
 
-			C.mob.RemoveComponentsOfType(/datum/component/manual_breathing)

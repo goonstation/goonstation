@@ -105,8 +105,5 @@ var/global/manual_blinking = FALSE
 			C.mob.AddComponent(/datum/component/manual_blinking)
 
 	else
-		for (var/client/C as anything in global.clients)
-			if (!ishuman(C?.mob))
-				continue
-
-			C.mob.RemoveComponentsOfType(/datum/component/manual_blinking)
+		for_by_tcl(H, /mob/living/carbon/human)
+			H.RemoveComponentsOfType(/datum/component/manual_blinking)
