@@ -1,18 +1,20 @@
 /datum/db_record/citation/fine
-	fields = alist(
-		"id" 			= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
-		"time"			= new /datum/record_field/string("Time Issued", "00:00:00"),
-		"authority"		= new /datum/record_field/string("Authority", "Nanotrasen Corporate Security"),
-		"type"			= new /datum/record_field/choice("Type", "FINE", list("TICKET", "FINE")),
-		"target"		= new /datum/record_field/string("Recipient", "Unknown"),
-		"status"		= new /datum/record_field/choice("Status", "PENDING", list("PENDING", "UNPAID", "PAID")),
-		"amount"		= new /datum/record_field/number("Amount", 0),
-		"paid_amount"	= new /datum/record_field/number("Amount Paid", 0),
-		"issuer"		= new /datum/record_field/string("Issuer", "Unknown"),
-		"issuer_job"	= new /datum/record_field/string("Issuer Job", "Unknown"),
-		"approver"		= new /datum/record_field/string("Approver", "Awaiting Approval"),
-		"approver_job"	= new /datum/record_field/string("Approver Job", "Awaiting Approval"),
-		"reason"		= new /datum/record_field/string("Reason", "Unknown"),
+
+/datum/db_record/citation/fine/build_fields()
+	return alist(
+		"id" 			= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
+		"time"			= new /datum/record_field/string(src, "Time Issued", "00:00:00"),
+		"authority"		= new /datum/record_field/string(src, "Authority", "Nanotrasen Corporate Security"),
+		"type"			= new /datum/record_field/choice(src, "Type", "FINE", list("TICKET", "FINE")),
+		"target"		= new /datum/record_field/string(src, "Recipient", "Unknown"),
+		"status"		= new /datum/record_field/choice(src, "Status", "PENDING", list("PENDING", "UNPAID", "PAID")),
+		"amount"		= new /datum/record_field/number(src, "Amount", 0),
+		"paid_amount"	= new /datum/record_field/number(src, "Amount Paid", 0),
+		"issuer"		= new /datum/record_field/string(src, "Issuer", "Unknown"),
+		"issuer_job"	= new /datum/record_field/string(src, "Issuer Job", "Unknown"),
+		"approver"		= new /datum/record_field/string(src, "Approver", "Awaiting Approval"),
+		"approver_job"	= new /datum/record_field/string(src, "Approver Job", "Awaiting Approval"),
+		"reason"		= new /datum/record_field/string(src, "Reason", "Unknown"),
 	)
 
 /datum/db_record/citation/fine/New(authority, target, amount, issuer, issuer_job, reason)
