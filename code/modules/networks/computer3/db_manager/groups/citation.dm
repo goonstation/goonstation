@@ -29,6 +29,21 @@
 			alist(key = "approver_job",	write = FALSE,	search = FALSE),
 			alist(key = "reason",		write = FALSE,	search = FALSE),
 		),
+		"Arrest Warrant" = list(
+			alist(key = "id",			write = FALSE,	search = TRUE),
+			alist(key = "time",			write = FALSE,	search = FALSE),
+			alist(key = "time_closed",	write = FALSE,	search = FALSE),
+			alist(key = "authority",	write = FALSE,	search = FALSE),
+			alist(key = "type",			write = FALSE,	search = TRUE),
+			alist(key = "target",		write = FALSE,	search = TRUE),
+			alist(key = "status",		write = FALSE,	search = TRUE),
+			alist(key = "issuer",		write = FALSE,	search = TRUE),
+			alist(key = "issuer_job",	write = FALSE,	search = FALSE),
+			alist(key = "reason",		write = FALSE,	search = FALSE),
+			alist(key = "closer",		write = FALSE,	search = FALSE),
+			alist(key = "closer_job",	write = FALSE,	search = FALSE),
+			alist(key = "resolution",	write = FALSE,	search = FALSE),
+		),
 	)
 	var/mode = "ALL"
 
@@ -38,6 +53,7 @@
 			var/list/datum/db_record/citation/citations = list()
 			citations += global.data_core.tickets.records
 			citations += global.data_core.fines.records
+			citations += global.data_core.arrests.records
 
 			return global.sortList(citations, GLOBAL_PROC_REF(cmp_citations))
 
@@ -47,11 +63,17 @@
 		if ("FINES")
 			return global.data_core.fines.records
 
+		if ("ARRESTS")
+			return global.data_core.arrests.records
+
 /datum/db_record_group/citation/get_linked_records(datum/db_record/citation/citation)
-	if (istype(citation, /datum/db_record/citation/fine))
-		return list("Fine" = citation)
-	else
-		return list("Ticket" = citation)
+	switch (citation.type)
+		if (/datum/db_record/citation/ticket)
+			return list("Ticket" = citation)
+		if (/datum/db_record/citation/fine)
+			return list("Fine" = citation)
+		if (/datum/db_record/citation/arrest)
+			return list("Arrest Warrant" = citation)
 
 /datum/db_record_group/citation/get_main_database()
 	CRASH("(/datum/db_record_group/citation) has no main database.")
@@ -60,13 +82,19 @@
 	return list(
 		"Ticket" = global.data_core.tickets,
 		"Fine" = global.data_core.fines,
+		"Arrest Warrant" = global.data_core.arrests,
 	)
 
 /datum/db_record_group/citation/get_commands(datum/db_record/citation/citation)
-	if (astype(citation, /datum/db_record/citation/fine)?["status"] == "PENDING")
-		return "<br>(R) Redraw <br>(P) Print Record<br>(C) Print Citation<br>(A) Approve <br>(0) Return to index."
-	else
-		return "<br>(R) Redraw <br>(P) Print Record<br>(C) Print Citation<br>(0) Return to index."
+	var/options = "<br>(R) Redraw<br>(P) Print Record<br>(Q) Print Citation"
+
+	if (astype(citation, /datum/db_record/citation/arrest)?["status"] == "OPEN")
+		options += "<br>(C) Close"
+	else if (astype(citation, /datum/db_record/citation/fine)?["status"] == "PENDING")
+		options += "<br>(A) Approve"
+
+	options += "<br>(0) Return to index."
+	return options
 
 /datum/db_record_group/citation/input_command(datum/db_manager_menu/record_view/menu, datum/db_record/citation/citation, command)
 	switch (command)
@@ -83,7 +111,7 @@
 			else
 				menu.parent.print_text("<b>Error:</b> No printer detected.")
 
-		if ("c")
+		if ("q")
 			if (astype(citation, /datum/db_record/citation/fine)?["status"] == "PENDING")
 				menu.parent.print_text("<b>Error:</b> Cannot print unapproved fines.")
 				return TRUE
@@ -111,6 +139,13 @@
 				if (SECURITY::TICKET::ERR::SUCCESS)
 					menu.parent.switch_menu_to("record_view", fine)
 
+		if ("c")
+			var/datum/db_record/citation/arrest/arrest = citation
+			if (!istype(arrest) || (arrest["status"] == "CLOSED"))
+				return
+
+			menu.parent.switch_menu_to("close_arrest", arrest)
+
 		else
 			return FALSE
 
@@ -128,6 +163,7 @@
 	var/list/datum/db_record/citation/citations = list()
 	citations += global.data_core.tickets.find_records("target", name)
 	citations += global.data_core.fines.find_records("target", name)
+	citations += global.data_core.arrests.find_records("target", name)
 
 	return global.sortList(citations, GLOBAL_PROC_REF(cmp_citations))
 
