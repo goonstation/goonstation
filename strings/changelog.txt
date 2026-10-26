@@ -1,5 +1,9 @@
 
 (t)mon oct 26 26
+(u)ANNmagedon
+(p)28153
+(e)🆕🐣🧑‍✈️|C-Feature, A-Respawning, A-Command
+(+)Late-join captains now get a pinpointer for the authentication disk.
 (u)JORJ949
 (p)28178
 (e)🎨🔨|C-Sprites, A-Player-Actions
