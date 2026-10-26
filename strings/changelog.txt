@@ -1,6 +1,10 @@
 
 (t)mon oct 26 26
 (u)JORJ949
+(p)28178
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(+)The icons for binding abilities have been updated (mostly to ones already being used by blobs)
+(u)JORJ949
 (p)28133
 (e)⚖🔨|C-Balance, A-Player-Actions
 (+)Containers (such as lockers) no longer block exploding PDAs from gibbing corpses wearing that PDA.
