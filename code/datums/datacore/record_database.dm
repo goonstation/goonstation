@@ -99,17 +99,6 @@
 		var/list/datum/db_record/indexed_records = (src.indices[key][value] ||= list())
 		indexed_records += record
 
-/// Create a new record and add it to this database.
-/datum/record_database/proc/create_record(list/fields)
-	RETURN_TYPE(/datum/db_record)
-
-	var/datum/db_record/record = new()
-	for (var/key as anything in fields)
-		record[key] = fields[key]
-
-	src.add_record(record)
-	return record
-
 /// Notify this database that one of its records has had a value updated.
 /datum/record_database/proc/notify_field_change(datum/db_record/record, key, old_value, new_value)
 	var/alist/records_by_value = src.indices[key]

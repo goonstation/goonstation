@@ -1,4 +1,13 @@
 
+(t)sun oct 25 26
+(u)Mr. Moriarty
+(p)28134
+(e)💅⚙🚗👮🖥️|C-QoL, A-Internal, A-Vehicles, A-Security, A-Computers
+(*)SecMate criminal statuses have been refactored to use arrest warrants. See details in the minor changelog.
+(+)Arrest warrants are issued by setting a crewmember to arrest and entering a reason field. This reason becomes the SecHUD flag.
+(+)Closing an arrest warrant requires a resolution field, which is a brief explanation of how the suspect was sentenced.
+(+)Arrest warrants can be tracked centrally through SecMate, with both open and closed warrants being tracked under a record's "Citations" field.
+(+)Issuing and closing warrants is announced over the Security PDA channel, with reasons and resolutions attached.
 (t)thu oct 22 26
 (u)AronBattlnode
 (p)28125

@@ -724,6 +724,15 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 			get_image_group(CLIENT_IMAGE_GROUP_SALVAGER_VALUES).remove_mob(user)
 		..()
 
+/datum/client_image_group/salvager_value/add_image(image/image)
+	. = ..()
+	src.RegisterSignal(image.loc, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(clear_images_attached_to))
+
+/datum/client_image_group/salvager_value/proc/clear_images_attached_to(var/target)
+	for(var/image/image in src.images)
+		if(image.loc == target)
+			src.remove_image(image)
+
 /obj/item/device/radio_upgrade/salvager
 	name = "private radio channel upgrade"
 	desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
