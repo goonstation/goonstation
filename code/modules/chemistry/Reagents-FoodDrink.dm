@@ -5098,7 +5098,7 @@ datum
 			taste = list("bold", "creamy")
 			thirst_value = 1
 			caffeine_content = 0.8
-      
+
 		fooddrink/dulcedeleche
 			name = "dulce de leche"
 			id = "dulcedeleche"
@@ -5108,3 +5108,13 @@ datum
 			description = "A thick, velvety spread that clings to everything it touches."
 			reagent_state = SOLID
 			taste = list("rich", "sweet")
+
+		fooddrink/oatmilk
+			name = "oatmilk"
+			id = "oatmilk"
+			fluid_r = 204
+			fluid_g = 193
+			fluid_b = 165
+			description = "A creamy, plant-based alternative to milk with a naturally sweet flavor."
+			reagent_state = LIQUID
+			taste = list("oaty", "sweet")
