@@ -5110,7 +5110,7 @@ datum
 			taste = list("rich", "sweet")
 
 		fooddrink/oatmilk
-			name = "oatmilk"
+			name = "oat milk"
 			id = "oatmilk"
 			fluid_r = 204
 			fluid_g = 193
