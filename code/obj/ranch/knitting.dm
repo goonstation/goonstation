@@ -228,6 +228,7 @@ ABSTRACT_TYPE(/datum/material/fabric/cloth/wool) //hi emily it's yass here makin
 		setProperty("thermal", 7)
 		return ..()
 
+ABSTRACT_TYPE(/obj/item/property_setter/wool)
 /obj/item/property_setter/wool
 	name = "YOU SHOULDN'T SEE ME"
 	desc = "YOU SHOULDN'T SEE ME. You feel confident in that you could apply this to a piece of clothing to make it more resistant to outside force."
