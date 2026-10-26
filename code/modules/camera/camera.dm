@@ -404,11 +404,7 @@ SET_UP_DIRECTIONALS(/obj/machinery/camera/AI, OFFSETS_CAMERA)
 
 /obj/machinery/camera/public/New()
 	. = ..()
-	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-
-/obj/machinery/camera/public/disposing()
-	. = ..()
-	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	src.AddElement(/datum/element/ghost_observable)
 
 
 /obj/machinery/camera/vspace
@@ -426,8 +422,4 @@ SET_UP_DIRECTIONALS(/obj/machinery/camera/AI, OFFSETS_CAMERA)
 
 /obj/machinery/camera/vspace/New()
 	. = ..()
-	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-
-/obj/machinery/camera/vspace/disposing()
-	. = ..()
-	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	src.AddElement(/datum/element/ghost_observable)

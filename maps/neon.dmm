@@ -1994,7 +1994,7 @@
 /area/station/turret_protected/ai)
 "bzy" = (
 /obj/table/auto,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "bzW" = (
 /obj/table/auto,
@@ -9687,7 +9687,7 @@
 	},
 /area/station/hallway/primary/south)
 "gEl" = (
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "gEs" = (
 /obj/cable{
@@ -10137,7 +10137,7 @@
 	dir = 4;
 	name = "rusty airlock"
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "gUJ" = (
 /obj/stool/bar,
@@ -12094,7 +12094,7 @@
 /obj/item/photo/beepsky1{
 	desc = "You can see a securitron on the photo.  Looks kinda familiar. It appears to be holding a \"#1 Son\" mug.  Is...is that a young Officer Beepsky?"
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "iqo" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -22204,7 +22204,7 @@
 /area/evilreaver/genetics)
 "psz" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "psH" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -23706,7 +23706,7 @@
 /area/station/maintenance/northeast)
 "qwB" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "qwQ" = (
 /obj/item/bell/hop{

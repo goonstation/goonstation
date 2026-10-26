@@ -245,9 +245,6 @@ var/global
 
 	list/selectable_ringtones = list()
 
-	//april fools
-	manualbreathing = 0
-	manualblinking = 0
 	speechpopups = 1
 
 	monkeysspeakhuman = 0

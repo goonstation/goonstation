@@ -1823,7 +1823,8 @@ proc/alert_all_ghosts(atom/target, message)
 						O.set_loc(target)
 					else if (istype(M, /mob/dead/target_observer))
 						var/mob/dead/target_observer/TO = M
-						TO.ghostjump(target.x, target.y, target.z)
+						var/mob/dead/observer/O = TO.to_ghost()
+						O.set_loc(target)
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts()

@@ -62,7 +62,7 @@
 	dir = 6
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/dmm_suite/clear_area)
 "U" = (
 /obj/candle_light{
