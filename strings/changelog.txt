@@ -1,4 +1,35 @@
 
+(t)mon oct 26 26
+(u)JORJ949
+(p)28178
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(+)The icons for binding abilities have been updated (mostly to ones already being used by blobs)
+(u)JORJ949
+(p)28133
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Containers (such as lockers) no longer block exploding PDAs from gibbing corpses wearing that PDA.
+(t)sun oct 25 26
+(u)Mr. Moriarty
+(p)28134
+(e)💅⚙🚗👮🖥️|C-QoL, A-Internal, A-Vehicles, A-Security, A-Computers
+(*)SecMate criminal statuses have been refactored to use arrest warrants. See details in the minor changelog.
+(+)Arrest warrants are issued by setting a crewmember to arrest and entering a reason field. This reason becomes the SecHUD flag.
+(+)Closing an arrest warrant requires a resolution field, which is a brief explanation of how the suspect was sentenced.
+(+)Arrest warrants can be tracked centrally through SecMate, with both open and closed warrants being tracked under a record's "Citations" field.
+(+)Issuing and closing warrants is announced over the Security PDA channel, with reasons and resolutions attached.
+(t)thu oct 22 26
+(u)AronBattlnode
+(p)28125
+(e)🪲👽|C-Bug, A-Mutantraces
+(+)Frog dehydration no longer carries over to other mutantraces.
+(u)glowbold
+(p)28104
+(e)💅🐣|C-QoL, A-Respawning
+(*)Observers using "Return to Corpse" will try to find your brain if you don't have a corpse (including silicons).
+(u)glowbold
+(p)28141
+(e)🎨🧛🤖|C-Sprites, A-Gamemodes, A-Silicons
+(*)Silicons have HUD buttons to interact with laws, lock/unlock interfaces, and change customizations.
 (t)wed oct 21 26
 (u)Temthrush
 (p)28146
