@@ -1,4 +1,9 @@
 
+(t)mon oct 26 26
+(u)JORJ949
+(p)28133
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Containers (such as lockers) no longer block exploding PDAs from gibbing corpses wearing that PDA.
 (t)sun oct 25 26
 (u)Mr. Moriarty
 (p)28134
