@@ -117,8 +117,7 @@
 		// "gracefully" transfer existing hivemind members without messing up lings who are backseating
 		if (istype(M, /mob/dead/target_observer/hivemind_observer))
 			var/mob/dead/target_observer/hivemind_observer/hivemind_observer = M
-			hivemind_observer.hivemind_owner = src
-			hivemind_observer.set_observe_target(src.owner)
+			hivemind_observer.set_owner(src)
 			var/datum/antagonist/subordinate/hivemind_member/antag_role = mind_to_be_transferred.get_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 			//we skip this bit if they're the ling themselves, you shouldn't subordinate to yourself!
 			if (antag_role && hivemind_observer != src.master)

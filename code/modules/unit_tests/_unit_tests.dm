@@ -55,6 +55,7 @@
 #include "terrainify.dm"
 
 /// regression tests
+#include "regression/changeling_speech.dm"
 #include "regression/reagent_transfer.dm"
 #include "regression/say_message.dm"
 
