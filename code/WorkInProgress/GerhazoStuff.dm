@@ -815,7 +815,7 @@
 		src.property_value = property_value
 		src.inverse = inverse
 
-
+ABSTRACT_TYPE(/obj/item/property_setter)
 /obj/item/property_setter
 	name = "property setter"
 	desc = "You shouldn't see this."

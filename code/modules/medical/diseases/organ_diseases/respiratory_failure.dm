@@ -3,7 +3,7 @@
 	name = "Respiratory Failure"
 	scantype = "Medical Emergency"
 	max_stages = 3
-	spread = "The patient's respiratory is starting to fail"
+	spread = "The patient's respiratory system is starting to fail"
 	cure_flags = CURE_CUSTOM
 	cure_desc = "Oxygen-healing drugs or surgery"
 	recureprob = 10
