@@ -1821,6 +1821,9 @@ TYPEINFO(/mob/living)
 /mob/living/proc/handle_perma_cryo()
 	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 		antagonist.handle_perma_cryo()
+
+	src.handle_cryo_replacements(TRUE)
+
 	var/datum/job/job = find_job_in_controller_by_string(src.mind?.assigned_role)
 	if(istype(job) && job.unique)
 		SPAWN(5 MINUTES)
@@ -1830,16 +1833,24 @@ TYPEINFO(/mob/living)
 	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 		antagonist.handle_cryo()
 
-	// Replace items that should be replaced if they are cryod with
+	src.handle_cryo_replacements()
+
+
+/// Replace items that should be replaced if they are cryod with
+/mob/living/proc/handle_cryo_replacements(var/perma_cryo = FALSE)
 	var/obj/storage/secure/crate/gear/nanotrasen/replacement_equipment/crate
-	for(var/obj/item/thing_to_replace in by_cat[TR_CAT_REPLACED_ON_CRYO])
+	for_by_tcl(replacement_component, /datum/component/replace_on_cryo)
+		if(!perma_cryo && replacement_component.only_on_perma_cryo)
+			continue
+		var/atom/movable/thing_to_replace = replacement_component.parent
 		//Not an accurate check, will apply to the captain cryoing someone, but saves iterating up the disk's tree on all cryos
 		if (get_turf(thing_to_replace) != get_turf(src))
 			continue
 		if(src in obj_loc_chain(thing_to_replace))
 			logTheThing(LOG_STATION, src, "at [log_loc(src)] cryos with \the [thing_to_replace] (found in their [thing_to_replace.loc]) so it is deleted and a replacement is shipped to cargo.")
 			crate ||= new()
-			new thing_to_replace.type(crate)
+			var/type_to_spawn = replacement_component.get_replacement_type()
+			new type_to_spawn(crate)
 			thing_to_replace.safe_delete()
 	if(crate)
 		shippingmarket.receive_crate(crate)

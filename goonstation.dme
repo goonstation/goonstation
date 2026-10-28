@@ -373,6 +373,7 @@
 #include "code\datums\DCS\components\proximity.dm"
 #include "code\datums\DCS\components\radioactive.dm"
 #include "code\datums\DCS\components\reagent_overlay.dm"
+#include "code\datums\DCS\components\replace_on_cryo.dm"
 #include "code\datums\DCS\components\seedy.dm"
 #include "code\datums\DCS\components\self_destruct.dm"
 #include "code\datums\DCS\components\send_to_target_mob.dm"
