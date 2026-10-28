@@ -10,7 +10,7 @@
 		var/size = text2num(base8[i], 8) + 1
 		barcode += "<td width='[size]px' bgcolor='[bar_colour]'></td> "
 
-	barcode += "</td></tr></table>"
+	barcode += "</tr></table>"
 	return barcode.Join()
 
 /// `md5()`, but in base8.

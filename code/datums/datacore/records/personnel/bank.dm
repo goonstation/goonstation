@@ -1,12 +1,14 @@
 /datum/db_record/personnel/bank
-	fields = alist(
-		"id"			= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
-		"name"			= new /datum/record_field/string("Name", "New Record"),
-		"pda_net_id"	= new /datum/record_field/string("PDA NetID"),
-		"wage"			= new /datum/record_field/number/wage("Wage", 0),
-		"current_money"	= new /datum/record_field/number/balance("Balance", 0),
-		"unionized"		= new /datum/record_field/choice("Unionised", "No", list("Yes", "No")),
-		"notes"			= new /datum/record_field/string("Important Notes", "No notes."),
+
+/datum/db_record/personnel/bank/build_fields()
+	return alist(
+		"id"			= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
+		"name"			= new /datum/record_field/string(src, "Name", "New Record"),
+		"pda_net_id"	= new /datum/record_field/string(src, "PDA NetID"),
+		"wage"			= new /datum/record_field/number/wage(src, "Wage", 0),
+		"current_money"	= new /datum/record_field/number/balance(src, "Balance", 0),
+		"unionized"		= new /datum/record_field/choice(src, "Unionised", "No", list("Yes", "No")),
+		"notes"			= new /datum/record_field/string(src, "Important Notes", "No notes."),
 	)
 
 /datum/db_record/personnel/bank/disposing()
