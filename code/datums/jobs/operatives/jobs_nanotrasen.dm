@@ -66,9 +66,8 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/engineer)
-	items_in_mob = list(/obj/item/device/pda2/nt/engineer)
 	// gets placed within the mob's id slot by put_id_in_pda, required because they need both of their pockets for the oxy (on spawn readiness is required) & pouch ("correct" slot for pouch)
-
+	items_in_mob = list(/obj/item/device/pda2/nt/engineer)
 	items_in_backpack = list(/obj/item/device/flash,
 	/obj/item/storage/box/elecrepair,
 #ifdef HOTSPOTS_ENABLED
