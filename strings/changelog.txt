@@ -1,5 +1,9 @@
 
 (t)wed oct 28 26
+(u)Driftered
+(p)28112
+(e)💅🤖|C-QoL, A-Silicons
+(*)Added bulk sheet recipes for regular metal, reinforced metal, and regular glass to the Robotics Fabricator.
 (u)glowbold
 (e)⚖📨|C-Balance, A-Logistics
 (*)Vending machines show a clock icon on items that will not be restocked with a restock cart. The list of non-restockable item/vendor combinations is in minor notes.
