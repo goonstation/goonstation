@@ -1,5 +1,9 @@
 
 (t)wed oct 28 26
+(u)glowbold
+(e)⚖📨|C-Balance, A-Logistics
+(*)Vending machines show a clock icon on items that will not be restocked with a restock cart. The list of non-restockable item/vendor combinations is in minor notes.
+(+)These items do not restock in the listed vending machines: Magic sandals, Chaplain Vendor; Odd Cigarettes, Cigarette Vendor; Lethal 38s, SecTech; Muckshot, AmmoTech
 (u)Spyritdragon
 (p)28023
 (e)🎨📨|C-Sprites, A-Logistics
