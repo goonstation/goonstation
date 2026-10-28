@@ -1,4 +1,13 @@
 
+(t)wed oct 28 26
+(u)Nexusuxen
+(p)27912
+(e)🎨📄|C-Sprites, A-UI
+(+)Abilities with aim assist come with bigger cursors to indicate their increased search range.
+(u)Astarthoc
+(p)28166
+(e)🪲🔨👮|C-Bug, A-Player-Actions, A-Security
+(+)Touching a head or any other organs now leaves fingerprints on it
 (t)mon oct 26 26
 (u)ANNmagedon
 (p)28153
