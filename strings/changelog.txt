@@ -1,5 +1,9 @@
 
 (t)wed oct 28 26
+(u)Spyritdragon
+(p)28023
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Added restock cartridges for the janitor and chapel vending machines
 (u)Nexusuxen
 (p)27912
 (e)🎨📄|C-Sprites, A-UI
