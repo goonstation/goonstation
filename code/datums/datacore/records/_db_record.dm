@@ -1,20 +1,34 @@
+ABSTRACT_TYPE(/datum/db_record)
 /datum/db_record
 	/// This database record's parent database, if it has one.
 	VAR_PRIVATE/datum/record_database/db = null
 	/// This database record's fields.
-	VAR_PROTECTED/alist/fields = alist(
-		"id" = new /datum/record_field/string("000000", @"[a-f0-9]{6}"),
-	)
+	VAR_PRIVATE/alist/fields = null
 
 /datum/db_record/New()
 	. = ..()
-	src.fields ||= alist()
+	src.fields = src.build_fields()
+
+	if (!src["id"])
+		CRASH("Database record type ([src.type]) initialised without an \"id\" field.")
+
 	src["id"] = copytext(ref(src), -7, -1)
 
 /datum/db_record/disposing()
 	src.delete()
+
+	for (var/key as anything in src.fields)
+		qdel(src.fields[key])
+
 	src.fields = null
 	. = ..()
+
+/// Construct this record's field datums. Called once during initialisation.
+/datum/db_record/proc/build_fields()
+	RETURN_TYPE(/alist)
+	return alist(
+		"id" = new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
+	)
 
 /// Returns this record's parent database, if it has one.
 /datum/db_record/proc/get_db()
@@ -51,14 +65,19 @@
 
 /// Returns the value of the specified field on this record.
 /datum/db_record/proc/operator[](key)
-	return astype(src.fields[key], /datum/record_field)?.get_value()
+	var/datum/record_field/field = src.fields[key]
+	return field.get_value()
 
 /// Sets the value of the specified field on this record.
 /datum/db_record/proc/operator[]=(key, value)
 	src.db?.notify_field_change(src, key, src[key], value)
-	var/datum/record_field/field = (src.fields[key] ||= new /datum/record_field)
+	var/datum/record_field/field = src.fields[key]
 	return field.set_value(value)
 
-/// Returns how this record should be displayed on record lists.
+/// Returns how this record should be displayed in shortform.
 /datum/db_record/proc/to_display_string()
+	return "ERR"
+
+/// Returns how this record should be displayed on record lists.
+/datum/db_record/proc/to_list_display_string()
 	return "ERR"

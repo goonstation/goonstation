@@ -1,8 +1,5 @@
+ABSTRACT_TYPE(/datum/db_record/personnel)
 /datum/db_record/personnel
-	fields = alist(
-		"id"	= new /datum/record_field/string("000000", @"[a-f0-9]{6}"),
-		"name"	= new /datum/record_field/string("Name", "New Record"),
-	)
 
 /datum/db_record/personnel/New(source)
 	. = ..()
@@ -13,6 +10,9 @@
 		src.init_from_record(source)
 
 /datum/db_record/personnel/to_display_string()
+	return "[src["id"]]: [src["name"]]"
+
+/datum/db_record/personnel/to_list_display_string()
 	return "[src["id"]]: [src["name"]]"
 
 /// Initialise the values of this personnel record's fields from a human.

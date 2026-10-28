@@ -60,7 +60,8 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				var/fpath = "data/logs/profiling/[fname]"
 				rustg_file_write(output, fpath)
 				var/spike_time = (TIME - automatic_profiling_started) / (1 SECOND)
-				message_admins("CPU back down to [world.cpu], turning off profiling, saved as <a href='[external_url]'>[external_url]</a>. Spike took [spike_time] seconds.")
+				var/viewer_url = goonhub_href("/admin/profiler?url=[url_encode(external_url)]")
+				message_admins("CPU back down to [world.cpu], turning off profiling, saved as <a href='[external_url]'>[external_url]</a> (<a href='[viewer_url]'>view on Goonhub</a>). Spike took [spike_time] seconds.")
 				logTheThing(LOG_DEBUG, null, "Automatic profiling finished, CPU at [world.cpu], saved as [external_url]. Spike took [spike_time] seconds.")
 				ircbot.export_async("admin_debug", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [external_url]. Spike took [spike_time] seconds."))
 				highCpuCount = 0

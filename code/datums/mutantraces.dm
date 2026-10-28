@@ -582,44 +582,34 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		var/datum/organHolder/OHM = O.organHolder
 
-		switch(mode)
-			if("set")
-				if(!src.mutant_organs.len)
-					return // All done!
-				else
-					for(var/mutorgan in src.mutant_organs)
-						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
-							if (OHM.tail)
-								qdel(OHM.tail)
-						else if(mutorgan == "butt") // butts arent organs
-							var/obj/item/clothing/head/butt/org = OHM.get_organ(mutorgan)
-							if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
-								continue
-						else // everything else is an organ, though
-							var/obj/item/organ/org = OHM.get_organ(mutorgan)
-							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
-								continue
-						var/obj/item/organ_get = src.mutant_organs[mutorgan]
-						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
-					return
-			if("reset") // Make everything mutant back into stock-ass human
-				if(!src.mutant_organs.len)
-					return // All done!
-				if (OHM.tail) // mutant to human, drop the tail. Unless you're a changer, then your butt just eats it
-					qdel(OHM.tail)
-				else
-					for(var/mutorgan in src.mutant_organs)
-						if(mutorgan == "butt") // butts arent organs
-							var/obj/item/clothing/head/butt/org = OHM.get_organ(mutorgan)
-							if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
-								continue
-						else // everything else is an organ, though
-							var/obj/item/organ/org = OHM.get_organ(mutorgan)
-							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
-								continue
-						var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
-						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
-					return
+		for(var/mutorgan in src.mutant_organs)
+			var/obj/item/organ_get
+			if (mode == "set")
+				organ_get = src.mutant_organs[mutorgan]
+			else // "reset": make everything mutant back into stock-ass human
+				organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
+
+			var/obj/item/organ/org = OHM.get_organ(mutorgan)
+			if (mutorgan == "tail") // Not everyone has a tail, so just force it in. Humans don't get one back.
+				qdel(OHM.tail)
+				org = null
+				if (mode != "set")
+					continue
+			else if (mutorgan == "butt") // butts arent organs
+				if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
+					continue
+				org = null
+			else if (!org || org.robotic || org.unusual) // No free organs, trade-ins only, keep ur robotic and unusual stuff
+				continue
+
+			var/obj/item/organ/new_organ = new organ_get(O, OHM)
+			if (org) // keep the damage so swapping species can't heal it
+				new_organ.brute_dam = org.brute_dam
+				new_organ.burn_dam = org.burn_dam
+				new_organ.tox_dam = org.tox_dam
+				if (org.broken)
+					new_organ.breakme()
+			OHM.receive_organ(new_organ, mutorgan, 0, 1, is_transformation = TRUE)
 
 	/// Applies or removes the bioeffect associated with the mutantrace
 	proc/MutateMutant(var/mob/living/carbon/human/H)
@@ -2008,6 +1998,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 	disposing()
 		if(ishuman(src.mob))
 			src.mob.bioHolder.RemoveEffect("accent_frog")
+			src.mob.cure_disease_by_path(/datum/ailment/disease/dehydration) // this disease is specific to frogs, it shouldn't apply to any other mutantraces
 		#ifndef RP_MODE
 			mob.sims.removeMotive("Thirst")
 		#endif

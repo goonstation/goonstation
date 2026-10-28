@@ -351,6 +351,10 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	mat_changename = FALSE
 	var/is_rotated = FALSE // Logs are rotated after being felled. Need to unrotate them after stacking.
 
+	New()
+		. = ..()
+		src.UpdateIcon()
+
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
@@ -408,6 +412,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	default_material = "bamboo"
 	uses_default_material_appearance = FALSE
 	mat_changename = TRUE
+	icon_stack_value = 0
 
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))

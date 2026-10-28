@@ -1251,6 +1251,8 @@
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.show_message(SPAN_ALERT("Your [src] explodes!"), 1)
+			if(isdead(M) && !isturf(M.loc))
+				M.ex_act(3) //Always gib dead wearer even if in a locker or something
 
 		if(T)
 			T.hotspot_expose(700,125)
@@ -1288,6 +1290,11 @@
 		if (E.mainframe)
 			return 1
 	return ..(user)
+
+// cyborgs shouldn't be able to eject ID cards from their PDA
+/obj/item/device/pda2/cyborg/eject_id_card(var/mob/user as mob)
+	boutput(user, SPAN_ALERT("The ID card is soldered firmly into [src.name]!"))
+	return
 
 /*
  *	PDA 2 ~help file~

@@ -71,6 +71,15 @@
 		pixel_y = TUPLE_GET_8(_OFFSETS); \
 	}
 
+/// Set up directional paths for an object such that the directional type sticks to walls
+#define SET_UP_DIRECTIONALS_WALL_STICKY(_PATH, _OFFSETS, _ARGS...) \
+	SET_UP_DIRECTIONALS(##_PATH, ##_OFFSETS, ##_ARGS) \
+	##_PATH/directional/dir = NORTH; \
+	##_PATH/directional/New() { \
+		. = ..(); \
+		src.AddElement(/datum/element/stick_to_walls); \
+	}
+
 
 
 

@@ -240,6 +240,10 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 				src.already_worn = 1
 				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, FALSE)
 				user.visible_message(SPAN_ALERT("<B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B>"))
+			else if(H.mind.special_role == ROLE_VAMPIRE && !src.already_worn)
+				src.already_worn = 1
+				playsound(user, 'sound/voice/guy_in_shades.ogg', 100, FALSE)
+				user.visible_message(SPAN_ALERT("<B><font size=3>I wear my sunglasses in space...</font></B>"))
 	..()
 	return
 

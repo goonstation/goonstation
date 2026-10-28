@@ -106,9 +106,7 @@
 	else
 		window.send_message("ping")
 
-	// |GOONSTATION-CHANGE| Different asset method
-	for(var/datum/asset/asset in src_object.ui_assets(user))
-		send_asset(asset)
+	send_assets()
 
 	// |GOONSTATION-ADD| Secret interface handling
 	if(secret_interface_id)
@@ -131,6 +129,7 @@
 // |GOONSTATION-CHANGE| Asset caching/sending done differently
 /datum/tgui/proc/send_assets()
 	PRIVATE_PROC(TRUE)
+	window.send_asset(get_assets(/datum/asset/json/icon_ref_map))
 	for(var/datum/asset/asset in src_object.ui_assets(user))
 		send_asset(asset)
 

@@ -44,6 +44,8 @@
 
 	E.Detach(src)
 
+/datum/proc/HasElement(id)
+	return !!src.datum_elements?["[id]"]
 
 TYPEINFO(/datum/element)
 	var/initialization_args = list()
@@ -75,8 +77,7 @@ ABSTRACT_TYPE(/datum/element)
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(target, COMSIG_ELEMENT_ATTACH, src)
-	if (element_flags & DCS::ELEMENT_FLAG::DETACH_ON_PARENT_DISPOSE)
-		src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(OnTargetDelete), override = TRUE)
+	src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(OnTargetDelete))
 
 /// Deactivates the functionality defined by the element on the given target datum.
 /datum/element/proc/Detach(datum/target)

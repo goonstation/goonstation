@@ -339,7 +339,7 @@
 		if(src.cloaked == 1)
 			..()
 		else
-			if (!isitem(W) || isnull(initial(W.icon)) || isnull(initial(W.icon_state)) || !W.icon || !W.icon_state)
+			if (!isitem(W) || isnull(get_initial_icon(W)) || isnull(initial(W.icon_state)) || !W.icon || !W.icon_state)
 				user.show_text("The [W.name] is not compatible with this device.", "red")
 				return
 			src.name = W.name
@@ -363,7 +363,7 @@
 			src.real_name = initial(src.real_name)
 			src.desc = initial(src.desc)
 			src.real_desc = initial(src.real_desc)
-			src.icon = initial(src.icon)
+			src.icon = get_initial_icon(src)
 			src.icon_state = initial(src.icon_state)
 			src.item_state = initial(src.item_state)
 			src.inhand_image = initial(src.inhand_image)

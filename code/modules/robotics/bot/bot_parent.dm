@@ -79,6 +79,7 @@ TYPEINFO(/obj/machinery/bot)
 	New()
 		..()
 		START_TRACKING
+		src.AddElement(/datum/element/ghost_observable)
 		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)

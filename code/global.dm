@@ -245,9 +245,6 @@ var/global
 
 	list/selectable_ringtones = list()
 
-	//april fools
-	manualbreathing = 0
-	manualblinking = 0
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
@@ -301,7 +298,6 @@ var/global
 	remote_music_announcements = 0
 
 
-	outpost_destroyed = 0
 	signal_loss = 0
 	solar_gen_rate = DEFAULT_SOLARGENRATE
 	fart_attack = 0
@@ -581,7 +577,7 @@ var/global
 
 /// Generates item icons for manufacturers and other things, used in UI dialogs.
 /proc/getItemIcon(var/atom/A, var/state, var/dir)
-	return "\ref[initial(A.icon)]?state=[state || initial(A.icon_state)]&dir=[dir || initial(A.dir)]"
+	return "\ref[get_initial_icon(A)]?state=[state || initial(A.icon_state)]&dir=[dir || initial(A.dir)]"
 
 #ifdef TWITCH_BOT_ALLOWED
 var/global/mob/twitch_mob = 0

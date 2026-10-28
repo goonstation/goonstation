@@ -903,7 +903,9 @@
 			return
 		tooltip_rebuild = TRUE
 		var/holder = src.loc
+		// labels become part of names, so no emoji etc
 		var/str = copytext(strip_html_tags(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
+		str = remove_bad_name_characters(str, keep_punctuation = TRUE)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
