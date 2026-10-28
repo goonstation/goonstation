@@ -1,10 +1,5 @@
 
 /datum/lifeprocess/statusupdate
-	//april fools stuff
-	var/blinktimer = 0
-	var/blinktimerstage = 0
-	var/blinktimernotifredundant = 0
-	var/blinkstate = 0
 
 	process(var/datum/gas_mixture/environment)
 		//proc/handle_regular_status_updates(datum/controller/process/mobs/parent,var/mult = 1)
@@ -53,58 +48,6 @@
 					if (I.block_vision)
 						owner.blinded = 1
 						break
-
-		if (manualblinking && human_owner)
-			var/showmessages = 1
-			var/tempblind = owner.get_eye_damage(1)
-
-			if (owner.find_ailment_by_type(/datum/ailment/disability/blind))
-				showmessages = 0
-
-			src.blinktimer += mult
-			switch(src.blinktimer)
-				if (0 to 20)
-					src.blinktimerstage = 0
-					src.blinktimernotifredundant = 0
-				if (20 to 30)
-					if (!src.blinktimernotifredundant)
-						src.blinktimerstage = 1
-				if (30 to 40)
-					if (src.blinktimernotifredundant < 2)
-						src.blinktimerstage = 2
-				if (40 to 60)
-					owner.change_eye_blurry(3, 3)
-					if (src.blinktimernotifredundant < 3)
-						src.blinktimerstage = 3
-				if (60 to 100)
-					owner.take_eye_damage(clamp(3 - tempblind, 0, 3), 1)
-					if (src.blinktimernotifredundant < 4)
-						src.blinktimerstage = 4
-				if (100 to INFINITY)
-					owner.contract_disease(/datum/ailment/disability/blind,null,null,1)
-					if (src.blinktimernotifredundant < 5)
-						src.blinktimerstage = 5
-			switch(src.blinktimerstage)
-				if (0)
-					; // this statement is intentionally left blank
-				if (1)
-					if (showmessages) boutput(owner, SPAN_ALERT("Your eyes feel slightly uncomfortable!"))
-					src.blinktimernotifredundant = 1
-				if (2)
-					if (showmessages) boutput(owner, SPAN_ALERT("Your eyes feel quite dry!"))
-					src.blinktimernotifredundant = 2
-				if (3)
-					if (showmessages) boutput(owner, SPAN_ALERT("Your eyes feel very dry and uncomfortable, it's getting difficult to see!"))
-					src.blinktimernotifredundant = 3
-				if (4)
-					if (showmessages) boutput(owner, SPAN_ALERT("Your eyes are so dry that you can't see a thing!"))
-					src.blinktimernotifredundant = 4
-				if (5) //blinking won't save you now, buddy
-					if (showmessages) boutput(owner, SPAN_ALERT("You feel a horrible pain in your eyes. That can't be good."))
-					src.blinktimernotifredundant = 5
-			src.blinktimerstage = 0
-
-			if (src.blinkstate) owner.take_eye_damage(clamp(1 - tempblind, 0, 1), 1)
 
 		if (owner.get_eye_damage(1)) // Temporary blindness.
 			owner.take_eye_damage(-mult, 1)

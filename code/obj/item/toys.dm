@@ -355,12 +355,8 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 
 	New()
 		. = ..()
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 		BLOCK_SETUP(BLOCK_BOOK)
-
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	proc/generate_words()
 		var/list/words = list()

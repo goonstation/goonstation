@@ -2,6 +2,7 @@
  * @file
  * @copyright 2026
  * @author glowbold (https://github.com/pgmzeta)
+ * @author Changes Sovexe (https://github.com/sovexe)
  * @license MIT
  */
 import { Box, Collapsible, Section } from 'tgui-core/components';
@@ -57,6 +58,7 @@ export const DisplayDisease = (props: DisplayDiseaseProps) => {
       Spread: {disease.spread}
       <br />
       {disease.cure_method}
+      {!!disease.suppression_info && <Box>{disease.suppression_info}</Box>}
     </Collapsible>
   );
 };

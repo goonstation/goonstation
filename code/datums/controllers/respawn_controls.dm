@@ -61,12 +61,12 @@ var/datum/respawn_controls/respawn_controller
 			if(RESPAWNEE_STATE_ELIGIBLE)
 				// They are eligible for respawn
 				R.notifyAndGrantVerb()
-			if(RESPAWNEE_STATE_ALIVE)
-				// They were somehow revived
+			if(RESPAWNEE_STATE_UNSUBSCRIBE)
+				// They are no longer allowed to respawn
 				unsubscribeRespawnee(R.ckey)
 
 	proc/subscribeNewRespawnee(var/ckey)
-		if(ckey && !respawnees.Find(ckey))
+		if(ckey && !find_player(ckey)?.joined_observer && !respawnees.Find(ckey))
 
 			var/datum/respawnee/R = new
 			R.initialize(ckey, src)
@@ -141,6 +141,11 @@ var/datum/respawn_controls/respawn_controller
 
 
 	proc/checkValid()
+		if (!src.master.respawns_enabled)
+			return RESPAWNEE_STATE_WAITING
+		if (src.player?.joined_observer)
+			return RESPAWNEE_STATE_UNSUBSCRIBE
+
 		// Time check (short-circuit saves some steps)
 		if(due_for_respawn || src.died_time + master.respawn_time * respawn_time_modifier <= TIME)
 			due_for_respawn = 1
@@ -203,8 +208,8 @@ var/datum/respawn_controls/respawn_controller
 
 		var/mob/new_player/M = new()
 		M.adminspawned = 1
-		M.is_respawned_player = 1
 		M.key = the_client.key
+		src.player.timed_respawn_in_progress = TRUE
 		M.client.player.dnr = FALSE //reset DNR in case we cryoed to get here
 		M.client.player.claimed_rewards = list() // reset claimed medal rewards
 		M.mind.purchased_bank_item = null

@@ -1023,6 +1023,12 @@
 "aBi" = (
 /turf/simulated/floor/purple,
 /area/station/hallway/primary/southwest)
+"aBl" = (
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/auto/glassblock/indigo,
+/area/station/crew_quarters/pool)
 "aBy" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -3466,6 +3472,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
+"bMJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "bMT" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/research_horizontal/vertical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -4456,6 +4468,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/security,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "clt" = (
@@ -10736,6 +10751,9 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fDY" = (
@@ -12685,6 +12703,9 @@
 /obj/stool/chair{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "gDy" = (
@@ -13064,6 +13085,13 @@
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
+"gOw" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/phone/unlisted,
+/turf/simulated/floor/specialroom/bar/edge{
+	dir = 8
+	},
+/area/station/crew_quarters/cafeteria)
 "gOA" = (
 /obj/machinery/plantpot,
 /obj/landmark/pest,
@@ -13417,6 +13445,9 @@
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
@@ -14984,6 +15015,9 @@
 /obj/machinery/plantpot{
 	anchored = 1
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "hKV" = (
@@ -15431,11 +15465,11 @@
 	},
 /area/station/hallway/primary/southwest)
 "hUj" = (
-/obj/machinery/computer/secure_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -16961,6 +16995,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -18130,6 +18167,9 @@
 "jnM" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -22686,8 +22726,10 @@
 	},
 /area/station/crew_quarters/market)
 "lBP" = (
-/obj/machinery/camera/directional/north,
 /obj/machinery/vending/kitchen,
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "lCr" = (
@@ -26222,6 +26264,9 @@
 	})
 "noN" = (
 /obj/machinery/light_switch/directional/east,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "noX" = (
@@ -28070,15 +28115,12 @@
 /area/station/crew_quarters/fitness)
 "omG" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/hydroponicsguide{
-	pixel_y = 2;
-	pixel_x = -4
-	},
 /obj/item/hand_labeler{
 	pixel_y = -1;
 	pixel_x = 12
 	},
 /obj/machinery/light,
+/obj/machinery/phone,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -32486,19 +32528,23 @@
 /area/station/maintenance/outer/nw)
 "qsu" = (
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "qsG" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
+/obj/item/paper/menhir_advisory{
+	pixel_x = 14;
+	pixel_y = 8
+	},
+/obj/machinery/shipalert,
 /obj/item/device/light/zippo{
 	pixel_x = -9;
 	pixel_y = 4
-	},
-/obj/item/paper/menhir_advisory{
-	pixel_x = 8;
-	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -34408,6 +34454,9 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "rto" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -35377,6 +35426,9 @@
 "rTx" = (
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -37666,6 +37718,15 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"sZf" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "sZG" = (
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
 /obj/machinery/drone_recharger,
@@ -38242,7 +38303,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/blind_switch/directional/east{
 	pixel_y = 5
 	},
@@ -38253,6 +38313,11 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 10
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/secure_data,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tlQ" = (
@@ -38696,6 +38761,9 @@
 	name = "Kitchen Shutter Control";
 	pixel_x = 0;
 	pixel_y = 24
+	},
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -44085,6 +44153,15 @@
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/white,
 /area/station/science/hall)
+"wjb" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "wjh" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/green/corner{
@@ -45156,6 +45233,9 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/industrial,
 /area/station/security/secwing)
@@ -47983,7 +48063,13 @@
 /turf/space,
 /area/mining/magnet)
 "xYE" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "xYN" = (
@@ -94813,7 +94899,7 @@ kJk
 kEz
 sjn
 xro
-lRR
+gOw
 lhk
 iec
 oBU
@@ -95955,7 +96041,7 @@ sEf
 sEf
 sEf
 fUa
-kdl
+aBl
 oGt
 kdl
 gdb
@@ -100525,8 +100611,8 @@ plw
 nFe
 wln
 tlO
-tyX
-seM
+bMJ
+wjb
 uDf
 wln
 ody
@@ -100828,7 +100914,7 @@ fLc
 wln
 wln
 bBy
-seM
+sZf
 tfg
 wln
 cCY

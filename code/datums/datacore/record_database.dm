@@ -5,11 +5,14 @@
 	 */
 	var/alist/indices = null
 
+	/// The record type that this database can store.
+	var/record_type = /datum/db_record
 	/// A list of all records contained within this database.
 	var/list/datum/db_record/records = null
 
-/datum/record_database/New(list/index_keys)
+/datum/record_database/New(list/index_keys, record_type)
 	. = ..()
+	src.record_type = record_type
 	src.records = list()
 
 	if (!length(index_keys))
@@ -36,7 +39,7 @@
 	RETURN_TYPE(/list/datum/db_record)
 
 	if (src.indices[key])
-		return src.indices[key][value]
+		return src.indices[key][value] || list()
 
 	. = list()
 	for (var/datum/db_record/record as anything in src.records)
@@ -50,7 +53,7 @@
 
 	for (var/datum/db_record/record as anything in src.records)
 		for (var/key as anything in keys)
-			var/value = record.get_field(key)
+			var/value = record[key]
 			if (matchtext(value, value_regex))
 				. += record
 				break
@@ -72,7 +75,7 @@
 		if (!record.has_field(key))
 			continue
 
-		var/value = record.get_field(key)
+		var/value = record[key]
 		var/list/datum/db_record/indexed_records = src.indices[key][value]
 		indexed_records -= record
 		if (!length(indexed_records))
@@ -92,20 +95,9 @@
 		if (!record.has_field(key))
 			continue
 
-		var/value = record.get_field(key)
+		var/value = record[key]
 		var/list/datum/db_record/indexed_records = (src.indices[key][value] ||= list())
 		indexed_records += record
-
-/// Create a new record and add it to this database.
-/datum/record_database/proc/create_record(list/fields)
-	RETURN_TYPE(/datum/db_record)
-
-	var/datum/db_record/record = new()
-	for (var/key as anything in fields)
-		record.set_field(key, fields[key])
-
-	src.add_record(record)
-	return record
 
 /// Notify this database that one of its records has had a value updated.
 /datum/record_database/proc/notify_field_change(datum/db_record/record, key, old_value, new_value)

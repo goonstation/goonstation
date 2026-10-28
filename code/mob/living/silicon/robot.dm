@@ -117,7 +117,8 @@ TYPEINFO(/mob/living/silicon/robot)
 		SPAWN(0) //Delay PDA spawning until the client is in the borg, so it respects preferences
 			src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 			src.internal_pda.name = "[src]’s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
+			src.internal_pda.owner = "[src.name]"
+			src.internal_pda.insert_id_card(src.botcard, src)
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule
@@ -267,7 +268,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		setdead(src)
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed [log_health(src)] at [log_loc(src)].")
-		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] was destroyed at [GHOST.MESSAGE.format_loc(src)].")
 		src.on_disassembly()
 
 		src.eject_brain(fling = TRUE) //EJECT
@@ -807,12 +808,14 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.real_name = borgify_name(src.real_name)
 			src.UpdateName()
 			src.internal_pda?.name = "[src.name]’s Internal PDA Unit"
-			src.internal_pda?.owner = "[src]"
+			src.internal_pda?.owner = "[src.name]"
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.real_name = "SHELL/[src.mainframe.name]"
 			src.UpdateName()
 			src.update_name_tag()
+			src.internal_pda?.name = "[src.name]’s Internal PDA Unit"
+			src.internal_pda?.owner = "[src.name]"
 
 		update_clothing()
 		update_appearance()
@@ -1232,6 +1235,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					if (src.locking)
 						src.locking = 0
 					locked = !locked
+					hud?.update_lock()
 					boutput(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
 					boutput(src, SPAN_NOTICE("[user] [ locked ? "locks" : "unlocks"] your interface."))
 				else
@@ -1667,6 +1671,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		src.locking = 0
 		src.opened = 0
 		src.brainexposed = 1
+		hud?.update_lock()
 
 		if (user)
 			user.put_in_hand_or_drop(src.part_head.brain)
@@ -1863,22 +1868,6 @@ TYPEINFO(/mob/living/silicon/robot)
 			C.apply_keybind("robot_tg")
 			if (C.preferences.use_azerty)
 				C.apply_keybind("robot_tg_azerty")
-
-	show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
-		var/who
-
-		if (everyone)
-			who = world
-		else
-			who = src
-			boutput(who, "<b>Obey these laws:</b>")
-		if(src.dependent && src?.mainframe?.law_rack_connection)
-			src.mainframe.law_rack_connection.show_laws(who)
-		else if(!src.dependent && src.law_rack_connection)
-			src.law_rack_connection.show_laws(who)
-		else
-			boutput(src,"You have no laws!")
-		return
 
 	get_equipped_ore_scoop()
 		if(src.module_states[1] && istype(src.module_states[1],/obj/item/ore_scoop))
@@ -2181,6 +2170,7 @@ TYPEINFO(/mob/living/silicon/robot)
 	proc/spellopen()
 		if (src.locked)
 			locked = 0
+			hud?.update_lock()
 		if (src.locking)
 			src.locking = 0
 		if (src.opened)
@@ -2200,127 +2190,111 @@ TYPEINFO(/mob/living/silicon/robot)
 		src.TakeDamage("All", 30, 0)
 		return 1
 
+	verb/cmd_interact_laws()
+		set category = "Robot Commands"
+		set name = "Laws"
+		src.interact_laws()
+
 	verb/cmd_show_laws()
 		set category = "Robot Commands"
-		set name = "Show Laws"
-
-		src.show_laws(0)
-		return
-
-	verb/cmd_state_standard_laws()
-		set category = "Robot Commands"
-		set name = "State Standard Laws"
-
-		if (GET_COOLDOWN(src, "state_laws"))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		var/list/say_targets = list()
-
-		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-			var/prefix_choice = prefix_module.get_prefix_choices()
-			if(!length(prefix_choice))
-				continue
-			say_targets += prefix_choice
-
-		say_targets += "Local"
-
-		var/choice
-		if (length(say_targets) == 1)
-			choice = say_targets[1]
-		else
-			choice = tgui_input_list(src, "Select output channel", "State Standard Laws", say_targets)
-
-		if (!choice)
-			return
-
-		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		var/prefix = ""
-		if (choice != "Local")
-			prefix = say_targets[choice]
-
-		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
-		src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
-		sleep(1 SECOND)
-		src?.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
-		sleep(1 SECOND)
-		src?.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
+		set name = "View Real Laws (Current)"
+		src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::VIEW)
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
-		set name = "State All Laws"
+		set name = "State Real Laws (Current)"
+		src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::STATE)
 
-		if (GET_COOLDOWN(src, "state_laws"))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
-			return
-
-		var/list/say_targets = list()
-
-		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-			var/prefix_choice = prefix_module.get_prefix_choices()
-			if(!length(prefix_choice))
-				continue
-			say_targets += prefix_choice
-
-		say_targets += "Local"
-
-		var/choice
-		if (length(say_targets) == 1)
-			choice = say_targets[1]
-		else
-			choice = tgui_input_list(src, "Select output channel", "State All Laws", say_targets)
-
-		if (!choice)
-			return
-
-		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-			return
-
-		var/prefix = ""
-		if (choice != "Local")
-			prefix = say_targets[choice]
-
-		var/laws = null
-		if(src.dependent) //are you a shell?
-			if(!src?.mainframe?.law_rack_connection)
-				boutput(src, "You have no laws!")
-				return
-			laws = src.mainframe.law_rack_connection.format_for_irc()
-		else
-			if(!src.law_rack_connection)
-				boutput(src, "You have no laws!")
-				return
-			laws = src.law_rack_connection.format_for_irc()
-
-		logTheThing(LOG_SAY, usr, "states all their current laws.")
-		for (var/number in laws)
-			src.say("[prefix] [number]. [laws[number]]")
-			sleep(1 SECOND)
+	verb/cmd_state_standard_laws()
+		set category = "Robot Commands"
+		set name = "State Asimov Laws (Default)"
+		src.interact_laws(SILICON::LAWS::SET::ASIMOV, SILICON::LAWS::ACTION::STATE)
 
 	verb/robot_set_fake_laws()
 		set category = "Robot Commands"
-		set name = "Set Fake Laws"
-		if (src.shell)
-			src.mainframe.set_fake_laws()
-		else
-			src.set_fake_laws()
+		set name = "Edit Fake Laws"
+		src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::EDIT)
 
 	verb/ai_state_fake_laws()
 		set category = "Robot Commands"
 		set name = "State Fake Laws"
-		src.state_fake_laws() //already handles being a shell
+		src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::STATE)
 
 	verb/robot_show_fake_laws()
 		set category = "Robot Commands"
-		set name = "Show Fake Laws"
-		src.show_fake_laws() //already handles being a shell
+		set name = "View Fake Laws"
+		src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::VIEW)
+
+	verb/cmd_customize_options()
+		set category = "Robot Commands"
+		set name = "Customization Options"
+
+		src.customize_options()
+		return
+
+	proc/customize_options()
+		var/list/custom_options = list()
+		var/obj/item/parts/robot_parts/head/screen/targethead = locate(/obj/item/parts/robot_parts/head/screen) in src.contents
+		if (istype(targethead))
+			custom_options += SILICON::CYBORG::CUSTOMIZE::FACEPLATE
+			custom_options += SILICON::CYBORG::CUSTOMIZE::DISPLAY
+		custom_options += list(SILICON::CYBORG::CUSTOMIZE::SCREAM, SILICON::CYBORG::CUSTOMIZE::PITCH, SILICON::CYBORG::CUSTOMIZE::MONOSPACE)
+		var/chosen_option = tgui_input_list(src, "Select an option to customize.", "Customization Options", custom_options)
+		if (isnull(chosen_option))
+			return
+
+		switch(chosen_option)
+			if(SILICON::CYBORG::CUSTOMIZE::FACEPLATE)
+				var/new_faceplate = tgui_input_list(src, "Select your screen expression.", SILICON::CYBORG::CUSTOMIZE::FACEPLATE, sortList(targethead.expressions, /proc/cmp_text_asc))
+				if (!new_faceplate)
+					return
+				new_faceplate = (new_faceplate ? lowertext(new_faceplate) : targethead.face)
+				targethead.face = new_faceplate
+				boutput(src, SPAN_NOTICE("Screen expression swapped to [new_faceplate]."))
+				update_bodypart(part = "head")
+
+
+			if(SILICON::CYBORG::CUSTOMIZE::DISPLAY)
+				var/new_displaymode = tgui_input_list(src, "Select a display mode", SILICON::CYBORG::CUSTOMIZE::DISPLAY, list("light-on-dark", "dark-on-light"))
+				if (!new_displaymode)
+					return
+				new_displaymode = (new_displaymode == "light-on-dark" ? "lod" : "dol")
+				new_displaymode = (new_displaymode ? new_displaymode : targethead.mode)
+				targethead.mode = new_displaymode
+				boutput(src, SPAN_NOTICE("Display mode set to [new_displaymode]."))
+				update_bodypart(part = "head")
+
+			if(SILICON::CYBORG::CUSTOMIZE::SCREAM)
+				var/list/notes_list = list()
+				if (src.scream_instrument.pick_random_note || !src.scream_instrument.use_new_interface)
+					for (var/i in 1 to length(src.scream_instrument.sounds_instrument))
+						notes_list += i
+				else
+					notes_list = src.scream_instrument.notes
+
+				var/note = tgui_input_list(src, "Select a scream note", "Select scream", notes_list)
+				if (!note || !(note in notes_list))
+					return
+
+				src.scream_note = note
+				boutput(src, SPAN_NOTICE("Scream set to [note]."))
+
+			if(SILICON::CYBORG::CUSTOMIZE::PITCH)
+				var/vocal_pitch_choice = tgui_input_list(src, "Select a vocal pitch:", "Robot Voice", list("Low", "Medium", "High"))
+				if (!vocal_pitch_choice)
+					return
+				switch(vocal_pitch_choice)
+					if("Low")
+						vocal_pitch = 0.9
+					if("Medium")
+						vocal_pitch = 1
+					if("High")
+						vocal_pitch = 1.25
+
+				boutput(src, SPAN_NOTICE("Vocal pitch set to [vocal_pitch_choice]."))
+
+			if(SILICON::CYBORG::CUSTOMIZE::MONOSPACE)
+				src.toggle_monospace_mode()
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
@@ -2329,6 +2303,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (src.locked)
 			src.locked = 0
 			boutput(src, SPAN_ALERT("You have unlocked your interface."))
+			hud?.update_lock()
 		else if (src.opened)
 			boutput(src, SPAN_ALERT("Your chest compartment is open."))
 		else if (src.wiresexposed)
@@ -2347,6 +2322,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					src.locked = 1
 					src.locking = 0
 					boutput(src, SPAN_ALERT("You have locked your interface."))
+					hud?.update_lock()
 
 	verb/cmd_alter_head_screen()
 		set category = "Robot Commands"

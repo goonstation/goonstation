@@ -590,7 +590,7 @@
 	dir = 1;
 	pixel_x = 12
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -903,7 +903,7 @@
 /obj/table/wood/auto/desk{
 	icon_state = "1"
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -2123,7 +2123,7 @@
 "aht" = (
 /obj/table/folding,
 /obj/decal/bloodtrace,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -3058,7 +3058,7 @@
 	})
 "akG" = (
 /obj/map/light/screen,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
@@ -3659,7 +3659,7 @@
 	dir = 1;
 	plane = -102
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -3698,7 +3698,7 @@
 	ambient_light = "#223333"
 	})
 "anj" = (
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -3900,7 +3900,7 @@
 	pixel_y = 7
 	},
 /obj/map/light/screen,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
@@ -6103,7 +6103,7 @@
 	color = "gray";
 	desc = "A few scattered pieces of concrete that broke off something bigger."
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -6154,7 +6154,7 @@
 /obj/item/device/radio/intercom/detnet/detective{
 	pixel_y = 20
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -6302,7 +6302,7 @@
 	pixel_y = 20
 	},
 /obj/decal/cleanable/dirt/dirt2,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
@@ -6768,7 +6768,7 @@
 /obj/decal/cleanable/dirt/dirt4{
 	dir = 1
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
@@ -6844,7 +6844,7 @@
 	pixel_y = 12;
 	pixel_x = 6
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -8160,7 +8160,7 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
@@ -9710,7 +9710,7 @@
 /obj/decal/cleanable/dirt/dirt4{
 	dir = 1
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
@@ -10390,7 +10390,7 @@
 /obj/window_blinds/cog2/closed/middle{
 	pixel_y = 31
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -10464,7 +10464,7 @@
 	pixel_x = -3;
 	name = "RHAEBUS-pattern accelerated mass lancer"
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -10714,7 +10714,7 @@
 	pixel_y = 14;
 	pixel_x = -2
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -11818,7 +11818,7 @@
 /obj/stool/chair/office/green{
 	dir = 8
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -13853,7 +13853,7 @@
 /obj/decal/cleanable/dirt/jen{
 	name = "powder residue"
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -14095,7 +14095,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
@@ -14495,7 +14495,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
@@ -14620,7 +14620,7 @@
 /obj/stool/chair/office/green{
 	dir = 4
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -14643,7 +14643,7 @@
 /obj/item/caution{
 	name = "fire sign"
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -14779,7 +14779,7 @@
 	ambient_light = "#441111"
 	})
 "aXD" = (
-/obj/machinery/computer/secure_data/detective_computer{
+/obj/filing_cabinet{
 	name = "Personnel Records";
 	pixel_y = 16
 	},
@@ -15466,7 +15466,7 @@
 	dir = 8;
 	pixel_x = 12
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -15516,7 +15516,7 @@
 	pixel_y = 2;
 	pixel_x = -1
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -16043,7 +16043,7 @@
 	icon_state = "chair_couch_ew-purple";
 	pixel_x = -11
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -16694,7 +16694,7 @@
 /obj/neon_lining{
 	dir = 1
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -17810,7 +17810,7 @@
 	dir = 1
 	},
 /obj/neon_lining,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -19066,7 +19066,7 @@
 	dir = 1;
 	plane = -102
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -19764,7 +19764,7 @@
 	},
 /obj/neon_lining,
 /obj/decal/bloodtrace,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -20399,7 +20399,7 @@
 /obj/stool/chair/black{
 	dir = 8
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -22198,7 +22198,7 @@
 	dir = 4;
 	pixel_x = -11
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -22536,7 +22536,7 @@
 	})
 "qyo" = (
 /obj/table/folding,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -22606,7 +22606,7 @@
 	dir = 1;
 	plane = -102
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -24122,7 +24122,7 @@
 	})
 "tSl" = (
 /obj/neon_lining,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -24822,7 +24822,7 @@
 	name = "Super! Fun Arcade"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -25209,7 +25209,7 @@
 /obj/stool/chair/black{
 	dir = 4
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -25281,7 +25281,7 @@
 	dir = 1;
 	name = "Super! Fun Arcade"
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -25423,7 +25423,7 @@
 	pixel_y = 7;
 	pixel_x = -1
 	},
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -25513,7 +25513,7 @@
 	dir = 4
 	},
 /obj/decal/bloodtrace,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -26196,7 +26196,7 @@
 "xXd" = (
 /obj/table/folding,
 /obj/item/paper/manufacturer_blueprint/alastor,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";

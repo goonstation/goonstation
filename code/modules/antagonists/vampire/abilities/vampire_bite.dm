@@ -46,11 +46,51 @@
 
 	return TRUE
 
+/// Gives the vampire a taste of whatever's in the victim's bloodstream w/o transferring any chemicals or side-effects.
+/datum/abilityHolder/vampire/proc/taste_bloodstream_of(var/mob/living/carbon/human/target)
+	var/mob/living/carbon/human/human = src.owner
+	var/big_content = target.reagents.reagent_list[target.reagents.get_master_reagent()].name
+	if (human.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
+		var/undertones = ""
+		for (var/reagent_id as anything in target.reagents.reagent_list)
+			var/datum/reagent/small_content = target.reagents.reagent_list[reagent_id]
+			var/chemName = small_content.name
+			if (chemName == "mirabilis" || chemName == big_content)
+				continue
+			if (undertones != "") // Not on first run of for loop
+				undertones += " [pick("and", "with")] "
+			else
+				undertones += "with "
+			undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
+		if (undertones != "")
+			undertones += "..."
+		boutput(human, SPAN_ITALIC("[target] has hints of [big_content]... [capitalize(undertones)]")) // Biggest chemical hinted first
+	else  // Non bartenders just get a normal taste!
+		var/taste = lowertext(target.reagents.get_taste_string(human))
+		if (taste != "tastes pretty bland.") // Don't want people to think that blood w/o reagents is bad
+			boutput(human, SPAN_ITALIC(capitalize(("[target] [taste]"))))
+		else if (target.traitHolder.hasTrait("training_clown")) // Clowns taste funny. Honk.
+			boutput(human, SPAN_ITALIC(capitalize("[target] tastes kind of funny.")))
+
+/// Checks the reagents of a victim for holy water and has a chance of giving them a taste.
+/datum/abilityHolder/vampire/proc/check_bloodstream_of(var/mob/living/carbon/human/target, var/mult = 1)
+	var/mob/living/carbon/human/human = src.owner
+	if (target.reagents.total_volume == 0)
+		return
+	if (target.reagents.has_reagent("water_holy"))
+		if (prob(30))
+			human.visible_message(SPAN_ALERT("<b>[human]</b>'s fangs sizzle!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
+		if (prob(50))
+			human.emote(pick("cough", "spit", "cry", "choke"))
+			human.stuttering += rand(1,3)
+			human.changeBodyTemp(rand(5,20) KELVIN)
+	else if (prob(20))
+		src.taste_bloodstream_of(target)
+
 /datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
 	var/datum/abilityHolder/vampire/H = src
-
 
 	if (HH.blood_volume <= 0 && isdead(HH))
 		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
@@ -104,6 +144,7 @@
 
 			// Vampire TEG also uses this ability, prevent runtimes
 			if (ismob(src.owner))
+				src.check_bloodstream_of(HH, mult)
 				//vampires heal, thralls don't
 				M.HealDamage("All", 3, 3)
 				M.take_toxin_damage(-1)

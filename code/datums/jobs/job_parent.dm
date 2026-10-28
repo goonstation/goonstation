@@ -182,7 +182,7 @@ ABSTRACT_TYPE(/datum/job)
 				boutput(M, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
 				boutput(M, "<B>Objective #1</B>: [newObjective.explanation_text]")
 
-			if (M.client && src.change_name_on_spawn)
+			if (M.client && src.change_name_on_spawn && !inafterlifebar(M))
 				if (!jobban_isbanned(M, "Custom Names"))
 					//if (ishuman(M)) //yyeah this doesn't work with critters fix later
 					var/default = M.real_name + " the " + src.name

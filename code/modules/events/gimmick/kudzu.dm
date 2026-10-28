@@ -30,7 +30,7 @@
 			user.setStatus("kudzuwalk", INFINITE_STATUS)
 			global.get_master_kudzu_controller().grant_conversion()
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
-			message_ghosts("<b>Kudzu</b> has been planted at [log_loc(src.loc, ghostjump=TRUE)].")
+			GHOST.MESSAGE.send("<b>Kudzu</b> has been planted at [GHOST.MESSAGE.format_loc(src)].")
 			user.u_equip(src)
 			qdel(src)
 

@@ -128,6 +128,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	///!!very hacky and dumb!! All manufacturers with the same share_id have the same storage datum, ie share materials inherently
 	var/share_id = null
 
+	var/static/datum/forensic_display/forensic_pattern_disp = new("Recently Fabricated: @F")
+	var/forensic_pattern_prefix = "FAB"
+	var/datum/forensic_id/forensic_pattern
+
 	New()
 		START_TRACKING
 		categories = MANUFACTURER.CATEGORY._get_namespace_constants()
@@ -145,6 +149,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		src.net_id = generate_net_id(src)
+		src.forensic_pattern = register_id("[src.forensic_pattern_prefix]-[build_id_unique(/proc/build_id_pattern, list("L###"))]")
 
 		if(!src.link)
 			var/turf/T = get_turf(src)
@@ -1230,7 +1235,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/bank_info = list()
 		var/list/keys_of_interest = list("name", "current_money")
 		for (var/key in keys_of_interest)
-			bank_info[key] = src.account.get_field(key)
+			bank_info[key] = src.account[key]
 		return bank_info
 
 	mouse_drop(over_object, src_location, over_location)
@@ -1517,6 +1522,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 				src.speed = given_speed
 				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#SPEEDSET"))
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		scan.add_text("Fabrication Pattern: [src.forensic_pattern.id]")
 
 	proc/post_signal(var/list/data)
 		var/datum/signal/new_signal = get_free_signal()
@@ -1865,6 +1874,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else if (isobj(product) || ismob(product))
 			A = product
 			A.set_loc(get_output_location())
+		if(A)
+			var/datum/forensic_data/basic/pattern_data = new(src.forensic_pattern, src.forensic_pattern_disp)
+			A.add_evidence(pattern_data)
 
 		return A
 

@@ -3,7 +3,7 @@
 	name = "water"
 	density = 0
 	anchored = ANCHORED
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	icon_state = "poolwater"
 	layer = EFFECTS_LAYER_UNDER_3
 	mouse_opacity = 0
@@ -496,7 +496,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 0)
-		message_ghosts("<b>[src]</b> has been VIOLENTLY DESTROYED at [log_loc(src, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] was VIOLENTLY DESTROYED at [GHOST.MESSAGE.format_loc(src)].")
 		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
 		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
 		if(length(afterlife_turfs))

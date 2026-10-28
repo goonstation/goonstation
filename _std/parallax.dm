@@ -51,7 +51,10 @@ var/list/planet_parallax_render_source_groups = list()
 #define Z_LEVEL_PARALLAX_RENDER_SOURCES(z_level) z_level_parallax_render_sources_##z_level
 
 /// Realigns the parallax layer so that the centremost tessellated tile occupies the position of the tessellated tile closest to the player.
-#define UPDATE_TESSELLATION_ALIGNMENT(parallax_layer) if (parallax_layer.parallax_render_source.tessellate) { \
-	parallax_layer.pixel_w = ((parallax_layer.pixel_w % parallax_layer.parallax_render_source.icon_width) + parallax_layer.parallax_render_source.icon_width) % parallax_layer.parallax_render_source.icon_width; \
-	parallax_layer.pixel_z = ((parallax_layer.pixel_z % parallax_layer.parallax_render_source.icon_height) + parallax_layer.parallax_render_source.icon_height) % parallax_layer.parallax_render_source.icon_height; \
-}
+#define UPDATE_TESSELLATION_ALIGNMENT(parallax_layer, render_source) \
+	if (render_source.tessellate) { \
+		var/__width = render_source.icon_width; \
+		var/__height = render_source.icon_height; \
+		parallax_layer.pixel_w = ((parallax_layer.pixel_w % __width) + __width) % __width; \
+		parallax_layer.pixel_z = ((parallax_layer.pixel_z % __height) + __height) % __height; \
+	}

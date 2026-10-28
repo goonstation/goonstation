@@ -23,8 +23,8 @@ ADD_TO_NAMESPACE(DCS)(proc/GetElement(list/arguments, init_element = TRUE))
 //------------ Element Flags ------------//
 /// Bitflags for modifying element behaviour.
 CREATE_NAMESPACE(DCS, ELEMENT_FLAG)
-/// Automatically call the `Detach()` proc when a datum registered to this element qdeletes.
-ADD_TO_NAMESPACE(DCS, ELEMENT_FLAG)(var/const/DETACH_ON_PARENT_DISPOSE = (1 << 0))
+/// Replace this with an actual bitflag when the need arises for one.
+ADD_TO_NAMESPACE(DCS, ELEMENT_FLAG)(var/const/EXAMPLE_FLAG = (1 << 0))
 
 
 //------------ DCS Errors ------------//

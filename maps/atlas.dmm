@@ -327,6 +327,9 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "abM" = (
@@ -7734,6 +7737,9 @@
 /area/station/science/artifact)
 "aYO" = (
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aYR" = (
@@ -8414,7 +8420,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "bKM" = (
 /obj/cable{
@@ -9220,7 +9226,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "dcx" = (
 /obj/cable{
@@ -9967,7 +9973,7 @@
 /area/station/mining/refinery)
 "eoM" = (
 /obj/landmark/gps_waypoint,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "eoY" = (
 /obj/machinery/networked/test_apparatus/electrobox,
@@ -10073,7 +10079,6 @@
 /turf/space,
 /area/space)
 "evY" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
 	},
@@ -10083,6 +10088,13 @@
 	pixel_x = 10
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/blueblack,
 /area/station/bridge/customs)
 "exg" = (
@@ -10352,7 +10364,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "eTg" = (
 /obj/stool/chair/comfy/wheelchair{
@@ -11453,7 +11465,7 @@
 /obj/machinery/chem_master{
 	dir = 4
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "gwJ" = (
 /obj/machinery/alarm/directional/north,
@@ -13441,6 +13453,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge/customs)
 "jsH" = (
@@ -14036,7 +14051,7 @@
 	},
 /obj/table/wood/auto/desk,
 /obj/item/device/radio/intercom/catering,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "kfF" = (
 /obj/cable{
@@ -14090,7 +14105,7 @@
 	pixel_x = 8;
 	pixel_y = -2
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "kmc" = (
 /obj/machinery/atmospherics/binary/valve,
@@ -14603,7 +14618,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/beacon,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "lbH" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -16309,7 +16324,7 @@
 "nvn" = (
 /obj/item/swingsignfolded,
 /obj/reagent_dispensers/beerkeg,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "nvv" = (
 /obj/table/wood/auto,
@@ -17122,7 +17137,7 @@
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "oIn" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -17245,7 +17260,7 @@
 	pixel_x = 32
 	},
 /obj/table/wood/auto/desk,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "oTI" = (
 /obj/machinery/camera/directional/north{
@@ -17726,7 +17741,7 @@
 "pEt" = (
 /obj/table/wood/auto/desk,
 /obj/noticeboard/persistent/bar/directional/north,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "pEV" = (
 /obj/cable{
@@ -19045,7 +19060,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "rYo" = (
 /obj/table/auto,
@@ -19312,8 +19327,14 @@
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "szn" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/noticeboard/persistent/detectives_office/directional/east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "szE" = (
@@ -19905,7 +19926,7 @@
 	icon_state = "line1"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/kitchen)
 "tkN" = (
 /obj/machinery/power/stats_meter{
@@ -20078,7 +20099,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "txp" = (
 /obj/cable{
@@ -21261,7 +21282,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "vcn" = (
 /turf/simulated/wall/auto/supernorn,
@@ -21744,7 +21765,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "vOd" = (
 /obj/cable{

@@ -444,7 +444,8 @@
 
 /atom/movable/screen/ability
 	var/datum/targetable/owner
-	var/static/image/binding = image('icons/mob/spell_buttons.dmi',"binding")
+	// Must always layer over the ability border overlay or it'll get covered
+	var/static/image/binding = image('icons/mob/spell_buttons.dmi',"binding", layer = HUD_LAYER_1)
 	//*screams*
 	var/static/image/one = image('icons/mob/spell_buttons.dmi',"1")
 	var/static/image/two = image('icons/mob/spell_buttons.dmi',"2")
@@ -578,11 +579,12 @@
 
 
 /atom/movable/screen/ability/topBar
-	var/static/image/ctrl_highlight = image('icons/mob/spell_buttons.dmi',"ctrl")
-	var/static/image/shift_highlight = image('icons/mob/spell_buttons.dmi',"shift")
-	var/static/image/alt_highlight = image('icons/mob/spell_buttons.dmi',"alt")
-	var/static/image/cooldown = image('icons/mob/spell_buttons.dmi',"cooldown")
-	var/static/image/darkener = image('icons/mob/spell_buttons.dmi',"darkener")
+	// Must always layer over the ability border overlay or they'll get covered
+	var/static/image/ctrl_highlight = image('icons/mob/spell_buttons.dmi',"ctrl", layer = HUD_LAYER_1)
+	var/static/image/shift_highlight = image('icons/mob/spell_buttons.dmi',"shift", layer = HUD_LAYER_1)
+	var/static/image/alt_highlight = image('icons/mob/spell_buttons.dmi',"alt", layer = HUD_LAYER_1)
+	var/static/image/cooldown = image('icons/mob/spell_buttons.dmi',"cooldown", layer = HUD_LAYER_1)
+	var/static/image/darkener = image('icons/mob/spell_buttons.dmi',"darkener", layer = HUD_LAYER_1)
 
 	var/atom/movable/screen/pseudo_overlay/cd_tens
 	var/atom/movable/screen/pseudo_overlay/cd_secs
@@ -632,6 +634,8 @@
 			if(owner)
 				T.color = owner.cd_text_color
 				S.color = owner.cd_text_color
+				if(src.owner.border_icon && src.owner.border_icon_state)
+					src.UpdateOverlays(image(src.owner.border_icon, src.owner.border_icon_state), "ability_border")
 
 	disposing()
 		qdel(point_overlay)
@@ -642,6 +646,15 @@
 		cd_secs = null
 		..()
 
+	MouseEntered()
+		. = ..()
+		if(src.owner?.border_icon && src.owner.hovered_border_icon_state)
+			src.UpdateOverlays(image(src.owner.border_icon, src.owner.hovered_border_icon_state), "ability_border")
+
+	MouseExited()
+		. = ..()
+		if(src.owner?.border_icon && src.owner.hovered_border_icon_state)
+			src.UpdateOverlays(image(src.owner.border_icon, src.owner.border_icon_state), "ability_border")
 
 	update_icon()
 		var/mob/M = get_controlling_mob()
@@ -878,6 +891,8 @@
 	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 	var/cooldown_after_action = FALSE		//! if TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
+	var/aim_assist_radius = null			//! If we don't click on a mob, how many tiles away do we search to find a mob to target? If null, don't try at all
+	var/aim_assist_ignore_owner = TRUE		//! Should we ignore our owner when searching for nearby mobs with aim assist?
 
 	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
 	var/waiting_for_hotkey = FALSE //If TRUE, the next number hotkey pressed will be bound to this.
@@ -886,6 +901,11 @@
 
 	var/icon = 'icons/mob/spell_buttons.dmi'
 	var/icon_state = "blob-template"
+
+	// Below determine if a separate "border" sprite should be overlayed on the ability
+	var/border_icon = null  /// Icon for a border to overlay over the ability separately
+	var/border_icon_state = null /// Icon state for the border to overlay over the ability icon.
+	var/hovered_border_icon_state = null // Border state while ability button is moused over
 
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/show_tooltip = TRUE
@@ -900,6 +920,8 @@
 		SHOULD_CALL_PARENT(FALSE) // I hate this but refactoring /datum/targetable is a big project I'll do some other time
 		..()
 		src.holder = holder
+		if (istext(src.icon))
+			src.icon = file(src.icon)
 		if (src.icon && src.icon_state)
 			var/atom/movable/screen/ability/topBar/button = new /atom/movable/screen/ability/topBar()
 			button.icon = src.icon
@@ -923,6 +945,8 @@
 
 	proc
 		handleCast(atom/target, params)
+			if (!isnull(src.aim_assist_radius) && !ismob(target))
+				target = src.aim_assist_retargeting(target, params)
 			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
 			result = TRUE
@@ -1123,6 +1147,22 @@
 
 		flip_callback()
 			.= 0
+
+		aim_assist_retargeting(atom/target, params)
+			. = target
+			var/list/mob_list = list()
+			var/list/click_location = get_turf_pixel_clicked_over(src.holder.owner, params)
+			if(!click_location)
+				return
+			if(src.aim_assist_radius > 0)
+				mob_list = get_nearest_mobs_list(click_location["turf"], src.aim_assist_radius, click_location["pixel_x"], click_location["pixel_y"])
+			else
+				for(var/mob/in_turf_target in click_location["turf"])
+					mob_list[in_turf_target] += 0 // either we dont change an existing entry's range, or add a new entry with a range 0 to the end of the list
+			for (var/mob/mob_target in mob_list)
+				if((mob_target == src.holder.owner) && src.aim_assist_ignore_owner)
+					continue
+				return mob_target
 
 /atom/movable/screen/pseudo_overlay
 	// this is hack as all get out

@@ -25,6 +25,7 @@
 	"Void" = "stamp-sprite-void",\
 	"Flock" = "stamp-sprite-flock",\
 	"Vamp" = "stamp-sprite-vamp",\
+	"Inspector" = "stamp-sprite-inspector",\
 	"Angler" = "stamp-sprite-angler",\
 	"Your Name" = "stamp-text-name",\
 	"Current Time" = "stamp-text-time",)
@@ -67,6 +68,7 @@
 	var/field_counter = 1
 	///Some subtypes might want to hide the scrollbar
 	var/scrollbar = TRUE
+	var/paper_color // UI color without sprite change
 
 /obj/item/paper/New()
 	..()
@@ -250,7 +252,7 @@
 				if(info != in_paper)
 					boutput(ui.user, "You write on \the [src]!");
 					info = in_paper
-					phrase_log.log_phrase("paper", info, no_duplicates=FALSE)
+					phrase_log.log_phrase("paper", info, no_duplicates=FALSE, strip_html = FALSE)
 					update_static_data(usr,ui)
 			. = TRUE
 
@@ -261,7 +263,7 @@
 		"sizeY" = src.sizey,
 		"text" = src.info,
 		"max_length" = PAPER_MAX_LENGTH,
-		"paperColor" = src.color || "white",	// color might not be set
+		"paperColor" = src.paper_color || src.color || "white",	// color might not be set
 		"stamps" = src.stamps,
 		"stampable" = src.stampable,
 		"sealed" = src.sealed,
@@ -306,6 +308,7 @@
 		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
 		"stamp-sprite-flock" = "[resource("images/tgui/stamp_icons/stamp-flock.apng")]",
 		"stamp-sprite-vamp" = "[resource("images/tgui/stamp_icons/stamp-vamp.png")]",
+		"stamp-sprite-inspector" = "[resource("images/tgui/stamp_icons/stamp-inspector.png")]",
 		"stamp-sprite-angler" = "[resource("images/tgui/stamp_icons/stamp-angler.png")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
@@ -320,6 +323,12 @@
 			var/obj/item/portable_typewriter/typewriter = src.loc
 			if(istype(typewriter.pen, /obj/item/pen))
 				O = typewriter.pen
+	if(istype(O, /obj/item/tool/omnitool))
+		var/obj/item/tool/omnitool/OMNI = O
+		if(istype(OMNI.mode, /datum/omnimode/pen))
+			var/datum/omnimode/pen/PEN_MODE = OMNI.mode
+			O = PEN_MODE.omnimode_pen
+
 	if(istype(O, /obj/item/pen) && in_interact_range(src, user))
 		var/obj/item/pen/PEN = O
 		. += list(
