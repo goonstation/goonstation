@@ -133,7 +133,7 @@
 	desc = "A small box full of tools meant for the moving and pinning of hotspots."
 	icon_state = "hotspot_nt"
 	spawn_contents = list(
-		/obj/item/heat_dowsing,
+		/obj/item/heat_dowsing = 3,
 		/obj/item/clothing/shoes/stomp_boots,
 		/obj/item/cable_coil/reinforced
 	)
