@@ -1166,7 +1166,9 @@
 
 		/// Returns the cursor .dmi we should use, based on user prefs and aim_assist_radius
 		get_ability_cursor()
-			var/client/client = src.holder.owner.client
+			var/client/client = src.holder?.owner?.client
+			if(!client)
+				client = usr.client
 			if(!client)
 				return
 			var/file = cursors_selection[client.preferences.target_cursor]
