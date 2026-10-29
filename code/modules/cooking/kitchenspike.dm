@@ -12,6 +12,7 @@ TYPEINFO(/obj/kitchenspike)
 	var/meat = 0
 	var/occupied = FALSE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
+	HELP_MESSAGE_OVERRIDE({"If you click on the spike while holding a monkey in your active hand, the monkey will be instantly killed, giving you five steaks in return. The steaks can then be harvested by clicking on the spike again until you run out of meat."})
 
 /obj/kitchenspike/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/grab))
@@ -37,8 +38,8 @@ TYPEINFO(/obj/kitchenspike)
 		return
 	if(!src.occupied)
 		src.occupied = TRUE
-		src.UpdateIcon()
 		src.meat = 5
+		src.UpdateIcon()
 		if (user)
 			src.visible_message(SPAN_ALERT("[user] forces [victim] onto the spike, killing [him_or_her(victim)] instantly!"))
 		else
@@ -63,6 +64,7 @@ TYPEINFO(/obj/kitchenspike)
 		new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat(src.loc)
 		if (src.meat >= 1)
 			boutput(user, "You remove some meat from the monkey.")
+			src.UpdateIcon()
 		else
 			boutput(user, "You remove the last piece of meat from the monkey!")
 			src.occupied = FALSE
@@ -71,6 +73,6 @@ TYPEINFO(/obj/kitchenspike)
 /obj/kitchenspike/update_icon()
 	. = ..()
 	if (src.occupied)
-		src.icon_state = "spikebloody"
+		src.icon_state = "spike[meat]"
 	else
 		src.icon_state = "spike"

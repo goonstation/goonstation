@@ -1,5 +1,42 @@
 
+(t)wed oct 28 26
+(u)nova2053
+(p)27903
+(e)💡|A-Station-Systems
+(*)Blind people (or people with their vision obscured by headwear) can no longer read papers, use PDAs, or operate most computers.
+(u)ANNmagedon
+(p)28121
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)The oculine recipe has been updated to saline + salicylic acid + space lube.
+(u)Cheekybrdy
+(p)27286
+(e)🎨⚗🌱|C-Sprites, A-Chemistry, A-Hydroponics
+(*)The sickly pear has returned.
+(u)Driftered
+(p)28112
+(e)💅🤖|C-QoL, A-Silicons
+(*)Added bulk sheet recipes for regular metal, reinforced metal, and regular glass to the Robotics Fabricator.
+(u)glowbold
+(e)⚖📨|C-Balance, A-Logistics
+(*)Vending machines show a clock icon on items that will not be restocked with a restock cart. The list of non-restockable item/vendor combinations is in minor notes.
+(+)These items do not restock in the listed vending machines: Magic sandals, Chaplain Vendor; Odd Cigarettes, Cigarette Vendor; Lethal 38s, SecTech; Muckshot, AmmoTech
+(u)Spyritdragon
+(p)28023
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Added restock cartridges for the janitor and chapel vending machines
+(u)Nexusuxen
+(p)27912
+(e)🎨📄|C-Sprites, A-UI
+(+)Abilities with aim assist come with bigger cursors to indicate their increased search range.
+(u)Astarthoc
+(p)28166
+(e)🪲🔨👮|C-Bug, A-Player-Actions, A-Security
+(+)Touching a head or any other organs now leaves fingerprints on it
 (t)mon oct 26 26
+(u)ANNmagedon
+(p)28153
+(e)🆕🐣🧑‍✈️|C-Feature, A-Respawning, A-Command
+(+)Late-join captains now get a pinpointer for the authentication disk.
 (u)JORJ949
 (p)28178
 (e)🎨🔨|C-Sprites, A-Player-Actions

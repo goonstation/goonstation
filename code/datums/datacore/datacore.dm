@@ -265,6 +265,7 @@
 
 		if (rank in global.command_jobs)
 			if (rank == "Captain")
+				entry = "<b>[entry]</b>"
 				section_command.Insert(1, entry)
 				continue // The Captain only appears in the command section.
 

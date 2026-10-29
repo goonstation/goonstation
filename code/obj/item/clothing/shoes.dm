@@ -809,16 +809,16 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.hasProperty("thermal"))
-				protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
-				setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
-				setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+			if(src.material.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+				protective_temperature = (100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) ** 1.65
+				setProperty("coldprot", round((100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 0.1))
+				setProperty("heatprot", round((100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 0.1))
 			else
 				protective_temperature = 0
 				setProperty("coldprot", 0)
 				setProperty("heatprot", 0)
-			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
-				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 1500)
+			if(src.material.hasProperty(MATERIAL::PROPERTY::HARDNESS) && src.material.hasProperty(MATERIAL::PROPERTY::DENSITY))
+				kick_bonus = round((src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) * src.material.getProperty(MATERIAL::PROPERTY::DENSITY)) / 1500)
 			else
 				kick_bonus = 0
 		return

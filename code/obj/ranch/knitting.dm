@@ -221,13 +221,14 @@ ABSTRACT_TYPE(/datum/material/fabric/cloth/wool) //hi emily it's yass here makin
 	material_flags = MATERIAL_CLOTH
 
 	New()
-		setProperty("hard", 1)
-		setProperty("density", 2)
-		setProperty("flammable", 6)
-		setProperty("electrical", 3)
-		setProperty("thermal", 7)
+		setProperty(MATERIAL::PROPERTY::HARDNESS, 1)
+		setProperty(MATERIAL::PROPERTY::DENSITY, 2)
+		setProperty(MATERIAL::PROPERTY::FLAMMABLE, 6)
+		setProperty(MATERIAL::PROPERTY::ELECTRIC_COND, 3)
+		setProperty(MATERIAL::PROPERTY::THERMAL_COND, 7)
 		return ..()
 
+ABSTRACT_TYPE(/obj/item/property_setter/wool)
 /obj/item/property_setter/wool
 	name = "YOU SHOULDN'T SEE ME"
 	desc = "YOU SHOULDN'T SEE ME. You feel confident in that you could apply this to a piece of clothing to make it more resistant to outside force."
