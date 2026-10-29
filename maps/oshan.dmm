@@ -25902,11 +25902,12 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -4
 	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
 /obj/machinery/computer3/terminal/zeta{
 	dir = 8;
 	setup_os_string = "ZETA_MAINFRAME"
 	},
-/obj/cable,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
