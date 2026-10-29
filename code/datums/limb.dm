@@ -1184,17 +1184,6 @@
 				TT.hotspot_expose(T0C + 5000, 125)
 				user.visible_message(SPAN_ALERT("[user] messes up with thier [src] and superheats the [target] "), SPAN_ALERT("You mess up and superheat [target]!"))
 				playsound(user, 'sound/impact_sounds/burn_sizzle.ogg', 100, 1)
-				// Old item destruction stuff
-				// var/obj/item/I = target
-				// if(I.anchored)
-				// 	return 0
-				// var/obj/decal/cleanable/molten_item/I2 = make_cleanable(/obj/decal/cleanable/molten_item,I.loc)
-				// user.visible_message(SPAN_ALERT("The [I] melts in [user]'s clutch"), SPAN_ALERT("The [I] melts in your clutch!"))
-				// qdel(target)
-				// I2.desc = "Looks like this was \an [I], melted by someone who was too much."
-				// I2.visible_message(SPAN_ALERT("\The [I] melts."))
-				// qdel(I)
-				// return
 
 		..()
 		return
@@ -1237,8 +1226,6 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		// if (!no_logs)
-		// 	logTheThing(LOG_COMBAT, user, "melts [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 3, 1, 0, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
