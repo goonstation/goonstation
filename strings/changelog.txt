@@ -1,5 +1,9 @@
 
 (t)wed oct 28 26
+(u)ANNmagedon
+(p)28121
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)The oculine recipe has been updated to saline + salicylic acid + space lube.
 (u)Cheekybrdy
 (p)27286
 (e)🎨⚗🌱|C-Sprites, A-Chemistry, A-Hydroponics
