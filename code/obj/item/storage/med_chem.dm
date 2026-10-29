@@ -498,6 +498,11 @@
 	desc = "Contains pills used to treat... brain damage."
 	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 7)
 
+/obj/item/storage/pill_bottle/bronadyl
+	name = "pill bottle (Bronadyl)"
+	desc = "A cheap hay fever medication."
+	spawn_contents = list(/obj/item/reagent_containers/pill/bronadyl = 3)
+
 /* -------------------- Pill Bottles - Drugs -------------------- */
 /obj/item/storage/pill_bottle/CBD
 	name = "pill bottle (CBD)"

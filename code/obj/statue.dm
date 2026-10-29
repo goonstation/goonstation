@@ -68,7 +68,7 @@
 			return
 		// Otherwise, it's probably soft enough to cut
 		if (iscuttingtool(W) || issawingtool(W) || ischoppingtool(W))
-			var/hardness = src.material.getProperty("hard")
+			var/hardness = src.material.getProperty(MATERIAL::PROPERTY::HARDNESS)
 			if (hardness > 2)
 				boutput(user, SPAN_ALERT("The [src.material] is too hard to cut!"))
 				return
@@ -111,7 +111,7 @@
 		..()
 
 	proc/mine_statue(var/obj/item/mining_tool/tool, var/mob/user)
-		var/hardness = src.material.getProperty("hard")
+		var/hardness = src.material.getProperty(MATERIAL::PROPERTY::HARDNESS)
 		if (hardness <= 2)
 			boutput(user, SPAN_ALERT("The [src.material] is too soft to mine!"))
 			return
