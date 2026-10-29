@@ -1,21 +1,23 @@
 /datum/db_record/personnel/medical
-	fields = alist(
-		"id"			= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
-		"name"			= new /datum/record_field/string("Name", "New Record"),
-		"h_imp"			= new /datum/record_field/string("Current Health", "No health implant detected."),
-		"blood_type"	= new /datum/record_field/choice("Blood Type", "Unknown", list("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Zesty Ranch", "Unknown")),
-		"mi_dis"		= new /datum/record_field/string("Minor Disabilities", "None"),
-		"mi_dis_d"		= new /datum/record_field/string("Details", "No minor disabilities have been declared."),
-		"ma_dis"		= new /datum/record_field/string("Major Disabilities", "None"),
-		"ma_dis_d"		= new /datum/record_field/string("Details", "No major disabilities have been diagnosed."),
-		"alg"			= new /datum/record_field/string("Allergies", "None"),
-		"alg_d"			= new /datum/record_field/string("Details", "No allergies have been detected in this patient."),
-		"cdi"			= new /datum/record_field/string("Current Diseases", "None"),
-		"cdi_d"			= new /datum/record_field/string("Details", "No diseases have been diagnosed at the moment."),
-		"cl_def"		= new /datum/record_field/string("Cloner Defects", "None"),
-		"cl_def_d"		= new /datum/record_field/string("Details", "No cloner defects have been recorded."),
-		"dnasample"		= new /datum/record_field/object("DNA Sample", null, /datum/computer/file/genetics_scan),
-		"notes"			= new /datum/record_field/string("Important Notes", "No notes."),
+
+/datum/db_record/personnel/medical/build_fields()
+	return alist(
+		"id"			= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
+		"name"			= new /datum/record_field/string(src, "Name", "New Record"),
+		"h_imp"			= new /datum/record_field/string(src, "Current Health", "No health implant detected."),
+		"blood_type"	= new /datum/record_field/choice(src, "Blood Type", "Unknown", list("A+", "A-", "B+", "B-", "AB+-", "AB+", "AB-", "O+", "O-", "Zesty Ranch", "Unknown")),
+		"mi_dis"		= new /datum/record_field/string(src, "Minor Disabilities", "None"),
+		"mi_dis_d"		= new /datum/record_field/string(src, "Details", "No minor disabilities have been declared."),
+		"ma_dis"		= new /datum/record_field/string(src, "Major Disabilities", "None"),
+		"ma_dis_d"		= new /datum/record_field/string(src, "Details", "No major disabilities have been diagnosed."),
+		"alg"			= new /datum/record_field/string(src, "Allergies", "None"),
+		"alg_d"			= new /datum/record_field/string(src, "Details", "No allergies have been detected in this patient."),
+		"cdi"			= new /datum/record_field/string(src, "Current Diseases", "None"),
+		"cdi_d"			= new /datum/record_field/string(src, "Details", "No diseases have been diagnosed at the moment."),
+		"cl_def"		= new /datum/record_field/string(src, "Cloner Defects", "None"),
+		"cl_def_d"		= new /datum/record_field/string(src, "Details", "No cloner defects have been recorded."),
+		"dnasample"		= new /datum/record_field/object(src, "DNA Sample", null, /datum/computer/file/genetics_scan),
+		"notes"			= new /datum/record_field/string(src, "Important Notes", "No notes."),
 	)
 
 /datum/db_record/personnel/medical/init_from_human(mob/living/carbon/human/H)

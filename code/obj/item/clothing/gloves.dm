@@ -389,7 +389,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	get_fiber_mask()
 		if(!src.material)
 			return null
-		var/chem_prot = src.material.getProperty("chemical")
+		var/chem_prot = src.material.getProperty(MATERIAL::PROPERTY::CHEM_RESIST)
 		if(chem_prot >= 8)
 			return FORENSIC_GLOVE_MASK_NONE
 		if(chem_prot >= 6)
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			..()
 			if(istype(src.material))
 
-				switch(src.material.getProperty("electrical"))
+				switch(src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
 					if(0 to 1)
 						src.setProperty("conductivity", 0.15)
 					if(1 to 2)
@@ -415,7 +415,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 					else
 						src.setProperty("conductivity", 1)
 
-				var/thermal_insul = max(0, 5 - src.material.getProperty("thermal"))
+				var/thermal_insul = max(0, 5 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND))
 
 				src.setProperty("coldprot", thermal_insul * 2)
 				src.setProperty("heatprot", thermal_insul * 2)
@@ -428,14 +428,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			..()
 			if(istype(src.material))
 				var/types = list()
-				if(src.material.getProperty("density") > 3 || src.material.getProperty("hard") > 3)
-					types["blunt"] = 0.5 * (max(src.material.getProperty("density"), src.material.getProperty("hard")) - 2)
-				if(src.material.getProperty("density") > 3)
-					types["cut"] = 0.5 * (src.material.getProperty("density") - 2)
-				if(src.material.getProperty("hard") > 3)
-					types["stab"] = 0.5 * (src.material.getProperty("hard") - 2)
+				if(src.material.getProperty(MATERIAL::PROPERTY::DENSITY) > 3 || src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) > 3)
+					types["blunt"] = 0.5 * (max(src.material.getProperty(MATERIAL::PROPERTY::DENSITY), src.material.getProperty(MATERIAL::PROPERTY::HARDNESS)) - 2)
+				if(src.material.getProperty(MATERIAL::PROPERTY::DENSITY) > 3)
+					types["cut"] = 0.5 * (src.material.getProperty(MATERIAL::PROPERTY::DENSITY) - 2)
+				if(src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) > 3)
+					types["stab"] = 0.5 * (src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) - 2)
 
-				var/thermal = max(0, 5 - src.material.getProperty("thermal"))
+				var/thermal = max(0, 5 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND))
 				if(thermal > 0)
 					types["burn"] = thermal
 

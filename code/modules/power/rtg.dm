@@ -8,12 +8,12 @@
 	var/obj/item/fuel_pellet/fuel_pellet
 
 	process()
-		if (fuel_pellet?.material && fuel_pellet.material.hasProperty("radioactive"))
-			lastgen = (4800 + rand(-100, 100)) * fuel_pellet.material.getProperty("radioactive") * 0.75
+		if (fuel_pellet?.material && fuel_pellet.material.hasProperty(MATERIAL::PROPERTY::RADS))
+			lastgen = (4800 + rand(-100, 100)) * fuel_pellet.material.getProperty(MATERIAL::PROPERTY::RADS) * 0.75
 			if(!fuel_pellet.material.isMutable())
 				fuel_pellet.material = fuel_pellet.material.getMutable()
 			if(prob(5))
-				fuel_pellet.material.adjustProperty("radioactive", -1)
+				fuel_pellet.material.adjustProperty(MATERIAL::PROPERTY::RADS, -1)
 			add_avail(lastgen)
 			UpdateIcon()
 
@@ -68,7 +68,7 @@
 		var/t = "<B>Radioisotope Thermoelectric Generator</B><br>"
 		t += "Output: [src.lastgen]W<br>"
 		if (fuel_pellet)
-			t += "Fuel pellet: [round(fuel_pellet.material.getProperty("radioactive"), 0.1)] rads <a href='byond://?src=\ref[src];eject=1'>Eject</a><br>"
+			t += "Fuel pellet: [round(fuel_pellet.material.getProperty(MATERIAL::PROPERTY::RADS), 0.1)] rads <a href='byond://?src=\ref[src];eject=1'>Eject</a><br>"
 		else
 			t += "No fuel pellet inserted.<br>"
 		t += "<a href='byond://?src=\ref[src];close=1'>Close</a>"
@@ -87,7 +87,7 @@
 			icon_state = "rtg_empty"
 			src.UpdateOverlays(null, "rtg")
 			return
-		src.UpdateOverlays(image('icons/obj/power.dmi', "rtg-f[min(1 + ceil(fuel_pellet.material.getProperty("radioactive") / 2), 5)]"), "rtg")
+		src.UpdateOverlays(image('icons/obj/power.dmi', "rtg-f[min(1 + ceil(fuel_pellet.material.getProperty(MATERIAL::PROPERTY::RADS) / 2), 5)]"), "rtg")
 
 	cerenkite_loaded
 		New()

@@ -296,7 +296,10 @@
 
 /datum/targetable/changeling
 	icon = 'icons/ui/ability_icons/changeling.dmi'
-	icon_state = "changeling-template" // No longer ToDo thanks to Sundance420.
+	icon_state = "horror"
+	border_icon = 'icons/ui/ability_icons/changeling.dmi'
+	border_icon_state = "changeling-border"
+	hovered_border_icon_state = "changeling-border-animated"
 	cooldown = 0
 	last_cast = 0
 	var/abomination_only = 0

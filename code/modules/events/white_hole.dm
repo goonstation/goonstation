@@ -88,7 +88,7 @@ TYPEINFO(/datum/random_event/major/white_hole)
 		var/obj/whitehole/whitehole = new (T, grow_duration, duration, source_location, TRUE)
 		whitehole.activity_modifier = activity_modifier
 		message_admins("White Hole anomaly with origin [whitehole.source_location] spawning in [log_loc(T)]")
-		message_ghosts("<b>\A [whitehole.source_location] white hole</b> is spawning at [log_loc(T, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("<b>\A [whitehole.source_location] white hole</b> is spawning at [GHOST.MESSAGE.format_loc(T)].")
 		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
 		src.cleanup()
 
@@ -389,7 +389,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		),
 		"plasma" = list(
 			"plasma" = 100,
-			/obj/critter/spore = 3,
+			/mob/living/critter/plasmaspore = 3,
 			/obj/item/raw_material/shard/plasmacrystal = 1,
 			/obj/item/raw_material/plasmastone = 1,
 		),

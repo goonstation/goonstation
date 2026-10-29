@@ -1620,7 +1620,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						src.boom()
 						return
 				else
-					message_ghosts("[src] has been attached at [log_loc(target, ghostjump=TRUE)].")
+					GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] has been attached at [GHOST.MESSAGE.format_loc(target)].")
 					boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 					user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 					src.icon_state = "bcharge2"
@@ -1747,7 +1747,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						src.boom()
 						return
 				else
-					message_ghosts("[src] has been attached at [log_loc(target, ghostjump=TRUE)].")
+					GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] has been attached at [GHOST.MESSAGE.format_loc(target)].")
 					boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 					user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 					src.icon_state = "bcharge2"
@@ -2149,7 +2149,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			if (istype(checked_item, /obj/item/raw_material/shard))
 				var/obj/item/raw_material/shard/S = checked_item // fix for duplication glitch because someone may have forgot to assign M to S, whoops!
 				src.bleed += 1
-				if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
+				if (S && (S.material.hasProperty(MATERIAL::PROPERTY::HARDNESS) || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
 					src.bleed += 1
 			if (istype(checked_item, /obj/item/raw_material/telecrystal))
 				src.tele += 2
