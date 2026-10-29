@@ -1156,6 +1156,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Vi FizZahrd"
 		icon_state = "vifizzahrd"
 		ckey = "vithesilly"
+	whele
+
+		name = "\improper Miss Funny Business"
+		icon_state = "missfunnybusiness"
+		ckey = "whele"
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
