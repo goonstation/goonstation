@@ -585,6 +585,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/spraybottle/cleaner = 6,
 		/obj/item/caution = 5,
 		/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
+		/obj/item/broom = 5,
 		/obj/item/mop = 5,
 		/obj/item/reagent_containers/glass/bucket = 5,
 		/obj/item/reagent_containers/glass/bucket/red = 1,
