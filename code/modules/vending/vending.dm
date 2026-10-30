@@ -181,7 +181,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			if(istype(src, /obj/machinery/vending/pizza)) //Pizza vendors need an exception so copies have inventory & don't start with money
 				src.credit = 0
 			else
-				src.product_list = new()
+				for (var/datum/data/vending_product/product in src.product_list)
+					product.product_amount = 0
 
 	/// Pick a random item with stock. Only includes hidden products if vendor is hacked.
 	proc/get_random_item()
