@@ -1,5 +1,9 @@
 
 (t)fri oct 30 26
+(u)ANNmagedon
+(p)28199
+(e)|
+(+)NanoTrasen & The Syndicate flags are now flammable.
 (u)TekoTheTeapot + ANNmagedon
 (p)28019
 (e)🎨|C-Sprites
