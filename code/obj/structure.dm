@@ -514,10 +514,6 @@ TYPEINFO(/obj/structure/woodwall)
 			return
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -536,6 +532,8 @@ TYPEINFO(/obj/structure/woodwall)
 		hit_twitch(wall)
 		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		owner.visible_message(SPAN_NOTICE("[owner] begins repairing [wall]!"))
+		if (src.owner && HAS_ATOM_PROPERTY(src.owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onEnd()
 		..()
