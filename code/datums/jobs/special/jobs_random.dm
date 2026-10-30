@@ -196,6 +196,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	alt_names = list("Diplomat", "Ambassador")
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	change_name_on_spawn = TRUE
+	wiki_link = "https://wiki.ss13.co/Diplomat"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
