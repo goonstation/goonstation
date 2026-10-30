@@ -1315,6 +1315,7 @@
 #include "code\modules\currents\turbine.dm"
 #include "code\modules\digging\buried_storage.dm"
 #include "code\modules\digging\dig_bar.dm"
+#include "code\modules\digging\gutter.dm"
 #include "code\modules\digging\trench.dm"
 #include "code\modules\disposals\conveyor.dm"
 #include "code\modules\disposals\crusher.dm"
