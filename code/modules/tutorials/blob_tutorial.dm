@@ -16,9 +16,8 @@
 	Start()
 		if (..())
 			bowner = owner
-			bowner.sight &= ~SEE_TURFS
-			bowner.sight &= ~SEE_MOBS
-			bowner.sight &= ~SEE_OBJS
+			// Removes SEE_TURFS | SEE_MOBS | SEE_OBJS
+			bowner.apply_vision(/datum/vision_modifier/blob_overmind_tutorial, "tutorial")
 			bowner.add_ability(/datum/blob_ability/tutorial_exit)
 
 	Finish()
@@ -46,7 +45,6 @@
 			bowner.lipids = list()
 			bowner.nuclei = list()
 			bowner.tutorial = null
-			bowner.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 			bowner.starter_buff = 1
 			qdel(src)
 
