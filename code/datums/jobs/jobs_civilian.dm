@@ -123,7 +123,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/mail_courier
 	name = "Mail Courier"
-	alias_names = "Mailman"
+	alias_names = list("Mailman")
 	wages = PAY::TRADESMAN
 	access_string = "Mail Courier"
 	limit = 1
