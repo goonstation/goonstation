@@ -464,6 +464,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	var/static/list/sfx = list('sound/items/mender.ogg','sound/items/mender2.ogg')
 
+	var/refill_rate = 1 // units per tick of refill rate
 
 	New()
 		..()
@@ -473,8 +474,9 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			src.reagents.temperature_cap = T20C
 			src.reagents.temperature_min = T0C
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
-		if(borg)
+		if(src.borg)
 			src.flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
+			processing_items.Add(src)
 
 	on_reagent_change(add)
 		..()
@@ -554,6 +556,8 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		return 0
 
 	afterattack(obj/target, mob/user, flag)
+		if(src.borg)
+			return
 		if(is_reagent_dispenser(target) && target.reagents)
 			if (!target.reagents.total_volume)
 				boutput(user, SPAN_ALERT("[target] is already empty."))
@@ -561,6 +565,24 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			playsound(src.loc, 'sound/items/mender_refill_juice.ogg', 50, 1)
 			target.reagents.trans_to(src, src.reagents.maximum_volume)
 			return
+
+	process()
+		..()
+		var/refill_reagent = initial(src.initial_reagents)
+		if (!src.borg || !istext(refill_reagent))
+			return
+
+		var/remaining_capacity = src.reagents.maximum_volume - src.reagents.total_volume
+		if(remaining_capacity <= 0)
+			return
+
+		src.reagents.add_reagent(refill_reagent, min(last_tick_duration * src.refill_rate, remaining_capacity))
+		tooltip_rebuild = TRUE
+		UpdateIcon()
+
+	disposing()
+		processing_items.Remove(src)
+		..()
 
 	proc/begin_application(mob/M as mob, mob/user as mob)
 		actions.start(new/datum/action/bar/icon/automender_apply(user,src,M), user)
@@ -576,13 +598,8 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 				params.Add("silent")
 
 			reagents.reaction(M, TOUCH, react_volume = use_volume_adjusted, paramslist = params)
-			if (!borg)
-				reagents.trans_to(M, use_volume_adjusted/2) // Patches should primarily be for topically drugs (Convair880).
-				reagents.remove_any(use_volume_adjusted/2)
-			else
-				var/datum/reagents/R = new
-				reagents.copy_to(R)
-				R.trans_to(M, use_volume_adjusted/2)
+			reagents.trans_to(M, use_volume_adjusted/2) // Patches should primarily be for topically drugs (Convair880).
+			reagents.remove_any(use_volume_adjusted/2)
 
 			playsound(src, pick(sfx), 50, 1)
 
@@ -591,7 +608,8 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	initial_reagents = "styptic_powder"
 
 	medbot
-		name = "brute auto-mender"
+		name = "cybernetic brute auto-mender"
+		desc = "A small electronic device designed to topically apply healing chemicals. This cybernetic version refills over time."
 		borg = 1
 
 	high_capacity
@@ -601,7 +619,8 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	initial_reagents = "silver_sulfadiazine"
 
 	medbot
-		name = "burn auto-mender"
+		name = "cybernetic burn auto-mender"
+		desc = "A small electronic device designed to topically apply healing chemicals. This cybernetic version refills over time."
 		borg = 1
 
 	high_capacity
@@ -664,6 +683,14 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		var/multiply = 1
 		if (looped <= 7)
 			multiply = min((looped+1)/8, 1)
+
+		if(M.borg && isrobot(user))
+			var/mob/living/silicon/robot/borg = user
+			if(!borg.cell || borg.cell.charge < 25 * multiply)
+				boutput(borg, SPAN_ALERT("Insufficient energy to use [M]!"))
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			borg.cell.use(25 * multiply)
 
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
