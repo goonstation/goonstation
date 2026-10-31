@@ -24840,7 +24840,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/table/reinforced/chemistry/auto/clericalsup,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
