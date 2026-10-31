@@ -1247,9 +1247,8 @@
 	return 0
 
 /mob/living/carbon/human/restrained()
-	if (src.hasStatus("handcuffed"))
-		return 1
-	if (src.hasStatus("incorporeal"))
+	var/static/list/restraining_statuses = list("handcuffed", "incorporeal")
+	if (src.hasStatus(restraining_statuses))
 		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
