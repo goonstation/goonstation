@@ -18094,8 +18094,7 @@
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hmicro";
-	name = "broken microwave oven";
-	pixel_y = 10
+	name = "broken microwave oven"
 	},
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/iomoon/base)
