@@ -802,6 +802,8 @@
 			inner_cuffs.remove_self_multiplier = cuffs.remove_self_multiplier
 			inner_cuffs.remove_other_multiplier = cuffs.remove_other_multiplier
 			inner_cuffs.appearance = cuffs.appearance
+			inner_cuffs.cuff_adjective = cuffs.cuff_adjective
+			inner_cuffs.cuff_name = cuffs.cuff_name
 			cuffs.amount--
 			if (cuffs.amount < 1 && cuffs.delete_on_last_use)
 				ownerMob.u_equip(cuffs)
