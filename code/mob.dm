@@ -2550,28 +2550,31 @@ TYPEINFO(/mob)
 	jitteriness = min(400, jitteriness + amount)	// store what will be new value
 													// clamped to max 400
 	if (jitteriness > 100 && !is_jittery)
+		is_jittery = 1 // set before the SPAWN so a second call this tick doesn't start another loop
 		SPAWN(0)
 			jittery_process()
 
 
 // jittery process - shakes the mob's pixel offset randomly
-// will terminate automatically when dizziness gets <100
+// will terminate automatically when jitteriness gets <=100
 // jitteriness decrements automatically in the mob's Life() proc.
 /mob/proc/jittery_process()
 	is_jittery = 1
-	while(jitteriness > 100)
-//		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
-//		pixel_x = amplitude * sin(0.008 * jitteriness * world.time)
-//		pixel_y = amplitude * cos(0.008 * jitteriness * world.time)
-
+	while(jitteriness > 100 && !src.disposed)
 		var/amplitude = min(4, jitteriness / 100)
-		var/off_x = rand(-amplitude, amplitude)
-		var/off_y = rand(-amplitude/3, amplitude/3)
-
-		animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
-		animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
-		sleep(0.1 SECONDS)
-	//endwhile - reset the pixel offsets to zero
+		// a looping sequence of 4 random shakes with a short rest after each
+		for (var/i in 1 to 4)
+			var/off_x = rand(-amplitude, amplitude)
+			var/off_y = rand(-amplitude/3, amplitude/3)
+			if (i == 1)
+				animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, loop = -1, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL|ANIMATION_END_NOW, tag = "jittery")
+			else
+				animate(pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
+			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
+			animate(pixel_x = 0, pixel_y = 0, time = 0.5, flags = ANIMATION_RELATIVE) // rest
+		sleep(1 SECOND)
+	//endwhile - stop the shake, the relative offsets net to zero
+	animate(src, flags = ANIMATION_END_NOW, tag = "jittery")
 	is_jittery = 0
 
 /mob/onVarChanged(variable, oldval, newval)
