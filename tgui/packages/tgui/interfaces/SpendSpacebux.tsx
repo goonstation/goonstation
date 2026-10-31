@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Divider,
+  DmIcon,
   Flex,
   Section,
   Stack,
@@ -14,7 +15,7 @@ import { Window } from '../layouts';
 
 const SBPurchaseEntry = (props) => {
   const {
-    product: { pname, cost, img },
+    product: { pname, cost, icon, icon_state, icon_dir },
     disabled,
     onClick,
   } = props;
@@ -23,8 +24,12 @@ const SBPurchaseEntry = (props) => {
     <>
       <Flex direction="row" align="center">
         <Flex.Item>
-          <img
-            src={`data:image/png;base64,${img}`}
+          <DmIcon
+            icon={icon}
+            icon_state={icon_state}
+            direction={icon_dir}
+            width="32px"
+            height="32px"
             style={{
               verticalAlign: 'middle',
             }}
