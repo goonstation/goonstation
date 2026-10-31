@@ -2065,8 +2065,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		S.set_head(src.organHolder.head)
 		S.head_moved() // update tracking
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
@@ -2110,8 +2111,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	src.organHolder.create_organs()
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
