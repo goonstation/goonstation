@@ -184,3 +184,9 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 32
 	prefabSizeY = 23
 	prefabPath = "assets/maps/allocated/menhir_room_sepulchre.dmm"
+
+/datum/mapPrefab/allocated/event_horizon
+	name = "event_horizon"
+	prefabSizeX = 7
+	prefabSizeY = 7
+	prefabPath = "assets/maps/allocated/event_horizon.dmm"

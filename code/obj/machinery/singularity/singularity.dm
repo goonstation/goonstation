@@ -364,6 +364,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
 
+		if (istype(A, /obj/storage) && contains_negative_matter(A))
+			var/datum/component/extradimensional_storage/storage/pocket = A.GetComponent(/datum/component/extradimensional_storage/storage)
+			if(pocket?.region)
+				var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/event_horizon)
+				var/datum/allocated_region/new_region = prefab.load()
+				pocket.region.move_movables_to(new_region.get_center())
+				logTheThing(LOG_COMBAT, A, "was consumed by \the [src] at [log_loc(src)] trapping its contents forever.")
+
 		if (istype(A, /obj/machinery/nuclearbomb))
 			gain += 5000 //ten clowns
 			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
