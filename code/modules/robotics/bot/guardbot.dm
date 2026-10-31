@@ -21,7 +21,7 @@
 	var/max_dist = 100
 	var/max_seen = 1000
 
-	New(var/newmaster, max_dist=100)
+	New(newmaster, max_dist=100)
 		..()
 		if(istype(newmaster, /obj/machinery/bot/guardbot))
 			src.master = newmaster
@@ -34,7 +34,7 @@
 		src.master = null
 		..()
 
-	proc/master_move(var/atom/the_target as obj|mob,var/adjacent=0)
+	proc/master_move(atom/the_target as obj|mob, adjacent=0)
 		if(!master)
 			return 1
 		if(!isturf(master.loc))
@@ -59,18 +59,23 @@
 			if (!master)
 				return
 
-			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
-			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
-			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, max_seen=src.max_seen, \
-				simulated_only=issimulatedturf(master.loc) && issimulatedturf(target_turf), \
-				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
-			if (!master)
-				return
-
-			master.path = thePath
-			if(adjacent && master.path && length(master.path)) //Make sure to check it isn't null!!
-				master.path.len-- //Only go UP to the target, not the same tile.
+			var/path_key = "[ref(get_turf(master))] [ref(target_turf)]"
+			var/searched = master.failed_path_key != path_key || !GET_COOLDOWN(master, "failed_path")
+			master.path = null
+			if(searched)
+				// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
+				// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
+				master.path = get_path_to(src.master, target_turf, max_distance=src.max_dist, max_seen=src.max_seen, \
+					simulated_only=issimulatedturf(master.loc) && issimulatedturf(target_turf), \
+					id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
+				if (!master)
+					return
+				if(adjacent && length(master.path))
+					master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && length(master.path) >= 21))
+				if(searched && the_target)
+					master.failed_path_key = path_key
+					OVERRIDE_COOLDOWN(master, "failed_path", 5 SECONDS)
 				master.task?.task_input("path_error")
 
 				master.moving = 0
