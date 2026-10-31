@@ -83,7 +83,7 @@
 		new /obj/art_fissure_objs/mirror_update_dummy(fissure_entr, entrance, entrance_dir)
 		entrance.icon = 'icons/turf/floors.dmi'
 		entrance.icon_state = "darkvoid"
-		entrance.opacity = TRUE
+		entrance.set_opacity(TRUE)
 		entrance.name = "Thick void mist"
 		entrance.desc = "Void mist thick enough that you can't see through it.. How did this get here?"
 		RL_UPDATE_LIGHT(entrance)
@@ -383,11 +383,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
 
 					T.vis_contents += station_turf
 					T.density = station_turf.density
-					T.opacity = station_turf.opacity
-					for (var/atom/A as anything in station_turf)
-						if (A.opacity)
-							T.opacity = TRUE
-							break
+					T.set_opacity_no_lighting(station_turf.opacity || station_turf.opaque_atom_count)
 					T.name = station_turf.name
 					T.desc = station_turf.desc
 					T.icon = station_turf.icon
@@ -396,7 +392,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
 					T.icon = null
 					T.icon_state = null
 					T.density = TRUE
-					T.opacity = TRUE
+					T.set_opacity_no_lighting(TRUE)
 					T.name = ""
 					T.desc = ""
 				T.RL_Init()
