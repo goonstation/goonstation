@@ -2476,18 +2476,22 @@ proc/can_act(var/mob/M, var/include_cuffs = 1)
 
 /// Returns true if the given mob is incapacitated. `ignore_no_power` skips the cyborg no-power/no-cell statuses.
 proc/is_incapacitated(mob/M, ignore_no_power = FALSE)
-	var/datum/statusEffect/lockdown/lockdown_effect = M.hasStatus("lockdown_robot") || M.hasStatus("lockdown_ai")
-	if(!istype(lockdown_effect) || lockdown_effect?.fake)
-		lockdown_effect = null
-	return (M &&(\
-		M.hasStatus("stunned") || \
-		M.hasStatus("knockdown") || \
-		M.hasStatus("unconscious") || \
-		M.hasStatus("paralysis") || \
-		M.hasStatus("pinned") || \
-		lockdown_effect || \
-		(!ignore_no_power && (M.hasStatus("no_power_robot") || M.hasStatus("no_cell_robot"))) || \
-		M.stat)) && !M.client?.holder?.ghost_interaction
+	if (!M || M.client?.holder?.ghost_interaction)
+		return FALSE
+	if (M.stat)
+		return TRUE
+	for (var/datum/statusEffect/status as anything in M.statusEffects)
+		switch (status.id)
+			if ("stunned", "knockdown", "unconscious", "paralysis", "pinned")
+				return TRUE
+			if ("no_power_robot", "no_cell_robot")
+				if (!ignore_no_power)
+					return TRUE
+			if ("lockdown_robot", "lockdown_ai")
+				var/datum/statusEffect/lockdown/lockdown = status
+				if (!lockdown.fake) // emagged/syndicate
+					return TRUE
+	return FALSE
 
 /// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()

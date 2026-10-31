@@ -284,10 +284,8 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			duration = round(duration / 2)
 
 		owner.visible_message(SPAN_NOTICE("[owner] begins assembling \the [obj_name]!"))
 
@@ -1876,10 +1874,6 @@
 			src.unanchor = target.anchored
 		if (duration)
 			src.duration = duration
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1903,6 +1897,8 @@
 		else if(isscrewingtool(tool))
 			playsound(target, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] begins [unanchor ? "un" : ""]anchoring [target]."))
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onEnd()
 		..()

@@ -1369,10 +1369,6 @@ TYPEINFO(/obj/table/glass)
 			interaction = interact
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner) && interaction != TABLE_LOCKPICK)
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1421,6 +1417,8 @@ TYPEINFO(/obj/table/glass)
 			if (TABLE_LOCKPICK)
 				verbing = "picking the lock on"
 				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
+		if (interaction != TABLE_LOCKPICK && owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 		owner.visible_message(SPAN_NOTICE("[owner] begins [verbing] [the_table]."))
 
 	onEnd()

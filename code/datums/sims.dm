@@ -10,6 +10,7 @@
 	var/depletion_rate = 0.2
 	var/image/image_meter = null
 	var/image/image_change = null
+	var/hud_value_cached = null
 
 	//Multipliers for how much the motive is drained by certain things and for how much it is gained
 	//High drain rate - higher reduction of motive when explicitly modified
@@ -32,6 +33,7 @@
 					src.icon = hud_style
 					hud.tooltip_options = list("theme" = hud_style)
 			hud.name = name
+			src.hud_value_cached = null
 			hud.icon = icon
 			hud.icon_state = icon_state
 			hud.layer = HUD_LAYER
@@ -73,24 +75,26 @@
 		else
 			src.hud.ClearSpecificOverlays("change")
 		//var/a_change = value - last_life_value
-		var/maptext_color = "#ffffff"
 		var/round_value = round(value)
-		switch (round_value)
-			if (90 to INFINITY)
-				maptext_color = "#88ff88"
-			if (70 to 89)
-				maptext_color = "#41bf41"
-			if (50 to 69)
-				maptext_color = "#ffff00"
-			if (30 to 49)
-				maptext_color = "#ff8000"
-			if (25 to 48)
-				maptext_color = "#ff0000"
-			else
-				maptext_color = "#b30b0b"
-		//hud.name = "[initial(name)] ([value] / 100) \[[a_change > 0 ? "+" : null][a_change]\]"
-		hud.name = "[initial(name)] -  Your current total is: <span class='sh vb r ps2p' style='color: [maptext_color];'>[round_value]%</span>"
-		hud.desc = "[initial(desc)]"
+		if (round_value != src.hud_value_cached) // Only rebuild when the value changes
+			src.hud_value_cached = round_value
+			var/maptext_color = "#ffffff"
+			switch (round_value)
+				if (90 to INFINITY)
+					maptext_color = "#88ff88"
+				if (70 to 89)
+					maptext_color = "#41bf41"
+				if (50 to 69)
+					maptext_color = "#ffff00"
+				if (30 to 49)
+					maptext_color = "#ff8000"
+				if (25 to 48)
+					maptext_color = "#ff0000"
+				else
+					maptext_color = "#b30b0b"
+			//hud.name = "[initial(name)] ([value] / 100) \[[a_change > 0 ? "+" : null][a_change]\]"
+			hud.name = "[initial(name)] -  Your current total is: <span class='sh vb r ps2p' style='color: [maptext_color];'>[round_value]%</span>"
+			hud.desc = "[initial(desc)]"
 		var/ratio = value / 100
 		if (!src.image_meter)
 			src.image_meter = image(src.icon, "[src.icon_state]-o", layer = HUD_LAYER+1)

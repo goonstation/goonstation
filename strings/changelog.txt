@@ -1,10 +1,14 @@
 
 (t)fri oct 30 26
+(u)ANNmagedon
+(p)28199
+(e)|
+(+)NanoTrasen & The Syndicate flags are now flammable.
 (u)TekoTheTeapot + ANNmagedon
 (p)28019
 (e)🎨|C-Sprites
 (*)The NT Repair Technician has received full funding and is now properly equipped to deal with emergencies.
-(u)ANNmagedon + RubiCubie
+(u)ANNmagedon, RubiCubie & TekoTheTeapot
 (p)27901
 (e)🎨🌠📨|C-Sprites, A-Events, A-Logistics
 (*)Janitors can now find push brooms in most places that house mops, the push brooms move items on the floor to the direction you are looking at.
