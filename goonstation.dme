@@ -1372,6 +1372,7 @@
 #include "code\modules\events\pretty_space.dm"
 #include "code\modules\events\radiation.dm"
 #include "code\modules\events\random_event.dm"
+#include "code\modules\events\remy_gets_cooking.dm"
 #include "code\modules\events\rev_trackers.dm"
 #include "code\modules\events\salvagers.dm"
 #include "code\modules\events\sleeperagent.dm"
