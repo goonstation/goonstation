@@ -239,6 +239,10 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "A bland but healthy cereal crop. Good source of fiber."
 	icon_state = "oat"
 
+	make_reagents()
+		src.create_reagents(85)
+		reagents.add_reagent("oatmilk", 40)
+
 /obj/item/plant/oat/salt
 	name = " salted oat"
 	desc = "A salty but healthy cereal crop. Just don't eat too much without water."
