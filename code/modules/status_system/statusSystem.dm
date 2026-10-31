@@ -82,9 +82,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		if(!ownerStatus)
 			return
 
-		src.overlays.Cut()
 		overImg.icon_state = ownerStatus.icon_state
-		src.overlays += overImg
+		src.UpdateOverlays(overImg, "status_icon")
 
 		if (ownerStatus.duration <= (5 SECONDS) && !isnull(ownerStatus.duration))
 			src.alpha = 175
