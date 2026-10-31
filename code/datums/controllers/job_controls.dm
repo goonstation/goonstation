@@ -8,6 +8,10 @@ var/datum/job_controller/job_controls
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
 	var/datum/job/created/job_creator = null
 	var/datum/job/priority_job = null
+	/// Map of lowercase job name/alias to list of jobs with it
+	var/alist/job_name_index = alist()
+	/// Map of job to flags of the job lists it is in
+	var/alist/job_list_flags = alist()
 
 	var/loaded_save = 0
 	var/last_client = null
@@ -59,6 +63,43 @@ var/datum/job_controller/job_controls
 				J.upper_limit = J.limit
 		#endif
 
+		src.rebuild_job_index()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable == "staple_jobs" || variable == "special_jobs" || variable == "hidden_jobs")
+			src.rebuild_job_index()
+
+	/// Rebuilds the job name index and list membership flags
+	/// Call after changing the job lists or a listed job's name/aliases
+	proc/rebuild_job_index()
+		src.job_name_index = alist()
+		src.job_list_flags = alist()
+		// in this order so staple (then special, then hidden) jobs come first when names are shared
+		src.index_job_list(src.staple_jobs, STAPLE_JOBS)
+		src.index_job_list(src.special_jobs, SPECIAL_JOBS)
+		src.index_job_list(src.hidden_jobs, HIDDEN_JOBS)
+
+	proc/index_job_list(list/jobs, list_flag)
+		PRIVATE_PROC(TRUE)
+		for (var/datum/job/J in jobs)
+			src.job_list_flags[J] |= list_flag
+			src.index_job_name(J, J.name)
+			if (islist(J.alias_names))
+				for (var/alias in J.alias_names)
+					src.index_job_name(J, alias)
+
+	proc/index_job_name(datum/job/J, job_name)
+		PRIVATE_PROC(TRUE)
+		if (!istext(job_name) || !job_name)
+			return
+		var/lower_name = lowertext(job_name)
+		var/list/matches = src.job_name_index[lower_name]
+		if (!matches)
+			matches = list()
+			src.job_name_index[lower_name] = matches
+		matches |= J
+
 	proc/check_user_changed()//Since this is a 'public' window that everyone can get to, make sure we keep the user contained to their own savefile
 		if (last_client != usr.client)
 			src.last_client = usr.client
@@ -77,14 +118,7 @@ var/datum/job_controller/job_controls
 		if ((job.limit >= 0) && (job.assigned >= job.limit))
 			return
 		// prevent someone from trying to sneak their way into a job they shouldn't be able to choose
-		var/is_valid_job = FALSE
-		if ((valid_categories & STAPLE_JOBS) && (job in src.staple_jobs))
-			is_valid_job = TRUE
-		else if ((valid_categories & SPECIAL_JOBS) && (job in src.special_jobs))
-			is_valid_job = TRUE
-		else if ((valid_categories & HIDDEN_JOBS) && (job in src.hidden_jobs))
-			is_valid_job = TRUE
-		if (!is_valid_job)
+		if (!(src.job_list_flags[job] & valid_categories))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
 			return
 		// antag job exemptions
@@ -300,6 +334,7 @@ var/datum/job_controller/job_controls
 		if(href_list["EditName"])
 			var/picker = input("What is this job's name?","Job Creator")
 			src.job_creator.name = picker
+			src.rebuild_job_index() // job_creator may be a listed job opened from the job manager
 			src.job_creator()
 
 		if(href_list["EditWages"])
@@ -1079,6 +1114,7 @@ var/datum/job_controller/job_controls
 	JOB.items_in_mob = src.job_creator.items_in_mob
 	JOB.spawn_id = src.job_creator.spawn_id
 	JOB.starting_mutantrace = src.job_creator.starting_mutantrace
+	src.rebuild_job_index()
 	message_admins("Admin [key_name(usr)] created special job [JOB.name]")
 	logTheThing(LOG_ADMIN, usr, "created special job [JOB.name]")
 	logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
@@ -1100,42 +1136,43 @@ var/datum/job_controller/job_controls
 ///
 /// latejoin_only - boolean (default: FALSE): Only list jobs that can currently be late-joined
 ///
-/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE, var/latejoin_only = FALSE)
+/proc/find_job_in_controller_by_string(string, staple_only = 0, soft = FALSE, case_sensitive = TRUE, latejoin_only = FALSE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string '[string]' in controller detected")
 		return null
-	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
-	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone", "Animal")
-	if (string in excluded_strings)
+	// ban categories and special role names that are never jobs
+	var/static/alist/excluded_strings = alist("Special Respawn" = TRUE, "Custom Names" = TRUE, "Everything Except Assistant" = TRUE,
+	"Engineering Department" = TRUE, "Security Department" = TRUE, "Heads of Staff" = TRUE, "Pod_Wars" = TRUE, "Syndicate" = TRUE,
+	"Construction Worker" = TRUE, "MODE" = TRUE, "Ghostdrone" = TRUE, "Animal" = TRUE)
+	if (excluded_strings[string])
 		return null
-	var/list/results = list()
-	for (var/datum/job/J in job_controls.staple_jobs)
-		if (latejoin_only)
-			if (J.no_late_join)
+
+	var/list/matches = job_controls.job_name_index[lowertext(string)]
+	var/datum/job/result = null
+	var/match_count = 0
+	if (matches)
+		var/alist/job_list_flags = job_controls.job_list_flags
+		var/searched_lists = STAPLE_JOBS
+		if (!staple_only)
+			searched_lists |= SPECIAL_JOBS
+			if (!latejoin_only)
+				searched_lists |= HIDDEN_JOBS
+		for (var/datum/job/J as anything in matches)
+			if (!(job_list_flags[J] & searched_lists))
 				continue
-			if (J.limit == 0 && J.request_limit == 0)
+			// latejoin filters apply to staple and special jobs ONLY
+			if (latejoin_only && (J.no_late_join || (J.limit == 0 && J.request_limit == 0)))
 				continue
-		if (J.match_to_string(string, case_sensitive))
-			results += J
-	if (!staple_only)
-		for (var/datum/job/J in job_controls.special_jobs)
-			if (latejoin_only)
-				if (J.no_late_join)
-					continue
-				if (J.limit == 0 && J.request_limit == 0)
-					continue
-			if (J.match_to_string(string, case_sensitive))
-				results += J
-		if (!latejoin_only)
-			for (var/datum/job/J in job_controls.hidden_jobs)
-				if (J.match_to_string(string, case_sensitive))
-					results += J
-	if(length(results) == 1)
-		return results[1]
-	else if(length(results) > 1)
+			// case-sensitive lookups need an exact name or alias
+			if (case_sensitive && J.name != string && !(string in J.alias_names))
+				continue
+			result ||= J
+			match_count++
+	if (match_count > 1)
 		stack_trace("Multiple jobs share the name '[string]'!")
-		return results[1]
+	if (result)
+		return result
 	if (!soft)
 		logTheThing(LOG_DEBUG, null, "No job found with name '[string]'!")
 
