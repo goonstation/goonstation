@@ -584,7 +584,8 @@
 							resist_prob += 100
 
 		for (var/obj/item/C as anything in src.get_equipped_items())
-			resist_prob += C.getProperty("viralprot")
+			if (C.properties)
+				resist_prob += C.getProperty("viralprot")
 
 		if(src.getStatusDuration("food_disease_resist"))
 			resist_prob += 80
