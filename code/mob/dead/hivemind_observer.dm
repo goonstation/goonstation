@@ -101,11 +101,14 @@ TYPEINFO(/mob/dead/target_observer/hivemind_observer)
 		if(hivemind_owner)
 			//DEBUG_MESSAGE("Removing [src] from [hivemind_owner.owner]'s hivemind.")
 			hivemind_owner.hivemind -= src
+			src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(hivemind_owner))
 
 		//DEBUG_MESSAGE("Adding [src] to new owner [new_owner.owner]'s hivemind.")
 		//Add ourselves to the new owner's hivemind
 		hivemind_owner = new_owner
 		new_owner.hivemind |= src
+		// Keep speech addressed to the same hivemind as our membership and camera.
+		src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(new_owner))
 		//...and transfer the observe stuff accordingly.
 		//DEBUG_MESSAGE("Setting new observe target: [new_owner.owner]")
 		set_observe_target(new_owner.owner)
