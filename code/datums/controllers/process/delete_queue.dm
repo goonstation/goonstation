@@ -48,8 +48,10 @@ var/global/harddel_count = 0
 
 		//var/t_gccount = gccount
 		//var/t_delcount = delcount
+		var/c = 0
 		for (var/ref as anything in global.delete_queue_2[global.delqueue_pos])
-			scheck()
+			if (!(c++ % 50))
+				scheck()
 
 			var/datum/D = locate(ref)
 			var/refcount = refcount(D) - 1

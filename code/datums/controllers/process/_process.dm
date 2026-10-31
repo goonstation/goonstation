@@ -354,3 +354,4 @@
 
 /datum/controller/process/proc/enable()
 	disabled = 0
+	main?.next_queue_time = 0 // trigger a rescan immediately

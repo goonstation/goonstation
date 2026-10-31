@@ -513,7 +513,9 @@ proc/generate_space_color()
 	return ..() //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
-	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.
+	SHOULD_CALL_PARENT(TRUE)
+	if (Obj.opacity)
+		src.recount_opaque_atoms()
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -526,6 +528,9 @@ proc/generate_space_color()
 	return ..(Obj, newloc)
 
 /turf/Entered(atom/movable/M as mob|obj, atom/OldLoc)
+	// Above return_if_overlay_or_effect on purpose, smoke is an /obj/effects
+	if (M.opacity)
+		src.recount_opaque_atoms()
 	M.set_gravity(src)
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
@@ -1046,67 +1051,10 @@ TYPEINFO(/turf/simulated)
 					K.Attackby(W, user, params)
 			return ..()
 
-/turf/simulated/aprilfools/grass
-	name = "grass"
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
-	step_material = "step_outdoors"
-	step_priority = STEP_PRIORITY_MED
-
-/turf/simulated/aprilfools/dirt
-	name = "dirt"
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "sand"
-
-/turf/simulated/aprilfools/brick_wall
-	name = "brick wall"
-	icon = 'icons/misc/aprilfools.dmi'
-	icon_state = "brick_wall"
-	opacity = 1
-	density = 1
-	pathable = 0
-	var/d_state = 0
-
 /turf/simulated/aprilfools/floor/concrete_floor
 	name = "concrete floor"
 	icon = 'icons/misc/aprilfools.dmi'
 	icon_state = "concrete"
-
-/turf/unsimulated/aprilfools/grass
-	name = "grass"
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
-	opacity = 0
-	density = 0
-
-/turf/unsimulated/aprilfools/dirt
-	name = "dirt"
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "sand"
-	opacity = 0
-	density = 0
-
-/turf/simulated/bar
-	name = "bar"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "bar"
-
-/turf/simulated/grimycarpet
-	name = "grimy carpet"
-	icon = 'icons/turf/floors/carpet.dmi'
-	icon_state = "grimy"
-
-/turf/unsimulated/grimycarpet
-	name = "grimy carpet"
-	icon = 'icons/turf/floors/carpet.dmi'
-	icon_state = "grimy"
-
-/turf/simulated/grass
-	name = "grass"
-	icon = 'icons/misc/worlds.dmi'
-	icon_state = "grass"
-	step_material = "step_outdoors"
-	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated
 	name = "command"

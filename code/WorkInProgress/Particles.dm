@@ -26,6 +26,7 @@
 
 	disposing()
 		particleMaster.active_particles -= src
+		particleMaster.particle_pool -= src
 		..()
 
 // --------------------------------------------------------------------------------------------------------------------------------------
@@ -37,6 +38,12 @@ var/datum/particleMaster/particleMaster = new
 	var/list/particleTypes = null
 	var/list/particleSystems = null
 	var/list/active_particles = list()
+	/// Expired particles kept for reuse, for steady emitters like sparkles
+	var/list/obj/particle/particle_pool = list()
+	/// How many expired particles to keep around
+	var/max_pooled_particles = 150
+	/// Appearance of a freshly created particle, restored on reuse
+	var/particle_appearance = null
 	var/allowed_particles_per_tick = 7
 
 	New()
@@ -122,11 +129,10 @@ var/datum/particleMaster/particleMaster = new
 
 
 		var/time = world.time
-		for (var/obj/particle/P in src.active_particles)
+		for (var/obj/particle/P as anything in src.active_particles)
 			if (P.death < time)
 				src.active_particles -= P
-				P.dispose() // skip the tiny qdel overhead
-				P = null
+				src.recycle_particle(P)
 
 	//Spawns specified particle. If type can be recycled, do that - else create new. After time is over, move particle to recycling to avoid del and new calls.
 	proc/SpawnParticle(var/atom/location, var/particleTypeName, var/particleTime, var/particleColor, var/atom/target, var/particleSprite) //This should be the only thing you access from the outside.
@@ -147,11 +153,32 @@ var/datum/particleMaster/particleMaster = new
 		else
 			return 0
 
-	proc/new_particle(var/lifetime)
-		var/obj/particle/P = new /obj/particle
+	proc/new_particle(lifetime)
+		var/obj/particle/P
+		var/pooled = length(src.particle_pool)
+		if (pooled)
+			P = src.particle_pool[pooled]
+			src.particle_pool.len--
+		else
+			P = new /obj/particle
+			src.particle_appearance ||= P.appearance
 		P.death = world.time + lifetime
 		src.active_particles += P
 		return P
+
+	/// Takes an expired particle off the map and resets it.
+	/// Reset the appearance (incl. overlays), plus others
+	proc/recycle_particle(obj/particle/P)
+		if (length(src.particle_pool) >= src.max_pooled_particles)
+			P.dispose() // skip the tiny qdel overhead
+			return
+		P.vis_locs = null
+		animate(P)
+		P.appearance = src.particle_appearance
+		P.overlay_refs = null // AddOverlays() bookkeeping
+		P.target = null
+		P.override_state = null
+		src.particle_pool += P
 
 // --------------------------------------------------------------------------------------------------------------------------------------
 // These datums are used by the particle master datum to apply the various effects to the base particle object before use.

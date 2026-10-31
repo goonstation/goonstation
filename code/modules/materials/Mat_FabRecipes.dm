@@ -9,10 +9,10 @@
 	postProcess(obj/item/reactor_component/I)
 		. = ..()
 		//default properties for all materials - everything is a sponge unless otherwise specified
-		if(!I.material.hasProperty("density"))
-			I.material.setProperty("density", 1)
-		if(!I.material.hasProperty("hard"))
-			I.material.setProperty("hard", 1)
+		if(!I.material.hasProperty(MATERIAL::PROPERTY::DENSITY))
+			I.material.setProperty(MATERIAL::PROPERTY::DENSITY, 1)
+		if(!I.material.hasProperty(MATERIAL::PROPERTY::HARDNESS))
+			I.material.setProperty(MATERIAL::PROPERTY::HARDNESS, 1)
 		if(I.material.getID()=="ice") //ice is cold
 			I.temperature = T0C-10
 
@@ -72,8 +72,8 @@
 	postProcess(obj/item/I)
 		. = ..()
 		//default properties for all materials - everything is a sponge unless otherwise specified
-		if(!I.material.hasProperty("density"))
-			I.material.setProperty("density", 1)
+		if(!I.material.hasProperty(MATERIAL::PROPERTY::DENSITY))
+			I.material.setProperty(MATERIAL::PROPERTY::DENSITY, 1)
 
 /datum/matfab_recipe/simple/turbine/blade
 	name = "Turbine Blade"
@@ -329,11 +329,15 @@
 	getMaxAmount()
 		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
 		var/obj/item/source = getObjectByPartName("Coating")
+		if(!ammo || !source)
+			return 0
 		return min(floor(source.material_amount_total() / ammo.ammo_type.coating_amount), ammo.amount_left)
 
 	canBuild(var/amount = 1, var/atom/owner)
 		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
 		var/obj/item/source = getObjectByPartName("Coating")
+		if(!ammo || !source)
+			return FALSE
 		var/enough_ammo = ammo.amount_left >= amount
 		var/enough_mats = source.material_amount_total() >= (ammo.ammo_type.coating_amount * amount)
 		return enough_ammo && enough_mats

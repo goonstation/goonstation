@@ -1,6 +1,8 @@
 /datum/record_field
 	/// The display name of this field.
 	var/name = null
+	/// The database record that this field belongs to.
+	VAR_PROTECTED/datum/db_record/parent = null
 	/// The current value of this field.
 	VAR_PROTECTED/value = null
 	/// The default value of this field.
@@ -8,8 +10,9 @@
 	/// Whether the value of this field is permitted to be null.
 	VAR_PROTECTED/permit_null_default = FALSE
 
-/datum/record_field/New(name, value)
+/datum/record_field/New(parent, name, value)
 	. = ..()
+	src.parent = parent
 	src.name = name
 	src.value = value
 	src.default_value = value
@@ -18,6 +21,10 @@
 		var/error = src.validate(src.value)
 		if (istext(error))
 			CRASH(error)
+
+/datum/record_field/disposing()
+	src.parent = null
+	. = ..()
 
 /// Returns the raw value of this field.
 /datum/record_field/proc/get_value()

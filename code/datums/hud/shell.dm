@@ -5,9 +5,8 @@
 	var/atom/movable/screen/hud/charge
 	var/atom/movable/screen/hud/intent
 	var/atom/movable/screen/hud/pulling
+	var/atom/movable/screen/hud/laws
 	var/atom/movable/screen/hud/eyecam
-
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
 	var/list/last_tools = list()
 	var/list/atom/movable/screen/hud/tool_selector_bg = list()
@@ -26,6 +25,9 @@
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-4:16, SOUTH", HUD_LAYER, EAST)
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+5:16, SOUTH+1", HUD_LAYER, SOUTHEAST)
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+5:16, SOUTH", HUD_LAYER, WEST)
+
+		laws = create_screen("laws", "Show Laws", 'icons/mob/hud_ai.dmi', "laws", "WEST, NORTH+0.5", HUD_LAYER)
+		laws.underlays += "button"
 
 		tool1 = create_screen("tool1", "Tool 1", icon_hud, "mod10", "CENTER-3:16, SOUTH", HUD_LAYER+1)
 		tool2 = create_screen("tool2", "Tool 2", icon_hud, "mod20", "CENTER-2:16, SOUTH", HUD_LAYER+1)
@@ -117,6 +119,8 @@
 						to_pull.pull(master)
 			if ("eyecam")
 				master.become_eye()
+			if ("laws")
+				master.interact_laws()
 
 	proc
 		update_charge()
@@ -221,39 +225,7 @@
 			pulling.icon_state = "pull[master.pulling ? 1 : 0]"
 
 	proc/update_status_effects()
-		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
-			remove_screen(statusUiElements[S])
-			if(!master || !master.statusEffects || !(S in master.statusEffects))
-				qdel(statusUiElements[S])
-				src.statusUiElements.Remove(S)
-				qdel(S)
-
-		var/spacing = 0.6
-		var/pos_x = spacing - 0.2
-
-		if(master?.statusEffects)
-			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
-				if(!S.visible) continue
-				if((S in statusUiElements) && statusUiElements[S])
-					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
-					U.icon = 'icons/mob/hud_robot.dmi'
-					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
-					U.update_value()
-					add_screen(U)
-					pos_x -= spacing
-				else
-					if(S.visible)
-						var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
-						U.init(master,S)
-						U.icon = 'icons/mob/hud_robot.dmi'
-						statusUiElements.Add(S)
-						statusUiElements[S] = U
-						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
-						U.update_value()
-						add_screen(U)
-						pos_x -= spacing
-						animate_buff_in(U)
-		return
+		src.sync_status_effects(src.master, 'icons/mob/hud_robot.dmi', "NORTH-0.7", 0.4)
 
 /mob/living/silicon/hivebot
 	updateStatusUi()

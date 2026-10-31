@@ -255,17 +255,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 					M.handcuffs.drop_handcuffs(M)
 
 				//Might as well set their security record to "released"
-				var/nameToCheck = M.name
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
-					// this makes it so that if your face is unobstructed and your id is wrong, i.e. you show up as John Smith (as Someone Else)
-					// it will take into account your actual name (John Smith) and still work, instead of searching for a "John Smith (as Someone Else)" in the records
-					// unless your face is obstructed, then it works normally by taking your visible name, with intended or unintended results
-					nameToCheck = H.face_visible() ? H.real_name : H.name
-					var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
-					if(!isnull(R) && ((R["criminal"] == SECURITY::ARREST::STATE::INCARCERATED) || (R["criminal"] == SECURITY::ARREST::STATE::ARREST) || (R["criminal"] == SECURITY::ARREST::STATE::DETAIN)))
-						R["criminal"] = SECURITY::ARREST::STATE::RELEASED
-						H.update_arrest_icon()
+					var/name_to_check = H.face_visible() ? H.real_name : H.name
+
+					var/datum/db_record/personnel/security/R = global.data_core.security.find_record("name", name_to_check)
+					if (R)
+						var/criminal_status = R["criminal"]
+						var/set_status = (criminal_status == SECURITY::ARREST::STATE::INCARCERATED) || (criminal_status == SECURITY::ARREST::STATE::DETAIN)
+
+						for (var/datum/db_record/citation/arrest/arrest as anything in global.data_core.get_open_arrests(name_to_check))
+							arrest.close("FLOORFLUSHER", "N/A", "Warrant closed via floor flusher.")
+							set_status = TRUE
+
+						if (set_status)
+							R["criminal"] = SECURITY::ARREST::STATE::RELEASED
 
 			if (global.instant_pipe_network)
 				src.process()

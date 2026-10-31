@@ -396,11 +396,6 @@
 			icon_state = The_Tool.icon_state
 		if (The_Duration)
 			duration = The_Duration
-		if (ishuman(owner))
-			//carpenter people can fiddle with railings faster!
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 		if (The_Interaction)
 			interaction = The_Interaction
 
@@ -431,6 +426,8 @@
 				verbing = "unfastening"
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		ownerMob.visible_message(SPAN_ALERT("[owner] begins [verbing] [the_railing]."))
+		if (src.owner && HAS_ATOM_PROPERTY(src.owner, PROP_MOB_FAST_BUILD)) //carpenter people can fiddle with railings faster!
+			src.duration = round(src.duration / 2)
 
 	onEnd()
 		..()

@@ -8,6 +8,7 @@
 	var/datum/record_database/disease = null
 	var/datum/record_database/tickets = null
 	var/datum/record_database/fines = null
+	var/datum/record_database/arrests = null
 
 /datum/datacore/New()
 	. = ..()
@@ -19,6 +20,8 @@
 	src.disease = new(list("id", "name"), /datum/db_record/disease)
 	src.tickets = new(list("id", "name"), /datum/db_record/citation/ticket)
 	src.fines = new(list("id", "name", "status"), /datum/db_record/citation/fine)
+	src.arrests = new(list("id", "name", "status"), /datum/db_record/citation/arrest)
+
 	src.populate_disease_database()
 
 /datum/datacore/proc/addManifest(mob/living/carbon/human/H, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")
@@ -64,8 +67,13 @@
 
 	groups.fields += "[J.email_group]:[username],"
 
-/datum/datacore/proc/generate_id()
-	return global.add_zero(num2hex(rand(1, 0xffffff), 0), 6)
+/datum/datacore/proc/get_open_arrests(target)
+	RETURN_TYPE(/list/datum/db_record/citation/arrest)
+	. = list()
+
+	for (var/datum/db_record/citation/arrest/arrest as anything in src.arrests.find_records("status", "OPEN"))
+		if (arrest["target"] == target)
+			. += arrest
 
 /datum/datacore/proc/forensic_search(search_input)
 	var/list/datum/db_record/record_matches = null
@@ -257,6 +265,7 @@
 
 		if (rank in global.command_jobs)
 			if (rank == "Captain")
+				entry = "<b>[entry]</b>"
 				section_command.Insert(1, entry)
 				continue // The Captain only appears in the command section.
 
