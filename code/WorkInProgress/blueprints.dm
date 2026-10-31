@@ -654,7 +654,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 		save["type"] << curr.type
 		save["dir"] << curr.dir
 		save["state"] << curr.icon_state
-		if (curr.icon != initial(curr.icon))
+		if (curr.icon != get_initial_icon(curr))
 			save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
 		turf_count++
 

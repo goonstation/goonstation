@@ -42,17 +42,18 @@
 
 
 ///Can be provided with a mob, a raw cache list, or a ckey. Prefer providing a cache if you can't use a mob, as that reduces API load.
-/proc/jobban_isbanned(M, rank)
+///If the matching job datum is already available, pass it to avoid resolving its name again.
+/proc/jobban_isbanned(M, rank, datum/job/existing_job = null)
 	var/list/cache
 	if(!M)
 		return FALSE
 	if(ismob(M))
 		var/mob/M2 = M
-		//if(isnull(M2.client))
-			//return FALSE
-		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
-		if(player.cached_jobbans == null) // Shit they aren't cached.
-			var/list/jobBans = jobban_get_for_player(M2.ckey)
+		var/player_ckey = M2.ckey
+		// Get the player so we can use their bancache.
+		var/datum/player/player = (player_ckey && global.players[player_ckey]) || make_player(player_ckey)
+		if(isnull(player.cached_jobbans)) // Shit they aren't cached.
+			var/list/jobBans = jobban_get_for_player(player_ckey)
 			player.cached_jobbans = jobBans
 			if(!length(jobBans)) // API unavailable or no bans
 				return FALSE
@@ -64,35 +65,31 @@
 	else //If we aren't a string this is going to explode.
 		cache = jobban_get_for_player(M)
 
-	var/datum/job/J = find_job_in_controller_by_string(rank)
+	if (!length(cache))
+		return FALSE
+
+	var/datum/job/J = existing_job || find_job_in_controller_by_string(rank)
 	if(J)
 		if (J.no_jobban_from_this_job)
 			return FALSE
 
-		if(cache.Find("Everything Except Assistant"))
-			if(!istype(J, /datum/job/civilian/staff_assistant))
-				return TRUE
-
-		if(cache.Find("Engineering Department"))
-			if(J.job_category == JOB_ENGINEERING || istype(J, /datum/job/command/chief_engineer))
-				return TRUE
-
-		if(cache.Find("Security Department") || cache.Find("Security Officer"))
-			if(J.job_category == JOB_SECURITY || istype(J, /datum/job/command/head_of_security) || istype(J, /datum/job/special/nt/security_consultant))
-				return TRUE
-
-		if(cache.Find("Heads of Staff"))
-			if(J.job_category == JOB_COMMAND || istype(J, /datum/job/special/nt/security_consultant))
-				return TRUE
-
-	if(cache.Find("Ghostdrone"))
-		if(rank in list("Ghostdrone","Remy","Bumblespider","Crow"))
+		if(("Everything Except Assistant" in cache) && !istype(J, /datum/job/civilian/staff_assistant))
 			return TRUE
 
-	if(cache.Find("[rank]"))
+		if(("Engineering Department" in cache) && (J.job_category == JOB_ENGINEERING || istype(J, /datum/job/command/chief_engineer)))
+			return TRUE
+
+		if((("Security Department" in cache) || ("Security Officer" in cache)) && (J.job_category == JOB_SECURITY || istype(J, /datum/job/command/head_of_security) || istype(J, /datum/job/special/nt/security_consultant)))
+			return TRUE
+
+		if(("Heads of Staff" in cache) && (J.job_category == JOB_COMMAND || istype(J, /datum/job/special/nt/security_consultant)))
+			return TRUE
+
+	var/static/list/ghostdrone_bans = list("Ghostdrone", "Remy", "Bumblespider", "Crow")
+	if(("Ghostdrone" in cache) && (rank in ghostdrone_bans))
 		return TRUE
-	else
-		return FALSE
+
+	return ("[rank]" in cache)
 
 /proc/jobban_unban(mob/M, rank, akey)//This is full of faff to try and account for raw ckeys and actual players.
 	var/checkey

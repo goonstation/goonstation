@@ -187,7 +187,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
 		health -= 5
-		if(src.material?.getProperty("flammable") > 3) //why would you make a canister out of wood/etc
+		if(src.material?.getProperty(MATERIAL::PROPERTY::FLAMMABLE) > 3) //why would you make a canister out of wood/etc
 			health -= 1000 //BURN
 		healthcheck()
 
@@ -212,7 +212,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	if(src.air_contents.check_if_dangerous())
 		message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 	logTheThing(LOG_STATION, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
-	message_ghosts("<b>[src]</b> was destructively opened at [log_loc(src, ghostjump = TRUE)].")
+	GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] was destructively opened at [GHOST.MESSAGE.format_loc(src)].")
 
 	var/atom/location = src.loc
 	location.assume_air(air_contents)

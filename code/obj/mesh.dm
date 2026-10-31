@@ -49,12 +49,12 @@ TYPEINFO(/obj/mesh)
 /obj/mesh/onMaterialChanged()
 	. = ..()
 	if (istype(src.material))
-		health_max = material.getProperty("density") * 10
+		health_max = material.getProperty(MATERIAL::PROPERTY::DENSITY) * 10
 		health = health_max
 
-		cut_resist = material.getProperty("hard") * 10
-		blunt_resist = material.getProperty("density") * 5
-		corrode_resist = material.getProperty("chemical") * 10
+		cut_resist = material.getProperty(MATERIAL::PROPERTY::HARDNESS) * 10
+		blunt_resist = material.getProperty(MATERIAL::PROPERTY::DENSITY) * 5
+		corrode_resist = material.getProperty(MATERIAL::PROPERTY::CHEM_RESIST) * 10
 
 /obj/mesh/damage_blunt(amount)
 	if (!isnum(amount) || amount <= 0)
@@ -393,9 +393,9 @@ TYPEINFO_NEW(/obj/mesh/grille)
 
 	// electrocution check
 	var/is_conductive = TRUE
-	if (src.material && src.material.getProperty("electrical") < 4)
+	if (src.material && src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) < 4)
 		is_conductive = FALSE
-	if (is_conductive && src.material && (BOUNDS_DIST(src, user) == 0) && src.shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
+	if (is_conductive && src.material && (BOUNDS_DIST(src, user) == 0) && src.shock(user, 60 + (5 * (src?.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) - 5))))
 		return
 
 	// tools
@@ -421,8 +421,8 @@ TYPEINFO_NEW(/obj/mesh/grille)
 	src.visible_message(SPAN_ALERT("<B>[src] was hit by [AM].</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 	if (ismob(AM))
-		if(src?.material.hasProperty("electrical"))
-			src.shock(AM, 60 + (5 * (src.material.getProperty("electrical") - 5)))  // sure loved people being able to throw corpses into these without any consequences.
+		if(src?.material.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+			src.shock(AM, 60 + (5 * (src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) - 5)))  // sure loved people being able to throw corpses into these without any consequences.
 		src.damage_blunt(5)
 	else if (isobj(AM))
 		var/obj/O = AM
@@ -474,7 +474,7 @@ TYPEINFO_NEW(/obj/mesh/grille)
 	if (!powernets[net])
 		return FALSE
 	if(src.material)
-		powernets[net].newavail += wattage / 100 * (100 - src.material.getProperty("electrical") * 5)
+		powernets[net].newavail += wattage / 100 * (100 - src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) * 5)
 		return TRUE
 
 	powernets[net].newavail += wattage / 7500

@@ -230,9 +230,9 @@
 
 		// these are all things we will want later
 		crew[M] = list(
-			name = manifest_record.get_field("name"),
-			job = manifest_record.get_field("rank"),
-			dna = manifest_record.get_field("dna"),
+			name = manifest_record["name"],
+			job = manifest_record["rank"],
+			dna = manifest_record["dna"],
 			)
 
 	// nobody here
@@ -585,6 +585,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/spraybottle/cleaner = 6,
 		/obj/item/caution = 5,
 		/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
+		/obj/item/broom = 5,
 		/obj/item/mop = 5,
 		/obj/item/reagent_containers/glass/bucket = 5,
 		/obj/item/reagent_containers/glass/bucket/red = 1,

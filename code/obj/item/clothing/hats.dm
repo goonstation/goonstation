@@ -1094,11 +1094,19 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 			playsound(src.loc, 'sound/vox/crime.ogg', 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
-		var/reason = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
-		var/details = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/reason = pick(
+			"Being unstoppable",
+			"Swagging out so hard",
+			"Stylin on \'em",
+			"Puttin\' in work",
+			"Convicted Badass, to the bone.",
+			"Certified Turbonerd, home-grown.",
+			"Absolute Salad.",
+			"King of crimes, Queen of Flexxin\'",
+		)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
-			H.apply_automated_arrest(reason,details,TRUE,FALSE,FALSE)
+			H.apply_automated_arrest(reason, requires_camera_seen = FALSE, use_visible_name = FALSE)
 
 	custom_suicide = 1
 	suicide_in_hand = 0
@@ -1185,7 +1193,7 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 
 	proc/change_big_icon_state(var/BIG)
 		if(BIG == TRUE)
-			src.icon = initial(src.icon)
+			src.icon = get_initial_icon(src)
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon = 'icons/mob/clothing/bighat.dmi'
@@ -1265,7 +1273,7 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 
 	proc/change_big_icon_state(var/BIG)
 		if(BIG == TRUE)
-			src.icon = initial(src.icon)
+			src.icon = get_initial_icon(src)
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon = 'icons/mob/clothing/bighat.dmi'
@@ -2817,3 +2825,10 @@ obj/item/clothing/head/headscarf
 		name = "white headscarf"
 		icon_state = "headscarf-white"
 		item_state = "headscarf-white"
+
+// Seasonal autumn hats
+/obj/item/clothing/head/newsboy
+	name = "newsboy cap"
+	desc = "Extra, Extra! Read all about it!"
+	icon_state = "newsboy"
+	item_state = "newsboy"

@@ -1,6 +1,9 @@
 import { logger } from '../logging';
 import { createQueue } from './handlers/chunking';
 
+const DUPLICATE_ACTION_WINDOW_MS = 50;
+const recentlySentActions = new Set<string>();
+
 /**
  * Sends an action to `ui_act` on `src_object` that this tgui window
  * is associated with.
@@ -18,6 +21,7 @@ export function sendAct(
   }
 
   const stringifiedPayload = JSON.stringify(payload);
+
   const urlSize = Object.entries({
     type: `act/${action}`,
     payload: stringifiedPayload,
@@ -29,6 +33,17 @@ export function sendAct(
       `${i > 0 ? '&' : '?'}${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
     '',
   ).length;
+  if (urlSize <= 2048) {
+    const actionKey = `${action}:${stringifiedPayload}`;
+    if (recentlySentActions.has(actionKey)) {
+      return;
+    }
+    recentlySentActions.add(actionKey);
+    setTimeout(
+      () => recentlySentActions.delete(actionKey),
+      DUPLICATE_ACTION_WINDOW_MS,
+    );
+  }
 
   if (urlSize > 2048) {
     const chunks: string[] = stringifiedPayload.split(chunkSplitter);

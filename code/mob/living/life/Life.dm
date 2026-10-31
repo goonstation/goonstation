@@ -226,7 +226,7 @@
 	if (src.transforming)
 		return 1
 
-	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
+	var/life_time_passed = clamp(TIME - last_life_tick, tick_spacing, cap_tick_spacing)
 
 	var/life_mult = life_time_passed / tick_spacing
 
@@ -297,7 +297,7 @@
 	if (..(parent))
 		return 1
 
-	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
+	var/mult = clamp(TIME - last_human_life_tick, tick_spacing, cap_tick_spacing) / tick_spacing
 
 	src.mutantrace?.onLife(mult)
 
@@ -584,7 +584,8 @@
 							resist_prob += 100
 
 		for (var/obj/item/C as anything in src.get_equipped_items())
-			resist_prob += C.getProperty("viralprot")
+			if (C.properties)
+				resist_prob += C.getProperty("viralprot")
 
 		if(src.getStatusDuration("food_disease_resist"))
 			resist_prob += 80

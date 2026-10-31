@@ -14,14 +14,3 @@
 		amount
 	)
 		. = ..(args)
-
-	buildAndSend(datum/fine/F, mob/living/M)
-		src.send(
-			M.mind.get_player().id,
-			F.target,
-			html_decode(F.reason),
-			M.real_name,
-			M.job,
-			M.ckey,
-			F.amount
-		)

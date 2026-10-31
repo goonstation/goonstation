@@ -238,14 +238,14 @@
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may overload")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent overload.")
-					message_ghosts("<b>[src]</b> is getting dangerously hot! [log_loc(src.loc, ghostjump=TRUE)].")
+					GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] is getting dangerously hot at [GHOST.MESSAGE.format_loc(src)].")
 			if(temperature >= REACTOR_ON_FIRE_TEMP && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message(SPAN_ALERT("<b>The [src] begins to burn!</b>"))
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to overload")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. OVERLOAD IMMINENT.", crisis = TRUE)
-					message_ghosts("<b>[src]</b> is extremely close to overloading! [log_loc(src.loc, ghostjump=TRUE)].")
+					GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] is extremely close to overloading at [GHOST.MESSAGE.format_loc(src)].")
 			else if(temperature < REACTOR_ON_FIRE_TEMP && src.GetParticles("overheat_fire"))
 				src.visible_message(SPAN_ALERT("<b>The [src] stops burning.</b>"))
 				logTheThing(LOG_STATION, src, "[src] is cooling from 2500K")
@@ -407,7 +407,7 @@
 				if(src.component_grid[x][y])
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					//more radioactive material = higher score. Doubled if the component is already melted.
-					meltdown_badness += (comp.material.getProperty("radioactive")*2 + comp.material.getProperty("n_radioactive")*5 + comp.material.getProperty("spent_fuel")*10) * (1 + comp.melted)
+					meltdown_badness += (comp.material.getProperty(MATERIAL::PROPERTY::RADS)*2 + comp.material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON)*5 + comp.material.getProperty(MATERIAL::PROPERTY::PLUTONIUM)*10) * (1 + comp.melted)
 					if(istype(comp, /obj/item/reactor_component/gas_channel))
 						var/obj/item/reactor_component/gas_channel/gascomp = comp
 						src.current_gas.merge(gascomp.air_contents) //grab all the gas in the channels and put it back in the reactor so it can be vented into engineering
@@ -420,7 +420,7 @@
 		for(var/i = 1 to rand(10,30))
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
 
-		message_ghosts("<b>[src]</b> is going BOOM! [log_loc(src.loc, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] is going BOOM at [GHOST.MESSAGE.format_loc(src)]!")
 		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")
 
 		explosion_new(src, current_loc, max(100, meltdown_badness*5), TRUE, 0, 360, TRUE)
@@ -605,6 +605,9 @@
 							CR.configured_insertion_level = val/100
 							. = TRUE
 
+	meteorhit(obj/meteor)
+		src.ex_act(2)
+
 	ex_act(severity)
 		var/comp_throw_prob = 0
 		switch(severity)
@@ -666,8 +669,8 @@
 				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, TRUE)
 				var/obj/item/reactor_component/fuel_rod/meat_rod = new /obj/item/reactor_component/fuel_rod("flesh")
 				meat_rod.material.setName(user.name)
-				if(user.bioHolder && user.bioHolder.HasEffect("radioactive"))
-					meat_rod.material.setProperty("radioactive", 3)
+				if(user.bioHolder && user.bioHolder.HasEffect(MATERIAL::PROPERTY::RADS))
+					meat_rod.material.setProperty(MATERIAL::PROPERTY::RADS, 3)
 				meat_rod.setMaterial(meat_rod.material)
 				if(src.component_grid[chosen_slot[1]][chosen_slot[2]] == null) //double check, just in case
 					src.component_grid[chosen_slot[1]][chosen_slot[2]] = meat_rod //hehe
@@ -816,13 +819,13 @@
 			return TRUE //don't irradiate ghosts, overlays, atmos fires etc.
 
 		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 10 : 5
-		var/density = (hit.material ? hit.material.getProperty("density") : 3) //3 is default density
+		var/density = (hit.material ? hit.material.getProperty(MATERIAL::PROPERTY::DENSITY) : 3) //3 is default density
 
 		//first are we colliding with this or ignoring it?
 		if(prob(density*multiplier))
 			//we hit it! now decide what that hit means
 			//first, reflection
-			if(hit.material && prob(hit.material.getProperty("hard")*10))
+			if(hit.material && prob(hit.material.getProperty(MATERIAL::PROPERTY::HARDNESS)*10))
 				//reflect
 				var/obj/projectile/reflected = shoot_reflected_bounce(O, hit)
 				reflected?.power = O.power
@@ -830,11 +833,11 @@
 
 			//then fission
 			//fission basically hits like an AoE contamination effect
-			if(hit.material && prob(hit.material.getProperty("n_radioactive")*10))
+			if(hit.material && prob(hit.material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON)*10))
 				for(var/turf/T in range(1, hit))
 					T.AddComponent(/datum/component/radioactive, 50, TRUE, TRUE, 1)
 				return FALSE
-			if(hit.material && prob(hit.material.getProperty("radioactive")*10))
+			if(hit.material && prob(hit.material.getProperty(MATERIAL::PROPERTY::RADS)*10))
 				for(var/turf/T in range(1, hit))
 					T.AddComponent(/datum/component/radioactive, 50, TRUE, FALSE, 1)
 				return FALSE

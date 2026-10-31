@@ -15,11 +15,13 @@ ABSTRACT_TYPE(/obj/item/plant)
 		..()
 		make_reagents()
 
-	get_desc(dist, mob/user)
+	examine(mob/user)
 		. = ..()
-		if (dist >= 5)
+		if (GET_DIST(src, user) >= 5)
 			return
-		HYPphytoscopic_scan(user, src)
+		var/scan = HYPphytoscopic_scan(user, src)
+		if (scan)
+			. += scan
 
 	proc/make_reagents()
 		if (!src.reagents)

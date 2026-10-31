@@ -381,6 +381,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/condiment/ketchup = 4,
 					/obj/item/reagent_containers/food/snacks/condiment/mayo = 4,
 					/obj/item/reagent_containers/food/snacks/condiment/syrup = 2,
+					/obj/item/reagent_containers/food/snacks/condiment/jam/blueberryjam = 1,
+					/obj/item/reagent_containers/food/snacks/condiment/jam/peachjam = 1,
+					/obj/item/reagent_containers/food/snacks/condiment/jam/strawberryjam = 1,
 					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 2,
 					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2,
 					/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 2)
@@ -515,10 +518,11 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/janitor
 	name = "Janitorial Supplies"
-	desc = "x3 Buckets, x3 Mop, x3 Wet Floor Signs, x3 Cleaning Grenades, x1 Mop Bucket, x1 Rubber Gloves"
+	desc = "x3 Buckets, x3 Mop, x3 Broom, x3 Wet Floor Signs, x3 Cleaning Grenades, x1 Mop Bucket, x1 Rubber Gloves"
 	category = "Crew Service"
 	contains = list(/obj/item/reagent_containers/glass/bucket = 3,
 					/obj/item/mop = 3,
+					/obj/item/broom = 3,
 					/obj/item/caution = 3,
 					/obj/item/chem_grenade/cleaner = 3,
 					/obj/mopbucket,
@@ -1419,28 +1423,37 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/necessities_vending_restock
 	name = "Necessities Vending Machine Restocking Pack"
-	desc = "x1 Coffee Restock Cartridge, x1 Snack Restock Cartridge, x1 Cigarette Restock Cartridge, x1 Cola Restock Cartridge, x1 Alcohol Restock Cartridge, x1 Capsule Restock Cartridge, x1 Standard Restock Cartridge, x1 Kitchen Restock Cartridge."
+	desc = "x1 Coffee Restock Cartridge, x1 Snack Restock Cartridge, x1 Cigarette Restock Cartridge, x1 Cola Restock Cartridge, x1 Capsule Restock Cartridge, x1 Standard Restock Cartridge."
 	contains = list(/obj/item/vending/restock_cartridge/coffee,
 					/obj/item/vending/restock_cartridge/snack,
 					/obj/item/vending/restock_cartridge/cigarette,
-					/obj/item/vending/restock_cartridge/alcohol,
 					/obj/item/vending/restock_cartridge/cola,
-					/obj/item/vending/restock_cartridge/kitchen,
 					/obj/item/vending/restock_cartridge/standard,
 					/obj/item/vending/restock_cartridge/capsule)
-	cost = PAY::TRADESMAN*5
+	cost = PAY::TRADESMAN*4
 	containertype = /obj/storage/crate
 	containername = "Necessities Vending Machine Restocking Pack"
 
 /datum/supply_packs/catering_vending_restock
 	name = "Catering and Hydroponics Vending Machine Restocking Pack"
-	desc = "x1 Hydroponics Restock Cartridge, x1 Kitchen Restock Cartridge."
+	desc = "x1 Hydroponics Restock Cartridge, x1 Kitchen Restock Cartridge, x1 Alcohol Restock Cartridge."
 	category = "Crew Service"
 	contains = list(/obj/item/vending/restock_cartridge/hydroponics,
-					/obj/item/vending/restock_cartridge/kitchen)
+					/obj/item/vending/restock_cartridge/kitchen,
+					/obj/item/vending/restock_cartridge/alcohol)
 	cost = PAY::TRADESMAN*2
 	containertype = /obj/storage/crate
 	containername = "Catering and Hydroponics Vending Machine Restocking Pack"
+
+/datum/supply_packs/civilian_vending_restock
+	name = "Civilian Vending Machine Restocking Pack"
+	desc = "x1 Janitor Restock Cartridge, x1 Chapel Restock Cartridge."
+	category = "Crew Service"
+	contains = list(/obj/item/vending/restock_cartridge/janitor,
+					/obj/item/vending/restock_cartridge/chapel)
+	cost = PAY::TRADESMAN*2
+	containertype = /obj/storage/crate
+	containername = "Civilian Vending Machine Restocking Pack"
 
 /datum/supply_packs/medical_vending_restock
 	name = "Medical Vending Machine Restock Pack"

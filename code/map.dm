@@ -177,7 +177,7 @@ var/global/list/mapNames = list(
 
 	proc/get_shuttle_path()
 		var/dirname = dir_to_dirname(escape_dir)
-		var/shuttle_name = src.default_shuttle || "[dirname]base"
+		var/shuttle_name = src.default_shuttle || "[dirname]_base"
 		#ifdef UPSCALED_MAP
 		. = "assets/maps/shuttles/[dirname]/[shuttle_name]_big.dmm"
 		#else
@@ -186,7 +186,7 @@ var/global/list/mapNames = list(
 
 	proc/get_shuttle_transit_path()
 		var/dirname = dir_to_dirname(escape_dir)
-		var/shuttle_name = src.default_shuttle || "[dirname]base"
+		var/shuttle_name = src.default_shuttle || "[dirname]_base"
 		#ifdef UPSCALED_MAP
 		. = "assets/maps/transit/[dirname]/[shuttle_name]_big.dmm"
 		#else

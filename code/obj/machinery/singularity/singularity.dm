@@ -77,7 +77,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 */
 /obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
 	START_TRACKING
-	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	src.AddElement(/datum/element/ghost_observable)
 	src.energy = E
 	radius_max = rad
 	succ_cache = list()
@@ -109,7 +109,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/disposing()
 	STOP_TRACKING
-	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	. = ..()
 
 /obj/machinery/the_singularity/process()
@@ -161,7 +160,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
-			message_ghosts("<b>[src]</b> has become loose at [log_loc(src, ghostjump=TRUE)].")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] has become loose at [GHOST.MESSAGE.format_loc(src)].")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -355,9 +354,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
 		if (istype(A.material))
-			gain += A.material.getProperty("density") * 3 * A.material_amt
-			gain += A.material.getProperty("radioactive") * 4 * A.material_amt
-			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
+			gain += A.material.getProperty(MATERIAL::PROPERTY::DENSITY) * 3 * A.material_amt
+			gain += A.material.getProperty(MATERIAL::PROPERTY::RADS) * 4 * A.material_amt
+			gain += A.material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON) * 6 * A.material_amt
 			if(isitem(A))
 				var/obj/item/I = A
 				gain *= min(I.amount, INFINITY)
@@ -482,7 +481,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	for (var/turf/T in orange(radius+EVENT_GROWTH+0.5, sing_center))
 		if (prob(70))
 			continue
-		if (T.material?.getProperty("density") >= 7)
+		if (T.material?.getProperty(MATERIAL::PROPERTY::DENSITY) >= 7)
 			continue
 		if (T && !istype(T, /turf/space) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
 			if (issimulatedturf(T))

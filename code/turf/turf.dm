@@ -177,7 +177,7 @@
 		setIntact(TRUE)
 		src.broken = FALSE
 		src.burnt = FALSE
-		icon = initial(icon)
+		icon = get_initial_icon(src)
 		if(icon_old)
 			icon_state = icon_old
 		else
@@ -1046,67 +1046,10 @@ TYPEINFO(/turf/simulated)
 					K.Attackby(W, user, params)
 			return ..()
 
-/turf/simulated/aprilfools/grass
-	name = "grass"
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
-	step_material = "step_outdoors"
-	step_priority = STEP_PRIORITY_MED
-
-/turf/simulated/aprilfools/dirt
-	name = "dirt"
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "sand"
-
-/turf/simulated/aprilfools/brick_wall
-	name = "brick wall"
-	icon = 'icons/misc/aprilfools.dmi'
-	icon_state = "brick_wall"
-	opacity = 1
-	density = 1
-	pathable = 0
-	var/d_state = 0
-
 /turf/simulated/aprilfools/floor/concrete_floor
 	name = "concrete floor"
 	icon = 'icons/misc/aprilfools.dmi'
 	icon_state = "concrete"
-
-/turf/unsimulated/aprilfools/grass
-	name = "grass"
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
-	opacity = 0
-	density = 0
-
-/turf/unsimulated/aprilfools/dirt
-	name = "dirt"
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "sand"
-	opacity = 0
-	density = 0
-
-/turf/simulated/bar
-	name = "bar"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "bar"
-
-/turf/simulated/grimycarpet
-	name = "grimy carpet"
-	icon = 'icons/turf/floors/carpet.dmi'
-	icon_state = "grimy"
-
-/turf/unsimulated/grimycarpet
-	name = "grimy carpet"
-	icon = 'icons/turf/floors/carpet.dmi'
-	icon_state = "grimy"
-
-/turf/simulated/grass
-	name = "grass"
-	icon = 'icons/misc/worlds.dmi'
-	icon_state = "grass"
-	step_material = "step_outdoors"
-	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated
 	name = "command"
@@ -1397,7 +1340,7 @@ TYPEINFO(/turf/simulated)
 
 /turf/unsimulated/floor/ballpit
 	name = "ball pit"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	icon_state = "ballpitfloor"
 
 /turf/simulated/floor/concrete

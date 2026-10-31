@@ -587,14 +587,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
 	lawText = "Security EXPANSION MODULE"
 	highlight_color = rgb(172, 0, 0, 255)
 	ai_abilities = list(/datum/targetable/ai/module/sec_huds)
-	var/obj/machinery/computer/secure_data/sec_comp
+	var/obj/machinery/computer3/generic/secure_data/sec_comp = null
 
 	New()
-		..()
-		sec_comp = new(src)
-		sec_comp.ai_access = TRUE
-		sec_comp.authenticated = TRUE
-		sec_comp.rank = "AI"
+		. = ..()
+		src.sec_comp = new(src)
 
 /obj/item/aiModule/ability_expansion/flash
 	name = "Flash Expansion Module"

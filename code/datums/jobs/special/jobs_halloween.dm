@@ -420,6 +420,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"
 	trusted_only = FALSE
+	var/static/plush_type = /mob/living/critter/small_animal/plush/cryptid
 #ifdef HALLOWEEN
 	limit = 2
 #endif
@@ -427,7 +428,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/small_animal/plush/cryptid)
+		M.critterize(src.plush_type)
 
 /datum/job/special/halloween/critter/remy
 	name = "Remy"

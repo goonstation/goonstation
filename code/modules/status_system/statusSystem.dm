@@ -147,8 +147,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	if(!globalInstance.preCheck(src))
 		return
 
-	if(hasStatus(statusId))
-		var/datum/statusEffect/S = hasStatus(statusId)
+	var/datum/statusEffect/S = hasStatus(statusId)
+	if(S)
 		setStatus(statusId, (isnull(S.maxDuration) ? (S.duration + duration):(min(S.duration + duration, S.maxDuration))), optional)
 		return S
 	else

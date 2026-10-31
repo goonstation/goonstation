@@ -11,6 +11,7 @@ datum/controller/process/mob_ai
 
 	doWork()
 		scheck()
+		var/c = 0
 		for(var/X in ai_mobs)
 			var/mob/M = X
 			last_object = X
@@ -74,6 +75,7 @@ datum/controller/process/mob_ai
 					M.ai._mobai_being_processed = TRUE
 					M.ai.tick()
 					M?.ai?._mobai_being_processed = FALSE //null checks just in case something went *really* wrong
-				scheck()
+				if (!(c++ % 5))
+					scheck()
 
 #undef MOBAI_STUCK_THRESHOLD

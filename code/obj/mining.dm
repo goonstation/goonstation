@@ -74,10 +74,6 @@
 		chassis = target
 		if (ismob(user))
 			master = user
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onStart()
 		..()
@@ -91,6 +87,8 @@
 		else if (mag_parts != master.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 		owner.visible_message(SPAN_NOTICE("[master] begins to assemble [mag_parts]!"))
+		if (src.owner && HAS_ATOM_PROPERTY(src.owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onUpdate()
 		..()
@@ -2030,6 +2028,8 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	icon_state = "hedron-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
+
+	var/welding = FALSE
 	powered_item_state = "gun"
 	powered_mining_sound = 'sound/items/Welder.ogg'
 	c_flags = ONBELT
@@ -2048,11 +2048,13 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 
 	power_up(var/mob/user)
 		src.set_icon_state("hedron-M")
+		src.welding = FALSE
 		FLICK("hedron-WtoM", src)
 		..()
 
 	power_down(var/mob/user)
 		src.set_icon_state("hedron-W")
+		src.welding = TRUE
 		FLICK("hedron-MtoW", src)
 		..()
 
@@ -2557,7 +2559,7 @@ TYPEINFO(/obj/item/cargotele)
 	mining_marker.alpha = 200
 	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_image(mining_marker)
 	SPAWN(2 MINUTES)
-		if(AST && AST.marker_expiration_time <= TIME)
+		if(AST && istype(AST) && AST.marker_expiration_time <= TIME)
 			AST.clear_marker()
 
 ///// MINER TRAITOR ITEM /////

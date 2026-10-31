@@ -30,11 +30,14 @@
 		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 
 	attack_hand(var/mob/user)
-		. = ..()
+		if (!user.sight_check(TRUE))
+			boutput(user, SPAN_ALERT("You can't see anything, operating a computer isn't going to work!"))
+			return 1
 		if (!user.literate)
 			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
 			return 1
 		interact_particle(user,src)
+		. = ..()
 
 	attack_ai(mob/user as mob)
 		src.Attackhand(user)
@@ -202,6 +205,22 @@
 	. = ..()
 	if(status & NOPOWER)
 		return
+
+/obj/machinery/computer/ui_status(mob/user, datum/ui_state/state)
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = min(tgui_broken_state.can_use_topic(src, user),
+						tgui_physical_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
+	else
+		. = min(state.can_use_topic(src, user),
+						tgui_broken_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
 
 /obj/machinery/computer/update_icon()
 	if(src.glow_in_dark_screen)
