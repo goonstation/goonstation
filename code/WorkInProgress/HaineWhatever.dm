@@ -1574,11 +1574,12 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			boutput(user, SPAN_NOTICE("You awkwardly jam the tiny flag back into the barrel."))
 
 /obj/item/bang_gun/ak47
-	name = "ak-477"
+	name = "\improper AKM Assault Rifle"
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
-	icon_state = "ak47"
-	item_state = "ak47"
-	desc = "There are 30 bullets left! Each shot will currently use 3 bullets!"
+	icon_state = "akm"
+	item_state = "akm"
+	desc = {"An old Cold War relic chambered in 7.62x39. Rusted, but not busted. Vast numbers were brought back into service for the Martian war.
+			There are 30 bullets left! Each shot will currently use 3 bullets!"}
 	description = "A bang flag unfurls out of the barrel!"
 	two_handed = 1
 
