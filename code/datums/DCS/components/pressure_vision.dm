@@ -53,7 +53,7 @@ TYPEINFO(/datum/component/pressure_vision)
 			continue
 
 		var/image/new_overlay = image(src.overlay_icon, T, src.overlay_state)
-		var/relative_pressure = MIXTURE_PRESSURE(T.air)/ONE_ATMOSPHERE
+		var/relative_pressure = MIXTURE_PRESSURE(T.return_air())/ONE_ATMOSPHERE
 		//make more orange if over one atmosphere
 		new_overlay.color = rgb(91 * (max(1,relative_pressure)), 103, 231 / (max(1,relative_pressure)))
 		new_overlay.alpha = 0

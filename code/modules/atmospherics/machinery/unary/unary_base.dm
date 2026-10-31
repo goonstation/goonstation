@@ -12,7 +12,7 @@
 	initialize_directions = dir
 	air_contents = new /datum/gas_mixture
 
-	air_contents.volume = 200
+	air_contents.set_volume(200)
 
 /obj/machinery/atmospherics/unary/disposing()
 	node?.disconnect(src)

@@ -316,7 +316,7 @@
 		if (!direct)
 			return loc?.return_air()
 
-	assume_air(datum/air_group/giver)
+	assume_air(datum/gas_mixture/giver)
 		return loc?.assume_air(giver)
 
 	can_strip()

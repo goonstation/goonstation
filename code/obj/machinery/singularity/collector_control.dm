@@ -145,20 +145,20 @@ TYPEINFO(/obj/machinery/power/collector_control)
 					power_s += singu.energy*max((singu.radius**2),1)/4
 			if(P1?.air_contents)
 				if(CA1.active != 0)
-					power_p += P1.air_contents.toxins
-					P1.air_contents.toxins -= 0.001 * mult
+					power_p += P1.air_contents.toxins()
+					P1.air_contents.adjust_toxins(-0.001 * mult)
 			if(P2?.air_contents)
 				if(CA2.active != 0)
-					power_p += P2.air_contents.toxins
-					P2.air_contents.toxins -= 0.001 * mult
+					power_p += P2.air_contents.toxins()
+					P2.air_contents.adjust_toxins(-0.001 * mult)
 			if(P3?.air_contents)
 				if(CA3.active != 0)
-					power_p += P3.air_contents.toxins
-					P3.air_contents.toxins -= 0.001 * mult
+					power_p += P3.air_contents.toxins()
+					P3.air_contents.adjust_toxins(-0.001 * mult)
 			if(P4?.air_contents)
 				if(CA4.active != 0)
-					power_p += P4.air_contents.toxins
-					P4.air_contents.toxins -= 0.001 * mult
+					power_p += P4.air_contents.toxins()
+					P4.air_contents.adjust_toxins(-0.001 * mult)
 			power_a = power_p*power_s*50
 			src.lastpower = power_a
 			add_avail(power_a)
