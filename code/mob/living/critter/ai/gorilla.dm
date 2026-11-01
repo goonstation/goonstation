@@ -16,4 +16,5 @@
 /datum/aiTask/prioritizer/critter/gorilla_aggressive/New()
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src.holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/smash_stuff, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive/melee, list(src.holder, src))
