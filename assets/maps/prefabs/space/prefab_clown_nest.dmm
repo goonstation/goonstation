@@ -24,6 +24,9 @@
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/airless/plating,
 /area/prefab/clown_nest)
+"cj" = (
+/turf/unsimulated/wall/auto/web,
+/area/noGenerate)
 "cH" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/variableTurf/floor,
@@ -39,11 +42,16 @@
 "dI" = (
 /obj/decal/cleanable/cobweb2,
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/web_sack,
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "eb" = (
 /turf/variableTurf/clear,
 /area/allowGenerate)
+"eE" = (
+/obj/decal/cleanable/cobweb,
+/turf/unsimulated/wall/auto/web,
+/area/prefab/clown_nest)
 "eJ" = (
 /obj/item/material_piece/cloth/spidersilk{
 	pixel_x = 4;
@@ -85,6 +93,10 @@
 	pixel_y = -2
 	},
 /obj/decal/cleanable/cobwebFloor,
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
+"gT" = (
+/obj/structure/woodwall/web/small/tiny,
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "ix" = (
@@ -189,7 +201,7 @@
 	pixel_x = 1
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/wall/auto/web,
 /area/prefab/clown_nest)
 "uY" = (
 /obj/lattice{
@@ -220,6 +232,10 @@
 "zi" = (
 /obj/fitness/speedbag/clown,
 /turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"Bk" = (
+/obj/decal/cleanable/web_sack,
+/turf/variableTurf/wall,
 /area/prefab/clown_nest)
 "Ch" = (
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
@@ -288,6 +304,7 @@
 /area/prefab/clown_nest)
 "GS" = (
 /obj/decal/cleanable/dirt/dirt4,
+/obj/structure/woodwall/web/small,
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "Hf" = (
@@ -330,6 +347,17 @@
 	},
 /mob/living/critter/spider/clownqueen/cluwne,
 /turf/variableTurf/floor,
+/area/prefab/clown_nest)
+"KJ" = (
+/turf/unsimulated/wall/auto/web,
+/area/prefab/clown_nest)
+"KQ" = (
+/obj/decal/cleanable/web_sack{
+	dir = 4;
+	pixel_x = 6;
+	pixel_y = -7
+	},
+/turf/unsimulated/wall/auto/web,
 /area/prefab/clown_nest)
 "Lg" = (
 /obj/table/auto{
@@ -416,6 +444,10 @@
 	name = "Honkys Clownspider Farm"
 	},
 /turf/variableTurf/wall,
+/area/prefab/clown_nest)
+"WP" = (
+/obj/decal/cleanable/web_sack,
+/turf/unsimulated/wall/auto/web,
 /area/prefab/clown_nest)
 "Xv" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -687,8 +719,8 @@ XY
 PL
 PL
 PL
-PL
-PL
+KJ
+KJ
 PL
 XY
 XY
@@ -720,15 +752,15 @@ cH
 PL
 GB
 xJ
+KJ
 PL
 PL
-PL
 XY
 XY
 PL
-XY
-XY
-XY
+je
+je
+je
 XY
 XY
 XY
@@ -752,17 +784,17 @@ xJ
 ja
 xJ
 fO
+KJ
+KJ
 PL
 PL
 PL
 PL
-PL
-PL
-PL
-XY
-XY
-XY
-XY
+KJ
+cj
+je
+je
+je
 XY
 XY
 XY
@@ -783,19 +815,19 @@ xJ
 xJ
 xJ
 sq
-PL
-PL
+KJ
+KJ
 JG
 PL
-PL
-PL
-xI
-PL
-PL
-PL
-XY
-XY
-XY
+KJ
+KJ
+eE
+KJ
+KJ
+KJ
+je
+je
+je
 XY
 XY
 eb
@@ -815,19 +847,19 @@ xJ
 xJ
 xJ
 Cu
-PL
-PL
+KJ
+KJ
 II
 Vz
-PL
+KJ
 SD
 xJ
 xJ
 cH
-PL
-PL
-XY
-XY
+KJ
+KJ
+je
+je
 XY
 XY
 eb
@@ -845,21 +877,21 @@ XY
 XY
 XY
 XW
-PL
-PL
-PL
+KJ
+KJ
+KJ
 Hf
 sH
-PL
-PL
+KJ
+KJ
 EN
 xJ
 eV
 xJ
+KJ
+KJ
 PL
-PL
-PL
-XY
+je
 XY
 eb
 eb
@@ -883,14 +915,14 @@ Ty
 bT
 Ty
 Ty
-PL
+KJ
 cH
 xJ
 tP
-PL
-PL
-PL
-XY
+KJ
+KJ
+KJ
+je
 XY
 XY
 XY
@@ -915,13 +947,13 @@ CZ
 gl
 Lg
 Ty
-PL
-PL
+KJ
+WP
 xJ
 xJ
-xJ
-PL
-XY
+KJ
+KJ
+cj
 XY
 XY
 XY
@@ -948,8 +980,8 @@ ix
 Ty
 Ty
 Ty
-PL
-PL
+KJ
+KJ
 xJ
 xJ
 GS
@@ -981,15 +1013,15 @@ aV
 Zh
 Ty
 PL
-PL
+KJ
 Xv
 xJ
-xJ
-PL
+KJ
+KJ
 XY
-XY
-XY
-XY
+je
+je
+je
 XY
 XY
 eb
@@ -1013,16 +1045,16 @@ Ty
 LW
 Ty
 PL
+Bk
 xJ
-xJ
+KJ
+KJ
+KJ
+je
 PL
 PL
 PL
-XY
-PL
-PL
-PL
-XY
+je
 XY
 eb
 eb
@@ -1048,12 +1080,12 @@ xJ
 xJ
 xJ
 nl
-PL
-PL
-PL
-PL
-PL
-PL
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
 PL
 XY
 XY
@@ -1081,11 +1113,11 @@ bw
 xJ
 xJ
 xJ
-PL
-PL
+KJ
+KJ
 Ch
 qF
-PL
+KJ
 PL
 XY
 XY
@@ -1102,8 +1134,8 @@ XY
 XY
 PL
 PL
-PL
-xJ
+KJ
+KJ
 ja
 xJ
 xJ
@@ -1113,10 +1145,10 @@ PL
 Ww
 xJ
 xJ
-PL
+KJ
 xI
 pV
-PL
+KJ
 PL
 XY
 XY
@@ -1133,7 +1165,7 @@ XY
 XY
 XY
 PL
-PL
+KJ
 dI
 xJ
 xJ
@@ -1142,13 +1174,13 @@ xJ
 Ma
 xJ
 xJ
-xJ
+gT
 xJ
 xJ
 cH
 xJ
 xJ
-PL
+KJ
 PL
 XY
 XY
@@ -1165,18 +1197,18 @@ XY
 XY
 XY
 PL
-PL
-PL
+KJ
+KJ
 rG
 xJ
 xJ
 ja
+KJ
 PL
 PL
 PL
-PL
-PL
-xJ
+KJ
+KQ
 xJ
 fO
 xJ
@@ -1198,18 +1230,18 @@ XY
 XY
 PL
 PL
-PL
+KJ
 UC
 xJ
 gG
-PL
-PL
+KJ
+KJ
+je
 XY
-XY
 PL
 PL
 PL
-PL
+KJ
 cH
 eV
 xJ
@@ -1232,17 +1264,17 @@ XY
 PL
 PL
 PL
+KJ
+KJ
+KJ
 PL
-PL
-PL
-PL
+je
 XY
 XY
 XY
-XY
-XY
-PL
-PL
+je
+KJ
+KJ
 xJ
 xJ
 XY
@@ -1267,15 +1299,15 @@ PL
 PL
 PL
 PL
+je
 XY
 XY
 XY
 XY
 XY
-XY
-XY
-XY
-XY
+je
+je
+je
 XY
 XY
 XY
@@ -1296,9 +1328,9 @@ XY
 XY
 XY
 XY
-XY
+je
 PL
-XY
+je
 XY
 XY
 XY

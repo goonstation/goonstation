@@ -1725,3 +1725,28 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (src.color)
 			color_name = hex2color_name(src.color)
 			src.name = "[color_name] hair pile"
+
+/obj/decal/cleanable/web_barricade
+    name = "torn webbing"
+    desc = "Torn up spider silk strewn across the floor."
+    icon = 'icons/obj/spiderwebs.dmi'
+    icon_state = "web_barricade-broken"
+
+/obj/decal/cleanable/web_block
+    name = "torn webbing"
+    desc = "Torn up spider silk strewn across the floor."
+    icon = 'icons/obj/spiderwebs.dmi'
+    icon_state = "web_block-broken"
+
+/obj/decal/cleanable/web_fence
+    name = "torn webbing"
+    desc = "Torn up spider silk strewn across the floor."
+    icon = 'icons/obj/spiderwebs.dmi'
+    icon_state = "web_fence-broken"
+
+/obj/decal/cleanable/web_sack
+    name = "egg sack"
+    desc = "A large ball of webbing likely containing spider eggs."
+    icon = 'icons/obj/spiderwebs.dmi'
+    icon_state = "websack1"
+    random_icon_states = list("websack1", "websack2")

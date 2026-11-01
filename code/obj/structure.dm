@@ -546,3 +546,119 @@ TYPEINFO(/obj/structure/woodwall)
 		wall._health = wall._max_health
 		wall.updateHealth()
 		wood.change_stack_amount(-1)
+/obj/structure/woodwall/web
+	name = "thick webbing"
+	desc = "Many strings of spider silk stretched between the walls."
+	icon = 'icons/obj/spiderwebs.dmi'
+	icon_state = "web_barricade"
+	projectile_passthrough_chance = 30
+	_health = 20
+	_max_health = 20
+
+	attack_hand(mob/user)
+		if (ishuman(user) && !user.is_zombie)
+			var/mob/living/carbon/human/H = user
+			if (src.anti_z && H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
+				H.set_loc(get_turf(src))
+				if (_health > 15)
+					H.visible_message(SPAN_NOTICE("<b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!"))
+					boutput(H, SPAN_ALERT("<b>OWW! You bruise yourself slightly!"))
+					playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+					random_brute_damage(H, 5)
+					src.changeHealth(rand(0, -2))
+				return
+
+		if (ishuman(user))
+			user.lastattacked = get_weakref(src)
+			src.visible_message(SPAN_ALERT("<b>[user]</b> tears at the [src]!"))
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+			//Zombies do less damage
+			var/mob/living/carbon/human/H = user
+			if (istype(H.mutantrace, /datum/mutantrace/zombie))
+				if(prob(40))
+					H.emote("scream")
+				src.changeHealth(rand(0, -2))
+			else
+				src.changeHealth(rand(-1, -3))
+			hit_twitch(src)
+			return
+		else
+			return
+
+	changeHealth(var/change = 0)
+		var/prevHealth = _health
+		_health += change
+		_health = min(_health, _max_health)
+		if (prevHealth > _health)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', rand(50,90), 1)
+		updateHealth(prevHealth)
+
+	updateHealth(var/prevHealth)
+		if (_health <= 0)
+			src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+			make_cleanable(/obj/decal/cleanable/web_barricade, src.loc)
+			src.projectile_passthrough_chance = 90
+			src.onDestroy()
+			return
+		else if (_health <= 5)
+			icon_state = "web_barricade-damaged2"
+			src.projectile_passthrough_chance = 70
+			set_opacity(0)
+		else if (_health <= 15)
+			src.projectile_passthrough_chance = 50
+			icon_state = "web_barricade-damaged1"
+		else
+			src.projectile_passthrough_chance = 30
+			icon_state = "web_barricade"
+
+/obj/structure/woodwall/web/small
+    name = "webbing"
+    desc = "Some strings of spider silk stretched between the walls."
+    icon_state = "web_block"
+    _health = 5
+    _max_health = 5
+    opacity = 0
+    attackby(obj/item/W, mob/user)
+        if (issnippingtool(W))
+            new /obj/item/material_piece/cloth/spidersilk(get_turf(src))
+            src.visible_message("[user] neatly cuts [src] with [W].")
+            qdel(src)
+
+    updateHealth(var/prevHealth)
+        if (_health <= 0)
+            src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
+            playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+            make_cleanable(/obj/decal/cleanable/web_block, src.loc)
+            src.projectile_passthrough_chance = 90
+            src.onDestroy()
+            return
+        else
+            src.projectile_passthrough_chance = 30
+            icon_state = "web_block"
+
+/obj/structure/woodwall/web/small/tiny
+    name = "thin webbing"
+    desc = "A few strings of spider silk stretched between the walls."
+    icon_state = "web_fence"
+    _health = 3
+    _max_health = 3
+
+    updateHealth(var/prevHealth)
+        if (_health <= 0)
+            src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
+            playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+            make_cleanable(/obj/decal/cleanable/web_fence, src.loc)
+            src.projectile_passthrough_chance = 90
+            src.onDestroy()
+            return
+        else
+            src.projectile_passthrough_chance = 30
+            icon_state = "web_fence"
+    Bumped(var/mob/AM as mob)
+        . = ..()
+        if(!istype(AM)) return
+        if(AM.client?.check_key(KEY_RUN)) //stolen from sec tape help me save me im just an intern
+            playsound(src, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100)
+            make_cleanable(/obj/decal/cleanable/web_fence, src.loc)
+            qdel(src)
