@@ -456,6 +456,7 @@
 #include "code\datums\DCS\elements\lifeprocess\hivebot.dm"
 #include "code\datums\DCS\elements\lifeprocess\honk_randomly.dm"
 #include "code\datums\DCS\elements\lifeprocess\hud.dm"
+#include "code\datums\DCS\elements\lifeprocess\melt.dm"
 #include "code\datums\DCS\elements\lifeprocess\mutations.dm"
 #include "code\datums\DCS\elements\lifeprocess\organs.dm"
 #include "code\datums\DCS\elements\lifeprocess\radiation.dm"
