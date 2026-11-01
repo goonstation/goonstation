@@ -20,6 +20,7 @@ TYPEINFO(/obj/machinery/networked/logreader)
 	device_tag = "PNET_LOGREADER"
 	timeout = 10
 	power_usage = 100
+	wired_all_hearing = TRUE
 	var/static/list/required_fields = list("card_name", "door_name", "time_t", "timestamp", "door_id", "action")
 	var/filter_name = null
 	var/ftb_min = null
