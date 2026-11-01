@@ -717,6 +717,10 @@
 	amount_left = 10
 	max_amount = 10
 
+/obj/item/ammo/bullets/a38/mag/lb
+	name = ".38 Hi-Tek LB magazine" // I don't know what LB stands for.
+	ammo_type = new/datum/projectile/bullet/revolver_38/lb
+
 //0.38
 /obj/item/ammo/bullets/a38/AP
 	sname = ".38 Spc AP"
