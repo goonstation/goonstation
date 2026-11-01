@@ -3052,6 +3052,17 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon_state = "swampgrass_edge"
 	can_dig = TRUE
 
+/turf/simulated/floor/auto/web
+    name = "web"
+    desc = "A thick coating of web."
+    icon = 'icons/turf/web.dmi'
+    icon_state = "web1"
+    pryable = FALSE
+    edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
+    icon_state_edge = "web_edge"
+    step_material = "step_outdoors"
+    step_priority = STEP_PRIORITY_MED
+
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	connect_diagonal = 1

@@ -614,7 +614,7 @@ TYPEINFO(/obj/structure/woodwall)
 
 /obj/structure/woodwall/web/small
     name = "webbing"
-    desc = "Some strings of spider silk stretched between the walls."
+    desc = "Thick strings of spider silk stretched between the walls."
     icon_state = "web_block"
     _health = 5
     _max_health = 5
@@ -639,7 +639,7 @@ TYPEINFO(/obj/structure/woodwall)
 
 /obj/structure/woodwall/web/small/tiny
     name = "thin webbing"
-    desc = "A few strings of spider silk stretched between the walls."
+    desc = "A few thick strings of spider silk stretched between the walls."
     icon_state = "web_fence"
     _health = 3
     _max_health = 3

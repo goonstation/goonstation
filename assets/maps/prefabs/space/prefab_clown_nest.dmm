@@ -11,7 +11,8 @@
 	icon_state = "airlock_open";
 	name = "broken external airlock"
 	},
-/turf/simulated/floor/airless/plating,
+/obj/structure/woodwall/web/small/tiny,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "bw" = (
 /obj/decal/cleanable/balloon,
@@ -24,9 +25,9 @@
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/airless/plating,
 /area/prefab/clown_nest)
-"cj" = (
-/turf/unsimulated/wall/auto/web,
-/area/noGenerate)
+"cs" = (
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
 "cH" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/variableTurf/floor,
@@ -39,12 +40,6 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"dI" = (
-/obj/decal/cleanable/cobweb2,
-/obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/web_sack,
-/turf/variableTurf/floor,
-/area/prefab/clown_nest)
 "eb" = (
 /turf/variableTurf/clear,
 /area/allowGenerate)
@@ -70,7 +65,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "fO" = (
 /obj/item/reagent_containers/food/snacks/candy/peach_ring{
@@ -87,17 +82,18 @@
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
+"gD" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/web_sack,
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
 "gG" = (
 /obj/item/material_piece/cloth/spidersilk{
 	pixel_x = -7;
 	pixel_y = -2
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
-/area/prefab/clown_nest)
-"gT" = (
-/obj/structure/woodwall/web/small/tiny,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "ix" = (
 /obj/decal/cleanable/slime,
@@ -106,7 +102,7 @@
 	pixel_x = 2;
 	pixel_y = -6
 	},
-/turf/simulated/floor/carpet/arcade/half,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "iy" = (
 /obj/decal/cleanable/dirt/dirt3,
@@ -124,7 +120,7 @@
 	pixel_x = -6;
 	pixel_y = 1
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "om" = (
 /turf/simulated/floor/airless/solar,
@@ -144,12 +140,12 @@
 /obj/item/reagent_containers/food/snacks/candy/peach_ring{
 	pixel_y = -1
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "qF" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "rj" = (
 /obj/mapping_helper/wingrille_spawn/auto/tuff,
@@ -161,7 +157,7 @@
 	pixel_y = 1
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "rO" = (
 /obj/fakeobject{
@@ -194,7 +190,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "u_guilty"
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "tP" = (
 /obj/item/material_piece/cloth/spidersilk{
@@ -202,6 +198,10 @@
 	},
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/wall/auto/web,
+/area/prefab/clown_nest)
+"tX" = (
+/mob/living/critter/spider/clown,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "uY" = (
 /obj/lattice{
@@ -220,11 +220,11 @@
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "xI" = (
 /obj/decal/cleanable/cobweb,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "xJ" = (
 /turf/variableTurf/floor,
@@ -233,14 +233,14 @@
 /obj/fitness/speedbag/clown,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
-"Bk" = (
-/obj/decal/cleanable/web_sack,
-/turf/variableTurf/wall,
+"AJ" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Ch" = (
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Cu" = (
 /obj/item/material_piece/cloth/spidersilk{
@@ -248,7 +248,7 @@
 	pixel_y = -2
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Cw" = (
 /obj/table/round/auto,
@@ -286,7 +286,7 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Ff" = (
 /obj/lattice{
@@ -314,7 +314,7 @@
 	pixel_x = -5;
 	pixel_y = -5
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "HA" = (
 /obj/candle_light{
@@ -331,7 +331,7 @@
 /area/prefab/clown_nest)
 "II" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "JG" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
@@ -346,7 +346,7 @@
 	icon_state = "floor6"
 	},
 /mob/living/critter/spider/clownqueen/cluwne,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "KJ" = (
 /turf/unsimulated/wall/auto/web,
@@ -399,12 +399,23 @@
 "PL" = (
 /turf/variableTurf/wall,
 /area/prefab/clown_nest)
+"PT" = (
+/mob/living/critter/spider/clownqueen,
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
+"Sn" = (
+/obj/item/reagent_containers/food/snacks/candy/peach_ring{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
 "SD" = (
 /obj/item/material_piece/cloth/spidersilk{
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Ty" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -427,7 +438,7 @@
 /obj/item/material_piece/cloth/spidersilk{
 	pixel_y = 5
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Vz" = (
 /obj/decal/cleanable/vomit/spiders,
@@ -436,7 +447,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Ww" = (
 /obj/juggleplaque{
@@ -457,7 +468,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/turf/simulated/floor/carpet/arcade/half,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "XW" = (
 /obj/item/kitchen/peach_rings{
@@ -470,7 +481,7 @@
 /area/noGenerate)
 "Zg" = (
 /obj/decal/cleanable/dirt,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Zh" = (
 /obj/fakeobject/pipe{
@@ -751,16 +762,16 @@ XY
 cH
 PL
 GB
-xJ
+cs
 KJ
 PL
 PL
 XY
 XY
 PL
-je
-je
-je
+PL
+PL
+PL
 XY
 XY
 XY
@@ -783,18 +794,18 @@ iy
 xJ
 ja
 xJ
-fO
+Sn
+KJ
+PL
+PL
+PL
+PL
+PL
 KJ
 KJ
 PL
 PL
 PL
-PL
-KJ
-cj
-je
-je
-je
 XY
 XY
 XY
@@ -815,19 +826,19 @@ xJ
 xJ
 xJ
 sq
-KJ
-KJ
+PL
+PL
 JG
 PL
-KJ
-KJ
+PL
+PL
 eE
 KJ
 KJ
 KJ
-je
-je
-je
+PL
+PL
+PL
 XY
 XY
 eb
@@ -847,19 +858,19 @@ xJ
 xJ
 xJ
 Cu
-KJ
-KJ
+PL
+PL
 II
 Vz
-KJ
+PL
 SD
-xJ
-xJ
-cH
+cs
+cs
+AJ
 KJ
 KJ
-je
-je
+PL
+PL
 XY
 XY
 eb
@@ -877,21 +888,21 @@ XY
 XY
 XY
 XW
-KJ
-KJ
-KJ
+PL
+PL
+PL
 Hf
 sH
-KJ
-KJ
+cs
+PL
 EN
-xJ
-eV
-xJ
+cs
+tX
+cs
 KJ
 KJ
 PL
-je
+PL
 XY
 eb
 eb
@@ -916,13 +927,13 @@ bT
 Ty
 Ty
 KJ
-cH
+AJ
 xJ
 tP
 KJ
 KJ
-KJ
-je
+PL
+PL
 XY
 XY
 XY
@@ -950,10 +961,10 @@ Ty
 KJ
 WP
 xJ
-xJ
+cs
 KJ
 KJ
-cj
+PL
 XY
 XY
 XY
@@ -1015,13 +1026,13 @@ Ty
 PL
 KJ
 Xv
-xJ
+cs
 KJ
-KJ
+PL
 XY
-je
-je
-je
+PL
+PL
+PL
 XY
 XY
 eb
@@ -1045,16 +1056,16 @@ Ty
 LW
 Ty
 PL
-Bk
-xJ
+WP
+cs
 KJ
 KJ
-KJ
-je
 PL
 PL
 PL
-je
+PL
+PL
+PL
 XY
 eb
 eb
@@ -1078,7 +1089,7 @@ fr
 bT
 xJ
 xJ
-xJ
+cs
 nl
 KJ
 KJ
@@ -1108,11 +1119,11 @@ PL
 eJ
 wc
 Zg
-xJ
+cs
 bw
 xJ
-xJ
-xJ
+cs
+cs
 KJ
 KJ
 Ch
@@ -1138,19 +1149,19 @@ KJ
 KJ
 ja
 xJ
-xJ
+cs
 xJ
 xJ
 PL
 Ww
 xJ
-xJ
+cs
 KJ
 xI
 pV
 KJ
+KJ
 PL
-XY
 XY
 XY
 eb
@@ -1166,23 +1177,23 @@ XY
 XY
 PL
 KJ
-dI
-xJ
-xJ
-xJ
+WP
+gD
+cs
+cs
 xJ
 Ma
 xJ
+cs
+cs
 xJ
-gT
-xJ
-xJ
+cs
 cH
-xJ
-xJ
+cs
+cs
 KJ
 PL
-XY
+PL
 XY
 XY
 XY
@@ -1200,9 +1211,9 @@ PL
 KJ
 KJ
 rG
-xJ
-xJ
-ja
+cs
+cs
+PT
 KJ
 PL
 PL
@@ -1211,7 +1222,7 @@ KJ
 KQ
 xJ
 fO
-xJ
+cs
 Lj
 PL
 PL
@@ -1232,16 +1243,16 @@ PL
 PL
 KJ
 UC
-xJ
+cs
 gG
 KJ
 KJ
-je
+PL
 XY
 PL
 PL
-PL
 KJ
+xJ
 cH
 eV
 xJ
@@ -1264,17 +1275,17 @@ XY
 PL
 PL
 PL
-KJ
+PL
 KJ
 KJ
 PL
-je
+PL
 XY
 XY
-XY
-je
-KJ
-KJ
+PL
+PL
+PL
+xJ
 xJ
 xJ
 XY
@@ -1299,15 +1310,15 @@ PL
 PL
 PL
 PL
-je
+PL
 XY
 XY
 XY
 XY
-XY
-je
-je
-je
+PL
+PL
+PL
+PL
 XY
 XY
 XY
@@ -1328,9 +1339,9 @@ XY
 XY
 XY
 XY
-je
 PL
-je
+PL
+PL
 XY
 XY
 XY
