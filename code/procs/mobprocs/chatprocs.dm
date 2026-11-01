@@ -119,6 +119,16 @@
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
 	boutput(usr, SPAN_NOTICE("[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat."))
 
+/mob/verb/toggleflyingpdachat()
+	set name = "Toggle Flying PDA Chat"
+	set desc = "Toggle seeing PDA messages pop up HUD text while in inventory."
+
+	if (!usr.client) //How could this even happen?
+		return
+
+	usr.client.preferences.flying_chat_pda_hidden = !usr.client.preferences.flying_chat_pda_hidden
+	boutput(usr, SPAN_NOTICE("[usr.client.preferences.flying_chat_pda_hidden ? "No longer": "Now"] seeing flying PDA chat."))
+
 /// Generate a hue for maptext from a given name
 /proc/living_maptext_color(given_name)
 	var/num = hex2num(copytext(md5(given_name), 1, 7))

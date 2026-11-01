@@ -1170,6 +1170,75 @@
 		update_overlay("message")
 		return
 
+	proc/hud_message(message)
+		if (!length(message))
+			return
+
+		if (!ismob(loc))
+			return
+
+		var/mob/M = loc
+
+		if (istype(M, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/AI = M
+			if (AI.deployed_shell)
+				M = AI.deployed_shell
+
+		if (!M.client)
+			return
+
+		if (M.client.preferences.flying_chat_pda_hidden)
+			return
+
+		var/hud_element = null
+
+		// where we place the maptext depends on hud type
+		// TODO: AI(core/aieye)
+		if (istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			var/hud_slot = null
+
+			switch(H.get_slot_from_item(src))
+				if(SLOT_WEAR_ID)
+					hud_slot = "id"
+				if(SLOT_BELT)
+					hud_slot = "belt"
+				if(SLOT_L_STORE)
+					hud_slot = "storage1"
+				if(SLOT_R_STORE)
+					hud_slot = "storage2"
+				if(SLOT_L_HAND)
+					hud_slot = "lhand"
+				if(SLOT_R_HAND)
+					hud_slot = "rhand"
+
+			if (!hud_slot)
+				return
+
+			hud_element = H.hud?.get_by_id(hud_slot)
+
+		else if (istype(M, /mob/living/silicon/robot)) // covers AI Cyborg shells
+			var/mob/living/silicon/robot/R = M
+			hud_element = R.hud?.get_by_id("charge")
+
+		else if(istype(M, /mob/living/silicon/hivebot))
+			var/mob/living/silicon/hivebot/hivebot = M
+			hud_element = hivebot.hud?.get_by_id("charge")
+
+		else if (istype(M, /mob/living/critter))
+			var/mob/living/critter/critter = M  // Not perfect but *should* work for all critter types
+			hud_element = critter.hud.get_by_id("throw")
+
+		if (!hud_element)
+			return
+
+		message = "PDA: " + message
+		if (length(message) > 80)
+			message = copytext(message, 1, 77) + "..."
+
+		// TODO: Should this respect observer preferences?
+		DISPLAY_MAPTEXT(hud_element, list(M), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/pda, message)
+
 	proc/display_message(var/message)
 		if (ismob(loc))
 			var/mob/M = loc
