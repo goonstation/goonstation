@@ -685,10 +685,10 @@ body
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T as anything in landmarks[LANDMARK_BLOBSTART]+landmarks[LANDMARK_HALLOWEEN_SPAWN]+landmarks[LANDMARK_PESTSTART])
-				var/datum/gas_mixture/gas = new /datum/gas_mixture
-				gas.toxins = 33333
-				gas.oxygen = 66666
-				gas.temperature = 100000
+				var/datum/gas_mixture/normal/gas = new /datum/gas_mixture/normal
+				gas.set_toxins(33333)
+				gas.set_oxygen(66666)
+				gas.set_temperature(100000)
 				T.assume_air(gas)
 			for_by_tcl(door, /obj/machinery/door)
 				var/turf/T = get_step(door, NORTH)
