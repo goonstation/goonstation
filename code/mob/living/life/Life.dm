@@ -60,6 +60,8 @@
 	var/last_stam_change = 0
 	var/life_context = "begin"
 
+	var/last_tick_regular_blood_range = FALSE
+
 	proc/add_lifeprocess(type,...)
 		var/datum/lifeprocess/L = null
 		if (length(args) > 1)
