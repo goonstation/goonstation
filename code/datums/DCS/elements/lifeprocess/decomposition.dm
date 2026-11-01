@@ -16,9 +16,9 @@
 
 	// Handle kudzu infections.
 	if ( \
-		(T.temp_flags & HAS_KUDZU) && (target.loc == T) && \
-		(target.decomp_stage < DECOMP_STAGE_SKELETONIZED) && \
-		(!isrestrictedz(T.z) || istype(get_area(T), /area/syndicate_station/hideout)) \
+		(T.temp_flags & HAS_KUDZU) && (target.loc == T) \
+		&& (target.decomp_stage < DECOMP_STAGE_SKELETONIZED) \
+		&& (!isrestrictedz(T.z) || istype(get_area(T), /area/syndicate_station/hideout)) \
 	)
 		target.infect_kudzu()
 
@@ -27,10 +27,10 @@
 
 	var/atom/A = target.loc
 	if ( \
-		!HAS_ATOM_PROPERTY(target, PROP_MOB_NO_MIASMA) && \
-		!astype(A, /obj/storage)?.welded && \
-		!istype(A, /obj/item/body_bag) && \
-		!istype(A, /obj/statue) \
+		!HAS_ATOM_PROPERTY(target, PROP_MOB_NO_MIASMA) \
+		&& !astype(A, /obj/storage)?.welded \
+		&& !istype(A, /obj/item/body_bag) \
+		&& !istype(A, /obj/statue) \
 	)
 		src.create_miasma(target, T)
 
