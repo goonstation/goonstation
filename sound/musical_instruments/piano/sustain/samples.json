@@ -1,0 +1,9 @@
+{
+  "range": ["c2", "c7"],
+  "pitch_shift_up": 1,
+  "release": {
+    "range": ["c2", "ds6"],
+    "fade": 0,
+    "volume_scale": 0.02
+  }
+}
