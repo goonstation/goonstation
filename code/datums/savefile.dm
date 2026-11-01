@@ -137,6 +137,7 @@
 		F["use_azerty"] << src.use_azerty
 		F["preferred_map"] << src.preferred_map
 		F["flying_chat_hidden"] << src.flying_chat_hidden
+		F["flying_chat_pda_hidden"] << src.flying_chat_pda_hidden
 		F["auto_capitalization"] << src.auto_capitalization
 		F["local_deachat"] << src.local_deadchat
 
@@ -342,6 +343,7 @@
 		F["use_azerty"] >> src.use_azerty
 		F["preferred_map"] >> src.preferred_map
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
+		F["flying_chat_pda_hidden"] >> src.flying_chat_pda_hidden
 		F["auto_capitalization"] >> src.auto_capitalization
 		F["local_deachat"] >> src.local_deadchat
 		if(isnull(src.local_deadchat))
