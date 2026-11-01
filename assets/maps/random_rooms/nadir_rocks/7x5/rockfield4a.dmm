@@ -1,26 +1,26 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/unsimulated/wall/trench,
-/area/space)
+/area/dmm_suite/clear_area)
 "j" = (
 /turf/space/fluid/acid,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /obj/item/raw_material/cobryl{
 	pixel_y = 22;
 	pixel_x = -4
 	},
 /turf/space/fluid/acid,
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /obj/item/raw_material/cobryl{
 	pixel_y = 22
 	},
 /turf/space/fluid/acid,
-/area/space)
+/area/dmm_suite/clear_area)
 "T" = (
 /turf/unsimulated/wall/trench/side,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 j

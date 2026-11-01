@@ -10,6 +10,7 @@
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	event_handler_flags = IMMUNE_SINGULARITY
+	provides_grip = TRUE
 	pass_unstable = FALSE
 	bound_width = 96
 	bound_x = -32
@@ -19,6 +20,7 @@
 #else
 	pixel_x = -32
 #endif
+	open_to_sound = FALSE
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
@@ -39,6 +41,7 @@
 		#ifdef UPSCALED_MAP
 		pixel_x = -64
 		#endif
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_INFO, "cryo")
 
 
 	disposing()
@@ -48,7 +51,7 @@
 			M.set_loc(T)
 			if (isliving(M))
 				var/mob/living/L = M
-				L.hibernating = 0
+				set_hibernating(L, FALSE)
 				if (isnull(L.bioHolder) || !L.bioHolder.HasEffect("blind"))
 					L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				else
@@ -65,12 +68,19 @@
 
 	meteorhit(obj/meteor)
 		return
+	proc/set_hibernating(var/mob/living/L, var/hibernating)
+		L.hibernating = hibernating
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if (hibernating || L.is_npc)
+				H.ai_set_active(!hibernating)
 
 	proc/add_person_to_queue(var/mob/living/person, var/datum/job/job)
 		if (!istype(person) || job?.special_spawn_location)
 			return 0
 
 		person.set_loc(src)
+		set_hibernating(person, TRUE)
 		folks_to_spawn += person
 		their_jobs += job
 
@@ -93,6 +103,7 @@
 		if (!folks_to_spawn.len)
 			var/mob/living/L = locate(/mob/living) in src
 			if (L && !stored_mobs.Find(L))
+				set_hibernating(L, TRUE)
 				folks_to_spawn += L
 				their_jobs += null
 			else
@@ -105,13 +116,13 @@
 		folks_to_spawn.Cut(1,2)
 		var/datum/job/job = their_jobs[1]
 		their_jobs.Cut(1,2)
-		var/be_loud = job ? job.radio_announcement : 1
+		var/be_loud = job ? (job.radio_announcement && !job.change_name_on_spawn) : TRUE
 		if (!istype(thePerson) || thePerson.loc != src)
 			busy = 0
 			return (folks_to_spawn.len != 0)
 
 		src.icon_state = "cryotron_down"
-		flick("cryotron_go_down", src)
+		FLICK("cryotron_go_down", src)
 
 		SPAWN(1.9 SECONDS)
 			if (!thePerson || thePerson.loc != src)
@@ -133,10 +144,10 @@
 				if (O.anchored == UNANCHORED && O != src)
 					O.set_loc(locate(src.x, src.y-1, src.z)) // dump it in front of the cyrotron
 			src.icon_state = "cryotron_up"
-			flick("cryotron_go_up", src)
+			FLICK("cryotron_go_up", src)
 
 			if (thePerson)
-				thePerson.hibernating = 0
+				set_hibernating(thePerson, FALSE)
 				if (thePerson.mind && thePerson.mind.assigned_role && be_loud)
 					for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 						if (!A.status && A.announces_arrivals)
@@ -154,7 +165,7 @@
 				return 0
 			else
 				L.set_loc(src)
-				L.hibernating = 1
+				set_hibernating(L, TRUE)
 				if (L.client)
 					L.addOverlayComposition(/datum/overlayComposition/blinded)
 					L.updateOverlaysClient(L.client)
@@ -164,15 +175,15 @@
 				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
-		for(var/datum/antagonist/antagonist as anything in L.mind?.antagonists)
-			antagonist.handle_cryo()
+		L.handle_cryo()
+
 		stored_mobs += L
 		stored_mobs_volunteered += L
 		stored_crew_names += L.real_name
 		stored_mobs[L] = TIME
 		stored_mobs_volunteered[L] = voluntary // if someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
 		L.set_loc(src)
-		L.hibernating = 1
+		set_hibernating(L, TRUE)
 		if (L.client)
 			L.addOverlayComposition(/datum/overlayComposition/blinded)
 			L.updateOverlaysClient(L.client)
@@ -216,14 +227,15 @@
 						if (mob_can_enter_storage(user))
 							add_person_to_storage(user)
 							respawn_controller.subscribeNewRespawnee(user.ckey)
-							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
-								antagonist.handle_perma_cryo()
+							user.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
-							user.ghostize()
-							var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
-							if (job && !job.unique)
-								job.assigned = max(0, job.assigned - 1)
-							qdel(user)
+							var/mob/dead/observer/ghost = user.ghostize()
+							//hopefully that's all the links?
+							ghost.corpse = null
+							user.ghost = null
+							user.last_ckey = null
+							//Disabling this for now, humans don't GC usually anyway and it was messing with cloner implants
+							// qdel(user)
 							return 1
 
 		return 0
@@ -250,7 +262,12 @@
 			boutput(user, "<b>You can't put someone in cryogenic storage if they aren't alive!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to enter storage on their own
-		if (!user && (L.stat || L.restrained() || L.getStatusDuration("unconscious") || L.sleeping))
+		var/handless = FALSE
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if((H.limbs && (!H.limbs.l_arm && !H.limbs.r_arm)))
+				handless = TRUE
+		if (!user && (L.stat || (!handless && L.restrained()) || L.getStatusDuration("unconscious") || L.sleeping))
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to put someone else in
@@ -323,7 +340,7 @@
 		for (var/mob/living/L in stored_mobs)
 			if (L.loc != src || QDELETED(L))
 				if(!QDELETED(L))
-					L.hibernating = 0
+					set_hibernating(L, FALSE)
 					if (!L.bioHolder.HasEffect("blind"))
 						L.removeOverlayComposition(/datum/overlayComposition/blinded)
 					if(ishuman(L))
@@ -364,9 +381,6 @@
 
 	/// Handling dragging players in to cryo, mainly for silicon players.
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (!ishuman(target) && !isrobot(user))
-			return
-
 		if (BOUNDS_DIST(src, user) != 0)
 			return
 
@@ -387,7 +401,12 @@
 		if (isAIeye(usr) || isintangible(usr))
 			return
 
-		if (!can_act(usr) || !in_interact_range(src, usr))
+		var/handless = FALSE
+		if (ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if((H.limbs && (!H.limbs.l_arm && !H.limbs.r_arm)))
+				handless = TRUE
+		if (!in_interact_range(src, usr) || is_incapacitated(usr, ignore_no_power = TRUE) || (!handless && usr.restrained()))
 			return
 
 		if (isdead(usr) || isobserver(usr))

@@ -7,9 +7,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	icon_state = "window"
 	desc = "A window."
 	density = 1
-	stops_space_move = 1
+	provides_grip = TRUE
 	dir = NORTHEAST //full tile
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
@@ -37,7 +37,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	HELP_MESSAGE_OVERRIDE(null)
 
 	the_tuff_stuff
@@ -123,9 +123,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	set_dir(new_dir)
 		. = ..()
 		if(new_dir in cardinal)
-			src.material_amt = 0.1
+			src.material_amt = MATERIAL::AMOUNT::SHEET
 		else
-			src.material_amt = 0.2
+			src.material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	onMaterialChanged()
 		..()
@@ -134,13 +134,13 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		if (istype(src.material))
 
-			health_max = round(material.getProperty("density") * 15)
+			health_max = round(material.getProperty(MATERIAL::PROPERTY::DENSITY) * 15)
 			health = health_max
 
-			cut_resist 		= material.getProperty("hard") * 10
-			blunt_resist 	= material.getProperty("density") * 5
-			stab_resist 	= material.getProperty("hard") * 10
-			corrode_resist 	= material.getProperty("chemical") * 10
+			cut_resist 		= material.getProperty(MATERIAL::PROPERTY::HARDNESS) * 10
+			blunt_resist 	= material.getProperty(MATERIAL::PROPERTY::DENSITY) * 5
+			stab_resist 	= material.getProperty(MATERIAL::PROPERTY::HARDNESS) * 10
+			corrode_resist 	= material.getProperty(MATERIAL::PROPERTY::CHEM_RESIST) * 10
 
 			if (material.getAlpha() > 220)
 				set_opacity(1) // useless opaque window)
@@ -152,13 +152,13 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		if (istype(reinforcement))
 
-			health_max += round(reinforcement.getProperty("density") * 5)
+			health_max += round(reinforcement.getProperty(MATERIAL::PROPERTY::DENSITY) * 5)
 			health = health_max
 
-			cut_resist 		+= round(reinforcement.getProperty("hard") * 5)
-			blunt_resist 	+= round(reinforcement.getProperty("density") * 5)
-			stab_resist 	+= round(reinforcement.getProperty("hard") * 5)
-			corrode_resist 	+= round(reinforcement.getProperty("chemical") * 5)
+			cut_resist 		+= round(reinforcement.getProperty(MATERIAL::PROPERTY::HARDNESS) * 5)
+			blunt_resist 	+= round(reinforcement.getProperty(MATERIAL::PROPERTY::DENSITY) * 5)
+			stab_resist 	+= round(reinforcement.getProperty(MATERIAL::PROPERTY::HARDNESS) * 5)
+			corrode_resist 	+= round(reinforcement.getProperty(MATERIAL::PROPERTY::CHEM_RESIST) * 5)
 
 			name = "[reinforcement.getName()]-reinforced " + name
 
@@ -177,9 +177,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 
 		if (src.health == 0 && nosmash)
+			. = get_turf(src)
 			qdel(src)
 		else if (src.health == 0 && !nosmash)
-			smash()
+			. = smash()
 		UpdateIcon()
 
 	damage_slashing(var/amount)
@@ -193,7 +194,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			smash()
+			. = smash()
 		UpdateIcon()
 
 	damage_piercing(var/amount)
@@ -207,7 +208,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			smash()
+			. = smash()
 		UpdateIcon()
 
 	damage_corrosive(var/amount)
@@ -219,7 +220,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			return
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			smash()
+			. = smash()
 		UpdateIcon()
 
 	damage_heat(var/amount, var/nosmash)
@@ -236,9 +237,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			if (nosmash)
+				. = get_turf(src)
 				qdel(src)
 			else
-				smash()
+				. = smash()
 		UpdateIcon()
 
 	ex_act(severity)
@@ -259,8 +261,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.damage_heat(rand(10, 25))
 
 	meteorhit(var/obj/M)
-		if (istype(M, /obj/newmeteor/massive))
-			smash()
+		if (istype(M, /obj/newmeteor/massive) && !(IS_ARRIVALS(get_area(src))))
+			. = smash()
 			return
 		src.damage_blunt(20)
 
@@ -279,11 +281,11 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
-				damage_blunt(damage*3)
+				. = damage_blunt(damage*3)
 			if(D_PIERCING)
-				damage_piercing(damage*2)
+				. = damage_piercing(damage*2)
 			if(D_ENERGY)
-				damage_heat(damage / 5)
+				. = damage_heat(damage / 5)
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())
@@ -387,13 +389,15 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		if (src && src.health <= 2 && !reinforcement)
 			src.anchored = UNANCHORED
-			src.stops_space_move = 0
+			src.provides_grip = FALSE
+			var/turf/T = get_turf(src)
+			T?.grip_atom_count -= 1
 			step(src, get_dir(AM, src))
 		..()
 		return
 
 	attack_hand(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
 			if (user.is_hulk())
@@ -417,7 +421,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				return
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		if (isscrewingtool(W))
 			if (state == 10) // ???
@@ -426,10 +430,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
-					if(ishuman(user))
-						var/mob/living/carbon/human/H = user
-						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-							total_decon_time = round(total_decon_time / 2)
+					if(user && HAS_ATOM_PROPERTY(user, PROP_MOB_FAST_BUILD))
+						total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [state == 1 ? "fasten the window to" : "unfasten the window from"] the frame...", "red")
 					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
 				else
@@ -438,10 +440,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
-					if(ishuman(user))
-						var/mob/living/carbon/human/H = user
-						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-							total_decon_time = round(total_decon_time / 2)
+					if(user && HAS_ATOM_PROPERTY(user, PROP_MOB_FAST_BUILD))
+						total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [src.anchored ? "unfasten the frame from" : "fasten the frame to"] the floor...", "red")
 					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
 				else
@@ -454,10 +454,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			else
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
-					if(ishuman(user))
-						var/mob/living/carbon/human/H = user
-						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-							total_decon_time = round(total_decon_time / 2)
+					if (user && HAS_ATOM_PROPERTY(user, PROP_MOB_FAST_BUILD))
+						total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [src.state ? "pry the window out of" : "pry the window into"] the frame...", "red")
 					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
 				else
@@ -467,13 +465,16 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
 		else if (src.health < src.health_max && istype(W, /obj/item/sheet) && W.material.isSameMaterial(src.material))
 			var/time = 4 SECONDS
-			if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
+			if (user && HAS_ATOM_PROPERTY(user, PROP_MOB_FAST_BUILD))
 				time = 2 SECONDS
 			SETUP_GENERIC_ACTIONBAR(user, src, time, /obj/window/proc/fix_window, list(W), null, null, SPAN_NOTICE(" [user] repairs \the [src] with \the [W] "), null)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
-			src.damage_blunt(W.force)
+			if (ischoppingtool(W))
+				src.damage_blunt(W.force*4)
+			else
+				src.damage_blunt(W.force)
 			..()
 		return
 
@@ -484,9 +485,11 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				user.show_text("You have [state == 1 ? "unfastened the window from" : "fastened the window to"] the frame.", "blue")
 			else
 				src.anchored = !(src.anchored)
-				src.stops_space_move = !(src.stops_space_move)
+				src.provides_grip = !(src.provides_grip)
+				var/turf/T = get_turf(src)
+				T?.grip_atom_count += src.provides_grip ? 1 : -1
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
-				logTheThing(LOG_STATION, user, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "[src.anchored ? "anchored" : "unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
 		else if(ispryingtool(W) && src.anchored)
 			state = 1 - state
@@ -513,6 +516,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		logTheThing(LOG_STATION, usr, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
+			. = get_turf(src)
 			qdel(src)
 			return
 		var/atom/movable/A
@@ -529,6 +533,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			A = new /obj/item/rods(src.loc)
 			A.setMaterial(reinforcement)
 		playsound(src, src.shattersound, 70, 1)
+		. = get_turf(src)
 		qdel(src)
 
 	proc/update_nearby_tiles(need_rebuild, var/selfnotify = 0)
@@ -545,14 +550,14 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 					affected_simturfs += get_step(src, neigh_dir)
 
 		if(need_rebuild)
-			for(var/turf/simulated/T in affected_simturfs)
+			for(var/turf/simulated/T as anything in affected_simturfs)
 				if(T.parent) //Rebuild/update nearby group geometry
-					air_master.groups_to_rebuild |= T.parent
+					air_master.groups_to_rebuild[T.parent] = null
 				else
-					air_master.tiles_to_update |= T
+					air_master.tiles_to_update[T] = null
 		else
-			for(var/turf/simulated/T in affected_simturfs)
-				air_master.tiles_to_update |= T
+			for(var/turf/simulated/T as anything in affected_simturfs)
+				air_master.tiles_to_update[T] = null
 
 		if (map_currently_underwater)
 			var/turf/space/fluid/n = get_step(src,NORTH)
@@ -760,7 +765,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	health_multiplier = 2
 	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
 	var/connectdir
@@ -776,9 +781,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		/turf/simulated/wall/auto/shuttle,
 		/obj/indestructible/shuttle_corner,
 
-		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
-		/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-		/turf/simulated/wall/auto/reinforced/supernorn/orange,
 		/turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen,
 		/turf/simulated/wall/auto/reinforced/jen,
@@ -848,8 +850,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
+		for (var/obj/mesh/M in orange(1,src))
+			M.UpdateIcon()
 
 	proc/update_damage_overlay()
 		var/health_percentage = health/health_max
@@ -999,12 +1001,15 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	smash()
 		if(health <= 0)
+			. = get_turf(src)
 			qdel(src)
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
-			src.stops_space_move = !(src.stops_space_move)
+			src.provides_grip = !(src.provides_grip)
+			var/turf/T = get_turf(src)
+			T?.grip_atom_count += src.provides_grip ? 1 : -1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened [src] to the floor." : "You have unfastened [src].")
 			return

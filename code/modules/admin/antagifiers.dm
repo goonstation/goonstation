@@ -51,7 +51,7 @@
 	name = "Fang-Marked Coffin"
 	desc = "The children of the night make such beautiful music."
 	attachedObjective = "Convert an army of minions, wear a cloak, say 'bluh' a lot."
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/coffin.dmi'
 	icon_state = "coffin"
 	color = "#FF0000"
 
@@ -75,7 +75,7 @@
 	desc = "Fancy a game?"
 	attachedObjective = "Blood, blood, blood!"
 	icon = 'icons/obj/items/organs/skull.dmi'
-	icon_state = "skullP"
+	icon_state = "skull_hunter"
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)

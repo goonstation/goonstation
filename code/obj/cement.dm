@@ -51,7 +51,7 @@
 	opacity = 0 	// changed in New()
 	anchored = ANCHORED
 	desc = "A heavy duty wall made of concrete! This thing is gonna take some manual labour to get through..."
-	flags = FPRINT | CONDUCT | USEDELAY
+	flags = CONDUCT | USEDELAY
 	var/const/baseHealth = 30
 	_max_health = baseHealth //Health related nums can be changed thru update_strength()
 	_health = baseHealth
@@ -60,7 +60,7 @@
 	New()
 		..()
 
-		flick("concrete_drying", src)
+		FLICK("concrete_drying", src)
 
 		if(istype(loc, /turf/space))
 			loc:ReplaceWithConcreteFloor()
@@ -93,7 +93,7 @@
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.bioHolder.HasEffect("hulk") && (prob(100 - strength*20))) //hulk smash
 			user.visible_message(SPAN_ALERT("[user] smashes through \the [src]! OH YEAH!!!"))
 			onDestroy()
@@ -105,7 +105,7 @@
 
 	attackby(var/obj/item/I, var/mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		changeHealth(-I.force)
 		..()
 

@@ -5,7 +5,7 @@
 "c" = (
 /obj/map/light/dimred,
 /obj/map/light/dimred,
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = -5;
 	dir = 10;
 	pixel_y = -7;
@@ -18,7 +18,7 @@
 	dir = 8;
 	pixel_y = 13
 	},
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = -32;
 	dir = 4;
 	layer = 2
@@ -26,7 +26,7 @@
 /turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "d" = (
-/obj/item/wrestlingbell{
+/obj/machinery/wrestlingbell{
 	pixel_y = -3;
 	pixel_x = 22;
 	name = "Chess-tling bell";
@@ -34,13 +34,13 @@
 	density = 0
 	},
 /obj/map/light/void,
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = 5;
 	dir = 5;
 	pixel_y = 13
 	},
 /obj/decal/tile_edge/stripe/corner,
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = 32;
 	dir = 8
 	},
@@ -73,7 +73,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = 5;
 	dir = 9;
 	pixel_y = -7;
@@ -92,7 +92,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = 5;
 	dir = 10;
 	pixel_y = 13
@@ -109,7 +109,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = -5;
 	dir = 6;
 	pixel_y = 13
@@ -124,14 +124,14 @@
 /area/dmm_suite/clear_area)
 "M" = (
 /obj/map/light/void,
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = 32;
 	dir = 8
 	},
 /obj/decal/tile_edge/stripe/corner{
 	dir = 1
 	},
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = 5;
 	dir = 6;
 	pixel_y = -7;
@@ -151,13 +151,13 @@
 "T" = (
 /obj/map/light/dimred,
 /obj/map/light/dimred,
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = -5;
 	dir = 9;
 	pixel_y = 13
 	},
 /obj/decal/tile_edge/stripe/corner,
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = -32;
 	dir = 4
 	},
@@ -168,7 +168,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	pixel_x = -5;
 	dir = 5;
 	pixel_y = -7;

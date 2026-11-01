@@ -48,9 +48,8 @@
 		var/atom/movable/prize = src.open(M)
 		logTheThing(LOG_STATION, M, "opened their [src] and got \a [prize] ([src.spawn_type]).")
 		game_stats.Increment("mail_opened")
-		// 100 credits + 10 more for every successful delivery after the first,
-		// capping at 1000 per letter delivered
-		shippingmarket.mail_delivery_payout += 90 + 10 * min(91, game_stats.GetStat("mail_opened"))
+		// 50 credits + 10 more for every successful delivery after the first, capped at 500 per letter delivered
+		shippingmarket.mail_delivery_payout += 50 + 10 * min(45, game_stats.GetStat("mail_opened"))
 
 		return
 
@@ -75,7 +74,7 @@
 
 	attackby(obj/item/I, mob/user)
 		// You know, like a letter opener. It opens letters.
-		if (istype(I, /obj/item/kitchen/utensil/knife) && src.target_dna)
+		if ((istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/dagger) || istype(I, /obj/item/knife)) && src.target_dna)
 			actions.start(new /datum/action/bar/icon/mail_lockpick(src, I, 5 SECONDS), user)
 			return
 		..()
@@ -87,7 +86,11 @@
 			if(ismob(hit_atom))
 				var/mob/M = hit_atom
 				if(ishuman(M))
-					if((prob(50) && M.bioHolder.HasEffect("clumsy")))
+					var/mob/living/carbon/human/H = M
+					if(H.restrained())
+						src.visible_message(SPAN_COMBAT("[H] gets beaned with the [src.name]."))
+						logTheThing(LOG_COMBAT, H, "is struck by [src]")
+					else if((prob(50) && M.bioHolder.HasEffect("clumsy")))
 						src.visible_message(SPAN_COMBAT("[M] gets beaned with \the [src.name]."))
 						M.changeStatus("stunned", 2 SECONDS)
 						JOB_XP(M, "Clown", 1)
@@ -114,6 +117,7 @@
 
 	var/obj/item/random_mail/the_mail
 	var/obj/item/the_tool
+	var/is_syndi_dagger = FALSE
 
 	New(var/obj/item/random_mail/O, var/obj/item/tool, var/duration_i)
 		..()
@@ -123,8 +127,13 @@
 			src.the_tool = tool
 			src.icon = src.the_tool.icon
 			src.icon_state = src.the_tool.icon_state
+			if (istype(src.the_tool, /obj/item/dagger/syndicate))
+				src.is_syndi_dagger = TRUE
+
 		if (duration_i)
 			src.duration = duration_i
+		if (src.is_syndi_dagger)
+			src.duration *= 0.25
 
 	onUpdate()
 		..()
@@ -135,7 +144,7 @@
 		if (istype(source) && src.the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (prob(8))
+		if (!src.is_syndi_dagger && prob(8))
 			owner.visible_message(SPAN_ALERT("[owner] messes up while disconnecting \the [src.the_mail]'s DNA lock!"))
 			playsound(the_mail, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 			interrupt(INTERRUPT_ALWAYS)
@@ -143,7 +152,8 @@
 
 	onStart()
 		..()
-		owner.visible_message(SPAN_ALERT("[owner] begins disconnecting \the [src.the_mail]'s lock..."))
+		if (!src.is_syndi_dagger)
+			owner.visible_message(SPAN_ALERT("[owner] begins disconnecting \the [src.the_mail]'s lock..."))
 		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
 
 	onEnd()
@@ -179,17 +189,9 @@
 
 		// I TOLD YOU IT WAS ILLEGAL!!!
 		// I WARNED YOU DOG!!!
-		if (ishuman(owner) && seen_by_camera(owner))
-			var/perpname = owner.name
-			if (owner:wear_id && owner:wear_id:registered)
-				perpname = owner:wear_id:registered
-
-			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-			if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
-				sec_record["criminal"] = ARREST_STATE_ARREST
-				sec_record["mi_crim"] = "Mail fraud."
-				var/mob/living/carbon/human/H = owner
-				H.update_arrest_icon()
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.apply_automated_arrest("Mail fraud.")
 
 
 /obj/decal/cleanable/mail_fraud
@@ -228,9 +230,9 @@
 
 		// these are all things we will want later
 		crew[M] = list(
-			name = manifest_record.get_field("name"),
-			job = manifest_record.get_field("rank"),
-			dna = manifest_record.get_field("dna"),
+			name = manifest_record["name"],
+			job = manifest_record["rank"],
+			dna = manifest_record["dna"],
 			)
 
 	// nobody here
@@ -270,7 +272,7 @@
 			var/spawn_type = weighted_pick(mail_types_by_job[J.type])
 			package = new(where)
 			package.spawn_type = spawn_type
-			package_color = J.linkcolor ? J.linkcolor : "#FFFFFF"
+			package_color = global.tgui_colours_to_rgb[J.ui_colour] || "#FFFFFF"
 		else
 			// if there are no job specific items or we aren't doing job-specific ones,
 			// just throw some random crap in there, fuck it. who cares. not us
@@ -281,6 +283,7 @@
 			package_color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
 
 		package.name = "mail for [recipient["name"]] ([recipient["job"]])"
+		package.real_name = package.name
 		var/list/color_list = rgb2num(package_color)
 		for(var/j in 1 to 3)
 			color_list[j] = 127 + (color_list[j] / 2) + rand(-10, 10)
@@ -356,6 +359,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/cable_coil = 3,
 		/obj/item/lamp_manufacturer/organic = 5,
 		/obj/item/pen/infrared = 4,
+		/obj/item/pen/crayon/infrared = 4,
 		/obj/item/sheet/steel/fullstack = 2,
 		/obj/item/sheet/glass/fullstack = 2,
 		/obj/item/rods/steel/fullstack = 1,
@@ -444,7 +448,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/clothing/head/helmet/camera = 3,
 		),
 
-	/datum/job/research/medical_doctor = list(
+	/datum/job/medical/medical_doctor = list(
 		/obj/item/reagent_containers/mender/brute = 5,
 		/obj/item/reagent_containers/mender/burn = 5,
 		/obj/item/reagent_containers/mender/both = 3,
@@ -462,7 +466,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/reagent_containers/emergency_injector/random = 2,
 		),
 
-	/datum/job/research/roboticist = list(
+	/datum/job/medical/roboticist = list(
 		/obj/item/reagent_containers/mender/brute = 5,
 		/obj/item/reagent_containers/mender/burn = 5,
 		/obj/item/reagent_containers/mender/both = 3,
@@ -476,10 +480,11 @@ var/global/mail_types_by_job = list(
 		/obj/item/sheet/steel/fullstack = 2,
 		),
 
-	/datum/job/research/geneticist = list(
+	/datum/job/medical/geneticist = list(
 		// so you can keep looking at your screen,
 		// even in the brightness of nuclear hellfire o7
 		/obj/item/clothing/glasses/sunglasses/tanning = 10,
+		/obj/item/clothing/glasses/eyestrain = 10,
 		),
 
 
@@ -491,6 +496,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/cable_coil = 6,
 		/obj/item/lamp_manufacturer/organic = 5,
 		/obj/item/pen/infrared = 7,
+		/obj/item/pen/crayon/infrared = 7,
 		/obj/item/sheet/steel/fullstack = 2,
 		/obj/item/sheet/glass/fullstack = 2,
 		/obj/item/rods/steel/fullstack = 2,
@@ -548,6 +554,9 @@ var/global/mail_types_by_job = list(
 		/obj/item/seed/alien = 10,
 		/obj/item/satchel/hydro = 7,
 		/obj/item/satchel/hydro/large = 5,
+		/obj/item/clothing/glasses/phyto = 10,
+		/obj/item/clothing/glasses/phyto/upgraded = 7,
+		/obj/item/device/analyzer/phytoscopic_upgrade = 7,
 		/obj/item/reagent_containers/glass/bottle/powerplant = 5,
 		/obj/item/reagent_containers/glass/bottle/fruitful = 5,
 		/obj/item/reagent_containers/glass/bottle/topcrop = 5,
@@ -559,7 +568,16 @@ var/global/mail_types_by_job = list(
 		),
 
 	/datum/job/civilian/rancher = list(
-		),
+		/obj/item/knitting_needles = 5,
+		/obj/item/drop_spindle = 5,
+		/obj/item/scissors/surgical_scissors/shears = 5,
+		/obj/item/fishing_rod/basic = 9,
+		/obj/item/fishing_rod/upgraded = 3,
+		/obj/item/fishing_rod/master = 1,
+		/obj/item/device/camera_viewer/ranch = 4,
+		/obj/item/clothing/mask/chicken = 5,
+		/obj/item/reagent_containers/food/snacks/ingredient/egg = 3,
+		), // Some T1 Power Eggs would be nice to add in secret, to give newer struggling ranchers a test taste on what they could do
 
 	/datum/job/civilian/janitor = list(
 		/obj/item/chem_grenade/cleaner = 5,
@@ -567,6 +585,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/spraybottle/cleaner = 6,
 		/obj/item/caution = 5,
 		/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
+		/obj/item/broom = 5,
 		/obj/item/mop = 5,
 		/obj/item/reagent_containers/glass/bucket = 5,
 		/obj/item/reagent_containers/glass/bucket/red = 1,
@@ -595,6 +614,11 @@ var/global/mail_types_by_job = list(
 		/obj/item/pen/crayon/rainbow = 2,
 		/obj/item/pen/crayon/random = 1,
 		/obj/item/storage/goodybag = 3,
+		),
+
+	/datum/job/civilian/mail_courier = list(
+		/obj/item/clothing/suit/pigeon = 3,
+		/obj/item/satchel/mail/large = 5,
 		),
 
 	/datum/job/civilian/staff_assistant = list(
@@ -637,7 +661,7 @@ var/global/mail_types_everyone = list(
 	/obj/item/reagent_containers/food/snacks/chips = 6,
 	/obj/item/reagent_containers/food/snacks/popcorn = 6,
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical = 5,
-	/obj/item/tank/emergency_oxygen = 5,
+	/obj/item/tank/pocket/oxygen = 5,
 	/obj/item/wrench = 4,
 	/obj/item/crowbar = 4,
 	/obj/item/screwdriver = 4,
@@ -660,8 +684,25 @@ var/global/mail_types_everyone = list(
 	/obj/item/clothing/glasses/vr/arcade = 2,
 	/obj/item/device/light/zippo = 4,
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 6,
+	/obj/item/paper/postcard/beach = 3,
+	/obj/item/paper/postcard/canyon = 3,
+	/obj/item/paper/postcard/mountain = 3,
+	/obj/item/paper/postcard/lovemd = 3,
+	/obj/item/paper/postcard/mdstatehouse = 3,
+	/obj/item/paper/postcard/moonfootprint = 3,
+	/obj/item/paper/postcard/apollo = 3,
+	/obj/item/paper/postcard/shelterfrogking = 3,
+	/obj/item/paper/postcard/cowbee = 3,
+	/obj/item/paper/postcard/believe = 3,
+	/obj/item/paper/postcard/silicongreeting = 3,
+	/obj/item/paper/postcard/thundrando = 3,
+	/obj/item/paper/postcard/pumpkinpatch = 3,
+	/obj/item/paper/postcard/chicago = 2,
+	/obj/item/paper/postcard/sadcrab = 2,
+	/obj/item/paper/postcard/spacequebec = 2,
+	/obj/item/paper/postcard/pyramid = 2,
 
-	// mostly taken from gangwar as a "relatively safe list of random hats"
+	// mostly taken from gangwar as a "relatively sa-fe list of random hats"
 	/obj/item/clothing/head/biker_cap = 1,
 	/obj/item/clothing/head/cakehat = 1,
 	/obj/item/clothing/head/chav = 1,

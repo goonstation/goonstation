@@ -1,7 +1,7 @@
 var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
 "silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "synaptizine", "anti_rad",\
 "oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
+"salicylic_acid", "acetylsalicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
 "menthol", "cold_medicine", "antihistamine", "ipecac",\
 "booster_enzyme", "anti_fart", "goodnanites", "smelling_salt", "CBD", "promethazine")
 
@@ -10,6 +10,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 /* =================================================== */
 
 TYPEINFO(/obj/item/reagent_containers/hypospray)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/reagent_containers/hypospray
@@ -21,7 +22,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 	item_state = "syringe_0"
 	icon_state = "hypo0"
 	amount_per_transfer_from_this = 5
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	flags = TABLEPASS | OPENCONTAINER | NOSPLASH
 	c_flags = ONBELT
 	var/list/whitelist = list()
 	var/inj_amount = 5
@@ -154,7 +155,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 			return
 		var/amt_prop = inj_amount == -1 ? src.reagents.total_volume : inj_amount
 		user.visible_message(SPAN_NOTICE("<B>[user] injects [target] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B>"),\
-		SPAN_NOTICE("You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units."))
+		SPAN_NOTICE("You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0, APPLY_CHEM_EPSILON(src.reagents.total_volume-amt_prop))] units."))
 		logTheThing(user == target ? LOG_CHEMISTRY : LOG_COMBAT, user, "uses a hypospray [log_reagents(src)] to inject [constructTarget(target,"combat")] at [log_loc(user)].")
 
 		src.reagents.trans_to(target, amt_prop)

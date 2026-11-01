@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 		if (.)
 			//we remove this commut and add splice disabler
 			HYPremoveCommut(gene_pool, /datum/plant_gene_strain/temporary_splice_stabilizer)
-			HYPaddCommut(gene_pool, /datum/plant_gene_strain/splicing/disabled)
+			HYPaddCommut(gene_pool, /datum/plant_gene_strain/splicing/disabled, TRUE) // Important to make this unaffected by commutblocker.
 
 /datum/plant_gene_strain/overpowering_genome
 	name = "Overpowering Genome"
@@ -199,6 +199,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 				else if (!growing && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/seedless) && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/reagent_blacklist))
 					//we create a new seed now
 					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(current_plantgenes, current_planttype, carrying_plantpot.generation)
+					temporary_seed.dont_mutate = TRUE //QoL for using this commut for non-creepers, so you don't have to deal with any mutants.
 					// now we are able to plant the seed
 					checked_plantpot.HYPnewplant(temporary_seed)
 					spawn(0.5 SECONDS)
@@ -318,7 +319,11 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 
 /datum/plant_gene_strain/stabilizer
 	name = "Stabilizer"
-	desc = "A strengthened genetic structure prevents mutations from occurring."
+	desc = "A strengthened genetic structure prevents any mutations from occurring."
+
+/datum/plant_gene_strain/commutblocker
+	name = "Gene Inhibitor"
+	desc = "A modified DNA repair response will prevent this plant from gaining unusual genetic traits. Other mutations can still occur."
 
 /datum/plant_gene_strain/accelerator
 	name = "Accelerator"
@@ -351,6 +356,11 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	desc = "Produce harvested from this plant will contain a higher than usual amount of water."
 	var/list/reagents_to_add = list("water")
 
+/datum/plant_gene_strain/reagent_adder/craftglue
+	name = "Enhanced adhesiveness"
+	desc = "Produce harvested from this plant will be much more sticky than usual."
+	reagents_to_add = list ("craftglue")
+
 /datum/plant_gene_strain/reagent_adder/toxic
 	name = "Toxic"
 	desc = "Produce harvested from this plant may contain toxic substances."
@@ -365,3 +375,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	name = "Inhibited Potential"
 	desc = "Produce harvested from this plant won't contain special dangerous chemicals"
 	var/list/reagents_to_remove = list("ghostchilijuice", "potassium", "lithium")
+
+/datum/plant_gene_strain/stable_alleles
+	name = "Immutable Alleles"
+	desc = "This plant's alleles are more stable, they will be passed down when harvested."

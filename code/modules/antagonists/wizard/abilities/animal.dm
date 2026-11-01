@@ -105,7 +105,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			boutput(M, SPAN_ALERT("<B>Your spell fizzles at the final moment, somehow your target is no longer human!</B>"))
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("YORAF UHRY", FALSE, spell.maptext_style, spell.maptext_colors)
+			M.say("YORAF UHRY", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = spell.maptext_style, "maptext_animation_colours" = spell.maptext_colors))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
@@ -132,7 +132,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		C.real_name = "[target.real_name] the [C.real_name]"
 		C.name = C.real_name
 		C.is_npc = FALSE
-		logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
+		logTheThing(LOG_COMBAT, M, "successfully casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
 		C.butcherable = BUTCHER_ALLOWED // we would like the brain to be recoverable, please
 		if (istype(C, /mob/living/critter/small_animal/bee))
 			var/mob/living/critter/small_animal/bee/B = C

@@ -11,7 +11,8 @@
 	var/col_g = 0.8
 	var/col_b = 0.7
 
-	// base class for pod lights
+	get_install_slot()
+		return POD_PART_LIGHTS
 
 	activate()
 		return ..()

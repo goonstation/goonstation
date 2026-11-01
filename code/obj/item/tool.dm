@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items/tools/wrench.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	health = 5

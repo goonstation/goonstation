@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/datum/material_property)
 	var/id = ""
 	/// Min value of this property. Please NOTHING BELOW `1`. It breaks everything.
 	var/min_value = 1
-	/// Max value of this property. May be modified by quality.
+	/// Max value of this property.
 	var/max_value = 9
 	/// What should be considered the "default" value of this property?
 	var/default_value = 5
@@ -16,7 +16,11 @@ ABSTRACT_TYPE(/datum/material_property)
 	var/prefix_high_min = 7
 	/// Max value for low-prefix. Maximum for the prefix to show up on the object names.
 	var/prefix_low_max = 3
+	var/value_unit = null
 
+	proc/getValueMerged(var/value_left, var/value_right, var/left_bias, var/right_bias)
+		var/result = (value_left * left_bias) + (value_right * right_bias)
+		return result // Results get rounded after TRIGGERS_ON_MIX has been called
 
 	proc/onValueChanged(var/datum/material/M, var/new_value)
 		return
@@ -32,7 +36,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/electrical_conductivity
 	name = "Electrical conductivity"
-	id = "electrical"
+	id = MATERIAL::PROPERTY::ELECTRIC_COND
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
@@ -51,7 +55,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/thermal_conductivity
 	name = "Thermal conductivity"
-	id = "thermal"
+	id = MATERIAL::PROPERTY::THERMAL_COND
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
@@ -70,7 +74,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/hardness
 	name = "Hardness"
-	id = "hard"
+	id = MATERIAL::PROPERTY::HARDNESS
 
 	default_value = 3
 	prefix_low_max = 2
@@ -93,7 +97,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/density
 	name = "Density"
-	id = "density"
+	id = MATERIAL::PROPERTY::DENSITY
 
 	default_value = 3
 	prefix_low_max = 2
@@ -116,7 +120,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/reflectivity
 	name = "Reflectivity"
-	id = "reflective"
+	id = MATERIAL::PROPERTY::REFLECT
 
 
 	default_value = 0
@@ -147,7 +151,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/flammability
 	name = "Flammability"
-	id = "flammable"
+	id = MATERIAL::PROPERTY::FLAMMABLE
 	default_value = 1
 
 	getAdjective(var/datum/material/M)
@@ -165,7 +169,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/chemical
 	name = "Chemical resistance"
-	id = "chemical"
+	id = MATERIAL::PROPERTY::CHEM_RESIST
 	default_value = 3
 
 	prefix_high_min = 5
@@ -188,7 +192,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/radioactivity
 	name = "Radioactivity"
-	id = "radioactive"
+	id = MATERIAL::PROPERTY::RADS
 
 	prefix_high_min = 1
 	prefix_low_max = 9
@@ -224,7 +228,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/neutron_radioactivity
 	name = "Neutron Radioactivity"
-	id = "n_radioactive"
+	id = MATERIAL::PROPERTY::RADS_NEUTRON
 
 	prefix_high_min = 1
 	prefix_low_max = 9
@@ -257,10 +261,47 @@ ABSTRACT_TYPE(/datum/material_property)
 		M.removeTrigger(TRIGGERS_ON_REMOVE, /datum/materialProc/n_radioactive_remove)
 		return
 
+/datum/material_property/melting_point
+	name = "Melting Point"
+	id = MATERIAL::PROPERTY::MELTING_POINT
+
+	min_value = 1 KELVIN
+	max_value = INFINITY
+	default_value = INFINITY
+	prefix_high_min = 1 KELVIN
+	value_unit = "K"
+
+	getAdjective(var/datum/material/M)
+		switch(M.getProperty(id))
+			if(1 to 150 KELVIN)
+				return "solid at very low temperatures"
+			if(150 KELVIN to (T0C-10))
+				return "solid at low temperatures"
+			if((T0C-10) to T20C)
+				return "liquid at room temperature"
+			if(T20C to 310 KELVIN)
+				return "melts to the touch"
+			if(310 KELVIN to (T100C + 50 KELVIN))
+				return "melts when heated"
+			if((T100C + 50 KELVIN) to 800 KELVIN)
+				return "low melting point"
+			if(800 KELVIN to 2000 KELVIN)
+				return "high melting point"
+			if(2000 KELVIN to INFINITY)
+				return "very high melting point"
+
+	getValueMerged(var/value_left, var/value_right, var/left_bias, var/right_bias)
+		if(value_left == INFINITY)
+			return value_right
+		if(value_right == INFINITY)
+			return value_left
+		var/result = (value_left * left_bias) + (value_right * right_bias)
+		return result
+
 /// Literally just indicating that it can be refined into good nuclear fuel in the centrifuge
 /datum/material_property/spent_fuel
 	name = "Fissile Isotopes"
-	id = "spent_fuel"
+	id = MATERIAL::PROPERTY::PLUTONIUM
 
 	min_value = 0
 	prefix_high_min = 0.1
@@ -284,7 +325,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/molitz_bubbles
 	name = "Gas Pockets"
-	id = "molitz_bubbles"
+	id = MATERIAL::PROPERTY::GAS_MOLITZ
 
 	min_value = 0
 	prefix_high_min = 0.1
@@ -302,7 +343,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/plasma_offgas
 	name = "Active Plasma"
-	id = "plasma_offgas"
+	id = MATERIAL::PROPERTY::GAS_PLASMA
 
 	min_value = 0
 	prefix_high_min = 0.1

@@ -1,17 +1,17 @@
 /obj/item/pen/sleepypen
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 	hide_attack = TRUE
 	move_triggered = TRUE
 	can_dip = FALSE
+	tooltip_flags = REBUILD_USER
+	SYNDICATE_STEALTH_DESCRIPTION("It has a rather sharp point.")
 
 	New()
 		..()
 		if (prob(50))
-			desc = "The humble National Notary 'Arundel' model pen. It's a normal black ink pen. With a sharp point."
-		else
 			name = "fancy pen"
-			desc = "One of those really fancy National Notary pens. Looks like the 'Grand Duchess' model with the marblewood handle. And a sharp point."
+			desc = /obj/item/pen/fancy::desc
 			icon_state = "pen_fancy"
 			item_state = "pen_fancy"
 			font_color = "blue"
@@ -50,7 +50,7 @@
 	name = "greasy pen"
 	icon_state = "pen-greasy"
 	desc = "Holy shit...that pen is fucking greasy."
-	flags = FPRINT | TABLEPASS | NOSPLASH | OPENCONTAINER
+	flags = TABLEPASS | NOSPLASH | OPENCONTAINER
 	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 

@@ -56,7 +56,7 @@
 	icon = 'icons/mob/hud_human_new.dmi'
 	icon_state = "stamina_bar"
 	var/last_val = -123123
-	tooltipTheme = "stamina"
+
 	var/last_update = 0
 	layer = HUD_LAYER-1
 
@@ -109,20 +109,6 @@
 		src.desc = newDesc
 		C.update_stamina_desc(newDesc)
 		return
-
-	//WIRE TOOLTIPS
-	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = (src.desc ? src.desc : null),
-				"theme" = src.tooltipTheme
-			))
-
-	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
 
 /atom/movable/screen/intent_sel/clicked(list/params)
 	var/icon_x = text2num(params["icon-x"])

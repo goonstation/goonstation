@@ -13,7 +13,7 @@
 	/// The current performance of the company. Tends itself to 0 when no events happen.
 	var/performance = 0
 	/// How much the price fluctuates on an average daily basis
-	var/fluctuational_coefficient = 1
+	var/fluctuational_coefficient = 10
 	/// The history of shareholder optimism of this stock
 	var/average_optimism = 0
 	var/current_trend = 0

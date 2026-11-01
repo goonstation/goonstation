@@ -1,14 +1,18 @@
 TYPEINFO(/obj/item/pinpointer)
-	mats = 4
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = list("metal"=1,
+				"conductive"=2,
+				"crystal"=1)
 
 /obj/item/pinpointer
 	name = "pinpointer"
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "disk_pinoff"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
@@ -20,7 +24,7 @@ TYPEINFO(/obj/item/pinpointer)
 	/// do not set directly, use turn_on and turn_off
 	var/active = FALSE
 	var/icon_type = "disk"
-	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technologically advanced arrow."
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -79,19 +83,22 @@ TYPEINFO(/obj/item/pinpointer)
 	proc/work()
 		set waitfor = FALSE
 		while(active)
+			if (QDELETED(src.target))
+				src.target = null
 			if(!target)
 				if (target_ref)
 					target = locate(target_ref)
 				else if (target_criteria)
 					target = locate(target_criteria)
-				if(!target || target.qdeled)
+				if(!target)
 					src.turn_off()
 					return
 				var/mob/user = src.loc
 				if (istype(user))
 					var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
 					arrow?.change_target(src.target)
-			work_check()
+			if(work_check())
+				return
 			var/turf/ST = get_turf(src)
 			var/turf/T = get_turf(target)
 			if(!ST || !T || ST.z != T.z || !isnull(max_range) && GET_DIST(src,target) > max_range)
@@ -99,7 +106,7 @@ TYPEINFO(/obj/item/pinpointer)
 				if(ismob(src.loc))
 					boutput(src.loc, SPAN_ALERT("Pinpointer target out of range."))
 				return
-			src.set_dir(get_dir(src,target))
+			src.set_dir(get_dir_accurate(src,target))
 			var/dist = GET_DIST(src,target)
 			switch(dist)
 				if(0)
@@ -134,6 +141,8 @@ TYPEINFO(/obj/item/pinpointer)
 			if(A.disposed || isnull(T))
 				continue
 			if(!isnull(z_locked) && z_locked != T.z)
+				continue
+			if(isnull(z_locked) && T.z != Z_LEVEL_STATION)
 				continue
 			var/dist = GET_DIST(A, src)
 			if(!isnull(max_range) && dist > max_range)
@@ -177,6 +186,35 @@ TYPEINFO(/obj/item/pinpointer)
 /obj/item/pinpointer/category/spysticker/det
 	category = TR_CAT_SPY_STICKERS_DET
 
+	get_choices()
+		var/list/choices = ..()
+		for(var/key in choices)
+			var/obj/item/sticker/S = choices[key]
+			if(!trackable_item(S.attached))
+				choices -= key
+		return choices
+
+	proc/trackable_item(obj/item/I)
+		. = TRUE
+		if(istype(I.loc, /obj/item/storage)) //allow one level of storage item
+			I = I.loc
+		if(!(isturf(I) || isturf(I.loc) || istype(I.loc, /obj/storage))) //if we aren't on a turf, something sitting on a turf, or in a locker/etc
+			if(ismob(I.loc))
+				var/mob/M = I.loc
+				if(!(I in (M.get_equipped_items(TRUE) + M.equipped_list())))
+					. = FALSE
+			else
+				. = FALSE
+
+	work_check()
+		. = ..()
+		var/obj/item/sticker/S = src.target
+		if(!trackable_item(S.attached))
+			src.turn_off()
+			if(ismob(src.loc))
+				boutput(src.loc, SPAN_ALERT("[src] shuts down because the tracking signal is obscured!"))
+			return TRUE
+
 /obj/item/pinpointer/nuke
 	name = "pinpointer (nuclear bomb)"
 	desc = "Points in the direction of the nuclear bomb."
@@ -192,14 +230,6 @@ TYPEINFO(/obj/item/pinpointer)
 	icon_type = "disk"
 	hudarrow_color = "#14ad00"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
-
-	New()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
 
 /obj/item/pinpointer/identificationcomputer
 	name = "pinpointer (identification computer)"
@@ -243,39 +273,42 @@ TYPEINFO(/obj/item/pinpointer)
 	target_criteria = /obj/gold_bee
 	hudarrow_color = "#e1940d"
 
+TYPEINFO(/obj/item/pinpointer/idtracker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/pinpointer/idtracker
 	name = "ID pinpointer"
 	icon_state = "id_pinoff"
-	var/mob/owner = null
 	hudarrow_color = "#ffffff"
-	is_syndicate = 1
-	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
+	desc = "This little bad-boy has been pre-programmed to display the general direction of any target you choose."
 
 	attack_self(mob/user)
-		if(!active)
-			if (!src.owner || !src.owner.mind)
-				boutput(user, SPAN_ALERT("\The [src] emits a sorrowful ping!"))
-				return
-			var/list/targets = list()
-			for_by_tcl(I, /obj/item/card/id)
-				if(!I)
-					continue // the ID can get deleted in the lagcheck
-				for(var/datum/objective/regular/assassinate/A in src.owner.mind.objectives)
-					if(I.registered == null) continue
-					if(ckey(I.registered) == ckey(A.targetname))
-						targets[I] = I
-				LAGCHECK(LAG_LOW)
-			target = null
-			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
-			if(!target)
-				boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
-			else
-				boutput(user, SPAN_NOTICE("You activate the target locator. Tracking [target]"))
-				src.turn_on()
+		if(src.active)
+			return ..()
+		var/list/targets = list()
+		for_by_tcl(I, /obj/item/card/id)
+			if(QDELETED(I))
+				continue // The ID can get deleted in the lagcheck
+			if(!I.registered)
+				continue // Don't include accessless and nameless IDs. Notably the captain's spare is registered to "Captain".
+			if(issilicon(I.loc) || istype(I.loc, /obj/machinery/bot) || istype(I.loc, /obj/item/device/pda2/cyborg))
+				continue // Don't include botcards
+			if(istype(I, /obj/item/card/id/syndicate))
+				continue // No tracking nukies or anyone spending TC to not get tracked
+			if(isrestrictedz(get_z(I)))
+				continue // No offstation IDs
+			if(get_z(I) != get_z(src))
+				continue // No IDs on another Z-Level
+			targets += I
+			LAGCHECK(LAG_LOW)
+		target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
+		if(!target)
+			boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
 		else
-			..()
+			boutput(user, SPAN_NOTICE("You activate the target locator. Tracking [target]"))
+			src.turn_on()
 
 /obj/item/pinpointer/idtracker/spy
+	var/mob/owner = null
 	attack_hand(mob/user)
 		..(user)
 		if (!user.mind || user.mind.special_role != ROLE_SPY_THIEF)
@@ -332,7 +365,7 @@ TYPEINFO(/obj/item/pinpointer)
 			blood_dna = A.blood_DNA
 		else if (CHECK_LIQUID_CLICK(A))
 			var/turf/T = get_turf(A)
-			blood_dna = T.active_liquid.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
+			blood_dna = T.active_liquid?.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
 		if(!blood_dna)
 			var/datum/reagents/reagents = A.reagents
 			if(isturf(A))
@@ -360,9 +393,10 @@ TYPEINFO(/obj/item/pinpointer)
 			src.turn_off()
 			if(ismob(src.loc))
 				boutput(src.loc, SPAN_ALERT("[src] shuts down because the blood in it became too dry!"))
+			return TRUE
 
 TYPEINFO(/obj/item/pinpointer/secweapons)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"
@@ -371,7 +405,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	var/list/itemrefs
 	var/list/accepted_types
 	hudarrow_color = "#ee4444"
-	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technologically advanced arrow."
 
 	proc/track(var/list/L)
 		itemrefs = list()
@@ -424,7 +458,10 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	proc/find_by_dna(var/dna)
 		for_by_tcl(H, /mob/living/carbon/human)
 			if (H.bioHolder?.Uid == dna)
-				return H
+				if (is_mob_trackable_by_AI(H))
+					return H
+				else
+					break
 
 //lets you click on something to pick it as a target, good for gimmicks
 /obj/item/pinpointer/picker
@@ -529,6 +566,20 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	name = "mob pinpointer"
 	category = /mob
 	thing_name = "mob"
+
+/obj/item/pinpointer/category/mobs/single_use
+	name = "single-use mob pinpointer"
+	var/used = FALSE
+
+	attack_self(mob/user)
+		if (used)
+			user.show_text("This pinpointer has already been used and cannot be activated again.", "red")
+			return
+		. = ..()
+		used = TRUE
+
+		src.name = "[target.name] pinpointer"
+
 
 /obj/item/pinpointer/category/ouija_boards
 	name = "ouija board pinpointer"

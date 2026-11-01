@@ -45,7 +45,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			mob_to_associated_images_lookup[img.loc] = list(img)
 			RegisterSignal(img.loc, COMSIG_ATOM_PROP_MOB_INVISIBILITY, PROC_REF(on_mob_invisibility_changed))
 
-		for (var/client/iterated_client as() in subscribed_clients_with_subcount)
+		for (var/client/iterated_client as anything in subscribed_clients_with_subcount)
 			if (image_condition(img, iterated_client.mob))
 				iterated_client.images.Add(img)
 
@@ -56,7 +56,7 @@ var/global/list/datum/client_image_group/client_image_groups
 		if (!length(mob_to_associated_images_lookup[img.loc])) // no images of a mob remain, removing from lookup and unregistering mob's invisibility update signal.
 			mob_to_associated_images_lookup.Remove(img.loc)
 			UnregisterSignal(img.loc, COMSIG_ATOM_PROP_MOB_INVISIBILITY)
-		for (var/client/iterated_client as() in subscribed_clients_with_subcount)
+		for (var/client/iterated_client as anything in subscribed_clients_with_subcount)
 			iterated_client.images.Remove(img)
 
 	/// Add an image that will attempt to attach itself to the mob inhabited by a mind, and update itself should the associated mind move to another mob.
@@ -117,7 +117,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			return
 		subscribed_clients_with_subcount[added_client] += 1
 		if (subscribed_clients_with_subcount[added_client] == 1)
-			for (var/image/img as() in images)
+			for (var/image/img as anything in images)
 				if (image_condition(img, added_client.mob))
 					added_client.images.Add(img)
 			RegisterSignal(added_client, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(on_client_del))
@@ -182,11 +182,11 @@ var/global/list/datum/client_image_group/client_image_groups
 		PRIVATE_PROC(TRUE)
 		for (var/image/I in mob_to_associated_images_lookup[invis_updated_mob])
 			if (invis_updated_mob.invisibility) // mob is invisible, remove their icons for other mobs
-				for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
+				for (var/mob/iterated_mob as anything in subscribed_mobs_with_subcount)
 					if ((iterated_mob != invis_updated_mob) && (invis_updated_mob.invisibility > iterated_mob.see_invisible)) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Remove(I)
 			else // mob is visible, add their icons to other mobs
-				for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
+				for (var/mob/iterated_mob as anything in subscribed_mobs_with_subcount)
 					if ((iterated_mob != invis_updated_mob) && (invis_updated_mob.invisibility <= iterated_mob.see_invisible)) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Add(I)
 

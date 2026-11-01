@@ -3,6 +3,7 @@
 	display_name = "mindhack"
 	antagonist_icon = "mindhack"
 	remove_on_death = TRUE
+	wiki_link = "https://wiki.ss13.co/Mindhack_Rules"
 
 	is_compatible_with(datum/mind/mind)
 		return isliving(mind.current)

@@ -5,7 +5,7 @@
 "b" = (
 /obj/rack,
 /obj/item/tank/oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "c" = (

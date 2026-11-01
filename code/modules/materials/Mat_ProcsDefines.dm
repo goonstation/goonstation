@@ -2,7 +2,7 @@
 var/global/list/material_cache
 
 /atom/var/datum/material/material = null
-/atom/var/material_amt = 1
+/atom/var/material_amt = MATERIAL::AMOUNT::DEFAULT
 
 /proc/isExploitableObject(var/atom/A)
 	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
@@ -24,33 +24,21 @@ var/global/list/material_cache
 
 /proc/mergeProperties(var/list/leftProps, var/list/rightProps, var/rightBias=0.5)
 	var/leftBias = 1 - rightBias
+	var/list/merged = rightProps | leftProps
 
-	var/list/merged = list()
-
-	for(var/o in leftProps)
-		//merged.Add(o)
-		merged[o] = leftProps[o] * leftBias
-
-	if(rightProps)
-		for(var/x in rightProps)
-			if(x in merged)
-				merged[x] += rightProps[x] * rightBias
-			else
-				merged.Add(x)
-				merged[x] = rightProps[x] * rightBias
-
-	for(var/x in merged)
-		merged[x] = round(merged[x])
-
+	for(var/datum/material_property/prop in merged)
+		var/value_left = (prop in leftProps) ? leftProps[prop] : prop.default_value
+		var/value_right = (prop in rightProps) ? rightProps[prop] : prop.default_value
+		merged[prop] = prop.getValueMerged(value_left, value_right, leftBias, rightBias)
 	return merged
 
 
 /// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
-		explosion_resistance = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_resistance
-		explosion_protection = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_protection
-		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
+		explosion_resistance = material.hasProperty(MATERIAL::PROPERTY::DENSITY) ? sqrt(round(max(4, material.getProperty(MATERIAL::PROPERTY::DENSITY)) - 4)) : explosion_resistance
+		explosion_protection = material.hasProperty(MATERIAL::PROPERTY::DENSITY) ? sqrt(round(max(4, material.getProperty(MATERIAL::PROPERTY::DENSITY)) - 4)) : explosion_protection
+		if( !(flags & CONDUCT) && (src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) >= 5)) flags |= CONDUCT
 
 
 /// Simply removes a material from an object.
@@ -101,7 +89,6 @@ var/global/list/material_cache
 					strPrefix += " [X]"
 				strPrefix = trimtext(strPrefix)
 				src.name_prefix(strPrefix ? strPrefix : "")
-				src.name_prefix(length(getQualityName(mat1.getQuality())) ? getQualityName(mat1.getQuality()) : "")
 			src.name_prefix(mat1.getName() ? mat1.getName() : "")
 			if(use_descriptors)
 				var/strSuffix = jointext(mat1.getSuffixes(), " ")
@@ -161,6 +148,9 @@ var/global/list/material_cache
 		if(mat1.shouldApplyColor())
 			src.alpha = mat1.getAlpha()
 			src.color = mat1.getColor()
+	if(src.color)
+		var/datum/component/radioactive/rad_comp = src.GetComponent(/datum/component/radioactive)
+		rad_comp?.filterize_color(rad_comp.parent)
 
 /// Applies material icon_state override to an /image based on this atom's material (or the material provided)
 /atom/proc/setMaterialAppearanceForImage(image/img, datum/material/mat=null)
@@ -180,9 +170,20 @@ var/global/list/material_cache
 		icon = src.icon
 	if(isnull(global.valid_icon_states[icon]))
 		global.valid_icon_states[icon] = list()
+		var/start_time = TIME
 		for(var/icon_state in icon_states(icon))
 			global.valid_icon_states[icon][icon_state] = 1
+		if (TIME != start_time) //we took longer than a tick
+			logTheThing(LOG_DEBUG, src, "is_valid_icon_state took [TIME - start_time] ticks(!!!) to cache [icon]")
 	return state in global.valid_icon_states[icon]
+
+proc/get_icon_states(icon)
+	. = global.valid_icon_states[icon]
+	if(isnull(.))
+		global.valid_icon_states[icon] = list()
+		. = icon_states(icon)
+		for(var/icon_state in .)
+			global.valid_icon_states[icon][icon_state] = 1
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
@@ -191,6 +192,8 @@ var/global/list/material_cache
 	// higher on this list means higher priority, be careful with it!
 	if (MAT.getMaterialFlags() & MATERIAL_CRYSTAL)
 		return /obj/item/material_piece/block
+	if (MAT.getMaterialFlags() & MATERIAL_ROCK)
+		return /obj/item/material_piece/brick
 	if (MAT.getMaterialFlags() & MATERIAL_METAL)
 		return /obj/item/material_piece/metal
 	if (MAT.getMaterialFlags() & MATERIAL_ORGANIC)
@@ -204,7 +207,6 @@ var/global/list/material_cache
 
 	return /obj/item/material_piece
 
-/// Increases generations on material triggers and handles removal if over the generation cap.
 /proc/handleTriggerGenerations(var/list/toDo)
 	for(var/datum/materialProc/current in toDo)
 		if(current.max_generations != -1 && (toDo[current] + 1) > current.max_generations)
@@ -244,6 +246,19 @@ var/global/list/material_cache
 /proc/getFusedMaterial(var/datum/material/mat1,var/datum/material/mat2)
 	return new /datum/material/interpolated(mat1, mat2, 0.5)
 
+/atom/proc/material_amount_total()
+	if(src.material)
+		return src.material_amt
+	return 0
+
+/obj/item/material_amount_total()
+	if(src.material)
+		return src.material_amt * src.amount
+	return 0
+/// Use to share type-specific material information when scanned.
+/atom/proc/on_material_scan()
+	return null
+
 //custom matsci event procs
 //Use these if you want the stom in general to interact in a special way with the items procs e.g. spears on attack triggering the tip, but on pickup the shafts material
 //situation_modifier is for when you want something like specifying "chest" or "L_hand" for clothes
@@ -260,8 +275,8 @@ var/global/list/material_cache
 		src.material.triggerOnBullet(src, attacked, projectile)
 	return
 
-/// Called when an atom is hit by a bullet for mat effects
-/atom/proc/material_trigger_on_chems(var/chem, var/amount)
+/// Called when an atom comes into contact with reagents for mat effects
+/atom/proc/material_trigger_on_chems(var/datum/reagent/chem, var/amount)
 	if (src.material)
 		src.material.triggerChem(src, chem, amount)
 	return
@@ -272,7 +287,7 @@ var/global/list/material_cache
 		src.material.triggerOnBlobHit(src, blobPower)
 	return
 
-/// Called when an atom is used for an attack a atom for mat effects
+/// Called when an atom is used to attack an atom for mat effects
 /atom/proc/material_on_attack_use(var/mob/attacker, var/atom/attacked)
 	if (src.material)
 		src.material.triggerOnAttack(src, attacker, attacked)
@@ -365,58 +380,6 @@ var/global/list/material_cache
 		else
 			return "Unknown"
 
-/// Simply returns a string for a given quality. Used as prefix for objects.
-/proc/getQualityName(var/quality)
-	switch(quality)
-		if(-INFINITY to -101)
-			return "useless"
-		if(-100 to -91)
-			return "atrocious"
-		if(-90 to -81)
-			return "wretched"
-		if(-80 to -71)
-			return "crap"
-		if(-70 to -61)
-			return "awful"
-		if(-60 to -51)
-			return "terrible"
-		if(-50 to -41)
-			return "bad"
-		if(-40 to -31)
-			return "shabby"
-		if(-30 to -21)
-			return "mediocre"
-		if(-20 to -11)
-			return "low-quality"
-		if(-10 to -1)
-			return "poor"
-		if(0)
-			return ""
-		if(1 to 10)
-			return "decent"
-		if(11 to 20)
-			return "fine"
-		if(21 to 30)
-			return "good"
-		if(31 to 40)
-			return "great"
-		if(41 to 50)
-			return "high-quality"
-		if(51 to 60)
-			return "excellent"
-		if(61 to 70)
-			return "superb"
-		if(71 to 80)
-			return "incredible"
-		if(81 to 90)
-			return "amazing"
-		if(91 to 100)
-			return "supreme"
-		if(101 to INFINITY)
-			return "perfect"
-		else
-			return "odd"
-
 /// Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
 /proc/matchesMaterialRecipe(var/datum/material/M)
 	for(var/datum/material_recipe/R in materialRecipes)
@@ -489,19 +452,28 @@ proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/materia
 	var/hTC1 = 5
 	var/hTC2 = 5
 	if(matA)
-		if(matA.hasProperty("thermal") && matA.hasProperty("electrical"))
-			hTC1 = (max(matA.getProperty("thermal"),0) + max(matA.getProperty("electrical"),0))/2
-		else if(matA.hasProperty("thermal"))
-			hTC1 = max(matA.getProperty("thermal"),0)
-		else if(matA.hasProperty("electrical"))
-			hTC1 = max(matA.getProperty("electrical"),0)
+		if(matA.hasProperty(MATERIAL::PROPERTY::THERMAL_COND) && matA.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+			hTC1 = (max(matA.getProperty(MATERIAL::PROPERTY::THERMAL_COND),0) + max(matA.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND),0))/2
+		else if(matA.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+			hTC1 = max(matA.getProperty(MATERIAL::PROPERTY::THERMAL_COND),0)
+		else if(matA.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+			hTC1 = max(matA.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND),0)
 	if(matB)
-		if(matB.hasProperty("thermal") && matB.hasProperty("electrical"))
-			hTC2 = (max(matB.getProperty("thermal"),0) + max(matB.getProperty("electrical"),0))/2
-		else if(matB.hasProperty("thermal"))
-			hTC2 = max(matB.getProperty("thermal"),0)
-		else if(matB.hasProperty("electrical"))
-			hTC2 = max(matB.getProperty("electrical"),0)
+		if(matB.hasProperty(MATERIAL::PROPERTY::THERMAL_COND) && matB.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+			hTC2 = (max(matB.getProperty(MATERIAL::PROPERTY::THERMAL_COND),0) + max(matB.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND),0))/2
+		else if(matB.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+			hTC2 = max(matB.getProperty(MATERIAL::PROPERTY::THERMAL_COND),0)
+		else if(matB.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+			hTC2 = max(matB.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND),0)
 	//average thermal conductivity approximated as 10^(x/5)-1
 	//common values 0 = 0, 5 = 10, 10 = 100
 	return ((10**(hTC1/5)-1)+(10**(hTC2/5)-1))/2
+
+proc/contains_negative_matter(atom/target_atom)
+	if (target_atom.material)
+		. = (target_atom.material.getID() == "negativematter")
+		if(!.)
+			for(var/datum/material/parent_mat in target_atom.material.getParentMaterials())
+				if(parent_mat.getID() == "negativematter")
+					. = TRUE
+					break

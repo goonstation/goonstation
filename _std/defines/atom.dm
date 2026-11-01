@@ -9,6 +9,13 @@
 /// This is relevant to atoms so it goes here!!!! do not @ me
 #define opposite_dir_to(dir) (turn(dir, 180))
 
+/// Use the editor resource in map editors and the default resource in normal builds.
+#ifdef IN_MAP_EDITOR
+#define MAP_EDITOR_ICON(EDITOR_RESOURCE, DEFAULT_RESOURCE) EDITOR_RESOURCE
+#else
+#define MAP_EDITOR_ICON(EDITOR_RESOURCE, DEFAULT_RESOURCE) DEFAULT_RESOURCE
+#endif
+
 
 /**
  * Makes the given procs available for use with the admin interact menu
@@ -26,8 +33,6 @@
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
 /// used for removing us from mantapush list when we get deleted
 #define SPACE_PUSHING				(1 << 0)
-/// used for removing us from spacepush list when we get beleted
-#define MANTA_PUSHING				(1 << 1)
 /// atom has a particlesystem right now - used for clean gc to clear refs to itself etc blah
 #define HAS_PARTICLESYSTEM			(1 << 2)
 /// atom is a particlesystem target - " "
@@ -42,37 +47,46 @@
 #define HAS_NBGG					(1 << 7)
 /// if an atom/movable is in the crusher (so conveyors don't push it around)
 #define BEING_CRUSHERED				(1 << 8)
-
+/// if an atom/movable is currently using the drifting animation
+#define DRIFT_ANIMATION				(1 << 9)
+/// In the gravity controller
+#define GRAVITY_SUBSCRIBER			(1 << 10)
 
 // event_handler_flags
-/// Atom implements HasProximity() call in some way.
-#define USE_PROXIMITY				(1 << 0)
 /// Atom implements EnteredFluid() call in some way.
-#define USE_FLUID_ENTER				(1 << 1)
+#define USE_FLUID_ENTER				(1 << 0)
 /// Atom can be held as an item and have a grab inside it to choke somebuddy
-#define USE_GRAB_CHOKE				(1 << 2)
+#define USE_GRAB_CHOKE				(1 << 1)
 /// Atom implements var/active = XXX and responds to sticker removal methods (burn-off + acetone). this atom MUST have an 'active' var. im sory.
-#define HANDLE_STICKER				(1 << 3)
+#define HANDLE_STICKER				(1 << 2)
 /// cannot be pushed by MANTAwaters
-#define IMMUNE_MANTA_PUSH			(1 << 5)
-#define IMMUNE_SINGULARITY			(1 << 6)
-#define IMMUNE_SINGULARITY_INACTIVE	(1 << 7)
+#define IMMUNE_OCEAN_PUSH			(1 << 3)
+#define IMMUNE_SINGULARITY			(1 << 4)
+#define IMMUNE_SINGULARITY_INACTIVE	(1 << 5)
 /// used for trinkets GC
-#define IS_TRINKET					(1 << 8)
-#define IS_FARTABLE					(1 << 9)
+#define IS_TRINKET					(1 << 6)
+#define IS_FARTABLE					(1 << 7)
 /// overrides the click drag mousedrop pickup QOL kinda stuff
-#define NO_MOUSEDROP_QOL			(1 << 10)
-#define MOVE_NOCLIP 				(1 << 11)
+#define NO_MOUSEDROP_QOL			(1 << 8)
+#define MOVE_NOCLIP 				(1 << 9)
 /// Atom won't get warped to z5 via floor holes on underwater maps
-#define IMMUNE_TRENCH_WARP			(1 << 12)
+#define IMMUNE_TRENCH_WARP			(1 << 10)
+#define IMMUNE_MINERAL_MAGNET		(1 << 11)
 
 
-//THROW flags (what kind of throw, we can have ddifferent kinds of throws ok)
-#define THROW_NORMAL	(1 << 0)
-#define THROW_CHAIRFLIP (1 << 1)
-#define THROW_GUNIMPACT (1 << 2)
-#define THROW_SLIP		(1 << 3)
-#define THROW_PEEL_SLIP	(1 << 4)
+//THROW flags (what kind of throw, we can have different kinds of throws ok)
+#define THROW_NORMAL		(1 << 0)
+#define THROW_CHAIRFLIP		(1 << 1)
+#define THROW_GUNIMPACT		(1 << 2)
+#define THROW_SLIP			(1 << 3)
+#define THROW_PEEL_SLIP		(1 << 4)
+#define THROW_BASEBALL		(1 << 5) //! throw that doesn't stun into walls.
+#define THROW_THROUGH_WALL	(1 << 6) //! throw that will blow through one wall/other dense object before becoming a normal throw again
+#define THROW_GIB			(1 << 7) //! gibs thrown mob on end (use with care)
+#define THROW_PHASE			(1 << 8) //! throw has phasing through walls for two tiles. For white holes
+#define THROW_NO_CLIP		(1 << 9) //! throw has phasing through walls without a tile limit
+#define THROW_ARC			(1 << 10)//! throw in an arc, like from a catapult or something
+#define THROW_DELIVERY		(1 << 11)//! cargo delivery, doesn't set off materials on impact
 
 //For serialization purposes
 #define DESERIALIZE_ERROR				(0 << 0)
@@ -117,3 +131,10 @@
 #define UNDERFLOOR 1
 /// The atom is above the floor tiles.
 #define OVERFLOOR 2
+
+/// The atom never receives mouse events.
+#define MOUSE_OPACITY_TRANSPARENT 0
+/// The atom receives mouse events on the non-transparent pixels of its icon.
+#define MOUSE_OPACITY_ICON 1
+/// The atom receives mouse events anywhere in its bounding box, whatever its icon looks like.
+#define MOUSE_OPACITY_OPAQUE 2

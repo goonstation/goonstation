@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/device/flyswatter)
 	name = "fly swatter"
 	desc = "It's one of those fancy electric types, so you can hear that satisfying zap, zap, <i>zap</i>!"
 	icon_state = "flyswatter"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	hit_type = DAMAGE_BURN

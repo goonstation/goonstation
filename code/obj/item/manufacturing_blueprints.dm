@@ -104,12 +104,16 @@
 /******************** Nadir Resonators *******************/
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax
-	name = "Type-AX Resonator"
+	name = "Axial Resonator - Type-AX"
 	blueprint = /datum/manufacture/resonator_type_ax
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm
-	name = "Type-SM Resonator"
+	name = "Shear Moderator - Type-SM"
 	blueprint = /datum/manufacture/resonator_type_sm
+
+/obj/item/paper/manufacturer_blueprint/resonator_type_fq
+	name = "Field Quantizer - Type-FQ"
+	blueprint = /datum/manufacture/resonator_type_fq
 
 
 /// This is a special item that breaks apart into blueprints for the machines needed to build/repair a cloner.

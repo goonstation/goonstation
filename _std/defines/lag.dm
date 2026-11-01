@@ -34,8 +34,11 @@
 #define LAG_REALTIME 90
 #define LAG_INIT 95
 
-/// Waits until a given condition is true, tg-style async
-#define UNTIL(X) while(!(X)) sleep(1)
+/// Waits until a given condition is true, or a timeout is reached
+#define UNTIL(X, TIMEOUT) do { \
+	var/end = TIMEOUT ? TIME + TIMEOUT : 0; \
+	while(!(X) && (!end || TIME < end)) sleep(1); \
+	} while(0)
 
 //ticklag stuff. code lives in gameticker's process() in datums/gameticker.dm
 #define TIME_DILATION_ENABLED 1
@@ -85,8 +88,6 @@
 #define OVERLOAD_PLAYERCOUNT 120
 /// when pcount is above this number on round start, increase ticklag to SEMIOVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define SEMIOVERLOAD_PLAYERCOUNT 85
-/// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
-#define OSHAN_LIGHT_OVERLOAD 18
 /// whenn pcount is >= this number, slow Life() processing a bit
 #define SLOW_LIFE_PLAYERCOUNT 85
 /// whenn pcount is >= this number, slow Life() processing a lot

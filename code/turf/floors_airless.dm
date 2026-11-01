@@ -382,12 +382,26 @@
 /turf/simulated/floor/airless/darkblue
 	icon_state = "fulldblue"
 
+/turf/simulated/floor/airless/darkblue/side
+	icon_state = "dblue"
+
+/turf/simulated/floor/airless/darkblue/corner
+	icon_state = "dbluecorner"
+
 /turf/simulated/floor/airless/darkblue/checker
-	icon_state = "blue-dblue"
+	icon_state = "dbluechecker"
 
-/turf/simulated/floor/airless/darkblue/checker/other
-	icon_state = "blue-dblue2"
+/turf/simulated/floor/airless/darkblueblack
+	icon_state = "dblueblack"
 
+/turf/simulated/floor/airless/darkblueblack/corner
+	icon_state = "dblueblackcorner"
+
+/turf/simulated/floor/airless/darkbluewhite
+	icon_state = "dbluewhite"
+
+/turf/simulated/floor/airless/darkbluewhite/corner
+	icon_state = "dbluewhitecorner"
 /////////////////////////////////////////
 
 /turf/simulated/floor/airless/bluegreen
@@ -398,6 +412,33 @@
 
 /turf/simulated/floor/airless/bluegreen/corner
 	icon_state = "blugreencorner"
+
+/////////////////////////////////////////
+
+
+/turf/simulated/floor/airless/darkpurple
+	icon_state = "fulldpurple"
+
+/turf/simulated/floor/airless/darkpurple/side
+	icon_state = "dpurple"
+
+/turf/simulated/floor/airless/darkpurple/corner
+	icon_state = "dpurplecorner"
+
+/turf/simulated/floor/airless/darkpurple/checker
+	icon_state = "dpurplechecker"
+
+/turf/simulated/floor/airless/darkpurpleblack
+	icon_state = "dpurpleblack"
+
+/turf/simulated/floor/airless/darkpurpleblack/corner
+	icon_state = "dpurpleblackcorner"
+
+/turf/simulated/floor/airless/darkpurplewhite
+	icon_state = "dpurplewhite"
+
+/turf/simulated/floor/airless/darkpurplewhite/corner
+	icon_state = "dpurplewhitecorner"
 
 /////////////////////////////////////////
 
@@ -484,6 +525,23 @@
 /turf/simulated/floor/airless/yellowblack/corner
 	icon_state = "yellowblackcorner"
 
+/turf/simulated/floor/airless/yellowwhite
+	icon_state = "yellowwhite"
+
+/turf/simulated/floor/airless/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/airless/lightyellow
+	icon_state = "fulllyellow"
+
+/turf/simulated/floor/airless/lightyellow/side
+	icon_state = "lyellow"
+
+/turf/simulated/floor/airless/lightyellow/corner
+	icon_state = "lyellowcorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/airless/orange
@@ -495,20 +553,36 @@
 /turf/simulated/floor/airless/orange/corner
 	icon_state = "orangecorner"
 
+/turf/simulated/floor/airless/orange/checker
+	icon_state = "orangechecker"
 
 /turf/simulated/floor/airless/orangeblack
-	icon_state = "fullcaution"
-
-/turf/simulated/floor/airless/orangeblack/side
-	icon_state = "caution"
-
-/turf/simulated/floor/airless/orangeblack/side/white
-	icon_state = "cautionwhite"
+	icon_state = "orangeblack"
 
 /turf/simulated/floor/airless/orangeblack/corner
+	icon_state = "orangeblackcorner"
+
+/turf/simulated/floor/airless/orangewhite
+	icon_state = "orangewhite"
+
+/turf/simulated/floor/airless/orangewhite/corner
+	icon_state = "orangewhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/airless/caution
+	icon_state = "fullcaution"
+
+/turf/simulated/floor/airless/caution/side
+	icon_state = "caution"
+
+/turf/simulated/floor/airless/caution/white
+	icon_state = "cautionwhite"
+
+/turf/simulated/floor/airless/caution/corner
 	icon_state = "cautioncorner"
 
-/turf/simulated/floor/airless/orangeblack/corner/white
+/turf/simulated/floor/airless/caution/corner/white
 	icon_state = "cautionwhitecorner"
 
 /////////////////////////////////////////
@@ -566,7 +640,7 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 	mat_appearances_to_ignore = list("cotton")
 /turf/simulated/floor/airless/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 	mat_changename = 0
 	default_material = "cotton"
@@ -580,11 +654,11 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 		icon = 'icons/turf/floors.dmi'
 
 /turf/simulated/floor/airless/carpet/grime
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/floor/airless/carpet/arcade
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "arcade_carpet"
 
 /turf/simulated/floor/airless/carpet/arcade/half
@@ -594,11 +668,10 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 	icon_state = "arcade_carpet_blank"
 
 /turf/simulated/floor/airless/carpet/office
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "office_carpet"
 
 /turf/simulated/floor/airless/carpet/office/other
-	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet2"
 
 /////////////////////////////////////////

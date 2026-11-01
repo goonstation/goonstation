@@ -164,8 +164,7 @@
 					HH.ex_act(3)
 
 			qdel(G)
-			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]slam wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
-
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""][name] wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		else
 			if (M)
 				M.pixel_x = 0
@@ -178,6 +177,9 @@
 			qdel(G)
 
 		return 0
+
+	logCast(atom/target)
+		return
 
 /datum/targetable/wrestler/slam/fake
 	fake = 1

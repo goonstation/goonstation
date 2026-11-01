@@ -64,5 +64,17 @@
 <i>Chef's Tip: Try using other fruit to make a pie, like Blackberry, Raspberry, or Cherry!</i>
 
 <hr>
+<h2>Cinnamon Bun</h2>
+<h3>Ingredients</h3>
+<div class = "cinnamonbun">
+<li>1 Sweet Dough
+<li>1 Butter
+<li>2 Cinnamon Stick
+</div>
+<div class ="cinnamonbun">
+<li>Cook the ingredients in the oven for 6 seconds on high.
+</div>
+
+<hr>
 <h2>Looks like there's plenty more empty pages in here...</h2>
 <h3>She's going to be working on this book for years to come.</h3>

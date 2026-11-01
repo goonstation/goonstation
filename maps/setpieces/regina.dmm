@@ -40,7 +40,7 @@
 /turf/simulated/drawbridge/floor,
 /area/regina)
 "aL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -48,7 +48,7 @@
 	},
 /area/space)
 "aQ" = (
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -137,7 +137,7 @@
 /turf/simulated/floor/airless/engine,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "dY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating,
 /area/regina)
 "ek" = (
@@ -279,7 +279,7 @@
 /area/regina)
 "gP" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -372,7 +372,7 @@
 /area/regina)
 "hQ" = (
 /obj/table/reinforced/auto,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/regina)
 "hS" = (
 /obj/indestructible/shuttle_corner{
@@ -458,9 +458,9 @@
 /area/regina)
 "iV" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	req_access_txt = "12"
+	dir = 4
 	},
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/airless/grey/blackgrime,
 /area/regina)
 "jc" = (
@@ -557,7 +557,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "kL" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -759,7 +759,7 @@
 /turf/unsimulated/floor/minitiles/black,
 /area/regina)
 "oq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
@@ -796,7 +796,7 @@
 /obj/machinery/sleeper{
 	dir = 4
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/regina)
 "oP" = (
 /obj/fakeobject/pipe{
@@ -969,7 +969,7 @@
 	},
 /area/regina)
 "rw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
@@ -1199,7 +1199,7 @@
 /turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "wh" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/regina)
 "ws" = (
 /obj/fakeobject/shuttlethruster{
@@ -1223,7 +1223,7 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "wR" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1348,7 +1348,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/regina)
 "yB" = (
 /obj/fakeobject/shuttlethruster{
@@ -1661,7 +1661,7 @@
 /area/space)
 "Fc" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1881,7 +1881,7 @@
 /area/regina)
 "Ki" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2190,7 +2190,7 @@
 /turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "Qf" = (
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -2205,7 +2205,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/regina)
 "Qz" = (
 /obj/table/reinforced/auto,
@@ -2343,8 +2343,7 @@
 /area/space)
 "Tq" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Atmospheric Processing";
-	req_access_txt = ""
+	name = "Atmospheric Processing"
 	},
 /turf/unsimulated/floor/plating,
 /area/regina)
@@ -2414,7 +2413,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "Uu" = (
 /obj/storage/secure/closet/personal,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/regina)
 "Uv" = (
 /turf/unsimulated/floor/engine,
@@ -2443,7 +2442,7 @@
 /area/regina)
 "Vv" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2498,7 +2497,7 @@
 /turf/simulated/floor/airless/engine,
 /area/space)
 "WM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/engine/vacuum,
@@ -2585,7 +2584,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "XU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -2727,7 +2726,7 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "ZW" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

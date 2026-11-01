@@ -224,7 +224,7 @@
 		update_amt_per_tile()
 		var/my_depth_level = 0
 		for(var/x in depth_levels)
-			if (src.amt_per_tile > x)
+			if (src.amt_per_tile >= x)
 				my_depth_level++
 			else
 				break
@@ -480,7 +480,7 @@
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		var/my_depth_level = 0
 		for(var/x in depth_levels)
-			if (amt_per_tile > x)
+			if (amt_per_tile >= x)
 				my_depth_level++
 			else
 				break
@@ -509,7 +509,7 @@
 
 		src.master_reagent_id = src.reagents?.get_master_reagent_id()
 
-		var/master_opacity = !src.drains_floor && src.reagents?.get_master_reagent_gas_opaque()
+		var/master_opacity = (!src.drains_floor && src.reagents?.get_master_reagent_gas_opaque()) ? TRUE : FALSE
 
 		var/depth_changed = 0 //force icon update later in the proc if fluid member depth changed
 		var/last_icon = 0
@@ -574,7 +574,8 @@
 						var/turf/simulated/T = get_step(F, dir)
 						if (T && T.active_liquid && T.active_liquid.group == F.group)
 							dirs |= dir
-					fluid_ma.icon_state = num2text(dirs)
+
+					fluid_ma.icon_state = "[num2text(dirs)][F.gforce < GFORCE_TRACTION_PARTIAL ? "ng" : ""]"
 
 					if (F.overlay_refs && length(F.overlay_refs))
 						if (F)
@@ -582,6 +583,9 @@
 
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
 					F.update_perspective_overlays()
+
+				if (fluid_ma.icon_state == "15" && F.last_depth_level >= 2)
+					fluid_ma.icon_state = "15-lines"
 			else
 				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
 
@@ -590,7 +594,10 @@
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			//air specific (messy)
-			fluid_ma.opacity = master_opacity
+			// set_opacity() first so the turf's opaque count, lighting and camera coverage are correct
+			if (F.opacity != master_opacity)
+				F.set_opacity(master_opacity)
+			UNLINT(fluid_ma.opacity = master_opacity) // a mutable_appearance
 			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
 			F.appearance = fluid_ma
 			F.name = initial(F.name) // i don't know what the fuck is going on with the appearances here
@@ -752,7 +759,7 @@
 		if (!removed_loc || src.qdeled || !src.reagents || !src.reagents.total_volume) //trying to stop the weird bug were a bunch of simultaneous splits removes all reagents
 			return 0
 		contained_amt = src.reagents.total_volume
-
+		connected += split_liq //include the actual splitting liquid object we're looking at
 		//remove some of contained_amt from src and add it to FG
 		src.can_update = 0
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0

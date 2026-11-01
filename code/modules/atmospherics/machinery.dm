@@ -12,6 +12,8 @@ ABSTRACT_TYPE(/obj/machinery/atmospherics)
 	/// Directions to look for other atmospheric devices.
 	var/initialize_directions = 0
 	var/static/list/icon/pipe_underlay_cache = list()
+	/// Does not share space with another exclusionary object.
+	var/exclusionary = FALSE
 
 /obj/machinery/atmospherics/process()
 	src.build_network()
@@ -49,3 +51,7 @@ ABSTRACT_TYPE(/obj/machinery/atmospherics)
 
 /// Disconnect reference from our nodes.
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
+
+/// Is the device we want to connect to not compatible with us? Direction is from them to us.
+/obj/machinery/atmospherics/proc/cant_connect(obj/machinery/atmospherics/device, direction)
+	return FALSE

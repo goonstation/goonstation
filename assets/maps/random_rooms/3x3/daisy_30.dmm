@@ -9,16 +9,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
-"h" = (
-/obj/machinery/camera,
-/turf/simulated/floor/circuit/red,
-/area/dmm_suite/clear_area)
-"p" = (
-/obj/machinery/camera{
-	dir = 10
-	},
-/turf/simulated/floor/circuit/red,
-/area/dmm_suite/clear_area)
 "y" = (
 /obj/item/screwdriver{
 	pixel_x = 12;
@@ -33,6 +23,10 @@
 "C" = (
 /obj/fakeobject/lawrack,
 /obj/map/light/dimred,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "Q" = (
@@ -44,12 +38,15 @@
 	pixel_x = 1;
 	pixel_y = 10
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "T" = (
-/obj/machinery/camera{
-	dir = 6
-	},
 /obj/machinery/networked/printer{
 	pixel_x = -2;
 	pixel_y = 11;
@@ -58,19 +55,17 @@
 /obj/item/paper/spaceodyssey{
 	pixel_y = -1
 	},
-/turf/simulated/floor/circuit/red,
-/area/dmm_suite/clear_area)
-"X" = (
-/obj/machinery/camera{
-	dir = 1
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"
-h
+a
 b
-X
+a
 "}
 (2,1,1) = {"
 a
@@ -80,5 +75,5 @@ y
 (3,1,1) = {"
 T
 Q
-p
+a
 "}

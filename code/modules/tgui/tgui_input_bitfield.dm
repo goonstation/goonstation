@@ -2,7 +2,9 @@
  * Copyright (c) 2024 @Azrun
  * SPDX-License-Identifier: MIT
  */
+
 /proc/tgui_input_bitfield(mob/user, message, title, default = 0, timeout = 0, autofocus = TRUE)
+	UNIT_TEST_TGUI_RESPONSE
 	if (!user)
 		user = usr
 	if (!istype(user))

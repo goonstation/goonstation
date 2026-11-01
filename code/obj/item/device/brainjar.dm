@@ -10,7 +10,7 @@
 	var/obj/item/device/radio/rad = null
 
 	var/obj/item/device/radio/signaler/signal = null
-	var/obj/item/assembly/detonator/detonator_part = null
+	var/obj/item/canbomb_detonator/detonator_part = null
 
 	var/colour = "blue"
 	var/list/icon/overlays_list = list()
@@ -18,7 +18,7 @@
 	var/crafting_stage_max = 5
 	New()
 		..()
-
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
 		overlays_list["wires"] = new /icon('icons/obj/items/device.dmi', "bjwires")
 		overlays_list["radio"] = new /icon('icons/obj/items/device.dmi', "bjradio")
 		overlays_list["analyzer"] = new /icon('icons/obj/items/device.dmi', "bjhealthanalyzer")
@@ -36,6 +36,7 @@
 		UpdateIcon()
 
 	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
 		controller?.ghostize()
 		..()
 
@@ -215,14 +216,22 @@
 
 		else ..()
 
-/obj/item/device/brainjar/is_detonator_attachment()
-	return crafting_stage >= crafting_stage_max && src.the_brain
+/// ----------- Trigger/Applier-Assembly-Related Procs -----------
 
-/obj/item/device/brainjar/detonator_act(event, var/obj/item/assembly/detonator/det)
+/obj/item/device/brainjar/proc/assembly_check(var/manipulated_brainjar, var/obj/item/second_part, var/mob/user)
+	//if secured, we return TRUE and prevent the combination
+	if (src.crafting_stage < src.crafting_stage_max || !src.the_brain)
+		boutput(user, SPAN_NOTICE("The [src] is not ready yet."))
+		return TRUE
+
+/// ----------------------------------------------
+
+/obj/item/device/brainjar/detonator_act(event, var/obj/item/canbomb_detonator/det)
 	switch (event)
 		if("attach")
 			detonator_part = det
 			controller.show_text("You interface with the detonator assembly controls.", "blue")
+			det.initial_wire_functions += src
 			update_controller_verbs()
 		if("detach")
 			detonator_part = null
@@ -236,13 +245,6 @@
 			playsound(src, 'sound/voice/screams/robot_scream.ogg', 70, TRUE)
 			detonator_part = null
 			update_controller_verbs()
-
-/obj/item/device/brainjar/hear_talk(mob/M as mob, text, real_name, lang_id)
-	if(!controller || M == controller) return
-	var/heardname = real_name ? M.name : real_name
-
-	var/rendered = SPAN_SAY("[heardname] [SPAN_MESSAGE("[M.say_quote(text[1])]")]")
-	controller.show_message(rendered, 2)
 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -304,19 +306,19 @@
 
 	if(alert("Are you sure you want to expedite the detonation?", "Bomb controls.", "Yes", "No") != "Yes") return
 
-	var/obj/item/assembly/detonator/det = src.detonator_part
+	var/obj/item/canbomb_detonator/det = src.detonator_part
 
 	if(istype(det))
-		if(det.part_fs)
-			if(det.part_fs.time <= 10)
-				src.controller.show_text("It's less than ten seconds left until the bomb blows up!", "red")
-				return
-			var/timing = det.part_fs.timing
-			det.part_fs.time = 10
-			det.failsafe_engage()
+		var/obj/item/device/timer/checked_timer = det.part_assembly.trigger
+		if(checked_timer.time <= 10)
+			src.controller.show_text("It's less than ten seconds left until the bomb blows up!", "red")
+			return
+		var/timing = checked_timer.timing
+		checked_timer.time = 10
+		det.failsafe_engage()
 
-			if(timing)
-				AIviewers(get_turf(src)) << SPAN_ALERT("<B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B>")
+		if(timing)
+			AIviewers(get_turf(src)) << SPAN_ALERT("<B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B>")
 
 /obj/item/device/brainjar/proc/detonate_tank_transfer_valve()
 	set name = "Detonate bomb!"

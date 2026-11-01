@@ -1,8 +1,10 @@
 var/HasturPresent = 0
 
+TYPEINFO(/mob/living/critter/hastur)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_VOID)
+
 /mob/living/critter/hastur
 	name = "????"
-	real_name = "????"
 	desc = "He who must not be named..."
 	density = 1
 	anchored = ANCHORED
@@ -16,12 +18,11 @@ var/HasturPresent = 0
 	see_invisible = INVIS_ADVENTURE
 	stat = STAT_DEAD
 	stepsound = 'sound/misc/hastur/tentacle_walk.ogg'
-	speechverb_say = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "inquires"
+	speech_verb_say = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "inquires"
 	bound_height = 32
 	bound_width = 32
-	speech_void = 1
 	layer = 40
 	var/icon/northsouth = null
 	var/icon/eastwest = null
@@ -35,7 +36,7 @@ var/HasturPresent = 0
 		changeIcon()
 		src.nodamage = 1
 		HasturPresent = 1
-		radio_brains[src] = 2
+		bioHolder.AddEffect("radio_brain", 2)
 		abilityHolder.addAbility(/datum/targetable/hastur/devour)
 		abilityHolder.addAbility(/datum/targetable/hastur/insanityaura)
 		abilityHolder.addAbility(/datum/targetable/hastur/masswhisper)
@@ -73,7 +74,7 @@ var/HasturPresent = 0
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.name = "right tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "tentacler"				// the icon state of the hand UI background
 		HH.limb_name = "right tentacles"					// name for the dummy holder
 		HH.limb = new /datum/limb/abomination/hastur	// if not null, the special limb to use when attack_handing
@@ -82,7 +83,7 @@ var/HasturPresent = 0
 
 		HH = hands[2]
 		HH.name = "left tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "tentaclel"				// the icon state of the hand UI background
 		HH.limb_name = "left tentacles"					// name for the dummy holder
 		HH.limb = new /datum/limb/abomination/hastur	// if not null, the special limb to use when attack_handing
@@ -91,7 +92,7 @@ var/HasturPresent = 0
 
 		HH = hands[3]
 		HH.name = "long range tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "tentaclek"				// the icon state of the hand UI background
 		HH.limb_name = "long range tentacles"					// name for the dummy holder
 		HH.limb = new /datum/limb/longtentacle	// if not null, the special limb to use when attack_handing
@@ -101,7 +102,7 @@ var/HasturPresent = 0
 
 		HH = hands[4]
 		HH.name = "long range stun tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "tentacles"				// the icon state of the hand UI background
 		HH.limb_name = "long range stun tentacles"					// name for the dummy holder
 		HH.limb = new /datum/limb/longtentaclestun	// if not null, the special limb to use when attack_handing
@@ -164,7 +165,7 @@ var/HasturPresent = 0
 		. = ..()
 		M.visible_message(pick(SPAN_ALERT("<B>[M] reveals their true form for a moment and -COMPLETELY- devours [target]!</B>"),SPAN_ALERT("<B>Huge mouth emerges underneath [M]'s robes and DEVOURS [target]!</B>"),SPAN_ALERT("<B>[M] growls angrily as they reveal their true form, completely devouring [target]!</B>")))
 		playsound(M.loc, pick('sound/misc/hastur/devour1.ogg','sound/misc/hastur/devour2.ogg','sound/misc/hastur/devour3.ogg','sound/misc/hastur/devour4.ogg'), 90,1)
-		flick("hastur-devour", M)
+		FLICK("hastur-devour", M)
 		SPAWN(7 DECI SECONDS)
 			target.gib()
 			target.icon_state = "lost"
@@ -233,7 +234,7 @@ var/HasturPresent = 0
 		. = ..()
 		if (stage == 1)
 			H.set_density(1)
-			REMOVE_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY_CLOAK, src)
 			H.alpha = 255
 			H.stepsound = 'sound/misc/hastur/tentacle_walk.ogg'
 			H.visible_message(pick(SPAN_ALERT("A horrible apparition fades into view!"), SPAN_ALERT("A pool of shadow forms and manifests into shape!")), pick(SPAN_ALERT("Void manifests around you, giving you your physical form back."), SPAN_ALERT("Energies of the void allow you to manifest back in a physical form.")))
@@ -241,7 +242,7 @@ var/HasturPresent = 0
 		else
 			H.visible_message(pick(SPAN_ALERT("[H] vanishes from sight!"), SPAN_ALERT("[H] dissolves into the void!")), pick(SPAN_NOTICE("You are enveloped by the void, hiding your physical manifestation."), SPAN_NOTICE("You fade into the void!")))
 			H.set_density(0)
-			APPLY_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_SPOOKY)
 			H.alpha = 160
 			H.stepsound = null
 			H.see_invisible = INVIS_SPOOKY
@@ -296,7 +297,7 @@ var/HasturPresent = 0
 			user.visible_message(SPAN_ALERT("<B>[user] sends a sharp tentacle flying!</B>"))
 			user.set_dir(get_dir(user, target))
 
-			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
+			var/list/affected = drawLineObj(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
 
 			for(var/obj/O in affected)
 				O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -305,7 +306,7 @@ var/HasturPresent = 0
 				for(var/obj/machinery/vehicle/A in src_turf)
 					if(A == O || A == user) continue
 					A.meteorhit(O)
-				for(var/obj/grille/A in src_turf)
+				for(var/obj/mesh/grille/A in src_turf)
 					if(A == O || A == user) continue
 					A.damage_blunt(10)
 				for(var/obj/window/A in src_turf)
@@ -363,7 +364,7 @@ var/HasturPresent = 0
 			user.visible_message(SPAN_ALERT("<B>[user] sends a grabbing tentacle flying!</B>"))
 			user.set_dir(get_dir(user, target))
 
-			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
+			var/list/affected = drawLineObj(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
 
 			for(var/obj/O in affected)
 				O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -372,7 +373,7 @@ var/HasturPresent = 0
 				for(var/obj/machinery/vehicle/A in src_turf)
 					if(A == O || A == user) continue
 					A.meteorhit(O)
-				for(var/obj/grille/A in src_turf)
+				for(var/obj/mesh/grille/A in src_turf)
 					if(A == O || A == user) continue
 					A.damage_blunt(10)
 				for(var/obj/window/A in src_turf)

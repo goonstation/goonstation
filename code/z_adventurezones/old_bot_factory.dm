@@ -28,7 +28,7 @@
 						frame.Attackby(cell_to_add, src)
 						if (frame.stage > 1)
 							src.visible_message("[src] inserts [cell_to_add] into [frame].")
-							flick("factory_arm_active",src)
+							FLICK("factory_arm_active",src)
 
 				if (2)
 					var/obj/item/device/guardbot_tool/tool_to_add = locate() in range(src, 1)
@@ -36,20 +36,20 @@
 						frame.Attackby(tool_to_add, src)
 						if (frame.created_module)
 							src.visible_message("[src] attaches [tool_to_add] into [frame].")
-							flick("factory_arm_active",src)
+							FLICK("factory_arm_active",src)
 					else
 						var/obj/item/guardbot_core/core = locate() in range(src, 1)
 						if (istype(core))
 							frame.Attackby(core, src)
 							if (frame.stage == 3)
 								src.visible_message("[src] attaches [core] into [frame].")
-								flick("factory_arm_active",src)
+								FLICK("factory_arm_active",src)
 
 				if (3)
 					var/obj/item/parts/robot_parts/arm/arm = locate() in range(src,1)
 					if (istype(arm))
 						frame.Attackby(arm,src)
-						flick("factory_arm_active",src)
+						FLICK("factory_arm_active",src)
 			//todo
 			return
 
@@ -74,7 +74,7 @@
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"
-		newfolder.metadata["permission"] = COMP_HIDDEN
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/os/kernel(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/shell(src) )
@@ -96,7 +96,7 @@
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "bin" //Applications available to all users.
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/cd(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/ls(src) )
@@ -114,12 +114,12 @@
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "mnt"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "conf"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		var/datum/computer/file/record/testR = new
@@ -132,7 +132,7 @@
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "etc"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		newfolder.add_file( new /datum/computer/file/guardbot_task/bodyguard(src) )
@@ -277,8 +277,10 @@
 	icon_redlight = null
 	icon_greenlight = null
 	secure = 2
+	can_leghole = FALSE
+	object_flags = 0
 
-	close()
+	close(var/entangleLogic, mob/user)
 		..()
 		if(!src.locked)
 			src.locked = 1

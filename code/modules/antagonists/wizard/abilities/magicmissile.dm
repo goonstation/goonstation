@@ -3,7 +3,7 @@
 	desc = "Attacks nearby foes with stunning projectiles."
 	icon_state = "missile"
 	targeted = 0
-	cooldown = 200
+	cooldown = 25 SECONDS
 	requires_robes = 1
 	requires_being_on_turf = TRUE
 	offensive = 1
@@ -35,7 +35,7 @@
 			missile_targets += M
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("ICEE BEEYEM", FALSE, maptext_style, maptext_colors) // EHM-EYEARRVEE
+			holder.owner.say("ICEE BEEYEM", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors)) // EHM-EYEARRVEE
 		..()
 
 		var/num_shots = src.base_shots

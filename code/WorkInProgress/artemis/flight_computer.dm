@@ -60,7 +60,7 @@
 
 		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_mob(M)
 
-		M.override_movement_controller = ship.movement_controller
+		M.add_movement_controller(ship.movement_controller)
 
 		if(ship.show_tracking)
 			ship.apply_arrows(M)
@@ -111,7 +111,7 @@
 				occupant.attach_hud(hud)
 			src.stored_huds.len = 0
 
-		src.occupant.override_movement_controller = null
+		src.occupant.remove_movement_controller(src.ship.movement_controller)
 		src.occupant.changeStatus("knockdown",20)
 		src.occupant = null
 		src.active = 0
@@ -173,7 +173,7 @@
 			if(!(M in my_chair))
 				return
 
-			flick("radar_ping",my_hud.radar_ping)
+			FLICK("radar_ping",my_hud.radar_ping)
 
 			if(target.flags & HAS_ARTEMIS_SCAN)
 				actions.start(new/datum/action/bar/icon/artemis_scan(my_ship, target, my_chair), my_ship)
@@ -223,7 +223,7 @@
 		tick++
 		if(tick % 2 == 0)
 			if(helm.myhud)
-				flick("radar_ping",src.helm.myhud.radar_ping)
+				FLICK("radar_ping",src.helm.myhud.radar_ping)
 
 	onInterrupt(flag)
 		if(HAS_FLAG(flag, INTERRUPT_MOVE))

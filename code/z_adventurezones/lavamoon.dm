@@ -177,7 +177,7 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 1
 	force_fullbright = 0
 	luminosity = 0
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	area_parallax_render_source_group = null
 	radiation_level = 0.8
 	sound_loop = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
@@ -234,9 +234,9 @@ var/sound/iomoon_alarm_sound = null
 /obj/machinery/computer3/luggable/personal/iomoon
 	name = "Research Laptop"
 	desc = "A portable computer used for away team-style research."
-	setup_drive_type = /obj/item/disk/data/fixed_disk/iomoon
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd32/iomoon
 
-/obj/item/disk/data/fixed_disk/iomoon
+/obj/item/disk/data/fixed_disk/hd32/iomoon
 
 	New()
 		..()
@@ -338,7 +338,7 @@ var/sound/iomoon_alarm_sound = null
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"
-		newfolder.metadata["permission"] = COMP_HIDDEN
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/os/kernel(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/shell(src) )
@@ -363,7 +363,7 @@ var/sound/iomoon_alarm_sound = null
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "bin" //Applications available to all users.
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/cd(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/ls(src) )
@@ -381,12 +381,12 @@ var/sound/iomoon_alarm_sound = null
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "mnt"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "conf"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		var/datum/computer/file/record/testR = new
@@ -399,7 +399,7 @@ var/sound/iomoon_alarm_sound = null
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "etc"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		subfolder = new /datum/computer/folder
@@ -494,18 +494,6 @@ var/sound/iomoon_alarm_sound = null
 			"and safety procedures in place for the magma chamber area.")
 
 //Items
-/obj/item/paper/xg_tapes
-	name = "XIANG|GIESEL Onboarding Course"
-	desc = "A cover sheet meant to accompany a set of corporate training materials."
-	icon_state = "paper_burned"
-	sizex = 740
-	sizey = 1100
-
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/xg_tapes.png")]'></body></html>"
 
 /obj/item/radio_tape/adventure/xg
 	name = "XIANG|GIESEL Onboarding Tape 1"
@@ -715,7 +703,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return
 
 			b_pressed = TRUE
-			flick("boss_button_activate", src)
+			FLICK("boss_button_activate", src)
 			src.icon_state = "boss_button1"
 
 			playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
@@ -736,7 +724,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (!I.force || health <= 0)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			user.visible_message(SPAN_ALERT("<b>[user] bonks [src] with [I]!</b>"),SPAN_ALERT("<b>You hit [src] with [I]!</b>"))
 			if (iomoon_blowout_state == 0)
 				playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
@@ -845,7 +833,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (!I.force || src.status != IOCORE_ACTIVE)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
 			else
@@ -879,7 +867,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (src.status != IOCORE_ACTIVE)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (user.a_intent == "harm")
 				src.health -= rand(1,2) * 0.5
 				user.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]!"), SPAN_ALERT("You punch [src]![prob(25) ? " It's about as effective as you would expect!" : null]"))
@@ -1000,6 +988,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (src.status == IOCORE_DEAD)
 					return
 
+				if (istype(get_area(src), /area/iomoon/robot_ruins/boss_chamber))
+					for (var/mob/living/L in range(6, src))
+						if (!isintangible(L))
+							L.unlock_medal("What's Buried Stays Buried", TRUE)
+
 				STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 
 				src.status = IOCORE_DEAD
@@ -1054,10 +1047,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 				var/list/lineObjs
-				lineObjs = DrawLine(src, zapMarker, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+				lineObjs = drawLineObj(src, zapMarker, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for (var/mob/living/poorSoul in range(zapMarker, 2))
-					lineObjs += DrawLine(zapMarker, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+					lineObjs += drawLineObj(zapMarker, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 					poorSoul.shock(src, 1250000, "chest", 0.15, 1)
 					if (isdead(poorSoul) && prob(25))
@@ -1177,7 +1170,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			changing_state = 1
 			active = (opened != default_state)
 
-			flick("ancientdoor_open",src)
+			FLICK("ancientdoor_open",src)
 			src.icon_state = "ancientdoor_opened"
 			set_density(0)
 			set_opacity(0)
@@ -1198,7 +1191,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 			set_density(1)
 			set_opacity(1)
-			flick("ancientdoor_close",src)
+			FLICK("ancientdoor_close",src)
 			src.icon_state = "ancientwall2"
 			desc = initial(src.desc)
 			src.name = initial(src.name)
@@ -1368,7 +1361,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 			active = 1
 			playsound(src.loc, 'sound/effects/stoneshift.ogg', 25, 1)
-			flick("ancient_floorpanel_activate",src)
+			FLICK("ancient_floorpanel_activate",src)
 			src.icon_state = "ancient_floorpanel1"
 
 		if (id)
@@ -1416,7 +1409,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			active = 0
 
 			playsound(src.loc, 'sound/effects/stoneshift.ogg', 25, 1)
-			flick("ancient_floorpanel_deactivate",src)
+			FLICK("ancient_floorpanel_deactivate",src)
 			src.icon_state = "ancient_floorpanel0"
 
 		if (id)
@@ -1594,7 +1587,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			return 1
 
 		playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
-		flick("ancient_button_activate",src)
+		FLICK("ancient_button_activate",src)
 		src.icon_state = "ancient_button[++active]"
 
 		if (timer)
@@ -1634,7 +1627,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			return 1
 
 		playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
-		flick("ancient_button_deactivate", src)
+		FLICK("ancient_button_deactivate", src)
 		src.icon_state = "ancient_button[--active]"
 
 		if (id)

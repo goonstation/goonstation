@@ -12,13 +12,14 @@
 	icon_state = "emerg_inj-orange"
 	initial_volume = 10
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/empty = 0
 	var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white, big red
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/manipulated_injection = FALSE //! is this injector being tampered with and being unuseable for injecting people?
+	var/can_fill = FALSE //Can this injector be filled with new chemicals; unless it's created empty this should be false
 
 	New()
 		..()
@@ -34,12 +35,15 @@
 		src.UpdateIcon()
 
 	update_icon()
+		if (src.can_fill) //dont want it to show the expended version when spawned empty
+			src.icon_state = "emerg_inj-[src.label]"
+			return
 		if (src.reagents.total_volume)
 			src.icon_state = "emerg_inj-[src.label]"
 		else
 			src.icon_state = "emerg_inj-[src.label]0"
 			src.fluid_image = image(src.fluid_image, "emerg_inj-fluid-flick")
-			flick("emerg_inj-[src.label]-flick", src)
+			FLICK("emerg_inj-[src.label]-flick", src)
 		UpdateOverlays(src.fluid_image, "fluid")
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -55,9 +59,44 @@
 		if(!src.manipulated_injection && !src.empty)
 			. += " You can use a <b>knife</b> to sabotage the injector."
 
+	attackby(var/obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers))
+			try_fill(W, user)
+			return
+		..()
+
+	proc/try_fill(var/obj/item/W, mob/user)
+		if(!src.can_fill || src.empty)
+			boutput(user, SPAN_ALERT("[src] can't be refilled!"))
+			return
+
+		if(istype(W, /obj/item/reagent_containers/injector_filler))
+			if(W.reagents.total_volume > 0)
+				src.can_fill = FALSE
+				src.empty = FALSE
+				W.reagents.trans_to(src, src.initial_volume)
+				src.name_suffix("([src.reagents.get_master_reagent_name()])")
+				src.UpdateName()
+				logTheThing(LOG_CHEMISTRY, user, "fills [src] with [W] [log_reagents(src)]")
+				user.visible_message(SPAN_ALERT("[user] transfer chemicals from [W] to [src]."),\
+				SPAN_ALERT("You transfer chemicals from [W] to [src]. [src]'s filling port closes."))
+				playsound(W, 'sound/items/mender_refill_juice.ogg', 40, FALSE)
+				src.UpdateIcon()
+				src.desc = "A small syringe-like thing that automatically injects its contents into someone. This one is filled with a custom solution."
+			else
+				boutput(user, SPAN_ALERT("[W] is empty!"))
+				return
+
+		else
+			boutput(user, SPAN_ALERT("[src] has a proprietary filling port and may only be filled with a pharmacist's <b>auto-injector filler</b>."))
+			return
+
 	proc/try_injection(mob/user, mob/target)
 		if (src.empty || !src.reagents)
 			boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
+			return
+		if (src.can_fill)
+			boutput(user, SPAN_ALERT("There's nothing to inject, [src] needs to be filled with a pharmacist's <b>auto-injector filler</b>!"))
 			return
 		if (iscarbon(target) || ismobcritter(target) || target.reagents)
 			if (src.manipulated_injection)
@@ -98,6 +137,43 @@
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
 
+/obj/item/reagent_containers/emergency_injector/empty
+	name = "emergency auto-injector"
+	desc = "An empty auto-injector with a proprietary injection port. Can be refilled with a pharmacist's <b>auto-injector filler</b>."
+	can_fill = TRUE
+
+	orange
+		label = "orange"
+		icon_state = "emerg_inj-orange" //icon state needs to be set here or the manufacturer wont use the correct icon
+
+	red
+		label = "red"
+		icon_state = "emerg_inj-red"
+
+	blue
+		label = "blue"
+		icon_state = "emerg_inj-blue"
+
+	green
+		label = "green"
+		icon_state = "emerg_inj-green"
+
+	yellow
+		label = "yellow"
+		icon_state = "emerg_inj-yellow"
+
+	purple
+		label = "purple"
+		icon_state = "emerg_inj-purple"
+
+	black
+		label = "black"
+		icon_state = "emerg_inj-black"
+
+	white
+		label = "white"
+		icon_state = "emerg_inj-white"
+
 /obj/item/reagent_containers/emergency_injector/epinephrine
 	name = "emergency auto-injector (epinephrine)"
 	initial_reagents = "epinephrine"
@@ -130,7 +206,7 @@
 /obj/item/reagent_containers/emergency_injector/pentetic_acid
 	name = "emergency auto-injector (pentetic acid)"
 	initial_reagents = list("penteticacid"=5)
-	label = "blue"
+	label = "green"
 	desc = "An auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
 
 /obj/item/reagent_containers/emergency_injector/omnizine
@@ -156,6 +232,12 @@
 	initial_reagents = "salicylic_acid"
 	label = "purple"
 	desc = "An auto-injector containing salicyclic acid, used as a painkiller and for treating moderate injuries."
+
+/obj/item/reagent_containers/emergency_injector/acetylsalicylic_acid
+	name = "emergency auto-injector (acetylsalicylic acid)"
+	initial_reagents = "acetylsalicylic_acid"
+	label = "white"
+	desc = "An auto-injector containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
 
 /obj/item/reagent_containers/emergency_injector/spaceacillin
 	name = "emergency auto-injector (spaceacillin)"
@@ -254,7 +336,7 @@
 	label = "vr2"
 
 /* ======================================================================== */
-/* -------------------- Nuke Ops Medic - high-capacity -------------------- */
+/* ------- Nuke Ops Medic / NT emergency paramedic - high-capacity -------- */
 /* ======================================================================== */
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/
@@ -280,6 +362,12 @@
 	label = "purple"
 	desc = "A high-capacity auto-injector containing salicyclic acid, used as a painkiller and for treating moderate injuries."
 
+/obj/item/reagent_containers/emergency_injector/high_capacity/acetylsalicylic_acid
+	name = "high-capacity auto-injector (acetylsalicylic acid)"
+	initial_reagents = "acetylsalicylic_acid"
+	label = "white"
+	desc = "A high-capacity auto-injector containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
+
 /obj/item/reagent_containers/emergency_injector/high_capacity/saline
 	name = "high-capacity auto-injector (saline-glucose)"
 	initial_reagents = "saline"
@@ -295,7 +383,7 @@
 /obj/item/reagent_containers/emergency_injector/high_capacity/pentetic
 	name = "high-capacity auto-injector (pentetic acid)"
 	initial_reagents = "penteticacid"
-	label = "purple"
+	label = "green"
 	desc = "A high-capacity auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/charcoal
@@ -307,8 +395,14 @@
 /obj/item/reagent_containers/emergency_injector/high_capacity/mannitol
 	name = "high-capacity auto-injector (mannitol)"
 	initial_reagents = "mannitol"
-	label = "green"
+	label = "red"
 	desc = "A high-capacity auto-injector containing mannitol, a medicine used to treat severe concussions."
+
+/obj/item/reagent_containers/emergency_injector/high_capacity/filgrastim
+	name = "high-capacity auto-injector (filgrastim)"
+	desc = "high-capacity auto-injector containing filgrastim, a medicine used to treat severe blood loss."
+	initial_reagents = "filgrastim"
+	label = "purple"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/cardiac
 	name = "cardiac combi-injector"
@@ -345,3 +439,39 @@
 	label = "bigblue"
 	initial_volume = 90
 	amount_per_transfer_from_this = 15
+
+
+///// Speciality Injectors
+///// These shouldn't really be seen in a normal round
+
+/obj/item/reagent_containers/emergency_injector/bloodbak
+	name = "BLOOD-BAK auto-injector"
+	desc = "A two-use auto-injector containing filgrastim, proconvertin and saline-glucose to help regain lost blood and stop bleeding."
+	initial_reagents = list("filgrastim" = 10, "proconvertin" = 20, "saline" = 20)
+	label = "red"
+	initial_volume = 50
+	amount_per_transfer_from_this = 25
+
+/obj/item/reagent_containers/emergency_injector/qwikheal
+	name = "QWIK-HEAL auto-injector"
+	desc = "A two-use auto-injector containing omnizine, salbutamol, and epinephrine to quickly get back into the battle."
+	initial_reagents = list("omnizine" = 20, "salbutamol" = 20, "epinephrine" = 20)
+	label = "blue"
+	initial_volume = 60
+	amount_per_transfer_from_this = 30
+
+/obj/item/reagent_containers/emergency_injector/painstop
+	name = "PAIN-STOP auto-injector"
+	desc = "A two-use auto-injector containing salicylic acid, and synaptizine to help stop pain. WARNING: Two uses in short time span may cause overdose."
+	initial_reagents = list("salicylic_acid" = 30, "synaptizine" = 20)
+	label = "green"
+	initial_volume = 50
+	amount_per_transfer_from_this = 25
+
+/obj/item/reagent_containers/emergency_injector/bringbak
+	name = "BRING-BAK auto-injector"
+	desc = "A single-use auto-injector containing atropine, mannitol, saline, epinephrine, and salbutamol to stabilize a soldier in critical condition. WARNING: Causes disorentation."
+	initial_reagents = list("atropine" =10 , "mannitol" =10 , "saline" =10 , "epinephrine" =10 , "salbutamol" =10)
+	label = "white"
+	initial_volume = 50
+	amount_per_transfer_from_this = 50

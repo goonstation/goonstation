@@ -30,3 +30,8 @@
 #define SETUP_GENERIC_PRIVATE_ACTIONBAR(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state, end_message, interrupt_flags) \
 	actions.start(new /datum/action/bar/private/icon/callback(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state,\
 	end_message, interrupt_flags), owner)
+
+/// Create an action bar that includes range checks for things bigger than 32x32
+#define SETUP_GENERIC_ACTIONBAR_WIDE(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state, end_message, interrupt_flags) \
+	actions.start(new /datum/action/bar/icon/callback_wide(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state,\
+	end_message, interrupt_flags), owner)

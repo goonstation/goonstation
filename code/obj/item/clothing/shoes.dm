@@ -43,10 +43,13 @@
 					. += "The laces are cut."
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
+		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini/oxygen) || istype(W, /obj/item/tank/jetpack))
+			if ((src.equipped_in_slot == SLOT_SHOES) && (src.cant_self_remove || src.cant_other_remove))
+				return
+
 			var/uses = 0
 
-			if(istype(W, /obj/item/tank/mini_oxygen)) uses = 2
+			if(istype(W, /obj/item/tank/mini/oxygen)) uses = 2
 			else if(istype(W, /obj/item/tank/air)) uses = 4
 			else if(istype(W, /obj/item/tank/oxygen)) uses = 4
 			else if(istype(W, /obj/item/tank/jetpack)) uses = 6
@@ -55,13 +58,36 @@
 			var/obj/item/clothing/shoes/rocket/R = new/obj/item/clothing/shoes/rocket(T)
 			R.uses = uses
 			boutput(user, SPAN_NOTICE("You haphazardly kludge together some rocket shoes."))
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, R, user)
 			qdel(W)
 			qdel(src)
 
 		if (src.laces == LACES_TIED && istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 			boutput(user, "You neatly cut the knot and most of the laces away. Problem solved forever!")
 			src.laces = LACES_CUT
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
+
+	proc/magnetic_teleport_check(mob/living/carbon/human/H, turf/start, turf/end)
+		if (!istype(H) || !src.magnetic || !istype(src, /obj/item/clothing/shoes/magnetic))
+			return // only do this crew-available magboots, anatgonist-specific ones shouldn't be affected. this feels silly.
+		var/obj/item/clothing/shoes/magnetic/stay_behind = H.shoes
+		if (!istype(stay_behind))
+			return
+		boutput(H, SPAN_ALERT("<b>The magnetic attractor on [stay_behind] overloads, severing your legs!</b>"))
+		playsound(H, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg'), 30)
+		H.u_equip(stay_behind)
+		stay_behind.set_loc(H.loc)
+		stay_behind.dropped(H)
+		stay_behind.layer = initial(stay_behind.layer)
+		H.sever_limb("l_leg")
+		H.sever_limb("r_leg")
+		random_brute_damage(H, rand(15, 25))
+		take_bleeding_damage(H, null, 10, DAMAGE_CRUSH)
+		logTheThing(LOG_COMBAT, H, "had magboots on when warping, severing their legs, going from [log_loc(start)] to [log_loc(end)].")
+		if (istype(src, /obj/item/clothing/shoes/magnetic))
+			SPAWN(3 SECONDS) // womp womp
+				var/obj/item/clothing/shoes/magnetic/magboot = src
+				magboot.deactivate(H)
 
 /obj/item/clothing/shoes/rocket
 	name = "rocket shoes"
@@ -170,8 +196,11 @@
 	icon_state = "pink"
 
 TYPEINFO(/obj/item/clothing/shoes/magnetic)
-	mats = 8
-
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = list("metal" = 4,
+			"conductive" = 8,
+			"fabric" = 3,
+			)
 /obj/item/clothing/shoes/magnetic
 	name = "magnetic shoes"
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
@@ -184,23 +213,61 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	step_priority = STEP_PRIORITY_LOW
 	abilities = list(/obj/ability_button/magboot_toggle)
 
-	proc/activate()
+	proc/activate(mob/M)
+		if (GET_COOLDOWN(src, "emp_check"))
+			boutput(M, SPAN_ALERT("\The [src] are still kerfuzzled!"))
+			return FALSE
+		if (src.check_move(M, get_turf(M), null, TRUE))
+			boutput(M, SPAN_ALERT("There's nothing to anchor to!"))
+			playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+			return FALSE
 		src.magnetic = 1
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
 		step_lots = TRUE
-		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
-	proc/deactivate()
+		playsound(M.loc, 'sound/items/miningtool_on.ogg', 30, 1)
+		RegisterSignal(M, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_move))
+		return TRUE
+
+	proc/deactivate(mob/M)
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
 		step_lots = FALSE
-		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+		playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+		UnregisterSignal(M, COMSIG_MOVABLE_PRE_MOVE)
+
+	emp_act()
+		. = ..()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			if (!GET_COOLDOWN(src, "emp_check"))
+				boutput(H, SPAN_ALERT("\The [src] kerfuzzle out!"))
+			if (H.shoes == src && src.magnetic)
+				src.deactivate(H)
+		ON_COOLDOWN(src, "emp_check", 10 SECONDS)
+	unequipped(mob/user)
+		. = ..()
+		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
+
+	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
+		//is the turf we're on solid?
+		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid)))
+			return FALSE
+		for (var/dir in alldirs)
+			var/turf/check = get_step(T, dir)
+			if (check.grip_atom_count > 0)
+				if (!quiet && prob(30)) //occasionally play a clonk for the people inside to hear
+					playsound(T, src.step_sound, 50, 1, extrarange = global.footstep_extrarange)
+					mover.playsound_local(src, src.step_sound, 50, 1)
+				return FALSE
+		//if we've got here then there would be nothing stopping us drifting off, so block the move
+		return TRUE
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.
@@ -219,6 +286,7 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 		delProperty("chemprot")
 
 TYPEINFO(/obj/item/clothing/shoes/industrial)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 15,
 				"conductive_high" = 10,
 				"energy_high" = 10)
@@ -259,6 +327,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "galoshes"
 	desc = "Rubber boots that prevent slipping on wet surfaces."
 	icon_state = "galoshes"
+	default_material = "synthrubber_yellow"
 	c_flags = NOSLIP
 	step_sound = "step_rubberboot"
 	step_priority = STEP_PRIORITY_LOW
@@ -289,6 +358,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	step_priority = 999
 	var/list/crayons = list() // stonepillar's crayon project
 	var/max_crayons = 5
+	var/crayonwalk_chance = 10
 
 	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pen/crayon))
@@ -309,6 +379,22 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 						return
 			else
 				boutput(user, SPAN_ALERT("You aren't funny enough to do that. Wait, did the shoes just laugh at you?"))
+		else if(istype(W, /obj/item/spray_paint_graffiti) && !(istype(src, /obj/item/clothing/shoes/clown_shoes/military)))
+			if (user.traitHolder.hasTrait("training_security"))
+				var/obj/item/I = new /obj/item/clothing/shoes/clown_shoes/military()
+				if (src.equipped_in_slot)
+					var/mob/living/carbon/human/wearer = src.loc
+					var/slot = src.equipped_in_slot
+					wearer.u_equip(src)
+					wearer.equip_if_possible(I, slot)
+				else
+					I.set_loc(get_turf(src))
+				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
+				boutput(user, SPAN_NOTICE("You spraypaint the clown shoes in a sleek black!"))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, I, user)
+				qdel(src)
+			else
+				boutput(user, SPAN_ALERT("You don't feel like insulting the clown like this."))
 		else
 			return ..()
 
@@ -325,6 +411,12 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			return
 		return ..()
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.max_crayons == initial(src.max_crayons))
+			src.max_crayons = INFINITY
+			src.crayonwalk_chance = 50
+			boutput(user, SPAN_NOTICE("Somehow you open up a crayon pocket dimension in [src]"))
+
 	autumn
 		name = "autumn clown shoes"
 		desc = "Wouldn't want to leaf these behind."
@@ -337,6 +429,17 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		icon_state = "clown_winter"
 		item_state = "clown_winter"
 
+	military
+		name = "military shoes"
+		desc = ""
+		icon_state = "clown_military"
+		item_state = "clown_military"
+
+		get_desc(var/dist, var/mob/user)
+			if (user.mind?.assigned_role == "Head of Security")
+				. = "Extra long shoes to show the extra long reach of the law!"
+			else
+				. = "These are clearly just clown shoes covered in black spraypaint."
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
@@ -347,6 +450,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "flippers"
 	desc = "A pair of rubber flippers that improves swimming ability when worn."
 	icon_state = "flippers"
+	default_material = "synthrubber_blue"
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
@@ -358,6 +462,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
 TYPEINFO(/obj/item/clothing/shoes/moon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 2
 
 /obj/item/clothing/shoes/moon
@@ -381,15 +486,33 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	icon_state = "cowboy"
 	compatible_species = list("human", "cow")
 
+TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
-	icon_state = "cowboy"
-	color = "#FF0000"
+	icon_state = "boomboots"
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999
-	is_syndicate = 1
+
+	equipped(mob/user, slot)
+		. = ..()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_step))
+
+	unequipped(mob/user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		. = ..()
+
+	proc/on_step(mob/user, atom/previous_loc, dir)
+		var/turf/T = get_turf(user)
+		if (user.lying || !(T.turf_flags & MOB_STEP))
+			return
+		if (prob(10))
+			if (ON_COOLDOWN(src, "EXPLOSION", 1 SECOND))
+				return
+			var/turf/explosion_target = get_turf(pick(oview(9, user)))
+			new /obj/effects/explosion/dangerous(explosion_target)
 
 /obj/item/clothing/shoes/ziggy
 	name = "familiar boots"
@@ -438,6 +561,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "chef's clogs"
 	desc = "Sturdy shoes that minimize injury from falling objects or knives."
 	icon_state = "chef"
+	default_material = "wood"
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
@@ -453,7 +577,6 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	protective_temperature = 1250
 	step_sound = "step_military"
 	step_priority = STEP_PRIORITY_LOW
-	step_lots = 1
 	kick_bonus = 2
 
 	setupProperties()
@@ -478,12 +601,50 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_priority = STEP_PRIORITY_LOW
 	tooltip_flags = REBUILD_DIST | REBUILD_USER
 
+	attackby(obj/item/W, mob/living/user)
+		if(istype(W, /obj/item/pen/crayon) && !(istype(src, /obj/item/clothing/shoes/swat/heavy/clown)))
+			if (user.traitHolder.hasTrait("training_clown"))
+				var/obj/item/I = new /obj/item/clothing/shoes/swat/heavy/clown()
+				if (src.equipped_in_slot)
+					var/mob/living/carbon/human/wearer = src.loc
+					var/slot = src.equipped_in_slot
+					wearer.u_equip(src)
+					wearer.equip_if_possible(I, slot)
+				else
+					I.set_loc(get_turf(src))
+				boutput(user, SPAN_NOTICE("You cover the heavy boots in crayon!"))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, I, user)
+				qdel(src)
+			else
+				boutput(user, SPAN_ALERT("You don't feel brave enough to do this."))
+		else
+			return ..()
+
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Head of Security")
 			. = "Still fit like a glove! Or a shoe."
 		else
 			. = "Looks like some big shoes to fill!"
 		. = ..()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(src.step_sound != "clownstep")
+			src.step_lots = 1
+			src.step_sound = "clownstep"
+			src.step_priority = /obj/item/clothing/shoes/clown_shoes::step_priority
+			boutput(user, SPAN_NOTICE("You scramble the speakers installed in [src]"))
+
+/obj/item/clothing/shoes/swat/heavy/clown
+	name = "heavy clown boots"
+	desc = ""
+	icon_state = "swatclown"
+	item_state = "swatclown"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "Your treasured boots covered in crayon. Someone's in trouble."
+		else
+			. = "Only the funniest of boots for the funniest of clowns."
 
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
@@ -536,7 +697,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 
 	New()
 		..()
-		src.tank = new /obj/item/tank/mini_oxygen(src)
+		src.tank = new /obj/item/tank/mini/oxygen(src)
 
 	setupProperties()
 		..()
@@ -553,7 +714,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 			if (src.tank)
 				boutput(user, SPAN_ALERT("There's already a tank installed!"))
 				return
-			if (!istype(W, /obj/item/tank/mini_oxygen))
+			if (!istype(W, /obj/item/tank/mini/oxygen))
 				boutput(user, SPAN_ALERT("[W] doesn't fit!"))
 				return
 			boutput(user, SPAN_NOTICE("You install [W] into [src]."))
@@ -643,21 +804,21 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/crafted
 	name = "shoes"
 	desc = "A custom pair of shoes"
-	icon_state = "white"
+	icon_state = "custom"
 
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.hasProperty("thermal"))
-				protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
-				setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
-				setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+			if(src.material.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+				protective_temperature = (100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) ** 1.65
+				setProperty("coldprot", round((100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 0.1))
+				setProperty("heatprot", round((100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 0.1))
 			else
 				protective_temperature = 0
 				setProperty("coldprot", 0)
 				setProperty("heatprot", 0)
-			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
-				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 1500)
+			if(src.material.hasProperty(MATERIAL::PROPERTY::HARDNESS) && src.material.hasProperty(MATERIAL::PROPERTY::DENSITY))
+				kick_bonus = round((src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) * src.material.getProperty(MATERIAL::PROPERTY::DENSITY)) / 1500)
 			else
 				kick_bonus = 0
 		return
@@ -783,3 +944,26 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	setupProperties()
 		..()
 		setProperty("vault_speed", vault_speed_bonus)
+
+/obj/item/clothing/shoes/derby
+	name = "derby shoes"
+	desc = "Open-laced leather shoes with a slight heel and made with real artificial leather."
+	icon_state = "derby"
+
+/obj/item/clothing/shoes/stiletto_boots
+	name = "stiletto boots"
+	desc = "Not to be wielded like the daggers which their name comes from."
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	icon_state = "stiletto_boots"
+	step_sound = "footstep"
+	step_priority = STEP_PRIORITY_LOW
+
+	force = 3
+	throwforce = 7
+	throw_speed = 2
+	throw_range = 4
+	stamina_damage = 10
+	stamina_cost = 15
+	stamina_crit_chance = 30
+	hit_type = DAMAGE_STAB
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'

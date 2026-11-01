@@ -45,7 +45,6 @@
 <html>
 <head>
 	<title>[title]</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 [Make_view_variabls_style()]
 </head>
@@ -179,7 +178,10 @@
 			body += debug_variable(V, global.vars[V], D, 0, 10)
 	else
 		for (var/V in names)
-			body += debug_variable(V, D.vars[V], D, 0)
+			try
+				body += debug_variable(V, D.vars[V], D, 0)
+			catch(var/exception/e)
+				body += debug_variable_read_error(V, e)
 		//body += debug_variable_link(V, D, (istype(D.vars[V], /datum) && src.holder.level >= LEVEL_CODER) ? 1 : 0)
 
 	body += "</tbody></table>"
@@ -188,7 +190,6 @@
 <html>
 <head>
 	<title>[title]</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 [Make_view_variabls_style()]</head>
 <body>
@@ -221,15 +222,20 @@
 
 	if (A)
 		html += " &middot; <a href='byond://?src=\ref[src];JumpToThing=\ref[D]'>Jump To</a>"
+		html += " &middot; <a href='byond://?src=\ref[src.holder];action=accessspeechtree;target=\ref[D]'>Speech Tree</a>"
+		html += " &middot; <a href='byond://?src=\ref[src.holder];action=accesslistentree;target=\ref[D]'>Listen Tree</a>"
 		if (ismob(D) || isobj(D))
 			html += " &middot; <a href='byond://?src=\ref[src];GetThing=\ref[D]'>Get (turf)</a> &middot; <a href='byond://?src=\ref[src];GetThing_Insert=\ref[D]'>Get (loc)</a>"
 			if (ismob(D))
 				html += " &middot; <a href='byond://?src=\ref[src];PlayerOptions=\ref[D]'>Player Options</a>"
 	if (istype(D, /datum))
+		html += " &middot; <a href='byond://?src=\ref[src];AddElement=\ref[D]'>Add Element</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];RemoveElement=\ref[D]'>Remove Element</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];RemoveComponent=\ref[D]'>Remove Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
-	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
+	if (isclient(D))
+		html += " &middot; <a href='byond://?src=\ref[src];CrashClient=\ref[D]'>Crash Client</a>"
 	if (A || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];DebugOverlays=\ref[D]'>Debug Overlays</a>"
@@ -238,7 +244,6 @@
 		html += "<br><a href='byond://?src=\ref[src];CheckReactions=\ref[D]'>Check Possible Reactions</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];ReplaceExplosive=\ref[D]'>Replace with Explosive</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];Possess=\ref[D]'>Possess</a>"
-		html += " &middot; <a href='byond://?src=\ref[src];AddPathogen=\ref[D]'>Add Random Pathogens Reagent</a>"
 
 
 		if (isitem(D))
@@ -252,8 +257,6 @@
 	if (istype(D,/obj/critter))
 		html += "<br> &middot; <a href='byond://?src=\ref[src];KillCritter=\ref[D]'>Kill Critter</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];ReviveCritter=\ref[D]'>Revive Critter</a>"
-
-
 
 	html += {"
 		<br>Direction: <a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=L90'>&lt; 90&deg;</a> &middot;
@@ -291,6 +294,15 @@
 			<a href='byond://?src=\ref[src];Vars=\ref[D];varToEdit=[V]'>Edit</a> &middot;
 		</div>
 		"}
+
+/client/proc/debug_variable_read_error(name, var/exception/e)
+	return {"
+	<tr>
+		<td></td>
+		<th>\[[name]\]</th>
+		<td><em class='value'>Error: [html_encode(e?.name || "unknown error")]</em></td>
+	</tr>
+	"}
 	//Really, move this out to a .css file or something, too lazy and don't know how offhand
 /proc/Make_view_variabls_style()
 	return {"	<style>
@@ -425,7 +437,7 @@
 
 			html += "<table><thead><tr><th>Idx</th><th>Value</th></tr></thead><tbody>"
 			var/assoc = 0
-			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs")
+			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs" && name != "filters")
 				try
 					assoc = !isnum(L[1]) && !isnull(L[L[1]])
 				catch
@@ -461,6 +473,8 @@
 	return html
 
 /client/Topic(href, href_list, hsrc)
+	if (!usr || isnull(usr.client) || usr.client != src)
+		return
 	if (href_list["Pause"])
 		USR_ADMIN_ONLY
 		src.refresh_varedit_onchange = !src.refresh_varedit_onchange
@@ -558,6 +572,20 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to DM dump something all rude-like.")
 		return
+	if (href_list["AddElement"])
+		USR_ADMIN_ONLY
+		if (src.holder && (src.holder.level >= LEVEL_PA))
+			src.debugAddElement(locate(href_list["AddElement"]))
+		else
+			src.audit(AUDIT_ACCESS_DENIED, "tried to add a element to something all rude-like.")
+		return
+	if (href_list["RemoveElement"])
+		USR_ADMIN_ONLY
+		if (src.holder && (src.holder.level >= LEVEL_PA))
+			src.debugRemoveElement(locate(href_list["RemoveElement"]))
+		else
+			src.audit(AUDIT_ACCESS_DENIED, "tried to remove a element from something all rude-like.")
+		return
 	if (href_list["AddComponent"])
 		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -607,15 +635,6 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
 		return
-	if (href_list["HardDelete"])
-		USR_ADMIN_ONLY
-		if(holder && src.holder.level >= LEVEL_PA)
-			var/datum/D = locate(href_list["HardDelete"])
-			if(alert(src, "Are you sure you want to delete [D] of type [D.type]?",,"Yes","No") == "Yes")
-				del(D)
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
-		return
 	if (href_list["Display"])
 		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -643,14 +662,6 @@
 				O.AddComponent(/datum/component/explode_on_touch, explosion_size, gib, delete_object, limbs_to_remove, turf_safe_explosion)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
-		return
-	if (href_list["AddPathogen"])
-		USR_ADMIN_ONLY
-		if(holder && src.holder.level >= LEVEL_PA)
-			var/obj/O = locate(href_list["AddPathogen"])
-			O.addpathogens()
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to add random pathogens all rude-like.")
 		return
 	if (href_list["KillCritter"])
 		USR_ADMIN_ONLY
@@ -716,6 +727,15 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to Possess all rude-like.")
 		return
+	if (href_list["CrashClient"])
+		USR_ADMIN_ONLY
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/client/C = locate(href_list["CrashClient"])
+			if (alert(usr, "Are you sure you want to hard crash [C.key]'s client?", "YOU ARE ABOUT TO BE VERY RUDE", "Yes", "No") == "Yes")
+				del(C)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to VV crash a client all rude-like.")
+		return
 	if (href_list["Vars"])
 		USR_ADMIN_ONLY
 		if (href_list["varToEdit"])
@@ -735,11 +755,21 @@
 	else
 		..()
 
+/// a list of things that no one has any business varediting ever
+#define VAREDIT_ABSOLUTELY_NOT_CHECK(D, var, value) (\
+	var == "holder" ||\
+	(var == "key" || var == "ckey") && istype(D, /client) ||\
+	istype(value, /datum/admins) ||\
+	istype(D, /datum/admins) ||\
+	value == logs ||\
+	value == logs["audit"]\
+)
+
 /client/proc/set_all(datum/D, variable, val)
 	if(!variable || !D || !(variable in D.vars))
 		return
 	#ifndef I_AM_HACKERMAN
-	if(variable == "holder")
+	if (VAREDIT_ABSOLUTELY_NOT_CHECK(D, variable, val))
 		boutput(src, "Access denied.")
 		return
 	#endif
@@ -776,7 +806,7 @@
 
 	var/var_value = D == "GLOB" ? global.vars[variable] : D.vars[variable]
 	#ifndef I_AM_HACKERMAN
-	if( istype(var_value, /datum/admins) || istype(D, /datum/admins) || var_value == logs || var_value == logs["audit"] )
+	if(VAREDIT_ABSOLUTELY_NOT_CHECK(D, variable, null))
 		src.audit(AUDIT_ACCESS_DENIED, "tried to assign a value to a forbidden variable.")
 		boutput(src, "You can't set that value.")
 		return
@@ -789,7 +819,7 @@
 	//Let's prevent people from promoting themselves, yes?
 	#ifndef I_AM_HACKERMAN
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
-	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
+	if(D != "GLOB" && istype(D, /datum) && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
 		boutput(usr, SPAN_ALERT("You're not allowed to edit [D.type] for security reasons!"))
 		logTheThing(LOG_ADMIN, usr, "tried to varedit [D.type] but was denied!")
 		logTheThing(LOG_DIARY, usr, "tried to varedit [D.type] but was denied!", "admin")
@@ -885,11 +915,13 @@
 
 	logTheThing(LOG_ADMIN, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing(LOG_DIARY, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
-	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), 1)
+	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	if(!set_global && istype(D, /datum))
 		D.onVarChanged(variable, var_value, D.vars[variable])
 	if(src.refresh_varedit_onchange)
 		src.debug_variables(D)
+
+#undef VAREDIT_ABSOLUTELY_NOT_CHECK
 
 /mob/proc/Delete(atom/A in view())
 	set category = "Debug"

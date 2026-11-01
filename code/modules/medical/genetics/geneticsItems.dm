@@ -54,7 +54,7 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 
 	dna_injector
 		name = "dna injector"
-		desc = "A syringe designed to safely insert or remove genetic structures to and from a living organism."
+		desc = "A syringe designed to safely insert genetic structures into a living organism."
 		var/datum/bioEffect/BE = null
 
 		injected(var/mob/living/carbon/user,var/mob/living/carbon/target)
@@ -62,7 +62,7 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 				return
 
 			var/datum/bioEffect/NEW = new BE.type()
-			copy_datum_vars(BE, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
+			copy_datum_vars(BE, NEW)
 			target.bioHolder.AddEffectInstance(NEW,1)
 			src.uses--
 			src.update_appearance()
@@ -152,10 +152,12 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 /obj/item/speed_injector
 	name = "screwdriver"
 	desc = "A hollow tool used to turn slotted screws and other slotted objects."
+	SYNDICATE_STEALTH_DESCRIPTION("There's a hole in the back that is the perfect size to hold DNA injectors.")
+	tooltip_flags = REBUILD_USER
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	hide_attack = ATTACK_FULLY_HIDDEN
@@ -254,6 +256,8 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 			src.bioHolder.CopyOther(target.bioHolder)
 			stored_name = target.real_name
 			randomize_look(target)
+			target.bioHolder.Uid = target.bioHolder.CreateUid() // forensics stuff, new blood dna and fingerprints
+			target.bioHolder.build_fingerprints()
 			UpdateIcon()
 
 	proc/paste_identity(var/mob/living/carbon/user,var/mob/living/carbon/target)

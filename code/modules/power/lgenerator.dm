@@ -10,8 +10,6 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 	icon_state = "ggen0"
 	anchored = UNANCHORED
 	density = 1
-	//layer = FLOOR_EQUIP_LAYER1 //why was this set to this
-	flags = FPRINT
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	requires_power = FALSE
 	var/chargeAPC = TRUE // TRUE = charge APC, FALSE = charge inserted power cell.

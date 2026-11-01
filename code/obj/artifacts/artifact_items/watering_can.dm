@@ -8,7 +8,7 @@
 	can_recycle = FALSE
 
 	New(var/loc, var/forceartiorigin)
-		..()
+		..(loc, null) // do not pass our artifact origin as a reagent type
 		var/datum/artifact/watercan/AS = new /datum/artifact/watercan(src)
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
@@ -81,7 +81,7 @@
 			reagents.add_reagent("werewolf_serum", 2) // awoo
 			usedCapacity += 2
 		if (prob(2))
-			reagents.add_reagent("liquid plasma", 15)
+			reagents.add_reagent("activated plasma", 15)
 			usedCapacity += 15
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)

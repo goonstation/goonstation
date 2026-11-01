@@ -78,7 +78,7 @@
 				animation.icon_state = "blank"
 				animation.icon = 'icons/mob/mob.dmi'
 				animation.master = user
-				flick("blspell", animation)
+				FLICK("blspell", animation)
 				sleep(0.5 SECONDS)
 				qdel(animation)
 
@@ -138,8 +138,8 @@
 		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 
 		// Some after attack stuff.
-		user.lastattacked = M
-		M.lastattacker = user
+		user.lastattacked = get_weakref(M)
+		M.lastattacker = get_weakref(user)
 		M.lastattackertime = world.time
 
 

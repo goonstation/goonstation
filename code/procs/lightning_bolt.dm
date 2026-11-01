@@ -24,11 +24,11 @@
 	for(var/obj/machinery/bot/b in range(1,center))
 		b.explode()
 
-/proc/residual_spark(atom/center, var/caster, var/duration = "9 SECONDS") //lingering shocky parts after lightning bolts
+/proc/residual_spark(atom/center, var/caster, var/duration = 9 SECONDS) //lingering shocky parts after lightning bolts
 	for(var/turf/T in range(1,center))
 		for (var/obj/residual_electricity/E in T.contents)
 			qdel(E) //no stacked shocky tiles
-		var/obj/residual_electricity/electricity = new /obj/residual_electricity(T)
+		var/obj/residual_electricity/electricity = new /obj/residual_electricity(T, duration)
 		electricity.caster = caster
 
 /obj/residual_electricity
@@ -39,11 +39,10 @@
 	opacity = 0
 	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
-	var/duration = 9 SECONDS
 	var/caster
 
-	New()
-		flick("residual_electricity_start", src)
+	New(loc, duration = 9 SECONDS)
+		FLICK("residual_electricity_start", src)
 		SPAWN(duration)
 			qdel(src)
 		..()
@@ -71,7 +70,7 @@
 
 	New()
 		..()
-		flick(pick("lightning_1", "lightning_2"), src)
+		FLICK(pick("lightning_1", "lightning_2"), src)
 		SPAWN(0.7 SECONDS)
 			qdel(src)
 

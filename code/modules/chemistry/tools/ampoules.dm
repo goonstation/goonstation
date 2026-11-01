@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "ampoule-0"
 	initial_volume = 5
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/expended = FALSE //Whether or not the ampoule has been used.
 	var/image/fluid_image
@@ -28,6 +28,7 @@
 		user.inhale_ampoule(src, user)
 	else
 		user.visible_message(SPAN_ALERT("[user] attempts to force [target] to inhale [src]!"))
+		logTheThing(LOG_COMBAT, user, "attempts to force [constructTarget(target,LOG_COMBAT)] to inhale an ampoule [log_reagents(src)] at [log_loc(user)].")
 		SETUP_GENERIC_ACTIONBAR(user, target, 3 SECONDS, /mob/proc/inhale_ampoule, list(src, user), src.icon, src.icon_state, null, \
 			list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
 

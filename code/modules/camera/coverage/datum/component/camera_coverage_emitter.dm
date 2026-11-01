@@ -10,6 +10,8 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 	var/active
 	var/turf/turf
 	var/list/turf/coverage
+	/// List of mobs currently using this camera to see in some way, used to update camera lights etc
+	var/list/viewers
 
 /datum/component/camera_coverage_emitter/New(list/raw_args)
 	. = ..()
@@ -19,7 +21,8 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 	if (length(src.coverage))
 		// Remove ourselves from the turfs and update their aiImage directly, we dont need to do any fancy checks here.
 		for (var/turf/T as anything in src.coverage)
-			T.camera_coverage_emitters -= src
+			if(islist(T.camera_coverage_emitters))
+				T.camera_coverage_emitters -= src
 	camera_coverage_controller.update_turfs(src.coverage)
 	src.coverage = null
 
@@ -57,3 +60,13 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 	src.active = active
 
 	camera_coverage_controller.update_emitter(src)
+
+/datum/component/camera_coverage_emitter/proc/register_user(mob/user)
+	LAZYLISTADD(src.viewers, user)
+	if (length(src.viewers) == 1)
+		SEND_SIGNAL(src.parent, COMSIG_CAMERA_ACTIVE)
+
+/datum/component/camera_coverage_emitter/proc/unregister_user(mob/user)
+	LAZYLISTREMOVE(src.viewers, user)
+	if (length(src.viewers) == 0)
+		SEND_SIGNAL(src.parent, COMSIG_CAMERA_DEACTIVE)

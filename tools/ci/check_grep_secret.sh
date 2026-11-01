@@ -43,6 +43,11 @@ if grep -P 'plane\s*=\s*[0-9]+|plane\s*=\s*[A-Z_]+\s*[+\-*]\s*' */**/*.dm;	then
     st=1
 fi;
 
+if grep -P '^(?!.*UNLINT).*\.opacity\s*=(?!=)' code/**/*.dm _std/**/*.dm;	then
+    echo "ERROR: don't assign .opacity directly, call set_opacity(), or set_opacity_no_lighting() when rewriting a region."
+    st=1
+fi;
+
 if grep -P 'rand\([^)]*[0-9]\.' */**/*.dm;	then
     echo "ERROR: rand() does not support floating point numbers, use randfloat() instead."
     st=1
@@ -52,6 +57,11 @@ fi;
 if grep -P '^ABSTRACT_TYPE\([^/]' */**/*.dm;	then
     echo "ERROR: You need to include the slash before the area type name in ABSTRACT_TYPE."
     st=1
+fi;
+
+if grep -P "(?<!UNLINT\().*name = .*\"\[.*\]'s" */**/*.dm;   then
+	echo "ERROR: Using an apostrophe in a name like [mob]'s brain may cause Byond to get confused between the two objects in click verbs etc. Please use ’ (U+2019) instead."
+	st=1
 fi;
 
 exit $st

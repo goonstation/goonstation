@@ -16,10 +16,24 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	endurance = 40
 	cropsize = 3
 	force_seed_on_harvest = 1
-	vending = 2
+	vending = 1
 	genome = 31
 	assoc_reagents = list("space_fungus")
 	mutations = list(/datum/plantmutation/fungus/amanita,/datum/plantmutation/fungus/psilocybin,/datum/plantmutation/fungus/cloak)
+
+/datum/plant/weed/sundew
+	name = "Sundew"
+	seedcolor = "#B9034C"
+	crop = /obj/item/reagent_containers/food/snacks/plant/sundew
+	growtime = 100
+	harvtime = 100
+	harvests = 3
+	cropsize = 1
+	nectarlevel = 5
+	endurance = 5
+	genome = 6
+	assoc_reagents = list("simplesyrup")
+	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/reagent_adder/craftglue)
 
 /datum/plant/weed/lasher
 	name = "Lasher"
@@ -61,7 +75,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 
 		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> violently retaliates against [user.name]!"))
 		random_brute_damage(user, 10, 1)//see above
-		if (W && prob(50))
+		if (W && !W.cant_drop && prob(50))
 			boutput(user, SPAN_ALERT("The lasher grabs and smashes your [W]!"))
 			W.dropped(user)
 			qdel(W)
@@ -74,7 +88,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			boutput(user, SPAN_ALERT("The lasher flails at you violently! You might need to weaken it first..."))
 			return 1
 		else
-			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
+			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher, TRUE) //You will always get Enzymatic. ALWAYS.
 			return 0
 
 
@@ -119,7 +133,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 				if (160 to INFINITY)
 					radstrength = 50
 					radrange = 3
-			for (var/mob/living/carbon/M in view(radrange,POT))
+			for (var/mob/living/M in view(radrange,POT))
 				if(!ON_COOLDOWN(M, "radweed_pulse", 2 SECONDS))
 					M.take_radiation_dose(radstrength/30 SIEVERTS)
 			for (var/obj/machinery/plantpot/C in range(radrange,POT))

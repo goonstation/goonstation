@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	name = "Tree"
 	seedcolor = "#9C5E13"
 	dont_rename_crop = TRUE
-	crop = /obj/item/material_piece/organic/wood
+	crop = /obj/item/material_piece/organic/wood/thin
 	starthealth = 40
 	growtime = 200
 	harvtime = 260

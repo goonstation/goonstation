@@ -92,7 +92,7 @@
 	desc = "Converts matter into energy and back. Needs to be used while standing on a cable."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "voltron"
-	item_state = "electronic"
+	item_state = "analyzer"
 	var/active = 0
 	var/mob/target = null
 	var/obj/dummy/voltron/D = null
@@ -108,7 +108,7 @@
 			check()//ohly fucke pls rewrite me
 		cableimgs = new/list((vision_radius*2+1)**2)
 		var/obj/cable/ctype = /obj/cable
-		var/cicon = initial(ctype.icon)
+		var/cicon = get_initial_icon(ctype)
 		for(var/i = 1, i <= cableimgs.len, i++)
 			var/image/cimg = image(cicon)
 			cimg.layer = 100

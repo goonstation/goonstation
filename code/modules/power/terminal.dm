@@ -19,6 +19,11 @@
 	var/turf/T = new_loc
 	if(istype(T) && level==UNDERFLOOR) hide(T.intact)
 
+/// Sets `master`, use this instead of assigning it directly
+/obj/machinery/power/terminal/proc/set_master(obj/machinery/new_master, net_id)
+	src.master = new_master
+	src.update_wired_route(new_master, net_id)
+
 /obj/machinery/power/terminal/disposing()
 	if (src.powernet && src.powernet.data_nodes)
 		src.powernet.data_nodes -= src
@@ -26,7 +31,12 @@
 		if (istype(src.master,/obj/machinery/power/apc))
 			var/obj/machinery/power/apc/APC = src.master
 			if (APC.terminal == src)
+				APC.terminal_repair_status = TERMINAL_REPAIR_STEP_WIRING
 				APC.terminal = null
+		if (istype(src.master, /obj/machinery/power/smes))
+			var/obj/machinery/power/smes/SMES = src.master
+			if (SMES.terminal == src)
+				SMES.terminal = null
 	..()
 
 /obj/machinery/power/terminal/hide(var/i)
@@ -61,10 +71,7 @@
 			signal.transmission_method = TRANSMISSION_WIRE
 			signal.channels_passed += "PN[src.netnum];"
 
-			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
-				if(device != src)
-					device.receive_signal(signal, TRANSMISSION_WIRE)
-				LAGCHECK(LAG_MED)
+			src.send_data_signal(signal)
 
 			//qdel(signal)
 			return
@@ -108,6 +115,11 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 		master = null
 		..()
 
+	/// Sets `master`, use this instead of assigning it directly
+	proc/set_master(atom/movable/new_master, net_id)
+		src.master = new_master
+		src.update_wired_route(new_master, net_id)
+
 	receive_signal(datum/signal/signal)
 		if(!signal)
 			return
@@ -127,16 +139,18 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 			if(!src.powernet || !signal)
 				return
 
+			var/sender = signal.data["sender"]
+			//block any packet asking every device to send a ping back, trivial amplification attack that can seriously lag the server
+			if (sender == "ping")
+				return
+
 			if(source != src.master || !DATA_TERMINAL_IS_VALID_MASTER(src, src.master))
 				return
 
 			signal.transmission_method = TRANSMISSION_WIRE
 			signal.channels_passed += "PN[src.netnum];"
 
-			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
-				if(device != src)
-					device.receive_signal(signal, TRANSMISSION_WIRE)
-				LAGCHECK(LAG_MED)
+			src.send_data_signal(signal)
 
 			if(signal)
 				qdel(signal)
@@ -146,7 +160,7 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 		alpha = invisibility ? 128 : 255
 
 TYPEINFO(/obj/machinery/power/data_terminal/cable_tray)
-	mats = 0 // uh no thanks
+	analyser_flags = ANALYSER_BLACKLIST // uh no thanks
 
 /obj/machinery/power/data_terminal/cable_tray
 	name = "cable tray"

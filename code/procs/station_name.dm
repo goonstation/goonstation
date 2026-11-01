@@ -49,7 +49,7 @@ var/global/lastStationNameChange = 0 //timestamp
 	return station_or_ship
 
 
-/proc/generate_random_station_name()
+/proc/generate_random_station_name(var/always_random_name = FALSE)
 	var/name = ""
 
 	//halloween prefixes, temporary thing
@@ -58,7 +58,7 @@ var/global/lastStationNameChange = 0 //timestamp
 	name += " "
 #endif
 
-	if (map_settings && istext(map_settings.display_name))
+	if (map_settings && istext(map_settings.display_name) && !always_random_name)
 		name += map_settings.display_name
 
 	else
@@ -141,7 +141,7 @@ var/global/lastStationNameChange = 0 //timestamp
 		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words, /proc/cmp_text_asc))
 
 		for (var/word in words)
-			station_name_whitelist[ckey(word)] = word
+			station_name_whitelist[lowertext(word)] = word
 
 
 //Verifies the given name matches a whitelist of words, only run on a manual setting of station name
@@ -211,7 +211,11 @@ var/global/lastStationNameChange = 0 //timestamp
 
 	else
 		if(isnull(name))
+			#ifdef NO_SHUTTLE_CALLS
+			name = "Goonstation Development SS13"
+			#else
 			name = generate_random_station_name()
+			#endif
 			#if defined(REVERSED_MAP)
 			name = reverse_text(name)
 			#endif

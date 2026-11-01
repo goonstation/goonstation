@@ -2,8 +2,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 	mats = 20
 
 /obj/machinery/power/furnace
-	name = "Zaojun-2 5kW Furnace"
-	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
+	name = "Zaojun-2 20kW Furnace"
+	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 20 kilowatt thermocouple. \
+	A simple power solution for low-demand facilities and outposts."
 	icon_state = "furnace"
 	anchored = ANCHORED
 	density = 1
@@ -132,7 +133,8 @@ TYPEINFO(/obj/machinery/power/furnace)
 				if (crate.spawn_contents && crate.make_my_stuff()) //Ensure contents have been spawned properly
 					crate.spawn_contents = null
 
-				user.visible_message(SPAN_NOTICE("[user] uses the [src]'s automatic ore loader on [crate]!"), SPAN_NOTICE("You use the [src]'s automatic ore loader on [crate]."))
+				user.visible_message(SPAN_NOTICE("[user] uses the [src]'s automatic ore loader on [crate]!"), \
+				SPAN_NOTICE("You use the [src]'s automatic ore loader on [crate]."))
 				for (var/obj/item/I in crate.contents)
 					load_into_furnace(I, 1, user)
 					if (src.fuel >= src.maxfuel)
@@ -206,6 +208,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 			return
 		actions.start(new /datum/action/bar/icon/stuff_mob_into_furnace(user, src, victim), user)
 
+	on_material_scan()
+		return "Filled more quickly by materials with high flammability"
+
 	// this is run after it's checked a person isn't being loaded in with a grab
 	// return value 0 means it can't be put it, 1 is loaded in
 	// original is 1 only if it's the item a person directly puts in, so that putting in a
@@ -215,10 +220,10 @@ TYPEINFO(/obj/machinery/power/furnace)
 		var/started_full = fuel == maxfuel
 		var/fuel_name = initial(W.name)
 		if (W.material)
-			if (W.material.getProperty("flammable") <= 1)
+			if (W.material.getProperty(MATERIAL::PROPERTY::FLAMMABLE) <= 1)
 				return 0
 			else
-				var/fuel_amount = (10 * (2 ** (W.material.getProperty("flammable") - 2)))
+				var/fuel_amount = (10 * (2 ** (W.material.getProperty(MATERIAL::PROPERTY::FLAMMABLE) - 2)))
 				if (W.amount == 1)
 					fuel += fuel_amount
 				else
@@ -316,6 +321,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 		src.user.visible_message(SPAN_ALERT("[src.user] starts to shove [src.victim] into the furnace!"))
 		logTheThing(LOG_COMBAT, src.user, "attempted to force [constructTarget(src.victim,"combat")] into a furnace at [log_loc(src.furnace)].")
 		message_admins("[key_name(src.user)] is trying to force [key_name(src.victim)] into a furnace at [log_loc(src.furnace)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src.victim)] is being shoved in a furnace at [GHOST.MESSAGE.format_loc(src.furnace)]!")
 
 	onUpdate()
 		..()

@@ -111,10 +111,12 @@ TYPEINFO(/datum/component/mimic_item)
 	ai_type = /datum/aiHolder/spider_peaceful
 	is_npc = FALSE
 	flags = TABLEPASS
+	use_stunned_icon = FALSE
 	add_abilities = list(/datum/targetable/critter/bite,
 			/datum/targetable/gimmick/grow_legs_mimic,
 			/datum/targetable/critter/fadeout,
 			/datum/targetable/gimmick/reveal)
+	has_genes = FALSE
 	var/critter_scream_sound = 'sound/voice/screams/fescream4.ogg'
 	var/critter_scream_pitch = -2.5
 	var/critter_fart_sound = 'sound/voice/farts/fart2.ogg'
@@ -130,7 +132,7 @@ TYPEINFO(/datum/component/mimic_item)
 
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"

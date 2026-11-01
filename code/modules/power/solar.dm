@@ -42,6 +42,8 @@ TYPEINFO(/obj/machinery/power/tracker)
 		id = "small_backup3"
 	small_backup4
 		id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		id = "diner"
 	silverglass
@@ -80,6 +82,12 @@ TYPEINFO(/obj/machinery/power/tracker)
 	power_change()
 		return
 
+	disposing() // it would probably be best if we unlink all our panels
+		if(control)
+			control.tracker = null
+			control = null
+		..()
+
 
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
@@ -95,6 +103,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	density = 1
 	directwired = 1
 	processing_tier = PROCESSING_EIGHTH
+	provides_grip = TRUE
 	var/health = 10
 	var/id = 1 // nolonger used, kept for map compatibility
 	var/obscured = 0
@@ -123,6 +132,8 @@ TYPEINFO(/obj/machinery/power/solar)
 		id = "small_backup3"
 	small_backup4
 		id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		id = "diner"
 	silverglass
@@ -187,9 +198,6 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/p_angle = (360 + adir - sun.angle) % 360
 	sunfrac = max(cos(p_angle), 0) ** 2
 
-// Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 454.54 WATTS every second
-// Adjust accordingly based on machine proc rate
-#define SOLARGENRATE (454.54 * MACHINE_PROCS_PER_SEC)
 
 /obj/machinery/power/solar/process()
 	..()
@@ -197,7 +205,7 @@ TYPEINFO(/obj/machinery/power/solar)
 		return
 
 	if(!obscured)
-		var/sgen = SOLARGENRATE * sunfrac
+		var/sgen = global.solar_gen_rate * sunfrac
 		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control && powernet == control.get_direct_powernet())
@@ -260,10 +268,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/cdir = 0
 	var/gen = 0
 	var/lastgen = 0
-	var/track = 2			// 0= off  1=timed  2=auto (tracker)
-	var/trackrate = 600		// 300-900 seconds
-	var/trackdir = 1		// 0 =CCW, 1=CW
-	var/nexttime = 0
+	var/active = TRUE
 	var/obj/machinery/power/tracker/tracker
 
 	north
@@ -284,6 +289,8 @@ TYPEINFO(/obj/machinery/power/solar)
 		solar_id = "small_backup3"
 	small_backup4
 		solar_id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		solar_id = "diner"
 	silverglass
@@ -301,7 +308,7 @@ TYPEINFO(/obj/machinery/power/solar)
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
 		if (!test_link) test_link = new /obj/machinery/power/data_terminal(T)
 		if(!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-			test_link.master = src
+			test_link.set_master(src)
 		set_panels(cdir) // this finds all the solars
 
 /obj/machinery/computer/solar_control/disposing() // it would probably be best if we unlink all our panels
@@ -312,6 +319,7 @@ TYPEINFO(/obj/machinery/power/solar)
 				Solar.control = null
 		if (tracker) // we track the solar tracker now
 			tracker.control = null
+			tracker = null
 	..()
 
 /obj/machinery/computer/solar_control/process()
@@ -319,28 +327,15 @@ TYPEINFO(/obj/machinery/power/solar)
 
 	lastgen = gen
 	gen = 0
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
-
-	if(status & (NOPOWER | BROKEN))
-		return
-
-	if(track==1 && nexttime < world.timeofday && trackrate)
-		nexttime = world.timeofday + 3600/abs(trackrate)
-		cdir = (cdir+trackrate/abs(trackrate)+360)%360
-
-		set_panels(cdir)
-
-	src.updateDialog()
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(lastgen), 50)]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
 
 
 // called by solar tracker when sun position changes
 /obj/machinery/computer/solar_control/proc/tracker_update(var/angle)
-	if(track != 2 || status & (NOPOWER | BROKEN))
+	if(!active || status & (NOPOWER | BROKEN))
 		return
-	cdir = angle
+	cdir = emagged ? (angle + 180) % 360 : angle
 	set_panels(cdir)
-
-	src.updateDialog()
 
 /obj/machinery/computer/solar_control/attack_hand(mob/user)
 	if(..())
@@ -348,68 +343,48 @@ TYPEINFO(/obj/machinery/power/solar)
 
 	if ( (BOUNDS_DIST(src, user) > 0 ))
 		if (!isAI(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=solcon")
 			return
 
-	add_fingerprint(user)
-	src.add_dialog(user)
-
-	var/t = "<TT><B>XIANG|GIESEL Photo-Electric Generator Control</B><HR><PRE>"
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
-	t += "<B>Orientation</B>: [rate_control(src,"cdir","[cdir]&deg",1,15)] ([angle2text(cdir)])<BR><BR><BR>"
-
-	t += "<BR><HR><BR><BR>"
-
-	t += "Tracking: "
-	switch(track)
-		if(0)
-			t += "<B>Off</B> <A href='?src=\ref[src];track=1'>Timed</A> <A href='?src=\ref[src];track=2'>Auto</A><BR>"
-		if(1)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <B>Timed</B> <A href='?src=\ref[src];track=2'>Auto</A><BR>"
-		if(2)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Timed</A> <B>Auto</B><BR>"
-
-
-	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",5,30,180)]<BR><BR>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
-	user.Browse(t, "window=solcon")
-	onclose(user, "solcon")
-	return
-
-/obj/machinery/computer/solar_control/Topic(href, href_list)
-	if(..())
-		usr.Browse(null, "window=solcon")
-		src.remove_dialog(usr)
-		return
-	if(href_list["close"] )
-		usr.Browse(null, "window=solcon")
-		src.remove_dialog(usr)
+	if (istype(user.equipped(), /obj/item/card/emag))
 		return
 
-	if(href_list["dir"])
-		cdir = text2num_safe(href_list["dir"])
-		SPAWN(1 DECI SECOND)
-			set_panels(cdir)
+	active = !active
+	user.show_text("You [active ? "activate" : "deactivate"] [src]'s solar tracking.", "blue")
+	if (src.is_active_and_powered())
+		src.tracker_update(!QDELETED(tracker) ? tracker.sun_angle : cdir)
 
-	if(href_list["rate control"])
-		if(href_list["cdir"])
-			src.cdir = clamp((360+src.cdir+text2num_safe(href_list["cdir"]))%360, 0, 359)
-			SPAWN(1 DECI SECOND)
-				set_panels(cdir)
-		if(href_list["tdir"])
-			src.trackrate = clamp(src.trackrate+text2num_safe(href_list["tdir"]), -7200,7200)
-			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
+	src.UpdateIcon()
 
-	if(href_list["track"])
-		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
-		track = text2num_safe(href_list["track"])
-		if(track == 2)
-			if(tracker) // we keep track of the tracker now
-				cdir = tracker.sun_angle
+/obj/machinery/computer/solar_control/get_desc()
+	. = "<br />It is currently <em>[src.is_active_and_powered() ? "tracking the sun" : "disabled"]</em>"
+	. += "<br />Generated power: [round(lastgen)] W"
+	. += "<br />Current Orientation: [cdir]&deg; ([angle2text(cdir)])"
+	. += "<br />Sun Orientation: [!QDELETED(src.tracker) ? "[tracker.sun_angle]&deg; ([angle2text(tracker.sun_angle)])" : "Unknown"]"
 
-	src.updateUsrDialog()
-	return
+/obj/machinery/computer/solar_control/proc/is_active_and_powered()
+	. = active && !(status & (NOPOWER | BROKEN))
+
+/obj/machinery/computer/solar_control/update_icon()
+	. = ..()
+	if (src.is_active_and_powered())
+		src.icon_state = initial(src.icon_state)
+	else
+		src.icon_state = "solar0"
+
+/obj/machinery/computer/solar_control/power_change()
+	..()
+	if (!(src.status & (NOPOWER | BROKEN)))
+		src.UpdateIcon()
+
+/obj/machinery/computer/solar_control/emag_act(var/mob/user)
+	. = ..()
+	if (src.emagged)
+		return
+
+	src.emagged = TRUE
+	user.show_text("You short out the control circuit on [src]!", "blue")
+	if (active && !QDELETED(tracker))
+		src.tracker_update(tracker.sun_angle)
 
 /obj/machinery/computer/solar_control/proc/set_panels(var/cdir=null)
 	var/datum/powernet/powernet = src.get_direct_powernet()
@@ -421,9 +396,10 @@ TYPEINFO(/obj/machinery/power/solar)
 		Solar.control = src
 		Solar.ndir = src.cdir
 
-	if (!src.tracker)
+	if (QDELETED(src.tracker))
 		for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
 			if(Tracker.control != src && Tracker.control) continue
+			if(QDELETED(Tracker)) continue
 			if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
 				continue // some solars are weird
 			Tracker.control = src
@@ -454,7 +430,7 @@ TYPEINFO(/obj/machinery/power/solar)
 // solar panels which ignore occlusion
 
 TYPEINFO(/obj/machinery/power/solar/owl_cheat)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/power/solar/owl_cheat
 	id = "owl"
@@ -471,7 +447,7 @@ TYPEINFO(/obj/machinery/power/solar/owl_cheat)
 		if(status & BROKEN)
 			return
 
-		var/sgen = SOLARGENRATE * sunfrac
+		var/sgen = DEFAULT_SOLARGENRATE * sunfrac
 		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control)

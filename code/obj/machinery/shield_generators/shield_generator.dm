@@ -9,6 +9,10 @@ TYPEINFO(/area/station/shield_zone)
 	do_not_irradiate = TRUE
 	requires_power = FALSE
 	minimaps_to_render_on = null
+	occlude_foreground_parallax_layers = FALSE
+	#ifdef UNDERWATER_MAP
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
+	#endif
 
 /* ==================== Generator ==================== */
 
@@ -29,19 +33,19 @@ TYPEINFO(/area/station/shield_zone)
 	var/image/image_shower_dir = null
 	var/sound_startup = 'sound/machines/shieldgen_startup.ogg' // 40
 	var/sound_shutoff = 'sound/machines/shieldgen_shutoff.ogg' // 35
-	var/lastuse = 0
+	var/cooldown = 150 SECONDS
 
 	New()
 		..()
 		src.UpdateIcon()
 		SPAWN(0.6 SECONDS)
+			src.net_id = generate_net_id(src)
 			if (!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if (test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
-			src.net_id = generate_net_id(src)
+					src.link.set_master(src, src.net_id)
 
 	update_icon()
 
@@ -130,11 +134,7 @@ TYPEINFO(/area/station/shield_zone)
 			user.show_text("[src] seems inoperable, as pressing the button does nothing.")
 			return
 
-		var/diff = world.timeofday - lastuse
-		if(diff < 0) diff += 864000 //Wrapping protection.
-
-		if(diff > 1500)
-			lastuse = world.timeofday
+		if(!ON_COOLDOWN(src, "toggle_shields", src.cooldown))
 			visible_message("[src] beeps loudly.","You hear a loud beep.")
 			if (src.active)
 				src.deactivate()
@@ -206,7 +206,7 @@ TYPEINFO(/area/station/shield_zone)
 /obj/machinery/shield_generator/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "engine1"
-
+	bound_height = 32
 	update_icon()
 
 		return
@@ -214,7 +214,7 @@ TYPEINFO(/area/station/shield_zone)
 /obj/machinery/shield_generator/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "engine2"
-
+	bound_height = 32
 	update_icon()
 
 		return
@@ -225,10 +225,12 @@ TYPEINFO(/area/station/shield_zone)
 	name = "shield control computer"
 	icon_state = "engine"
 	base_icon_state = "engine"
-	setup_drive_size = 48
-
-	setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-	//setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64
+	setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive,
+			/obj/item/peripheral/network/powernet_card)
+	///obj/item/peripheral/network/radio/locked/pda
 	setup_starting_program = /datum/computer/file/terminal_program/shield_control
 
 /obj/machinery/computer3/generic/shield_control/console_upper

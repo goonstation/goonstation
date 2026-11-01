@@ -1,0 +1,4 @@
+/obj/critter/turtle : /mob/living/critter/small_animal/turtle{@OLD}
+/obj/critter/turtle/sylvester : /mob/living/critter/small_animal/turtle/sylvester{@OLD}
+/obj/critter/turtle/sylvester/HoS : /mob/living/critter/small_animal/turtle/sylvester/HoS{@OLD}
+/obj/critter/turtle/sylvseter/Commander : //mob/living/critter/small_animal/turtle/sylvester/Commander{@OLD}

@@ -12,6 +12,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 1
+	var/gorilla_mode = 0
 
 	cast(mob/target)
 		if (!holder)
@@ -115,6 +116,10 @@
 
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))
+				if (ishuman(HH) && gorilla_mode == TRUE)
+					var/mob/living/carbon/human/limb_loser = HH
+					if(limb_loser.limbs)
+						limb_loser.sever_limb(pick(list("l_arm", "r_arm", "l_leg", "r_leg")))
 				if (!fake)
 					HH.set_loc(get_turf(M))
 					HH.throw_at(T, 10, 4, bonus_throwforce = 33) // y e e t
@@ -126,12 +131,18 @@
 					HH.throw_at(T, 3, 1)
 
 
-			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
-
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""][name] wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		if (G && istype(G)) // Target was gibbed before we could throw them, who knows.
 			qdel(G)
 
 		return 0
 
+	logCast(atom/target)
+		return
+
 /datum/targetable/wrestler/throw/fake
 	fake = 1
+
+/datum/targetable/wrestler/throw/gorilla_fling
+	start_on_cooldown = 0
+	gorilla_mode = TRUE

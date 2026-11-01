@@ -1,5 +1,7 @@
-
 ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
+TYPEINFO(/obj/critter/domestic_bee)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_COMIC)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/critter/domestic_bee
 	name = "greater domestic space-bee"
@@ -22,6 +24,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	flying = 1
 	min_quality = -60
 	p_class = 2
+	speech_verb_say = "buzzes"
 
 	var/honey_production_amount = 50
 	var/nectar_check = 10
@@ -112,16 +115,16 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 						src.visible_message(SPAN_NOTICE("<b>[src]</b> stares at [maybeOurMom] for a moment, then bumbles happily!"))
 						break
 
-			else if ((beeMom in hearers(src, null)))
+			else if (beeMom && (beeMom in hearers(src, null)))
 				if (isdead(beeMom))
 					beeMom = null //beeMomCkey still set.
 					src.visible_message(SPAN_ALERT("<b>[src]</b> bumbles MOURNFULLY."))
 					return
 
-				if (beeMom.lastattacker && beeMom.lastattacker != beeMom && (beeMom.lastattackertime + 140) >= world.time)
-					src.target = beeMom.lastattacker
+				if (beeMom.lastattacker?.deref() && beeMom.lastattacker.deref() != beeMom && (beeMom.lastattackertime + 140) >= world.time)
+					src.target = beeMom.lastattacker.deref()
 					src.oldtarget_name = "[src.target]"
-					src.visible_message(SPAN_ALERT("<b>[src] buzzes angrily at [beeMom.lastattacker]!</b>"))
+					src.visible_message(SPAN_ALERT("<b>[src] buzzes angrily at [beeMom.lastattacker.deref()]!</b>"))
 					src.task = "chasing"
 					return ..()
 
@@ -352,7 +355,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 							src.visible_message("<b>[src]</b> drops \a [D] on the floor in an attempt to cheer [user] up!")
 							playsound(D.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg' , 30, 1)
 			else
-				E.icon_state = "gold"
+				E.icon_state = "id_gold"
 				E.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [E]!")
 				E.name = "sticky [E.name]"
@@ -880,7 +883,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				hat.transform = trans
 				trans.Translate(0, -7 * ((ubertier - 4) / 3 - 1))
 				hat.wear_image.transform = trans
-		hat.name = "[src]'s [hat.name]"
+		hat.name = "[src]’s [hat.name]"
 		src.original_hat = hat
 		src.hat_that_bee(hat)
 		src.UpdateIcon()
@@ -990,6 +993,16 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		else
 			..()
 
+/obj/fakeobject/bubs_standee
+	name = "fat and sassy space-bee standee"
+	desc = "A greater domestic space-bee that happens to be <s>particularly pudgy and obstinate</s> CARDBOARD!!!."
+	icon = /obj/critter/domestic_bee/bubs::icon
+	icon_state = "bubsbee"
+	default_material = "cardboard"
+	uses_default_material_appearance = TRUE
+	anchored = 1
+	density = 1
+
 /obj/critter/domestic_bee/bubs
 	name = "fat and sassy space-bee"
 	desc = "A greater domestic space-bee that happens to be particularly pudgy and obstinate."
@@ -1010,7 +1023,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			if (time2text(world.realtime, "MM DD") == "10 31")
 				name = "Beezlebubs"
 				desc = "Oh no, a terrifying demon!!  Oh, wait, no, nevermind, it's just the fat and sassy space-bee.  Wow, really had me fooled for a moment...guess that's a Halloween trick...."
-				src.hat = new /obj/item/clothing/head/devil (src)
+				src.hat = new /obj/item/clothing/head/headband/devil (src)
 				src.hat_that_bee(src.hat)
 				src.UpdateIcon()
 
@@ -1063,20 +1076,23 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			return ..()
 
 	proc/perhaps_go_to_work()
-		. = time2text(world.realtime, "DDD")
-		if (. == "Sun" || . == "Sat")
+		// Bubs works weekdays in the EST daytime.
+		var/est_day = time2text(world.realtime - (5 HOURS), "DDD")
+		if (est_day == "Sun" || est_day == "Sat")
 			return 0		//No working the weekends!
 
-		. = text2num(time2text(world.timeofday, "hh"))
-		//1 am to 9 am cst is a little offset from the Real Bubs Jobtime
-		//of course, this is tied to the server's local time so G4 will be different
-		if (. >= 1 && . < 9)
-			var/turf/T = pick_landmark(LANDMARK_BUBS_BEE_JOB)
-			if (istype(T))
-				src.hat = new /obj/item/clothing/head/flatcap (src)
-				src.hat_that_bee(src.hat)
-				src.UpdateIcon()
-				src.set_loc(T)
+		var/est_timeofday = (world.timeofday - (5 HOURS)) % (1 DAY)
+		if (est_timeofday < 0)
+			est_timeofday += 1 DAY
+		if (est_timeofday < (7 HOURS) || est_timeofday >= (15 HOURS))
+			return 0
+
+		var/turf/T = pick_landmark(LANDMARK_BUBS_BEE_JOB)
+		if (istype(T))
+			src.hat = new /obj/item/clothing/head/flatcap (src)
+			src.hat_that_bee(src.hat)
+			src.UpdateIcon()
+			src.set_loc(T)
 
 		return 1
 
@@ -2073,6 +2089,13 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		reagents.add_reagent("honey", 10)
 		reagents.add_reagent("cornstarch", 5)
 		reagents.add_reagent("pollen", 20)
+
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee
+	name = "Heisenbee's birthday cupcake"
+	desc = "A little birthday cupcake for Heisenbee. May not taste good to non-bees.";
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
+	icon_state = "cupcake";
+
 
 /* -------------------- END -------------------- */
 

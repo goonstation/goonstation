@@ -70,7 +70,7 @@
 
 
 	src.add_dialog(user)
-	var/t = "<TT><B>Switchgear Control</B><BR><A href='?src=\ref[src];close=1'>Close Panel</A><HR>"
+	var/t = "<TT><B>Switchgear Control</B><BR><A href='byond://?src=\ref[src];close=1'>Close Panel</A><HR>"
 
 	if(!powernet)
 		t += "<span style=\"color:red\">No connection</span>"
@@ -82,7 +82,7 @@
 				var/obj/machinery/power/apc/A = term.master
 				L += A
 
-		t += "<FONT SIZE=+1><TABLE><tr><td colspan='2'><center>Main Supply<BR><FONT SIZE=+3><a href='?src=\ref[src];set_main=[mainsupply ? 0 : 1]'>[mainsupply ? "On" : "Off"]</A></center></font></td></tr>"
+		t += "<FONT SIZE=+1><TABLE><tr><td colspan='2'><center>Main Supply<BR><FONT SIZE=+3><a href='byond://?src=\ref[src];set_main=[mainsupply ? 0 : 1]'>[mainsupply ? "On" : "Off"]</A></center></font></td></tr>"
 
 		if(length(L) > 0)
 
@@ -91,10 +91,10 @@
 			for(var/obj/machinery/power/apc/A in L)
 				if (side)
 					side = 0
-					t += "<td align='left'><A href='?src=\ref[src];set_apc=\ref[A];circuit_disabled=[A.circuit_disabled ? 0 : 1]'>[A.circuit_disabled ? "Off" : "On"]</A> - [A.area.name]</td></tr>"
+					t += "<td align='left'><A href='byond://?src=\ref[src];set_apc=\ref[A];circuit_disabled=[A.circuit_disabled ? 0 : 1]'>[A.circuit_disabled ? "Off" : "On"]</A> - [A.area.name]</td></tr>"
 				else
 					side = 1
-					t += "<tr><td align = 'right'>[A.area.name] - <A href='?src=\ref[src];set_apc=\ref[A];circuit_disabled=[A.circuit_disabled ? 0 : 1]'>[A.circuit_disabled ? "Off" : "On"]</A></td>"
+					t += "<tr><td align = 'right'>[A.area.name] - <A href='byond://?src=\ref[src];set_apc=\ref[A];circuit_disabled=[A.circuit_disabled ? 0 : 1]'>[A.circuit_disabled ? "Off" : "On"]</A></td>"
 
 			if (side)
 				t += "<td></td></tr>"

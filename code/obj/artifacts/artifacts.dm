@@ -22,6 +22,8 @@
 			src.ArtifactSetup()
 
 	disposing()
+		if (istype(src.artifact, /datum/artifact))
+			src.ArtifactDeactivated()
 		artifact_controls.artifacts -= src
 		..()
 
@@ -29,7 +31,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	attack_hand(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.ArtifactTouched(user)
 		return
 
@@ -37,20 +39,19 @@
 		return attack_hand(user)
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (src.Artifact_attackby(W,user))
 			..()
 
 	meteorhit(obj/O as obj)
 		src.ArtifactStimulus("force", 60)
-		..()
 
 	examine()
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			. += SPAN_ARTHINT(A.examine_hint)
 
 	ex_act(severity)
@@ -137,7 +138,7 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()
@@ -165,7 +166,6 @@
 
 	meteorhit(obj/O as obj)
 		src.ArtifactStimulus("force", 60)
-		..()
 
 	ex_act(severity)
 		switch(severity)
@@ -242,7 +242,7 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()

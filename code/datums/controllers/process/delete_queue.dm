@@ -48,11 +48,14 @@ var/global/harddel_count = 0
 
 		//var/t_gccount = gccount
 		//var/t_delcount = delcount
-		for (var/numr in global.delete_queue_2[global.delqueue_pos])
-			scheck()
+		var/c = 0
+		for (var/ref as anything in global.delete_queue_2[global.delqueue_pos])
+			if (!(c++ % 50))
+				scheck()
 
-			var/r = NUM_TO_ADDR(numr)
-			var/datum/D = locate(r)
+			var/datum/D = locate(ref)
+			var/refcount = refcount(D) - 1
+
 			if (!istype(D) || !D.qdeled)
 				// If we can't locate it, it got garbage collected.
 				// If it isn't disposed, it got garbage collected and then a new thing used its ref.
@@ -61,7 +64,7 @@ var/global/harddel_count = 0
 
 			SPAWN(0)
 #ifdef HARD_DELETIONS_DISABLED
-				var/harddel_msg = "Didn't GC: \ref[D]"
+				var/harddel_msg = "Didn't GC (with refcount [refcount]): [ref]"
 #else
 				var/harddel_msg = "HardDel of"
 #endif

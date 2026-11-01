@@ -6,6 +6,8 @@ Unit tests are automated code to verify that parts of the game work exactly as t
 
 On their most basic level, when `UNIT_TESTS` is defined, all subtypes of `/datum/unit_test` will have their `Run` proc executed. From here, if `Fail` is called at any point, then the tests will report as failed.
 
+Tests that are only needed for slower historical regression coverage should be subtypes of `/datum/unit_test/regression`. Normal unit test runs skip those tests; the Regression Tests job defines `UNIT_TESTS_REGRESSION_ONLY` and runs only regression tests.
+
 ## How do I write one?
 1. Find a relevant file.
 
@@ -52,6 +54,8 @@ Unit tests should also be just that--testing *units* of code. For example, inste
 You can find more information about all of these from their respective doc comments, but for a brief overview:
 
 `/datum/unit_test` - The base for all tests to be ran. Subtypes must override `Run()`. `New()` and `Destroy()` can be used for setup and teardown. To fail, use `Fail(reason)`.
+
+`/datum/unit_test/regression` - The base for tests that should be skipped by normal PR unit tests and run by scheduled regression testing instead.
 
 `/datum/unit_test/proc/allocate(type, ...)` - Allocates an instance of the provided type with the given arguments. Is automatically destroyed when the test is over. Commonly seen in the form of `var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)`.
 

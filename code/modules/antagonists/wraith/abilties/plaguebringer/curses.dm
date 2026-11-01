@@ -15,35 +15,46 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 			return 1
 
-		if (ishuman(target))
-			if (istype(get_area(target), /area/station/chapel))	//Dont spam curses in the chapel.
-				boutput(holder.owner, SPAN_ALERT("The holy ground this creature is standing on repels the curse immediately."))
-				boutput(target, SPAN_ALERT("You feel as though some weight was added to your soul, but the feeling immediately dissipates."))
-				return 0
+		if (!ishuman(target))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (istype(get_area(target), /area/station/chapel))	//Dont spam curses in the chapel.
+			boutput(holder.owner, SPAN_ALERT("The holy ground this creature is standing on repels the curse immediately."))
+			boutput(target, SPAN_ALERT("You feel as though some weight was added to your soul, but the feeling immediately dissipates."))
+			return CAST_ATTEMPT_FAIL_DO_COOLDOWN
 
-			//Lets let people know they have been cursed, might not be obvious at first glance
-			var/mob/living/carbon/H = target
-			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(holder.owner, SPAN_NOTICE("A strange force prevents you from cursing this being, your energy is wasted."))
-				return 0
-			var/curseCount = 0
-			if (H.bioHolder.HasEffect("blood_curse"))
-				curseCount ++
-			if (H.bioHolder.HasEffect("blind_curse"))
-				curseCount ++
-			if (H.bioHolder.HasEffect("weak_curse"))
-				curseCount ++
-			if (H.bioHolder.HasEffect("rot_curse"))
-				curseCount ++
-			switch(curseCount)
-				if (1)
-					boutput(H, SPAN_NOTICE("You feel strangely sick."))
-				if (2)
-					boutput(H, SPAN_ALERT("You hear whispers in your head, pushing you towards your doom."))
-					H.playsound_local(H.loc, "sound/voice/wraith/wraithstaminadrain.ogg", 50)
-				if (3)
-					boutput(H, SPAN_ALERT("<b>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel or the purification of holy water.</b>"))
-					H.playsound_local(H.loc, "sound/voice/wraith/wraithraise1.ogg", 80)
+		if (SEND_SIGNAL(target, COMSIG_TRY_CURSE, holder.owner))
+			boutput(holder.owner, SPAN_ALERT("This creature is protected by a holy charm!"))
+			return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+
+		//Lets let people know they have been cursed, might not be obvious at first glance
+		var/mob/living/carbon/H = target
+		if (H.traitHolder.hasTrait("training_chaplain"))
+			boutput(holder.owner, SPAN_NOTICE("A strange force prevents you from cursing this being, your energy is wasted."))
+			return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+		var/curseCount = 0
+		if (H.bioHolder.HasEffect("blood_curse"))
+			curseCount ++
+		if (H.bioHolder.HasEffect("blind_curse"))
+			curseCount ++
+		if (H.bioHolder.HasEffect("weak_curse"))
+			curseCount ++
+		if (H.bioHolder.HasEffect("rot_curse"))
+			curseCount ++
+		switch(curseCount)
+			if (1)
+				boutput(H, SPAN_NOTICE("You feel strangely sick."))
+			if (2)
+				boutput(H, SPAN_ALERT("You hear whispers in your head, pushing you towards your doom."))
+				H.playsound_local(H.loc, "sound/voice/wraith/wraithstaminadrain.ogg", 50)
+			if (3)
+				boutput(H, SPAN_ALERT("<b>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel or the purification of holy water.</b>"))
+				H.playsound_local(H.loc, "sound/voice/wraith/wraithraise1.ogg", 80)
+
+	afterCast()
+		. = ..()
+		for (var/datum/targetable/ability in src.holder.getAbilitiesOfType(/datum/targetable/wraithAbility/curse))
+			if (ability != src)
+				ability.doCooldown()
 
 /datum/targetable/wraithAbility/curse/blood
 	name = "Curse of blood"
@@ -54,8 +65,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	cooldown = 45 SECONDS
 
 	cast(atom/target)
-		if (..())
-			return 1
+		. = ..()
+		if (.)
+			return .
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -65,14 +77,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("blood_curse")
 			boutput(holder.owner, SPAN_NOTICE("We curse this being with a blood dripping curse."))
-			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
-			ability.doCooldown()
 			return 0
 		else
 			return 1
@@ -86,8 +90,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	cooldown = 45 SECONDS
 
 	cast(atom/target)
-		if (..())
-			return 1
+		. = ..()
+		if (.)
+			return .
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -97,14 +102,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("blind_curse")
 			boutput(holder.owner, SPAN_NOTICE("We curse this being with a blinding curse."))
-			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
-			ability.doCooldown()
 			return 0
 		else
 			return 1
@@ -118,8 +115,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	cooldown = 45 SECONDS
 
 	cast(atom/target)
-		if (..())
-			return 1
+		. = ..()
+		if (.)
+			return .
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -129,14 +127,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("weak_curse")
 			boutput(holder.owner, SPAN_NOTICE("We curse this being with an enfeebling curse."))
-			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
-			ability.doCooldown()
 			return 0
 		else
 			return 1
@@ -150,8 +140,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	cooldown = 45 SECONDS
 
 	cast(atom/target)
-		if (..())
-			return 1
+		. = ..()
+		if (.)
+			return .
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H= target
@@ -161,14 +152,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("rot_curse")
 			boutput(holder.owner, SPAN_NOTICE("We curse this being with a decaying curse."))
-			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
-			ability.doCooldown()
 			return 0
 		else
 			return 1
@@ -182,8 +165,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	cooldown = 45 SECONDS
 
 	cast(atom/target)
-		if (..())
-			return TRUE
+		. = ..()
+		if (.)
+			return .
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target

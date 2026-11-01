@@ -20,7 +20,7 @@ var/global/datum/roundManagement/roundManagement
 			#endif
 			var/testmerges = null
 			#ifdef TESTMERGE_PRS
-				testmerges = TESTMERGE_PRS
+			testmerges = TESTMERGE_PRS
 			#endif
 			addRound.buildBody(map_setting, config.server_id, rpMode, testmerges)
 			gameRound = apiHandler.queryAPI(addRound)

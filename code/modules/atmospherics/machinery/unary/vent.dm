@@ -39,6 +39,13 @@
 			ourturf.air.copy_from(turf_copy)
 			qdel(turf_copy) // done with this
 
+	else if (istype(ourturf, /turf/space/fluid))
+		// build up pressure and then vent it in a bubble
+		if (MIXTURE_PRESSURE(src.air_contents) < ONE_ATMOSPHERE)
+			return
+		var/datum/gas_mixture/bubble_gas = new
+		equalize_gases(list(src.air_contents, bubble_gas))
+		new /obj/bubble(ourturf, bubble_gas)
 	else
 		var/datum/gas_mixture/turf_air = ourturf.return_air()
 
@@ -61,4 +68,4 @@
 /obj/machinery/atmospherics/unary/vent/hide(var/intact) //to make the little pipe section invisible, the icon changes.
 	var/hide_pipe = CHECKHIDEPIPE(src)
 	src.icon_state = hide_pipe ? "hvent" : "vent"
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+	update_pipe_underlay(src.node, src.dir, "long", hide_pipe)

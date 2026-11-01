@@ -71,7 +71,7 @@
 
 
 /obj/item/gun/russianrevolver/fake357
-	name = "\improper Predator revolver"
+	name = "\improper Revolver" // Automatically copies the real gun name in New()
 	desc = "A slightly shabby looking combat revolver developed by somebody. Uses .357 caliber rounds."
 	force = MELEE_DMG_REVOLVER
 	shotsMax = 1 //griff
@@ -79,13 +79,14 @@
 	var/fakeshots = 0
 
 	New()
+		src.name = /obj/item/gun/kinetic/revolver::name
 		fakeshots = rand(2, 7)
 		set_current_projectile(new/datum/projectile/bullet/revolver_357)
 		..()
 		inventory_counter.update_number(fakeshots)
 
 	pixelaction(atom/target, params, mob/user, reach)
-		if(target.loc != user)
+		if(target.loc != user && !(reach && target.storage)) //don't blow people's brains out for trying to put this in a bag
 			if(src.fire_gun(user))
 				user.show_text("That gun DID look a bit dodgy, after all!", "red")
 				user.playsound_local(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, 1)

@@ -3,49 +3,49 @@
 /obj/stool/bee_bed,
 /mob/living/critter/small_animal/cat/synth,
 /turf/simulated/floor/carpet/blue/fancy/edge,
-/area/space)
+/area/dmm_suite/clear_area)
 "e" = (
 /obj/stool/bee_bed,
 /mob/living/critter/small_animal/cat/synth,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 9
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/carpet/blue,
-/area/space)
+/area/dmm_suite/clear_area)
 "n" = (
 /turf/simulated/floor/carpet/blue,
-/area/space)
+/area/dmm_suite/clear_area)
 "p" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/carpet/blue/fancy/edge,
-/area/space)
+/area/dmm_suite/clear_area)
 "q" = (
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /obj/item/gardentrowel,
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 8
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/machinery/hydro_growlamp,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "y" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /obj/potted_plant{
 	icon_state = "plant7"
@@ -53,33 +53,33 @@
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 6
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "H" = (
 /obj/item/reagent_containers/food/fish/salmon,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "M" = (
 /obj/item/seedplanter,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "O" = (
 /obj/stool/bee_bed,
 /mob/living/critter/small_animal/cat/synth,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 4
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/machinery/light/small/floor/warm,
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/carpet/blue,
-/area/space)
+/area/dmm_suite/clear_area)
 "Z" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 10
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 e

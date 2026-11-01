@@ -1,16 +1,16 @@
 /datum/random_event/major/antag/salvagers
 	name = "Salvagers"
-	required_elapsed_round_time = 12.8 MINUTES
-	wont_occur_past_this_time = 35 MINUTES
+	required_elapsed_round_time = 15 MINUTES
+	wont_occur_past_this_time = 70 MINUTES
 	customization_available = 1
 	announce_to_admins = 0 // Doing it manually.
-	weight = 20
+	weight = 80
 
 	var/antag_count = 0
 	var/lock = 0
 	var/admin_override = 0
 	var/ghost_confirmation_delay = 2 MINUTES // time to acknowledge or deny respawn offer.
-	var/minimum_count = 3
+	var/minimum_count = 1
 
 	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )
@@ -71,7 +71,7 @@
 		logTheThing(LOG_ADMIN, null, "Setting up [src] event. Source: [source ? "[source]" : "random"]")
 		SPAWN(0)
 			src.lock = TRUE
-			do_event(source=="spawn_antag", source)
+			do_event(source)
 
 	proc/do_event(var/source)
 		if (!src || !istype(src, /datum/random_event/major/antag/salvagers))
@@ -88,14 +88,14 @@
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 
 		if (!islist(candidates) || !length(candidates))
-			message_admins("Couldn't set Salvager; no ghosts responded. Source: [source ? "[source]" : "random"]")
+			message_admins("Couldn't set up Salvager; no ghosts responded. Source: [source ? "[source]" : "random"]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up Salvager; no ghosts responded. Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
 		if(!admin_override && (length(candidates) < src.minimum_count) )
-			message_admins("Insufficient ghosts responded. Source: [source ? "[source]" : "random"]")
-			logTheThing(LOG_ADMIN, null, "Couldn't set up Salvager; Insufficient ghosts ghosts responded. Source: [source ? "[source]" : "random"]")
+			message_admins("Couldn't set up Salvager; insufficient ghosts responded (had [length(candidates)], needed [src.minimum_count]). Source: [source ? "[source]" : "random"]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up Salvager; insufficient ghosts responded (had [length(candidates)], needed [src.minimum_count]). Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -112,8 +112,8 @@
 				attempts++
 
 			if (!(lucky_dude && istype(lucky_dude) && lucky_dude.current))
-				message_admins("Couldn't set up Salvager; candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
-				logTheThing(LOG_ADMIN, null, "Couldn't set up Salvager); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
+				message_admins("Couldn't set up Salvager; candidate selection failed (had [length(candidates)] candidate(s)). Source: [source ? "[source]" : "random"]")
+				logTheThing(LOG_ADMIN, null, "Couldn't set up Salvager; candidate selection failed (had [length(candidates)] candidate(s)). Source: [source ? "[source]" : "random"]")
 				src.post_event()
 				return
 

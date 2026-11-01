@@ -121,36 +121,6 @@
 
 	O.show_laws()
 	boutput(O, SPAN_HINT("<b>These laws may be changed by other players.</b>"))
-
-	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-	O.verbs += /mob/living/silicon/ai/proc/reset_apcs
-	O.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
-	O.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-	O.verbs += /mob/living/silicon/ai/proc/ai_alerts
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_list
-	// See file code/game/verbs/ai_lockdown.dm for next two
-	//O.verbs += /mob/living/silicon/ai/proc/lockdown
-	//O.verbs += /mob/living/silicon/ai/proc/disablelockdown
-	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-	O.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
-	//O.verbs += /mob/living/silicon/ai/proc/ai_toggle_arrival_alerts
-	//O.verbs += /mob/living/silicon/ai/proc/ai_custom_arrival_alert
-//	O.verbs += /mob/living/silicon/ai/proc/hologramize
-	O.verbs += /mob/living/silicon/ai/verb/deploy_to
-//	O.verbs += /mob/living/silicon/ai/proc/ai_cancel_call
-	O.verbs += /mob/living/silicon/ai/proc/ai_view_crew_manifest
-	O.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
-	O.verbs += /mob/living/silicon/ai/verb/access_internal_radio
-	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
-	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
-	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
-	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
-	O.verbs += /mob/living/silicon/ai/verb/rename_self
 	O.job = "AI"
 
 	SPAWN(0)
@@ -171,19 +141,25 @@
 
 /mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE, delete_original=TRUE)
 	var/mob/living/critter/newmob = new critter_type()
-	if(ghost_spawned)
-		newmob.ghost_spawned = ghost_spawned
+	if (ghost_spawned || newmob.ghost_spawned)
+		newmob.ghost_spawned = TRUE
+
+		newmob.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
+		newmob.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_SILICONCHAT)
+
 		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
 			newmob.name_prefix("ethereal")
+			newmob.job = "Ethereal Critter" // for observer menu
 			newmob.name_suffix("[rand(10,99)][rand(10,99)]")
 			newmob.UpdateName()
+
 	if (!T || !isturf(T))
 		T = get_turf(src)
 	newmob.set_loc(T)
 	newmob.gender = src.gender
 	if (src.bioHolder)
 		var/datum/bioHolder/original = new/datum/bioHolder(newmob)
-		original.CopyOther(src.bioHolder)
+		original.CopyOther(src.bioHolder, copyPool=FALSE, copyActiveEffects=FALSE)
 		qdel(newmob.bioHolder)
 		newmob.bioHolder = original
 
@@ -204,6 +180,11 @@
 	if (delete_original)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
+
+	// some critters are on harm intent by default, which causes confusion for players controlling them. this prevents that.
+	if(newmob.mind)
+		newmob.set_a_intent(INTENT_HELP)
+
 	return newmob
 
 
@@ -477,45 +458,43 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (!src.can_respawn_as_ghost_critter())
 		return
 
-	if (tgui_alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", list("Yes", "No")) != "Yes")
+	get_singleton(/datum/ghost_critter_respawn_menu).ui_interact(src)
+
+
+/// Get us a full listing of the options available to them
+/mob/proc/get_ghost_critter_types()
+	var/list/critter_types = respawn_critter_types.Copy()
+	if (istype(src.mind?.purchased_bank_item, /datum/bank_purchaseable/critter_respawn))
+		var/datum/bank_purchaseable/critter_respawn/purchase = src.mind.purchased_bank_item
+		critter_types |= purchase.respawn_critter_types
+	else if (istype(src.mind?.purchased_bank_item, /datum/bank_purchaseable/bird_respawn))
+		var/datum/bank_purchaseable/bird_respawn/purchase = src.mind.purchased_bank_item
+		critter_types |= purchase.respawn_critter_types
+	if (src.mind?.is_antagonist())
+		critter_types |= antag_respawn_critter_types
+	return critter_types
+
+
+/mob/proc/make_ghost_critter(var/turf/spawnpoint, var/list/types = null, critter_type = null)
+	var/list/available_types = length(types) ? types : src.get_ghost_critter_types()
+	if (isnull(critter_type))
+		critter_type = pick(available_types)
+	if (!(critter_type in available_types))
 		return
+	var/antag_critter = !length(types) && (critter_type in antag_respawn_critter_types)
 
-	var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
-	if(!spawnpoint)
-		spawnpoint = pick_landmark(LANDMARK_LATEJOIN, get_turf(src))
-
-	src.make_ghost_critter(spawnpoint)
-
-
-/mob/proc/make_ghost_critter(var/turf/spawnpoint, var/list/types = null)
 	var/mob/selfmob = src
 	src = null
-	var/mob/living/critter/C
-	var/traitor = 0
-
-	if (length(types))
-		C = selfmob.make_critter(pick(types), spawnpoint, ghost_spawned=TRUE)
-	else
-		traitor = selfmob.mind?.is_antagonist()
-		if (traitor)
-			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
-		else
-			if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/critter_respawn))
-				var/datum/bank_purchaseable/critter_respawn/critter_respawn = selfmob.mind.purchased_bank_item
-				C = selfmob.make_critter(pick(critter_respawn.respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
-			else if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/bird_respawn))
-				var/datum/bank_purchaseable/bird_respawn/bird_respawn = selfmob.mind.purchased_bank_item
-				C = selfmob.make_critter(pick(bird_respawn.respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
-			else
-				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
+	var/mob/living/critter/C = selfmob.make_critter(critter_type, spawnpoint, ghost_spawned = TRUE)
 
 	C.mind.assigned_role = "Animal"
-	C.say_language = "animal"
+	C.say_language = LANGUAGE_ANIMAL
+	C.ensure_listen_tree().AddKnownLanguage(LANGUAGE_ANIMAL)
 	C.literate = 0
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE
 
-	if (traitor)
+	if (antag_critter)
 		C.show_antag_popup("ghostcritter_antag")
 	else
 		C.show_antag_popup("ghostcritter")
@@ -553,7 +532,8 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor, spawnpoint, ghost_spawned=TRUE)
 
 	C.mind.assigned_role = "Animal"
-	C.say_language = "animal"
+	C.say_language = LANGUAGE_ANIMAL
+	C.ensure_listen_tree().AddKnownLanguage(LANGUAGE_ANIMAL)
 	C.literate = 0
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE
@@ -588,7 +568,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	var/mob/selfmob = src
 	src = null
-	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=TRUE)
+	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=FALSE)
 	C.mind.assigned_role = "Animal"
 	C.literate = 1
 	C.original_name = selfmob.real_name
@@ -619,6 +599,8 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
+	newbody.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_DEADCHAT)
+	newbody.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
 
 	// preserve your original role;
 	// gives "???" if not an observer and not assigned a role,
@@ -636,10 +618,6 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	if (newbody.traitHolder && newbody.traitHolder.hasTrait("bald"))
 		newbody.stow_in_available(newbody.create_wig())
-		newbody.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		newbody.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		newbody.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		newbody.update_colorful_parts()
 
 	// No contact between the living and the dead.
 	var/obj/to_del = newbody.ears
@@ -685,7 +663,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// There are some traits removed in the afterlife bar, these have afterlife_blacklist set to TRUE.
 
-	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+	newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 	newbody.set_clothing_icon_dirty()
 
 	announce_ghost_afterlife(src.key, "<b>[src.name]</b> is visiting the Afterlife Bar.")

@@ -36,9 +36,8 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	stamina_cost = 0
 	stamina_crit_chance = 0
 
-	flags = FPRINT | TABLEPASS
 	var/can_stain = 1
-	var/list/stains = null
+	var/list/datum/stain/stains = null
 
 	New()
 		..()
@@ -63,25 +62,40 @@ ABSTRACT_TYPE(/obj/item/clothing)
 		src.name = src.real_name || initial(src.name)
 		if(src.material?.usesSpecialNaming())
 			src.name = src.material.specialNaming(src)
-		src.name = "[name_prefix(null, 1)][src.get_stains()][src.name][name_suffix(null, 1)]"
+		src.name = "[name_prefix(null, 1)][src.get_stain_names()][src.name][name_suffix(null, 1)]"
 
-	proc/add_stain(var/stn)
-		if (!stn || !src.can_stain)
+	///Add a stain to this clothing piece
+	proc/add_stain(stain_type)
+		var/datum/stain/stain = get_singleton(stain_type)
+		if (!istype(stain) || !src.can_stain)
 			return
 		if (!islist(src.stains))
 			src.stains = list()
-		else if (stn in src.stains)
+		else if (stain in src.stains)
 			return
-		src.stains += stn
+		src.stains.Add(stain)
+		stain.add_to_clothing(src)
 		src.UpdateName()
 
-	proc/get_stains()
+	///Returns a space-concatenated string of stain names
+	proc/get_stain_names()
 		if (src.can_stain && islist(src.stains) && length(src.stains))
-			for (var/i in src.stains)
-				. += i + " "
+			for (var/datum/stain/stn in src.stains)
+				. += stn.name + " "
 
+	///Removes a stain from this clothing piece. Returns 1/TRUE if stain removed.
+	proc/remove_stain(stain_type)
+		var/datum/stain/stain = get_singleton(stain_type)
+		if(stain in src.stains)
+			stain.remove_from_clothing(src)
+			. = src.stains.Remove(stain)
+			src.UpdateName()
+
+	///Removes all stains from this clothing piece
 	proc/clean_stains()
 		if (islist(src.stains) && length(src.stains))
+			for (var/datum/stain/stain in src.stains)
+				stain.remove_from_clothing(src)
 			src.stains = list()
 			src.UpdateName()
 
@@ -99,6 +113,15 @@ ABSTRACT_TYPE(/obj/item/clothing)
 			CF.set_loc(get_turf(src))
 		user.u_equip(src)
 		qdel(src)
+
+	// throw_at() but it also automatically unequips the item. adding this for cigarette slapping, putting it here because it might be useful for other stuff in the future
+	proc/throw_worn_item(var/target, var/range, var/speed)
+		if(ismob(src.loc))
+			var/mob/owner = src.loc
+			owner.drop_item(src)
+			src.set_loc(owner.loc)
+			src.dropped(owner)
+		src.throw_at(target, range, speed)
 
 /obj/item/clothing/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
 	// if someone wearing this gets attacked, only trigger this if the corresponding zone is hit
@@ -136,6 +159,21 @@ ABSTRACT_TYPE(/obj/item/clothing/under)
 		..()
 		playsound(src.loc, 'sound/items/zipper.ogg', 30, 0.2, pitch = 2)
 
+/obj/item/clothing/proc/update_tail_clothing(var/mob/living/carbon/human/H, var/tail_clothing_state)
+	var/obj/item/organ/tail/our_tail = H.organHolder.tail // visual tail data is stored in the tail
+	H.human_tail_image = image(our_tail.clothing_image_icon, tail_clothing_state)
+	src.copy_appearance_to_image(H.human_tail_image)
+	H.human_tail_image.filters += H.mutantrace?.apply_clothing_filters(src)
+	H.tail_standing.overlays += H.human_tail_image
+	H.tail_standing_oversuit.overlays += H.human_tail_image
+	if(src.worn_material_texture_image)
+		// If the original object has a material texture, apply it
+		var/icon/masked_tail_tex = GetTexturedIcon(H.human_tail_image.icon, src.material.getTexture())
+		var/image/tail_tex_image = image(masked_tail_tex, tail_clothing_state)
+		tail_tex_image.layer = H.human_tail_image.layer + 0.1
+		H.tail_standing_oversuit.overlays += tail_tex_image
+	H.update_tail_overlays()
+	return
 /*
 /obj/item/clothing/fire_burn(obj/fire/raging_fire, datum/air_group/environment)
 	if(raging_fire.internal_temperature > src.s_fire)
@@ -143,7 +181,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under)
 			var/t = src.icon_state
 			src.icon_state = ""
 			src.icon = 'b_items.dmi'
-			flick(text("[]", t), src)
+			FLICK(text("[]", t), src)
 			sleep(1.4 SECONDS)
 			qdel(src)
 		return 0

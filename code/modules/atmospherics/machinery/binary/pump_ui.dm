@@ -47,21 +47,22 @@
 				logTheThing(LOG_STATION, usr, "has set [src.get_atom()] value to [src.get_value()] at [log_loc(src.get_atom())]")
 
 	src.show_ui(usr)
+
 /// Displays the UI
 /datum/pump_ui/proc/show_ui(mob/user)
-	if (user.client?.tooltipHolder) // Monke!
-		user.client.tooltipHolder.showClickTip(get_atom(), list("title" = src.pump_name, "content" = render()))
-
-/// Generates the HTML
-/datum/pump_ui/proc/render()
-	return {"
-<span>[is_on() ? "Active" : "Inactive"]</span>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=toggle_power">Toggle Power</a>
-<br />
-<span>[value_name]:
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[-incr_lg]">-</a>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[-incr_sm]">-</a>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=set_value">[get_value()] [value_units]</a>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[incr_sm]">+</a>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[incr_lg]">+</a>
-"}
+	user.client?.tooltips?.show(
+		TOOLTIP_PINNED, src.get_atom(),
+		title = src.pump_name,
+		content = alist(
+			"file" = "pump.eta",
+			"data" = alist(
+				"src" = "\ref[src]",
+				"is_on" = is_on(),
+				"value_name" = value_name,
+				"value_units" = value_units,
+				"value" = get_value(),
+				"incr_lg" = incr_lg,
+				"incr_sm" = incr_sm,
+			)
+		),
+	)

@@ -3,6 +3,10 @@
 #define APC_WIRE_MAIN_POWER2 3
 #define APC_WIRE_AI_CONTROL 4
 
+#define TERMINAL_REPAIR_STEP_WIRING 1 // nothing has been done yet, waiting for wiring
+#define TERMINAL_REPAIR_STEP_SOLDERING 2 // wiring has been installed into open frame, waiting for solder
+#define TERMINAL_REPAIR_STEP_METAL 3 // wiring has been soldered, waiting for metal
+// metal sheet to conclude repairs
 
 var/zapLimiter = 0
 #define APC_ZAP_LIMIT_PER_5 2
@@ -20,6 +24,12 @@ var/zapLimiter = 0
 
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
+	manufactured_type = /obj/machinery/power/apc //for sub types
+
+	/// Only allow building an APC in an area if no APC currently is powering the area.
+	can_build(turf/T)
+		var/area/A = get_area(T)
+		return A.area_apc == null
 
 ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapStuff)
 
@@ -69,16 +79,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/wiresexposed = 0
 	var/apcwires = 15
 	var/repair_status = 0 //0: Screwdriver - Disconnect Control Unit ->  1: 4 units of cable - repair autotransformer -> 2: Wrench - Tune autotransformer -> 3: Multitool - Reset control circuitry -> 4: Screwdriver - Reconnect circuitry.
+	var/terminal_repair_status = 0 // 0 = nothing yet, the rest are defined above handle_terminal_repair
 	var/setup_networkapc = 1 //0: Local interface only, 1: Local interface and network interface, 2: network interface only.
 	var/net_id = null
 	var/host_id = null
 	var/timeout = 60 //The time until we auto disconnect (if we don't get a refresh ping)
 	var/timeout_alert = 0 //Have we sent a timeout refresh alert?
 	var/hardened = 0 // azone/listening post apcs that you dont want fucked with. immune to explosions, blobs, meteors
+	var/update_requested = FALSE // Whether the next APC process should include an update (set after turfs are reallocated to this APC's area)
 
 //	luminosity = 1
 	var/debug = 0
-	mechanics_type_override = /obj/machinery/power/apc
 	autoname_north
 		name = "Autoname N APC"
 		dir = NORTH
@@ -100,7 +111,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		name = "Autoname E APC"
 		dir = EAST
 		autoname_on_spawn = 1
-		pixel_x = 24
+		pixel_x = 20
 
 		nopoweralert
 			noalerts = 1
@@ -136,7 +147,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		name = "Autoname W APC"
 		dir = WEST
 		autoname_on_spawn = 1
-		pixel_x = -24
+		pixel_x = -20
 
 		nopoweralert
 			noalerts = 1
@@ -176,12 +187,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	..()
 	START_TRACKING
 	// offset 24 pixels in direction of dir
+	//+excluding east and west which is now 20 pixels
 	// this allows the APC to be embedded in a wall, yet still inside an area
 
 	tdir = dir		// to fix Vars bug
 	// dir = SOUTH
 
-	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 24 : -24)
+	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 20 : -20)
 	pixel_y = (tdir & 3)? (tdir ==1 ? 24 : -24) : 0
 
 	// is starting with a power cell installed, create it and set its charge level
@@ -200,27 +212,27 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if (src.autoname_on_spawn == 1 || (name == "N APC" || name == "E APC" || name == "S APC" || name == "W APC"))
 			src.name = "[area.name] APC"
 	if (!QDELETED(src.area))
-		src.area.area_apc = src
+		if(istype(src.area,/area/unconnected_zone)) //if we built in an as-yet APCless zone, we've created a new built zone as a consequence
+			unconnected_zone.propagate_zone(get_turf(src))
+			var/area/A = get_area(src)
+			src.area = A
+			A.area_apc = src
+		else
+			src.area.area_apc = src
 
 	src.UpdateIcon()
 
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	if (setup_networkapc)
-		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
-		src.net_id = generate_net_id(src)
-	else
-		terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.set_dir(tdir)
-	terminal.master = src
+	src.build_terminal()
 
 	SPAWN(0.5 SECONDS)
 		src.update()
 
 /obj/machinery/power/apc/disposing()
 	STOP_TRACKING
+	if(src.area?.area_apc == src)
+		src.area.area_apc = null
 	cell = null
-	terminal?.master = null
+	terminal?.set_master(null)
 	terminal = null
 	..()
 
@@ -237,21 +249,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
-
-	if(status & BROKEN)
-		switch(repair_status)
-			if(0)
-				. += "<br>It's completely busted! It seems you need to use a screwdriver and disconnect the control board first, to begin the repair process.</br>"
-			if(1)
-				. += "<br>The control board has been disconnected. The autotransformer's wiring is all messed up! You need to grab some cables and fix it.</br>"
-			if(2)
-				. += "<br>The control panel is disconnected and the autotransformer seems to be in a good condition. You just need to tune it with a wrench now.</br>"
-			if(3)
-				. += "<br>The autotransformer seems to be working fine now. The next step is resetting the control board with a multitool.</br>"
-			if(4)
-				. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a screwdriver, to finish the repair process.</br>"
-		return
-
 	if(user && !user.stat)
 		. += "A control terminal for the area electrical systems."
 		if(opened)
@@ -281,6 +278,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/atom/last = src
 
 	var/list/starts = new/list()
+
+	for_by_tcl(IX, /obj/machinery/interdictor)
+		if (IX.expend_interdict(500, src))
+			arcFlash(last, IX, 500000)
+			return 1
+
 	for(var/mob/living/M in oview(5, src))
 		if(M.invisibility) continue
 		starts.Add(M)
@@ -298,13 +301,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
 	ClearAllOverlays(1)
-	if(opened)
+	if(src.status & BROKEN)
+		icon_state = "apc-b"
+	else if(opened)
 		icon_state = "apc1"
 
 		if (cell)
 			// if opened, update overlays for cell
-			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
-			AddOverlays(I_cell, "cell")
+			var/image/i_cell
+			if(cell.artifact)
+				i_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.artifact.artiappear.name]")
+			else
+				i_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
+			AddOverlays(i_cell, "cell")
 
 	else if(emagged)
 		icon_state = "apcemag"
@@ -368,7 +377,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			if (user)
 				boutput(user, "This APC doesn't have a local interface to hack.")
 		else
-			flick("apc-spark", src)
+			FLICK("apc-spark", src)
 			sleep(0.6 SECONDS)
 			if(prob(50))
 				emagged = 1
@@ -424,15 +433,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 						var/obj/machinery/power/terminal/newTerm = locate(/obj/machinery/power/terminal) in src.loc
 						if (istype(newTerm) && !newTerm.master)
 							src.terminal = newTerm
-							newTerm.master = src
+							newTerm.set_master(src, src.net_id)
 							newTerm.set_dir(initial(src.dir)) //Can't use CURRENT dir because it is set to south on spawn.
-						else
-							if (src.setup_networkapc)
-								src.terminal = new /obj/machinery/power/terminal/netlink(src.loc)
-							else
-								src.terminal = new /obj/machinery/power/terminal(src.loc)
-							src.terminal.master = src
-							src.terminal.set_dir(initial(src.dir))
 
 					status &= ~BROKEN //Clear broken flag
 					icon_state = initial(src.icon_state)
@@ -454,7 +456,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 					else
 						boutput(user, SPAN_ALERT("Not enough cable! <I>(Requires four pieces)</I>"))
 						return
-					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
+					SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
 					list(theCoil, user), W.icon, W.icon_state, null, null)
 					return
 				if (2)
@@ -470,8 +472,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				if (1)
 					boutput(user, SPAN_ALERT("You must repair the autotransformer's windings prior to tuning it."))
 				if (2)
-					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
-					SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
+					boutput(user, "You begin to carefully tune the autotransformer.")
+					SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
 					list(user), W.icon, W.icon_state, null, null)
 				else
 					boutput(user, "The autotransformer is already tuned.")
@@ -490,6 +492,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			return
 
 		return
+
+	if(!terminal && opened) // terminal repair
+		if(!terminal_repair_status) // failsafe check, just in case something weird happens
+			terminal_repair_status = TERMINAL_REPAIR_STEP_WIRING
+		if(istype(W, /obj/item/cable_coil) || issolderingtool(W) || istype(W, /obj/item/sheet))
+			handle_terminal_repair(W, user)
+			return
+
 	if (ispryingtool(W))	// crowbar means open or close the cover
 		if(opened)
 			opened = 0
@@ -546,15 +556,85 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				boutput(user, SPAN_ALERT("Access denied."))
 
 /obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
-	W.change_stack_amount(-4)
-	boutput(user, "You repair the autotransformer.")
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-	src.repair_status = 2
+	var/obj/item/cable_coil/coil = W
+	if (coil?.use(4))
+		boutput(user, "You repair the autotransformer.")
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		src.repair_status = 2
 
 /obj/machinery/power/apc/proc/fix_autotransformer(mob/user)
 	boutput(user, "You tune the autotransformer.")
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	src.repair_status = 3
+
+// We assume that another proc has verified that the terminal is actually missing, and that the cover is open
+/obj/machinery/power/apc/proc/handle_terminal_repair(obj/item/W, mob/user)
+	if(istype(W, /obj/item/cable_coil))
+		if(terminal_repair_status != TERMINAL_REPAIR_STEP_WIRING)
+			boutput(user, SPAN_ALERT("You don't need any more cables to repair the terminal."))
+			return
+		var/obj/item/cable_coil/theCoil = W
+		if (theCoil.amount >= 6)
+			boutput(user, "You unravel some cable..<br>Now replacing the power feed cables.  This could take some time.")
+		else
+			boutput(user, SPAN_ALERT("Not enough cable! <I>(Requires six pieces)</I>"))
+			return
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/power/apc/proc/terminal_step_wiring,\
+		list(theCoil, user), W.icon, W.icon_state, null, null)
+		return
+
+	else if(issolderingtool(W))
+		if(terminal_repair_status == TERMINAL_REPAIR_STEP_WIRING)
+			boutput(user, SPAN_ALERT("You can't solder the cabling when you haven't even installed it yet!"))
+			return
+		else if(terminal_repair_status == TERMINAL_REPAIR_STEP_METAL)
+			boutput(user, SPAN_ALERT("The power cables are already secured!"))
+			return
+		playsound(src, 'sound/machines/click.ogg', 15, TRUE, pitch = 1.25)
+		boutput(user, "You start to solder the cables to the autotransformer and power board. This could take some time.")
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/power/apc/proc/terminal_step_soldering,\
+		list(user), W.icon, W.icon_state, null, null)
+		return
+
+	else if(istype(W, /obj/item/sheet))
+		if(terminal_repair_status == TERMINAL_REPAIR_STEP_WIRING)
+			boutput(user, SPAN_ALERT("You haven't even installed the wires yet, the terminal cover can wait!"))
+			return
+		if(terminal_repair_status == TERMINAL_REPAIR_STEP_SOLDERING)
+			boutput(user, SPAN_ALERT("The cabling hasn't been soldered, it's not time to install the terminal cover yet!"))
+			return
+		var/obj/item/sheet/sheet = W
+		if (sheet.material?.getMaterialFlags() & MATERIAL_METAL)
+			sheet.change_stack_amount(-1)
+			src.visible_message("[user] finishes installing a new power terminal for [src].")
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
+			src.terminal_repair_status = null // we're done!
+			src.build_terminal()
+		else
+			boutput(user, SPAN_ALERT("You need a sheet of metal to finish the terminal cover!"))
+			return
+
+/obj/machinery/power/apc/proc/terminal_step_wiring(var/obj/item/cable_coil/theCoil, mob/user)
+	if(theCoil?.use(6))
+		boutput(user, "You feed the new cabling into the conduits.")
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		src.terminal_repair_status = TERMINAL_REPAIR_STEP_SOLDERING
+
+/obj/machinery/power/apc/proc/terminal_step_soldering(mob/user)
+	boutput(user, "You finish securing the power supply cables.")
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	src.terminal_repair_status = TERMINAL_REPAIR_STEP_METAL
+
+/// create a terminal object at the same position as original turf loc
+/// wires will attach to this
+/obj/machinery/power/apc/proc/build_terminal()
+	if (src.setup_networkapc)
+		src.terminal = new /obj/machinery/power/terminal/netlink(src.loc)
+		src.net_id = generate_net_id(src)
+	else
+		src.terminal = new/obj/machinery/power/terminal(src.loc)
+	src.terminal.set_dir(tdir)
+	src.terminal.set_master(src, src.net_id)
 
 /obj/machinery/power/apc/attack_ai(mob/user)
 	if (src.aidisabled && !src.wiresexposed)
@@ -904,6 +984,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
+/obj/machinery/power/apc/proc/request_update()
+	src.update_requested = TRUE
+
 /obj/machinery/power/apc/proc/update()
 	if (!QDELETED(src.area))
 
@@ -1191,6 +1274,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if(!area.requires_power)
 			return
 	else
+		if (QDELETED(src)) //we're in the failed-to-gc pile, stop generating runtimes
+			src.UnsubscribeProcess()
+			return
 		SPAWN(1)
 			qdel(src)
 		CRASH("Broken-ass APC [identify_object(src)] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
@@ -1303,7 +1389,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	// update icon & area power if anything changed
 
-	if(last_lt != lighting || last_eq != equipment || last_en != environ || last_ch != charging)
+	if(last_lt != lighting || last_eq != equipment || last_en != environ || last_ch != charging || update_requested)
+		if(update_requested)
+			update_requested = FALSE
 		UpdateIcon()
 		update()
 
@@ -1444,13 +1532,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		set_broken()
 
 
-/obj/machinery/power/apc/proc/set_broken()
-	status |= BROKEN
-	icon_state = "apc-b"
-	ClearAllOverlays() //no need to cache since nobody repairs these
-
+/obj/machinery/power/apc/set_broken()
+	if(src.hardened) // cannot be broken
+		return TRUE
+	. = ..()
+	if(.) return
 	operating = 0
 	update()
+
+/obj/machinery/power/apc/overload_act()
+	if(src.hardened)
+		return FALSE
+	return !src.set_broken()
 
 // overload all the lights in this APC area
 
@@ -1588,9 +1681,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/receive_silicon_hotkey(var/mob/user)
-	..()
-
-	if (!isAI(user) && !issilicon(user))
+	if(..())
 		return
 
 	if (user.client.check_key(KEY_OPEN))
@@ -1636,3 +1727,27 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	. = ..()
 	if(Obj == src.cell)
 		src.cell = null
+
+/obj/machinery/power/apc/get_help_message(dist, mob/user)
+	if (!(src.status & BROKEN) && !terminal_repair_status)
+		return null
+	if(src.status & BROKEN)
+		switch(repair_status)
+			if(0)
+				. += "It's completely busted! It seems you need to use a <b>screwdriver</b> and disconnect the control board first, to begin the repair process."
+			if(1)
+				. += "The control board has been disconnected. The autotransformer's wiring is all messed up! You need to grab some cables and fix it."
+			if(2)
+				. += "The control panel is disconnected and the autotransformer seems to be in a good condition. You just need to tune it with a <b>wrench</b> now."
+			if(3)
+				. += "The autotransformer seems to be working fine now. The next step is resetting the control board with a <b>multitool</b>."
+			if(4)
+				. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a <b>screwdriver</b>, to finish the repair process.</br>"
+	else
+		switch(terminal_repair_status)
+			if(TERMINAL_REPAIR_STEP_WIRING)
+				. += "The power terminal is missing! To begin replacing it, you'll need to <b>open the cover</b> and <b>insert new cabling</b>."
+			if(TERMINAL_REPAIR_STEP_SOLDERING)
+				. += "New cables have been inserted, but you need to finish installing them with a <b>soldering iron</b>."
+			if(TERMINAL_REPAIR_STEP_METAL)
+				. += "The new power cables are fully installed, and just need a housing. Any <b>sheet of metal</b> should do the trick."

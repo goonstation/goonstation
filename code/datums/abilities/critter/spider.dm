@@ -131,7 +131,7 @@
 /datum/targetable/critter/spider_drain
 	name = "Drain"
 	desc = "Drain a dead human."
-	icon_state = "clown_spider_drain"
+	icon_state = "spider_drain"
 	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
@@ -161,6 +161,9 @@
 		var/mob/living/carbon/human/H = target
 		if(!istype(H) || !isdead(H))
 			boutput(holder.owner, SPAN_ALERT("That isn't a dead human."))
+			return 1
+		if(H.bioHolder.HasEffect("husk"))
+			boutput(holder.owner, SPAN_ALERT("That target has already been drained of all their fluids!"))
 			return 1
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] starts draining the fluids out of [H]!</b>"),\
@@ -192,7 +195,7 @@
 				if(length(neightbors))
 					holder.owner.set_loc(pick(neightbors))
 				SPAWN(0)
-					var/obj/icecube/cube = new /obj/icecube(get_turf(H), H)
+					var/obj/icecube/spider/cube = new /obj/icecube/spider(get_turf(H), H)
 					if (istype(S))
 						switch (S.encase_in_web)
 							if (2)
@@ -228,6 +231,9 @@
 
 /datum/targetable/critter/spider_drain/cluwne
 	icon_state = "cluwne_spider_drain"
+
+/datum/targetable/critter/spider_drain/clown
+	icon_state = "clown_spider_drain"
 
 // -----------------
 // Baby clownspider kick
@@ -318,8 +324,10 @@
 			while (flail > 0 && MT && !MT.disposed)
 				MT.changeStatus("knockdown", 2 SECONDS)
 				MT.canmove = 0
-				if (MT.loc)
+				if (MT.loc && get_dist(holder.owner.loc, MT.loc) < 2)
 					holder.owner.set_loc(MT.loc)
+				else
+					break
 				MT.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("knockdown") || holder.owner.getStatusDuration("unconscious"))
 					break

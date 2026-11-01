@@ -9,7 +9,6 @@
 	icon = 'icons/mob/mobile_ai.dmi'
 	voice_name = "synthesized voice"
 	icon_state = "ai"
-	network = "SS13"
 	pixel_y = 15
 	layer = MOB_LAYER
 	classic_move = 0
@@ -145,7 +144,7 @@
 
 		src.check_power()
 
-	set_face(var/emotion)
+	set_face(var/emotion, var/key, var/apply_glass_material = FALSE)
 		src.overlays.len = 0
 		if(src.stat || src.malf)
 			if(isdead(src))

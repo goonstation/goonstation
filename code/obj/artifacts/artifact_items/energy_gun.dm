@@ -1,3 +1,5 @@
+TYPEINFO(/obj/item/gun/energy/artifact)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/gun/energy/artifact
 	// an energy gun, it shoots things as you might expect
 	name = "artifact energy gun"
@@ -5,7 +7,6 @@
 	icon_state = "laser"
 	force = 5
 	artifact = 1
-	is_syndicate = 1
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -37,7 +38,7 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr) || isobserver(usr)))
 			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()

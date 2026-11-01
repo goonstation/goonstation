@@ -4,15 +4,27 @@
  * @author garash2k
  * @license ISC
  */
-import { AlertContentWindow } from './types';
+import type { AlertContentWindow } from './types';
 
-import { tgControls } from './tgControls';
+const r = require.context('./acw', false, /\.AlertContentWindow\.tsx$/);
 
-export const getAlertContentWindow = (alertContentWindowName: string): AlertContentWindow => {
-  switch (alertContentWindowName) {
-    case "tgControls":
-      return tgControls;
-    default:
-      throw new Error(`Unrecognized alert content window name: ${alertContentWindowName}`);
+const alertContentWindowMap: { [key: string]: AlertContentWindow } = {};
+r.keys().forEach((key) => {
+  const module = r(key);
+  const componentName = key.match(/\/(.*)\.AlertContentWindow\.tsx$/)?.[1];
+  if (componentName) {
+    alertContentWindowMap[componentName] = module.acw;
   }
+});
+
+export const getAlertContentWindow = (
+  alertContentWindowName: string,
+): AlertContentWindow => {
+  const alertContentWindow = alertContentWindowMap[alertContentWindowName];
+  if (!alertContentWindow) {
+    throw new Error(
+      `Unrecognized alert content window name: ${alertContentWindowName}`,
+    );
+  }
+  return alertContentWindow;
 };

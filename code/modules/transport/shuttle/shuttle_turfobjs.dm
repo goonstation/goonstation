@@ -109,7 +109,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
 		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
-		/turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner
+		/turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner, /obj/indestructible/shuttle_window
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/false_wall/reinforced,
@@ -125,8 +125,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	icon_state = "mapwall"
 #endif
 	light_mod = "wall-"
-	opacity = 0
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	//opacity = 0 //lets try opaque shuttle walls
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	attackby()
 	attack_hand()
@@ -207,9 +207,23 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	icon_state = "corner"
 	density = 1
 	opacity = 0
+	provides_grip = TRUE
 	gas_impermeable = TRUE
 	layer = EFFECTS_LAYER_BASE - 1
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
+
+/obj/indestructible/shuttle_window
+	plane = PLANE_WALL
+	name = "shuttle window"
+	desc = "A shuttle window. Pretty reinforced."
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "shuttle_window1"
+	density = 1
+	opacity = 0
+	provides_grip = TRUE
+	gas_impermeable = TRUE
+	layer = EFFECTS_LAYER_BASE - 1
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 //TODO: CLEAN UP
 /turf/simulated/shuttle/wall

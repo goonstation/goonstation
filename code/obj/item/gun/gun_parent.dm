@@ -1,9 +1,8 @@
-var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder uID stuff
 
 /obj/item/gun
 	name = "gun"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
@@ -21,6 +20,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	hide_attack = 2 //Point blanking... gross
 	pickup_sfx = 'sound/items/pickup_gun.ogg'
 	inventory_counter_enabled = 1
+	var/scope_enabled = 0
 
 	var/suppress_fire_msg = 0
 
@@ -29,6 +29,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/list/projectiles = null
 	var/current_projectile_num = 1
 	var/silenced = 0
+	///the "out of ammo oh no" click
+	var/click_sound = 'sound/weapons/Gunclick.ogg'
+	var/click_msg = "*click* *click*"
 	var/can_dual_wield = 1
 
 	var/slowdown = 0 //Movement delay attack after attack
@@ -88,6 +91,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/camera_recoil_sway_min = 0 //! Minimum recoil variance
 	var/camera_recoil_sway_max = 20 //! Maximum recoil variance
 
+	var/datum/forensic_id/forensic_profile = null
+
 
 	buildTooltipContent()
 		. = ..() + src.current_projectile?.get_tooltip_content()
@@ -95,9 +100,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	New()
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
-		SPAWN(2 SECONDS)
-			src.forensic_ID = src.CreateID()
-			forensic_IDs.Add(src.forensic_ID)
+		src.forensic_profile = register_id("=[build_id_unique(/proc/build_id, list(FORENSIC_CHARS_BALLISTICS, 9))]=")
 		return ..()
 
 	// equip handling for weapons that fit on your back
@@ -114,6 +117,12 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (user.back.storage.check_can_hold(src) == STORAGE_CAN_HOLD)
 			user.back.Attackby(src, user)
 			return TRUE
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.forensic_profile)
+			var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+			scan.add_data(gun_profile_data)
 
 ///CHECK_LOCK
 ///Call to run a weaponlock check vs the users implant
@@ -152,6 +161,38 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		src.set_current_projectile(src.projectiles[src.current_projectile_num])
 		boutput(user, SPAN_NOTICE("You set the output to [src.current_projectile.sname]."))
 	return
+
+/obj/item/gun/dropped(mob/user as mob)
+	var/obj/ability_button/toggle_scope/scope = locate(/obj/ability_button/toggle_scope) in src.ability_buttons
+	scope?.icon_state = "scope_off"
+	..()
+
+/obj/item/gun/proc/calculate_spread(mob/user as mob)
+	var/spread = 0
+	if (ismob(user) )
+		if (user.reagents)
+			var/how_drunk = 0
+			var/amt = user.reagents.get_reagent_amount("ethanol")
+			switch(amt)
+				if (110 to INFINITY)
+					how_drunk = 2
+				if (1 to 110)
+					how_drunk = 1
+			how_drunk = max(0, how_drunk - isalcoholresistant(user))
+			spread += 5 * how_drunk
+
+	spread = max(spread, spread_angle)
+	spread += (recoil/recoil_max) * recoil_inaccuracy_max
+
+	if (ismob(user))
+		if (user.bioHolder.HasEffect("clumsy"))
+			spread += 5
+		if (user.bioHolder.HasEffect("hulk"))
+			spread += 8
+
+	return spread
+
+
 
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
@@ -206,8 +247,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!target || !ismob(target)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 
-	user.lastattacked = target
-	target.lastattacker = user
+	user.lastattacked = get_weakref(target)
+	target.lastattacker = get_weakref(user)
 	target.lastattackertime = world.time
 
 	if(user.a_intent != INTENT_HELP && isliving(target))
@@ -228,7 +269,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/proc/ShootPointBlank(atom/target, var/mob/user as mob, var/second_shot = 0)
 	if(!SEND_SIGNAL(src, COMSIG_GUN_TRY_POINTBLANK, target, user, second_shot))
-		src.shoot_point_blank(target, user, second_shot)
+		if(!ON_COOLDOWN(src, "shoot_delay", src.shoot_delay))
+			src.shoot_point_blank(target, user, second_shot)
 
 /obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
 	if (!target || !user)
@@ -273,16 +315,22 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			return
 
 	if (!canshoot(user))
-		if (!silenced)
-			target.visible_message(SPAN_ALERT("<B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B>"))
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
-		else
-			user.show_text("*click* *click*", "red")
+		if (src.click_sound)
+			if (!silenced)
+				target.visible_message(SPAN_ALERT("<B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B>"))
+				playsound(user, click_sound, 60, TRUE)
+			else
+				user.show_text(src.click_msg, "red")
 		return FALSE
 
-	if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
-		var/mob/living/carbon/human/H = user
-		H.gunshot_residue = 1
+	if (src.add_residue && ismob(user)) // Kinetic firearms leave behind forensic evidence
+		var/mob/M = user
+		var/datum/forensic_data/basic/residue_data = new(register_id("Gunshot residue found"), flags = FORENSIC_REMOVE_CLEANING)
+		M.add_evidence(residue_data, FORENSIC_GROUP_NOTES)
+		src.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/simulated/floor))
+			T.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
 
 	if (!src.silenced)
 		for (var/mob/O in AIviewers(target, null))
@@ -305,21 +353,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			sleep(slowdown_time)
 			user.movement_delay_modifier -= slowdown
 
-	var/spread = 0
-	if (ismob(user) && user.reagents)
-		var/how_drunk = 0
-		var/amt = user.reagents.get_reagent_amount("ethanol")
-		switch(amt)
-			if (110 to INFINITY)
-				how_drunk = 2
-			if (1 to 110)
-				how_drunk = 1
-		how_drunk = max(0, how_drunk - isalcoholresistant(user))
-		spread += 5 * how_drunk
-	spread = max(spread, spread_angle)
-
-	spread += (recoil/recoil_max) * recoil_inaccuracy_max
-
+	var/spread = src.calculate_spread(user)
 	for (var/i = 0; i < current_projectile.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 		if (!P)
@@ -328,7 +362,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			P.shooter = null
 			P.mob_shooter = user
 
-		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
+		if(isobj(P.implanted))
+			var/obj/O = P.implanted
+			O.forensic_holder = P.forensic_holder // Any evidence applied to the projectile will also be applied to the bullet
 		if(BOUNDS_DIST(user, target) == 0)
 			P.was_pointblank = 1
 			hit_with_existing_projectile(P, target) // Includes log entry.
@@ -349,6 +385,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 
 /obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
+	if(P && src.forensic_profile)
+		var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+		P.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 	return
 
 /obj/item/gun/proc/Shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
@@ -359,11 +398,18 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
+
+	if(!isturf(target))
+		target = get_turf(target)
+
+	if(isnull(target))
+		return FALSE
+
 	if (!canshoot(user))
-		if (ismob(user))
-			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
+		if (ismob(user) && src.click_sound)
+			user.show_text(src.click_msg, "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+				playsound(user, click_sound, 60, TRUE)
 		return FALSE
 	if (!process_ammo(user))
 		return FALSE
@@ -371,9 +417,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return FALSE
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return FALSE
-
-	if(!isturf(target))
-		target = get_turf(target)
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
@@ -390,25 +433,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				sleep(slowdown_time)
 				M.movement_delay_modifier -= slowdown
 
-	var/spread = is_dual_wield*10
-	if (user.reagents)
-		var/how_drunk = 0
-		var/amt = user.reagents.get_reagent_amount("ethanol")
-		switch(amt)
-			if (110 to INFINITY)
-				how_drunk = 2
-			if (1 to 110)
-				how_drunk = 1
-		how_drunk = max(0, how_drunk - isalcoholresistant(user))
-		spread += 5 * how_drunk
-	spread = max(spread, spread_angle)
-
-	spread += (recoil/recoil_max) * recoil_inaccuracy_max
+	var/spread = src.calculate_spread(user)
 
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
-		P.forensic_ID = src.forensic_ID
-
+		if(isobj(P.implanted))
+			var/obj/O = P.implanted
+			O.forensic_holder = P.forensic_holder
+		P.spread = spread
 	if(user && !suppress_fire_msg)
 		if(!src.silenced)
 			for(var/mob/O in AIviewers(user, null))
@@ -424,11 +456,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	handle_recoil(user, start, target, POX, POY)
 
-	if (ismob(user))
+	if (src.add_residue && ismob(user)) // Kinetic firearms leave behind forensic evidence
 		var/mob/M = user
-		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
-			var/mob/living/carbon/human/H = user
-			H.gunshot_residue = 1
+		var/datum/forensic_data/basic/residue_data = new(register_id("Gunshot residue found"), flags = FORENSIC_REMOVE_CLEANING)
+		M.add_evidence(residue_data, FORENSIC_GROUP_NOTES)
+		src.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/simulated/floor))
+			T.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
 
 	src.UpdateIcon()
 	return TRUE
@@ -438,7 +473,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 0
 
 /obj/item/gun/proc/log_shoot(mob/user, turf/T, obj/projectile/P)
-	logTheThing(LOG_COMBAT, user, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
+	if(!P)
+		return
+	logTheThing(LOG_COMBAT, user, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir_accurate(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
 
 /obj/item/gun/examine()
 	if (src.artifact)
@@ -446,9 +483,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return ..()
 
 /obj/item/gun/proc/process_ammo(var/mob/user)
-	boutput(user, SPAN_ALERT("*click* *click*"))
-	if (!src.silenced)
-		playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+	if (src.click_sound)
+		boutput(user, SPAN_ALERT(src.click_msg))
+		if (!src.silenced)
+			playsound(user, click_sound, 60, TRUE)
 	return 0
 
 // Could be useful in certain situations (Convair880).
@@ -495,6 +533,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/set_current_projectile(datum/projectile/newProj)
 	src.current_projectile = newProj
 	src.tooltip_rebuild = TRUE
+	if (src.silenced)
+		src.silence_projectile()
 	SEND_SIGNAL(src, COMSIG_GUN_PROJECTILE_CHANGED, newProj)
 
 /obj/item/gun/proc/do_camera_recoil(mob/user, turf/start, turf/target, POX, POY)
@@ -550,7 +590,18 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		recoil_stacks += 1
 		stacked_recoil = clamp(round(recoil_stacks) - recoil_stacking_safe_stacks,0,recoil_stacking_max_stacks) * recoil_stacking_amount
 
-	recoil += (recoil_strength + stacked_recoil)
+
+	var/recoil_mult = 1
+	if (ismob(user))
+		var/is_strong = user.bioHolder.HasEffect("strong")
+		var/is_hulk = user.bioHolder.HasEffect("hulk")
+
+		if (is_strong)
+			recoil_mult *= 0.6
+		if (is_hulk)
+			recoil_mult *= 0.15 // Basically zero recoil, but flat inaccuracy penalty
+
+	recoil += (recoil_strength + stacked_recoil)*recoil_mult
 	recoil = clamp(recoil, 0, recoil_max)
 	recoil_last_shot = TIME
 	if (camera_recoil_enabled)
@@ -563,3 +614,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (start_recoil && icon_recoil_enabled)
 		SPAWN(0)
 			do_icon_recoil()
+
+/obj/item/gun/proc/silence_projectile()
+	src.current_projectile.shot_sound_extrarange = -10
+	src.current_projectile.sound_los = TRUE

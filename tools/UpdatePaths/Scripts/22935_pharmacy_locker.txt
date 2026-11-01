@@ -1,0 +1,1 @@
+/obj/storage/secure/closet/research/chemical{req_access_txt="5"} : /obj/storage/secure/closet/research/chemical/pharmacy{@OLD;req_access_txt=@SKIP}

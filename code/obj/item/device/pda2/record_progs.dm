@@ -39,7 +39,8 @@
 					dat += "Sex: [src.active1["sex"]]<br>"
 					dat += "Pronouns: [src.active1["pronouns"]]<br>"
 					dat += "Age: [src.active1["age"]]<br>"
-					dat += "Fingerprint: [src.active1["fingerprint"]]<br>"
+					dat += "Fingerprint (R): [src.active1["fprint_r"]]<br>"
+					dat += "Fingerprint (L): [src.active1["fprint_l"]]<br>"
 					dat += "DNA: [src.active1["dna"]]<br>"
 					dat += "Physical Status: [src.active1["p_stat"]]<br>"
 					dat += "Mental Status: [src.active1["m_stat"]]<br>"
@@ -54,7 +55,7 @@
 					dat += "SecHUD Flag: [src.active2["sec_flag"]]<br>"
 
 					dat += "Minor Crimes: [src.active2["mi_crim"]]<br>"
-					dat += "Details: [src.active2["mi_crim"]]<br><br>"
+					dat += "Details: [src.active2["mi_crim_d"]]<br><br>"
 
 					dat += "Major Crimes: [src.active2["ma_crim"]]<br>"
 					dat += "Details: [src.active2["ma_crim_d"]]<br><br>"
@@ -123,7 +124,8 @@
 					dat += "Sex: [src.active1["sex"]]<br>"
 					dat += "Pronouns: [src.active1["pronouns"]]<br>"
 					dat += "Age: [src.active1["age"]]<br>"
-					dat += "Fingerprint: [src.active1["fingerprint"]]<br>"
+					dat += "Fingerprint (R): [src.active1["fprint_r"]]<br>"
+					dat += "Fingerprint (L): [src.active1["fprint_l"]]<br>"
 					dat += "DNA: [src.active1["dna"]]<br>"
 					dat += "Physical Status: [src.active1["p_stat"]]<br>"
 					dat += "Mental Status: [src.active1["m_stat"]]<br>"
@@ -136,7 +138,7 @@
 				if (istype(src.active2, /datum/db_record) && data_core.medical.has_record(src.active2))
 					dat += "Current Health: [src.active2["h_imp"]]<br><br>"
 
-					dat += "Blood Type: [src.active2["bioHolder.bloodType"]]<br><br>"
+					dat += "Blood Type: [src.active2["blood_type"]]<br><br>"
 
 					dat += "Minor Disabilities: [src.active2["mi_dis"]]<br>"
 					dat += "Details: [src.active2["mi_dis_d"]]<br><br>"

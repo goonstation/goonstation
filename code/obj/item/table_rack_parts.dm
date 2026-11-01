@@ -13,23 +13,20 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	stamina_damage = 35
 	stamina_cost = 22
 	stamina_crit_chance = 10
 	health = 8
+	can_arcplate = FALSE
 	var/furniture_type = /obj/table/auto
 	var/furniture_name = "table"
 	var/reinforced = 0
 	var/build_duration = 50
-	var/obj/contained_storage = null // used for desks' drawers atm, if src is deconstructed it'll dump its contents on the ground and be deleted
 	var/density_check = TRUE //! Do we want to prevent building on turfs with something dense there?
 
-	New(loc, obj/storage_thing)
+	New(loc)
 		..()
-		if (storage_thing)
-			src.contained_storage = storage_thing
-			src.contained_storage.set_loc(src)
 		BLOCK_SETUP(BLOCK_LARGE)
 
 	proc/construct(mob/user as mob, turf/T as turf)
@@ -40,7 +37,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			if (!T) // buh??
 				return
 		if (ispath(src.furniture_type))
-			newThing = new src.furniture_type(T, src.contained_storage ? src.contained_storage : null)
+			newThing = new src.furniture_type(T)
 		else
 			stack_trace("[user] tries to build a piece of furniture from [identify_object(src)] but its furniture_type is null and it is being deleted.")
 			user.u_equip(src)
@@ -58,14 +55,6 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 		return newThing
 
 	proc/deconstruct(var/reinforcement = 0)
-		if (src.contained_storage && length(src.contained_storage.contents))
-			var/turf/T = get_turf(src)
-			for (var/atom/movable/A in src.contained_storage)
-				A.set_loc(T)
-			var/obj/O = src.contained_storage
-			src.contained_storage = null
-			qdel(O)
-
 		var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
 		if (src.material)
 			A.setMaterial(src.material)
@@ -95,25 +84,16 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	mouse_drop(atom/movable/target)
 		. = ..()
-		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target))
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target) && BOUNDS_DIST(src, usr) == 0 \
+			&& BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(usr, target) == 0 && can_reach(usr, src) && can_reach(usr, target)) // i hate mouse_drop
 			actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), usr)
-
-	disposing()
-		if (src.contained_storage && length(src.contained_storage.contents))
-			var/turf/T = get_turf(src)
-			for (var/atom/movable/A in src.contained_storage)
-				A.set_loc(T)
-			var/obj/O = src.contained_storage
-			src.contained_storage = null
-			qdel(O)
-		..()
 
 /* ---------- Table Parts ---------- */
 #define TABLE_WARNING(user) boutput(user, SPAN_ALERT("You can't build a table under yourself! You'll have to build it somewhere adjacent instead."))
 /obj/item/furniture_parts/table
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a table."
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	afterattack(atom/target, mob/user)
 		if (isturf(target) && target == get_turf(user))
@@ -124,6 +104,13 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	attack_self(mob/user)
 		TABLE_WARNING(user)
+
+	mouse_drop(atom/movable/target)
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target) && target == get_turf(usr))
+			TABLE_WARNING(usr)
+			return
+		. = ..()
+
 
 #undef TABLE_WARNING
 
@@ -150,6 +137,12 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 	desc = "A collection of parts that can be used to make a round wooden table."
 	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	furniture_type = /obj/table/wood/round/auto
+
+/obj/item/furniture_parts/table/wood/regal
+	name = "fancy wooden table parts"
+	desc = "A collection of parts that can be used to make a fancy wooden table."
+	icon = 'icons/obj/furniture/table_wood_regal.dmi'
+	furniture_type = /obj/table/wood/regal/auto
 
 /obj/item/furniture_parts/table/wood/desk
 	name = "desk parts"
@@ -213,6 +206,13 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 	desc = "A collection of parts that can be used to make a sleek table."
 	icon = 'icons/obj/furniture/table_sleek.dmi'
 	furniture_type = /obj/table/sleek/auto
+
+/obj/item/furniture_parts/table/monodesk
+	name = "monochrome desk parts"
+	desc = "A collection of parts that can be used to make a monochrome desk."
+	icon = 'icons/obj/furniture/table_monochrome_desk.dmi'
+	furniture_type = /obj/table/monodesk/auto
+
 /* ---------- Glass Table Parts ---------- */
 TYPEINFO(/obj/item/furniture_parts/table/glass)
 	mat_appearances_to_ignore = list("glass")
@@ -302,7 +302,7 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 /* ------- Single Table Parts ------- */
 
@@ -504,11 +504,11 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 	industrial
 		name = "industrial chair parts"
-		desc = "An collection of rods and scaffolding that can be used to make an industrial chair."
+		desc = "A collection of rods and scaffolding that can be used to make an industrial chair."
 		icon_state = "ichair_parts"
 		furniture_type = /obj/stool/chair/dining/industrial
 		furniture_name = "industrial chair"
-		material_amt = 0.1
+		material_amt = MATERIAL::AMOUNT::SHEET
 
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"
@@ -600,6 +600,16 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	furniture_type = /obj/stool/chair/comfy/throne_gold
 	furniture_name = "golden throne"
 
+/obj/item/furniture_parts/wood_regalchair
+	name = "fancy wooden chair parts"
+	desc = "A collection of parts that can be used to make a fancy wooden chair."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "wooden_regalchair_parts"
+	stamina_damage = 15
+	stamina_cost = 15
+	furniture_type = /obj/stool/chair/comfy/wood_regal
+	furniture_name = "fancy wooden chair"
+
 /obj/item/furniture_parts/sleekchair
 	name = "comfy sleek chair parts"
 	desc = "A collection of parts that can be used to make a sleek and stylish chair."
@@ -655,14 +665,10 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		src.target_turf = target_turf
 		if (duration)
 			src.duration = duration
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
-		if (parts == null || owner == null || BOUNDS_DIST(owner, parts) > 0 || BOUNDS_DIST(owner, target_turf) > 0)
+		if (parts == null || owner == null || BOUNDS_DIST(owner, parts) > 0 || BOUNDS_DIST(parts, target_turf) > 0 || BOUNDS_DIST(owner, target_turf) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -684,7 +690,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 			var/obj/blocker
 			for (var/obj/O in target_turf)
-				if (O.density)
+				if (O.density && !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) || (ispath(parts.furniture_type, /obj/table) && HAS_FLAG(O.object_flags, NO_BLOCK_TABLE))))
 					blocker = O
 					break
 
@@ -694,6 +700,8 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		owner.visible_message(SPAN_NOTICE("[owner] begins constructing \a [furniture_name]!"))
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onResume(datum/action/bar/icon/furniture_build/attempted) //guaranteed since we only resume with the same type
 		..()
@@ -725,10 +733,6 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 			icon_state = the_tool.icon_state
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -743,6 +747,8 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		..()
 		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] begins disassembling [the_furniture]."))
+		if (src.owner && HAS_ATOM_PROPERTY(src.owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onEnd()
 		..()

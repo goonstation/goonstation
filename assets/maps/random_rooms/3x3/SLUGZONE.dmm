@@ -9,14 +9,14 @@
 	pixel_y = -29
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "e" = (
 /obj/shrub{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/greenish,
 /turf/simulated/floor/grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /mob/living/critter/small_animal/slug{
 	dir = 8
@@ -31,7 +31,7 @@
 	pixel_x = 33
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "u" = (
 /mob/living/critter/small_animal/slug,
 /obj/item/clothing/head/party/random,
@@ -40,10 +40,10 @@
 	pixel_y = -22
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /turf/simulated/floor/grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "T" = (
 /mob/living/critter/small_animal/slug/snail,
 /obj/item/clothing/head/party/random{
@@ -51,14 +51,14 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "X" = (
 /obj/decal/cleanable/writing{
 	words = "SLUG ZONE!!!";
 	pixel_y = 28
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 X

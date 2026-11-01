@@ -1,7 +1,7 @@
 // WIP bot improvements (Convair880).
-#define CLEANBOT_MOVE_SPEED 10
 #define CLEANBOT_CLEARTARGET_COOLDOWN "cleanbotclearinvalidtargetslist"
 #define CLEANBOT_CLEAN_COOLDOWN "slackbotidle"
+#define CLEANBOT_ACQUIRE_TARGET_COOLDOWN "cleanbotacquiretarget"
 ////////////////////////////////////////////// Cleanbot assembly ///////////////////////////////////////
 /obj/item/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
@@ -15,21 +15,42 @@
 	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 	var/created_cleanbot_type = /obj/machinery/bot/cleanbot
+	var/created_name = "Cleanbot"
 
-	attackby(var/obj/item/parts/robot_parts/P, mob/user as mob)
-		if (!istype(P, /obj/item/parts/robot_parts/arm/))
+	attackby(var/obj/item/I, mob/user as mob)
+		if (!istype(I, /obj/item/parts/robot_parts/arm/) && !istype(I, /obj/item/pen))
 			return
 
-		var/obj/machinery/bot/cleanbot/A = new created_cleanbot_type
-		if (user.r_hand == src || user.l_hand == src)
-			A.set_loc(get_turf(user))
-		else
-			A.set_loc(get_turf(src))
+		if(istype(I, /obj/item/parts/robot_parts/arm))
+			var/obj/machinery/bot/cleanbot/A = new created_cleanbot_type
+			A.setMaterial(src.material)
+			A.forensic_holder = src.forensic_holder
+			I.forensic_holder.copy_to(A.forensic_holder)
+			if (user.r_hand == src || user.l_hand == src)
+				A.set_loc(get_turf(user))
+			else
+				A.set_loc(get_turf(src))
 
-		boutput(user, "You add the robot arm to the bucket and sensor assembly! Beep boop!")
-		qdel(P)
-		qdel(src)
-		return
+			boutput(user, "You add the robot arm to the bucket and sensor assembly! Beep boop!")
+			A.name = src.created_name
+			qdel(I)
+			qdel(src)
+			return
+
+		if (istype(I, /obj/item/pen))
+			var/t = input(user, "Enter new robot name", src.name, src.created_name) as null|text
+			if (!t)
+				return
+			if(t && t != src.name && t != src.created_name)
+				phrase_log.log_phrase("bot-clean", t)
+				t = strip_html(replacetext(t, "'",""))
+				t = copytext(t, 1, 45)
+			if (!t)
+				return
+			if (!in_interact_range(src, user) && src.loc != user)
+				return
+
+			src.created_name = t
 
 	red
 		icon_state = "bucket_proxy-red"
@@ -44,6 +65,7 @@
 	layer = 5
 	density = 0
 	anchored = UNANCHORED
+	default_material = "plastic"
 	var/icon_state_base // defined in new, this is the base of the icon_state with the suffix removed, i.e. "cleanbot" without the "0", for easier modification of icon_states so long as the convention is followed
 
 	on = 1
@@ -51,7 +73,7 @@
 	health = 25
 	no_camera = 1
 	access_lookup = "Janitor"
-	bot_move_delay = CLEANBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::CLEANBOT
 
 	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
@@ -161,14 +183,15 @@
 
 		dat += "<tt><b>Automatic Station Cleaner v1.1</b></tt>"
 		dat += "<br><br>"
-		dat += "Status: <A href='?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
+		dat += "Status: <A href='byond://?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
 
-		if (user.client?.tooltipHolder)
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = "Cleanerbot v1.1 controls",
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				mouse = params,
+				title = "Cleanerbot v1.1 controls",
+				content = dat,
+			)
 
 		return
 
@@ -223,7 +246,7 @@
 			src.targets_invalid = list()
 			src.cleanbottargets = list() // if 5 minutes have gone by and jim still hasnt cleaned up the floor, I dont think they're gonna
 
-		if (!src.target)
+		if (!src.target && !GET_COOLDOWN(src, CLEANBOT_ACQUIRE_TARGET_COOLDOWN))
 			if(!src.scan_origin || !isturf(src.scan_origin))
 				src.scan_origin = get_turf(src)
 			src.target = src.find_target()
@@ -244,7 +267,7 @@
 
 			// we are not there. how do we get there
 			if (!src.path || !length(src.path))
-				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 20)
+				src.navigate_to(get_turf(src.target), src.bot_move_delay, max_dist = 20)
 				if (!src.path || !length(src.path))
 					// answer: we don't. try to find something else then.
 					src.KillPathAndGiveUp(1)
@@ -290,7 +313,7 @@
 					src.targets_invalid += coords
 				return 1
 
-	KillPathAndGiveUp(var/give_up)
+	KillPathAndGiveUp(var/give_up, var/apply_target_cooldown = FALSE)
 		. = ..()
 		var/coords = turf2coordinates(get_turf(src.target))
 		if(give_up)
@@ -298,6 +321,8 @@
 				src.targets_invalid += coords
 			src.search_range = 1
 			src.scan_origin = null
+		if(apply_target_cooldown)
+			ON_COOLDOWN(src, CLEANBOT_ACQUIRE_TARGET_COOLDOWN, 5 SECONDS)
 		src.cleaning = 0
 		src.icon_state = "[src.icon_state_base][src.on]"
 		src.cleanbottargets -= coords
@@ -351,6 +376,17 @@
 	is_open_container()
 		return TRUE
 
+	Crossed(atom/movable/M as mob)
+		..()
+		if(!src.on) //can't move our mop in the way of they legs if we're damn off
+			return
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.traitHolder?.hasTrait("wasitsomethingisaid") && prob(7)) //not too common... but not too uncommon
+				src.visible_message(SPAN_COMBAT("[src] [pick("sneakily","slyly","guilefully","deviously","rudely","devilishly","cleanly","delightfully devilishly","duplicitously","dastardly","connivingly","fucking rudely")] trips [M.name] with their mop!"))
+				H.setStatus("resting", duration = INFINITE_STATUS)
+				H.force_laydown_standup()
+
 	red
 		icon_state = "cleanbot-red0"
 		idle_delay = 175 // DA RED WUNZ GO FASTA
@@ -366,7 +402,7 @@
 
 /datum/action/bar/icon/cleanbotclean
 	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACT | INTERRUPT_ACTION
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
 	var/obj/machinery/bot/cleanbot/master
@@ -407,13 +443,13 @@
 
 			if (master.emagged)
 				if (master.reagents) // ZeWaka: Fix for null.remove_reagent()
-					master.reagents.remove_reagent(master.reagent_emagged, 10)
-					if (master.reagents.get_reagent_amount(master.reagent_emagged) <= 0)
+					master.reagents.remove_any(10)
+					if (master.reagents.total_volume <= 0)
 						master.reagents.add_reagent(master.reagent_emagged, 50)
 			else
 				if (master.reagents)
-					master.reagents.remove_reagent(master.reagent_normal, 10)
-					if (master.reagents.get_reagent_amount(master.reagent_normal) <= 0)
+					master.reagents.remove_any(10)
+					if (master.reagents.total_volume <= 0)
 						master.reagents.add_reagent(master.reagent_normal, 50)
 
 			if (T.active_liquid)
@@ -424,5 +460,3 @@
 			ON_COOLDOWN(master, CLEANBOT_CLEAN_COOLDOWN, master.idle_delay)
 			master.KillPathAndGiveUp(0)
 		..()
-
-#undef CLEANBOT_MOVE_SPEED

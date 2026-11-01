@@ -6,7 +6,6 @@
 // Outpost self-destruct !nuke!
 // A wirenet -> wireless link thing.
 // A printer! All the fun of printing, now in SS13!
-// Pathogen manipulator TO-DO
 // Security system monitor
 // A dangerous teleportation-oriented testing apparatus.
 // Generic testing appartus
@@ -15,6 +14,7 @@
 	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/networked.dmi'
+	provides_grip = TRUE
 	var/net_id = null
 	var/host_id = null //Who are we connected to? (If we have a single host)
 	var/old_host_id = null //Were we previously connected to someone?  Do we care?
@@ -69,7 +69,7 @@
 		. = "<br>Configuration Switches:<br><table border='1' style='background-color:#7A7A7A'><tr>"
 		for (var/i = 8, i >= 1, i >>= 1)
 			var/styleColor = (net_number & i) ? "#60B54A" : "#CD1818"
-			. += "<td style='background-color:[styleColor]'><a href='?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
+			. += "<td style='background-color:[styleColor]'><a href='byond://?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
 
 		. += "</tr></table>"
 
@@ -95,7 +95,7 @@
 
 	disposing()
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		..()
@@ -103,7 +103,7 @@
 	set_loc(atom/target)
 		..()
 		if(src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 		if(!isturf(src.loc))
 			return
@@ -111,7 +111,7 @@
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
 		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 			src.link = test_link
-			src.link.master = src
+			src.link.set_master(src, src.net_id)
 
 
 TYPEINFO(/obj/machinery/networked/storage)
@@ -183,7 +183,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			if(!tape && (setup_drive_size > 0) && setup_spawn_with_tape)
 				if(src.setup_drive_type)
@@ -237,7 +237,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		var/dat = "<html><head><title>Databank - \[[bank_id]]</title></head><body>"
 
-		dat += "<b>[capitalize(src.setup_tape_tag)]:</b> <a href='?src=\ref[src];tape=1'>[src.tape ? "Eject" : "--------"]</a><hr>"
+		dat += "<b>[capitalize(src.setup_tape_tag)]:</b> <a href='byond://?src=\ref[src];tape=1'>[src.tape ? "Eject" : "--------"]</a><hr>"
 
 		if (status & NOPOWER)
 			user.Browse(dat,"window=databank;size=245x302")
@@ -256,13 +256,13 @@ TYPEINFO(/obj/machinery/networked/storage)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		dat += "<br>Read Only: "
 		if(!src.read_only)
-			dat += "<a href='?src=\ref[src];read=1'>YES</a> <b>NO</b><br>"
+			dat += "<a href='byond://?src=\ref[src];read=1'>YES</a> <b>NO</b><br>"
 		else
-			dat += "<b>YES</b> <a href='?src=\ref[src];read=1'>NO</a><br>"
+			dat += "<b>YES</b> <a href='byond://?src=\ref[src];read=1'>NO</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -795,6 +795,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			boutput(user, "You insert \the [I].")
 
 	ui_act(action, params)
+		. = ..()
 		switch(action)
 			if ("add_item")
 				src.add_tank(usr, usr.equipped(), params["tank"])
@@ -1026,11 +1027,14 @@ TYPEINFO(/obj/machinery/networked/storage)
 	file_amount = 4
 
 
+ADMIN_INTERACT_PROCS(/obj/machinery/networked/nuclear_charge, proc/activate, proc/deactivate, proc/detonate)
+
 TYPEINFO(/obj/machinery/networked/nuclear_charge)
 	mats = list("energy_extreme" = 27,
 				"metal_superdense" = 25,
 				"conductive_high" = 13,
 				"crystal_dense" = 15) //haha this is a bad idea
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //^ Agreed
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = ANCHORED_ALWAYS
@@ -1048,7 +1052,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
 	deconstruct_flags = DECON_NONE
-	is_syndicate = 1 //^ Agreed
 
 	New()
 		..()
@@ -1060,7 +1063,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
@@ -1082,7 +1085,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -1147,7 +1150,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 			src.time--
 			post_display_status(src.time)
 			if(src.time <= 0)
-				outpost_destroyed = 1
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
@@ -1279,21 +1281,9 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 						if(data["auth"] != netpass_heads)
 							src.post_status(target,"command","term_message","data","command=status&status=badauth&session=[sessionid]")
 							return
-						src.timing = 1
-						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 
-						var/admessage = "NUKE: Network Nuclear Charge armed for [time] seconds."
-						var/turf/T = get_turf(src)
-						if(T)
-							admessage += "<b> ([T.x],[T.y],[T.z])</b>"
-						message_admins(admessage)
-						//World announcement.
-						if (src.z == Z_LEVEL_STATION)
-							command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
-							playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
-						else
-							command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
-							playsound_global(world, 'sound/misc/airraid_loop.ogg', 25)
+						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
+						src.activate()
 						return
 					if("deact")
 						if(data["auth"] != netpass_heads)
@@ -1303,18 +1293,8 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 							src.post_status(target,"command","term_message","data","command=status&status=failure&session=[sessionid]")
 							return
 
-						src.timing = 0
-						src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
-						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
-						//World announcement.
-						if (src.z == Z_LEVEL_STATION)
-							command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
-							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
-						else
-							command_alert("The nuclear charge at [get_area(src)] has been de-activated.", "Nuclear Charge De-activated", alert_origin = ALERT_STATION)
-							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
-						post_display_status(-1)
+						src.deactivate()
 						return
 
 				return
@@ -1338,7 +1318,38 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 
 		return
 
+	proc/activate()
+		src.timing = 1
+		var/admessage = "NUKE: Network Nuclear Charge armed for [time] seconds."
+		var/turf/T = get_turf(src)
+		if(T)
+			admessage += "<b> ([T.x],[T.y],[T.z])</b>"
+		GHOST.MESSAGE.send("<b>Networked nuclear charge</b> armed at [GHOST.MESSAGE.format_loc(src)].")
+		message_admins(admessage)
+		//World announcement.
+		if (src.z == Z_LEVEL_STATION)
+			command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
+			playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
+		else
+			command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
+			playsound_global(world, 'sound/misc/airraid_loop.ogg', 25)
+
+	proc/deactivate()
+		src.timing = 0
+		src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
+		src.icon_state = "net_nuke0"
+		GHOST.MESSAGE.send("<b>Networked nuclear charge</b> DISARMED at [GHOST.MESSAGE.format_loc(src)].")
+		//World announcement.
+		if (src.z == Z_LEVEL_STATION)
+			command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
+			playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
+		else
+			command_alert("The nuclear charge at [get_area(src)] has been de-activated.", "Nuclear Charge De-activated", alert_origin = ALERT_STATION)
+			playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
+		post_display_status(-1)
+
 	proc/detonate()
+		GHOST.MESSAGE.send("<b>Networked nuclear charge</b> DETONATES at [GHOST.MESSAGE.format_loc(src)].")
 		playsound_global(world, 'sound/effects/kaboom.ogg', 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
@@ -1399,7 +1410,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	proc/add_frequency(newFreq)
 		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "f[newFreq]", newFreq)
@@ -1437,7 +1448,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 		dat += "<hr>Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -1661,7 +1672,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 
 				SPAWN(0)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, transmission_range, "f[newFreq]")
-					flick("net_radio-blink", src)
+					FLICK("net_radio-blink", src)
 				src.post_status(target,"command","term_message","data","command=status&status=success")
 
 				return
@@ -1694,6 +1705,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	desc = "A networked printer.  It's designed to print."
 	anchored = ANCHORED
 	density = 1
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
@@ -1707,6 +1719,10 @@ TYPEINFO(/obj/machinery/networked/printer)
 	var/blinking = 0 //Is our indicator light blinking?
 	var/sheets_remaining = 15 //How many blank sheets of paper do we have left?
 
+	var/static/datum/forensic_display/forensic_pattern_disp = new("Recently Printed: @F")
+	var/forensic_pattern_prefix = "PRINTER"
+	var/datum/forensic_id/forensic_pattern
+
 #define MAX_SHEETS 20
 #define SETUP_JAM_IGNITION 6 //How jammed do we have to be before we break down?
 #define MAX_PRINTBUFFER_SIZE 10
@@ -1717,6 +1733,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
 			src.print_id = "GENERIC"
+		src.forensic_pattern = register_id("[src.forensic_pattern_prefix]-[build_id_unique(/proc/build_id_pattern, list("L###"))]")
 
 		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
@@ -1726,7 +1743,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon() //Update the icon
 		return
@@ -1788,6 +1805,14 @@ TYPEINFO(/obj/machinery/networked/printer)
 			src.updateUsrDialog()
 			return
 
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/jam/paperjam)) //Jam the printer with jam!
+			src.jam()
+			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
+			user.visible_message(SPAN_NOTICE("[user] jams the printer with the jam."), SPAN_NOTICE("You jam the printer with the jam."))
+			src.updateUsrDialog()
+			qdel(W)
+			return
+
 		else
 			return attack_hand(user)
 
@@ -1808,7 +1833,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "<hr><tt>[temp_msg]</tt><hr>"
 
 		if(jam)
-			dat += "<b>Printing:</b> <a href='?src=\ref[src];unjam=1'>JAMMED</a><br>"
+			dat += "<b>Printing:</b> <a href='byond://?src=\ref[src];unjam=1'>JAMMED</a><br>"
 		else
 			dat += "<b>Printing:</b> [printing ? "YES" : "NO"]<br>"
 
@@ -1824,7 +1849,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -1972,7 +1997,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 						var/buffer_add = null
 						if (istype(signal.data_file, /datum/computer/file/image)) // pic-a-ture
-							buffer_add = signal.data_file:data
+							buffer_add = signal.data_file
 							if (!buffer_add)
 								src.post_status(target,"command","term_message","data","command=status&status=badfile")
 								return
@@ -2021,6 +2046,10 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		return
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		scan.add_text("Printing Pattern: [src.forensic_pattern.id]")
+
 	proc
 		print()
 			if(status & (NOPOWER|BROKEN))
@@ -2055,21 +2084,20 @@ TYPEINFO(/obj/machinery/networked/printer)
 			sheets_remaining--
 			use_power(200)
 
-			flick("printer-printing",src)
+			FLICK("printer-printing",src)
 			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 			SPAWN(3.2 SECONDS)
 
 				if (istype(print_text, /datum/computer/file/image)) // trying to print a photo! :I
 					var/datum/computer/file/image/IMG = print_text
-					/*var/obj/item/photo/P = */new/obj/item/photo(src.loc, IMG.ourImage, IMG.ourIcon, IMG.img_name, IMG.img_desc)
-					/*P.fullImage = IMG.ourImage ? IMG.ourImage : image(IMG.ourIcon)
-					P.fullIcon = IMG.ourIcon
-					P.name = IMG.img_name
-					P.desc = IMG.img_desc*/
+					var/obj/item/photo/P = new(src.loc, IMG.ourImage, IMG.ourIcon, IMG.img_name, IMG.img_desc)
+					var/datum/forensic_data/basic/pattern_data = new(src.forensic_pattern, src.forensic_pattern_disp)
+					P.add_evidence(pattern_data)
 				else
 					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(src.loc)
-
+					var/datum/forensic_data/basic/pattern_data = new(src.forensic_pattern, src.forensic_pattern_disp)
+					P.add_evidence(pattern_data)
 
 					var/titlepoint = findtext(print_text, "&title;",1 , 72)
 					if (titlepoint)
@@ -2171,6 +2199,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	anchored = ANCHORED
 	density = 1
 	icon_state = "scanner0"
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_DESTRUCT
 	//device_tag = "PNET_SCANDEVC"
 	var/scanning = 0 //Are we scanning RIGHT NOW?
@@ -2204,7 +2233,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		var/dat = "<html><head><title>Scanner - \[[copytext(bank_id,4)]]</title></head><body>"
 
-		dat += "<b>Document:</b> <a href='?src=\ref[src];document=1'>[src.scanned_thing ? src.scanned_thing.name : "-----"]</a><br>"
+		dat += "<b>Document:</b> <a href='byond://?src=\ref[src];document=1'>[src.scanned_thing ? src.scanned_thing.name : "-----"]</a><br>"
 
 		var/readout_color = "#000000"
 		var/readout = "ERROR"
@@ -2218,7 +2247,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -2348,7 +2377,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			return 1
 
 		scanning = 1
-		flick("scanner-scanning",src)
+		FLICK("scanner-scanning",src)
 		sleep(2 SECONDS)
 		if (scan_buffer)
 			scan_buffer.dispose()
@@ -2421,12 +2450,15 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		return output
 
+TYPEINFO(/obj/machinery/networked/secdetector)
+	mats = 12
 
 //IR tripwire/threat analyzer.
 /obj/machinery/networked/secdetector
 	name = "IR Detector"
 	desc = "An infrared tripwire and video camera coupled with a sophisticated threat-analysis system."
 	icon_state = "secdetector0"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	device_tag = "PNET_IR_DETECT"
 
 	var/detector_id = null
@@ -2462,7 +2494,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon()
 		return
@@ -2478,7 +2510,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			src.scan_beam.dispose()
 			src.scan_beam = null
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		..()
@@ -2516,7 +2548,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "<br>Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -2563,7 +2595,9 @@ TYPEINFO(/obj/machinery/networked/printer)
 		if (active_time > 0)
 			active_time--
 			if (!active_time)
-				//src.state = src.online
+				qdel(src.scan_beam)
+				src.scan_beam = null
+				src.state = src.online
 				src.UpdateIcon(src.online)
 
 		switch (src.state)
@@ -2912,7 +2946,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon()
 		return
@@ -2929,7 +2963,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			src.beam = null
 
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		for (var/obj/item/I in src.telecrystals)
@@ -2976,9 +3010,9 @@ TYPEINFO(/obj/machinery/networked/printer)
 					dat += "<td style='background-color:#33FF00'><font color=white>+++++</font></td>"
 			else
 				if (isnull(telecrystals[i]))
-					dat += "<td style='background-color:#F80000'><font color=white><a href='?src=\ref[src];insert=[i]'>-----</a></font></td>"
+					dat += "<td style='background-color:#F80000'><font color=white><a href='byond://?src=\ref[src];insert=[i]'>-----</a></font></td>"
 				else
-					dat += "<td style='background-color:#33FF00'><font color=white><a href='?src=\ref[src];eject=[i]'>EJECT</a></font></td>"
+					dat += "<td style='background-color:#33FF00'><font color=white><a href='byond://?src=\ref[src];eject=[i]'>EJECT</a></font></td>"
 
 		var/readout_color = "#000000"
 		var/readout = "ERROR"
@@ -2992,7 +3026,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "</tr></table></center><hr><br>Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -3221,7 +3255,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/turf/beamTurf = get_step(src, src.dir)
 				if (!istype(beamTurf) || beamTurf.density)
 					return 0
-				src.beam = new /obj/linked_laser/h7_beam(beamTurf, src.dir)
+				src.beam = new /obj/linked_laser/h7_beam(beamTurf, src.dir, src)
 				src.beam.master = src
 				src.beam.try_propagate()
 			else
@@ -3267,7 +3301,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon()
 		return
@@ -3308,7 +3342,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		dat += "<br>Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -3722,7 +3756,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 						src.visible_message("<b>[src.name]</b> extends its stand.")
 						src.set_density(1)
 						src.setup_base_icon_state = "impactstand"
-						flick("impactpad-extend",src)
+						FLICK("impactstand-extend",src)
 						src.UpdateIcon()
 						playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					else
@@ -3733,7 +3767,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					src.visible_message("<b>[src.name]</b> retracts its stand.")
 					src.set_density(0)
 					src.setup_base_icon_state = "impactpad"
-					flick("impactstand-retract",src)
+					FLICK("impactstand-retract",src)
 					src.UpdateIcon()
 					playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					message_host("command=ack")
@@ -4042,6 +4076,11 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					src.electrify_contents()
 					message_host("command=ack")
 					src.UpdateIcon()
+					SPAWN(5 SECONDS)
+						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
+						playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
+						active = 0
+						src.UpdateIcon()
 				else
 					message_host("command=nack")
 

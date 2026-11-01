@@ -5,7 +5,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 2
-	cooldown = 1 SECONDS
+	cooldown = 0 SECONDS
 	min_req_dist = 10
 	var/in_use = 0
 

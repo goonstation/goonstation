@@ -43,7 +43,7 @@
 	var/turf/fortifying = null
 	var/turf/protecting = null
 	var/destroy_level = 0
-	var/list/consider_destroy = list(/obj/reagent_dispensers = 1, /obj/table = 1, /obj/machinery/computer3 = 1, /obj/machinery/computer = 1, /obj/storage/secure/closet = 1, /obj/storage/closet = 1, /obj/machinery/door/airlock = 2, /obj/window = 2, /obj/grille = 2)
+	var/list/consider_destroy = list(/obj/reagent_dispensers = 1, /obj/table = 1, /obj/machinery/computer3 = 1, /obj/machinery/computer = 1, /obj/storage/secure/closet = 1, /obj/storage/closet = 1, /obj/machinery/door/airlock = 2, /obj/window = 2, /obj/mesh/grille = 2)
 
 	var/list/closed = list()
 
@@ -200,32 +200,32 @@
 		return T
 
 	proc/check_viability(var/turf/start)
-		var/list/closed = list()
 		var/list/open = list()
 		open[start] = 1
 		var/viability = 0
-		while (open.len)
-			var/turf/T = open[1]
+		// A turf being present in 'open' already means its been seen already.
+		var/open_idx = 1
+		while (open_idx <= length(open))
+			var/turf/T = open[open_idx]
+			open_idx++
 			viability++
 			if (viability >= 100)
 				return 1
-			open.Cut(1,2)
-			closed[T] = 1
 			var/turf/N = locate(T.x, T.y + 1, T.z)
 			var/turf/S = locate(T.x, T.y - 1, T.z)
 			var/turf/W = locate(T.x - 1, T.y, T.z)
 			var/turf/E = locate(T.x + 1, T.y, T.z)
 			if (N)
-				if (!istype(N, /turf/space) && !N.density && !(N in closed) && !(N in open))
+				if (!istype(N, /turf/space) && !N.density && !open[N])
 					open[N] = 1
 			if (S)
-				if (!istype(S, /turf/space) && !S.density && !(S in closed) && !(S in open))
+				if (!istype(S, /turf/space) && !S.density && !open[S])
 					open[S] = 1
 			if (W)
-				if (!istype(W, /turf/space) && !W.density && !(W in closed) && !(W in open))
+				if (!istype(W, /turf/space) && !W.density && !open[W])
 					open[W] = 1
 			if (E)
-				if (!istype(E, /turf/space) && !E.density && !(E in closed) && !(E in open))
+				if (!istype(E, /turf/space) && !E.density && !open[E])
 					open[E] = 1
 		return 0
 

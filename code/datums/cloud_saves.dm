@@ -7,10 +7,14 @@
 
 /datum/cloudSaves
 	var/datum/player/player = null
+	///generic cloud data
 	var/list/data = list()
+	///cloudsaves. ONLY FOR CHARACTER PROFILE CLOUD SAVES. NOTHING ELSE.
 	var/list/saves = list()
 	var/loaded = FALSE // Have we performed an initial fetch
 	var/simulating = FALSE
+	/// Data waiting for `putDataSoon()` to send it
+	var/alist/pending_data = null
 
 	New(datum/player/player)
 		..()
@@ -92,16 +96,20 @@
 
 				src.data = newData
 				src.saves = newSaves
-				src.loaded = TRUE
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to have their cloud data loaded: [error.message]")
 				logTheThing(LOG_DIARY, src.player.ckey, "failed to have their cloud data loaded: [error.message]", "admin")
 
+			src.loaded = TRUE
 		return TRUE
 
 	/// Save new cloud data for this player
 	proc/putData(key, value)
+		if(value == src.data[key]) //don't bother sending data if we'd be making no change
+			return TRUE
+		if (!istext(value) && !isnum_safe(value))
+			CRASH("Attempt to put cloud data with unsupported type, value: [value]")
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.putSimulatedCloud("data", key, value)
@@ -124,8 +132,22 @@
 		src.data[key] = value
 		return TRUE
 
-	/// Save a new cloud file for this player
+	/// Sends after a short delay with any other changes made meanwhile, so players can't spam the API
+	proc/putDataSoon(key, value)
+		if (!src.pending_data)
+			src.pending_data = alist()
+			SPAWN(2 SECONDS)
+				var/alist/to_send = src.pending_data
+				src.pending_data = null
+				for (var/pending_key in to_send)
+					src.putData(pending_key, to_send[pending_key])
+		src.pending_data[key] = value
+
+	/// Save a new cloud file for this player. ONLY FOR CHARACTER PROFILE CLOUD SAVES. USE putData FOR ANYTHING ELSE.
 	proc/putSave(name, data)
+		if(data == src.saves[name]) //don't bother sending save if we'd be making no change
+			return TRUE
+
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.putSimulatedCloud("saves", name, data)
@@ -188,6 +210,8 @@
 		return TRUE
 
 	proc/getData(key)
+		if (src.pending_data && (key in src.pending_data))
+			return src.pending_data[key]
 		return src.data[key]
 
 	proc/getSave(name)
@@ -270,10 +294,10 @@
 	for (var/client/C in clients)
 		if (C.ckey == from_ckey)
 			// The source player has all their saves moved
-			C.player.cloudSaves.saves = list()
+			C.player?.cloudSaves.saves = list()
 		if (C.ckey == to_ckey)
 			// Trigger a re-fetch on the target so they can get their new saves right away
-			C.player.cloudSaves.fetch()
+			C.player?.cloudSaves.fetch()
 
 	return TRUE
 #endif

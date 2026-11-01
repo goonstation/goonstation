@@ -101,7 +101,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	for(var/obj/machinery/atmospherics/normal_member as anything in src.normal_members)
 		var/result = normal_member.return_network_air(src)
-		if(result)
+		if(length(result))
 			gases += result
 
 	for(var/datum/pipeline/line_member as anything in src.line_members)

@@ -19,13 +19,14 @@
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE
 	animate_movement = NO_STEPS //Stop shifting around recycled particles.
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 	var/atom/target = null // target location for directional particles
 	var/override_state = null
 	var/death = 0
 
 	disposing()
 		particleMaster.active_particles -= src
+		particleMaster.particle_pool -= src
 		..()
 
 // --------------------------------------------------------------------------------------------------------------------------------------
@@ -37,6 +38,12 @@ var/datum/particleMaster/particleMaster = new
 	var/list/particleTypes = null
 	var/list/particleSystems = null
 	var/list/active_particles = list()
+	/// Expired particles kept for reuse, for steady emitters like sparkles
+	var/list/obj/particle/particle_pool = list()
+	/// How many expired particles to keep around
+	var/max_pooled_particles = 150
+	/// Appearance of a freshly created particle, restored on reuse
+	var/particle_appearance = null
 	var/allowed_particles_per_tick = 7
 
 	New()
@@ -122,11 +129,10 @@ var/datum/particleMaster/particleMaster = new
 
 
 		var/time = world.time
-		for (var/obj/particle/P in src.active_particles)
+		for (var/obj/particle/P as anything in src.active_particles)
 			if (P.death < time)
 				src.active_particles -= P
-				P.dispose() // skip the tiny qdel overhead
-				P = null
+				src.recycle_particle(P)
 
 	//Spawns specified particle. If type can be recycled, do that - else create new. After time is over, move particle to recycling to avoid del and new calls.
 	proc/SpawnParticle(var/atom/location, var/particleTypeName, var/particleTime, var/particleColor, var/atom/target, var/particleSprite) //This should be the only thing you access from the outside.
@@ -140,18 +146,39 @@ var/datum/particleMaster/particleMaster = new
 			if (particleSprite)
 				p.override_state = particleSprite
 			if (target)
-				p.target = get_turf(target)
+				p.target = target
 			pType.Apply(p)
 
 			return p
 		else
 			return 0
 
-	proc/new_particle(var/lifetime)
-		var/obj/particle/P = new /obj/particle
+	proc/new_particle(lifetime)
+		var/obj/particle/P
+		var/pooled = length(src.particle_pool)
+		if (pooled)
+			P = src.particle_pool[pooled]
+			src.particle_pool.len--
+		else
+			P = new /obj/particle
+			src.particle_appearance ||= P.appearance
 		P.death = world.time + lifetime
 		src.active_particles += P
 		return P
+
+	/// Takes an expired particle off the map and resets it.
+	/// Reset the appearance (incl. overlays), plus others
+	proc/recycle_particle(obj/particle/P)
+		if (length(src.particle_pool) >= src.max_pooled_particles)
+			P.dispose() // skip the tiny qdel overhead
+			return
+		P.vis_locs = null
+		animate(P)
+		P.appearance = src.particle_appearance
+		P.overlay_refs = null // AddOverlays() bookkeeping
+		P.target = null
+		P.override_state = null
+		src.particle_pool += P
 
 // --------------------------------------------------------------------------------------------------------------------------------------
 // These datums are used by the particle master datum to apply the various effects to the base particle object before use.
@@ -372,6 +399,35 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			animate(par, time = 10, transform = first, pixel_y = 96, alpha = 250)
 			animate(transform = second, time = 10, pixel_y = 96 + rand(-32, 32), pixel_x = rand(-32, 32) + par.pixel_x, easing = SINE_EASING, alpha = 200)
 			animate(transform = third, time = 7, pixel_y = 0, easing = LINEAR_EASING|EASE_OUT, alpha = 0)
+
+			MatrixInit()
+
+
+/datum/particleType/fireworks_pop
+	name = "fireworks_pop"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "wpart"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+		third = matrix()
+
+	Apply(var/obj/particle/par)
+		if(..())
+			par.blend_mode = BLEND_ADD
+			par.color = rgb(rand(0, 255),rand(0, 255),rand(0, 255))
+
+			first.Turn(rand(-180, 180))
+			second.Turn(rand(-90, 90))
+			second.Scale(0.5,0.5)
+			third.Turn(rand(-90, 90))
+
+			if(!istype(par)) return
+			animate(par, time = 0, transform = first, alpha = 250)
+			var/pix_Y = rand(-32, 32)
+			animate(transform = second, time = 5, pixel_y = pix_Y, pixel_x = rand(-32, 32) + par.pixel_x, easing = SINE_EASING, alpha = 200)
+			animate(transform = third, time = 7, pixel_y = pix_Y-rand(22,30), easing = LINEAR_EASING|EASE_OUT, alpha = 0)
 
 			MatrixInit()
 
@@ -1111,6 +1167,16 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				SpawnParticle()
 			Die()
 
+/datum/particleSystem/fireworks_pop
+	New(var/atom/location = null)
+		..(location, "fireworks_pop", 35)
+
+	Run()
+		if (..())
+			for(var/i=0, i<rand(40,50), i++)
+				SpawnParticle()
+			Die()
+
 /datum/particleSystem/confetti
 	New(var/atom/location = null)
 		..(location, "confetti", 35)
@@ -1374,10 +1440,11 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				copied.reaction(A, TOUCH, 0, 0)
 			if(isliving(A))
 				var/mob/living/L = A
+				var/exception = ismiasmaimmune(L) ? "miasma" : null
 				if(!issmokeimmune(L))
 					logTheThing(LOG_COMBAT, A, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
 					if(L.reagents)
-						copied.copy_to(L.reagents, 1 / max((GET_DIST(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
+						copied.copy_to(L.reagents, 1 / max((GET_DIST(A, location)+1)/2, 1)**2, exception = exception) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
 
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null
@@ -1480,3 +1547,72 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null, var/light_color)
 		..(location, "glow_stick_dance", 9.9, light_color)
 		SpawnParticle()
+
+/datum/particleType/glasses_sparkle
+	name = "glasses_sparkle"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "sparkle"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+
+	Apply(obj/particle/par)
+		if(..())
+			par.pixel_x = rand(0,1) ? -8:  8
+			par.pixel_y = 6 + rand(2, 4)
+
+			var/rot = rand(-90, 90)
+
+			first.Turn(rot)
+			first.Scale(0.1,0.1)
+			par.transform = first
+
+			first.Scale(11)
+			animate(par, transform = first, time = 5, alpha = 245)
+
+			first.Scale(0.1 / 11)
+			first.Turn(rot)
+			animate(transform = first, time = 15, alpha = 50)
+			first.Reset()
+
+/datum/particleSystem/glasses_sparkle
+	New(var/atom/location = null, var/glasses_color)
+		..(location, "glasses_sparkle", 9.9, glasses_color)
+		SpawnParticle()
+
+/datum/particleType/shredded
+	name = "shredded"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "2x2square"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+
+	Apply(obj/particle/par)
+		if (!..())
+			return
+		par.pixel_x = rand(-8,8)
+		animate(par, time = 0.5 SECOND, pixel_x = rand(-16, 16), pixel_y = rand(16, 32))
+		animate(delay = rand(2,3), flags = ANIMATION_PARALLEL, time = 1 SECOND, pixel_y = -16)
+
+/datum/particleSystem/shredded
+	var/icon/shredding
+	New(atom/location, particleTypeName, particleTime, particleColor, atom/target, particleSprite)
+		src.shredding = getFlatIcon(target)
+		..(location, "shredded", 10, null, target)
+
+	SpawnParticle()
+		var/obj/particle/par = ..()
+		if (src.shredding)
+			par.color = src.shredding.RandomPixelColor()
+
+	Run() //this is kind of particle system abuse but I need more consistent particle spawns than waiting for the loop to come back around
+		set waitfor = FALSE
+		if (..())
+			for(var/i=0, i<40, i++)
+				sleep(1)
+				SpawnParticle()
+			Die()
+

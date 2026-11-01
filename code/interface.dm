@@ -3,27 +3,14 @@
 		changes()
 			set category = "Commands"
 			set name = "Changelog"
-			set desc = "Show or hide the changelog"
-			if (winexists(src, "changes") && winget(src, "changes", "is-visible") == "true")
-				src.Browse(null, "window=changes")
-			else
-				var/changelogHtml = grabResource("html/changelog.html")
-				var/data = changelog:html
-				var/fontcssdata = {"
-				<style type="text/css">
-				@font-face {
-					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/Twemoji.eot")]');
-					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
-						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
-					text-rendering: optimizeLegibility;
-				}
-				</style>
-				"}
-				changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
-				changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-				src.Browse(changelogHtml, "window=changes;size=500x650;title=Changelog;", 1)
-				src.changes = 1
+			set desc = "Show the changelog"
+
+			if (!global.tgui_process)
+				boutput(src, SPAN_ALERT("Changelog will be ready to view in a few seconds."))
+				return
+
+			global.changelog.ui_interact(src.mob)
+			src.changes = TRUE
 
 		bugreport()
 			set category = "Commands"
@@ -42,14 +29,14 @@
 					You have disabled the menu. To enable the menu again, you can use the Menu button on the top right corner of the screen!
 					<a href='byond://winset?command=enable_menu'>Or just click here!</a>
 				</div>"})
-			winset(src, null, "hide_menu.is-checked=true; mainwindow.menu=''; menub.is-visible = true")
+			src.preferences.set_client_setting(src, CLIENT_SETTING_HIDE_MENU, TRUE)
 
 		enable_menu()
 			set category = "Commands"
 			set name = "enable_menu"
 			set desc = "Reenables the menu"
 			set hidden = 1
-			winset(src, null, "mainwindow.menu='menu'; hide_menu.is-checked=false; menub.is-visible = false")
+			src.preferences.set_client_setting(src, CLIENT_SETTING_HIDE_MENU, FALSE)
 
 		github()
 			set category = "Commands"
@@ -63,17 +50,14 @@
 			set name = "Wiki"
 			set desc = "Open the Wiki in your browser"
 			set hidden = 1
-			src << link("http://wiki.ss13.co")
+			src << link(generate_ingame_wiki_link(src))
 
 		map()
 			set category = "Commands"
 			set name = "Map"
 			set desc = "Open an interactive map in your browser"
 			set hidden = 1
-			if (map_settings)
-				src << link(goonhub_href(map_settings.goonhub_map))
-			else
-				src << link(goonhub_href("/maps/cogmap"))
+			src << link(generate_ingame_map_link(src))
 
 		forum()
 			set category = "Commands"
@@ -85,3 +69,29 @@
 	proc
 		set_macro(name)
 			winset(src, "mainwindow", "macro=\"[name]\"")
+
+/proc/generate_ingame_map_link(client/our_user)
+	. = "/maps/cogmap"
+	if (map_settings)
+		. = map_settings.goonhub_map
+	. = goonhub_href(.)
+	var/turf/T = get_turf(our_user.mob)
+	if (!T || T.z != Z_LEVEL_STATION && T.z != Z_LEVEL_DEBRIS) //no maps for weird z levels or nullspace
+		return .
+	. += "?sx=[T.x]&sy=[T.y]&zoom=0"
+	if (T.z == Z_LEVEL_DEBRIS)
+		. += "&layer=debris"
+
+/proc/generate_ingame_wiki_link(client/our_user)
+	. = "https://wiki.ss13.co/"
+	var/datum/mind/user_mind = our_user.mob.mind
+	if(!user_mind)
+		return
+	if (user_mind.assigned_role)
+		var/datum/job/Job = find_job_in_controller_by_string(user_mind.assigned_role)
+		if(Job?.wiki_link)
+			. = Job.wiki_link
+	if (user_mind.is_antagonist())
+		for (var/datum/antagonist/antagonist_role in user_mind.antagonists)
+			if(antagonist_role.wiki_link)
+				. = antagonist_role.wiki_link //Keep going until you get the most recent antag (its probably the one you want the page for)

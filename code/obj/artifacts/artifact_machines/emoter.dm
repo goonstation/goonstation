@@ -5,11 +5,12 @@
 
 /datum/artifact/emoter
 	associated_object = /obj/machinery/artifact/emoter
-	type_name = "Emote Forcer Field" //this was brown note originally
+	type_name = "Emote-stimulation Field" //this was brown note originally
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("martian","eldritch","precursor")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
+		/datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS,TOUCH_ONLY_FAULTS)
 	activ_text = "opens up, revealing a strange horn!"
 	deact_text = "closes itself up."

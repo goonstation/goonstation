@@ -12,7 +12,7 @@
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10
@@ -28,7 +28,7 @@
 	icon_state = "bad_rcd0"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rcd"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10
@@ -36,7 +36,7 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
-	var/mode = RCD_MODE_FLOORSWALLS
+	var/mode = RCD_MODE::FLOORSWALLS
 	var/broken = 0 //Fully broken, that is.
 
 	New()

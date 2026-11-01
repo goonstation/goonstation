@@ -2,6 +2,9 @@ TYPEINFO(/obj/machinery/dialysis)
 	mats = list("metal" = 20,
 				"crystal" = 5,
 				"conductive_high" = 5)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/dialysis
 	name = "dialysis machine"
 	desc = "A machine which continuously draws blood from a patient, removes excess chemicals from it, and re-infuses it into the patient."
@@ -12,6 +15,9 @@ TYPEINFO(/obj/machinery/dialysis)
 	icon_state = "dialysis-base"
 #endif
 	density = 1
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/mob/living/carbon/patient
 	var/list/whitelist
 	// In units per process tick.
@@ -40,7 +46,7 @@ TYPEINFO(/obj/machinery/dialysis)
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (src.hacked) return FALSE
 		src.hacked = TRUE
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Dialysis protocols inversed.\""))
+		src.say("Dialysis protocols inversed.")
 		logTheThing(LOG_ADMIN, user, "emagged [src] at [log_loc(user)].")
 		logTheThing(LOG_DIARY, user, "emagged [src] at [log_loc(user)].", "admin")
 		message_admins("[key_name(usr)] emagged [src] at [log_loc(user)].")
@@ -78,12 +84,12 @@ TYPEINFO(/obj/machinery/dialysis)
 	process(mult)
 		..()
 		if (!src.patient || !ishuman(src.patient) || QDELETED(src.patient))
-			src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Patient lost.\""))
+			src.say("Patient lost.")
 			src.stop_dialysis()
 			return
 
 		if (!src.patient.blood_volume)
-			src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"No blood pressure detected.\""))
+			src.say("No blood pressure detected.")
 			src.stop_dialysis()
 			return
 
@@ -91,14 +97,14 @@ TYPEINFO(/obj/machinery/dialysis)
 			var/fluff = pick("pulled", "yanked", "ripped")
 			src.patient.visible_message(SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of [src.patient]'s arm!</b>"),\
 			SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of your arm!</b>"))
-			src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"No blood pressure detected.\""))
+			src.say("No blood pressure detected.")
 			src.stop_dialysis()
 			return
 
 		// If we're full of blood and can't take anymore on, destroy it all.
 		if (src.reagents.is_full())
 			src.reagents.clear_reagents()
-			src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Blood buffer has reached maximum capacity. Purging internal reservoir.\""))
+			src.say("Blood buffer has reached maximum capacity. Purging internal reservoir.")
 
 		transfer_blood(src.patient, src, src.draw_amount)
 
@@ -175,6 +181,6 @@ TYPEINFO(/obj/machinery/dialysis)
 		src.output_blood_colour = null
 		if (src.reagents.total_volume)
 			src.reagents.clear_reagents()
-			src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Purging internal reservoir.\""))
+			src.say("Purging internal reservoir.")
 		src.power_usage = 0
 		src.UpdateIcon()

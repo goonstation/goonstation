@@ -1,4 +1,38 @@
-var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
+// markup chars, removed from names only
+#define NAME_PUNCTUATION @{"[_<>;\[\]{}|\\/]+|"}
+// quotes break out of single/double-quoted HTML attributes, as names are often put unescaped into browse windows
+// TODO: allow them by mapping ' and " to ’ and ” here, in choose_name()'s strip_html()
+// TODO: the problem is then we need to replace them everywhere where they would be searched for like sec records
+#define NAME_QUOTES @{"['"]+|"}
+// 1: control chars, anything above \u8000 (emoji, cuneiform, etc), plus invisible and text-direction chars
+#define NAME_REMOVED @{"[^\u0020-\u8000]+|[\u00AD\u115F\u1160\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u3164]+)"}
+// 2: odd or repeated spaces to turn into one normal space (PRECIS nickname profile, RFC 8266)
+// 3: stacked combining marks (diacritics, Cyrillic, Thai). Trimmed to keep accents but stop zalgo
+#define NAME_SPACES_AND_MARKS @{"|([ \u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]{2,}|[\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000])|([\u0300-\u036F\u0483-\u0489\u0E31\u0E34-\u0E3A\u0E47-\u0E4E\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF]{2,})"}
+var/regex/name_cleanup_regex = regex("(" + NAME_PUNCTUATION + NAME_QUOTES + NAME_REMOVED + NAME_SPACES_AND_MARKS, "g")
+var/regex/text_cleanup_regex = regex("(" + NAME_QUOTES + NAME_REMOVED + NAME_SPACES_AND_MARKS, "g")
+#undef NAME_QUOTES
+#undef NAME_PUNCTUATION
+#undef NAME_REMOVED
+#undef NAME_SPACES_AND_MARKS
+
+/// Enforces what a player name may contain
+/// Too aggressive for general text, see `strip_illegal_characters()` for that
+/// `keep_punctuation` keeps ASCII punctuation, for text that ends up in names (e.g. labels)
+proc/remove_bad_name_characters(string, keep_punctuation = FALSE)
+	var/regex/cleanup = keep_punctuation ? text_cleanup_regex : name_cleanup_regex
+	return cleanup.Replace(string, /proc/clean_name_match)
+
+/proc/clean_name_match(match, removed, spaces, marks)
+	if (removed)
+		return ""
+	if (spaces)
+		return " "
+	// at most two marks per letter, and never the same mark twice (UTS #39)
+	var/first = copytext_char(marks, 1, 2)
+	var/second = copytext_char(marks, 2, 3)
+	return first == second ? first : first + second
+
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
@@ -14,6 +48,7 @@ var/list/removed_jobs = list(
 	var/name_first
 	var/name_middle
 	var/name_last
+	var/hyphenate_name
 	var/robot_name
 	var/gender = MALE
 	var/age = 30
@@ -29,6 +64,7 @@ var/list/removed_jobs = list(
 
 	var/be_traitor = FALSE
 	var/be_syndicate = FALSE
+	var/be_sleeper_agent = FALSE
 	var/be_syndicate_commander = FALSE
 	var/be_spy = FALSE
 	var/be_gangleader = FALSE
@@ -65,6 +101,9 @@ var/list/removed_jobs = list(
 	var/use_azerty = FALSE // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
+	var/use_satchel //Automatically convert backpack to satchel?
+	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
+	var/id_starts_in_pda = FALSE //Try to automatically equip IDs in PDAs and PDAs in ID slots?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -79,7 +118,6 @@ var/list/removed_jobs = list(
 
 	var/mentor = FALSE
 	var/see_mentor_pms = TRUE // do they wanna disable mentor pms?
-	var/antispam = FALSE
 
 	var/datum/traitPreferences/traitPreferences = new
 
@@ -93,11 +131,15 @@ var/list/removed_jobs = list(
 
 	var/scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 
+	var/middle_mouse_swap = FALSE
+
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
 
 	var/preferred_map = ""
 
 	var/font_size = null
+
+	var/observer_dnr = FALSE //Automatically set DNR when spawn as observer?
 
 	///An associative list of slots to part IDs, see part_customization.dm
 	var/list/custom_parts = null
@@ -112,11 +154,16 @@ var/list/removed_jobs = list(
 		src.randomize_name()
 		src.randomizeLook()
 		src.profile_names = new/list(SAVEFILE_PROFILES_MAX)
+		src.client_settings = global.client_setting_defaults.Copy()
 		..()
 		if (isnull(src.custom_parts)) //I feel like there should be a better place to init this
 			src.custom_parts = list(
 				"l_arm" = "arm_default_left",
 				"r_arm" = "arm_default_right",
+				"l_leg" = "leg_default_left",
+				"r_leg" = "leg_default_right",
+				"left_eye" = "eye_default_left",
+				"right_eye" = "eye_default_right",
 			)
 
 	ui_state(mob/user)
@@ -131,11 +178,18 @@ var/list/removed_jobs = list(
 			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
+			// Sanitise and set up the job lists before opening the UI.
+			src.GetJobStaticData(user)
+
 			ui = new(user, src, "CharacterPreferences")
 			ui.set_autoupdate(FALSE)
 			ui.open()
-		SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
-			src.update_preview_icon() //apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
+			if (isnull(src.preview))
+				src.preview = new(user.client, ui.window.id, "preferences_character_preview")
+			SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
+				//apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
+				src.preview.add_background()
+				src.update_preview_icon()
 
 	ui_close(mob/user)
 		. = ..()
@@ -159,16 +213,20 @@ var/list/removed_jobs = list(
 				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
 				"points" = trait.points,
 			)
+		var/list/hudThemes = list()
+		for (var/name in hud_style_selection)
+			hudThemes += list(list(
+				"name" = name,
+				"icon" = get_tgui_icon(hud_style_selection[name]),
+			))
 		. = list(
-			"traitsData" = traitsData
+			"traitsData" = traitsData,
+			"hudThemes" = hudThemes,
 		)
 
-	ui_data(mob/user)
-		if (isnull(src.preview))
-			src.preview = new(user.client, "preferences", "preferences_character_preview")
-			src.preview.add_background()
-			src.update_preview_icon()
+		. += src.GetJobStaticData(user)
 
+	ui_data(mob/user)
 		var/client/client = ismob(user) ? user.client : user
 		if (!client)
 			return
@@ -184,7 +242,7 @@ var/list/removed_jobs = list(
 		src.profile_names_dirty = FALSE
 
 		var/list/cloud_saves = list()
-		for (var/name in client.player.cloudSaves.saves)
+		for (var/name in client.player?.cloudSaves.saves)
 			cloud_saves += name
 
 		src.sanitize_null_values()
@@ -198,8 +256,18 @@ var/list/removed_jobs = list(
 				"id" = customization.id,
 				"name" = customization.get_name(),
 				"points" = customization.trait_cost,
-				"img" = customization.get_base64_icon(),
-			)
+			) + customization.get_ui_icon()
+
+		var/list/volume_channels = list()
+		var/list/volume_names = list("Master") + client.getVolumeNames()
+		var/list/volume_descriptions = client.getVolumeDescriptions()
+		for (var/i in 1 to length(volume_names))
+			volume_channels += list(list(
+				"name" = volume_names[i],
+				"description" = volume_descriptions[i],
+				"volume" = client.volumes[i],
+				"default" = client.getDefaultVolume(i - 1),
+			))
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -210,11 +278,12 @@ var/list/removed_jobs = list(
 			"profileName" = src.profile_name,
 			"profileModified" = src.profile_modified,
 
-			"preview" = src.preview?.preview_id,
+			"preview" = "preferences_character_preview",
 
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
+			"hyphenateName" = src.hyphenate_name,
 			"robotName" = src.robot_name,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
@@ -232,18 +301,48 @@ var/list/removed_jobs = list(
 			"chatsound" = src.AH.voicetype,
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
+			"useSatchel" = src.use_satchel,
+			"preferredUplink" = src.preferred_uplink,
+			"idStartsInPda" = src.id_starts_in_pda,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
-			"customColor1" = src.AH.customization_first_color,
-			"customStyle1" = src.AH.customization_first.name,
-			"customColor2" = src.AH.customization_second_color,
-			"customStyle2" = src.AH.customization_second.name,
-			"customColor3" = src.AH.customization_third_color,
-			"customStyle3" = src.AH.customization_third.name,
+			"customColor1" = src.AH.customizations["hair_bottom"].color,
+			"customStyle1" = src.AH.customizations["hair_bottom"].style.name,
+			"customColor2" = src.AH.customizations["hair_middle"].color,
+			"customStyle2" = src.AH.customizations["hair_middle"].style.name,
+			"customColor3" = src.AH.customizations["hair_top"].color,
+			"customStyle3" = src.AH.customizations["hair_top"].style.name,
 			"underwearColor" = src.AH.u_color,
 			"underwearStyle" = src.AH.underwear,
 			"randomAppearance" = src.be_random_look,
+
+			"jobFavourite" = src.job_favorite,
+			"jobsMedPriority" = src.jobs_med_priority,
+			"jobsLowPriority" = src.jobs_low_priority,
+			"jobsUnwanted" = src.jobs_unwanted,
+
+			"antagonistPreferences" = list(
+				ROLE_TRAITOR = src.be_traitor,
+				ROLE_SLEEPER_AGENT = src.be_sleeper_agent,
+				ROLE_NUKEOP = src.be_syndicate,
+				ROLE_NUKEOP_COMMANDER = src.be_syndicate_commander,
+				ROLE_SPY_THIEF = src.be_spy,
+				ROLE_GANG_LEADER = src.be_gangleader,
+				ROLE_GANG_MEMBER = src.be_gangmember,
+				ROLE_HEAD_REVOLUTIONARY = src.be_revhead,
+				ROLE_CHANGELING = src.be_changeling,
+				ROLE_WIZARD = src.be_wizard,
+				ROLE_WEREWOLF = src.be_werewolf,
+				ROLE_VAMPIRE = src.be_vampire,
+				ROLE_ARCFIEND = src.be_arcfiend,
+				ROLE_WRAITH = src.be_wraith,
+				ROLE_BLOB = src.be_blob,
+				ROLE_CONSPIRATOR = src.be_conspirator,
+				ROLE_FLOCKMIND = src.be_flock,
+				ROLE_SALVAGER = src.be_salvager,
+				ROLE_MISC = src.be_misc,
+			),
 
 			"fontSize" = src.font_size,
 			"seeMentorPms" = src.see_mentor_pms,
@@ -253,11 +352,11 @@ var/list/removed_jobs = list(
 			"autoCapitalization" = src.auto_capitalization,
 			"localDeadchat" = src.local_deadchat,
 			"hudTheme" = src.hud_style,
-			"hudThemePreview" = icon2base64(icon(hud_style_selection[src.hud_style], "preview")),
 			"targetingCursor" = src.target_cursor,
-			"targetingCursorPreview" = icon2base64(icon(cursors_selection[src.target_cursor])),
+			"targetingCursorIcon" = get_tgui_icon(cursors_selection[src.target_cursor]),
 			"tooltipOption" = src.tooltip_option,
 			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
+			"middleMouseSwap" = src.middle_mouse_swap,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,
 			"viewChangelog" = src.view_changelog,
@@ -268,6 +367,10 @@ var/list/removed_jobs = list(
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"observerDnr" = src.observer_dnr,
+			"clientSettings" = src.client_settings,
+			"volumeChannels" = volume_channels,
+			"saturation" = text2num(client.player?.cloudSaves.getData("saturation")) || 1,
 			"traitsAvailable" = traits,
 			"traitsMax" = src.traitPreferences.max_traits,
 			"traitsPointsTotal" = src.traitPreferences.calcTotal(src.traitPreferences.traits_selected, src.custom_parts),
@@ -315,11 +418,6 @@ var/list/removed_jobs = list(
 				src.update_preview_icon()
 				return
 
-			if ("open-occupation-window")
-				src.SetChoices(usr)
-				ui.close()
-				return TRUE
-
 			if ("save")
 				var/index = params["index"]
 				if (isnull(src.profile_name) || is_blank_string(src.profile_name))
@@ -342,10 +440,11 @@ var/list/removed_jobs = list(
 					boutput(usr, SPAN_NOTICE("<b>Character loaded from Slot [index].</b>"))
 					src.traitPreferences.traitDataDirty = TRUE
 					src.update_preview_icon()
+					src.update_static_data(usr, ui)
 					return TRUE
 
 			if ("cloud-new")
-				if (length(client.player.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
+				if (length(client.player?.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
@@ -353,7 +452,7 @@ var/list/removed_jobs = list(
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
-						if (istext(ret))
+						if (!ret)
 							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
 						else
 							boutput( usr, SPAN_NOTICE("Savefile saved!") )
@@ -361,7 +460,7 @@ var/list/removed_jobs = list(
 
 			if ("cloud-save")
 				var/ret = src.cloudsave_save(client, params["name"])
-				if (istext(ret))
+				if (!ret)
 					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile saved!"))
@@ -389,7 +488,13 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("profile-file-export")
+#ifndef LIVE_SERVER
+				var/response = tgui_alert(ui.user, "You are exporting on a server that doesn't have the ability to properly salt your character file. This character file will not be able to be imported on the live servers.", "NO SALT FOUND", list("Continue", "Cancel"))
+				if (response == "Continue")
+					src.profile_export()
+#else
 				src.profile_export()
+#endif
 
 			if ("profile-file-import")
 				src.profile_import()
@@ -398,9 +503,7 @@ var/list/removed_jobs = list(
 			if ("update-profileName")
 				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
 
-				for (var/c in bad_name_characters)
-					new_profile_name = replacetext(new_profile_name, c, "")
-
+				new_profile_name = remove_bad_name_characters(new_profile_name)
 				new_profile_name = trimtext(new_profile_name)
 
 				if (new_profile_name)
@@ -420,8 +523,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your first name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -438,7 +540,7 @@ var/list/removed_jobs = list(
 
 				if (new_name)
 					src.name_first = new_name
-					src.real_name = src.name_first + " " + src.name_last
+					src.set_real_name()
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -447,8 +549,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					new_name = ""
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) > NAME_CHAR_MAX)
 					tgui_alert(usr, "Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
@@ -464,8 +565,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -482,9 +582,35 @@ var/list/removed_jobs = list(
 
 				if (new_name)
 					src.name_last = new_name
-					src.real_name = src.name_first + " " + src.name_last
+					src.set_real_name()
 					src.profile_modified = TRUE
 					return TRUE
+
+			if ("toggle-hyphenation")
+				src.hyphenate_name = !src.hyphenate_name
+				src.set_real_name()
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("toggle-satchel")
+				src.use_satchel = !src.use_satchel
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("toggle-id-in-pda")
+				src.id_starts_in_pda = !src.id_starts_in_pda
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-uplink")
+				if (isnull(src.preferred_uplink) || src.preferred_uplink == PREFERRED_UPLINK_STANDALONE)
+					src.preferred_uplink = PREFERRED_UPLINK_PDA
+				else if (src.preferred_uplink == PREFERRED_UPLINK_PDA)
+					src.preferred_uplink = PREFERRED_UPLINK_RADIO
+				else
+					src.preferred_uplink = PREFERRED_UPLINK_STANDALONE
+				src.profile_modified = TRUE
+				return TRUE
 
 			if ("update-robotName")
 				var/new_name = tgui_input_text(usr, "Your preferred cyborg name, leave empty for random.", "Character Generation", src.robot_name)
@@ -527,9 +653,9 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-age")
-				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
+				var/new_age = tgui_input_number(usr, "Please select type in age: 20-100", "Character Generation", src.age, 100, 20)
 				if (new_age)
-					src.age = clamp(round(text2num(new_age)), 20, 80)
+					src.age = clamp(round(text2num(new_age)), 20, 100)
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -698,22 +824,22 @@ var/list/removed_jobs = list(
 				var/current_color
 				switch (params["id"])
 					if ("custom1")
-						current_color = src.AH.customization_first_color
+						current_color = src.AH.customizations["hair_bottom"].color
 					if ("custom2")
-						current_color = src.AH.customization_second_color
+						current_color = src.AH.customizations["hair_middle"].color
 					if ("custom3")
-						current_color = src.AH.customization_third_color
+						current_color = src.AH.customizations["hair_top"].color
 					if ("underwear")
 						current_color = src.AH.u_color
 				var/new_color = tgui_color_picker(usr, "Please select a color.", "Character Generation", current_color)
 				if (new_color)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customization_first_color = new_color
+							src.AH.customizations["hair_bottom"].color = new_color
 						if ("custom2")
-							src.AH.customization_second_color = new_color
+							src.AH.customizations["hair_middle"].color = new_color
 						if ("custom3")
-							src.AH.customization_third_color = new_color
+							src.AH.customizations["hair_top"].color = new_color
 						if ("underwear")
 							src.AH.u_color = new_color
 					src.update_preview_icon()
@@ -730,11 +856,11 @@ var/list/removed_jobs = list(
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customization_first = new_style
+							src.AH.customizations["hair_bottom"].style = new_style
 						if ("custom2")
-							src.AH.customization_second = new_style
+							src.AH.customizations["hair_middle"].style = new_style
 						if ("custom3")
-							src.AH.customization_third = new_style
+							src.AH.customizations["hair_top"].style = new_style
 						if ("underwear")
 							src.AH.underwear = new_style
 					src.update_preview_icon()
@@ -749,11 +875,11 @@ var/list/removed_jobs = list(
 
 				switch (params["id"])
 					if ("custom1")
-						current_style = src.AH.customization_first.type
+						current_style = src.AH.customizations["hair_bottom"].style.type
 					if ("custom2")
-						current_style = src.AH.customization_second.type
+						current_style = src.AH.customizations["hair_middle"].style.type
 					if ("custom3")
-						current_style = src.AH.customization_third.type
+						current_style = src.AH.customizations["hair_top"].style.type
 					if ("underwear")
 						current_style = src.AH.underwear
 
@@ -778,11 +904,11 @@ var/list/removed_jobs = list(
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customization_first = new new_style
+							src.AH.customizations["hair_bottom"].style = new new_style
 						if ("custom2")
-							src.AH.customization_second = new new_style
+							src.AH.customizations["hair_middle"].style = new new_style
 						if ("custom3")
-							src.AH.customization_third = new new_style
+							src.AH.customizations["hair_top"].style = new new_style
 						if ("underwear")
 							src.AH.underwear = new_style
 					src.update_preview_icon()
@@ -817,16 +943,50 @@ var/list/removed_jobs = list(
 					src.profile_modified = TRUE
 					return TRUE
 
-			if ("update-fontSize")
-				if (params["reset"])
-					src.font_size = initial(src.font_size)
-					return TRUE
-				else
-					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 200, 1)
-					if (!isnull(new_font_size))
-						src.font_size = new_font_size
-						src.profile_modified = TRUE
+			if ("open-job-wiki")
+				var/datum/job/J = find_job_in_controller_by_string(params["job"])
+				if (istype(J) && J.wiki_link)
+					ui.user << link(J.wiki_link)
+				return FALSE
+
+			if ("set-job-priority-level")
+				src.SetJob(usr, params["fromPriority"], params["job"], params["toPriority"])
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("reset-all-jobs-priorities")
+				switch (params["toPriority"])
+					if (2)
+						src.ResetAllPrefsToMed(usr)
+					if (3)
+						src.ResetAllPrefsToLow(usr)
+					if (4)
+						src.ResetAllPrefsToUnwanted(usr)
+					else
 						return TRUE
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("toggle-antagonist-preference")
+				var/variable_name = params["variable"]
+				src.vars[variable_name] = !src.vars[variable_name]
+
+				// As a result of how nukeops are selected, you must be allowed to roll Operative in order to roll Commander.
+				switch (variable_name)
+					if ("be_syndicate")
+						src.be_syndicate_commander &&= src.be_syndicate
+					if ("be_syndicate_commander")
+						src.be_syndicate ||= src.be_syndicate_commander
+
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-fontSize")
+				var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 200, 1)
+				if (!isnull(new_font_size))
+					src.font_size = new_font_size
+					src.profile_modified = TRUE
+					return TRUE
 
 			if ("update-seeMentorPms")
 				src.see_mentor_pms = !src.see_mentor_pms
@@ -834,12 +994,12 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-listenOoc")
-				src.listen_ooc = !src.listen_ooc
+				usr.client.toggle_ooc(!src.listen_ooc)
 				src.profile_modified = TRUE
 				return TRUE
 
 			if ("update-listenLooc")
-				src.listen_looc = !src.listen_looc
+				usr.client.toggle_looc(!src.listen_looc)
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -859,10 +1019,13 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-hudTheme")
-				var/new_hud = tgui_input_list(usr, "Please select a HUD style:", "New", hud_style_selection)
-				if (new_hud)
+				var/new_hud = params["value"]
+				if (new_hud in hud_style_selection)
 					src.hud_style = new_hud
 					src.profile_modified = TRUE
+					var/mob/living/carbon/human/H = usr
+					if (istype(H))
+						H.force_hud_style(new_hud)
 					return TRUE
 
 			if ("update-targetingCursor")
@@ -883,7 +1046,10 @@ var/list/removed_jobs = list(
 					src.scrollwheel_limb_targeting = params["value"]
 					src.profile_modified = TRUE
 					return TRUE
-
+			if ("update-middleMouseSwap")
+				src.middle_mouse_swap = !src.middle_mouse_swap
+				src.profile_modified = TRUE
+				return TRUE
 			if ("update-tguiFancy")
 				src.tgui_fancy = !src.tgui_fancy
 				src.profile_modified = TRUE
@@ -934,6 +1100,36 @@ var/list/removed_jobs = list(
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("update-observerDnr")
+				src.observer_dnr = !src.observer_dnr
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-clientSetting")
+				return src.set_client_setting(client, params["setting"], params["value"])
+
+			if ("update-volume")
+				var/channel = params["channel"]
+				if (!isnum(channel) || channel < VOLUME_CHANNEL_MASTER || channel > VOLUME_CHANNEL_FARTS || !isnum(params["value"]))
+					return
+				client.setVolume(channel, params["value"] / 100)
+				return TRUE
+
+			if ("reset-volumes")
+				for (var/channel in VOLUME_CHANNEL_MASTER to VOLUME_CHANNEL_FARTS)
+					client.setVolume(channel, client.getDefaultVolume(channel))
+				return TRUE
+
+			if ("update-saturation")
+				var/current = text2num(client.player?.cloudSaves.getData("saturation")) || 1
+				var/new_saturation = tgui_input_number(usr, "Saturation (in percent):", "Saturation", round(current * 100), 150, 50)
+				if (isnull(new_saturation))
+					return
+				var/saturation = clamp(new_saturation, 50, 150) / 100
+				client.set_saturation(saturation)
+				client.player?.cloudSaves.putDataSoon("saturation", saturation)
+				return TRUE
+
 			if ("select-trait")
 				src.profile_modified = src.traitPreferences.selectTrait(params["id"], src.custom_parts)
 				return TRUE
@@ -981,14 +1177,14 @@ var/list/removed_jobs = list(
 				src.AH.gender = MALE
 				src.randomize_name()
 
-				src.AH.customization_first = new /datum/customization_style/hair/short/short
-				src.AH.customization_second = new /datum/customization_style/none
-				src.AH.customization_third = new /datum/customization_style/none
+				src.AH.customizations["hair_bottom"].style = new /datum/customization_style/hair/short/short
+				src.AH.customizations["hair_middle"].style = new /datum/customization_style/none
+				src.AH.customizations["hair_top"].style = new /datum/customization_style/none
 				src.AH.underwear = "No Underwear"
 
-				src.AH.customization_first_color = initial(src.AH.customization_first_color)
-				src.AH.customization_second_color = initial(src.AH.customization_second_color)
-				src.AH.customization_third_color = initial(src.AH.customization_third_color)
+				src.AH.customizations["hair_bottom"].color = initial(src.AH.customizations["hair_bottom"].color)
+				src.AH.customizations["hair_middle"].color = initial(src.AH.customizations["hair_middle"].color)
+				src.AH.customizations["hair_top"].color = initial(src.AH.customizations["hair_top"].color)
 				src.AH.e_color = "#101010"
 				src.AH.u_color = "#FEFEFE"
 
@@ -1002,7 +1198,7 @@ var/list/removed_jobs = list(
 				src.flying_chat_hidden = FALSE
 				src.local_deadchat = FALSE
 				src.auto_capitalization = FALSE
-				src.listen_ooc = TRUE
+				usr.client.toggle_ooc(TRUE)
 				src.view_changelog = TRUE
 				src.view_score = TRUE
 				src.view_tickets = TRUE
@@ -1011,6 +1207,7 @@ var/list/removed_jobs = list(
 				src.use_click_buffer = FALSE
 				src.help_text_in_examine = TRUE
 				src.be_traitor = FALSE
+				src.be_sleeper_agent = FALSE
 				src.be_syndicate = FALSE
 				src.be_syndicate_commander = FALSE
 				src.be_spy = FALSE
@@ -1021,10 +1218,12 @@ var/list/removed_jobs = list(
 				src.be_wizard = FALSE
 				src.be_werewolf = FALSE
 				src.be_vampire = FALSE
+				src.be_arcfiend = FALSE
 				src.be_wraith = FALSE
 				src.be_blob = FALSE
 				src.be_conspirator = FALSE
 				src.be_flock = FALSE
+				src.be_salvager = FALSE
 				src.be_misc = FALSE
 				src.tooltip_option = TOOLTIP_ALWAYS
 				src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
@@ -1066,16 +1265,23 @@ var/list/removed_jobs = list(
 			return
 		var/savefile/message = new()
 		message.ImportText("/", file2text(F))
-		var/hash
-		message["hash"] >> hash
-		message["hash"] << null
-		if(hash == sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]"))
-			var/profilenum_old = profile_number
-			savefile_load(usr.client, 1, message)
-			src.profile_modified = TRUE
-			src.profile_number = profilenum_old
-			src.traitPreferences.traitDataDirty = TRUE
+		if (!src.check_hash(message))
+			return
+		var/profilenum_old = profile_number
+		savefile_load(usr.client, 1, message)
+		src.profile_modified = TRUE
+		src.profile_number = profilenum_old
+		src.traitPreferences.traitDataDirty = TRUE
 
+	proc/check_hash(savefile/file)
+#ifdef LIVE_SERVER
+		var/hash
+		file["hash"] >> hash
+		file["hash"] << null
+		return hash == sha1("[sha1(file.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]")
+#else
+		return TRUE //we're on a local, accept any old character imports
+#endif
 
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
@@ -1095,7 +1301,7 @@ var/list/removed_jobs = list(
 				src.name_middle = capitalize(pick_string_autokey("names/first_female.txt"))
 		if (last)
 			src.name_last = capitalize(pick_string_autokey("names/last.txt"))
-		src.real_name = src.name_first + " " + src.name_last
+		src.set_real_name()
 
 	proc/randomizeLook() // im laze
 		if (!src.AH)
@@ -1107,26 +1313,33 @@ var/list/removed_jobs = list(
 		src.update_preview_icon()
 
 	proc/sanitize_name()
-		for (var/c in bad_name_characters)
-			src.name_first = replacetext(src.name_first, c, "")
-			src.name_middle = replacetext(src.name_middle, c, "")
-			src.name_last = replacetext(src.name_last, c, "")
+		src.name_first = remove_bad_name_characters(src.name_first)
+		src.name_middle = remove_bad_name_characters(src.name_middle)
+		src.name_last = remove_bad_name_characters(src.name_last)
 
 		if (length(src.name_first) < NAME_CHAR_MIN || length(src.name_first) > NAME_CHAR_MAX || is_blank_string(src.name_first) || !character_name_validation.Find(src.name_first))
 			src.randomize_name(1, 0, 0)
 
-		if (length(src.name_middle) > NAME_CHAR_MAX || is_blank_string(src.name_middle))
+		if (length(src.name_middle) > NAME_CHAR_MAX)
 			src.randomize_name(0, 1, 0)
 
 		if (length(src.name_last) < NAME_CHAR_MIN || length(src.name_last) > NAME_CHAR_MAX || is_blank_string(src.name_last) || !character_name_validation.Find(src.name_last))
 			src.randomize_name(0, 0, 1)
 
-		src.real_name = src.name_first + " " + src.name_last
+		src.set_real_name()
+
+	proc/set_real_name()
+		if (!src.name_middle)
+			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-") + src.name_last
+		else
+			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-[src.name_middle]-") + src.name_last
 
 
 	proc/update_preview_icon()
 		if (!src.AH)
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			return
+		if (!src.preview)
 			return
 
 		var/datum/mutantrace/mutantRace = /datum/mutantrace/human
@@ -1136,21 +1349,23 @@ var/list/removed_jobs = list(
 				mutantRace = T.mutantRace
 				break
 
+		var/mob/living/carbon/human/H = src.preview.preview_thing
 		src.AH.mutant_race = mutantRace
 		var/s_orig = src.AH.s_tone_original
+		if (src.traitPreferences.traits_selected.Find("mutant_hair") && mutantRace)
+			H.hair_override = TRUE
+		else
+			H.hair_override = FALSE
 		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name = src.real_name)
 		src.AH.s_tone_original = s_orig // refuse any edits made by mutantrace setting/etc
 		// bald trait preview stuff
-		if (!src.preview)
-			return
-		var/mob/living/carbon/human/H = src.preview.preview_thing
 		var/ourWig = H.head
 		if (ourWig)
 			H.u_equip(ourWig)
 			qdel(ourWig)
 
 		if (src.traitPreferences.traits_selected.Find("bald") && mutantRace)
-			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
+			H.equip_if_possible(H.create_wig(keep_hair = TRUE), SLOT_HEAD)
 
 		for (var/slot_id in src.custom_parts)
 			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
@@ -1158,6 +1373,8 @@ var/list/removed_jobs = list(
 		H.update_icons_if_needed()
 
 	proc/ShowChoices(mob/user)
+		if (!user.client?.authenticated)
+			return
 		src.ui_interact(user)
 
 	proc/ResetAllPrefsToMed(mob/user)
@@ -1166,7 +1383,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
+			if (jobban_isbanned(user, J.name, J) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1181,7 +1398,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
+			if (jobban_isbanned(user, J.name, J) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1208,7 +1425,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.ckey || ckey(user.mind?.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
+			if (jobban_isbanned(user, J.name, J) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1217,302 +1434,181 @@ var/list/removed_jobs = list(
 			src.jobs_low_priority += J.name
 		return
 
-	proc/SetChoices(mob/user)
+	proc/GetJobStaticData(mob/user)
 		if (isnull(src.jobs_med_priority) || isnull(src.jobs_low_priority) || isnull(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, SPAN_ALERT("<b>Your Job Preferences were null, and have been reset.</b>"))
-		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !length(src.jobs_unwanted))
+
+		else if (isnull(src.job_favorite) && !length(src.jobs_med_priority) && !length(src.jobs_low_priority) && !length(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, SPAN_ALERT("<b>Your Job Preferences were empty, and have been reset.</b>"))
+
 		else
-			// remove/replace jobs that were removed/renamed
-			for (var/job in removed_jobs)
+			// Remove or replace jobs that were removed or renamed.
+			for (var/job as anything in global.removed_jobs)
 				if (job in src.jobs_med_priority)
 					src.jobs_med_priority -= job
-					if (removed_jobs[job])
-						src.jobs_med_priority |= removed_jobs[job]
+					if (global.removed_jobs[job])
+						src.jobs_med_priority |= global.removed_jobs[job]
+
 				if (job in src.jobs_low_priority)
 					src.jobs_low_priority -= job
-					if (removed_jobs[job])
-						src.jobs_low_priority |= removed_jobs[job]
+					if (global.removed_jobs[job])
+						src.jobs_low_priority |= global.removed_jobs[job]
+
 				if (job in src.jobs_unwanted)
 					src.jobs_unwanted -= job
-					if (removed_jobs[job])
-						src.jobs_unwanted |= removed_jobs[job]
-			// add missing jobs
+					if (global.removed_jobs[job])
+						src.jobs_unwanted |= global.removed_jobs[job]
 
-//pod wars only special jobs
+			// Add missing jobs.
 #if defined(MAP_OVERRIDE_POD_WARS)
-			for (var/datum/job/J in job_controls.special_jobs)
-				if (istype(J, /datum/job/special/pod_wars))
-					if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
-						if (J.cant_allocate_unwanted)
-							src.jobs_low_priority |= J.name
-						else
-							src.jobs_unwanted |= J.name
+			for (var/datum/job/special/pod_wars/job_datum in global.job_controls.special_jobs)
+				if ((src.job_favorite == job_datum.name) || (job_datum.name in src.jobs_med_priority) || (job_datum.name in src.jobs_low_priority))
+					continue
+
+				if (job_datum.cant_allocate_unwanted)
+					src.jobs_low_priority |= job_datum.name
+				else
+					src.jobs_unwanted |= job_datum.name
 #else
-			for (var/datum/job/J in job_controls.staple_jobs)
-				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
-					src.jobs_unwanted |= J.name
+			for (var/datum/job/job_datum in global.job_controls.staple_jobs)
+				if ((src.job_favorite == job_datum.name) || (job_datum.name in src.jobs_med_priority) || (job_datum.name in src.jobs_low_priority))
+					continue
+
+				src.jobs_unwanted |= job_datum.name
 #endif
 
-			// remove duplicate jobs
+			// Remove duplicate jobs.
 			var/list/seen_jobs = list()
 			if (src.job_favorite)
 				seen_jobs[src.job_favorite] = TRUE
-			for (var/J in src.jobs_med_priority)
-				if (seen_jobs[J])
-					src.jobs_med_priority.Remove(J)
+
+			for (var/job as anything in src.jobs_med_priority)
+				if (seen_jobs[job])
+					src.jobs_med_priority -= job
 				else
-					seen_jobs[J] = TRUE
-			for (var/J in src.jobs_low_priority)
-				if (seen_jobs[J])
-					src.jobs_low_priority.Remove(J)
+					seen_jobs[job] = TRUE
+
+			for (var/job as anything in src.jobs_low_priority)
+				if (seen_jobs[job])
+					src.jobs_low_priority -= job
 				else
-					seen_jobs[J] = TRUE
-			for (var/J in src.jobs_unwanted)
-				if (seen_jobs[J])
-					src.jobs_unwanted.Remove(J)
+					seen_jobs[job] = TRUE
+
+			for (var/job as anything in src.jobs_unwanted)
+				if (seen_jobs[job])
+					src.jobs_unwanted -= job
 				else
-					seen_jobs[J] = TRUE
+					seen_jobs[job] = TRUE
 
-
-		var/list/HTML = list()
-
-		HTML += {"<title>Job Preferences</title>
-<style type="text/css">
-	.jobtable {
-		margin-top: 0.3em;
-		width: 100%;
-		}
-	.jobtable td, th {
-		vertical-align: top;
-		text-align: center;
-		width: 25%;
-		margin: 0;
-		padding: 0.1em 0.5em;
-		}
-	.jobtable td + td {
-		border-left: 1px solid black;
-		}
-	.jobtable td div {
-		margin-bottom: 3px;
-		text-align: center;
-		position: relative;
-		padding: 0 1.2em;
-		border: 1px solid rgba(128, 128, 128, 0.5);
-		}
-	.jobtable td a {
-		text-decoration: none;
-		}
-	.jobtable td div a.job {
-		width: 100%;
-		display: inline-block;
-		text-align: center;
-		background: rgba(128, 128, 128, 0.05);
-	}
-	.jobtable td div .arrow {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		width: 1em;
-		text-align: center;
-		background: rgba(128, 128, 128, 0.3);
-		}
-
-	.jobtable td div .arrow:hover {
-		background: rgba(128, 128, 128, 0.5);
-		}
-	.jobtable td div a.job:hover {
-		background: rgba(128, 128, 128, 0.15);
-		}
-	.info-thing {
-		background: rgba(128, 128, 255, 0.4);
-		color: rgba(255, 255, 255, 0.8);
-		margin-left: 0.5em;
-		display: inline-block;
-		text-align: center;
-		font-size: 80%;
-		font-weight: bold;
-		min-width: 1.2em;
-		min-height: 1.2em;
-		border-radius: 100%;
-		position: relative;
-		top: -1px;
-		cursor: help;
-		}
-	.antagprefs a {
-		display: block;
-		text-align: left;
-		margin-bottom: 0.2em;
-		text-decoration: none;
-		}
-	.antagprefs a.yup {
-		color: #ff4444;
-		}
-	.antagprefs a.nope {
-		color: inherit;
-		}
-</style>
-
-<div style="float: right;">
-	<a href="byond://?src=\ref[src];preferences=1;closejobswindow=1">Back to Setup</a> &bull;
-	<a href="byond://?src=\ref[src];preferences=1;jobswindow=1">Refresh</a> &bull;
-	<a href="byond://?src=\ref[src];preferences=1;resetalljobs=1"><b>Reset All Jobs</b></a>
-</div>
-		"}
-
-		// this still sucks but at least the rest is slightly less awful
-
-		HTML += "<b>Favorite Job</b><span class='info-thing' title=\"This is for the one job you like the most - the game will always try to get you into this job first if it can. You might not always get your favorite job, especially if it's a single-slot role like a Head, but don't be discouraged if you don't get it - it's just luck of the draw. You might get it next time.\">?</span>:"
-		if (!src.job_favorite)
-			HTML += " None"
-		else
-			var/print_the_job = FALSE
-			var/datum/job/J_Fav = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : null
-			if (!J_Fav)
-				HTML += " Favorite Job not found!"
-			else if (jobban_isbanned(user,J_Fav.name) || (J_Fav.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J_Fav.requires_whitelist && !NT.Find(ckey(user.mind.key))))
-				boutput(user, SPAN_ALERT("<b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</b>"))
-				src.jobs_unwanted += J_Fav.name
-				src.job_favorite = null
-			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
-				if (!J_Fav.has_rounds_needed(user.client.player))
-					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b>"))
-					src.jobs_unwanted += J_Fav.name
-					src.job_favorite = null
-				else
-					print_the_job = TRUE
-			else
-				print_the_job = TRUE
-			if (print_the_job)
-				HTML += " <a href=\"byond://?src=\ref[src];preferences=1;occ=1;job=[J_Fav.name];level=0\" style='font-weight: bold; color: [J_Fav.linkcolor];'>[J_Fav.name]</a>"
-
-		HTML += {"
-	<table class='jobtable'>
-		<tr>
-			<th>Medium Priority <span class="info-thing" title="Medium Priority Jobs are any jobs you would like to play that aren't your favorite. People with jobs in this category get priority over those who have the same job in their low priority bracket. It's best to put jobs here that you actively enjoy playing and wouldn't mind ending up with if you don't get your favorite.">?</span></th>
-			<th>Low Priority <span class="info-thing" title="Low Priority Jobs are jobs that you don't mind doing. When the game is finding candidates for a job, it will try to fill it with Medium Priority players first, then Low Priority players if there are still free slots.">?</span></th>
-			<th>Unwanted Jobs <span class="info-thing" title="Unwanted Jobs are jobs that you absolutely don't want to have. The game will never give you a job you list here. The 'Staff Assistant' role can't be put here, however, as it's the fallback job if there are no other openings.">?</span></th>
-			<th>Antagonist Roles <span class="info-thing" title="Antagonist roles are randomly chosen when the game starts, before jobs have been allocated. Leaving an antagonist role unchecked means you will never be chosen for it automatically.">?</span></th>
-		</tr>
-		<tr>"}
-
-		var/list/jerbs = list(medium = src.jobs_med_priority, low = src.jobs_low_priority, unwanted = src.jobs_unwanted)
-
-		for (var/cat in jerbs)
-			var/level = 0
-			switch (cat)
-				if ("medium")
-					level = 2
-				if ("low")
-					level = 3
-				if ("unwanted")
-					level = 4
-
-			HTML += "<td valign='top'>"
-
-			for (var/J in jerbs[cat])
-				var/datum/job/JD = find_job_in_controller_by_string(J)
-
-				if (!JD)
+		// Filter the jobs, disabling those that can't be played.
+		var/list/list/job_static_data = list()
+		var/list/jobs_by_category = list(
+			"favourite" = list(src.job_favorite),
+			"medium" = src.jobs_med_priority,
+			"low" = src.jobs_low_priority,
+			"unwanted" = src.jobs_unwanted,
+		)
+		for (var/category as anything in jobs_by_category)
+			for (var/job as anything in jobs_by_category[category])
+				var/datum/job/job_datum = global.find_job_in_controller_by_string(job)
+				if (!job_datum)
 					continue
-				if (JD.needs_college && !user.has_medal("Unlike the director, I went to college"))
-					continue
-				if (JD.requires_whitelist && !NT.Find(user.ckey))
-					continue
-				if (jobban_isbanned(user, JD.name))
-					if (cat != "unwanted")
-						jerbs[cat] -= JD.name
-						jerbs["unwanted"] += JD.name
+
+				job_static_data[job_datum.name] ||= list()
+				job_static_data[job_datum.name]["disabled"] = FALSE
+				job_static_data[job_datum.name]["colour"] = job_datum.ui_colour
+				job_static_data[job_datum.name]["wiki_link"] = job_datum.wiki_link
+				job_static_data[job_datum.name]["required"] = job_datum.cant_allocate_unwanted
+
+				// If the user cannot play as this job.
+				var/reason_tooltip = null
+				if (global.jobban_isbanned(user, job_datum.name, job_datum))
+					reason_tooltip = "You have been banned from playing this job."
+				else if (job_datum.needs_college && !user.has_medal("Unlike the director, I went to college"))
+					reason_tooltip = "This job requires the <i>\"Unlike the director, I went to college\"</i> medal, which you do not possess."
+				else if (job_datum.requires_whitelist == REQUIRES_WHITELIST_ALWAYS && !user.client.can_play_whitelisted_roles())
+					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may play this job on Fridays."
+				else if (job_datum.requires_whitelist == REQUIRES_WHITELIST_USUALLY && !user.client.can_play_whitelisted_roles() && (!IS_IT_SATURDAY))
+					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may play this job on Fridays. Anyone may play this job on Saturdays."
+				else if (!job_datum.has_rounds_needed(user.client?.player))
+					var/played_rounds = user.client.player.get_rounds_participated()
+					var/needed_rounds = job_datum.rounds_needed_to_play
+					var/allowed_rounds = job_datum.rounds_allowed_to_play
+
+					if (played_rounds < needed_rounds)
+						reason_tooltip =  "You have only played <b>[played_rounds]</b> round[s_es(played_rounds)], but need to play a minimum of <b>[needed_rounds]</b> rounds to play as this job."
 					else
-						HTML += {"
-						<div>
-							<s style="color: #888888;">[JD.name]</s>
-						</div>
-						"}
+						reason_tooltip =  "You have already played <b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds]</b> allowed rounds. You should be experienced enough to try the full role!"
+
+				if (reason_tooltip)
+					if (category != "unwanted")
+						if (category == "favourite")
+							src.job_favorite = null
+						else
+							jobs_by_category[category] -= job_datum.name
+
+						src.jobs_unwanted += job_datum.name
+						boutput(user, SPAN_ALERT("<b>You are no longer allowed to play [job_datum.name].</b> [reason_tooltip]"))
+
+					job_static_data[job_datum.name]["disabled"] = TRUE
+					job_static_data[job_datum.name]["disabled_tooltip"] = reason_tooltip
 					continue
 
-				if (cat == "unwanted" && JD.cant_allocate_unwanted)
-					boutput(user, SPAN_ALERT("<b>[JD.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b> You may need to refresh your job preferences page to correct the job count."))
-					src.jobs_unwanted -= JD.name
-					src.jobs_low_priority += JD.name
+				// If the job shouldn't be in the Unwanted category.
+				if ((category == "unwanted") && job_datum.cant_allocate_unwanted)
+					src.jobs_unwanted -= job_datum.name
+					src.jobs_low_priority += job_datum.name
+					boutput(user, SPAN_ALERT("<b>[job_datum.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b>"))
 
-				var/hover_text = JD.short_description
+		var/list/list/antagonist_static_data = list()
+		var/list/team_antagonists = list(
+			ROLE_NUKEOP = TRUE,
+			ROLE_NUKEOP_COMMANDER = TRUE,
+			ROLE_GANG_LEADER = TRUE,
+			ROLE_GANG_MEMBER = TRUE,
+			ROLE_HEAD_REVOLUTIONARY = TRUE,
+			ROLE_CONSPIRATOR = TRUE,
+			ROLE_SALVAGER = TRUE,
+		)
+		for (var/antag_role as anything in global.roles_to_prefs)
+			antagonist_static_data[antag_role] = list()
+			antagonist_static_data[antag_role]["variable"] = global.get_preference_for_role(antag_role)
+			antagonist_static_data[antag_role]["disabled"] = FALSE
 
-				HTML += {"
-				<div>
-					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level - 1]" class="arrow" style="left: 0;">&lt;</a>
-					[level < (4 - (JD.cant_allocate_unwanted ? 1 : 0)) ? {"<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level + 1]" class="arrow" style="right: 0;">&gt;</a>"} : ""]
-					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];" title="[hover_text]">
-					[JD.name]</a>
-				</div>
-				"}
+			if (antag_role == ROLE_MISC)
+				antagonist_static_data[antag_role]["name"] = "Other Foes"
 
-			HTML += "</td>"
+			else
+				var/datum/antagonist/antag_datum = global.get_antagonist_datum_type(antag_role)
+				if (!antag_datum)
+					CRASH("Unrecognised antagonist role ID: [antag_role]")
 
-		HTML += "<td valign='top' class='antagprefs'>"
-#ifdef LIVE_SERVER
-		if ((user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT) && !user?.client?.player.cloudSaves.getData("bypass_round_reqs"))
-			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
-			src.be_syndicate = FALSE
-			src.be_syndicate_commander = FALSE
-			src.be_gangleader = FALSE
-			src.be_gangmember = FALSE
-			src.be_revhead = FALSE
-			src.be_conspirator = FALSE
-#endif
-		if (jobban_isbanned(user, "Syndicate"))
-			HTML += "You are banned from playing antagonist roles."
-			src.be_traitor = FALSE
-			src.be_syndicate = FALSE
-			src.be_syndicate_commander = FALSE
-			src.be_spy = FALSE
-			src.be_gangleader = FALSE
-			src.be_gangmember = FALSE
-			src.be_revhead = FALSE
-			src.be_changeling = FALSE
-			src.be_wizard = FALSE
-			src.be_werewolf = FALSE
-			src.be_vampire = FALSE
-			src.be_arcfiend = FALSE
-			src.be_salvager = FALSE
-			src.be_wraith = FALSE
-			src.be_blob = FALSE
-			src.be_conspirator = FALSE
-			src.be_flock = FALSE
-		else
+				antagonist_static_data[antag_role]["name"] = global.capitalize_each_word(antag_datum.display_name)
 
-			HTML += {"
-			<a href="byond://?src=\ref[src];preferences=1;b_traitor=1" class="[src.be_traitor ? "yup" : "nope"]">[crap_checkbox(src.be_traitor)] Traitor</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_syndicate=1" class="[src.be_syndicate ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate)] Nuclear Operative</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_syndicate_commander=1" class="[src.be_syndicate_commander ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate_commander)] Nuclear Operative Commander</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_spy=1" class="[src.be_spy ? "yup" : "nope"]">[crap_checkbox(src.be_spy)] Spy/Thief</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_gangleader=1" class="[src.be_gangleader ? "yup" : "nope"]">[crap_checkbox(src.be_gangleader)] Gang Leader</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_gangmember=1" class="[src.be_gangmember ? "yup" : "nope"]">[crap_checkbox(src.be_gangmember)] Gang Member</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_revhead=1" class="[src.be_revhead ? "yup" : "nope"]">[crap_checkbox(src.be_revhead)] Revolution Leader</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_changeling=1" class="[src.be_changeling ? "yup" : "nope"]">[crap_checkbox(src.be_changeling)] Changeling</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_wizard=1" class="[src.be_wizard ? "yup" : "nope"]">[crap_checkbox(src.be_wizard)] Wizard</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_werewolf=1" class="[src.be_werewolf ? "yup" : "nope"]">[crap_checkbox(src.be_werewolf)] Werewolf</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_vampire=1" class="[src.be_vampire ? "yup" : "nope"]">[crap_checkbox(src.be_vampire)] Vampire</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_arcfiend=1" class="[src.be_arcfiend ? "yup" : "nope"]">[crap_checkbox(src.be_arcfiend)] Arcfiend</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_wraith=1" class="[src.be_wraith ? "yup" : "nope"]">[crap_checkbox(src.be_wraith)] Wraith</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_salvager=1" class="[src.be_salvager ? "yup" : "nope"]">[crap_checkbox(src.be_salvager)] Salvager</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
-		"}
+			// If the user cannot play as this antagonist role.
+			var/reason_tooltip = null
+			if (global.jobban_isbanned(user, "Syndicate"))
+				reason_tooltip = "You have been banned from playing antagonist roles."
+			else if (team_antagonists[antag_role] && user.client?.player && !user.client.player.cloudSaves.getData("bypass_round_reqs"))
+				var/played_rounds = user.client.player.get_rounds_participated()
+				var/needed_rounds = TEAM_BASED_ROUND_REQUIREMENT
 
-		HTML += {"</td></tr></table>"}
+				if (!isnull(played_rounds) && (played_rounds < needed_rounds))
+					reason_tooltip =  "You have only played <b>[played_rounds]</b> round[s_es(played_rounds)], but need to play a minimum of <b>[needed_rounds]</b> rounds to play as a team-based antagonist."
 
-		user.Browse(null, "window=preferences")
-		user.Browse(HTML.Join(), "window=mob_occupation;size=850x580")
-		return
+			if (reason_tooltip)
+				src.vars[global.get_preference_for_role(antag_role)] = FALSE
+				antagonist_static_data[antag_role]["disabled"] = TRUE
+				antagonist_static_data[antag_role]["disabled_tooltip"] = reason_tooltip
+
+		return list(
+			"jobStaticData" = job_static_data,
+			"antagonistStaticData" = antagonist_static_data,
+		)
 
 	proc/SetJob(mob/user, occ=1, job="Captain", level = 0)
-		if (src.antispam)
-			return
 		switch (occ)
 			if (1)
 				if (src.job_favorite != job)
@@ -1531,10 +1627,11 @@ var/list/removed_jobs = list(
 				//
 		//works for now, maybe move this to something on game mode to decide proper jobs... -kyle
 #if defined(MAP_OVERRIDE_POD_WARS)
-		if (!find_job_in_controller_by_string(job,0,TRUE))
+		var/datum/job/temp_job = find_job_in_controller_by_string(job, 0, TRUE)
 #else
-		if (!find_job_in_controller_by_string(job,1,TRUE))
+		var/datum/job/temp_job = find_job_in_controller_by_string(job, 1, TRUE)
 #endif
+		if (!temp_job)
 			boutput(user, SPAN_ALERT("<b>The game could not find that job in the internal list of jobs.</b>"))
 			switch (occ)
 				if (1) src.job_favorite = null
@@ -1552,7 +1649,7 @@ var/list/removed_jobs = list(
 				src.jobs_unwanted += job
 			return
 
-		if (jobban_isbanned(user, job))
+		if (jobban_isbanned(user, job, temp_job))
 			boutput(user, SPAN_ALERT("<b>You are banned from this job and may not select it.</b>"))
 			if (occ != 4)
 				switch (occ)
@@ -1562,14 +1659,16 @@ var/list/removed_jobs = list(
 				src.jobs_unwanted += job
 			return
 
-//pod wars only special jobs
-#if defined(MAP_OVERRIDE_POD_WARS)
-		var/datum/job/temp_job = find_job_in_controller_by_string(job,0)
-#else
-		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
-#endif
 		if (user.client && !temp_job.has_rounds_needed(user.client.player))
-			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
+			var/played_rounds = user.client.player.get_rounds_participated()
+			var/needed_rounds = temp_job.rounds_needed_to_play
+			var/allowed_rounds = temp_job.rounds_allowed_to_play
+			var/reason_msg = ""
+			if (allowed_rounds && !needed_rounds)
+				reason_msg =  "You've already played </b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds] allowed rounds. You should be experienced enough!</b>"
+			else if (needed_rounds)
+				reason_msg =  "You've only played </b>[played_rounds]</b> rounds and need to play <b>[needed_rounds].</b>"
+			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> [reason_msg]"))
 			if (occ != 4)
 				switch (occ)
 					if (1) src.job_favorite = null
@@ -1578,35 +1677,15 @@ var/list/removed_jobs = list(
 				src.jobs_unwanted += job
 			return
 
-		src.antispam = TRUE
-
 		var/picker = "Low Priority"
-		var/datum/job/J = find_job_in_controller_by_string(job)
-		if (level == 0)
-			var/list/valid_actions = list("Favorite", "Medium Priority", "Low Priority", "Unwanted")
-			if (J.wiki_link)
-				valid_actions += "Show Wiki Page"
+		switch (level)
+			if (1) picker = "Favorite"
+			if (2) picker = "Medium Priority"
+			if (3) picker = "Low Priority"
+			if (4) picker = "Unwanted"
 
-			switch (occ)
-				if (1) valid_actions -= "Favorite"
-				if (2) valid_actions -= "Medium Priority"
-				if (3) valid_actions -= "Low Priority"
-				if (4) valid_actions -= "Unwanted"
-
-			picker = tgui_input_list(usr, "Which bracket would you like to move this job to?", "Job Preferences", valid_actions)
-			if (!picker)
-				src.antispam = FALSE
-				return
-		else
-			switch (level)
-				if (1) picker = "Favorite"
-				if (2) picker = "Medium Priority"
-				if (3) picker = "Low Priority"
-				if (4) picker = "Unwanted"
-
-		if (J.cant_allocate_unwanted && picker == "Unwanted")
+		if (temp_job.cant_allocate_unwanted && picker == "Unwanted")
 			boutput(user, SPAN_ALERT("<b>[job] cannot be set to Unwanted.</b>"))
-			src.antispam = FALSE
 			return
 
 		var/successful_move = FALSE
@@ -1632,8 +1711,6 @@ var/list/removed_jobs = list(
 				if (occ == 1)
 					src.job_favorite = null
 				successful_move = TRUE
-			if ("Show Wiki Page")
-				user << link(J.wiki_link)
 
 		if (successful_move)
 			switch (occ)
@@ -1642,147 +1719,7 @@ var/list/removed_jobs = list(
 				if (3) src.jobs_low_priority -= job
 				if (4) src.jobs_unwanted -= job
 
-		src.antispam = FALSE
 		return 1
-
-	Topic(href, href_list[])
-		if (usr?.client?.preferences)
-			if (src == usr.client.preferences)
-				process_link(usr, href_list)
-			else
-				boutput(usr, "<h3 class='alert'>Those aren't your prefs!</h3>")
-		else
-			boutput(usr, "<h3 class='alert'>Something went wrong with preferences. Call a coder.</span>")
-		..()
-
-	proc/process_link(mob/user, list/link_tags)
-		if (!user.client)
-			return
-
-		// do we check if they actually modified something? no.
-		// thats effort.
-		src.profile_modified = TRUE
-
-		if (link_tags["job"])
-			src.SetJob(user, text2num(link_tags["occ"]), link_tags["job"], text2num(link_tags["level"]))
-			src.SetChoices(user)
-			return
-
-		if (link_tags["jobswindow"])
-			src.SetChoices(user)
-			return
-
-		if (link_tags["closejobswindow"])
-			user.Browse(null, "window=mob_occupation")
-			src.ShowChoices(user)
-			return
-
-		if (link_tags["resetalljobs"])
-			var/resetwhat = tgui_input_list(user, "Reset all jobs to which level?", "Job Preferences", list("Medium Priority", "Low Priority", "Unwanted"))
-			switch (resetwhat)
-				if ("Medium Priority")
-					src.ResetAllPrefsToMed(user)
-				if ("Low Priority")
-					src.ResetAllPrefsToLow(user)
-				if ("Unwanted")
-					src.ResetAllPrefsToUnwanted(user)
-				else
-					return
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_traitor"])
-			src.be_traitor = !src.be_traitor
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_syndicate"])
-			src.be_syndicate = !src.be_syndicate
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_syndicate_commander"])
-			src.be_syndicate_commander = !src.be_syndicate_commander
-			src.be_syndicate |= src.be_syndicate_commander
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_spy"])
-			src.be_spy = !src.be_spy
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_gangleader"])
-			src.be_gangleader = !src.be_gangleader
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_gangmember"])
-			src.be_gangmember = !src.be_gangmember
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_revhead"])
-			src.be_revhead = !src.be_revhead
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_changeling"])
-			src.be_changeling = !src.be_changeling
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_wizard"])
-			src.be_wizard = !src.be_wizard
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_werewolf"])
-			src.be_werewolf = !src.be_werewolf
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_vampire"])
-			src.be_vampire = !src.be_vampire
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_arcfiend"])
-			src.be_arcfiend = !src.be_arcfiend
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_salvager"])
-			src.be_salvager = !src.be_salvager
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_wraith"])
-			src.be_wraith = !src.be_wraith
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_blob"])
-			src.be_blob = !src.be_blob
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_conspirator"])
-			src.be_conspirator = !src.be_conspirator
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_flock"])
-			src.be_flock = !src.be_flock
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_misc"])
-			src.be_misc = !src.be_misc
-			src.SetChoices(user)
-			return
-
-		src.ShowChoices(user)
 
 	proc/copy_to(mob/living/character, mob/user, ignore_randomizer = FALSE, skip_post_new_stuff = FALSE)
 		src.sanitize_null_values()
@@ -1807,7 +1744,7 @@ var/list/removed_jobs = list(
 					src.copy_to(character, user, TRUE) // apply the other stuff again but with the random name
 
 		//character.real_name = real_name
-		src.real_name = src.name_first + " " + src.name_last
+		src.set_real_name()
 		character.real_name = src.real_name
 		phrase_log.log_phrase("name-human", character.real_name, no_duplicates=TRUE)
 
@@ -1840,14 +1777,15 @@ var/list/removed_jobs = list(
 			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
-	proc/apply_post_new_stuff(mob/living/character)
+	proc/apply_post_new_stuff(mob/living/character, var/role_for_traits)
+		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
+			character.traitHolder.mind_role_fallback = role_for_traits
+			for (var/T in src.traitPreferences.traits_selected)
+				character.traitHolder.addTrait(T)
 		for (var/slot_id in src.custom_parts)
 			var/part_id = src.custom_parts[slot_id]
 			var/datum/part_customization/customization = get_part_customization(part_id)
 			customization.try_apply(character, src.custom_parts)
-		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
-			for (var/T in src.traitPreferences.traits_selected)
-				character.traitHolder.addTrait(T)
 
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))
@@ -1856,24 +1794,26 @@ var/list/removed_jobs = list(
 			src.AH = new
 		if (src.AH.gender != src.gender)
 			src.AH.gender = src.gender
-		if (src.AH.customization_first_color == null)
-			src.AH.customization_first_color = "#101010"
-		if (src.AH.customization_first == null)
-			src.AH.customization_first = new  /datum/customization_style/none
-		if (src.AH.customization_second_color == null)
-			src.AH.customization_second_color = "#101010"
-		if (src.AH.customization_second == null)
-			src.AH.customization_second = new /datum/customization_style/none
-		if (src.AH.customization_third_color == null)
-			src.AH.customization_third_color = "#101010"
-		if (src.AH.customization_third == null)
-			src.AH.customization_third = new /datum/customization_style/none
+		if (src.AH.customizations["hair_bottom"].color == null)
+			src.AH.customizations["hair_bottom"].color = "#101010"
+		if (src.AH.customizations["hair_bottom"].style == null)
+			src.AH.customizations["hair_bottom"].style = new  /datum/customization_style/none
+		if (src.AH.customizations["hair_middle"].color == null)
+			src.AH.customizations["hair_middle"].color = "#101010"
+		if (src.AH.customizations["hair_middle"].style == null)
+			src.AH.customizations["hair_middle"].style = new /datum/customization_style/none
+		if (src.AH.customizations["hair_top"].color == null)
+			src.AH.customizations["hair_top"].color = "#101010"
+		if (src.AH.customizations["hair_top"].style == null)
+			src.AH.customizations["hair_top"].style = new /datum/customization_style/none
 		if (src.AH.e_color == null)
 			src.AH.e_color = "#101010"
 		if (src.AH.u_color == null)
 			src.AH.u_color = "#FEFEFE"
 		if (src.AH.s_tone == null || src.AH.s_tone == "#FFFFFF" || src.AH.s_tone == "#ffffff")
 			src.AH.s_tone = "#FEFEFE"
+		if (!src.preferred_uplink)
+			src.preferred_uplink = PREFERRED_UPLINK_PDA
 
 	proc/keybind_prefs_updated(var/client/C)
 		if (!isclient(C))
@@ -1883,14 +1823,4 @@ var/list/removed_jobs = list(
 			else
 				boutput(C, "<h3 class='alert'>Something went wrong. Maybe the game isn't done loading yet, give it a minute!</h3>")
 				return
-		if (C.preferences.use_wasd)
-			winset(C, "menu.wasd_controls", "is-checked=true")
-		else
-			winset(C, "menu.wasd_controls", "is-checked=false")
 		C.mob.reset_keymap()
-
-// Generates a real crap checkbox for html toggle links.
-// it sucks but it's a bit more readable i guess.
-/proc/crap_checkbox(var/checked)
-	if (checked) return "&#9745;"
-	else return "&#9744;"

@@ -1,7 +1,13 @@
 ////////////////////
 //Wraith curses
 ////////////////////
-/datum/bioEffect/blood_curse
+ABSTRACT_TYPE(/datum/bioEffect/curse)
+/datum/bioEffect/curse
+	OnAdd()
+		. = ..()
+		src.holder.cursed = TRUE
+
+/datum/bioEffect/curse/blood
 	name = "Blood curse"
 	desc = "Curse of blood."
 	id = "blood_curse"
@@ -24,8 +30,11 @@
 		curse_icon.pixel_y = 28
 		curse_icon.alpha = 170
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
+		. = ..()
 
 	OnLife(mult)
+		if (..())
+			return
 		if (probmult(5))
 			owner.emote("cough")
 			var/turf/T = get_turf(owner)
@@ -42,7 +51,7 @@
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 		. = ..()
 
-/datum/bioEffect/blindness_curse
+/datum/bioEffect/curse/blindness
 	name = "Blind curse"
 	desc = "Curse of blindness."
 	id = "blind_curse"
@@ -66,6 +75,8 @@
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
 
 	OnLife(mult)
+		if (..())
+			return
 		if (probmult(8) && ishuman(owner))
 			owner.eye_damage += 10
 			if (owner.eye_damage > 90)
@@ -82,7 +93,7 @@
 		. = ..()
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 
-/datum/bioEffect/weak_curse
+/datum/bioEffect/curse/weakness
 	name = "Weakness curse"
 	desc = "Curse of enfeeblement."
 	id = "weak_curse"
@@ -105,8 +116,11 @@
 		curse_icon.pixel_y = 28
 		curse_icon.alpha = 170
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
+		. = ..()
 
 	OnLife(mult)
+		if (..())
+			return
 		if (probmult(5))
 			boutput(owner, SPAN_NOTICE("You suddenly feel very [pick("winded", "tired")]."))
 			owner.changeStatus("slowed", 10 SECONDS)
@@ -123,7 +137,7 @@
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 		. = ..()
 
-/datum/bioEffect/rot_curse	//Also prevents eating entirely.
+/datum/bioEffect/curse/rot	//Also prevents eating entirely.
 	name = "Rot curse"
 	desc = "Curse of rot."
 	id = "rot_curse"
@@ -146,11 +160,13 @@
 			curse_icon.pixel_y = 26
 			curse_icon.alpha = 170
 			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
+		. = ..()
 
 	OnLife(mult)
-		if (probmult(5))
-			var/vomit_message = SPAN_ALERT("[owner] suddenly vomits on the floor!")
-			owner.vomit(rand(3,5), null, vomit_message)
+		if (..())
+			return
+		if (probmult(20))
+			owner.nauseate(1)
 		if (probmult(3))
 			owner.emote(pick("cough", "sneeze"))
 
@@ -162,7 +178,7 @@
 		. = ..()
 
 //Used mostly to track if someone got rid of this curse in the meantime
-/datum/bioEffect/death_curse
+/datum/bioEffect/curse/death
 	name = "Curse of death"
 	desc = "Curse of death."
 	id = "death_curse"

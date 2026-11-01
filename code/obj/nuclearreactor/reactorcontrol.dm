@@ -10,13 +10,10 @@
 	icon_state = "engine"
 	density = TRUE
 	anchored = ANCHORED
-	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine_handle = null
-	var/list/history
-	var/const/history_max = 50
+	var/obj/machinery/reactor_turbine/turbine_handle = null
 
 	New()
 		..()
-		src.history = list()
 
 	process()
 		. = ..()
@@ -24,26 +21,13 @@
 
 		if(QDELETED(turbine_handle))
 			turbine_handle = null
-			if (length(src.history) > src.history_max)
-				src.history.Cut(1, 2) //drop the oldest entry
-			history += list(list(0, 0, 0))
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/N in powernet.nodes)
-				if(istype(N.master,/obj/machinery/atmospherics/binary/reactor_turbine))
+				if(istype(N.master,/obj/machinery/reactor_turbine))
 					src.turbine_handle = N.master
 					break
 			return
-
-		if (length(src.history) > src.history_max)
-			src.history.Cut(1, 2) //drop the oldest entry
-		history += list(
-					list(
-						turbine_handle.RPM,
-						turbine_handle.stator_load,
-						turbine_handle.lastgen
-						)
-					)
 
 		if (status & (NOPOWER|BROKEN))
 			return
@@ -72,15 +56,9 @@
 		)
 
 	ui_data(mob/user)
-		. = list(
-			"rpm" = turbine_handle?.RPM,
-			"load" = turbine_handle?.stator_load,
-			"power" = turbine_handle?.lastgen,
-			"volume" = turbine_handle?.flow_rate,
-			"history" = src.history,
-			"overspeed" = turbine_handle?.overspeed,
-			"overtemp" = turbine_handle?.overtemp,
-		)
+		if(QDELETED(src.turbine_handle))
+			src.turbine_handle = null
+		. = src.turbine_handle ? src.turbine_handle.get_tgui_data() : list("connected" = FALSE)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
@@ -98,7 +76,7 @@
 				logTheThing(LOG_STATION, src, "[src.turbine_handle] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
-				src.turbine_handle.flow_rate = min(max(x,1),10e5)
+				src.turbine_handle.flow_rate = min(max(x,1),src.turbine_handle.flow_rate_max)
 				logTheThing(LOG_STATION, src, "[src.turbine_handle] flow rate configured to [x] by [ui.user]")
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -110,7 +88,7 @@
 	icon_state = "reactor_stats"
 	density = TRUE
 	anchored = ANCHORED
-	var/obj/machinery/atmospherics/binary/nuclear_reactor/reactor_handle = null
+	var/obj/machinery/nuclear_reactor/reactor_handle = null
 
 	process()
 		. = ..()
@@ -119,7 +97,7 @@
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/netlink/N in powernet.nodes)
-				if(istype(N.master,/obj/machinery/atmospherics/binary/nuclear_reactor))
+				if(istype(N.master,/obj/machinery/nuclear_reactor))
 					src.reactor_handle = N.master
 
 

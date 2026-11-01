@@ -20,7 +20,7 @@
 	},
 /area/prefab/zoo)
 "f" = (
-/obj/critter/microman,
+/mob/living/critter/microman,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

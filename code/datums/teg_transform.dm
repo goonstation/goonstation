@@ -36,6 +36,7 @@
 
 	proc/transform_to_type(type, mat_id)
 		if(ispath(type, /datum/teg_transformation))
+			logTheThing(LOG_STATION, generator, "began TEG transformation [type][mat_id ? " (material: [mat_id])" : ""].")
 			SPAWN(0)
 				if(generator.active_form)
 					generator.active_form.on_revert()
@@ -147,12 +148,12 @@ datum/teg_transformation
 			Oversimplification: zT = 2σ/κ
 			*/
 			electrical_conductivity = 50
-			if(src.teg.material.hasProperty("electrical"))
-				electrical_conductivity = src.teg.material.getProperty("electrical") * 10
+			if(src.teg.material.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+				electrical_conductivity = src.teg.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) * 10
 
 			thermal_conductivity = 50
-			if(src.teg.material.hasProperty("thermal"))
-				thermal_conductivity =  src.teg.material.getProperty("thermal") * 10
+			if(src.teg.material.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+				thermal_conductivity =  src.teg.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND) * 10
 
 			/*    2σ / κ = zT    - Offset 				Result 	*/
 			/*  2*75 / 25 = 6    - 2 = 4  		 	 Great! 	*/

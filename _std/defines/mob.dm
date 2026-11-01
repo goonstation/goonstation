@@ -1,9 +1,6 @@
 //various mob_flags go here
-/// For mobs who can hear everything (mainly observer ghossts)
-#define MOB_HEARS_ALL 1
 // God Ecaps
-#define SPEECH_REVERSE (1 << 1)
-#define SPEECH_BLOB (1 << 2)		//yes
+
 #define SEE_THRU_CAMERAS (1 << 3)	//for ai eye
 #define IS_BONEY (1 << 4)			//for skeletals
 #define UNUSED_32 (1 << 5)
@@ -65,6 +62,9 @@
 #define REST_TOGGLE_COOLDOWN 0.1 SECONDS
 #define EAT_COOLDOWN 0.5 SECONDS
 
+/// Returned by /obj/item/proc/Eat() when the eater backed out, as opposed to FALSE for "can't eat this"
+#define EAT_CANCELLED -1
+
 //skipped_mobs_list flags
 #define SKIPPED_MOBS_LIST (1 << 0)
 #define SKIPPED_AI_MOBS_LIST (1 << 1)
@@ -90,3 +90,10 @@
 
 //idk where else to put this
 #define DEFAULT_MIRANDA "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
+
+/// How many tiles away an examine with ProDocs will give a full health scan
+#define MAX_PRODOC_RANGE 3
+/// How many tiles away can you read nametags/IDs/detailed
+#define MAX_NAMETAG_RANGE 5
+/// How many tiles away can you see if anything is equipped
+#define MAX_EXAMINE_RANGE 7

@@ -3,6 +3,7 @@
 	display_name = "grinch"
 	antagonist_icon = "grinch"
 	success_medal = "You're a mean one..."
+	wiki_link = "https://wiki.ss13.co/Grinch"
 
 	/// The ability holder of this grinch, containing their respective abilities.
 	var/datum/abilityHolder/grinch/ability_holder

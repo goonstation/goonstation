@@ -11,7 +11,7 @@
 	bound_width = 32
 	bound_height = 64
 	layer = 30
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	dir = NORTH
 	var/move_dir = NORTH
 	var/moved_on_flooring = 0
@@ -118,7 +118,7 @@
 
 			var/area/AR = get_area(src)
 			var/turf/T = get_turf(src)
-			var/area_check = istype(AR, /area/station) && !istype(AR, /area/station/solar) && !istype(AR, /area/station/engine/singcore)
+			var/area_check = istype(AR, /area/station) && !istype(AR, /area/station/solar) && !istype(AR, /area/station/engine/core/singularity/external)
 			var/turf_check = istype(T, /turf/simulated/floor) && !T.density
 			if (istype(AR, /area/pod_wars))
 				AR = TRUE

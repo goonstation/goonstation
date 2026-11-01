@@ -1,22 +1,3 @@
-/datum/abilityHolder/vampire/var/list/blood_tally
-/datum/abilityHolder/vampire/var/const/max_take_per_mob = 250
-
-/datum/abilityHolder/vampire/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
-	if (!src.blood_tally)
-		src.blood_tally = list()
-
-	if (!(target in src.blood_tally))
-		src.blood_tally[target] = 0
-
-	src.blood_tally[target] += blood_amt_taken
-
-/datum/abilityHolder/vampire/proc/can_take_blood_from(var/mob/living/carbon/human/target)
-	.= 1
-	if (src.blood_tally)
-		if (target in src.blood_tally)
-			.= src.blood_tally[target] < max_take_per_mob
-
-
 /datum/abilityHolder/vampire/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = TRUE)
 	var/datum/abilityHolder/vampire/holder = src
 	var/mob/living/M = holder.owner
@@ -59,22 +40,59 @@
 		boutput(M, SPAN_ALERT("Drink monkey blood?! That's disgusting!"))
 		return FALSE
 
-	if (!holder.can_take_blood_from(target))
-		return FALSE
-
 	if (isnpc(target))
 		boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 		return FALSE
 
 	return TRUE
 
+/// Gives the vampire a taste of whatever's in the victim's bloodstream w/o transferring any chemicals or side-effects.
+/datum/abilityHolder/vampire/proc/taste_bloodstream_of(var/mob/living/carbon/human/target)
+	var/mob/living/carbon/human/human = src.owner
+	var/big_content = target.reagents.reagent_list[target.reagents.get_master_reagent()].name
+	if (human.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
+		var/undertones = ""
+		for (var/reagent_id as anything in target.reagents.reagent_list)
+			var/datum/reagent/small_content = target.reagents.reagent_list[reagent_id]
+			var/chemName = small_content.name
+			if (chemName == "mirabilis" || chemName == big_content)
+				continue
+			if (undertones != "") // Not on first run of for loop
+				undertones += " [pick("and", "with")] "
+			else
+				undertones += "with "
+			undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
+		if (undertones != "")
+			undertones += "..."
+		boutput(human, SPAN_ITALIC("[target] has hints of [big_content]... [capitalize(undertones)]")) // Biggest chemical hinted first
+	else  // Non bartenders just get a normal taste!
+		var/taste = lowertext(target.reagents.get_taste_string(human))
+		if (taste != "tastes pretty bland.") // Don't want people to think that blood w/o reagents is bad
+			boutput(human, SPAN_ITALIC(capitalize(("[target] [taste]"))))
+		else if (target.traitHolder.hasTrait("training_clown")) // Clowns taste funny. Honk.
+			boutput(human, SPAN_ITALIC(capitalize("[target] tastes kind of funny.")))
+
+/// Checks the reagents of a victim for holy water and has a chance of giving them a taste.
+/datum/abilityHolder/vampire/proc/check_bloodstream_of(var/mob/living/carbon/human/target, var/mult = 1)
+	var/mob/living/carbon/human/human = src.owner
+	if (target.reagents.total_volume == 0)
+		return
+	if (target.reagents.has_reagent("water_holy"))
+		if (prob(30))
+			human.visible_message(SPAN_ALERT("<b>[human]</b>'s fangs sizzle!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
+		if (prob(50))
+			human.emote(pick("cough", "spit", "cry", "choke"))
+			human.stuttering += rand(1,3)
+			human.changeBodyTemp(rand(5,20) KELVIN)
+	else if (prob(20))
+		src.taste_bloodstream_of(target)
+
 /datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
 	var/datum/abilityHolder/vampire/H = src
 
-
-	if (HH.blood_volume <= 0)
+	if (HH.blood_volume <= 0 && isdead(HH))
 		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
 		return 0
 
@@ -83,14 +101,12 @@
 			boutput(M, SPAN_ALERT("The blood of the dead provides little sustenance..."))
 
 		var/bitesize = 5 * mult
-		H.change_vampire_blood(bitesize, 1)
-		H.change_vampire_blood(bitesize, 0)
-		H.tally_bite(HH,bitesize)
+		H.change_vampire_blood(bitesize, 1, victim = HH)
+		H.change_vampire_blood(bitesize, 0, victim = HH)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
 		else
 			HH.blood_volume -= 20 * mult
-		if (istype(H)) H.blood_tracking_output()
 
 	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
 		if(istype(M))
@@ -99,7 +115,7 @@
 			if (M.get_vampire_blood() >= 20 * mult)
 				M.change_vampire_blood(-20 * mult, 0)
 			else
-				M.change_vampire_blood(0, 0, 1)
+				M.change_vampire_blood(0, 0, 1, victim = HH)
 			M.TakeDamage("chest", 0, 30 * mult)
 
 	else
@@ -109,22 +125,18 @@
 				HH.change_vampire_blood(-bitesize, 0)
 				HH.change_vampire_blood(-bitesize, 1) // Otherwise, two vampires could perpetually feed off of each other, trading blood endlessly.
 
-				H.change_vampire_blood(bitesize, 0)
-				H.change_vampire_blood(bitesize, 1)
-				H.tally_bite(HH,bitesize)
-				if (istype(H))
-					H.blood_tracking_output()
+				H.change_vampire_blood(bitesize, 0, victim = HH)
+				H.change_vampire_blood(bitesize, 1, victim = HH)
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
-				HH.change_vampire_blood(0, 0, 1)
+				HH.change_vampire_blood(0, 0, 1, victim = HH)
 				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
 				return 0
 		else
 			var/bitesize = 10 * mult
-			H.change_vampire_blood(bitesize, 1)
-			H.change_vampire_blood(bitesize, 0)
-			H.tally_bite(HH,bitesize)
+			H.change_vampire_blood(bitesize, 1, victim = HH)
+			H.change_vampire_blood(bitesize, 0, victim = HH)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
 			else
@@ -132,6 +144,7 @@
 
 			// Vampire TEG also uses this ability, prevent runtimes
 			if (ismob(src.owner))
+				src.check_bloodstream_of(HH, mult)
 				//vampires heal, thralls don't
 				M.HealDamage("All", 3, 3)
 				M.take_toxin_damage(-1)
@@ -147,9 +160,7 @@
 						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
-			if (istype(H)) H.blood_tracking_output()
-
-	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
+	if (HH.blood_volume <= 0 && (mult >= 1))
 		boutput(HH, SPAN_ALERT("You feel your soul slipping away..."))
 		HH.death(FALSE)
 
@@ -157,27 +168,10 @@
 		H.check_for_unlocks()
 
 	eat_twitch(src.owner)
-	playsound(src.owner.loc, 'sound/items/drink.ogg', 5, 1, -15, pitch = 1.4) //tested to be audible for about 5 tiles, assuming quiet environment
+	playsound(src.owner.loc, 'sound/items/drink.ogg', 5, 1, -15, pitch = 1.4, flags = SOUND_DO_LOS) //tested to be audible for about 5 tiles, assuming quiet environment
 	HH.was_harmed(M, special = "vamp")
 	bleed(HH, 1, 3, get_turf(src.owner))
 
-/datum/abilityHolder/vampiric_thrall/var/list/blood_tally
-/datum/abilityHolder/vampiric_thrall/var/const/max_take_per_mob = 250
-
-/datum/abilityHolder/vampiric_thrall/proc/can_take_blood_from(var/mob/living/carbon/human/target)
-	.= 1
-	if (src.blood_tally)
-		if (target in src.blood_tally)
-			.= src.blood_tally[target] < max_take_per_mob
-
-/datum/abilityHolder/vampiric_thrall/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
-	if (!src.blood_tally)
-		src.blood_tally = list()
-
-	if (!(target in src.blood_tally))
-		src.blood_tally[target] = 0
-
-	src.blood_tally[target] += blood_amt_taken
 
 /datum/abilityHolder/vampiric_thrall/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = 1)
 	var/datum/abilityHolder/vampiric_thrall/holder = src
@@ -221,19 +215,13 @@
 		boutput(M, SPAN_ALERT("Drink monkey blood?! That's disgusting!"))
 		return 0
 
-	if (!holder.can_take_blood_from(target))
-		return 0
-
-
 	return 1
 
 /datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
-	var/datum/abilityHolder/vampiric_thrall/H = src
 
-
-	if (HH.blood_volume <= 0)
+	if (HH.blood_volume <= 0 && isdead(HH))
 		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
 		return 0
 
@@ -242,9 +230,8 @@
 			boutput(M, SPAN_ALERT("The blood of the rotten provides little sustenance..."))
 
 		var/bitesize = 5 * mult
-		M.change_vampire_blood(bitesize, 1)
-		M.change_vampire_blood(bitesize, 0)
-		H.tally_bite(HH,bitesize)
+		M.change_vampire_blood(bitesize, 1, victim = HH)
+		M.change_vampire_blood(bitesize, 0, victim = HH)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
 		else
@@ -256,7 +243,7 @@
 		if (M.get_vampire_blood() >= 20 * mult)
 			M.change_vampire_blood(-20 * mult, 0)
 		else
-			M.change_vampire_blood(0, 0, 1)
+			M.change_vampire_blood(0, 0, 1, victim = HH)
 		M.TakeDamage("chest", 0, 30 * mult)
 
 	else
@@ -266,20 +253,18 @@
 				HH.change_vampire_blood(-bitesize, 0)
 				HH.change_vampire_blood(-bitesize, 1) // Otherwise, two vampires could perpetually feed off of each other, trading blood endlessly.
 
-				M.change_vampire_blood(bitesize, 0)
-				M.change_vampire_blood(bitesize, 1)
-				H.tally_bite(HH,bitesize)
+				M.change_vampire_blood(bitesize, 0, victim = HH)
+				M.change_vampire_blood(bitesize, 1, victim = HH)
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
-				HH.change_vampire_blood(0, 0, 1)
+				HH.change_vampire_blood(0, 0, 1, victim = HH)
 				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
 				return 0
 		else
 			var/bitesize = 10 * mult
-			M.change_vampire_blood(bitesize, 1)
-			M.change_vampire_blood(bitesize, 0)
-			H.tally_bite(HH,bitesize)
+			M.change_vampire_blood(bitesize, 1, victim = HH)
+			M.change_vampire_blood(bitesize, 0, victim = HH)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
 			else
@@ -294,7 +279,7 @@
 						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
-	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
+	if (HH.blood_volume <= 0 && (mult >= 1))
 		boutput(HH, SPAN_ALERT("You feel your soul slipping away..."))
 		HH.death(FALSE)
 
@@ -429,8 +414,6 @@
 		if (state == ACTIONSTATE_RUNNING)
 			if (HH.blood_volume < 0)
 				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
-			else if (!H.can_take_blood_from(H, HH))
-				boutput(M, SPAN_ALERT("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
 			else
 				boutput(M, SPAN_ALERT("Your feast was interrupted."))
 

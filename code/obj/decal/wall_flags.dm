@@ -6,99 +6,123 @@
 	/// Must by a type path of `/obj/item/flag`.
 	var/starting_flag = /obj/item/flag
 	var/obj/item/flag/flag_item = null
+	var/needs_logging = TRUE // Does it require logging on suspcious interactions
 
-	New()
-		src.flag_item = new src.starting_flag(src)
-		..()
+/obj/decal/poster/flag/New()
+	src.flag_item = new src.starting_flag(src)
+	..()
 
-	disposing()
+/obj/decal/poster/flag/disposing()
+	src.flag_item = null
+	..()
+
+/obj/decal/poster/flag/attack_hand(mob/user)
+	if (!(tgui_alert(user, "Are you sure you want to take down the flag?", "Confirmation", list("Take", "Leave")) == "Take"))
+		return
+	src.take_flag(user)
+
+/obj/decal/poster/flag/proc/take_flag(mob/user)
+	if (src.flag_item)
+		src.flag_item.add_fingerprint(user)
+		user.put_in_hand_or_drop(src.flag_item)
 		src.flag_item = null
-		..()
+	user.visible_message(SPAN_NOTICE("[user] takes down the [src.name] in [src.loc]!"), SPAN_NOTICE("You take down the [src.name] in [src.loc]!"))
 
-	attack_hand(mob/user)
-		if (tgui_alert(user, "Are you sure you want to take down the flag?", "Confirmation", list("Take", "Leave")) == "Take")
-			src.take_flag(user)
+	if(src.needs_logging)
+		logTheThing(LOG_STATION, user, "Takes down a flag ([src.name]) in [src.loc] at [log_loc(user)].")
+	qdel(src)
 
-	proc/take_flag(mob/user)
-		if (src.flag_item)
-			src.flag_item.add_fingerprint(user)
-			user.put_in_hand_or_drop(src.flag_item)
-			src.flag_item = null
-			user.visible_message("<span class='notice'>[user] takes down the [src.name] in [src.loc]!.</span>", "<span class='notice'>You take down the [src.name] in [src.loc]!</span>")
-			logTheThing(LOG_STATION, user, "Takes down a flag ([src.name]) in [src.loc] at [log_loc(user)].")
-			qdel(src)
+/obj/decal/poster/flag/ace
+	name = "asexual pride flag"
+	icon_state = "ace"
+	starting_flag = /obj/item/flag/ace
 
-	ace
-		name = "asexual pride flag"
-		icon_state = "ace"
-		starting_flag = /obj/item/flag/ace
+/obj/decal/poster/flag/aro
+	name = "aromantic pride flag"
+	icon_state = "aro"
+	starting_flag = /obj/item/flag/aro
 
-	aro
-		name = "aromantic pride flag"
-		icon_state = "aro"
-		starting_flag = /obj/item/flag/aro
+/obj/decal/poster/flag/bisexual
+	name = "bisexual pride flag"
+	icon_state = "bisexual"
+	starting_flag = /obj/item/flag/bisexual
 
-	bisexual
-		name = "bisexual pride flag"
-		icon_state = "bisexual"
-		starting_flag = /obj/item/flag/bisexual
+/obj/decal/poster/flag/demisexual
+	name = "demisexual pride flag"
+	icon_state = "demisexual"
+	starting_flag = /obj/item/flag/demisexual
 
-	demisexual
-		name = "demisexual pride flag"
-		icon_state = "demisexual"
-		starting_flag = /obj/item/flag/demisexual
+/obj/decal/poster/flag/genderqueer
+	name = "genderqueer pride flag"
+	icon_state = "genderqueer"
+	starting_flag = /obj/item/flag/genderqueer
 
-	genderqueer
-		name = "genderqueer pride flag"
-		icon_state = "genderqueer"
-		starting_flag = /obj/item/flag/genderqueer
+/obj/decal/poster/flag/intersex
+	name = "intersex pride flag"
+	icon_state = "intersex"
+	starting_flag = /obj/item/flag/intersex
 
-	intersex
-		name = "intersex pride flag"
-		icon_state = "intersex"
-		starting_flag = /obj/item/flag/intersex
+/obj/decal/poster/flag/lesb //lesbeean prefab thingy - subtle environmental storytelling, you know?
+	name = "lesbian pride flag"
+	icon_state = "lesb"
+	starting_flag = /obj/item/flag/lesb
 
-	lesb //lesbeean prefab thingy - subtle environmental storytelling, you know?
-		name = "lesbian pride flag"
-		icon_state = "lesb"
-		starting_flag = /obj/item/flag/lesb
+/obj/decal/poster/flag/nb
+	name = "non-binary pride flag"
+	icon_state = "nb"
+	starting_flag = /obj/item/flag/nb
 
-	nb
-		name = "non-binary pride flag"
-		icon_state = "nb"
-		starting_flag = /obj/item/flag/nb
+/obj/decal/poster/flag/pan
+	name = "pansexual pride flag"
+	icon_state = "pan"
+	starting_flag = /obj/item/flag/pan
 
-	pan
-		name = "pansexual pride flag"
-		icon_state = "pan"
-		starting_flag = /obj/item/flag/pan
+/obj/decal/poster/flag/polysexual
+	name = "polysexual pride flag"
+	icon_state = "polysexual"
+	starting_flag = /obj/item/flag/polysexual
 
-	polysexual
-		name = "polysexual pride flag"
-		icon_state = "polysexual"
-		starting_flag = /obj/item/flag/polysexual
+/obj/decal/poster/flag/progressive
+	name = "progressive pride flag"
+	icon_state = "progressive"
+	starting_flag = /obj/item/flag/progressive
 
-	progressive
-		name = "progressive pride flag"
-		icon_state = "progressive"
-		starting_flag = /obj/item/flag/progressive
+/obj/decal/poster/flag/rainbow
+	name = "rainbow flag"
+	icon_state = "rainbow"
+	starting_flag = /obj/item/flag/rainbow
 
-	rainbow
-		name = "rainbow flag"
-		icon_state = "rainbow"
-		starting_flag = /obj/item/flag/rainbow
+/obj/decal/poster/flag/trans
+	name = "transgender pride flag"
+	icon_state = "trans"
+	starting_flag = /obj/item/flag/trans
 
-	trans
-		name = "transgender pride flag"
-		icon_state = "trans"
-		starting_flag = /obj/item/flag/trans
+/obj/decal/poster/flag/mlmvinc
+	name = "\improper Vincian MLM pride flag"
+	icon_state = "mlmvinc"
+	starting_flag = /obj/item/flag/mlmvinc
 
-	mlmvinc
-		name = "\improper Vincian MLM pride flag"
-		icon_state = "mlmvinc"
-		starting_flag = /obj/item/flag/mlmvinc
+/obj/decal/poster/flag/mlmachi
+	name = "\improper Achilean MLM pride flag"
+	icon_state = "mlmachi"
+	starting_flag = /obj/item/flag/mlmachi
 
-	mlmachi
-		name = "\improper Achilean MLM pride flag"
-		icon_state = "mlmachi"
-		starting_flag = /obj/item/flag/mlmachi
+/obj/decal/poster/flag/nanotrasen
+	name = "nanotrasen flag"
+	desc = "The flag of the Nanotrasen corporation, you probably know who they are by now."
+	icon_state = "nanotrasen"
+	needs_logging = FALSE
+	starting_flag = /obj/item/flag/nanotrasen
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		boutput(user, SPAN_NOTICE("The [E]'s red wiring rubs off on the [src], painting it sinister red!"))
+		new/obj/decal/poster/flag/syndicate(src.loc)
+		qdel(src)
+
+/obj/decal/poster/flag/syndicate
+	name = "syndicate flag"
+	desc = "The ominous and intimidating flag of the Syndicate, naturally its a <b>red flag</b>, heh."
+	icon_state = "syndicate"
+	needs_logging = FALSE
+	starting_flag = /obj/item/flag/syndicate

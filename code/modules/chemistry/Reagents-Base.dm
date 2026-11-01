@@ -138,7 +138,6 @@
 	depletion_rate = 0.05 // ethanol depletes slower but is formed in smaller quantities
 	overdose = 100 // ethanol poisoning
 	thirst_value = -0.02
-	bladder_value = -0.2
 	hygiene_value = 1
 	target_organs = list("liver")	//heart,  "stomach", "intestines", "left_kidney", "right_kidney"
 
@@ -157,10 +156,16 @@
 		if (isliving(M))
 			var/mob/living/H = M
 			var/ethanol_amt = holder.get_reagent_amount(src.id)
-			if(H?.reagents.has_reagent("moonshine"))
-				mult *= 7
+			var/has_moonshine = H.reagents.has_reagent("moonshine")
 			var/liver_damage = 0
-			if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
+			if(has_moonshine)
+				mult *= 7
+			else
+				ethanol_amt -= GET_ATOM_PROPERTY(M, PROP_MOB_ALCOHOL_RESIST)
+				ethanol_amt = max(ethanol_amt, 0)
+				if (ethanol_amt == 0)
+					return ..()
+			if (!isalcoholresistant(H))
 				if (ethanol_amt >= 15)
 					if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 					H.stuttering += 1
@@ -190,9 +195,8 @@
 						step(H, pick(cardinal))
 					if(prob(4))
 						H.change_misstep_chance(20 * mult)
-					if(probmult(6))
-						var/vomit_message = SPAN_ALERT("[H] pukes all over [himself_or_herself(H)].")
-						H.vomit(0, null, vomit_message)
+					if(probmult(10 + (ethanol_amt / 4)))
+						H.nauseate(1)
 					if(prob(15))
 						H.make_dizzy(5 * mult)
 				if (ethanol_amt >= 60)
@@ -289,7 +293,6 @@
 	fluid_b = 135
 	transparency = 255
 	overdose = 20
-	pathogen_nutrition = list("iron")
 
 	on_mob_life(var/mob/living/H, var/mult = 1)
 		..()
@@ -298,15 +301,9 @@
 			if(prob(10))
 				H.take_oxygen_deprivation(-1 * mult)
 	do_overdose(var/severity, var/mob/M, var/mult = 1)
-		M.take_toxin_damage(1 * mult) // Iron overdose fucks you up bad
-		if(probmult(5))
-			if (M.nutrition > 10) // Not good for your stomach either
-				var/vomit_message = SPAN_ALERT("[M] vomits on the floor profusely!")
-				M.vomit(0, null, vomit_message)
-				M.nutrition -= rand(3,5)
-				M.take_toxin_damage(10) // im bad
-				M.setStatusMin("stunned", 3 SECONDS * mult)
-				M.setStatusMin("knockdown", 3 SECONDS * mult)
+		M.take_toxin_damage(2 * mult) // Iron overdose fucks you up bad
+		if(probmult(30))
+			M.nauseate(2)
 
 /datum/reagent/lithium
 	name = "lithium"
@@ -388,7 +385,6 @@
 	fluid_g = 254
 	fluid_b = 252
 	transparency = 20
-	pathogen_nutrition = list("nitrogen")
 
 /datum/reagent/oxygen
 	name = "oxygen"
@@ -440,7 +436,11 @@
 		if(!M) M = holder.my_atom
 		if(holder.has_reagent("epinephrine"))
 			holder.remove_reagent("epinephrine", 2 * mult)
-		M.take_toxin_damage(1 * mult)
+		var/datum/bioEffect/plasma_metabolism/plasma_bioeffect = M.bioHolder?.GetEffect("plasma_metabolism")
+		if (!plasma_bioeffect)
+			M.take_toxin_damage(1 * mult)
+		else
+			plasma_bioeffect.absorb_liquid_plasma(mult)
 		..()
 		return
 
@@ -506,27 +506,33 @@
 	fluid_g = 200
 	fluid_b = 200
 	transparency = 255
+	overdose = 30
 	taste = "metallic"
+	var/finaltone = rgb(108, 125, 183)
 
 	reaction_obj(var/obj/item/I, var/volume)
 		if (I.material && I.material.getID() == "silver")
 			return 1
-
 		.= 1
-
-		if (volume >= 20)
-			if (istype(I, /obj/item/ammo/bullets/bullet_22HP) || istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
-				var/obj/item/ammo/bullets/bullet_holder = I
-				var/datum/projectile/ammo_type = bullet_holder.ammo_type
-				if (ammo_type && !(ammo_type.material && ammo_type.material.getID() == "silver"))
-					ammo_type.material = getMaterial("silver")
-					holder.remove_reagent(src.id, 20)
-					.= 0
 		if (volume >= 50)
 			if (I.type == /obj/item/handcuffs)
 				I.setMaterial(getMaterial("silver"))
 				holder.remove_reagent(src.id, 50)
 				.= 0
+	do_overdose(severity, mob/M, mult) //turns your skin blue
+		. = ..()
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/currenttone = H.bioHolder?.mobAppearance.s_tone
+			if(currenttone && color_dist(currenttone, finaltone) >= 5000) //these numbers might need tweaking
+				var/newtone = BlendRGB(currenttone, finaltone, 0.04)
+				H.bioHolder.mobAppearance.s_tone = newtone
+				H.set_face_icon_dirty()
+				H.set_body_icon_dirty()
+				if (H.limbs)
+					H.limbs.reset_stone()
+				H.update_colorful_parts()
+
 
 /datum/reagent/sulfur
 	name = "sulfur"
@@ -547,10 +553,9 @@
 	fluid_g = 255
 	fluid_b = 255
 	transparency = 255
-	overdose = 200
+	overdose = 80
 	hunger_value = 0.098
 	thirst_value = -0.098
-	pathogen_nutrition = list("sugar")
 	taste = "sweet"
 	stun_resist = 6
 	threshold = THRESHOLD_INIT
@@ -572,7 +577,7 @@
 		M.make_jittery(2 )
 		M.changeStatus("drowsy", -10 SECONDS)
 		if(prob(4))
-			M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
+			M.reagents.add_reagent("epinephrine", 3 * src.calculate_depletion_rate(M, mult)) // let's not metabolize into meth anymore
 		//if(prob(2))
 			//M.reagents.add_reagent("cholesterol", rand(1,3))
 		..()
@@ -603,12 +608,12 @@
 
 				responseBee.visible_message("<b>[responseBee]</b> [ pick("looks confused.", "appears to undergo a metaphysical crisis.  What is human?  What is space bee?<br>Or it might just have gas.", "looks perplexed.", "bumbles in a confused way.", "holds out its forelegs, staring into its little bee-palms and wondering what is real.") ]")
 
-		else
+		else if (severity == 2)
 			if (!M.getStatusDuration("unconscious"))
 				boutput(M, SPAN_ALERT("You pass out from hyperglycemic shock!"))
 				M.emote("collapse")
 				//M.changeStatus("unconscious", ((2 * severity)*15) * mult)
-				M.changeStatus("knockdown", ((4 * severity)*1.5 SECONDS) * mult)
+				M.changeStatus("knockdown", ((6 SECONDS) * mult))
 
 			if (prob(8))
 				M.take_toxin_damage(severity * mult)
@@ -639,7 +644,7 @@
 	fluid_g = 250
 	fluid_b = 160
 	transparency = 155
-	data = null
+	threshold_volume = 40
 
 	on_add()
 		if(ismob(holder?.my_atom))
@@ -654,6 +659,18 @@
 			if(M?.bioHolder.HasEffect("quiet_voice"))
 				M.bioHolder.RemoveEffect("quiet_voice")
 		..()
+
+	cross_threshold_over()
+		. = ..()
+		if (ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			APPLY_ATOM_PROPERTY(M, PROP_ATOM_FLOATING, "reagent_[src.id]")
+
+	cross_threshold_under()
+		. = ..()
+		if (ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			REMOVE_ATOM_PROPERTY(M, PROP_ATOM_FLOATING, "reagent_[src.id]")
 
 /datum/reagent/radium
 	name = "radium"
@@ -702,7 +719,6 @@
 	fluid_g = 200
 	fluid_b = 200
 	transparency = 255
-	pathogen_nutrition = list("sodium")
 	fluid_flags = FLUID_STACKING_BANNED
 
 /datum/reagent/uranium
@@ -733,10 +749,8 @@
 	fluid_g = 165
 	fluid_b = 254
 	transparency = 80
-	pathogen_nutrition = list("water")
 	thirst_value = 0.8909
 	hygiene_value = 1.33
-	bladder_value = -0.2
 	taste = "bland"
 	minimum_reaction_temperature = -INFINITY
 	target_organs = list("left_kidney", "right_kidney")
@@ -807,19 +821,12 @@
 		var/mob/living/M = target
 		if(istype(M))
 			var/list/covered = holder.covered_turf()
-			if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
-				var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
-				if(M in pz.brandlist)
-					pz.brandlist -= M
-					boutput(M,SPAN_SUCCESS("<b>The feeling of an otherworldly presence passes...</b>"))
-				for(var/mob/zoldorf/Z in M)
-					Z.set_loc(Z.homebooth)
 			if (isvampire(M))
 				M.emote("scream")
 				for(var/mob/O in AIviewers(M, null))
 					O.show_message(SPAN_ALERT("<b>[M] begins to crisp and burn!</b>"), 1)
 				boutput(M, SPAN_ALERT("Holy Water! It burns!"))
-				var/burndmg = raw_volume * 1.25 / length(covered) //the sanctification inflicts the pain, not the water that carries it.
+				var/burndmg = raw_volume * 1.25 / (length(covered) || 1) //the sanctification inflicts the pain, not the water that carries it.
 				burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 				M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 				M.change_vampire_blood(-burndmg)
@@ -830,12 +837,34 @@
 				else
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
+						var/removed_curse = FALSE
 						if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
-							H.bioHolder.RemoveEffect("blood_curse")
-							H.bioHolder.RemoveEffect("blind_curse")
-							H.bioHolder.RemoveEffect("weak_curse")
-							H.bioHolder.RemoveEffect("rot_curse")
-							H.bioHolder.RemoveEffect("death_curse")
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
+							else
+								H.bioHolder.RemoveEffect("blood_curse")
+								H.bioHolder.RemoveEffect("blind_curse")
+								H.bioHolder.RemoveEffect("weak_curse")
+								H.bioHolder.RemoveEffect("rot_curse")
+								H.bioHolder.RemoveEffect("death_curse")
+								removed_curse = TRUE
+						else if(M.hasStatus("art_blood_curse") || M.hasStatus("art_aging_curse") || M.hasStatus("art_nightmare_curse") || M.hasStatus("art_maze_curse") || M.hasStatus("art_displacement_curse") || M.hasStatus("art_light_curse"))
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
+							else
+								M.delStatus("art_blood_curse")
+								M.delStatus("art_aging_curse")
+								M.delStatus("art_nightmare_curse")
+								M.delStatus("art_maze_curse")
+								M.delStatus("art_displacement_curse")
+								M.delStatus("art_light_curse")
+								playsound(H, 'sound/effects/lit.ogg', 100, TRUE)
+								removed_curse = TRUE
+						else
+							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
+						if(removed_curse)
 							H.visible_message("[H] screams as some black smoke exits their body.")
 							H.emote("scream")
 							random_burn_damage(H, 5)
@@ -845,8 +874,6 @@
 								if (S)
 									S.set_up(5, 0, T, null, "#3b3b3b")
 									S.start()
-						else
-							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 					else
 						boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 					M.take_brain_damage(0 - clamp(volume, 0, 10))
@@ -867,7 +894,6 @@
 	reagent_state = LIQUID
 	thirst_value = 0.8909
 	hygiene_value = 0.75
-	bladder_value = -0.25
 	taste = "bitter"
 
 	reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
@@ -907,7 +933,6 @@
 	reagent_state = LIQUID
 	thirst_value = -0.3 //Sea water actually slowly dehydrates you because you use more liquid to get rid of the salt then you gain.
 	hygiene_value = 0.3
-	bladder_value = -0.5
 	taste = "gross"
 
 /datum/reagent/ice
@@ -920,7 +945,6 @@
 	fluid_b = 250
 	transparency = 200
 	thirst_value = 0.8909
-	bladder_value = -0.2
 	minimum_reaction_temperature = T0C+1 // if it adds 1'C water, 1'C is good enough.
 	taste = "cold"
 
@@ -950,7 +974,6 @@
 	fluid_b = 247
 	transparency = 180
 	thirst_value = 0.3
-	bladder_value = -0.1
 	taste = "steamy"
 
 	reaction_turf(var/turf/t, var/volume)

@@ -5,11 +5,13 @@ TYPEINFO(/obj/machinery/optable)
 	name = "Operating Table"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
+	layer = OBJ_LAYER - 0.1
 	pass_unstable = TRUE
 	desc = "A table that allows qualified professionals to perform delicate surgeries."
 	density = 1
 	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
+	provides_grip = TRUE
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0
 
@@ -59,10 +61,9 @@ TYPEINFO(/obj/machinery/optable)
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.hasStatus("resting") || isunconscious(M) ||  M.traitHolder.hasTrait("training_medical"))
-			src.victim = M
-			icon_state = "table2-active"
-			return 1
+		src.victim = M
+		icon_state = "table2-active"
+		return 1
 	if (src.victim)
 		src.victim = null
 		src.computer?.victim = null
@@ -74,8 +75,6 @@ TYPEINFO(/obj/machinery/optable)
 
 /obj/machinery/optable/attackby(obj/item/W, mob/user)
 	if (issilicon(user)) return
-	if (istype(W, /obj/item/electronics/scanner)) return // hack
-	if (istype(W, /obj/item/deconstructor)) return //deconstruct_flags
 	if (istype(W, /obj/item/grab))
 		if(ismob(W:affecting))
 			var/mob/M = W:affecting

@@ -56,7 +56,7 @@
 							if (!istype(H.mutantrace, /datum/mutantrace/werewolf))
 								D.stage_prob = 0
 							D.stage = 1
-							H.werewolf_transform() // Less code duplication and stuff. See werewolf.dm (Convair880).
+							H.werewolf_transform(FALSE) // Less code duplication and stuff. See werewolf.dm (Convair880).
 						src.triggered_transformation = 0 // Necessary. Disease datums seem to be pooled or something, dunno.
 
 					return
@@ -67,4 +67,4 @@
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
 		if (istype(H.mutantrace, /datum/mutantrace/werewolf))
-			H.werewolf_transform()
+			H.werewolf_transform(TRUE)

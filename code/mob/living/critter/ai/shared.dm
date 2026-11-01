@@ -26,7 +26,8 @@
 
 /datum/aiTask/sequence/goalbased/proc/precondition()
 	// useful for goals that have a requirement, return 0 to instantly make this state score 0 and not be picked
-	. = TRUE
+	if(src.holder)
+		. = TRUE
 
 /datum/aiTask/sequence/goalbased/on_tick()
 	..()
@@ -81,6 +82,29 @@
 	holder?.stop_move() // Just in case they yeet themselves out of existance
 	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
 
+/datum/aiTask/timed/wander/short
+	minimum_task_ticks = 1
+	maximum_task_ticks = 3
+
+/datum/aiTask/timed/wander/floor_only
+/datum/aiTask/timed/wander/floor_only/on_tick()
+	var/list/valid_dirs = list()
+	for (var/dir in alldirs)
+		if (isfloor(get_step(holder.owner, dir)))
+			valid_dirs += dir
+	if (length(valid_dirs) == 0)
+		valid_dirs = alldirs // we're stranded!
+	holder.owner.move_dir = pick(valid_dirs)
+	holder.owner.process_move()
+	holder?.stop_move() // Just in case they yeet themselves out of existance
+	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
+
+/datum/aiTask/timed/wander/floor_only/less
+
+/datum/aiTask/timed/wander/floor_only/less/on_tick()
+	if (prob(30))
+		..()
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
 // a timed task that also relates to a target and the acquisition of said target
@@ -98,9 +122,11 @@
 /datum/aiTask/succeedable/move
 	name = "moving"
 	max_fails = 2
+	var/max_frustration = 4 //The amount of times we let it reevaluate before we put a fail into it. Set this to 0 to disable this functionality
+	var/frustration = 0 //the amount of times the target needed to reevaluate its pathing
 	var/max_path_dist = 50 //keeping this low by default, but you can override it - see /datum/aiTask/sequence/goalbased/rally for details
 	var/list/found_path = null
-	var/turf/move_target = null
+	var/atom/move_target = null
 
 // use the target from our holder
 /datum/aiTask/succeedable/move/proc/get_path()
@@ -113,19 +139,27 @@
 		src.found_path = get_path_to(holder.owner, move_target, max_distance=src.max_path_dist, mintargetdist=distance_from_target, simulated_only=!move_through_space)
 		if(GET_DIST(get_turf(holder.target), move_target) <= distance_from_target)
 			holder.target_path = src.found_path
-	if(!src.found_path || !jpsTurfPassable(src.found_path[1], get_turf(src.holder.owner), src.holder.owner)) // no path :C
+	if(!src.found_path || !jpsTurfPassable(src.found_path[1], get_turf(src.holder.owner), src.holder.owner, list(POP_SIMULATED_ONLY = !src.move_through_space))) // no path :C
 		fails++
 
 /datum/aiTask/succeedable/move/on_reset()
 	src.found_path = null
 	src.move_target = null
+	src.frustration = 0
 
 
 /datum/aiTask/succeedable/move/on_tick()
 	if(!src.move_target)
 		fails++
 		return
-	if(!length(src.found_path))
+	if(!length(src.found_path) || !jpsTurfPassable(src.found_path[1], get_turf(src.holder.owner), src.holder.owner, list(POP_SIMULATED_ONLY = !src.move_through_space)) || GET_DIST(src.found_path[length(src.found_path)], move_target) > distance_from_target)
+		if(src.max_frustration != 0 && length(src.found_path))
+			src.frustration += 1
+			if(src.frustration >= src.max_frustration)
+				src.frustration = 0
+				src.fails += 1
+			//if the target moved away from the goal, or the tile just infront of our way got impassable (heeeeeloooo doors!) of our path or we don't have a path, we need to grab a new one
+			//but it also means we need to pump frustration up in case we want
 		get_path()
 	if(length(src.found_path))
 		holder.move_to_with_path(move_target, src.found_path, 0)
@@ -252,3 +286,45 @@
 	..()
 	holder.target = null
 	holder.stop_move()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERIC ACTION BAR TASK
+// Use this when you want to an action bar, then wait for it to complete or be interupted before continuing
+// Interupt counts as a fail.
+// Set the final action you want to happen in `callback_proc`. It will recieve the owner and the target as arguments.
+// You can also define a `before_action_start()` proc on the aitask to do something before the action is started
+/datum/aiTask/succeedable/actionbar
+	var/datum/action/bar/icon/callback/actionbar
+	// action bar duration in deciseconds
+	var/duration = 5 SECONDS
+	// The proc to run when the action completes. PROC_REF(callback) where callback is a proc on the aitask
+	var/callback_proc = null
+	// The icon to display above the actionbar
+	var/action_icon = null
+	// The iconstate for the icon above the actionbar
+	var/action_icon_state = null
+	// a message displayed to all mobs that can see the owner at the end of the task (e.g. "the [holder.owner] does the thing to [holder.target]")
+	var/end_message = null
+	// flags which indicate what actions should interupt the actionbar
+	var/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	// internal flag for having started
+	var/_has_started = FALSE
+
+/datum/aiTask/succeedable/actionbar/on_reset()
+	QDEL_NULL(src.actionbar)
+	_has_started = FALSE
+
+/datum/aiTask/succeedable/actionbar/on_tick()
+	if(!istype(actionbar))
+		src.before_action_start()
+		actionbar = SETUP_GENERIC_ACTIONBAR(src.holder.owner, src.holder.target, src.duration, src.callback_proc, list(src.holder.owner, src.holder.target), src.action_icon, src.action_icon_state, src.end_message, src.interrupt_flags)
+		actionbar.call_proc_on = src
+		_has_started = TRUE
+
+/datum/aiTask/succeedable/actionbar/proc/before_action_start()
+
+/datum/aiTask/succeedable/actionbar/succeeded()
+	return (_has_started && QDELETED(actionbar)) || (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_start == -1)
+
+/datum/aiTask/succeedable/actionbar/failed()
+	return (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_start > -1)

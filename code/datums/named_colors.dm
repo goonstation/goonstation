@@ -1,9 +1,6 @@
 // Named colors
 // Used for describing appearences of reagents
 
-/// distance^2 between first and second RGB values
-#define color_dist2(_r, _g, _b, _dr, _dg, _db) ((_r-_dr)*(_r-_dr)+(_g-_dg)*(_g-_dg)+(_b-_db)*(_b-_db))
-
 /// the datum holding one named color
 /datum/named_color
 	var/name = null
@@ -145,7 +142,7 @@ proc/create_named_colors()
 	add_color("toupe", 199, 172, 125 )
 	add_color("dark cream", 255, 243, 154 )
 	add_color("indian red", 133, 14, 4 )
-	add_color("light lavendar", 239, 192, 254 )
+	add_color("light lavender", 239, 192, 254 )
 	add_color("poison green", 64, 253, 20 )
 	add_color("baby puke green", 182, 196, 6 )
 	add_color("bright yellow green", 157, 255, 0 )

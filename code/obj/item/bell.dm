@@ -3,7 +3,6 @@
 	icon = 'icons/obj/items/bell.dmi'
 	icon_state = "bell"
 	desc = "Ding ding ding!"
-	flags = FPRINT | TABLEPASS
 	force = 5
 	throwforce = 5
 	throw_speed = 3

@@ -46,6 +46,12 @@ proc/toIso8601(timeInByondFormat)
 	var/list/parts = splittext(timeString, " ")
 	return parts[1] + "T" + parts[2] + "Z"
 
+/// Convert BYOND time format to ISO 8601 but in the "in character" year
+proc/toIso8601InCharacter(timeInByondFormat)
+	var/timeString = time2text(timeInByondFormat, "[CURRENT_SPACE_YEAR]-MM-DD hh:mm:ss")
+	var/list/parts = splittext(timeString, " ")
+	return parts[1] + "T" + parts[2] + "Z"
+
 /// Add time to a given BYOND time format
 proc/addTime(timeInByondFormat, years=0, months=0, days=0, hours=0, minutes=0, seconds=0)
 	return timeInByondFormat + (seconds SECONDS + (minutes MINUTES) + (hours HOURS) + (days DAYS) + (months DAYS * 30) + (years DAYS * 365))
@@ -92,3 +98,33 @@ proc/validateIso8601(iso8601)
 		return FALSE
 
 	return TRUE
+
+///returns a string describing approximately how much time this represents, useful for when you want to be *vague*
+///if this already exists somewhere else I apologise but I couldn't find it
+proc/approx_time_text(time)
+	var/number = null
+	var/string = null
+	if (time < 1 MINUTE)
+		number = time / (1 SECOND)
+		string = "second"
+	else if (time < 1 HOUR)
+		number = time / (1 MINUTE)
+		string = "minute"
+	else if (time < 1 DAY)
+		number = time / (1 HOUR)
+		string = "hour"
+	else if (time < 1 WEEK)
+		number = time / (1 DAY)
+		string = "day"
+	else if (time < 1 MONTH)
+		number = time / (1 WEEK)
+		string = "week"
+	else if (time < 1 YEAR)
+		number = time / (1 MONTH)
+		string = "month"
+	else
+		number = time / (1 YEAR)
+		string = "year"
+
+	number = floor(number)
+	return "[number] [string][number > 1 ? "s" : ""]"

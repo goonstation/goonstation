@@ -49,7 +49,7 @@
 
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("CLAE MASHON", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("CLAE MASHON", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()
 
 		var/mob/living/critter/golem/the_golem
@@ -58,8 +58,7 @@
 			the_golem.name = "Bee Golem"
 			the_golem.desc = "A greater domestic space bee that has been created with magic, but is otherwise completely identical to any other member of its species."
 		else
-			the_golem = new /mob/living/critter/golem/(get_turf(holder.owner))
-			the_golem.CustomizeGolem(TheReagents)
+			the_golem = new /mob/living/critter/golem/(get_turf(holder.owner), customised_reagents = TheReagents)
 
 		qdel(TheReagents)
 		qdel(AnItem)

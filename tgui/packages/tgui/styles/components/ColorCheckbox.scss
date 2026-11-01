@@ -1,0 +1,15 @@
+@use '../colors';
+
+@each $color-name, $color-value in colors.$color-map {
+  .Button--selected.ColorCheckbox--selectedColor--#{$color-name} {
+    --button-background-selected: hsl(
+      from #{$color-value} h s calc(l - var(--adjust-color))
+    ) !important;
+  }
+
+  .Button--disabled.ColorCheckbox--disabledColor--#{$color-name} {
+    --button-color: hsl(
+      from #{$color-value} h s calc(l - var(--adjust-color))
+    ) !important;
+  }
+}

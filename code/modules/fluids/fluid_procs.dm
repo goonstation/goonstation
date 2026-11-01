@@ -13,8 +13,8 @@
 		var/atom/thing = A
 		if (!A)
 			continue
-		if(IS_SOLID_TO_FLUID(thing) && (thing.density || thing.flags & FLUID_DENSE))
-			return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
+		if(IS_SOLID_TO_FLUID(thing) && (thing.density || thing.flags & FLUID_DENSE_ALWAYS))
+			return 0 // && !istype(thing,/obj/mesh/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
 	return 1
 
 turf/simulated/floor/plating/airless/ocean_canpass()
@@ -132,7 +132,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			if (found_cleanable)
 				T.cleanable_fluid_react(null,TRUE)
 
-	F.trigger_fluid_enter()
+	if (airborne)
+		var/obj/fluid/airborne/AF = F
+		AF.trigger_fluid_enter(dose_mobs = FALSE)
+	else
+		F.trigger_fluid_enter()
 
 //s/ ame as the above, but using a reagent_id instead of a datum
 /turf/proc/fluid_react_single(reagent_name, react_volume, airborne = 0, processing_cleanables=FALSE)
@@ -188,7 +192,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 
 	FG.reagents.add_reagent(reagent_name,react_volume)
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
-	F.done_init()
+	if (airborne)
+		var/obj/fluid/airborne/AF = F
+		AF.done_init(dose_mobs = FALSE)
+	else
+		F.done_init()
 	.= F
 
 	if (!airborne && !processing_cleanables)
@@ -202,7 +210,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			if (found_cleanable)
 				T.cleanable_fluid_react(null,TRUE)
 
-	F.trigger_fluid_enter()
+	if (airborne)
+		var/obj/fluid/airborne/AF = F
+		AF.trigger_fluid_enter(dose_mobs = FALSE)
+	else
+		F.trigger_fluid_enter()
 
 
 /turf/proc/react_all_cleanables() //Same procedure called in fluid_react and fluid_react_single. copypasted cause i dont wanna proc call overhead up in hea
@@ -230,7 +242,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			var/is_tracks = istype(possible_cleanable,/obj/decal/cleanable/blood/dynamic/tracks)
 			if(is_tracks && !grab_any_amount)
 				return 0
-			if (blood.reagents && blood.reagents.total_volume >= 13 || src.active_liquid || grab_any_amount)
+			if (blood.reagents && blood.reagents.total_volume >= 26 || src.active_liquid || grab_any_amount)
 				if (blood.reagents)
 					var/datum/reagents/R = new(blood.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
 					blood.reagents.copy_to(R)

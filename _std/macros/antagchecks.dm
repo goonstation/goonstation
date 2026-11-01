@@ -1,11 +1,23 @@
 
 // Macros with abilityHolder or mutantrace defines are used for more than antagonist checks, so don't replace them with mind.special_role.
+
+//Trained Syndicate operatives (e.g. not syndie-backed like revs or spiefs)
 #define istraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_TRAITOR) || x:mind:get_antagonist(ROLE_HARDMODE_TRAITOR)))
+#define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_NUKEOP) || x:mind:get_antagonist(ROLE_NUKEOP_COMMANDER)))
+#define issleeperagent(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_SLEEPER_AGENT))
+#define issyndicateagent(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_SYNDICATE_AGENT) || x:mind:get_antagonist(ROLE_SYNDICATE_COMMANDER) || x:mind:get_antagonist(ROLE_SYNDICATE_MONKEY)))
+#define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:get_antagonist(ROLE_NUKEOP_GUNBOT))
+#define issyndicatecyborg(x) (istype(x, /mob/living/silicon/robot) && x:syndicate)
+#define istrainedsyndie(x) (istraitor(x) || isnukeop(x) || issleeperagent(x) || issyndicateagent(x) || isnukeopgunbot(x) || isomnitraitor(x) || issyndicatecyborg(x))
+
+#define isomnitraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_OMNITRAITOR))
+#define issawflybuddy(x) (istrainedsyndie(x) || isspythief(x))
 #define isrevolutionary(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_HEAD_REVOLUTIONARY) || x:mind:get_antagonist(ROLE_REVOLUTIONARY)))
 #define isconspirator(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_CONSPIRATOR))
 #define ischangeling(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/changeling) != null)
 #define isabomination(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/abomination))
-#define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_NUKEOP) || x:mind:get_antagonist(ROLE_NUKEOP_COMMANDER)))
+#define ischangelingcritter(x) (istype(x, /mob/living/critter/changeling))
+#define ischangelingORlingcritter(x) (ischangeling(x) || ischangelingcritter(x))
 #define isvampire(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/vampire) != null)
 #define isvampiricthrall(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/vampiric_thrall) != null)
 #define iswizard(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/wizard) != null)
@@ -16,10 +28,13 @@
 #define ispoltergeist(x) istype(x, /mob/living/intangible/wraith/poltergeist)
 #define isarcfiend(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/arcfiend) != null)
 #define ispirate(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_PIRATE) || x:mind:get_antagonist(ROLE_PIRATE_FIRST_MATE) || x:mind:get_antagonist(ROLE_PIRATE_CAPTAIN)))
-#define issawflybuddy(x) ((istraitor(x)) || isnukeop(x) || isspythief(x) || isnukeopgunbot(x))
+#define issalvager(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_SALVAGER)))
 
 #define isblob(x) istype(x, /mob/living/intangible/blob_overmind)
 #define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_SPY_THIEF))
+#define isganger(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_GANG_LEADER) || x:mind:get_antagonist(ROLE_GANG_MEMBER)))
+#define isgangleader(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_GANG_LEADER))
+#define isgangmember(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_GANG_MEMBER))
 #define isfloorgoblin(x) (x:mind && x:mind:get_antagonist(ROLE_FLOOR_GOBLIN))
 #define isslasher(x) (istype(x, /mob/living/carbon/human/slasher) && x:mind:get_antagonist(ROLE_SLASHER))
 
@@ -30,6 +45,12 @@
 #define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
 #define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
 #define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
-#define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:get_antagonist(ROLE_NUKEOP_GUNBOT))
 #define issawfly(x) (istype(x, /mob/living/critter/robotic/sawfly))
 #define iszombie(x) (istype(x, /mob/living/critter/zombie) || istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/zombie))
+
+// Should any revs spawned follow roleplay behaviour?
+#ifdef RP_MODE
+#define ROLEPLAY_REVOLUTIONARIES (!istype_exact(ticker.mode, /datum/game_mode/revolution))
+#else
+#define ROLEPLAY_REVOLUTIONARIES (istype(ticker.mode, /datum/game_mode/revolution/extended))
+#endif

@@ -1,7 +1,6 @@
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
-#define MEDBOT_MOVE_SPEED 6
 #define MEDBOT_LASTPATIENT_COOLDOWN "medbot_anti_patient_clinginess"
 #define MEDBOT_POINT_COOLDOWN "medbot_pointing_antirudeness"
 
@@ -20,7 +19,7 @@
 	on = 1
 	health = 20
 	locked = 1
-	bot_move_delay = MEDBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::MEDBOT
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null // options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
@@ -146,7 +145,7 @@
 	pixel_y = 4 // so we don't have to have two sets of the skin sprites, we're just gunna bump this up a bit
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
-	var/skin = null // same as the bots themselves: options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
+	var/skin = null // same as the bots themselves: options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, mental1/2/3, and psyche
 	w_class = W_CLASS_NORMAL
 
 /obj/item/firstaid_arm_assembly/New()
@@ -206,38 +205,39 @@
 
 	var/dat
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
+	dat += "Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 	dat += "Beaker: "
 	if (src.reagent_glass)
-		dat += "<A href='?src=\ref[src];eject=1'>Loaded \[[src.reagent_glass.reagents.total_volume]/[src.reagent_glass.reagents.maximum_volume]\]</a>"
+		dat += "<A href='byond://?src=\ref[src];eject=1'>Loaded \[[src.reagent_glass.reagents.total_volume]/[src.reagent_glass.reagents.maximum_volume]\]</a>"
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]"
 	if (!src.locked)
 		dat += "<hr><TT>Healing Threshold: "
-		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "
-		dat += "<a href='?src=\ref[src];adj_threshold=-5'>-</a> "
+		dat += "<a href='byond://?src=\ref[src];adj_threshold=-10'>--</a> "
+		dat += "<a href='byond://?src=\ref[src];adj_threshold=-5'>-</a> "
 		dat += "[src.heal_threshold] "
-		dat += "<a href='?src=\ref[src];adj_threshold=5'>+</a> "
-		dat += "<a href='?src=\ref[src];adj_threshold=10'>++</a>"
+		dat += "<a href='byond://?src=\ref[src];adj_threshold=5'>+</a> "
+		dat += "<a href='byond://?src=\ref[src];adj_threshold=10'>++</a>"
 		dat += "</TT><br>"
 
 		dat += "<TT>Injection Level: "
-		dat += "<a href='?src=\ref[src];adj_inject=-5'>-</a> "
+		dat += "<a href='byond://?src=\ref[src];adj_inject=-5'>-</a> "
 		dat += "[src.injection_amount] "
-		dat += "<a href='?src=\ref[src];adj_inject=5'>+</a> "
+		dat += "<a href='byond://?src=\ref[src];adj_inject=5'>+</a> "
 		dat += "</TT><br>"
 
 		dat += "Reagent Source: "
-		dat += "<a href='?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
+		dat += "<a href='byond://?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
 
-	if (user.client?.tooltipHolder)
-		user.client.tooltipHolder.showClickTip(src, list(
-			"params" = params,
-			"title" = "Medibot v1.0 controls",
-			"content" = dat,
-			"size" = "260xauto"
-		))
+	if (user.client?.tooltips)
+		user.client.tooltips.show(
+			TOOLTIP_PINNED, src,
+			mouse = params,
+			title = "Medibot v1.0 controls",
+			content = dat,
+			size = list(260, 0)
+		)
 
 	return
 
@@ -388,7 +388,7 @@
 			var/message = pick("Radar, put a mask on!","I'm a doctor.","There's always a catch, and it's the best there is.",\
 			"I knew it, I should've been a plastic surgeon.",\
 			"What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
-			src.speak(message)
+			src.say(message)
 		src.seek_patient()
 
 	if (src.patient)
@@ -398,7 +398,7 @@
 			return
 		else if(IN_RANGE(src,src.patient,10))
 			src.KillPathAndGiveUp(0)
-			navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
+			navigate_to(get_turf(src.patient), src.bot_move_delay, max_dist = 10)
 		else
 			src.KillPathAndGiveUp(1)
 
@@ -420,19 +420,28 @@
 			continue
 
 		if (src.assess_patient(C))
+			if(C.traitHolder?.hasTrait("wasitsomethingisaid") && !src.emagged && !src.terrifying) //they still try to kill you if they can
+				ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(C?.name)]", src.last_patient_cooldown * 10) //don't bother insulting them for a good while
+				if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam this either!
+					src.point(C, 1)
+					var/message = pick("I've seen worse, don't be such a baby!","That looks bad. You should find a doctor who cares.","Injured? Good.","I don't think your insurance covers THAT.","Just... walk that off.","You'll be fine. You want a second opinion? You're ugly!")
+					src.say(message)
+				return
+
 			src.patient = C
 			src.doing_something = 1
+
 			if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
 				src.point(src.patient, 1)
 				var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
-				src.speak(message)
+				src.say(message)
 
 			if(IN_RANGE(src,src.patient,1))
 				src.KillPathAndGiveUp(0)
 				return
 			else
 				src.KillPathAndGiveUp(0)
-				navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
+				navigate_to(get_turf(src.patient), src.bot_move_delay, max_dist = 10)
 				return
 		else
 			continue
@@ -533,13 +542,13 @@
 
 	if(isdead(C))
 		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
-		src.speak(death_message)
+		src.say(death_message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
 
 	if (C.loc && !isturf(C.loc)) // don't stab people while they're still in the cloner, wait till they're out first!
 		var/missing_message = pick("Wait, where'd [he_or_she(C)] go?","That's okay, I'll just wait here until you're ready.")
-		src.speak(missing_message)
+		src.say(missing_message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
 
@@ -588,7 +597,7 @@
 
 	if (length(reagent_id) < 1) //If they don't need any of that they're probably cured!
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
-		src.speak(message)
+		src.say(message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
 	else if(!actions.hasAction(src, /datum/action/bar/icon/medbot_inject))
@@ -636,7 +645,7 @@
 
 		if (master.terrifying)
 			if(!(BOUNDS_DIST(master, master.patient) == 0) && !master.moving)
-				master.navigate_to(get_turf(master.patient), MEDBOT_MOVE_SPEED, 1, 10)
+				master.navigate_to(get_turf(master.patient), master.bot_move_delay, 1, 10)
 			if(!src.did_spooky && prob(10))
 				if (prob(20))
 					var/message = pick("It will be okay.","You're okay.", "Everything will be alright,","Please remain calm.",\
@@ -645,7 +654,7 @@
 					"MEM ERR BLK 0  ADDR 30FC500 HAS 010F NOT 0000","MEM ERR BLK 3  ADDR 55005FF HAS 020A NOT FF00",\
 					"ERROR: Missing or corrupted resource filEs. Plea_-se contact a syst*m administrator.","ERROR: Corrupted kernel. Ple- - a",\
 					"This will all be over soon.")
-					master.speak(message)
+					master.say(message)
 				else
 					master.visible_message("<b>[master] [pick("freaks out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
 					var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg',\
@@ -717,41 +726,9 @@
 		if(!master.terrifying && !(BOUNDS_DIST(master, master.patient) == 0))
 			return TRUE
 
-// copied from transposed scientists
 
-#define fontSizeMax 3
-#define fontSizeMin -3
-
-/obj/machinery/bot/medbot/terrifying/speak(var/message)
-	if ((!src.on) || (!message))
-		return
-
-	var/list/audience = hearers(src, null)
-	if (!audience || !length(audience))
-		return
-
-	var/fontSize = 1
-	var/fontIncreasing = 1
-	var/messageLen = length(message)
-	var/processedMessage = ""
-
-	for (var/i = 1, i <= messageLen, i++)
-		processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
-		if (fontIncreasing)
-			fontSize = min(fontSize+1, fontSizeMax)
-			if (fontSize >= fontSizeMax)
-				fontIncreasing = 0
-		else
-			fontSize = max(fontSize-1, fontSizeMin)
-			if (fontSize <= fontSizeMin)
-				fontIncreasing = 1
-
-	message = processedMessage
-
-	..()
-
-#undef fontSizeMax
-#undef fontSizeMin
+TYPEINFO(/obj/machinery/bot/medbot/terrifying)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, SPEECH_MODIFIER_ACCENT_TRANSPOSED)
 
 /obj/machinery/bot/medbot/bullet_act(var/obj/projectile/P)
 	..()
@@ -826,12 +803,6 @@
 
 /obj/item/storage/firstaid/attackby(var/obj/item/parts/robot_parts/S, mob/user as mob)
 	if (!istype(S, /obj/item/parts/robot_parts/arm/))
-		if (src.storage.is_full())
-			return
-		if (S.w_class >= W_CLASS_SMALL || S.storage)
-			if (!istype(S,/obj/item/storage/pill_bottle))
-				boutput(user, SPAN_ALERT("[S] won't fit into [src]!"))
-				return
 		..()
 		return
 
@@ -840,6 +811,9 @@
 		return
 	else
 		var/obj/item/firstaid_arm_assembly/A = new /obj/item/firstaid_arm_assembly
+		A.setMaterial(src.material)
+		A.forensic_holder = src.forensic_holder
+		S.forensic_holder.copy_to(A.forensic_holder)
 		if (src.icon_state != "firstaid") // fart
 			A.skin = src.icon_state // farto
 /* all of this is kinda needlessly complicated imo
@@ -862,6 +836,7 @@
 
 /obj/item/firstaid_arm_assembly/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/device/analyzer/healthanalyzer)) && (!src.build_step))
+		W.forensic_holder.copy_to(src.forensic_holder)
 		src.build_step++
 		boutput(user, "You add the health sensor to [src]!")
 		src.name = "First aid/robot arm/health analyzer assembly"
@@ -872,6 +847,9 @@
 		src.build_step++
 		boutput(user, "You complete the Medibot! Beep boop.")
 		var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot
+		S.setMaterial(src.material)
+		S.forensic_holder = src.forensic_holder
+		W.forensic_holder.copy_to(S.forensic_holder)
 		S.skin = src.skin
 		S.set_loc(get_turf(src))
 		S.name = src.created_name
@@ -892,5 +870,3 @@
 			return
 
 		src.created_name = t
-
-#undef MEDBOT_MOVE_SPEED

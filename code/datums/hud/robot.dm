@@ -33,8 +33,15 @@
 		health
 		oxy
 		temp
+		gravity
 
 		pda
+		option
+		laws
+		lock
+		unlock
+		map
+
 		eyecam
 
 	var/list/screen_tools = list()
@@ -55,9 +62,6 @@
 	var/icon/icon_hud = 'icons/mob/hud_robot.dmi'
 
 	var/image/storage_bg
-
-
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
 	var/atom/movable/screen/hud
 
@@ -90,11 +94,12 @@
 				remove_screen(prev)
 				remove_screen(next)
 				return
+			var/list/tools = master.get_tools()
 			var x = 1, y = 10, sx = 1, sy = 10
 			if (!boxes)
 				return
-			if (items_screen + 6 > master.module.tools.len)
-				items_screen = max(master.module.tools.len - 6, 1)
+			if (items_screen + 6 > length(tools))
+				items_screen = max(length(tools) - 6, 1)
 			if (items_screen < 1)
 				items_screen = 1
 			boxes.screen_loc = "[x], [y] to [x+sx-1], [y-sy+1]"
@@ -124,7 +129,7 @@
 
 			var/sid = 1
 			var/i_max = items_screen + 7
-			if (i_max <= master.module.tools.len)
+			if (i_max <= length(tools))
 				next.icon_state = "down"
 				next.color = COLOR_MATRIX_IDENTITY
 			else
@@ -132,9 +137,9 @@
 				next.color = COLOR_MATRIX_GRAYSCALE
 
 			for (var/i = items_screen, i < i_max, i++)
-				if (i > master.module.tools.len)
+				if (i > length(tools))
 					break
-				var/obj/item/I = master.module.tools[i]
+				var/obj/item/I = tools[i]
 				var/atom/movable/screen/hud/S = screen_tools[sid]
 
 				if (!I) // if the item has been deleted, just show an empty slot.
@@ -165,17 +170,27 @@
 				sid++
 
 		try_equip_at(var/i)
-			if (!master || !master.cell || master.cell.charge <= 100)
+			if (!master)
+				update_equipment()
+				return
+			if (!master.cell || master.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
+				boutput(master, SPAN_ALERT("You don't have enough power to equip this!"))
 				update_equipment()
 				return
 			if (!master.module || !show_items)
 				update_equipment()
 				return
+			var/datum/statusEffect/lockdown/lockdown_effect = master.hasStatus("lockdown_robot")
+			if (lockdown_effect && !lockdown_effect.fake)
+				boutput(master, SPAN_ALERT("Your equipment is locked down!"))
+				update_equipment()
+				return
 			var/content_id = items_screen + i - 1
-			if (content_id > master.module.tools.len || content_id < 1)
+			var/list/tools = master.get_tools()
+			if (content_id > length(tools) || content_id < 1)
 				boutput(usr, SPAN_ALERT("An error occurred. Please notify a coder immediately. (Content ID: [content_id].)"))
-			var/obj/item/O = master.module.tools[content_id]
-			if(!O || O.loc != master.module)
+			var/obj/item/O = tools[content_id]
+			if(!O || (O.loc != master.module && O.loc != master))
 				return
 			if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
 				master.equip_slot(1, O)
@@ -247,6 +262,8 @@
 
 		oxy = create_screen("oxy", "Oxygen", icon_hud, "oxy0", "EAST, NORTH-1")
 		temp = create_screen("temp", "Temperature", icon_hud, "temp0", "EAST, NORTH-2")
+		gravity = create_screen("gravity", "Gravity", src.icon_hud, "gravity2", "EAST, NORTH-3", HUD_LAYER, tooltip_options = list("theme" = "gravInd02"))
+		gravity.desc = GRAVITY_DESC_NORMAL
 
 		if (master.module_active)
 			set_active_tool(master.module_states.Find(master.module_active))
@@ -260,9 +277,25 @@
 		pda = create_screen("pda", "Cyborg PDA", 'icons/mob/hud_ai.dmi', "pda", "WEST, NORTH+0.5", HUD_LAYER)
 		pda.underlays += "button"
 
+		option = create_screen("option", "Customization Options", 'icons/mob/hud_ai.dmi', "option", "WEST, NORTH", HUD_LAYER)
+		option.underlays += "button"
+
+		laws = create_screen("laws", "Show Laws", 'icons/mob/hud_ai.dmi', "laws", "WEST, NORTH-0.5", HUD_LAYER)
+		laws.underlays += "button"
+
+		lock = create_screen("lock", "Interface Lock", 'icons/mob/hud_ai.dmi', "lock", "WEST, NORTH-1", HUD_LAYER)
+		lock.underlays += "button"
+		lock.invisibility = INVIS_ALWAYS
+		unlock = create_screen("unlock", "Interface Lock", 'icons/mob/hud_ai.dmi', "unlock", "WEST, NORTH-1", HUD_LAYER)
+		unlock.underlays += "button"
+
+		map = create_screen("map", "Alert Map", 'icons/mob/hud_ai.dmi', "map", "WEST, NORTH-1.5", HUD_LAYER)
+		map.underlays += "button"
+
 		eyecam = create_screen("eyecam", "Eject to eyecam", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
 		eyecam.underlays += "block"
 
+		update_lock()
 
 	scrolled(id, dx, dy, user, parms, atom/movable/screen/hud/scr)
 		if(!master || user != master) return
@@ -389,45 +422,21 @@
 				last_health = -1
 			if ("pda")
 				master.access_internal_pda()
+			if ("option")
+				master.customize_options()
+			if ("laws")
+				master.interact_laws()
+			if ("lock")
+				master.cmd_toggle_lock()
+			if ("unlock")
+				master.cmd_toggle_lock()
+			if ("map")
+				master.open_alert_minimap()
 			if ("eyecam")
 				master.become_eye()
 
 	proc/update_status_effects()
-		for(var/atom/movable/screen/statusEffect/G in src.objects)
-			remove_screen(G)
-
-		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
-			if(!master.statusEffects || !(S in master.statusEffects))
-				qdel(statusUiElements[S])
-				src.statusUiElements.Remove(S)
-				qdel(S)
-
-		var/spacing = 0.6
-		var/pos_x = spacing - 0.2 - 1
-
-		if(master.statusEffects)
-			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
-				if(!S.visible) continue
-				if((S in statusUiElements) && statusUiElements[S])
-					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
-					U.icon = icon_hud
-					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-2.7"
-					U.update_value()
-					add_screen(U)
-					pos_x -= spacing
-				else
-					if(S.visible)
-						var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
-						U.init(master,S)
-						U.icon = icon_hud
-						statusUiElements.Add(S)
-						statusUiElements[S] = U
-						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
-						U.update_value()
-						add_screen(U)
-						pos_x -= spacing
-						animate_buff_in(U)
-		return
+		src.sync_status_effects(src.master, src.icon_hud, "NORTH-2.7", -0.6)
 
 	update_health()
 		..()
@@ -583,6 +592,32 @@
 					else
 						temp.icon_state = "temp-1"
 
+		update_gravity_indicator()
+			if (!src.gravity)
+				return
+			var/stage
+			switch(master.gforce)
+				if (-INFINITY to GFORCE_GRAVITY_MINIMUM)
+					stage = 0
+					src.gravity.desc = GRAVITY_DESC_NONE
+				if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
+					stage = 2
+					src.gravity.desc = GRAVITY_DESC_NORMAL
+				if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
+					stage = 1
+					src.gravity.desc = GRAVITY_DESC_LOW
+				if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)
+					stage = 4
+					src.gravity.desc = GRAVITY_DESC_EXTREME
+				if (GFORCE_MOB_HIGH_THRESHOLD to GFORCE_MOB_EXTREME_THRESHOLD)
+					stage = 3
+					src.gravity.desc = GRAVITY_DESC_HIGH
+				if (GFORCE_EARTH_GRAVITY to GFORCE_MOB_HIGH_THRESHOLD)
+					stage = 2
+					src.gravity.desc = GRAVITY_DESC_NORMAL
+			src.gravity.icon_state = "gravity[stage]"
+			src.gravity.tooltip_options = list("theme" = "gravInd[stage]")
+
 		update_upgrades()
 			var/startx = 5 - master.max_upgrades
 			if (master.max_upgrades != upgrade_slots.len)
@@ -622,6 +657,10 @@
 					add_object(upgrade, HUD_LAYER+2, "CENTER+[startx+i]:24, SOUTH+1:4")
 					i++
 			last_upgrades = master.upgrades.Copy()
+
+		update_lock()
+			lock.invisibility = master.locked ? INVIS_ALWAYS : INVIS_NONE
+			unlock.invisibility = master.locked ? INVIS_NONE : INVIS_ALWAYS
 
 	proc/handle_event(var/event, var/sender)
 		if (event == "icon_updated") // this is only ever emitted by atoms

@@ -55,7 +55,7 @@
 				<span class="critter_name">Space seal pup (<span class="science_name">Arctocephalus gazella peur spatium</span>)</span><BR>
 				<span class="location"><B>Location:</B> Pool</span>
 				</p>
-				<p class="description">The actual most adorable things in existence.  The only specimens that one will be able to find are in Space Station 13's pool.  They never seem to age due to a quirk in their genetic code that seems to be incompatible with any other species.  Anyone who attacks them is clearly an immoral monster and are to be lynched with utmost haste.</p>
+				<p class="description">The actual most adorable things in existence.  The only specimens that one will be able to find are in Space Station 13's pool.  They never seem to age due to a quirk in their genetic code that seems to be incompatible with any other species.  Anyone who attacks them is clearly an immoral monster and are to be gibbed with utmost haste.</p>
 
 				<p>
 					<span class="critter_name">Meat cube (<span class="science_name">Carnis cubus</span>)</span><br>

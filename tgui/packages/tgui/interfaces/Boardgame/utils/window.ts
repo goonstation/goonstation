@@ -1,30 +1,33 @@
 declare const Byond, window;
 
-import { useBackend } from '../../../backend';
-import { useActions, useStates } from '.';
-import { BoardgameData } from './types';
+import { BoardInfoType, TileSizeType, UserDataType } from './types';
 
-export const adjustSizes = (context) => {
-  adjustTileSizeType(context);
-  adjustWindowSize(context);
+export const adjustSizes = (
+  boardInfo: BoardInfoType | undefined,
+  tileSize: TileSizeType,
+  setTileSizeType: (size: TileSizeType) => void,
+) => {
+  adjustTileSizeType(boardInfo, tileSize, setTileSizeType);
+  adjustWindowSize();
 };
 
-const adjustTileSizeType = (context) => {
-  const { data } = useBackend<BoardgameData>(context);
-  const { setTileSizeType, tileSize } = useStates(context);
-
+const adjustTileSizeType = (
+  boardInfo: BoardInfoType | undefined,
+  tileSize: TileSizeType,
+  setTileSizeType: (size: TileSizeType) => void,
+) => {
   const board = document.getElementsByClassName('boardgame__board-inner')[0];
   let tileWidth: number = 0;
   let tileHeight: number = 0;
 
-  if (board) {
+  if (board && boardInfo) {
     const boardRect = board.getBoundingClientRect();
 
     const boardWidth = boardRect.width - 40; // Full width of the board
     const boardHeight = boardRect.height - 40; // Full height of the board
 
-    tileWidth = boardWidth / data.boardInfo.width; // Width of a single tile
-    tileHeight = boardHeight / data.boardInfo.height; // Height of a single tile
+    tileWidth = boardWidth / boardInfo.width; // Width of a single tile
+    tileHeight = boardHeight / boardInfo.height; // Height of a single tile
   }
 
   // Compare old tile size to new tile size
@@ -33,64 +36,37 @@ const adjustTileSizeType = (context) => {
   }
 };
 
-const adjustWindowSize = (context) => {
-  const { data } = useBackend<BoardgameData>(context);
-  const { aspectRatio } = data.styling;
-
-  const PaletteSetPadding = 100; // Add 100 pixels to the width
-  const titlebarHeightPadding = 32 + 0.25;
-  let width = 500;
-  let height = 400;
-  // Fetch boardgame__wrapper element and get its width and height
-  const wrapper = document.getElementsByClassName('boardgame__window')[0];
-  if (wrapper) {
-    const wrapperRect = wrapper.getBoundingClientRect();
-    let wrapperWidth = wrapperRect.width;
-    let wrapperHeight = wrapperRect.height;
-
-    // Return if the width and height are the same
-    if (wrapperWidth === width && wrapperHeight === height) {
-      return;
-    }
-
-    let shortestSide = wrapperWidth < wrapperHeight ? wrapperWidth : wrapperHeight;
-
-    // Set the width and height to the shortest side
-    width = shortestSide + PaletteSetPadding;
-    height = shortestSide + titlebarHeightPadding;
-
-    // Set the width and height to the aspect ratio
-    if (aspectRatio) {
-      width = shortestSide * aspectRatio + PaletteSetPadding;
-      height = shortestSide + titlebarHeightPadding;
-    }
-  }
-
+// This used to contain a bunch of brittle code to handle different window sizes
+// That broke everything so we're just hard setting it to the right size for now
+const adjustWindowSize = () => {
+  let width = 580;
+  let height = 512;
   Byond.winset(window.__windowId__, {
     size: `${width}x${height}`,
   });
 };
 
-export const handleEvents = (context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
-  const { paletteClear, pieceDeselect } = useActions(act);
-
+export const handleEvents = (
+  currentUser: UserDataType | undefined,
+  paletteClear: (ckey: string) => void,
+  pieceDeselect: (ckey: string) => void,
+) => {
   document.body.oncontextmenu = (e) => {
     e.preventDefault();
     if (e.button === 2) {
-      if (data.currentUser?.palette) {
-        paletteClear(data.currentUser.ckey);
+      if (currentUser?.palette) {
+        paletteClear(currentUser.ckey);
       }
-      if (data.currentUser?.selected) {
-        pieceDeselect(data.currentUser.ckey);
+      if (currentUser?.selected) {
+        pieceDeselect(currentUser.ckey);
       }
     }
     return false;
   };
 
   document.body.onmouseleave = () => {
-    if (data.currentUser?.palette) {
-      paletteClear(data.currentUser.ckey);
+    if (currentUser?.palette) {
+      paletteClear(currentUser.ckey);
     }
   };
 };

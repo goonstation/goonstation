@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="holderRef" content="holderRefHere" />
+    <meta name="interface" content="interfaceHere" />
+    <meta name="dataProp" content="dataPropHere" />
+  </head>
+  <body>
+    <script
+      type="text/javascript"
+      src="{{resource('js/interfaceSizeHelper.js')}}"
+    ></script>
+    <script type="text/javascript">
+      window.sizeHelper.update = function () {
+        var mapX = window.screenLeft;
+        var mapY = window.screenTop;
+        var mapW =
+          window.innerWidth ||
+          document.documentElement.clientWidth ||
+          document.body.clientWidth;
+        var mapH =
+          window.innerHeight ||
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+
+        var params =
+          '{"x": ' +
+          mapX +
+          ', "y": ' +
+          mapY +
+          ', "w": ' +
+          mapW +
+          ', "h": ' +
+          mapH +
+          '}';
+        window.location =
+          'byond://winset?' +
+          this.interface +
+          '.' +
+          this.dataProp +
+          '=' +
+          params;
+      };
+
+      window.sizeHelper.init();
+    </script>
+  </body>
+</html>

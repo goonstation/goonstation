@@ -3,11 +3,6 @@
 /// π
 #define pi 3.14159265
 
-#if DM_VERSION < 515
-/// Gets the ceiling (maps x to the least integer greater than or equal to x)
-#define ceil(x) (-round(-(x)))
-#endif
-
 /// ceil, with second argument being the multiple to use for rounding
 #define ceil2(x,y) (-round(-x / y) * y)
 
@@ -33,14 +28,6 @@
 /// difference in degrees from angle x to angle y
 #define angledifference(x,y) ((((y) - (x) + 180) % 360 - 180) + (((((y) - (x) + 180) % 360 - 180) < -180) ? 360 : 0))
 
-#if DM_VERSION < 515
-/// isnum() returns TRUE for NaN. Also, NaN != NaN. Checkmate, BYOND.
-#define isnan(x) ( (x) != (x) )
-
-/// Returns true if the number is infinity or -infinity
-#define isinf(x) (isnum((x)) && (((x) == INFINITY) || ((x) == -INFINITY)))
-#endif
-
 /// NaN isn't a number, damn it. Infinity is a problem too.
 #define isnum_safe(x) ( isnum((x)) && !isnan((x)) && !isinf((x)) ) //By ike709
 
@@ -50,6 +37,13 @@ proc/text2num_safe(x)
 	if(isnum_safe(.))
 		return
 	return null
+
+/// Similar to `text2num_safe`, but returns the original string on failure.
+/proc/text2num_if_num(x)
+	. = text2num(x)
+	if (isnum_safe(.) && ("[.]" == x))
+		return
+	return x
 
 /// rand() but for floats, returns a random floating point number between L and H
 #define randfloat(L, H) ((L) + rand() * ((H) - (L)))

@@ -1,5 +1,4 @@
 //Floorbot assemblies
-#define FLOORBOT_MOVE_SPEED 7
 #define FLOORBOT_CLEARTARGET_COOLDOWN "clearinvalidfloorbotlist"
 /obj/item/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
@@ -36,7 +35,7 @@
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
-	bot_move_delay = FLOORBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::FLOORBOT
 	//weight = 1.0E7
 	var/amount = 50
 	on = 0 // Don't start running around eating everything and puking it all over the cold loop, at least till someone pokes you
@@ -90,21 +89,22 @@
 /obj/machinery/bot/floorbot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
-	dat += "Status: \[<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"
+	dat += "Status: \[<A href='byond://?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"
 	dat += "Tiles left: [src.amount]<BR>"
 	dat += "Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>"
 	if (!src.locked)
 		dat += "<hr>"
-		dat += "Improves floors: \[<A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>\]<BR>"
-		dat += "Finds tiles: \[<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
-		dat += "Make single pieces of metal into tiles when empty: \[<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
+		dat += "Improves floors: \[<A href='byond://?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>\]<BR>"
+		dat += "Finds tiles: \[<A href='byond://?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
+		dat += "Make single pieces of metal into tiles when empty: \[<A href='byond://?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
 
-	if (user.client?.tooltipHolder)
-		user.client.tooltipHolder.showClickTip(src, list(
-			"params" = params,
-			"title" = "Repairbot v1.0 controls",
-			"content" = dat,
-		))
+	if (user.client?.tooltips)
+		user.client.tooltips.show(
+			TOOLTIP_PINNED, src,
+			mouse = params,
+			title = "Repairbot v1.0 controls",
+			content = dat,
+		)
 
 	return
 
@@ -146,19 +146,15 @@
 /obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob)
 	if (istype(W, /obj/item/tile))
 		var/obj/item/tile/T = W
-		if (src.amount >= max_tiles)
+		var/space_left = src.max_tiles - src.amount
+		if (space_left < 1)
 			return
-		var/loaded = 0
-		if (src.amount + T.amount > max_tiles)
-			var/i = max_tiles - src.amount
-			src.amount += i
-			T.amount -= i
-			loaded = i
-		else
-			src.amount += T.amount
-			loaded = T.amount
-			qdel(T)
-		boutput(user, SPAN_ALERT("You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"))
+		var/moving_tiles = space_left
+		if (space_left > T.amount)
+			moving_tiles = T.amount
+		T.change_stack_amount(moving_tiles * -1)
+		src.amount += moving_tiles
+		boutput(user, SPAN_ALERT("You load [moving_tiles] tiles into the floorbot. It now contains [src.amount] tiles!"))
 		src.UpdateIcon()
 	//Regular ID
 	else
@@ -324,7 +320,7 @@
 
 		// we are not there. how do we get there
 		if (!src.path || !length(src.path))
-			src.navigate_to(get_turf(src.target), FLOORBOT_MOVE_SPEED, max_dist = 20)
+			src.navigate_to(get_turf(src.target), src.bot_move_delay, max_dist = 20)
 			if (!src.path || !length(src.path))
 				// answer: we don't. try to find something else then.
 				src.targets_invalid |= turf2coordinates(src.target)
@@ -335,7 +331,7 @@
 		while(!isnull(A) && !istype(A.loc, /turf) && !ishuman(A.loc))
 			A = A.loc
 		if (ishuman(A?.loc) && prob(30))
-			speak(pick(src.chase_lines))
+			src.say(pick(src.chase_lines))
 		src.doing_something = 1
 		src.search_range = 1
 	else
@@ -390,6 +386,9 @@
 		src.target = null
 		src.repairing = 0
 		return
+	if (ismob(T.loc))
+		var/mob/M = T.loc
+		M.drop_item(T, FALSE)
 	if (src.amount + T.amount > max_tiles)
 		var/i = max_tiles - src.amount
 		src.amount += i
@@ -440,6 +439,9 @@
 /obj/machinery/bot/floorbot/active
 	on = TRUE
 
+/obj/machinery/bot/floorbot/active/improvefloors
+	improvefloors = TRUE
+
 /////////////////////////////////
 //////Floorbot Construction//////
 /////////////////////////////////
@@ -455,6 +457,9 @@
 	if (!istype(D, /obj/item/device/prox_sensor))
 		return
 	var/obj/item/toolbox_tiles_sensor/B = new /obj/item/toolbox_tiles_sensor
+	B.setMaterial(src.material)
+	B.forensic_holder = src.forensic_holder
+	D.forensic_holder.copy_to(B.forensic_holder)
 	if(src.color_overlay)
 		B.UpdateOverlays(image(B.icon, icon_state = src.color_overlay), "coloroverlay")
 		B.color_overlay = src.color_overlay
@@ -471,6 +476,9 @@
 	if (!istype(P, /obj/item/parts/robot_parts/arm/))
 		return
 	var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
+	A.setMaterial(src.material)
+	A.forensic_holder = src.forensic_holder
+	P.forensic_holder.copy_to(A.forensic_holder)
 	if(src.color_overlay)
 		A.UpdateOverlays(image(A.icon, icon_state = src.color_overlay), "coloroverlay")
 		A.color_overlay = src.color_overlay

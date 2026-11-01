@@ -24,7 +24,6 @@
 
 /mob/living/critter/killertomato
 	name = "killer tomato"
-	real_name = "killer tomato"
 	desc = "Today, Space Station 13 - tomorrow, THE WORLD!"
 	density = 1
 	icon_state = "ktomato"
@@ -54,7 +53,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.name = "mouth"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"				// the icon state of the hand UI background
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing

@@ -68,7 +68,7 @@ Contents:
 * icons/turf/dojo.dmi <-- floor icons
 * icons/obj/dojo.dmi <-- object icons
 * radiotelescope.dm
-* browserassets/images/radioTelescope
+* browserassets/src/images/radioTelescope
 * icons/effects/224x160.dmi
 * weapons.dmi
 * hand_weapons.dmi
@@ -203,37 +203,7 @@ Contents:
 
 	// black body radiation color temperature
 	proc/set_real_color()
-		var/input = temperature / 100
-
-		var/red
-		if (input <= 66)
-			red = 255
-		else
-			red = input - 60
-			red = 329.698727446 * (red ** -0.1332047592)
-		red = clamp(red, 0, 255)
-
-		var/green
-		if (input <= 66)
-			green = max(0.001, input)
-			green = 99.4708025861 * log(green) - 161.1195681661
-		else
-			green = input - 60
-			green = 288.1221695283 * (green ** -0.0755148492)
-		green = clamp(green, 0, 255)
-
-		var/blue
-		if (input >= 66)
-			blue = 255
-		else
-			if (input <= 19)
-				blue = 0
-			else
-				blue = input - 10
-				blue = 138.5177312231 * log(blue) - 305.0447927307
-		blue = clamp(blue, 0, 255)
-
-		color = rgb(red, green, blue)
+		src.color = blackbody_color(src.temperature)
 
 	afterattack(var/atom/target, var/mob/user)
 		var/obj/item/reagent_containers/RC = target
@@ -348,6 +318,7 @@ Contents:
 	desc = "A pretty japanese cherry tree. You don't find a lot of these away from earth."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "sakuratree"
+	season_affected = FALSE
 
 /obj/tree/sakura_tree/tree_2
 	icon_state = "sakuratree2"
@@ -443,13 +414,13 @@ Contents:
 	icon_state = "furnace"
 	density = 1
 	anchored = ANCHORED_ALWAYS
-	var/obj/effects/tatara/effect
+	var/obj/effects/little_sparks/tatara/effect
 
 	var/temperature = T0C + 870
 
 	New()
 		..()
-		effect = new /obj/effects/tatara(src)
+		effect = new(src)
 		vis_contents += effect
 
 	attackby(obj/item/W, mob/user as mob)
@@ -477,7 +448,7 @@ Contents:
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.getMaterialFlags() & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
+					if((R.material?.getMaterialFlags() & MATERIAL_METAL) && R.material.getProperty(MATERIAL::PROPERTY::DENSITY) >= 3 && R.material.getProperty(MATERIAL::PROPERTY::HARDNESS) >= 2)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else
@@ -520,6 +491,48 @@ Contents:
 		sheet_stack.update_appearance()
 		qdel(src)
 
+// hehe angilvib but anyone under it
+/obj/table/anvil/gimmick/gib_any
+	New()
+		..()
+		src.anchored = ANCHORED_ALWAYS
+		src.density = 0
+		src.pixel_y = 224 // 32 * 7 default anvilgib
+		src.alpha = 0
+		src.layer += 4
+		src.plane = PLANE_NOSHADOW_ABOVE
+
+		animate(src, alpha = 255, time = 0.9 SECONDS, flags = ANIMATION_PARALLEL)
+		animate(src, pixel_y = 0, easing = EASE_IN | QUAD_EASING, time = 1.84 SECONDS, flags = ANIMATION_PARALLEL)
+
+		var/obj/effects/shadow = new /obj/effects{
+			icon='icons/effects/96x96.dmi';
+			icon_state="circle";
+			mouse_opacity = 0;
+			color = "#000000";
+			alpha = 0;
+			transform = matrix(0.8, 0, 0, 0, 0.5, 0);
+			pixel_x = -32;
+			pixel_y = -32 - 7;
+			anchored = ANCHORED_ALWAYS;
+			plane = PLANE_NOSHADOW_BELOW
+		}(get_turf(src))
+		animate(shadow, alpha = 150, transform = matrix(0.25, 0, 0, 0, 0.17, 0), easing = EASE_IN | QUAD_EASING, time = 1.75 SECONDS, flags = ANIMATION_PARALLEL)
+
+		playsound(get_turf(src), 'sound/effects/cartoon_fall.ogg', 50, FALSE)
+		SPAWN (1.8 SECONDS)
+			// yoinked from lethal supplydrops
+			for(var/mob/M in view(7, src.loc))
+				shake_camera(M, 1 SECOND, 4)
+				if(M.loc == src.loc && isliving(M) && !isintangible(M))
+					if(isliving(M))
+						logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+					M.gib(1, 1)
+			src.anchored = initial(src.anchored)
+			src.plane = initial(src.plane)
+			src.density = initial(src.density)
+			qdel(shadow)
+
 /obj/dojo_bellows
 	name = "bellows"
 	desc = "An old bellows. Used to keep a flame alight."
@@ -551,15 +564,6 @@ Contents:
 	desc = "A little wooden tool for raking sand in to patterns."
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "rake"
-
-/obj/fakeobject/sealed_door
-	name = "laboratory door"
-	desc = "It appears to be sealed."
-	icon = 'icons/obj/dojo.dmi'
-	icon_state = "sealed_door"
-	density = 1
-	anchored = ANCHORED_ALWAYS
-	opacity = 1
 
 /obj/fakeobject/katana_fake
 	name = "katana sheath"
@@ -812,6 +816,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
 	name = "zen garden"
 	icon = 'icons/turf/dojo.dmi'
 	icon_state = "sand"
+	can_dig = TRUE
 
 	horizontal
 		icon_state = "sand_horiz"

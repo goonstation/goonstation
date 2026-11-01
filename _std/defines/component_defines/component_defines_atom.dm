@@ -22,6 +22,12 @@
 	#define COMSIG_ATOM_CROSSED "atom_crossed"
 	/// when something triggers Uncrossed by exiting this atom's turf (/atom/movable)
 	#define COMSIG_ATOM_UNCROSSED "atom_uncrossed"
+	/// When this atom enters a turf with a fluid. (/atom, /obj/fluid)
+	#define COMSIG_ATOM_FLUID_ENTERED "atom_fluid_entered"
+	/// When this atom leaves a turf with a fluid. (/atom, /obj/fluid)
+	#define COMSIG_ATOM_FLUID_EXITED "atom_fluid_exited"
+	/// When something that's caused an AM to be slipped ends that slip. (thing, /atom/movable/victim)
+	#define COMSIG_ATOM_SLIP_END "mov_throw_end"
 	/// When something calls UpdateIcon, before the icon is updated
 	#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
 	/// When something calls UpdateIcon, after the icon is updated
@@ -50,13 +56,51 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+	/// when an atom say()s anything
+	/// I swear if you use this to modify a message when you should be using a speech_module, I will hurt you - Amylizzle
+	#define COMSIG_ATOM_SAY "atom_say"
 	/// when this atom has clean_forensic called, send this signal.
 	#define COMSIG_ATOM_CLEANED "atom_cleaned"
+	/// sent to the parent object when its handset retracts, see /datum/component/cord
+	#define COMSIG_CORD_RETRACT "cord_retract"
+	/// sent to the signal jamming thing when it successfully blocks a signal (signal)
+	#define COMSIG_SIGNAL_JAMMED "signal_jammed"
+	/// sent when something was build out of a frame (thing, user, newly_build)
+	#define COMSIG_BUILD_FROM_FRAME "build_from_frame"
 
 // ---- minimap ----
 
 /// When an atom requires to create a single minimap marker for a specific minimap.
 #define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
+
+// ---- laser sink ----
+
+/// Sent to an object when a laser hits it (laser)
+#define COMSIG_LASER_INCIDENT "laser_incident"
+/// Sent to a sink's parent when a laser successfully connects to it (laser) - return COMPONENT_LASER_BLOCKED to reject connection
+#define COMSIG_LASER_CONNECTED "laser_connected"
+/// Sent to an object when a laser stops hitting it (laser)
+#define COMSIG_LASER_EXIDENT "laser_exident"
+/// Sent to a sink's parent when a laser disconnects from it (laser)
+#define COMSIG_LASER_DISCONNECTED "laser_disconnected"
+/// Sent to a parent when laser traversal is requested (proc_to_call)
+#define COMSIG_LASER_TRAVERSE "laser_traverse"
+/// Return flag for COMSIG_LASER_CONNECTED: reject the laser
+#define COMPONENT_LASER_BLOCKED (1<<0)
+
+// ---- machinery ----
+
+/// When this piece of machinery calls its process function
+#define COMSIG_MACHINERY_PROCESS "machinery_process"
+/// When the HPD wants to check if this machine has a node it can remove (thing, used_HPD). returns TRUE is it is the case.
+#define COMSIG_MACHINERY_HAS_REMOVEABLE_FLUID_NODE "machinery_has_removeable_fluid_node"
+/// When the HPD wants to check if this machine could potentionally have a node (thing, used_HPD). returns TRUE is it is the case.
+#define COMSIG_MACHINERY_CAN_RECEIVE_FLUID_NODE "machinery_can_receive_fluid_node"
+/// When the HPD tries to order the object to remove their internal fluid node (thing, used_HPD). returns TRUE if sucessfull.
+#define COMSIG_MACHINERY_REMOVE_FLUID_NODE "machinery_remove_fluid_node"
+/// sent when the fluid pipe gets initialized (thing)
+#define COMSIG_FLUID_PIPE_ON_INIT "fluid_pipe_on_init"
+
 
 // ---- atom/movable signals ----
 
@@ -65,7 +109,7 @@
 	/// when an AM moves on the map (thing, previous_loc, direction)
 	#define COMSIG_MOVABLE_MOVED "mov_moved"
 	/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
-	#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
+	#define COMSIG_MOVABLE_PRE_MOVE "mov_pre_move"
 	/// when an AM changes its loc (thing, previous_loc)
 	#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 	/// when an AM ends throw (thing, /datum/thrown_thing)
@@ -83,17 +127,6 @@
 	/// when an AM is revealed from under a floor tile (turf revealed from)
 	#define COMSIG_MOVABLE_FLOOR_REVEALED "mov_floor_revealed"
 
-	// ---- complex ----
-
-	/// when the outermost movable in the .loc chain changes (thing, old_outermost_movable, new_outermost_movable)
-	#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
-	/// When the outermost movable in the .loc chain moves to a new area. (thing, old_area, new_area)
-	#define XSIG_MOVABLE_AREA_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_area_changed")
-	/// When the outermost movable in the .loc chain moves to a new turf. (thing, old_turf, new_turf)
-	#define XSIG_MOVABLE_TURF_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_turf_changed")
-	/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
-	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
-
 // ---- turf signals ----
 	/// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)
 	#define COMSIG_TURF_CONTENTS_SET_OPACITY "turf_contents_set_opacity"
@@ -103,6 +136,10 @@
 	#define COMSIG_TURF_REPLACED "turf_replaced"
 	/// when an atom inside the turfs contents changes density (turf, previous_density, thing)
 	#define COMSIG_TURF_CONTENTS_SET_DENSITY "turf_contents_set_density"
+	/// when a fluid port is created on this turf
+	#define COMSIG_TURF_FLUID_PORT_CREATED "turf_fluid_port_created"
+	/// this is used to receive a list with all fluid ports on a tile (thing, list_for_pipes)
+	#define COMSIG_TURF_FLUID_PORT_PING "turf_fluid_fluid_port_ping"
 
 // ---- obj signals ----
 
@@ -131,7 +168,7 @@
 	#define COMSIG_ITEM_UNEQUIPPED "itm_unequip"
 	/// When an item is picked up (user)
 	#define COMSIG_ITEM_PICKUP "itm_pickup"
-	/// When an item is picked dropped (user)
+	/// When an item is dropped (user)
 	#define COMSIG_ITEM_DROPPED "itm_drop"
 	/// When an item is used to attack a mob
 	#define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
@@ -159,6 +196,15 @@
 	#define COMSIG_ITEM_AFTERATTACK "itm_afterattack"
 	/// When the item in hand is twirl emoted and spun in hand. (user, item)
 	#define COMSIG_ITEM_TWIRLED "itm_twirled"
+	/// After an item has been placed into another item (backpack, satchel, toolbox, etc)
+	#define COMSIG_ITEM_STORED "itm_stored"
+	/// When an item reacting to being seen in a storage or dumped out of it (e.g. mousetraps)
+	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
+	/// Send out to every item directly in and on the person on no-suicide-death
+	#define COMSIG_ITEM_ON_OWNER_DEATH "itm_on_owner_death"
+	/// After an item is altered by being removed and replaced with another item, sent shortly before being removed. The original is not always
+	/// deleted but instead treated as if it were a part of the new item, see assemblies. (item or list of items produced by conversion, user)
+	#define COMSIG_ITEM_CONVERTED "itm_converted"
 
 	// ---- bomb assembly signals ----
 
@@ -166,6 +212,39 @@
 	#define COMSIG_ITEM_BOMB_SIGNAL_START "bomb_signal_start"
 	/// Triggers when an assembly bomb's signalling is cancelled
 	#define COMSIG_ITEM_BOMB_SIGNAL_CANCEL "bomb_signal_cancel"
+
+	// ---- general assembly signals ----
+
+	/// Triggers on attack_self of the assembly if it is unsecured
+	#define COMSIG_ITEM_ASSEMBLY_MANIPULATION "assembly_manipulation"
+	/// Triggers on attack_self of the assembly if it is secured
+	#define COMSIG_ITEM_ASSEMBLY_ACTIVATION "assembly_activation"
+	/// Triggers if the assembly fires it's applier
+	#define COMSIG_ITEM_ASSEMBLY_APPLY "assembly_apply"
+	/// Triggers on an item when it is build into an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_SETUP "assembly_item_setup"
+	/// Triggers on an item when a target is build into an assembly. Used when special combinations are enabled through certain components
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION "assembly_item_on_target_addition"
+	/// Triggers on an item when a target is build into an assembly. Used when special combinations are enabled through certain components
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION "assembly_item_on_misc_addition"
+	/// Triggers on an item when it is removed from an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL "assembly_item_removal"
+	/// Checks on any item if they have special conditions under which they cannot be used in the assembly, e.g. igniters needing to be unsecured
+	#define COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK "assembly_combination_check"
+	/// Checks if that item, as additional component, adds any odd overlays on the assembly
+	#define COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS "assembly_overlay_additions"
+	/// Returns the state of the trigger of the assembly
+	#define COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE "assembly_get_trigger_state"
+	/// Pass here a assembly_signal_helper datum here to get the time left on the trigger of the assembly (if it has any, else its 0)
+	#define COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT "assembly_get_trigger_time_left"
+	/// Set's the timer of the trigger to the respectable time (if it is able to)
+	#define COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME "assembly_set_trigger_time"
+	/// Will be send to the assembly if one of its components gets disposed
+	#define COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL "assembly_on_part_disposal"
+	/// Will be send to the attacking_component of the assembly when it is about to be used. If it returns TRUE, the attack proc will prevent the attack entirely
+	#define COMSIG_ITEM_ASSEMBLY_ON_ATTACK_OVERRIDE "assembly_on_attack_override"
+	/// Will be send to the attacking_component of the assembly when it is being used. If it returns TRUE, the attack proc will not call the attack parent of the assembly
+	#define COMSIG_ITEM_ASSEMBLY_DO_ATTACK_OVERRIDE "assembly_do_attack_override"
 
 	// ---- implant signals ----
 
@@ -183,9 +262,13 @@
 	#define COMSIG_MOB_LOGIN "mob_login"
 	/// When a client logs out of a mob
 	#define COMSIG_MOB_LOGOUT "mob_logout"
+	/// When a target observer starts observing this mob
+	#define COMSIG_MOB_OBSERVER_ATTACHED "mob_observer_attached"
+	/// When a target observer stops observing this mob
+	#define COMSIG_MOB_OBSERVER_DETACHED "mob_observer_detached"
 	/// At the beginning of when an attackresults datum is being set up
 	#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
-	/// When a mob dies
+	/// When a mob dies (gibbed bool)
 	#define COMSIG_MOB_DEATH "mob_death"
 	/// When a mob fakes death
 	#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
@@ -211,7 +294,9 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
-	/// Sent when a mob is grabbed by another mob (grab object)
+	/// sent when a mob's client click drags
+	#define COMSIG_MOB_MOUSEDROP "mob_mousedrop"
+	/// Sent when a mob is grabbed by another mob, and when the grab is upgraded (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 	/// Sent when a mob emotes (emote, voluntary, emote target)
 	#define COMSIG_MOB_EMOTE "mob_emote"
@@ -227,26 +312,23 @@
 	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
 	/// Sent when the mob points at something (point target)
 	#define COMSIG_MOB_POINT "mob_point"
+	/// Sent when a mob is pulled
+	#define COMSIG_MOB_PULL_TRIGGER "pull_trigger"
 	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
 	#define COMSIG_MOB_SPRINT "mob_sprint"
-	/// Sent when the mob says something (message)
-	#define COMSIG_MOB_SAY "mob_say"
 	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
 	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
+	/// Sent when a mob changes its lying state (lying)
+	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
+	/// Sent to cancel a mob viewing a camera
+	#define COMSIG_MOB_CANCEL_CAMERA "mob_cancel_camera"
+	/// Sent when a disease is cured from a mob (cured disease master, cured strain)
+	#define COMSIG_MOB_DISEASE_CURED "mob_disease_cured"
 
 	// ---- cloaking device signal ----
 
 	/// Make cloaking devices turn off - sent to the mob
 	#define COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
-
-	// ---- typing indicator signals ----
-
-	/// Create typing indicator
-	#define COMSIG_CREATE_TYPING "create_typing"
-	/// Remove typing indicator
-	#define COMSIG_REMOVE_TYPING "remove_typing"
-	/// Speech bubble
-	#define COMSIG_SPEECH_BUBBLE "speech_bubble"
 
 	// ---- disguiser device signal ----
 
@@ -254,8 +336,12 @@
 	#define COMSIG_MOB_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
 // ---- living signals ----
-		// When Life() ticks (mult)
+		/// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
+
+// ---- aquatic signals ----
+		/// If the mob has an aquatic breathing component, returns the water need.
+		#define COMSIG_AQUATIC_GET_WATER_NEED "aquatic_get_water_need"
 
 // ---- human signals ----
 

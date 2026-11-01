@@ -7,7 +7,8 @@ if(istype(M, /mob/living/carbon/human)){\
 	else{\
 		HumToDeanchor.anchored = UNANCHORED}}\
 else{\
-	M.anchored = UNANCHORED;}}\
+	M.anchored = UNANCHORED;}\
+M.update_traction(M.loc)}\
 while(FALSE)
 
 /// Moves `mover` from inside thing `loc` to `loc`'s turf, iff `mover` is inside `loc`

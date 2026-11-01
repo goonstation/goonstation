@@ -25,6 +25,11 @@ if grep -P 'step_[xy]' assets/maps/**/*.dmm maps/**/*.dmm;	then
     st=1
 fi;
 
+if grep -R --exclude-dir=probstation -P '^\/area(?!\/dmm_suite\/clear_area)' assets/maps/random_rooms/; then
+    echo "ERROR: random room uses non '/area/dmm_suite/clear' area"
+    st=1
+fi;
+
 # We check for this as well to ensure people aren't actually using this mapping effect in their maps.
 if grep -P '/obj/merge_conflict_marker' assets/maps/**/*.dmm maps/**/*.dmm; then
     echo "ERROR: Merge conflict markers detected in map, please resolve all merge failures!"
@@ -40,6 +45,11 @@ fi;
 
 if grep -P 'plane\s*=\s*[0-9]+|plane\s*=\s*[A-Z_]+\s*[+\-*]\s*' */**/*.dm;	then
     echo "ERROR: don't directly set plane to a number, please use a define."
+    st=1
+fi;
+
+if grep -P '^(?!.*UNLINT).*\.opacity\s*=(?!=)' code/**/*.dm _std/**/*.dm;	then
+    echo "ERROR: don't assign .opacity directly, call set_opacity(), or set_opacity_no_lighting() when rewriting a region."
     st=1
 fi;
 
@@ -66,6 +76,11 @@ fi;
 if grep -P 'as anything in o?(range|hearers)' */**/*.dm;	then
     echo "ERROR: Don't include 'as anything' before o?range|hearers, it disables optimizations."
     st=1
+fi;
+
+if grep -P "(?<!UNLINT\().*name = .*\"\[.*\]'s" */**/*.dm;    then
+	echo "ERROR: Using an apostrophe in a name like [mob]'s brain may cause Byond to get confused between the two objects in click verbs etc. Please use ’ (U+2019) instead."
+	st=1
 fi;
 
 exit $st

@@ -143,11 +143,14 @@ var/maniac_previous_victim = "Unknown"
 	icon_state = "body"
 	anchored = ANCHORED
 	density = 1
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/alert = 0
 	var/id = "evilreaverbridge"
 
-	HasProximity(atom/movable/AM as mob|obj)
+	New()
+		..()
+		src.AddComponent(/datum/component/proximity)
+
+	EnteredProximity(atom/movable/AM)
 		if(!alert)
 			if(iscarbon(AM))
 				alert = 1
@@ -182,10 +185,12 @@ var/maniac_previous_victim = "Unknown"
 /area/evilreaver
 	name = "Forgotten Station"
 	icon_state = "derelict"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
 	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
+#elif defined(MAP_OVERRIDE_NEON)
 	requires_power = FALSE
 #endif
 

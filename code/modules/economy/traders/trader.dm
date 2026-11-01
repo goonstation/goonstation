@@ -8,15 +8,27 @@
 	var/hidden = 0              // Makes the trader not show up on the QM console
 	var/chance_leave = 35       // Chance for a trader to go hidden during a market shift
 	var/chance_arrive = 45      // Chance for a trader to stop hiding during a market shift
+	var/chance_restock = 35		// Chance for a trader to restock goods (per good) during a market shift
 	var/asshole = 0 // will accept wrong-direction haggles
+
+	///A business card or other item type to occasionally include with orders
+	var/business_card = null
+	var/business_card_chance = 20
 
 	// lists of commodity datums that the trader will buy or sell, and the cart
 	// these are the base lists of commodities this trader will have
 	var/list/base_goods_buy = list()
 	var/list/base_goods_sell = list()
-	// these are the max amount of entries the trader will have on each list
-	var/max_goods_buy = 1
-	var/max_goods_sell = 1
+
+	// The rarities used to iterate over
+	var/rarities = list(TRADER_RARITY_COMMON, TRADER_RARITY_UNCOMMON, TRADER_RARITY_RARE)
+	// list to determine how many items per rarity we have
+	// it's cumulative, meaning we will have at least X common, Y uncommon, etc.
+	var/list/amount_of_items_per_rarity = alist(
+		TRADER_RARITY_COMMON = 3,
+		TRADER_RARITY_UNCOMMON = 2,
+		TRADER_RARITY_RARE = 1,
+	)
 	// and these three are the active ones used for gameplay
 	var/list/goods_buy = list()
 	var/list/goods_sell = list()
@@ -86,40 +98,38 @@
 		..()
 		src.current_message = pick(src.dialogue_greet)
 		src.patience = rand(src.base_patience[1],src.base_patience[2])
-		if (src.max_goods_buy > src.base_goods_buy.len)
-			src.max_goods_buy = length(src.base_goods_buy)
-		if (src.max_goods_sell > src.base_goods_sell.len)
-			src.max_goods_sell = length(src.base_goods_sell)
 		src.set_up_goods()
 
-	proc/set_up_goods()
+	proc/set_up_goods(var/should_reset_buylist = TRUE)
 		// This is called in New and also when the trader comes back from being away for a while
 		// It basically clears out and rejumbles their commodity lists to keep things fresh
-		src.goods_buy = new/list()
+		if (should_reset_buylist) src.goods_buy = new/list()
 		src.goods_sell = new/list()
 		src.wipe_cart()
 
-		var/list/goods_buy_temp = list()
-		goods_buy_temp |= base_goods_buy
-		var/list/goods_sell_temp = list()
-		goods_sell_temp |= base_goods_sell
+		var/list/goods_buy_temp[(length(rarities))]
+		for(var/i in rarities)
+			var/list/L = base_goods_buy[i]
+			goods_buy_temp[i] = L.Copy()
 
-		var/howmanybuy = rand(1,src.max_goods_buy)
-		while(howmanybuy > 0)
-			howmanybuy--
-			var/the_commodity = pick(goods_buy_temp)
-			var/datum/commodity/COM = new the_commodity(src)
-			src.goods_buy += COM
-			goods_buy_temp -= the_commodity
+		var/list/goods_sell_temp[(length(rarities))]
+		for(var/i in rarities)
+			var/list/L = base_goods_sell[i]
+			goods_sell_temp[i] = L.Copy()
 
-		var/howmanysell = rand(1,src.max_goods_sell)
-		while(howmanysell > 0)
-			howmanysell--
-			var/the_commodity = pick(goods_sell_temp)
-			var/datum/commodity/COM = new the_commodity(src)
-			if(COM.type == /datum/commodity) logTheThing(LOG_DEBUG, src, "<B>SpyGuy/Traders:</B> [src] got a /datum/commodity when trying to set up stock with [the_commodity]")
-			src.goods_sell += COM
-			goods_sell_temp -= the_commodity
+		// Iterate over all rarities and pick the corresponding amount of items from the respective lists
+		for (var/rarity in src.rarities)
+			for (var/i in 1 to src.amount_of_items_per_rarity[rarity])
+				if(should_reset_buylist && length(goods_buy_temp[rarity]) >= i)
+					var/buy_com = pick(goods_buy_temp[rarity])
+					var/datum/commodity/new_buy_com = new buy_com(src)
+					src.goods_buy += new_buy_com
+					goods_buy_temp[rarity] -= buy_com
+				if(length(goods_sell_temp[rarity]) >= i)
+					var/sell_com = pick(goods_sell_temp[rarity])
+					var/datum/commodity/new_sell_com = new sell_com(src)
+					src.goods_sell += new_sell_com
+					goods_sell_temp[rarity] -= sell_com
 
 	proc/haggle(var/datum/commodity/goods,var/askingprice,var/buying = 0)
 		// if something's gone wrong and there's no input, reject the haggle
@@ -172,8 +182,11 @@
 		src.current_message = pick(src.dialogue_haggle_accept)
 		src.patience--
 		// warn the player if the trader isn't going to take any more haggling
-		if (src.patience == 0)
+		if (src.patience == 1)
 			src.current_message = src.dialogue_haggle_accept[src.dialogue_haggle_accept.len]
+		// dialogue is still visible, may as well tell the player they fucked up
+		else if (src.patience <= 0)
+			src.current_message = "\[ERROR: Connection lost!\]"
 
 	proc/buy_from()
 		src.currently_selling = 1
@@ -182,6 +195,9 @@
 		var/obj/item/paper/invoice = new /obj/item/paper(S)
 		invoice.name = "Sale Invoice ([src.name])"
 		invoice.info = "Invoice of Sale from [src.name]<br><br>"
+
+		if (src.business_card && prob(src.business_card_chance))
+			new src.business_card(S)
 
 		var/total_price = 0
 		for (var/datum/commodity/trader/C in src.shopping_cart)
@@ -196,14 +212,15 @@
 
 		invoice.info += "<br>Final Cost of Goods: [total_price] credits."
 
-		wagesystem.shipping_budget -= total_price
+		wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] -= total_price
 
 		src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
 		src.currently_selling = 0 //At this point the shopping cart has been processed
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 		shippingmarket.receive_crate(S)
+		global.shippingmarket.update_supply_console_data()
 
 	proc/wipe_cart(var/sold_stuff)
 		for (var/datum/commodity/trader/incart/COM in src.shopping_cart)
@@ -213,6 +230,20 @@
 			COM.amount = 0
 			src.shopping_cart -= COM
 		src.shopping_cart.Cut()
+
+/datum/trader/proc/fetch_commodities_data(var/list/commodities)
+	. = list()
+	for (var/datum/commodity/trader/commodity in commodities)
+		.+= list(src.fetch_commodity_data(commodity))
+
+/datum/trader/proc/fetch_commodity_data(var/datum/commodity/trader/commodity)
+	return list(
+		"name" = commodity.comname,
+		"description" = commodity.listed_name,
+		"price" = commodity.price,
+		"amount_left" = commodity.amount,
+		"ref" = ref(commodity),
+	)
 
 /datum/commodity/trader
 	var/listed_name = "a thing!!!"   // What it shows up as outside the shopping cart

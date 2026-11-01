@@ -49,7 +49,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 */
 
 TYPEINFO(/obj/machinery/communications_dish/transception)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
@@ -166,7 +166,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 		src.is_transceiving = TRUE
 		use_power(ARRAY_TELECOST)
 		playsound(src.loc, 'sound/effects/mag_forcewall.ogg', 50, 0)
-		flick("beam",src.telebeam)
+		FLICK("beam",src.telebeam)
 		SPAWN(TRANSCEPTION_COOLDOWN)
 			src.is_transceiving = FALSE
 		return TRUE
@@ -517,9 +517,10 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 	desc = "Endpoint for status reporting and configuration for a nearby transception array."
 
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "alert:0"
+	icon_state = "atmos"
 	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/transception_control
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -582,7 +583,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 			"failsafeStat" = transception_array.primed ? "OPERATIONAL" : "FAILSAFE HALT",
 			"drawRateTarget" = transception_array.intcap_draw_rate,
 			"surplusThreshold" = transception_array.grid_surplus_threshold,
-			"arrayImage" = icon2base64(icon(initial(transception_array.icon), initial(transception_array.icon_state))),
+			"arrayImage" = icon2base64(icon(get_initial_icon(transception_array), initial(transception_array.icon_state))),
 			"arrayHealth" = arrayborked
 		)
 
@@ -689,8 +690,8 @@ TYPEINFO(/obj/machinery/transception_pad)
 					if("send")
 						src.attempt_transceive()
 					if("receive")
-						var/sigindex = signal.data["data"]
-						if(isnum_safe(sigindex))
+						var/sigindex = text2num_safe(signal.data["data"])
+						if (isnum_safe(sigindex))
 							src.attempt_transceive(sigindex)
 
 
@@ -760,7 +761,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 		src.is_transceiving = TRUE
 		playsound(src.loc, 'sound/effects/ship_alert_minor.ogg', 50, 0) //outgoing cargo warning (stand clear)
 		SPAWN(2 SECONDS)
-			flick("neopad_activate",src)
+			FLICK("neopad_activate",src)
 			SPAWN(0.3 SECONDS)
 				var/obj/thing2send
 				var/list/oofed_nerds = list()
@@ -809,7 +810,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 			shippingmarket.pending_crates.Remove(thing2get) //avoid received thing being queued into multiple pads at once
 		playsound(src.loc, 'sound/effects/ship_alert_minor.ogg', 50, 0) //incoming cargo warning (stand clear)
 		SPAWN(2 SECONDS)
-			flick("neopad_activate",src)
+			FLICK("neopad_activate",src)
 			SPAWN(0.4 SECONDS)
 				var/tele_obstructed = FALSE
 				var/turf/receive_turf = get_turf(src)
@@ -879,7 +880,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 			src.is_transceiving = TRUE
 			src.visible_message(SPAN_ALERT("<B>[src]</B> emits a buffer error alert!"))
 			playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
-			flick("neopad_activate",src)
+			FLICK("neopad_activate",src)
 			SPAWN(0.4 SECONDS)
 				M.set_loc(src.loc)
 				showswirl(src.loc)

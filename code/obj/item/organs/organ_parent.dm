@@ -12,7 +12,6 @@
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
-	flags = TABLEPASS | FPRINT
 	force = 1
 	health = 4
 	w_class = W_CLASS_TINY
@@ -22,7 +21,7 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
-	material_amt = 0.3
+	material_amt = MATERIAL::AMOUNT::SHEET * 3
 	uses_default_material_appearance = FALSE
 	uses_default_material_name = FALSE
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
@@ -114,7 +113,7 @@
 				return
 
 		else
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			hit_twitch(src)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, TRUE)
@@ -125,9 +124,6 @@
 				src.take_damage(W.force, 0, 0, W.hit_type)
 
 		..()
-
-	add_fingerprint(mob/living/M as mob, hidden_only = TRUE)
-		. = ..()
 
 	New(loc, datum/organHolder/nholder)
 		..()
@@ -141,10 +137,8 @@
 				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
 				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
 			else if (src.donor.name)
 				src.donor_name = src.donor.name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 			src.blood_DNA = src.donor_DNA
 			src.blood_type = src.donor.bioHolder?.bloodType
@@ -158,6 +152,7 @@
 
 	disposing()
 		if (src.holder)
+			src.remove_organ_abilities()
 			for(var/thing in holder.organ_list)
 				if(thing == "all")
 					continue
@@ -234,10 +229,10 @@
 			var/image/I = H.prodoc_icons["robotic_organs"]
 			I.icon_state = "organs-cyber"
 
-		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP
+		// Cure the organ failure disease if this organ is healthy enough not to cause it
 		if (src.donor)
-			if (!src.broken  && failure_disease)
-				src.donor.cure_disease(failure_disease)
+			if (!src.broken && failure_disease && src.get_damage() < src.fail_damage)
+				src.donor.cure_disease_by_path(failure_disease)
 
 		if (!broken && islist(src.organ_abilities) && length(src.organ_abilities))
 			var/datum/abilityHolder/organ/A = M.get_ability_holder(/datum/abilityHolder/organ)
@@ -256,7 +251,7 @@
 		//all robotic organs have a stamina buff we must remove
 		if (src.donor)
 			if (failure_disease)
-				src.donor.cure_disease(failure_disease)
+				src.donor.cure_disease_by_path(failure_disease)
 
 			if (src.robotic)
 				src.donor.robotic_organs--
@@ -270,21 +265,24 @@
 			src.blood_type = src.donor.bioHolder?.bloodType
 		src.blood_color = src.donor?.bioHolder?.bloodColor
 		src.blood_reagent = src.donor?.blood_id
-		if (islist(src.organ_abilities) && length(src.organ_abilities))// && src.donor.abilityHolder)
-			var/datum/abilityHolder/aholder
-			if (src.donor && src.donor.abilityHolder)
-				aholder = src.donor.abilityHolder
-			else if (src.holder && src.holder.donor && src.holder.donor.abilityHolder)
-				aholder = src.holder.donor.abilityHolder
-			if (istype(aholder))
-				for (var/abil in src.organ_abilities)
-					src.remove_ability(aholder, abil)
+		src.remove_organ_abilities()
+
 		src.donor = null
 		src.in_body = FALSE
 		if (src.surgery_contexts)
 			src.surgery_contexts = null
-
 		return
+
+	proc/remove_organ_abilities()
+		if (islist(src.organ_abilities) && length(src.organ_abilities))
+			var/datum/abilityHolder/aholder
+			if (src.donor?.abilityHolder)
+				aholder = src.donor.abilityHolder
+			else if (src.holder?.donor?.abilityHolder)
+				aholder = src.holder.donor.abilityHolder
+			if (istype(aholder))
+				for (var/abil in src.organ_abilities)
+					src.remove_ability(aholder, abil)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.robotic)
@@ -309,6 +307,11 @@
 	emp_act()
 		if (robotic)
 			src.take_damage(20, 20, 20)
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.donor_DNA)
+			scan.add_text("[src.organ_name]'s DNA: [src.donor_DNA]")
 
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		if (!aholder || !abil)
@@ -485,3 +488,17 @@
 
 			.+= length(surgery_contexts)
 
+	/// Get TGUI ui_data list for this organ's health
+	proc/ui_organ_data()
+		var/special = ""
+		if (src.robotic)
+			special = "Cybernetic"
+		if (src.synthetic)
+			special = "Synthetic"
+		if (src.unusual)
+			special = "Unusual"
+		return list(
+			"health" = src.get_damage(),
+			"max_health" = src.max_damage,
+			"special" = special
+		)

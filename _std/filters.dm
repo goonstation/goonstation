@@ -76,6 +76,14 @@
 	for(var/filter in filter_data)
 		other.add_filter(filter, filter_data[filter]["priority"], filter_data[filter])
 
+/// Copy appearance modifiers from an atom and apply them to an image. Useful if the image is supposed to visually represent the atom
+/atom/proc/copy_appearance_to_image(image/other_img)
+	other_img.color = src.color
+	other_img.alpha = src.alpha
+	if(!filter_data)
+		return
+	other_img.filters = src.filters.Copy()
+
 
 //Helpers to generate lists for filter helpers
 //This is the only practical way of writing these that actually produces sane lists

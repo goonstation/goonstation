@@ -42,7 +42,7 @@ change the direction of created objects.<br>
 			AM.gift_wrap(FALSE, FALSE)
 		else
 			AM.gift_wrap(FALSE, TRUE)
-		if (isobj(AM) || ismob(AM))
+		if ((isobj(AM) || ismob(AM)) && src.holder.dir)
 			AM.set_dir(holder.dir)
 			AM.onVarChanged("dir", SOUTH, AM.dir)
 
@@ -66,7 +66,7 @@ change the direction of created objects.<br>
 					animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
 					SPAWN(0.7 SECONDS)
 						swirl.loc = T
-						flick("portswirl", swirl)
+						FLICK("portswirl", swirl)
 
 						spawn_gift(T)
 
@@ -122,7 +122,7 @@ change the direction of created objects.<br>
 						animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
 						SPAWN(0.7 SECONDS)
 							swirl.loc = Q
-							flick("portswirl", swirl)
+							FLICK("portswirl", swirl)
 
 							spawn_gift(Q)
 

@@ -116,8 +116,8 @@
 
 	initializeBioholder()
 		bioHolder.age = 400
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/pomp
-		bioHolder.mobAppearance.customization_first_color = "#000000"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/short/pomp
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#000000"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"
 		. = ..()
@@ -413,10 +413,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	initializeBioholder()
 		. = ..()
-		bioHolder.mobAppearance.customization_first_color = "#292929"
-		bioHolder.mobAppearance.customization_second_color = "#292929"
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/gimmick/shitty_hair
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/gimmick/shitty_beard
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#292929"
+		bioHolder.mobAppearance.customizations["hair_middle"].color = "#292929"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/gimmick/shitty_hair
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/gimmick/shitty_beard
 		bioHolder.age = 62
 		bioHolder.bloodType = "A-"
 		bioHolder.mobAppearance.gender = "male"
@@ -439,13 +439,12 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/turf/target_turf = pick(afterlife_bar_turfs)
 			var/mob/living/carbon/human/biker/newbody = new()
 			newbody.set_loc(target_turf)
-			newbody.overlays += image('icons/misc/32x64.dmi',"halo")
+			newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 			if(inafterlifebar(src))
 				qdel(src)
 			return
 		else
 			boutput(src, "<span class='bold notice'>Shitty Bill will try to respawn in roughly 3 minutes.</span>")
-			src.become_ghost()
 #ifdef TWITCH_BOT_ALLOWED
 			src = null
 
@@ -567,7 +566,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
 					SPAWN(rand(20,40))
 						if (murray?.on && !murray.idle)
-							murray.speak("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
+							murray.say("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
 
 				else
 					var/mob/M = pick(alive_mobs)
@@ -841,8 +840,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		bioHolder.age = 44
 		bioHolder.bloodType = "Worchestershire"
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/pomp
-		bioHolder.mobAppearance.customization_first_color = "#F6D646"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/short/pomp
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#F6D646"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"
 
@@ -895,7 +894,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.real_name = Create_Tommyname()
 
 		src.gender = "male"
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
+		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/long/dreads
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.s_tone = "#FAD7D0"
 		bioHolder.mobAppearance.s_tone_original = "#FAD7D0"
@@ -1008,8 +1007,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	initializeBioholder()
 		. = ..()
 		bioHolder.age = 49
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/beard/fullbeard
-		bioHolder.mobAppearance.customization_first_color = "#555555"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#555555"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"
 		real_name = "[pick("Chut","Brendt","Franko","Steephe","Geames","Whitney","Thom","Cheddar")] \"Big Yank\" Whitney"
@@ -1044,5 +1043,44 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai.target = M
 		src.ai.enable()
 
+// Basketball whitehole NPC
+/mob/living/carbon/human/referee
+	is_npc = TRUE
+	gender = MALE
+
+	New()
+		..()
+		src.say("LET'S PLAY BALL") // balling as soon as he exits the white hole
+		src.equip_new_if_possible(/obj/item/clothing/shoes/white, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/referee, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/instrument/whistle, SLOT_L_HAND)
+
+	initializeBioholder()
+		. = ..()
+		bioHolder.age = 52
+		bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/hair/short/balding
+		bioHolder.mobAppearance.customizations["hair_top"].color = "#555555"
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.underwear = "boxers"
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+		if(prob(10))
+			SPAWN(0) src.say(pick("PLAY BALL","GET THE HELL UP","CALL THIS BASKETBALL?","PLAY ON","I'VE SEEN CLOWNS BALL BETTER THAN THAT","CALL YOURSELF A BALLER?"))
+
+	attack_hand(mob/M)
+		..()
+		if(isdead(src))
+			return
+		if (prob(30))
+			say(pick("DON'T TRY ME","STEP THE HELL BACK BACK OR IT'S A FOUL","I'M IN CHARGE HERE","VIOLATION!"))
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
+		if(isdead(src))
+			return
+		if(prob(50))
+			say(pick("ASSAULT! ASSAULT ON AN OFFICIAL!","FOUL! FOUL! FOUL!","FLAGRANT FOUL!","GET THE HELL OFF MY COURT"))
 
 #undef BILL_PICK

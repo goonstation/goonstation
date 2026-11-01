@@ -13,7 +13,7 @@
 	var/style = "patch"
 	initial_volume = 30
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | EXTRADELAY
+	flags = TABLEPASS | SUPPRESSATTACK | EXTRADELAY
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
 	var/in_use = 0
 	var/good_throw = 0
@@ -342,14 +342,14 @@
 /* =================================================== */
 
 /obj/item/reagent_containers/patch/mini/bruise
-	name = "healing mini-patch"
-	desc = "Heals brute damage wounding."
+	name = "brute mini-patch"
+	desc = "Heals small brute wounds."
 	medical = 1
 	initial_reagents = "styptic_powder"
 
 /obj/item/reagent_containers/patch/mini/burn
 	name = "burn mini-patch"
-	desc = "Heals burn damage wounding."
+	desc = "Heals small burn wounds."
 	medical = 1
 	initial_reagents = "silver_sulfadiazine"
 
@@ -359,12 +359,21 @@
 	medical = 1
 	initial_reagents = "synthflesh"
 
+/obj/item/reagent_containers/patch/synthetic
+	name = "synthetic anticyst"
+	desc = "It reeks like an abandoned TV dinner. Hopefully it's healthier than one."
+	icon_state = "synthpatch"
+	style = "synthpatch"
+	sticker_icon_state = "synthpatch"
+	initial_volume = 10
+	initial_reagents = "synthflesh"
+
 /obj/item/patch_stack
 	name = "Patch Stack"
 	desc = "A stack, holding patches. The top patch can be used."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "patch_stack"
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	var/list/patches = list()
 
 	proc/update_overlay()
@@ -432,6 +441,7 @@
 
 //mender
 TYPEINFO(/obj/item/reagent_containers/mender)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 5,
 				"crystal" = 4,
 				"gold" = 5)
@@ -444,7 +454,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
@@ -460,17 +470,17 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		if (!tampered && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		if (src.reagents)
-			src.reagents.temperature_cap = 330
-			src.reagents.temperature_min = 270
+			src.reagents.temperature_cap = T20C
+			src.reagents.temperature_min = T0C
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 		if(borg)
 			src.flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
 
 	on_reagent_change(add)
 		..()
-		if (src.reagents)
-			src.reagents.temperature_cap = 330
-			src.reagents.temperature_min = 270
+		if (src.reagents && (src.reagents.total_temperature > T20C || src.reagents.total_temperature < T0C))
+			src.reagents.temperature_cap = T20C
+			src.reagents.temperature_min = T0C
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 		if (!tampered && add)
 			check_whitelist(src, src.whitelist)
@@ -600,9 +610,12 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 /obj/item/reagent_containers/mender/both
 	initial_reagents = "synthflesh"
 
-/obj/item/reagent_containers/mender/both/mini
-	initial_volume = 50
-	initial_reagents = "synthflesh"
+	mini
+		initial_volume = 50
+		initial_reagents = "synthflesh"
+
+	high_capacity
+		initial_volume = 500
 
 /datum/action/bar/icon/automender_apply
 	duration = 10
@@ -682,30 +695,33 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 	desc = "A container designed to be able to quickly refill medical auto-menders."
 	icon = 'icons/obj/chemical.dmi'
 	initial_volume = 200
-	initial_reagents = "nicotine"
 	// item_state = "ecigrefill"
 	icon_state = "mender-refill"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS | OPENCONTAINER
 	var/image/fluid_image
+	var/list/whitelist = list()
 
 	New()
+		. = ..()
+		src.whitelist = chem_whitelist
+
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = 'icons/obj/chemical.dmi', \
+			reagent_overlay_icon_state = "mender-refill", \
+			reagent_overlay_states = 4, \
+			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+		)
+
+	on_reagent_change(add)
 		..()
-		UpdateIcon()
-
-	update_icon()
-		if (reagents.total_volume)
-			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 4), 1, 4))
-			if (!src.fluid_image)
-				src.fluid_image = image('icons/obj/chemical.dmi', "mender-refill-fluid-4", -1)
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.fluid_image.icon_state = "mender-refill-fluid-[fluid_state]"
-			src.UpdateOverlays(src.fluid_image, "fluid")
-
-		else
-			src.ClearSpecificOverlays("fluid")
-
-		signal_event("icon_updated")
+		if (src.reagents && (src.reagents.total_temperature > T20C || src.reagents.total_temperature < T0C))
+			src.reagents.temperature_cap = T20C
+			src.reagents.temperature_min = T0C
+			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
+		if (add)
+			check_whitelist(src, src.whitelist)
+		src.UpdateIcon()
 
 	proc/do_refill(var/obj/item/reagent_containers/mender, var/mob/user)
 		if (src?.reagents.total_volume > 0)
@@ -735,4 +751,5 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 	name = "synthflesh auto-mender refill cartridge"
 	initial_reagents = "synthflesh"
 	high_capacity
+		name = "large synthflesh auto-mender refill cartridge"
 		initial_volume = 500

@@ -35,22 +35,22 @@
 	proc/rcd_icon_state_from_mode(mode)
 		PRIVATE_PROC(TRUE)
 		switch (mode)
-			if (RCD_MODE_DECONSTRUCT)
+			if (RCD_MODE::DECONSTRUCT)
 				return "close"
 
-			if (RCD_MODE_AIRLOCK)
+			if (RCD_MODE::AIRLOCK)
 				return "door"
 
-			if (RCD_MODE_FLOORSWALLS)
+			if (RCD_MODE::FLOORSWALLS)
 				return "wall"
 
-			if (RCD_MODE_LIGHTTUBES)
+			if (RCD_MODE::LIGHTTUBES)
 				return "tube"
 
-			if (RCD_MODE_LIGHTBULBS)
+			if (RCD_MODE::LIGHTBULBS)
 				return "bulb"
 
-			if (RCD_MODE_WINDOWS)
+			if (RCD_MODE::WINDOWS)
 				return "window"
 
 	onInterrupt(flag)
@@ -76,6 +76,11 @@
 
 	onEnd()
 		..()
+
+		if(!src.rcd.ammo_check(src.user, src.ammo_cost))
+			boutput(src.user, "Insufficient ammo to complete operation!")
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		src.rcd.ammo_consume(src.owner, src.ammo_cost)
 		var/datum/callback/cb = CALLBACK(src.callback_owner, src.callback_path)

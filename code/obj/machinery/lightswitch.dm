@@ -14,11 +14,12 @@ TYPEINFO(/obj/machinery/light_switch)
 				"conductive" = 15)
 ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch
+	name = "light switch"
 	desc = "A light switch"
-	name = null
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = ANCHORED
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_MULTITOOL | DECON_WIRECUTTERS
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	var/on = 1
@@ -42,9 +43,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 
 		src.id = src.area.name
 		ADD_SWITCHED_OBJ(SWOB_LIGHTS)
-
-		if(!name || name == "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
-			name = "light switch"
 
 		src.on = src.area.lightswitch
 		UpdateIcon()
@@ -97,7 +95,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 
 /obj/machinery/light_switch/was_deconstructed_to_frame(mob/user)
 	. = ..()
-	area.machines -= src
+	// Might be the last light switch in the area, ensure lights stay on
+	if (!src.on)
+		src.on = TRUE
+		src.area.lightswitch = TRUE
+		src.area.power_change()
+	src.area.machines -= src
 	REMOVE_SWITCHED_OBJ(SWOB_LIGHTS)
 
 /obj/machinery/light_switch/update_icon()
@@ -159,7 +162,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	switched_obj_toggle(SWOB_LIGHTS,src.id,src.on) //the bit that handles visual and switch state updates for the group, via the toggle proc below
 
 	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
-		for_by_tcl(S, /obj/critter/turtle)
+		for_by_tcl(S, /mob/living/critter/small_animal/turtle)
 			if(get_area(S) == src.area && S.rigged)
 				S.explode()
 
@@ -186,29 +189,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 
 		UpdateIcon()
 
-/obj/machinery/light_switch/north
-	name = "N light switch"
-	pixel_y = 24
-
-/obj/machinery/light_switch/east
-	name = "E light switch"
-	pixel_x = 24
-
-/obj/machinery/light_switch/south
-	name = "S light switch"
-	pixel_y = -24
-
-/obj/machinery/light_switch/west
-	name = "W light switch"
-	pixel_x = -24
-
-/obj/machinery/light_switch/auto
-	name = "light switch"
-
-	New()
-		SPAWN(1 DECI SECOND)
-			src.autoposition()
-		..()
+SET_UP_DIRECTIONALS(/obj/machinery/light_switch, OFFSETS_LIGHTSWITCH)
 
 #undef SWITCH_SPAM_TIMEOUT
 #undef SWITCH_SPAM_START_THRESHOLD

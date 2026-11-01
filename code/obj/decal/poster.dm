@@ -1,4 +1,4 @@
-
+#define IMG_OFFSET 20
 /obj/decal/poster
 	desc = "A piece of paper with an image on it. Clearly dealing with incredible technology here."
 	name = "poster"
@@ -25,7 +25,7 @@
 		if (!C || !src.popup_win)
 			return
 		// wtf why is this using wizardtips... with a custom size... fuck it im leaving this one out of the centralization -singh
-		C.Browse(grabResource("html/traitorTips/wizardTips.html"),"window=antagTips;size=[imgw]x[imgh];title=Antagonist Tips")
+		C.Browse(grabResource("html/traitorTips/wizardTips.html"),"window=antagTips;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Antagonist Tips")
 
 	wallsign
 		desc = "A sign, on a wall. Wow!"
@@ -670,20 +670,39 @@
 				var/which = pick(
 					// the fuck II poster
 					30;"fuckII",
-					// new contest winners
+					// contest winners from January 2021 and June 2024
 					50;"contest1",
 					50;"contest2",
 					50;"contest3",
 					50;"contest4",
 					50;"contest5",
-					// new contest not-winners but cool nonetheless
+					50;"contest6",
+					50;"contest7",
+					50;"contest8",
+					50;"contest9",
+					50;"contest10",
+					50;"contest11",
+					50;"contest12",
+					50;"contest13",
+					50;"contest14",
+					50;"contest15",
+					50;"contest16",
+					// poster contest not-winners but cool nonetheless
 					5 ;"contest-other1",
 					5 ;"contest-other2",
 					5 ;"contest-other3",
 					5 ;"contest-other4",
 					5 ;"contest-other5",
 					5 ;"contest-other6",
-					5 ;"contest-other7"
+					5 ;"contest-other7",
+					5 ;"contest-other8",
+					5 ;"contest-other9",
+					5 ;"contest-other10",
+					5 ;"contest-other11",
+					5 ;"contest-other12",
+					5 ;"contest-other13",
+					// I have been radicalized - TekoTheTeapot
+					1 ;"mandarin_belief"
 					)
 				switch(which)
 					if("fuckII")
@@ -705,6 +724,48 @@
 					if("contest5")
 						src.name = "Work! Ranch"
 						src.icon_state = "work_ranch"
+					if("contest6")
+						src.name = "Red Saw"
+						src.icon_state = "red_saw"
+					if("contest7")
+						src.name = "Men in Red"
+						src.icon_state = "men_in_red"
+						src.desc = "The classic 50's movie with the highest amount of explosives used on set ever."
+					if("contest8")
+						src.name = "Capy King"
+						src.icon_state = "capy_king"
+						src.desc = "Who thought it was a good idea to bring the capybaby this close to the sun?"
+					if("contest9")
+						src.name = "Pie Hard"
+						src.icon_state = "pie_hard"
+						src.desc = "\"Something smells funny. The HoS is against Don McClown...and that's just the way he honks it.\""
+					if("contest10")
+						src.name = "Parting Red"
+						src.icon_state = "parting_red"
+					if("contest11")
+						src.name = "Mentors"
+						src.icon_state = "mentors"
+					if("contest12")
+						src.name = "Changer III"
+						src.icon_state = "changeriii"
+						src.desc = "Coming this summer...a totally fictional horror story. NOT based on a true story."
+					if("contest13")
+						src.name = "Clown"
+						src.icon_state = "clown"
+					if("contest14")
+						src.name = "Planet Abzu"
+						src.icon_state = "planet_abzu"
+						src.desc = {"\"This summer, take a journey to a cambrian world untouched by time and discover the mysteries
+								lying beneath the waves of this distant ocean planet.
+								A nature documentary presented by David Spacenborough.\""}
+					if("contest15")
+						src.name = "Fuckin Monky"
+						src.icon_state = "fuckin_monky"
+						src.desc = "This summer...based on real events (maybe)...the damn monkeys!"
+					if("contest16")
+						src.name = "Wraithbusters"
+						src.icon_state = "wraithbusters"
+						src.desc = "\"If there's something strange / In your stationhood. / Who you gonna call? / (Wraithbusters!)\""
 					if("contest-other1")
 						src.name = "Pack Smart"
 						src.icon_state = "pack_smart"
@@ -726,6 +787,30 @@
 					if("contest-other7")
 						src.name = "Code"
 						src.icon_state = "code"
+					if("contest-other8")
+						src.name = "Click 2"
+						src.icon_state = "click2"
+						src.desc = "\"What if the greatest movie of all time had a sequel?\""
+					if("contest-other9")
+						src.name = "Biodome"
+						src.icon_state = "biodome"
+					if("contest-other10")
+						src.name = "Rat"
+						src.icon_state = "rat"
+					if("contest-other11")
+						src.name = "The Honkinator"
+						src.icon_state = "the_honkinator"
+					if("contest-other12")
+						src.name = "The Cluwne"
+						src.icon_state = "the_cluwne"
+						src.desc = "\"This summer...things are getting...honked.\""
+					if("contest-other13")
+						src.name = "Cluwne XVII"
+						src.icon_state = "cluwnexvii"
+					if("mandarin_belief")
+						src.name = "I Want to Believe"
+						src.icon_state = "mandarin_belief"
+						src.desc = "\"An odd poster that seems to support some inane conspiracy involving citrus fruits.\""
 
 			attack_hand(mob/user)
 				. = ..()
@@ -859,193 +944,197 @@
 			icon = 'icons/misc/janstuff.dmi'
 			icon_state = "poster_eiffel"
 
-///////////////////////////////////////
-// AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
-///////////////////////////////////////
 
-		framed_award
-			name = "A framed award"
-			desc = "Just some generic award"
-			var/award_text = null
-			var/obj/item/award_type = /obj/item/rddiploma
-			var/award_name ="diploma"
-			var/usage_state = 0		// 0 = GLASS, AWARD 1 = GLASS OFF, AWARD IN CASE, 2 = GLASS OFF, AWARD GONE,
-			var/owner_job = "Research Director"
-			var/icon_glass = "rddiploma1"
-			var/icon_award = "rddiploma"
-			var/icon_empty = "frame"
-			var/glass_type = /obj/item/sheet/glass
-			icon_state = "rddiploma"
-			pixel_y = -6
+		iso
+			name = "\improper ISO 7010 sign"
+			desc = "An informative wall sign conforming to the Interstellar Standards Organisation's technical specifications. If only people listened to them."
+			icon = 'icons/obj/decals/ISO_signs.dmi'
+			icon_state = "warning_action"
+			pixel_y = 32
 
-			New()
-				..()
-				var/obj/item/M = new award_type(src.loc)
-				M.desc = src.desc
-				src.contents.Add(M)
+			prohibited
+				name = "prohibited action sign"
+				icon_state = "prohibited_general"
 
-			get_desc()
-				if(award_text)
-					return award_text
-				else
-					// Do we have a player of the right job?
-					for(var/mob/living/carbon/human/player in mobs)
-						if(!player.mind)
-							continue
-						if(player.mind.assigned_role == owner_job)
-							award_text = src.get_award_text(player.mind)
-							return award_text
+				generic // P001
 
+				smoking // P002
+					name = "smoking prohibited sign"
+					icon_state = "prohibited_smoking"
 
-			attack_hand(mob/user)
-				if (user.stat || isghostdrone(user) || !isliving(user))
-					return
+				touch // P010
+					name = "touching prohibited sign"
+					icon_state = "prohibited_touch"
 
-				switch (usage_state)
-					if (0)
-						if (issilicon(user)) return
-						src.usage_state = 1
-						src.icon_state = icon_glass
-						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new glass_type()
-						G.amount = 1
-						src.add_fingerprint(user)
-						user.put_in_hand_or_drop(G)
+				food // P022
+					name = "food prohibited sign"
+					icon_state = "prohibited_food"
 
-					if (1)
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-						var/obj/item/award_item = locate(award_type) in src
-						if(award_item)
-							award_item.desc = src.desc
-							user.put_in_hand_or_drop(award_item)
-							user.visible_message("[user] takes the [award_name] from the frame.", "You take the [award_name] out of the frame.")
-							src.icon_state = icon_empty
-							src.add_fingerprint(user)
-							src.usage_state = 2
+				fire // P003
+					name = "naked flame prohibited sign"
+					icon_state = "prohibited_fire"
 
-			attackby(obj/item/W, mob/user)
-				if (user.stat)
-					return
+				shoes // P060
+					name = "outdoor footwear prohibited sign"
+					icon_state = "prohibited_shoes"
 
-				if (src.usage_state == 2)
-					if (istype(W, award_type))
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-						user.u_equip(W)
-						W.set_loc(src)
-						user.visible_message("[user] places the [award_name] back in the frame.", "You place the [award_name] back in the frame.")
-						src.usage_state = 1
-						src.icon_state = icon_glass
+			mandatory
+				name = "mandatory action sign"
+				icon_state = "mandatory_action"
 
-				if (src.usage_state == 1)
-					if (istype(W, /obj/item/sheet/glass))
-						if (W.amount >= 1)
-							src.glass_type = W.type
-							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-							user.u_equip(W)
-							qdel(W)
-							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-							src.usage_state = 0
-							src.icon_state = icon_award
+				generic // M001
 
+				eyepro // M004 / M007
+					name = "mandatory eye protection sign"
+					icon_state = "mandatory_eyepro"
 
-			proc/get_award_text(var/datum/mind/M)
-				. = "Awarded to some chump for achieving something."
+				earpro // M003
+					name = "mandatory ear protection sign"
+					icon_state = "mandatory_earpro"
 
-		framed_award/hos_medal
-			name = "framed medal"
-			desc = "A dusty old war medal."
-			award_type = /obj/item/clothing/suit/hosmedal
-			award_name = "medal"
-			owner_job = "Head of Security"
-			icon_glass = "medal1"
-			icon_award = "medal"
-			icon_empty = "frame"
-			icon_state = "medal"
+				mask // M016
+					name = "mandatory facemask sign"
+					icon_state = "mandatory_mask"
 
-			attackby(obj/item/W, mob/user)
-				if (user.stat)
-					return
+				welding // M019
+					name = "mandatory welding mask sign"
+					icon_state = "mandatory_welding"
 
-				if (istype(W, /obj/item/diary))
-					var/obj/item/paper/book/from_file/space_law/first/newbook = new /obj/item/paper/book/from_file/space_law/first
-					user.u_equip(W)
-					user.put_in_hand_or_drop(newbook)
-					boutput(user, SPAN_ALERT("Beepsky's private journal transforms into Space Law 1st Print."))
-					qdel(W)
+				ppe // M010
+					name = "mandatory protective equipment sign"
+					icon_state = "mandatory_ppe"
 
-				..()
+				catears //M30W
+					name = "mandatory cat ears sign"
+					icon_state = "mandatory_catears"
 
-			get_award_text(var/datum/mind/M)
-				var/hosname = "Anonymous"
-				if(M?.current?.client?.preferences?.name_last)
-					hosname = M.current.client.preferences.name_last
-				var/hosage = 50
-				if(M?.current?.bioHolder?.age)
-					hosage = M.current.bioHolder.age
-				. = "Awarded to [pick("Pvt.","Sgt","Cpl.","Maj.","Cpt.","Col.","Gen.")] "
-				. += "[hosname] for [pick("Outstanding","Astounding","Incredible")] "
-				. += "[pick("Bravery","Courage","Sneakiness","Competence","Participation","Robustness")] in the "
-				. += "[pick("Great","Scary","Bloody","")] [pick("War","Battle","Massacre","Riot","Kerfuffle","Undeclared Conflict")] of "
-				. += "'[(CURRENT_SPACE_YEAR - rand((hosage - 18),hosage)) % 100]."
+				ground // M005
+					name = "mandatory ground terminal sign"
+					icon_state = "mandatory_ground"
 
-		framed_award/firstbill
-			name = "framed space currency"
-			desc = "A single bill of space currency."
-			award_type = /obj/item/firstbill
-			award_name = "first bill"
-			owner_job = "Head of Personnel"
-			icon_glass = "hopcredit1"
-			icon_award = "hopcredit"
-			icon_empty = "frame"
-			icon_state = "hopcredit"
+				magnet // M4GN3T
+					name = "mandatory magnetic equipment sign"
+					icon_state = "mandatory_mag"
 
-			get_award_text(var/datum/mind/M)
-				var/hopname = "Anonymous"
-				if(M?.current?.client?.preferences?.name_last)
-					hopname = M.current.client.preferences.name_last
-				. = "The first [pick("Space","NT", "Golden","Silver")] "
-				. += "[pick("Dollar","Doubloon","Buck","Peso","Credit")] earned by [hopname] "
-				. += "for selling a [pick("Amazing","Mediocre","Suspicious","Quality","Decent","Odd")] "
-				. += "[pick("Time share","Hamburger", "Clown shoe","Corporate secrets")]"
+				horn // M029
+					name = "mandatory sound horn sign"
+					icon_state = "mandatory_horn"
 
-		framed_award/rddiploma
-			name = "research directors diploma"
-			desc = "A fancy space diploma."
-			award_type = /obj/item/rddiploma
+				buckle // M020
+					name = "mandatory safety belt sign"
+					icon_state = "mandatory_belt"
 
-			get_desc(dist)
-				if(award_text)
-					return award_text
-				if (dist <= 1 & prob(50))
-					. += ".. Upon closer inspection this degree seems to be fake! Who could have guessed!"
-				else
-					// Do we have a rd?
-					..()
+			warning
+				name = "warning sign"
+				icon_state = "warning_action"
 
-			get_award_text(var/datum/mind/M)
-				var/rdname = "Anonymous"
-				if(M?.current?.client?.preferences?.name_last)
-					rdname = M.current.client.preferences.name_last
-				. += "It says \ [rdname] has been awarded the degree of [pick("Associate", "Bachelor")] of [pick("arts","science")] "
-				. += "Master of [pick("arts","science")], "
-				. += "in [pick("Superstition","Quantum","Avian","Simian","Relative","Absolute","Computational","Philosophical","Practical","Inadvisably-applied","Impractical","Hyper", "Mega", "Giga", "Probabilistic")] [pick("Physics","Astronomy","Plasmatology", "Astrology","Cosmetology", "Dentistry","Botany","Science","Ologylogy","Wumbology")].\""
+				generic // W001
 
-		framed_award/mdlicense
-			name = "medical directors medical license"
-			desc = "There's just no way this is real."
-			award_type = /obj/item/mdlicense
-			award_name = "medical license"
-			owner_job = "Medical Director"
-			icon_glass = "mdlicense1"
-			icon_award = "mdlicense"
-			icon_empty = "frame"
-			icon_state = "mdlicense"
+				radiation // W003
+					name = "radiation warning sign"
+					icon_state = "warning_radiation"
 
-			get_award_text(var/datum/mind/M)
-				var/mdname = "Anonymous"
-				if(M?.current?.client?.preferences?.name_last)
-					mdname = M.current.client.preferences.name_last
-				. += "It says \ [mdname] has been granted a license as a Physician and Surgeon entitled to practice the profession of medicine in space."
+				biological // W009
+					name = "biohazard warning sign"
+					icon_state = "warning_biological"
+
+				laser // W004
+					name = "laser warning sign"
+					icon_state = "warning_laser"
+
+				electric // W012
+					name = "electrical shock warning sign"
+					icon_state = "warning_electric"
+
+				explosion // W002
+					name = "explosion warning sign"
+					icon_state = "warning_explosion"
+
+				toxic // W016
+					name = "toxicity warning sign"
+					icon_state = "warning_toxic"
+
+				flammable // W021
+					name = "flammable material warning sign"
+					icon_state = "warning_flammable"
+
+				corrosive // W023
+					name = "corrosive material warning sign"
+					icon_state = "warning_corrosive"
+
+				quicksand // W061
+					name = "quicksand warning sign"
+					icon_state = "warning_quicksand"
+
+				cliff // W053
+					name = "unstable cliff warning sign"
+					icon_state = "warning_cliff"
+
+			safe
+				name = "safe condition sign"
+				icon_state = "safe_medical"
+
+				medical // E003
+					name = "medical aid sign"
+					icon_state = "safe_medical"
+
+				exit
+					name = "exit sign"
+
+					left // E001
+						icon_state = "safe_exit-l"
+
+					right // E002
+						icon_state = "safe_exit-r"
+
+				defib // E010
+					name = "defibrilator sign"
+					icon_state = "safe_defib"
+
+				respirator // E029
+					name = "respirator sign"
+					icon_state = "safe_respirator"
+
+				oxygen // E028
+					name = "oxygen supply sign"
+					icon_state = "safe_oxygen"
+
+				shower // E012
+					name = "emergency shower sign"
+					icon_state = "safe_shower"
+
+				eyewash // E011
+					name = "emergency eyewash sign"
+					icon_state = "safe_eyewash"
+
+				shipboard_general_alarm // E031
+					name = "shipboard general alarm sign"
+					desc = "Are we even on a ship most of the time?"
+					icon_state = "safe_shipboard_general_alarm"
+
+				coffee // yum,
+					name = "coffee sign"
+					icon_state = "safe_coffee"
+
+				water // E015
+					name = "potable water sign"
+					icon_state = "safe_water"
+
+				evac // E007
+					name = "evacuation assembly point sign"
+					icon_state = "safe_evac"
+
+			fire
+				name = "fire protection sign"
+				icon_state = "fire_extinguisher"
+
+				extinguisher // F001
+					name = "fire extinguisher sign"
+					icon_state = "fire_extinguisher"
+
+				helmet // F004
+					name = "fire protection equipment sign"
+					icon_state = "fire_helmet"
 
 /obj/decal/poster/wallsign/pod_build
 	name = "poster"
@@ -1056,7 +1145,7 @@
 	show_popup_win(var/client/C)
 		if (!C || !src.popup_win)
 			return
-		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=How to Build a Space Pod")
+		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=How to Build a Space Pod")
 
 /obj/decal/poster/wallsign/pod_build/nt
 	icon_state = "nt-pod-poster"
@@ -1076,7 +1165,20 @@
 		if (!C || !src.popup_win)
 			return
 
-		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
+		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Map")
+
+/obj/decal/poster/miners_almanac
+	name = "Miner's almanac"
+	desc = "An informational poster kindly provided by Gragg Industries."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "almanac"
+	popup_win = TRUE
+	imgw = 605
+	imgh = 784
+
+	show_popup_win(client/C)
+		C?.Browse("<img src=\"[resource("images/miners_almanac.png")]\">","window=Almanac;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Miner's Almanac")
+
 
 /obj/decal/poster/banner
 	name = "banner"
@@ -1132,6 +1234,7 @@
 			var/obj/item/material_piece/cloth/C = new(user.loc)
 			if (src.material) C.setMaterial(src.material)
 			else C.setMaterial(getMaterial("cotton")) // In case the material is null
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 			qdel(src)
 
 	mouse_drop(atom/over_object, src_location, over_location)
@@ -1144,3 +1247,5 @@
 				clear_banner()
 			else
 				return
+
+#undef IMG_OFFSET

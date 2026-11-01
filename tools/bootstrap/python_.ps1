@@ -11,8 +11,40 @@
 # regardless of ExecutionPolicy.
 $host.ui.RawUI.WindowTitle = "starting :: python $args"
 $ErrorActionPreference = "Stop"
+# stupid fucking workaround for powershell 5 vs 7 bullshit. - tgstation#97434
+$Env:PSModulePath = "$Env:ProgramFiles\WindowsPowerShell\Modules;$PSHOME\Modules"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+if (-not (Get-Command Get-FileHash -ErrorAction SilentlyContinue)) {
+	function Get-FileHash {
+		param(
+			[Parameter(Mandatory = $true)]
+			[string] $Path
+		)
+
+		$sha256 = [System.Security.Cryptography.SHA256]::Create()
+		try {
+			$stream = [System.IO.File]::OpenRead($Path)
+			try {
+				$hashBytes = $sha256.ComputeHash($stream)
+			}
+			finally {
+				$stream.Dispose()
+			}
+		}
+		finally {
+			$sha256.Dispose()
+		}
+
+		$hex = [BitConverter]::ToString($hashBytes) -replace '-', ''
+		return [PSCustomObject]@{
+			Algorithm = 'SHA256'
+			Hash      = $hex
+			Path      = $Path
+		}
+	}
+}
 
 function ExtractVersion {
 	param([string] $Path, [string] $Key)
@@ -66,7 +98,7 @@ if (!(Test-Path $PythonExe -PathType Leaf)) {
 if (!(Test-Path "$PythonDir/Scripts/pip.exe")) {
 	$host.ui.RawUI.WindowTitle = "Downloading Pip..."
 
-	Invoke-WebRequest "https://bootstrap.pypa.io/pip/3.6/get-pip.py" `
+	Invoke-WebRequest "https://bootstrap.pypa.io/get-pip.py" `
 		-OutFile "$Cache/get-pip.py" `
 		-ErrorAction Stop
 

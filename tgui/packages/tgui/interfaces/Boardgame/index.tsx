@@ -1,41 +1,38 @@
-import { Window } from '../../layouts';
+import { useEffect } from 'react';
+import { Box, Dimmer, Icon } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { adjustSizes, handleEvents } from './utils/window';
-import { Component } from 'inferno';
-
-import { Box, Dimmer, Icon } from '../../components';
-import { BoardgameData, useStates } from './utils';
-import { TitleBar } from './Components/common/TitleBar';
-import { HeldPieceRenderer } from './Components/common/HeldPieceRenderer';
+import { Window } from '../../layouts';
 import { BoardgameContents } from './Components/common/BoardgameContents';
+import { HeldPieceRenderer } from './Components/common/HeldPieceRenderer';
+import { TitleBar } from './Components/common/TitleBar';
+import { BoardgameData, useActions, useStates } from './utils';
+import { adjustSizes, handleEvents } from './utils/window';
 
-export class Boardgame extends Component<BoardgameData, any> {
-  constructor(props) {
-    super(props);
-  }
+export const Boardgame = () => {
+  const { act, data } = useBackend<BoardgameData>();
+  const { paletteClear, pieceDeselect } = useActions(act);
+  const { setTileSizeType, tileSize } = useStates();
+  const name = data?.boardInfo?.name || 'Boardgame';
 
-  componentDidUpdate() {
-    handleEvents(this.context);
-    adjustSizes(this.context);
-  }
+  // Keep class component timing.
+  useEffect(() => {
+    handleEvents(data?.currentUser, paletteClear, pieceDeselect);
+    adjustSizes(data?.boardInfo, tileSize, setTileSizeType);
+  });
 
-  render() {
-    const { data } = useBackend<BoardgameData>(this.context);
-    const name = data?.boardInfo?.name || 'Boardgame';
+  return (
+    <Window title={name} width={580} height={512}>
+      <HelpModal />
+      <TitleBar />
+      <HeldPieceRenderer />
+      <BoardgameContents />
+    </Window>
+  );
+};
 
-    return (
-      <Window title={name} width={580} height={512}>
-        <HelpModal />
-        <TitleBar />
-        <HeldPieceRenderer />
-        <BoardgameContents />
-      </Window>
-    );
-  }
-}
-
-const HelpModal = (props, context) => {
-  const { helpModalClose, isHelpModalOpen } = useStates(context);
+const HelpModal = () => {
+  const { helpModalClose, isHelpModalOpen } = useStates();
 
   if (!isHelpModalOpen) return null;
 
@@ -46,7 +43,8 @@ const HelpModal = (props, context) => {
           <strong>Help</strong>
         </p>
         <p>
-          <Icon name="mouse" /> Click on a piece to select it, click on a tile to move it there.
+          <Icon name="mouse" /> Click on a piece to select it, click on a tile
+          to move it there.
         </p>
         <p>Pieces may also be click-dragged to a target tile.</p>
         <p>

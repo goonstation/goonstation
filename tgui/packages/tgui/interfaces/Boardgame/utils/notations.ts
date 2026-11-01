@@ -12,7 +12,10 @@ export const numToBoardNotation = (num: number) => {
   return notation;
 };
 
-export const generateBoardNotationLetters = (size: number, isFlipped?: boolean) => {
+export const generateBoardNotationLetters = (
+  size: number,
+  isFlipped?: boolean,
+) => {
   let letterList: string[] = [];
 
   // Generate letters for the notations

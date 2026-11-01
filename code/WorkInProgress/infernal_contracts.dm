@@ -13,7 +13,7 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 		return 0
 	to_buff.force = (initial(to_buff.force)) + total_souls_value
 	to_buff.throwforce = (initial(to_buff.throwforce)) + total_souls_value //these were originally capped at 30, but that seemed arbitrary and pointless in hindsight
-	to_buff.tooltip_rebuild = 1
+	to_buff.tooltip_rebuild = TRUE
 	return 1
 
 /proc/souladjust(var/to_adjust as num)
@@ -245,7 +245,7 @@ proc/is_weak_rollable_contract(type)
 	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS| CONDUCT | NOSPLASH
 	color = "#FF0000"
 	force = 15
 	throwforce = 15
@@ -253,8 +253,6 @@ proc/is_weak_rollable_contract(type)
 	throw_range = 8
 	burn_possible = FALSE //Only makes sense since it's from hell.
 	item_function_flags = IMMUNE_TO_ACID // we don't get a spare, better make sure it lasts.
-	w_class = W_CLASS_BULKY
-	max_wclass = W_CLASS_NORMAL
 	desc = "A diabolical human leather-bound briefcase, capable of holding a number of small objects and tormented souls. All those tormented souls give it a good deal of heft; you could use it as a great improvised bludgeoning weapon."
 	stamina_damage = 80 //buffed from 40
 	stamina_cost = 20 //nerfed from 10
@@ -364,7 +362,7 @@ END GUIDE
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
 	var/uses = 4
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
@@ -406,7 +404,9 @@ END GUIDE
 		if (isdiabolical(user))
 			boutput(user, SPAN_NOTICE("You can't sell your soul to yourself!"))
 			return 0
-		src.visible_message(SPAN_ALERT("<b>[user] signs [his_or_her(user)] name in blood upon [src]!</b>"))
+		boutput(user, SPAN_ALERT(SPAN_BOLD("The pen stabs into your hand as you start to sign, your blood trickling down onto the page.")))
+		src.visible_message(SPAN_ALERT("<b>[user] signs [his_or_her(user)] name in [his_or_her(user)] own blood upon [src]!</b>"))
+		take_bleeding_damage(user, user, 4, DAMAGE_STAB, TRUE)
 		logTheThing(LOG_ADMIN, user, "signed a [src.type] contract at [log_loc(user)]!")
 		. = user.sell_soul(100, 0, 1)
 		if(!.)
@@ -415,7 +415,7 @@ END GUIDE
 	proc/updateuses(var/mob/user as mob, var/mob/badguy as mob)
 		if (src.limiteduse == 1)
 			src.used++
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			SPAWN(0)
 				if (src.used >= src.contractlines)
 					src.vanish(user, badguy)

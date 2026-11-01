@@ -1,18 +1,18 @@
 TYPEINFO(/obj/item/device/disguiser)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 8
 
 /obj/item/device/disguiser
 	name = "holographic disguiser"
 	icon_state = "enshield0"
 	desc = "Experimental device that projects a hologram of a randomly generated appearance onto the user, hiding their real identity."
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
-	item_state = "electronic"
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	is_syndicate = 1
 	var/datum/appearanceHolder/oldAH = new
 	var/anti_spam = 1 // In relation to world time.
 	var/active = 0
@@ -80,7 +80,7 @@ TYPEINFO(/obj/item/device/disguiser)
 		src.anti_spam = world.time
 		var/obj/overlay/T = new/obj/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
-		flick("emppulse",T)
+		FLICK("emppulse",T)
 		SPAWN(0.8 SECONDS)
 			if (T) qdel(T)
 		return 1
@@ -97,7 +97,7 @@ TYPEINFO(/obj/item/device/disguiser)
 			src.anti_spam = world.time
 			var/obj/overlay/T = new/obj/overlay(get_turf(src))
 			T.icon = 'icons/effects/effects.dmi'
-			flick("emppulse",T)
+			FLICK("emppulse",T)
 			SPAWN(0.8 SECONDS)
 				if (T) qdel(T)
 		src.active = 0
@@ -123,10 +123,6 @@ TYPEINFO(/obj/item/device/disguiser)
 		// Store current appearance and generate new one.
 		if (!reset_to_normal)
 			oldAH.CopyOther(AH)
-			if (AH.mob_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-				AH.customization_first_color = fix_colors(AH.customization_first_color)
-				AH.customization_second_color = fix_colors(AH.customization_second_color)
-				AH.customization_third_color = fix_colors(AH.customization_third_color)
 			src.real_name = user.real_name
 			randomize_look(user, 0, 0, 0, 1, 0, 0) // randomize: gender 0, blood type 0, age 0, name 1, underwear 0, remove effects 0
 			user.update_colorful_parts()

@@ -99,7 +99,7 @@
 /obj/warp_beacon/New()
 	..()
 	START_TRACKING
-	AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE | MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE, "portal")
+	AddComponent(/datum/component/minimap_marker/minimap, MAP_SYNDICATE | MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE, "portal")
 
 /obj/warp_beacon/disposing()
 	..()
@@ -113,14 +113,25 @@
 	var/obj/target = null
 	/// allows a portal to warp to restricted Zs and areas
 	var/bypass_tele_block = FALSE
-	anchored = ANCHORED
-	event_handler_flags = USE_FLUID_ENTER
+	anchored = ANCHORED_ALWAYS
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP | IMMUNE_OCEAN_PUSH
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.shoes?.magnetic)
+			return
 	SPAWN(0)
 		src.teleport(M)
 		return
 	return
+
+/obj/warp_portal/Cross(atom/movable/mover)
+	if (ishuman(mover))
+		var/mob/living/carbon/human/H = mover
+		if(H.shoes?.magnetic)
+			return FALSE
+	. = ..()
 
 /obj/warp_portal/Crossed(atom/movable/AM as mob|obj)
 	..()
@@ -136,7 +147,7 @@
 		qdel(src)
 
 /obj/warp_portal/Click(location, control, params)
-	if (isobserver(usr))
+	if (isobserver(usr) && src.target)
 		usr.set_loc(get_turf(src.target))
 		return
 	..()
@@ -286,7 +297,7 @@
 				if (istype(I, /obj/item/cable_coil))
 					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 			if(3)
-				if (istype(I, /obj/item/electronics/soldering))
+				if (issolderingtool(I))
 					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 
 /datum/action/bar/icon/warp_beacon_assembly
@@ -308,10 +319,6 @@
 			icon_state = the_tool.icon_state
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -333,6 +340,9 @@
 		if (beacon.state == 3)
 			playsound(beacon, 'sound/effects/zzzt.ogg', 30, TRUE)
 			owner.visible_message("[SPAN_BOLD("[owner]")] begins soldering \the [beacon]'s wiring into place.")
+		if (src.owner && HAS_ATOM_PROPERTY(src.owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
+
 	onEnd()
 		..()
 		if (beacon.state == 1)
@@ -346,20 +356,14 @@
 			beacon.desc = "A partially completed frame for a deployable warp buoy. It's missing its wiring."
 			return
 		if (beacon.state == 2)
-			beacon.state = 3
-			beacon.icon_state = "beaconunit"
-			boutput(owner, SPAN_NOTICE("You finish wiring together the beacon's electronics."))
-			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, TRUE)
+			var/obj/item/cable_coil/coil = the_tool
+			if (coil.use(1))
+				beacon.state = 3
+				beacon.icon_state = "beaconunit"
+				boutput(owner, SPAN_NOTICE("You finish wiring together the beacon's electronics."))
+				playsound(beacon, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
-			the_tool.amount -= 1
-			if (the_tool.amount < 1)
-				var/mob/source = owner
-				source.u_equip(the_tool)
-				qdel(the_tool)
-			else if(the_tool.inventory_counter)
-				the_tool.inventory_counter.update_number(the_tool.amount)
-
-			beacon.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
+				beacon.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
 			return
 		if (beacon.state == 3)
 			boutput(owner, SPAN_NOTICE("You solder the wiring into place, completing the beacon. It's now ready to deploy with a wrench."))

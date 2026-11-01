@@ -1,6 +1,5 @@
 /mob/living/critter/plasmaspore
 	name = "plasma spore"
-	real_name = "plasma spore"
 	desc = "A barely intelligent colony of organisms. Very volatile."
 	density = 1
 	icon_state = "spore"
@@ -8,7 +7,8 @@
 	hand_count = 0
 	can_throw = 0
 	blood_id = "plasma"
-
+	ai_type = /datum/aiHolder/wanderer
+	is_npc = TRUE
 	faction = list(FACTION_BOTANY)
 
 	death(var/gibbed)

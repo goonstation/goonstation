@@ -135,18 +135,28 @@ var/list/dirty_keystates = list()
 		//How should we distinguish whether the original click was 'null' later on if we need to? location will == "map", that might be fine to identify with?
 		//(this fixes the behavior of guns not firing if you clicked a hidden tile. now you can actually shoot in the dark or in a small tunnel!)
 		if (!object && src.mob)
-			var/list/l2 = splittext(params2list(params)["screen-loc"],",")
-			if (length(l2) >= 2)
-				var/list/lx = splittext(l2[1],":")
-				var/list/ly = splittext(l2[2],":")
+			var/regex/locparser = new(@"(\d+):(\d*),(\d+):(\d*)$")
+			if(!locparser.Find(params2list(params)["screen-loc"]))
+				return //FUCK
+			var/x = text2num(locparser.group[1])
+			var/pox = text2num(locparser.group[2])
+			var/y = text2num(locparser.group[3])
+			var/poy = text2num(locparser.group[4])
 
-				object = locate(src.mob.x + (text2num(lx[2]) + -1 - ((istext(src.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
-								src.mob.y + (text2num(ly[1]) + -1 - 7),\
-								src.mob.z)
-				if (object)
-					src.Click(object,location,control,params)
+
+			object = locate(src.mob.x + (x + -1 - ((istext(src.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
+							src.mob.y + (y + -1 - 7),\
+							src.mob.z)
+			params += "&icon-x=[pox]&icon-y=[poy]"
+			if (object)
+				src.Click(object,location,control,params)
 
 		return
+
+	MouseDrop(src_object, over_object, turf/src_location, turf/over_location, src_control, over_control, params)
+		if (src.mob && SEND_SIGNAL(src.mob, COMSIG_MOB_MOUSEDROP, src_object, over_object, src_location, over_location, src_control, over_control, params))
+			return
+		return ..()
 
 	DblClick(atom/target, location, control, params)
 		var/list/paramslist = params2list(params)
@@ -175,7 +185,7 @@ var/list/dirty_keystates = list()
 		if (src.mob.mob_flags & SEE_THRU_CAMERAS)
 			if(isturf(object))
 				var/turf/T = object
-				if (!length(T.camera_coverage_emitters))
+				if (!seen_by_camera(T))
 					return
 				else
 					if (parameters["right"])
@@ -204,7 +214,7 @@ var/list/dirty_keystates = list()
 				buildmode.build_click(object, location, control, parameters)
 				return
 
-		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
+		if (parameters["left"] && !mob.targeting_ability)	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
 
 			if(length(contexts))
@@ -340,10 +350,16 @@ var/list/dirty_keystates = list()
 			last_input_loop_time = TIME
 			process_keystates()
 
-			for(var/client/C as anything in clients) // as() is ok here since we nullcheck
-				C?.mob?.internal_process_move(C.key_state)
+			for(var/client/C as anything in clients) // as anything is ok here since we nullcheck
+				var/mob/M = C?.mob
+				if (!M)
+					continue
+				var/keys = C.key_state
+				// do nothing if we're idle
+				if (keys || M.move_dir || length(M.movement_controller_list) || length(M.grabbed_by))
+					M.internal_process_move(keys)
 
-			for(var/datum/aiHolder/ai as anything in ai_move_scheduled) // as() is ok here since we nullcheck
+			for(var/datum/aiHolder/ai as anything in ai_move_scheduled) // as anything is ok here since we nullcheck
 				if (ai?.move_target)
 					ai.move_step()
 

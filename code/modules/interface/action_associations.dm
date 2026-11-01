@@ -37,8 +37,8 @@ var/list/action_names = list(
 	"look_e" = "Look East",
 
 	"say" = "Say",
-	"say_radio" = "Say Radio",
-	"say_main_radio" = "Say Main Radio",
+	"say_over_channel" = "Say Over Channel",
+	"say_over_main_radio" = "Say Over Main Radio",
 	"dsay" = "Dead Say",
 	"asay" = "Admin Say",
 	"whisper" = "Whisper",
@@ -92,7 +92,7 @@ var/list/action_names = list(
 
 ///Used for literal input of actions
 var/list/action_verbs = list(
-	"say_radio" = "say_radio",
+	"say_over_channel" = "say_over_channel",
 	"salute" = "me_hotkey salute",
 	"burp" = "me_hotkey burp",
 	"dab" = "me_hotkey dab",
@@ -129,7 +129,7 @@ var/list/action_macros = list(
 	"say" = "startsay",
 	"emote-h" = "startemote-h",
 	"emote-v" = "startemote-v",
-	"say_main_radio" = "radiosay",
+	"say_over_main_radio" = "radiosay",
 	"ooc" = "ooc",
 	"looc" = "looc",
 	"whisper" = "whisper",

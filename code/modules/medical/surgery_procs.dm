@@ -127,13 +127,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if (patient.stat) // is the patient dead?
 		screw_up_prob -= 30
-	if (patient.getStatusDuration("unconscious")) // unable to move?
+	if (patient.getStatusDuration("unconscious") || patient.getStatusDuration("paralyzed") || patient.getStatusDuration("knockdown")) // unable to move?
 		screw_up_prob -= 15
 	if (patient.sleeping) // asleep?
 		screw_up_prob -= 10
 	if (patient.getStatusDuration("stunned")) // stunned?
 		screw_up_prob -= 5
-	if (patient.hasStatus("drowsy")) // sleepy?
+	if (patient.getStatusDuration("drowsy") || patient.getStatusDuration("resting")) // sleepy?
 		screw_up_prob -= 5
 
 	if (patient.reagents) // check for anesthetics/analgetics
@@ -185,6 +185,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 			chest_item.set_loc(patient)
 			patient.chest_item = chest_item
+			logTheThing(LOG_COMBAT, patient, "received a surgical chest item implant of \the [chest_item] ([chest_item.type]) by [constructTarget(surgeon,"combat")]")
 
 			// Remove item from surgeon
 			surgeon.u_equip(chest_item)

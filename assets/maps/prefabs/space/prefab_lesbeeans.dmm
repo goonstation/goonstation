@@ -105,7 +105,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/prefab/lesbeeans/exterior)
 "lL" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -160,7 +160,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "sm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/airless/plating/catwalk,
 /area/prefab/lesbeeans/exterior)
 "tG" = (

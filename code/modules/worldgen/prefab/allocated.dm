@@ -10,6 +10,11 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 		src.applyTo(region.bottom_left, overwrite_args = DMM_OVERWRITE_OBJS | DMM_OVERWRITE_MOBS | DMM_BESPOKE_AREAS)
 		return region
 
+/datum/mapPrefab/allocated/newbee_tutorial
+	prefabPath = "assets/maps/allocated/newbee_tutorial.dmm"
+	prefabSizeX = 40
+	prefabSizeY = 21
+
 /datum/mapPrefab/allocated/blob_tutorial
 	prefabPath = "assets/maps/allocated/blob_tutorial.dmm"
 	prefabSizeX = 17
@@ -50,6 +55,11 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 5
 	prefabSizeY = 5
 
+/datum/mapPrefab/allocated/artifact_fissure
+	prefabPath = "assets/maps/allocated/artifact_fissure.dmm"
+	prefabSizeX = 29
+	prefabSizeY = 35
+
 /datum/mapPrefab/allocated/pirate_ship
 	prefabPath = "assets/maps/allocated/pirate_ship.dmm"
 	prefabSizeX = 33
@@ -59,3 +69,118 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 7
 	prefabSizeY = 7
 	prefabPath = "assets/maps/allocated/jar.dmm"
+
+/datum/mapPrefab/allocated/htr_team
+	prefabPath = "assets/maps/allocated/htr_team_ship.dmm"
+	prefabSizeX = 25
+	prefabSizeY = 25
+
+	purge
+		prefabPath = "assets/maps/allocated/htr_purge_ship.dmm"
+
+/datum/mapPrefab/allocated/phoenix_nest
+	prefabSizeX = 9
+	prefabSizeY = 9
+	prefabPath = "assets/maps/allocated/phoenix_nest.dmm"
+
+/datum/mapPrefab/allocated/salvager_local
+	prefabSizeX = 31
+	prefabSizeY = 33
+	prefabPath = "assets/maps/allocated/salvager_local.dmm"
+
+// Syndicate Hideouts
+/datum/mapPrefab/allocated/syndicate_hideout
+	name = "Sinister Office"
+	prefabSizeX = 13
+	prefabSizeY = 13
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/sinister_office.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/trash
+	name = "Trash Pit"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/trash_pit.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/cafe
+	name = "Syndicafé"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/syndicafe.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/dojo
+	name = "Dojo"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/dojo.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/retreat
+	name = "Retreat"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/retreat.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/surgery
+	name = "Shady Clinic"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/surgery.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/brig
+	name = "Brig"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/brig.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_medical
+	name = "menhir_room_medical"
+	prefabSizeX = 20
+	prefabSizeY = 15
+	prefabPath = "assets/maps/allocated/menhir_room_medical.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_lounge
+	name = "menhir_room_lounge"
+	prefabSizeX = 20
+	prefabSizeY = 19
+	prefabPath = "assets/maps/allocated/menhir_room_lounge.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_botany
+	name = "menhir_room_botany"
+	prefabSizeX = 20
+	prefabSizeY = 15
+	prefabPath = "assets/maps/allocated/menhir_room_botany.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_cavern
+	name = "menhir_room_cavern"
+	prefabSizeX = 20
+	prefabSizeY = 28
+	prefabPath = "assets/maps/allocated/menhir_room_cavern.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_hangar
+	name = "menhir_room_hangar"
+	prefabSizeX = 19
+	prefabSizeY = 17
+	prefabPath = "assets/maps/allocated/menhir_room_hangar.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_genpop
+	name = "menhir_room_genpop"
+	prefabSizeX = 19
+	prefabSizeY = 23
+	prefabPath = "assets/maps/allocated/menhir_room_genpop.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_arcade
+	name = "menhir_room_arcade"
+	prefabSizeX = 19
+	prefabSizeY = 18
+	prefabPath = "assets/maps/allocated/menhir_room_arcade.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_depths
+	name = "menhir_room_depths"
+	prefabSizeX = 32
+	prefabSizeY = 31
+	prefabPath = "assets/maps/allocated/menhir_room_depths.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_enigma
+	name = "menhir_room_enigma"
+	prefabSizeX = 34
+	prefabSizeY = 23
+	prefabPath = "assets/maps/allocated/menhir_room_enigma.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_bball
+	name = "menhir_room_bball"
+	prefabSizeX = 18
+	prefabSizeY = 29
+	prefabPath = "assets/maps/allocated/menhir_room_bball.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_sepulchre
+	name = "menhir_room_sepulchre"
+	prefabSizeX = 32
+	prefabSizeY = 23
+	prefabPath = "assets/maps/allocated/menhir_room_sepulchre.dmm"

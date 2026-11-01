@@ -1,7 +1,13 @@
+ABSTRACT_TYPE(/datum/achievementReward)
 /datum/achievementReward
 	var/title = ""
 	var/desc = ""
 	var/required_medal = null
+	var/category = MEDAL::REWARD::CATEGORY::MISCELLANEOUS
+
+	var/icon = 'icons/ui/jobxp.dmi'
+	var/icon_state = "?"
+
 	var/once_per_round = 1   //Can only be claimed once per round.
 	var/mobonly = 1 //If the reward can only be redeemed if the player has a /mob/living.
 
@@ -12,13 +18,15 @@
 		//You could even make one-time reward by stripping their medal here.
 		return
 
-
+#define COPY_ATOM_ICON(path) icon=path::icon; icon_state=path::icon_state
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rewards below
 /datum/achievementReward/satchel
 	title = "(Skin) Satchel"
 	desc = "Converts whatever backpack you're wearing into a satchel. Requires that you're wearing a backpack."
 	required_medal = "Fish"
 	once_per_round = 0
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	COPY_ATOM_ICON(/obj/item/storage/backpack/satchel)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -29,254 +37,22 @@
 			return
 
 		var/obj/item/storage/backpack/M = activator.back
-		var/prev_desc
 
 		if(!istype(M))
 			boutput(activator, SPAN_ALERT("Whatever it is you've got on your back, it isn't a backpack!"))
 			return
 
-		//SPACEBUX REWARD BACKPACKS
-		if (istype(M, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
-			M.icon_state = "NTsatchel"
-			M.item_state = "NTsatchel"
-			M.name = "\improper NT Satchel"
-			M.real_name = "NT satchel"
-			M.desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: NT backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/randoseru) || activator.back.icon_state == "bp_randoseru")
-			M.icon_state = "sat_randoseru"
-			M.item_state = "sat_randoseru"
-			M.name = "randoseru satchel"
-			M.real_name = "randoseru satchel"
-			M.desc = "Inconspicuous, nostalgic and quintessentially Space Japanese. (Base Item: randoseru)"
-
-		else if (istype(M, /obj/item/storage/backpack/fjallravenyel) || activator.back.icon_state == "bp_fjallraven_yellow")
-			M.icon_state = "sat_fjallraven_yellow"
-			M.item_state = "sat_fjallraven_yellow"
-			M.name = "rucksack satchel"
-			M.real_name = "rucksack satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff. (Base Item: rucksack)"
-
-		else if (istype(M, /obj/item/storage/backpack/fjallravenred) || activator.back.icon_state == "bp_fjallraven_red")
-			M.icon_state = "sat_fjallraven_red"
-			M.item_state = "sat_fjallraven_red"
-			M.name = "rucksack satchel"
-			M.real_name = "rucksack satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff. (Base Item: rucksack)"
-
-		else if (istype(M, /obj/item/storage/backpack/anello) || activator.back.icon_state == "bp_anello")
-			M.icon_state = "sat_anello"
-			M.item_state = "sat_anello"
-			M.name = "travel satchel"
-			M.real_name = "travel satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, often seen carried by tourists and travelers. (Base Item: travel pack)"
-
-		else if (istype(M, /obj/item/storage/backpack/studdedblack) || activator.back.icon_state == "bp_studded")
-			M.icon_state = "sat_studded"
-			M.item_state = "sat_studded"
-			M.name = "studded satchel"
-			M.real_name = "studded satchel"
-			M.desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag. (Base Item: studded backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag/blue) || activator.back.icon_state == "bp_itabag_blue")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_blue"
-			M.item_state = "sat_itabag_blue"
-			M.name = "blue itabag satchel"
-			M.real_name = "blue itabag satchel"
-			M.desc = "[prev_desc] (Base Item: blue itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag/purple) || activator.back.icon_state == "bp_itabag_purple")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_purple"
-			M.item_state = "sat_itabag_purple"
-			M.name = "purple itabag satchel"
-			M.real_name = "purple itabag satchel"
-			M.desc = "[prev_desc] (Base Item: purple itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag/mint) || activator.back.icon_state == "bp_itabag_mint")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_mint"
-			M.item_state = "sat_itabag_mint"
-			M.name = "mint itabag satchel"
-			M.real_name = "mint itabag satchel"
-			M.desc = "[prev_desc] (Base Item: mint itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag/black) || activator.back.icon_state == "bp_itabag_black")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_black"
-			M.item_state = "sat_itabag_black"
-			M.name = "black itabag satchel"
-			M.real_name = "black itabag satchel"
-			M.desc = "[prev_desc] (Base Item: black itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag) || activator.back.icon_state == "bp_itabag_pink")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_pink"
-			M.item_state = "sat_itabag_pink"
-			M.name = "pink itabag satchel"
-			M.real_name = "pink itabag satchel"
-			M.desc = "[prev_desc] (Base Item: pink itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/brown) || activator.back.icon_state == "backpackbr")
-			M.icon_state = "satchelbr"
-			M.item_state = "satchelbr"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers. This brown variation is both rustic and adventurous! (Base Item: backpack)"
-
-		//OTHER NON-JOB BAGS
-		else if (istype(M, /obj/item/storage/backpack/NT) || activator.back.icon_state == "Syndiebackpack")
-			M.icon_state = "Syndiesatchel"
-			M.item_state = "Syndiesatchel"
-			M.name = "\improper Syndicate Satchel"
-			M.real_name = "Syndicate Satchel"
-			M.desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's shoulder. (Base Item: Syndicate backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/studdedwhite) || activator.back.icon_state == "bp_studdedw")
-			M.icon_state = "sat_studdedw"
-			M.item_state = "sat_studdedw"
-			M.name = "white studded satchel"
-			M.real_name = "white studded satchel"
-			M.desc = "Made of sturdy white synthleather and covered in metal studs. Much edgier than the standard issue bag. (Base Item: white studded backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/bearpack) || activator.back.icon_state == "bp_bear")
-			M.icon_state = "sat_bear"
-			M.item_state = "sat_bear"
-			M.name = "bear-satchel"
-			M.real_name = "bear-satchel"
-			M.desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful! (Base Item: bearpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/breadpack) || activator.back.icon_state == "bp_breadpack")
-			M.icon_state = "sat_breadpack"
-			M.item_state = "sat_breadpack"
-			M.name = "bag-uette satchel"
-			M.real_name = "bag-uette satchel"
-			M.desc = "It kind of smells like bread too! Definitely not edible, sadly. (Base Item: bag-uette)"
-
-		else if (istype(M, /obj/item/storage/backpack/turtlegreen) || activator.back.icon_state == "bp_turtle_green")
-			M.icon_state = "sat_turtle_green"
-			M.name = "green turtle shell satchel"
-			M.real_name = "green turtle shell backpack"
-			M.desc = "A satchel that looks like a green turtleshell. Cowabunga! (Base Item: green turtle shell backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/turtlebrown) || activator.back.icon_state == "bp_turtle_brown")
-			M.icon_state = "sat_turtle_brown"
-			M.name = "brown turtle shell satchel"
-			M.real_name = "brown turtle shell backpack"
-			M.desc = "A satchel that looks like a brown turtleshell. How childish! (Base Item: brown turtle shell backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/blue) || activator.back.icon_state == "backpackb")
-			M.icon_state = "satchelb"
-			M.item_state = "satchelb"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers. The blue variation is similar in shade to Abzu's ocean. (Base Item: backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/red) || activator.back.icon_state == "backpackr")
-			M.icon_state = "satchelr"
-			M.item_state = "satchelr"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers. The red variation is striking and slightly suspicious. (Base Item: backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/green) || activator.back.icon_state == "backpackg")
-			M.icon_state = "satchelg"
-			M.item_state = "satchelg"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden... (Base Item: backpack)"
-
-		//JOB BAGS
-		else if (istype(M, /obj/item/storage/backpack/medic) || activator.back.icon_state == "bp_medic")
-			M.icon_state = "satchel_medic"
-			M.item_state = "satchel_medic"
-			M.name = "medic's satchel"
-			M.real_name = "medic's satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a medical doctor's shoulder. (Base Item: medic's backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/security) || activator.back.icon_state == "bp_security")
-			M.icon_state = "satchel_security"
-			M.item_state = "satchel_security"
-			M.name = "security satchel"
-			M.real_name = "security satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects stylishly on the shoulder of security personnel.(Base Item: security backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/robotics) || activator.back.icon_state == "bp_robotics")
-			M.icon_state = "satchel_robotics"
-			M.item_state = "satchel_robotics"
-			M.name = "robotics satchel"
-			M.real_name = "robotics satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromatically on the shoulder of roboticists.(Base Item: robotics backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/genetics) || activator.back.icon_state == "bp_genetics")
-			M.icon_state = "satchel_genetics"
-			M.item_state = "satchel_genetics"
-			M.name = "genetics satchel"
-			M.real_name = "genetics satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of geneticists.(Base Item: genetics backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/engineering) || activator.back.icon_state == "bp_engineering")
-			M.icon_state = "satchel_engineering"
-			M.item_state = "satchel_engineering"
-			M.name = "engineering satchel"
-			M.real_name = "engineering satchel"
-			M.desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the shoulder of engineers.(Base Item: engineering backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/research) || activator.back.icon_state == "bp_research")
-			M.icon_state = "satchel_research"
-			M.item_state = "satchel_research"
-			M.name = "research satchel"
-			M.real_name = "research satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the shoulder of scientists.(Base Item: research backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/captain/blue) || activator.back.icon_state == "capbackpack_blue")
-			M.icon_state = "capsatchel_blue"
-			M.item_state = "capsatchel_blue"
-			M.name = "Captain's Satchel"
-			M.real_name = "Captain's Satchel"
-			M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: Captain's Backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/captain/red) || activator.back.icon_state == "capbackpack_red")
-			M.icon_state = "capsatchel_red"
-			M.item_state = "capsatchel_red"
-			M.name = "Captain's Satchel"
-			M.real_name = "Captain's Satchel"
-			M.desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: Captain's Backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/captain) || activator.back.icon_state == "capbackpack")
-			M.icon_state = "capsatchel"
-			M.item_state = "capbackpack"
-			M.name = "Captain's Satchel"
-			M.real_name = "Captain's Satchel"
-			M.desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: Captain's Backpack)"
-
-		//GENERIC BACKPACK
-		else if (M.satchel_compatible && (istype(M, /obj/item/storage/backpack) || activator.back.icon_state == "backpack"))
-			M.icon_state = "satchel"
-			M.item_state = "satchel"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: backpack)"
-		else
+		if(!M.convert_to_satchel(TRUE))
 			boutput(activator, SPAN_ALERT("Whatever it is you've got on your back, it can't be reskinned!"))
 			return
-
-		//Updates to ensure satchel is displayed correctly
-		M.icon = 'icons/obj/items/storage.dmi'
-		M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
-		if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-		M.wear_image_icon = 'icons/mob/clothing/back.dmi'
-		if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
-		activator.set_clothing_icon_dirty()
-		M.wear_layer = MOB_BACK_LAYER_SATCHEL
-
 		return 1
 
 /datum/achievementReward/hightechpodskin
 	title = "(Skin) HighTech Pod"
 	desc = "Gives you a Kit that allows you to change the appearance of a Pod."
 	required_medal = "Newton's Crew"
+	icon = 'icons/obj/ship.dmi'
+	icon_state = "pod_skinAc"
 
 	rewardActivate(var/mob/activator)
 		boutput(usr, SPAN_NOTICE("The Kit has been dropped at your current location."))
@@ -288,6 +64,8 @@
 	desc = "Turns a gas mask you're wearing into a high-tech particle-filtered version."
 	required_medal = "Old Enemy"
 	once_per_round = FALSE
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	COPY_ATOM_ICON(/obj/item/clothing/mask/gas/respirator)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -313,6 +91,8 @@
 	title = "(Skin) SWAT Gas Mask"
 	desc = "Turns your Gas Mask into a SWAT Gas Mask. If you're wearing one."
 	required_medal = "Leave no man behind!"
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	COPY_ATOM_ICON(/obj/item/clothing/mask/gas/swat/NT)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -337,11 +117,13 @@
 	title = "(Skin) Colorful Beret"
 	desc = "Turns your hat into a colorful beret. If you're wearing one."
 	required_medal = "Monkey Duty"
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	COPY_ATOM_ICON(/obj/item/clothing/head/beret)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			if (!istype(H.head, /obj/item/clothing/head/helmet) && istype(H.head, /obj/item/clothing/head)) // ha...
+			if (!istype(H.head, /obj/item/clothing/head/helmet) && !istype(H.head, /obj/item/clothing/head/headband && istype(H.head, /obj/item/clothing/head))) // ha...
 				var/obj/item/clothing/head/M = H.head
 				M.icon = 'icons/obj/clothing/item_hats.dmi'
 				M.icon_state = "beret_base"
@@ -365,6 +147,8 @@
 	desc = "Requires you to be holding a large beaker."
 	required_medal = "We didn't start the fire"
 	once_per_round = 0
+	category = MEDAL::REWARD::CATEGORY::ITEM
+	COPY_ATOM_ICON(/obj/item/reagent_containers/glass/beaker/large/round)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -402,6 +186,8 @@
 	desc = "Requires you to be holding a bucket."
 	required_medal = "Spotless"
 	once_per_round = 1
+	category = MEDAL::REWARD::CATEGORY::ITEM
+	COPY_ATOM_ICON(/obj/item/reagent_containers/glass/bucket/red)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -412,13 +198,8 @@
 		if (skin_target)
 			var/obj/item/reagent_containers/glass/bucket/red/new_bucket = new /obj/item/reagent_containers/glass/bucket/red(get_turf(activator))
 			new_bucket.reagents = skin_target.reagents
-			new_bucket.fingerprints = skin_target.fingerprints
-			new_bucket.fingerprints_full = skin_target.fingerprints_full
-			new_bucket.fingerprintslast = skin_target.fingerprintslast
+			new_bucket.forensic_holder = skin_target.forensic_holder
 			skin_target.reagents = null
-			skin_target.fingerprints = null
-			skin_target.fingerprints_full = null
-			skin_target.fingerprintslast = null
 			// Update borg's bucket in their module, don't drop it
 			if (issilicon(activator))
 				var/mob/living/silicon/robot/borg_activator = activator
@@ -436,6 +217,9 @@
 	title = "(Skin) Pilot Suit"
 	desc = "Requires that you wear something in your jumpsuit slot."
 	required_medal = "It's not 'Door to Heaven'"
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+	icon_state = "mechanic-reward"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -443,9 +227,9 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				var/prev = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "mechanic-reward"
@@ -466,6 +250,8 @@
 	desc = "Requires that you wear medical scrubs in your jumpsuit slot."
 	required_medal = "Primum non nocere"
 	once_per_round = 0
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	COPY_ATOM_ICON(/obj/item/clothing/under/scrub/flower)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -476,9 +262,9 @@
 					boutput(activator, SPAN_ALERT("You're not wearing medical scrubs!"))
 					return
 				var/prev = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "scrub-f"
@@ -496,6 +282,9 @@
 	title = "(Skin) Relic Security Jumpsuit"
 	desc = "Requires that you wear a security officer or Head of Security uniform in your jumpsuit slot."
 	required_medal = "Dead or alive, you're coming with me"
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	icon = 'icons/obj/clothing/jumpsuits/item_js_rank.dmi'
+	icon_state = "security-old"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -503,7 +292,7 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/under/rank/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/head_of_security))
-					M.icon = initial(M.icon)
+					M.icon = get_initial_icon(M)
 					M.inhand_image_icon = initial(M.inhand_image_icon)
 					M.wear_image_icon = initial(M.wear_image_icon)
 					M.item_state = initial(M.item_state)
@@ -514,7 +303,7 @@
 					H.set_clothing_icon_dirty()
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
-					M.icon = initial(M.icon)
+					M.icon = get_initial_icon(M)
 					M.inhand_image_icon = initial(M.inhand_image_icon)
 					M.wear_image_icon = initial(M.wear_image_icon)
 					M.name = initial(M.name)
@@ -535,6 +324,8 @@
 	desc = "Requires that you wear a medical labcoat in your suit slot."
 	required_medal = "Patchwork"
 	once_per_round = 0
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	COPY_ATOM_ICON(/obj/item/clothing/suit/labcoat/medical/cool)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -564,6 +355,8 @@
 	desc = "Requires that you wear a labcoat in your suit slot."
 	required_medal = "Meth is a hell of a drug"
 	once_per_round = 0
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	COPY_ATOM_ICON(/obj/item/clothing/suit/labcoat/science)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -606,6 +399,9 @@
 	desc = "Requires that you wear a labcoat in your suit slot."
 	required_medal = "Illuminated"
 	once_per_round = 0
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	icon_state = "alchrobe"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -637,6 +433,9 @@
 	title = "(Skin) Strange Vampire Outfit"
 	desc = "Requires that you wear a vampire cape in your suit slot."
 	required_medal = "Dracula Jr."
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	icon_state = "vclothes"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -664,11 +463,13 @@
 	title = "Clown College Regalia"
 	desc = "Spawns you your clown college graduation cap and diploma."
 	required_medal = "Unlike the director, I went to college"
+	category = MEDAL::REWARD::CATEGORY::ITEM
+	COPY_ATOM_ICON(/obj/item/toy/diploma)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			if (H.mind.assigned_role == "Clown")
+			if (H.traitHolder?.getTrait("training_clown"))
 				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), SLOT_HEAD)
 				var/obj/item/toy/diploma/D = new /obj/item/toy/diploma(get_turf(H))
 				D.redeemer = H.ckey
@@ -683,6 +484,9 @@
 	title = "(Skin) Aerostatic Pilot Jacket"
 	desc = "Turns your detective's coat into an orange pilot jacket"
 	required_medal = "Deep Freeze"
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	icon_state = "detective_kim"
 
 	rewardActivate(var/mob/activator)
 		var/mob/living/carbon/human/H = activator
@@ -710,6 +514,9 @@
 	desc = "Will change the skin of a detective's coat, hats, gloves, shoes, jumpsuit, and holster."
 	required_medal = "Neither fashionable noir stylish"
 	once_per_round = FALSE
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+	icon_state = "inspectorj"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -735,8 +542,8 @@
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/det))
 					var/prev = M.name
-					M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+					M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 					M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 					M.icon_state = "inspectorj"
 					M.item_state = "viceG"
@@ -749,6 +556,7 @@
 			if (H.head)
 				var/obj/item/clothing/M = H.head
 				var/obj/item/clothing/head/det_hat/gadget/G = H.head
+				var/obj/item/clothing/head/det_hat/folded_scuttlebot/S = H.head
 				if (istype(G))
 					var/prev = M.name
 					G.icon_state = "inspector"
@@ -757,6 +565,18 @@
 					G.inspector = TRUE
 					H.set_clothing_icon_dirty()
 					succ = TRUE
+
+				else if (istype(S))
+					var/prev = M.name
+					S.icon_state = "inspector"
+					S.item_state = "inspector"
+					S.name = "inspector's hat"
+					S.real_name = "inspector's hat"
+					S.desc = "A hat for the modern detective. It looks a bit heavier than it should. (Base Item: [prev])"
+					S.inspector = TRUE
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 				else if (istype(M, /obj/item/clothing/head/det_hat))
 					var/prev = M.name
 					M.icon_state = "inspector"
@@ -792,7 +612,7 @@
 					succ = TRUE
 
 			if (H.gloves)
-				var/obj/item/clothing/M = H.gloves
+				var/obj/item/clothing/gloves/M = H.gloves
 				if (istype(M, /obj/item/clothing/gloves/black))
 					var/prev = M.name
 					M.icon_state = "inspector"
@@ -800,6 +620,7 @@
 					M.name = "inspector's gloves"
 					M.real_name = "inspector's gloves"
 					M.desc = "A pair of gloves for the modern detective. (Base Item: [prev])"
+					M.fingertip_color = "#2d3c52"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -815,6 +636,8 @@
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
 	required_medal = "Icarus"
 	once_per_round = FALSE
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	COPY_ATOM_ICON(/obj/item/clothing/head/centhat)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -864,9 +687,12 @@
 					succ = TRUE
 
 				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/obj/item/clothing/suit/armor/capcoat/coat = M
+					coat.coat_style = "centcoat"
+					coat.item_state = "centcoat"
+					var/datum/component/toggle_coat/toggle_component = coat.GetComponent(/datum/component/toggle_coat)
+					toggle_component.update_coat_icon()
 					var/prev = M.name
-					M.icon_state = "centcoat"
-					M.item_state = "centcoat"
 					M.name = "commander's coat"
 					M.real_name = "commander's coat"
 					M.desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
@@ -892,6 +718,7 @@
 					M.name = "commander's gloves"
 					M.real_name = "commander's gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#3c6dc3"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
@@ -988,6 +815,8 @@
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
 	required_medal = "Brown Pants" //Red shirt, brown pants.
 	once_per_round = FALSE
+	category = MEDAL::REWARD::CATEGORY::CLOTHING
+	COPY_ATOM_ICON(/obj/item/clothing/head/centhat/red)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -1036,9 +865,12 @@
 					succ = TRUE
 
 				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/obj/item/clothing/suit/armor/capcoat/coat = M
+					coat.coat_style = "centcoat-red"
+					coat.item_state = "centcoat-red"
+					var/datum/component/toggle_coat/toggle_component = coat.GetComponent(/datum/component/toggle_coat)
+					toggle_component.update_coat_icon()
 					var/prev = M.name
-					M.icon_state = "centcoat-red"
-					M.item_state = "centcoat-red"
 					M.name = "\improper CentCom coat"
 					M.real_name = "\improper CentCom coat"
 					M.desc = "A luxurious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
@@ -1063,6 +895,7 @@
 					M.name = "CentCom gloves"
 					M.real_name = "CentCom gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#d73715"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
@@ -1157,6 +990,9 @@
 	title = "(AI Face) Malfunction"
 	desc = "Turns you into a scary malfunctioning AI! Only in appearance, of course."
 	required_medal = "HUMANOID MUST NOT ESCAPE"
+	category = MEDAL::REWARD::CATEGORY::SILICON
+	icon = 'icons/mob/ai.dmi'
+	icon_state = "ai_malf"
 
 	rewardActivate(var/mob/activator)
 		if (isAI(activator))
@@ -1176,6 +1012,9 @@
 	title = "(AI Face) Tetris"
 	desc = "Turns you into a tetris-playing machine!"
 	required_medal = "Block Stacker"
+	category = MEDAL::REWARD::CATEGORY::SILICON
+	icon = 'icons/mob/ai.dmi'
+	icon_state = "ai_tetris"
 
 	rewardActivate(var/mob/activator)
 		if (isAI(activator))
@@ -1196,6 +1035,9 @@
 	title = "(Cyborg Skin) Automaton"
 	desc = "Turns you into the mysterious Automaton! Only in appearance, of course. Keys not included."
 	required_medal = "Icarus"
+	icon = 'icons/mob/robots.dmi'
+	icon_state = "automaton"
+	category = MEDAL::REWARD::CATEGORY::SILICON
 
 	rewardActivate(var/mob/activator)
 		if (isrobot(activator))
@@ -1206,36 +1048,13 @@
 		else
 			boutput(activator, SPAN_ALERT("You need to be a cyborg to use this, you goof!"))
 
-/*
-/datum/achievementReward/secbelt
-	title = "(Skin) Security Toolbelt"
-	desc = "Turns your worn Utility Belt into a Security Toolbelt."
-	required_medal = "Suitable? How about the Oubliette?!"
-
-	rewardActivate(var/mob/living/carbon/human/activator)
-
-	rewardActivate(var/mob/activator)
-		if (!ishuman(activator))
-			return
-
-		var/mob/living/carbon/human/H = activator
-
-		if (H.belt && istype(H.belt, /obj/item/storage/belt/utility))
-			var/obj/item/storage/belt/utility/M = H.belt
-			var/prev = M.name
-			M.icon_state = "secbelt"
-			M.item_state = "secbelt"
-			M.name = "security toolbelt"
-			M.real_name = "security toolbelt"
-			M.desc = "For the trend-setting Security Officer on the go. (Base Item: [prev])"
-			H.set_clothing_icon_dirty()
-		return
-*/
-
 /datum/achievementReward/goldenGun
 	title = "Golden Gun"
-	desc = "Gold plates a shotgun, hunting rifle, detective revolver, or AK-47 you're holding."
+	desc = "Gold plates a shotgun, hunting rifle, detective revolver, Colt SAA, or AK-47 you're holding."
 	required_medal = "Helios"
+	category = MEDAL::REWARD::CATEGORY::ITEM
+	icon = 'icons/obj/items/guns/kinetic.dmi'
+	icon_state = "colt_saa-golden"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -1266,6 +1085,9 @@
 	title = "Golden Carrier"
 	desc = "Gold plates a pet carrier."
 	required_medal = "Noah's Shuttle"
+	category = MEDAL::REWARD::CATEGORY::ITEM
+	icon = 'icons/obj/items/pet_carrier.dmi'
+	icon_state = "carrier-full-golden"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -1298,6 +1120,7 @@
 	title = "(Emote) Smug"
 	desc = "Gives you the ability to be all smug about something. I bet nobody likes you."
 	required_medal = ":10bux:"
+	COPY_ATOM_ICON(/obj/effect/smug)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -1309,6 +1132,7 @@
 	title = "(Emote) Shelterbee"
 	desc = "Shelterbee expresses what you cannot. And it's also pretty dang cute."
 	required_medal = "Too Cool"
+	COPY_ATOM_ICON(/obj/effect/shelterbee)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -1326,28 +1150,37 @@
 	pixel_y = -16
 
 /datum/achievementReward/participantribbon
-	title = "(Transformation) Participation Ribbon"
-	desc = "Turn into a living participation ribbon. No refunds!"
+	title = "(Item) Participation Ribbon"
+	desc = "Receive a participation ribbon. No refunds!"
 	required_medal = "Fun Times"
-	mobonly = 0
+	category = MEDAL::REWARD::CATEGORY::ITEM
+	COPY_ATOM_ICON(/obj/item/sticker/ribbon/participant)
 
 	rewardActivate(var/mob/activator)
-		if (!isobserver(activator))
-			boutput(activator, SPAN_ALERT("You gotta be dead to use this, you goof!"))
-			return
-		if(istype(activator, /mob/dead/target_observer) && !istype_exact(activator, /mob/dead/target_observer))
-			boutput(activator, SPAN_ALERT("You gotta be a ghost to use this, you goof!"))
-			return
-		var/mob/living/object/O = new /mob/living/object(get_turf(usr), new /obj/item/sticker/ribbon/participant, usr)
-		O.say_language = "animal"
-		O.literate = 0
+		var/ribbon = new/obj/item/sticker/ribbon/participant(get_turf(activator))
+		activator.put_in_hand_or_drop(ribbon)
 		return 1
+
+/datum/achievementReward/xenoarcheology_hat
+	title = "(Item) Xenoarchaeologist Hat"
+	desc = "Receive a hat that shows your love of space relics."
+	required_medal = "Licensed Archaeologist"
+	once_per_round = TRUE
+	COPY_ATOM_ICON(/obj/item/clothing/head/safari/artsci)
+
+	rewardActivate(var/mob/activator)
+		var/hat = new/obj/item/clothing/head/safari/artsci(get_turf(activator))
+		activator.put_in_hand_or_drop(hat)
+		return TRUE
 
 /datum/achievementReward/goldbud
 	title = "(Skin) Golden PR-4 Guardbuddy Frame"
 	desc = "Gold plates a held PR-4 Guardbuddy frame."
 	required_medal = "Ol' buddy ol' pal"
 	once_per_round = 1
+	category = MEDAL::REWARD::CATEGORY::ITEM
+	icon = 'icons/obj/bots/robuddy/pr-4.dmi'
+	icon_state = "skin-gold"
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -1396,7 +1229,8 @@
 /datum/achievementReward/beefriend
 	title = "(Reagent) Bee"
 	desc = "You're gonna burp one up, probably."
-	required_medal = "Bombini is missing!"
+	required_medal = "Bombini is Missing!"
+	COPY_ATOM_ICON(/obj/npc/trader/bee)
 
 	rewardActivate(var/mob/activator)
 		if (!activator.reagents) return
@@ -1408,6 +1242,7 @@
 	title = "(Fancy Gib) Plague of Blood"
 	desc = "This will cleanse you of Original Sin (permanently)."
 	required_medal = "Original Sin"
+	COPY_ATOM_ICON(/obj/item/skull/vampire)
 	// once_per_round = 0
 
 	rewardActivate(var/mob/activator)
@@ -1439,11 +1274,14 @@
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, TRUE)
 		activator.gib()
 		return 1
+
 /datum/achievementReward/HotrodHelmet
 	title = "(Skin) Hotrod Welding Helmet"
 	desc = "Requires you to hold a welding helmet."
 	required_medal = "Slow Burn"
 	once_per_round = 0
+	category = MEDAL::REWARD::CATEGORY::ITEM
+	COPY_ATOM_ICON(/obj/item/clothing/head/helmet/welding/fire)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -1452,12 +1290,7 @@
 		var/obj/item/clothing/head/helmet/welding/skin_target = activator.find_type_in_hand(/obj/item/clothing/head/helmet/welding)
 		if (skin_target)
 			var/obj/item/clothing/head/helmet/welding/fire/new_helmet = new /obj/item/clothing/head/helmet/welding/fire(get_turf(activator))
-			new_helmet.fingerprints = skin_target.fingerprints
-			new_helmet.fingerprints_full = skin_target.fingerprints_full
-			new_helmet.fingerprintslast = skin_target.fingerprintslast
-			skin_target.fingerprints = null
-			skin_target.fingerprints_full = null
-			skin_target.fingerprintslast = null
+			new_helmet.forensic_holder = skin_target.forensic_holder
 			qdel(skin_target)
 			activator.put_in_hand_or_drop(new_helmet)
 			return 1
@@ -1465,6 +1298,23 @@
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a welding helmet in your hands."))
 			return
 
+/datum/achievementReward/fishing_rod
+	title = "(Skin) Gilded Fishing Rod"
+	desc = "One use, requires you to hold a fishing rod."
+	required_medal = "So Long, and Thanks for All the Fish"
+	category = MEDAL::REWARD::CATEGORY::ITEM
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	icon_state = "reward_icon"
+
+	rewardActivate(mob/activator)
+		var/obj/item/fishing_rod/rod = activator.find_type_in_hand(/obj/item/fishing_rod) || activator.find_type_in_hand(/obj/item/syndie_fishing_rod)
+		if (!rod)
+			boutput(activator, SPAN_ALERT("Unable to redeem... You must have a fishing rod in your hands!"))
+			return null
+		rod.gilded = TRUE
+		rod.UpdateIcon()
+		activator.update_inhands()
+		return TRUE
 
 // Reward management stuff
 
@@ -1474,6 +1324,7 @@
 	required_medal = "Contributor"
 	once_per_round = 0
 	mobonly = 0
+	COPY_ATOM_ICON(/obj/item/organ/heart)
 
 	rewardActivate(mob/user)
 		ui_interact(user)
@@ -1517,70 +1368,13 @@
 	proc/sillyscream(mob/M)
 		var/mob/living/living = M
 		if(istype( living ))
-			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
+			M.bioHolder.mobAppearance.screamsounds["sillyscream"] = pick('sound/voice/screams/sillyscream1.ogg', 'sound/voice/screams/sillyscream2.ogg')
+			M.bioHolder.mobAppearance.screamsound = "sillyscream"
+			M.bioHolder.mobAppearance.UpdateMob()
 			M.playsound_local_not_inworld(living.sound_scream, 100)
 			return 1
 		else
 			boutput( usr, SPAN_ALERT("Hmm.. I can't set the scream sound of that!") )
 			return 0
 
-/// Keeps track of once-per-round rewards
-/datum/player/var/list/claimed_rewards = list()
-
-/client/verb/claimreward()
-	set background = 1
-	set name = "Claim Reward"
-	set desc = "Allows you to claim rewards you might have earned."
-	set category = "Commands"
-	set popup_menu = 0
-
-	SPAWN(0)
-		src.verbs -= /client/verb/claimreward
-		boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
-		var/list/eligible = list()
-		for(var/A in rewardDB)
-			var/datum/achievementReward/D = rewardDB[A]
-			var/result = usr.has_medal(D.required_medal)
-			if(result == 1)
-				if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
-					if( D.mobonly && !istype( src.mob, /mob/living ) ) continue
-					eligible.Add(D.title)
-					eligible[D.title] = D
-
-		if(!length(eligible))
-			boutput(usr, SPAN_ALERT("Sorry, you don't have any rewards available."))
-			src.verbs += /client/verb/claimreward
-			return
-
-		var/selection = tgui_input_list(usr,"Please select your reward", "VIP Rewards", (eligible + "CANCEL"))
-
-		if(!selection || selection == "CANCEL")
-			src.verbs += /client/verb/claimreward
-			return
-
-		var/datum/achievementReward/S = null
-
-		for(var/X in rewardDB)
-			var/datum/achievementReward/C = rewardDB[X]
-			if(C.title == selection)
-				S = C
-				break
-
-		if(S == null)
-			boutput(usr, SPAN_ALERT("Invalid Rewardtype after selection. Please inform a coder."))
-			return
-
-		if(S.once_per_round && src.player.claimed_rewards.Find(S.type))
-			boutput(usr, SPAN_ALERT("You already claimed this!"))
-			return
-
-		var/confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
-		src.verbs += /client/verb/claimreward
-		if(confirm == "Yes")
-			var/worked = S.rewardActivate(src.mob)
-			if (worked)
-				boutput(usr, SPAN_ALERT("Successfully claimed \"[S.title]\"."))
-				if(S.once_per_round)
-					src.player.claimed_rewards.Add(S.type)
-			else
-				boutput(usr, SPAN_ALERT("Redemption of \"[S.title]\" failed."))
+#undef COPY_ATOM_ICON

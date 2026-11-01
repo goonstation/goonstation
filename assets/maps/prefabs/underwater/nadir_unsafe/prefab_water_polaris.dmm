@@ -20,10 +20,6 @@
 /obj/decal/cleanable/machine_debris,
 /turf/variableTurf/clear,
 /area/noGenerate)
-"f" = (
-/obj/item/raw_material/shard/glass,
-/turf/variableTurf/clear,
-/area/space)
 "g" = (
 /turf/unsimulated/floor/polarispit/polarispitwall,
 /area/noGenerate)
@@ -144,7 +140,7 @@ a
 "}
 (8,1,1) = {"
 d
-f
+k
 a
 a
 h

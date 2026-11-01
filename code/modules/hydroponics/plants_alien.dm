@@ -194,7 +194,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 /datum/plant/artifact/plasma
 	name = "Plasma"
 	override_icon_state = "Plasma"
-	crop = /obj/critter/spore
+	crop = /mob/living/critter/plasmaspore
 	unique_seed = /obj/item/seed/alien/plasma
 	starthealth = 20
 	growtime = 180
@@ -400,16 +400,17 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			user.show_text("You were interrupted!", "red")
 			return
 
-
-
 /datum/plant/crystal
 	name = "Crystal"
 	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	sprite = "Crystal"
 	starthealth = 50
-	growtime = 300
-	harvtime = 600
+	growtime = 250
+	harvtime = 450
+	cropsize = 4
 	harvestable = 1
 	endurance = 100
 	vending = 0
+	stop_size_scaling = TRUE // Let's not have huge plasmaglass shards, that looks wacky
 	crop = /obj/item/raw_material/shard/plasmacrystal
+

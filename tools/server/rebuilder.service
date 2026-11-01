@@ -1,0 +1,14 @@
+# sudo cp rebuilder.service /etc/systemd/system/ss13-rebuilder.service
+# sudo systemctl daemon-reload
+# sudo systemctl enable ss13-rebuilder
+# sudo systemctl start ss13-rebuilder
+
+[Unit]
+Description=Rebuild SS13 server containers on demand
+
+[Service]
+Environment='SERVERS=main1 main3 main4 main5 dev streamer1'
+ExecStart=/bin/bash /pop/ss13/servers/main1/game/tools/server/rebuilder.sh $SERVERS
+
+[Install]
+WantedBy=multi-user.target

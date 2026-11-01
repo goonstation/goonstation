@@ -32,7 +32,8 @@
 /atom/movable/screen/hud
 	var/datum/hud/master
 	var/id = ""
-	var/tooltipTheme
+	var/show_tooltip = FALSE
+	var/list/tooltip_options = list()
 	var/obj/item/item
 
 /atom/movable/screen/hud/New(loc, icon, icon_state)
@@ -59,22 +60,22 @@
 	if (src.id == "stats" && istype(master, /datum/hud/human))
 		var/datum/hud/human/H = master
 		H.update_stats()
-	if (usr.client.tooltipHolder && src.tooltipTheme)
-		usr.client.tooltipHolder.showHover(src, list(
-			"params" = params,
+	if (usr.client.tooltips && src.show_tooltip)
+		usr.client.tooltips.show(arglist(list(
+			"type" = TOOLTIP_HOVER,
+			"target" = src,
+			"mouse" = params,
 			"title" = src.name,
-			"content" = (src.desc ? src.desc : null),
-			"theme" = src.tooltipTheme
-		))
-	else
-		if (master && (!master.click_check || (usr in master.mobs)))
-			master.MouseEntered(src, location, control, params)
+			"content" = src.desc ? src.desc : null,
+		) + src.tooltip_options))
+	else if (master && (!master.click_check || (usr in master.mobs)))
+		master.MouseEntered(src, location, control, params)
 
-/atom/movable/screen/hud/MouseExited()
-	if (usr.client.tooltipHolder)
-		usr.client.tooltipHolder.hideHover()
-	if (master && (!master.click_check || (usr in master.mobs)))
-		master.MouseExited(src)
+/atom/movable/screen/hud/MouseExited(location, control, params)
+	if (usr.client.tooltips && src.show_tooltip)
+		usr.client?.tooltips?.hide(TOOLTIP_HOVER)
+	else if (master && (!master.click_check || (usr in master.mobs)))
+		master.MouseExited(src, location, control, params)
 
 /atom/movable/screen/hud/MouseWheel(dx, dy, loc, ctrl, parms)
 	if (master && (!master.click_check || (usr in master.mobs)))
@@ -106,9 +107,15 @@
 	**/
 	var/list/datum/hud_zone/hud_zones = list()
 
+	/// Assoc list of status effect instance -> its `/atom/movable/screen/statusEffect`, see [/datum/hud/proc/sync_status_effects]
+	var/list/statusUiElements = null
+
 	disposing()
 		for (var/mob/M in src.mobs)
 			M.detach_hud(src)
+		for (var/client/C in src.clients)
+			src.remove_client(C)
+
 		for (var/atom/movable/Obj in src.objects)
 			Obj.plane = initial(Obj.plane)
 			if(istype(Obj, /atom/movable/screen/hud))
@@ -120,9 +127,6 @@
 		for (var/datum/hud_zone/zone in src.hud_zones)
 			qdel(zone)
 		src.hud_zones = null
-
-		for (var/client/C in src.clients)
-			remove_client(C)
 
 		src.clear_master()
 		..()
@@ -148,7 +152,8 @@
 		for (var/atom/A in src.objects)
 			C.screen -= A
 
-	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null, mouse_opacity = 1)
+	/// Will not set the `blend_mode` of a `customType` to `null`.
+	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltip_options = list(), desc = null, customType = null, mouse_opacity = 1, blend_mode = null)
 		if(QDELETED(src))
 			CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
 		var/atom/movable/screen/hud/S
@@ -168,20 +173,24 @@
 		S.screen_loc = loc
 		S.layer = layer
 		S.set_dir(dir)
-		S.tooltipTheme = tooltipTheme
+		S.show_tooltip = tooltip_options && length(tooltip_options)
+		S.tooltip_options = tooltip_options
 		S.mouse_opacity = mouse_opacity
+		if(blend_mode != null) // `blend_mode` is a newer parameter on this older proc. This check is made with the intention of not breaking things.
+			S.blend_mode = blend_mode
 		src.objects += S
 
 		for (var/client/C in src.clients)
 			C.screen += S
 		return S
 
-	proc/add_object(atom/movable/A, layer = HUD_LAYER, loc)
+	proc/add_object(atom/movable/A, layer = HUD_LAYER, loc, mouse_item = TRUE)
 		if (loc)
 			//A.screen_loc = loc
 			A.screen_loc = do_hud_offset_thing(A, loc)
 		A.layer = layer
 		A.plane = PLANE_HUD
+		if (isitem(A) && mouse_item) A.mouse_opacity = 2
 		if (!(A in src.objects))
 			src.objects += A
 			for (var/client/C in src.clients)
@@ -189,6 +198,7 @@
 
 	proc/remove_object(atom/movable/A)
 		A.plane = initial(A.plane) // object should really be restoring this by itself, but we'll just make sure it doesnt get trapped in the HUD plane
+		if (isitem(A)) A.mouse_opacity = initial(A.mouse_opacity)
 		if (src.objects)
 			src.objects -= A
 		for (var/client/C in src.clients)
@@ -223,6 +233,44 @@
 		for (var/client/C in src.clients)
 			C.screen -= S
 
+	/// Shows owner's visible status effects in a row going west from `start_x` tiles off the east edge at `screen_y`.
+	/// Only touches elements whose position or value changed.
+	proc/sync_status_effects(atom/owner, status_icon, screen_y, start_x)
+		var/list/datum/statusEffect/statuses = owner?.statusEffects
+		for (var/datum/statusEffect/S as anything in src.statusUiElements) //Remove ended effects
+			if (!(S in statuses))
+				var/atom/movable/screen/statusEffect/U = src.statusUiElements[S]
+				src.remove_screen(U)
+				qdel(U)
+				src.statusUiElements -= S
+				qdel(S)
+
+		// Nobody is looking
+		if (!length(src.clients) || !length(statuses))
+			return
+
+		var/pos_x = start_x
+		for (var/datum/statusEffect/S as anything in statuses)
+			if (!S.visible)
+				continue
+			var/atom/movable/screen/statusEffect/U = src.statusUiElements?[S]
+			var/is_new = isnull(U)
+			if (is_new)
+				U = new
+				U.init(owner, S)
+				LAZYLISTINIT(src.statusUiElements)
+				src.statusUiElements[S] = U
+			if (U.icon != status_icon)
+				U.icon = status_icon
+			var/new_screen_loc = "EAST[pos_x < 0 ? "" : "+"][pos_x],[screen_y]"
+			if (U.screen_loc != new_screen_loc)
+				U.screen_loc = new_screen_loc
+			U.update_value()
+			if (is_new)
+				src.add_screen(U)
+				animate_buff_in(U)
+			pos_x -= 0.6
+
 	proc/remove_screen_id(var/id)
 		var/atom/movable/screen/S = get_by_id(id)
 		if(S)
@@ -239,7 +287,7 @@
 
 	proc/relay_click(id)
 	proc/scrolled(id, dx, dy, user, parms)
-	proc/MouseEntered(id,location, control, params)
-	proc/MouseExited(id)
+	proc/MouseEntered(id, location, control, params)
+	proc/MouseExited(id, location, control, params)
 	proc/MouseDrop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 	proc/MouseDrop_T(var/atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob, params)

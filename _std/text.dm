@@ -1,3 +1,6 @@
+/// Checks whether a standard "haystack" string matches a regex-enabled "needle". For non-regex needles, identical to (X == Y).
+#define matchtext(haystack, needle) (istype(needle, /regex) ? (findtext(haystack, needle) && !replacetext(haystack, needle, "")) : (haystack == needle))
+
 #define EXTERNAL_LINK(URL, TEXT) {"<a href=""} + URL + {"" target="_blank">"} + TEXT + {"</a>"}
 
 /proc/trim_left(text)
@@ -37,6 +40,13 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		return t
 
 	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
+
+/proc/capitalize_each_word(t as text)
+	var/list/split = splittext(t, " ")
+	var/list/words = list()
+	for (var/word in split)
+		words += capitalize(word)
+	return list2text(words, " ")
 
 /// Returns true if the given string has a vowel
 /proc/isVowel(var/t as text)
@@ -163,6 +173,8 @@ proc/pluralize(word)
 	else
 		. += "s"
 
+proc/list2text(L, d = "")
+	return jointext(L, d)
 
 
 // DM simultaneously makes cursed shit like this work...
@@ -175,3 +187,9 @@ var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
   * Removes the special data inserted via use of \improper etc in strings
   */
 #define stripTextMacros(text) replacetext(text, regexTextMacro, "")
+
+var/global/regex/sentence_end_regex = regex(".*\[\\.\\?\\!\\-\]$")
+proc/end_sentence(sentence, punctuation = ".")
+	if (sentence_end_regex.Find(sentence))
+		return sentence
+	return sentence + punctuation

@@ -1,11 +1,10 @@
 /datum/targetable/critter/self_immolate
 	name = "Self Immolate"
-	desc = "Expend some of your health to create a permanent fire that gives off healing embers."
+	desc = "Expend 20% of your current health to create a permanent fire that gives off healing embers."
 	icon_state = "fire_e_immolate"
 
-	cooldown = 15 SECONDS
+	cooldown = 25 SECONDS
 	targeted = FALSE
-
 
 	cast()
 		if (..())
@@ -14,12 +13,13 @@
 
 		var/mob/fe = holder.owner
 		// boutput(holder.owner, SPAN_ALERT("[fe.get_damage()] damage."))
-		if (fe.get_damage() < 100)
+		if (fe.get_damage() < 0)
 			boutput(fe, SPAN_ALERT("You must be in good health to self-immolate!"))
 			return 1
 
-		fe.TakeDamage("All", 50, 0, 0, DAMAGE_BLUNT)
-		holder.owner.visible_message(SPAN_NOTICE("<b>[holder.owner] self immolates! [fe]!</b>"))
+		var/damage_dealt = fe.get_damage() * 0.2
+		fe.TakeDamage("All", damage_dealt, 0, 0, DAMAGE_BLUNT)
+		holder.owner.visible_message(SPAN_NOTICE("<b>[holder.owner] self immolates!</b>"))
 
 		// fireflash(get_turf(fe), 1, checkLos = FALSE, chemfire = CHEM_FIRE_BLUE)
 		var/T = get_turf(fe)
@@ -38,18 +38,32 @@
 		else
 			return 1
 
-		var/obj/hotspot/chemfire/cf = locate(/obj/hotspot/chemfire) in T
+		//Make flame on tile we're standing on
+		var/atom/movable/hotspot/chemfire/cf = locate(/atom/movable/hotspot/chemfire) in T
 		if (cf == null || cf.fire_color != CHEM_FIRE_DARKRED)
-			new /obj/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+			new /atom/movable/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
 
-		cf = locate(/obj/hotspot/chemfire) in T1
-		if (cf == null || cf.fire_color != CHEM_FIRE_DARKRED)
-			new /obj/hotspot/chemfire(T1,  CHEM_FIRE_DARKRED)
-
-		cf = locate(/obj/hotspot/chemfire) in T2
-		if (cf == null || cf.fire_color != CHEM_FIRE_DARKRED)
-			new /obj/hotspot/chemfire(T2,  CHEM_FIRE_DARKRED)
-
+		//Make flame on tile to the East/West or North/South
+		var/atom/movable/hotspot/chemfire/o = new /atom/movable/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+		o.set_real_color()
+		spawn(1)
+			handle_fire_spread(T, T1, o)
+		var/atom/movable/hotspot/chemfire/o1 = new /atom/movable/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+		o1.set_real_color()
+		spawn(1)
+			handle_fire_spread(T, T2, o1)
 		return 0
 
+
+	proc/handle_fire_spread(turf/Source, turf/Destination, obj/fire)
+		fire.set_loc(Destination)
+		if (get_turf(fire) == Source)
+			qdel(fire)
+		// If tile it moves to has a darkred chemfire, then delete this
+		if (get_turf(fire) == Destination)
+			for(var/atom/movable/hotspot/chemfire/cf in  Destination)
+				if (cf == fire) continue
+				if (cf.fire_color == CHEM_FIRE_DARKRED)
+					qdel(fire)
+					break;
 

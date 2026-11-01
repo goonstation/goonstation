@@ -8,7 +8,6 @@
 ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic
 	name = "aquatic mobcritter"
-	real_name = "aquatic mobcritter"
 	desc = "No, you should not be seeing this!"
 	icon = 'icons/misc/sea_critter.dmi'
 	density = 0
@@ -31,8 +30,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 	var/is_pet = null // null for automatic detection
 
-	var/datum/lifeprocess/aquatic_breathing/aquabreath_process = null
-
 /mob/living/critter/aquatic/New(loc)
 	if(isnull(src.is_pet))
 		src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
@@ -40,20 +37,27 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		src.is_pet = 0
 	if(src.is_pet)
 		START_TRACKING_CAT(TR_CAT_PETS)
+	#ifdef MAP_OVERRIDE_NEON // plasma coral, neon uniqueness, strange wildlife happenings
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+	#endif
 	..()
 	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 
 /mob/living/critter/aquatic/restore_life_processes()
 	. = ..()
-	src.aquabreath_process = add_lifeprocess(/datum/lifeprocess/aquatic_breathing,src.in_water_buff,src.out_of_water_debuff)
+	src.AddComponent(/datum/component/aquatic_breathing, src.in_water_buff, src.out_of_water_debuff, CALLBACK(src, PROC_REF(move_callback)))
+
+/mob/living/critter/aquatic/proc/move_callback(datum/component/aquatic_breathing/C)
+	return
 
 /mob/living/critter/aquatic/disposing()
 	ai?.dispose()
 	ai = null
 	if(src.is_pet)
 		STOP_TRACKING_CAT(TR_CAT_PETS)
-	remove_lifeprocess(/datum/lifeprocess/aquatic_breathing)
-	..()
+
+	src.RemoveComponentsOfType(/datum/component/aquatic_breathing)
+	. = ..()
 
 /mob/living/critter/aquatic/setup_healths()
 	add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -96,82 +100,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if(P.mob_shooter)
 		src.harmed_by(P.mob_shooter)
 
-/mob/living/critter/aquatic/EnteredFluid(obj/fluid/F, atom/oldloc)
-	. = ..()
-	src.aquabreath_process?.update_water_status()
-
-/datum/lifeprocess/aquatic_breathing
-	var/water_need = 0 // 0, 1, or 2; 1 and 2 just differ in intensity
-	var/in_water_to_out_of_water = 0 // did they enter an area with sufficient water from an area with insufficient water?
-	var/out_of_water_debuff = 1 // debuff amount for being out of water
-	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
-	var/in_water_buff = 1 // buff amount for being in water
-
-	New(mob/new_owner,arguments)
-		..()
-		if(length(arguments) >= 2)
-			in_water_buff = arguments[1]
-			out_of_water_debuff = arguments[2]
-		new_owner.event_handler_flags |= USE_FLUID_ENTER
-
-	process()
-		src.update_water_status()
-		if (HAS_ATOM_PROPERTY(src.critter_owner, PROP_MOB_BREATHLESS)) return
-		if(src.critter_owner)
-			if(src.water_need)
-				if(prob(50 * src.water_need) && !critter_owner.nodamage) // question: this gets rid of like one proc call; worth it?
-					var/datum/healthHolder/Br = critter_owner.get_health_holder("brute")
-					Br?.TakeDamage(src.water_need * src.out_of_water_debuff)
-					var/datum/healthHolder/Bu = critter_owner.get_health_holder("burn")
-					if(Bu && !critter_owner.is_heat_resistant())
-						Bu.TakeDamage(src.water_need * src.out_of_water_debuff)
-					hit_twitch(critter_owner)
-			else if(critter_owner.max_health > critter_owner.health && prob(10 * src.in_water_buff))
-				var/datum/healthHolder/Br = critter_owner.get_health_holder("brute")
-				if (Br && Br.maximum_value > Br.value)
-					Br.TakeDamage(-src.in_water_buff)
-				var/datum/healthHolder/Bu = critter_owner.get_health_holder("burn")
-				if (Bu && Bu.maximum_value > Bu.value && !critter_owner.is_heat_resistant())
-					Bu.TakeDamage(-src.in_water_buff)
-		else if(src.human_owner)
-			if(src.water_need)
-				if(prob(50 * src.water_need) && !human_owner.nodamage) // question: this gets rid of like one proc call; worth it?
-					human_owner.take_oxygen_deprivation(10*src.water_need)
-					hit_twitch(critter_owner)
-			else if(human_owner.max_health > human_owner.health && prob(10 * src.in_water_buff))
-				human_owner.HealDamage("All", src.in_water_buff, src.in_water_buff,0)
-				human_owner.take_oxygen_deprivation(-10)
-
-
-	proc/update_water_status(loc = null)
-		if(isnull(loc))
-			loc = owner.loc
-		if(istype(loc, /turf/space/fluid)) // question: is this logic viable? too messy?
-			if(src.water_need)
-				src.water_need = 0
-				src.out_of_water_to_in_water = 1
-		else if(isturf(loc))
-			var/turf/T = loc
-			if (T.active_liquid)
-				if(T.active_liquid.last_depth_level > 3)
-					if(src.water_need)
-						src.water_need = 0
-						src.out_of_water_to_in_water = 1
-				else
-					if(src.water_need != 1)
-						if(!src.water_need)
-							src.in_water_to_out_of_water = 1
-						src.water_need = 1
-			else
-				if(src.water_need != 2)
-					if(!src.water_need)
-						src.in_water_to_out_of_water = 1
-					src.water_need = 2
-		else // so, like, in a vehicle or something; this does not work for being inside large storages
-			if(src.water_need != 2)
-				if(!src.water_need)
-					src.in_water_to_out_of_water = 1
-				src.water_need = 2
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //fish
@@ -179,12 +107,11 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/fish
 	name = "fish"
-	real_name = "fish"
 	desc = "Goes well with chips."
 	icon_state = "clownfish"
 	base_move_delay = 3
-	speechverb_say = "blubs"
-	speechverb_exclaim = "glubs"
+	speech_verb_say = "blubs"
+	speech_verb_exclaim = "glubs"
 	death_text = "%src% flops belly up!"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/small
 	// todo: skinresult of scales, custom_brain_type of fish egg item (caviar?)
@@ -199,7 +126,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	..()
 	var/datum/handHolder/HH = hands[1]
 	HH.limb = new /datum/limb/mouth/fish
-	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon = 'icons/mob/critter_hands.dmi'
 	HH.icon_state = "mouth"
 	HH.name = "mouth"
 	HH.limb_name = "mouth"
@@ -217,17 +144,18 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 			src.ai = new /datum/aiHolder/aquatic/fish(src)
 			mobs.Remove(src)*/
 
-/mob/living/critter/aquatic/fish/Move(NewLoc, direct)
-	. = ..()
-	if(src.aquabreath_process.out_of_water_to_in_water)
+/mob/living/critter/aquatic/fish/move_callback(datum/component/aquatic_breathing/C)
+	if (C.out_of_water_to_in_water)
 		animate_bumble(src)
-		src.aquabreath_process.out_of_water_to_in_water = 0
-	else if(src.aquabreath_process.in_water_to_out_of_water)
+		C.out_of_water_to_in_water = FALSE
+
+	else if (C.in_water_to_out_of_water)
 		animate(src)
-		src.aquabreath_process.in_water_to_out_of_water = 0
-	else if(src.aquabreath_process.water_need && prob(20 * src.aquabreath_process.water_need))
+		C.in_water_to_out_of_water = FALSE
+
+	else if (C.water_need && prob(20 * C.water_need))
 		hit_twitch(src)
-		src.visible_message("<b>[src]</b> [pick("flops around desperately","gasps","shudders")].")
+		src.visible_message("<b>[src]</b> [pick("flops around desperately", "gasps", "shudders")].")
 
 /mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
@@ -236,12 +164,12 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
-	if(!src.aquabreath_process.water_need && !isdead(src))
+	if(!SEND_SIGNAL(src, COMSIG_AQUATIC_GET_WATER_NEED) && !isdead(src))
 		animate_bumble(src)
 
 /mob/living/critter/aquatic/fish/harmed_by(var/mob/M)
 	..()
-	if(src.is_npc && !isdead(src) && !src.aquabreath_process.water_need && !swimming_away) // todo: add this to AI to make things cleaner?
+	if(src.is_npc && !isdead(src) && !SEND_SIGNAL(src, COMSIG_AQUATIC_GET_WATER_NEED) && !swimming_away) // todo: add this to AI to make things cleaner?
 		walk_away(src,M,6,4)
 		swimming_away = 1
 		if(src)
@@ -258,7 +186,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic/fish/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)
 		if ("flip")
-			if (src.emote_check(voluntary, 50) && !src.aquabreath_process.water_need)
+			if (src.emote_check(voluntary, 50) && !SEND_SIGNAL(src, COMSIG_AQUATIC_GET_WATER_NEED))
 				SPAWN(1 SECOND)
 					animate_bumble(src)
 				return null
@@ -273,7 +201,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 						src.pixel_x-= 2
 						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
-					if(!src.aquabreath_process.water_need)
+					if(!SEND_SIGNAL(src, COMSIG_AQUATIC_GET_WATER_NEED))
 						animate_bumble(src)
 				return "<b>[src]</b> dances!"
 	return null
@@ -383,7 +311,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/king_crab
 	name = "king crab"
-	real_name = "king crab"
 	desc = "This doesn't look tasty at all. It probably has spectacular levels of mercury and lead and who knows what else."
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "king_crab"
@@ -396,8 +323,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	can_throw = 1
 	can_choke = 1
 	pet_text = "pokes"
-	speechverb_say = "demands"
-	speechverb_exclaim = "bellows"
+	speech_verb_say = "demands"
+	speech_verb_exclaim = "bellows"
 	death_text = "%src% collapses in on itself!"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	// todo: meat_type of something cool, skinresult of especially hard crustacean plates?
@@ -440,19 +367,20 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		else
 			src.ai = new /datum/aiHolder/aquatic/king_crab(src)
 
-/mob/living/critter/aquatic/king_crab/Move(NewLoc, direct)
-	. = ..()
-	if(src.aquabreath_process.out_of_water_to_in_water)
-		base_move_delay = 1
-		src.aquabreath_process.out_of_water_to_in_water = 0
-	else if(src.aquabreath_process.in_water_to_out_of_water)
+/mob/living/critter/aquatic/king_crab/move_callback(datum/component/aquatic_breathing/C)
+	if (C.out_of_water_to_in_water)
+		src.base_move_delay = 1
+		C.out_of_water_to_in_water = FALSE
+
+	else if (C.in_water_to_out_of_water)
 		animate_shake(src)
 		src.emote("scream")
-		base_move_delay = 2
-		src.aquabreath_process.in_water_to_out_of_water = 0
-	else if(src.aquabreath_process.water_need && prob(src.aquabreath_process.water_need))
+		src.base_move_delay = 2
+		C.in_water_to_out_of_water = FALSE
+
+	else if (C.water_need && prob(C.water_need))
 		hit_twitch(src)
-		src.visible_message("<b>[src]</b> [pick("shudders","clinks heavily","gasps","looks dazed")].")
+		src.visible_message("<b>[src]</b> [pick("shudders", "clinks heavily", "gasps", "looks dazed")].")
 
 /mob/living/critter/aquatic/king_crab/bump(atom/movable/AM)
 	..()
@@ -461,8 +389,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 			var/obj/window/W = AM
 			W.health = 0
 			W.smash()
-		else if(istype(AM, /obj/grille))
-			var/obj/grille/G = AM
+		else if(istype(AM, /obj/mesh/grille))
+			var/obj/mesh/grille/G = AM
 			G.damage_blunt(30)
 		else if(istype(AM, /obj/machinery/vehicle/tank) || istype(AM, /obj/table))
 			AM.meteorhit()
@@ -521,15 +449,15 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/fish/jellyfish
 	name = "jellyfish"
-	real_name = "jellyfish"
 	desc = "Squishy"
 	icon = 'icons/misc/sea_critter.dmi'
 	icon_state = "jellyfish"
 	base_move_delay = 2
 	hand_count = 2
 	pet_text = "pokes"
-	speechverb_say = "quibbles"
-	speechverb_exclaim = "shudders"
+	speech_verb_say = "quibbles"
+	speech_verb_exclaim = "shudders"
+	blood_id = "hemolymph"
 	death_text = "%src% collapses in a heap on the ground!"
 	meat_type = /obj/item/device/light/glowstick/green_on //Until I think of something else. Also it's kinda funny
 	add_abilities = list(/datum/targetable/critter/sting)
@@ -549,14 +477,14 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	..()
 	var/datum/handHolder/HH = hands[1]
 	HH.limb = new /datum/limb/mouth/fish/jellyfish
-	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon = 'icons/mob/critter_hands.dmi'
 	HH.icon_state = "mouth"
 	HH.name = "mouth"
 	HH.limb_name = "mouth"
 
 	HH = hands[2]
 	HH.limb = new /datum/limb/small_critter
-	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon = 'icons/mob/critter_hands.dmi'
 	HH.icon_state = "handn"
 	HH.name = "tendrils"
 	HH.limb_name = "tendrils"
@@ -567,7 +495,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/shark
 	name = "space shark"
-	real_name = "space shark"
 	desc = "This is the third most terrifying thing you've ever laid eyes on."
 	icon = 'icons/misc/banshark.dmi'
 	icon_state = "banshark1"
@@ -589,7 +516,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth/shark
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "jaws"
@@ -603,7 +530,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		. = ..()
 
 		if (length(.) && prob(10))
-			playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0)
+			if (!ON_COOLDOWN(src, "jaws_sound", 50 SECONDS))
+				playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0, 0, 1)
 
 	critter_scavenge(var/mob/target)
 		src.visible_message(SPAN_COMBAT("<B>[src]</B> gibs [target] in one bite!"))

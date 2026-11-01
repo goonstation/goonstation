@@ -6,7 +6,7 @@
 	included_cosmetic = /datum/robot_cosmetic/medical
 	included_tools = /datum/robot/module_tool_creator/recursive/module/medical
 	radio_type = /obj/item/device/radio/headset/medical
-	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGO_SILICON, MGD_PARTY)
+	mailgroups = list(MGD_MEDICAL, MGT_ROBOTICS, MGT_GENETICS, MGD_SILICON, MGD_PARTY)
 	alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 
 /datum/robot_cosmetic/medical

@@ -61,12 +61,9 @@
 		qdel(src)
 
 	proc/make_maptext(atom/target, msg)
-		msg = "<span class='ol vga c' style='font-size:9pt'>[msg]</span>"
-		var/obj/dummy/dummy = new(get_turf(target))
-		dummy.mouse_opacity = 0
-		var/image/chat_maptext/text = make_chat_maptext(dummy, msg, force = TRUE, time = INFINITY)
-		var/mob/actual_mob = src.fowner.abilityHolder.get_controlling_mob() //hunt for the client
-		text.show_to(actual_mob.client)
+		var/image/maptext/flock_tutorial/text = NEW_MAPTEXT(/image/maptext/flock_tutorial, msg)
+		text.loc = get_turf(target)
+		src.fowner.abilityHolder.get_controlling_mob().client.images += text
 
 	proc/portal_in(turf/location, type)
 		var/obj/portal/portal = new(location)
@@ -93,7 +90,7 @@
 			if (!initial(structure.show_in_tutorial))
 				continue
 			structures += list(list(
-				"icon" = icon2base64(icon(initial(structure.icon), initial(structure.icon_state), frame = 1)),
+				"icon" = icon2base64(icon(get_initial_icon(structure), initial(structure.icon_state), frame = 1)),
 				"name" = initial(structure.flock_id),
 				"description" = initial(structure.tutorial_desc) || initial(structure.flock_desc), //default to the normal description
 				"cost" = initial(structure.resourcecost)

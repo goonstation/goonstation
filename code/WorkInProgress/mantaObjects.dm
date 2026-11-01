@@ -9,7 +9,6 @@
 
 //-------------------------------------------- MANTA COMPATIBLE LISTS HERE --------------------------------------------
 
-var/list/mantaPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
 var/obj/manta_speed_lever/mantaLever = null
@@ -20,7 +19,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	density = 0
 	anchored = ANCHORED_ALWAYS
 	layer =  EFFECTS_LAYER_4
-	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
+	event_handler_flags = IMMUNE_OCEAN_PUSH | USE_FLUID_ENTER
 	name = ""
 	mouse_opacity = 0
 
@@ -519,7 +518,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				return
 
 	attackby(var/obj/item/I, var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 		if (broken == 0)
 			change_health(-I.force)
@@ -564,7 +563,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				return
 
 	attackby(var/obj/item/I, var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 		if (broken == 0)
 			change_health(-I.force)
@@ -643,7 +642,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
-		flick("englrt-act", src)
+		FLICK("englrt-act", src)
 		playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 		animate_teleport(user)
 		SPAWN(1 SECOND)
@@ -664,158 +663,6 @@ var/obj/manta_speed_lever/mantaLever = null
 						S.recharging = 0
 						src.recharging = 0
 				return
-/obj/item/rddiploma
-	name = "RD's diploma"
-	icon = 'icons/obj/items/items.dmi'
-	desc = ".. Upon closer inspection this degree seems to be fake! Who could have guessed!"
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon_state = "rddiploma"
-	item_state = "rddiploma"
-
-/obj/item/mdlicense
-	name = "MD's medical license"
-	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon_state = "mdlicense"
-	item_state = "mdlicense"
-
-/obj/item/firstbill
-	name = "HoP's first bill"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "hopbill"
-
-//CONSTRUCTION WORKER STUFF//
-
-/obj/item/sledgehammer
-	name = "sledgehammer"
-	desc = "A heavy hammer that takes great deal of strenght to wield."
-	icon_state = "sledgehammer"
-	item_state = "sledgehammer"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	two_handed = 1
-	click_delay = 30
-	force = 50
-
-	New()
-		..()
-		BLOCK_SETUP(BLOCK_ROD)
-
-/obj/item/clothing/head/constructioncone
-	desc = "Caution!"
-	name = "construction cone"
-	icon = 'icons/obj/construction.dmi'
-	icon_state = "cone_1"
-	force = 1
-	throwforce = 3
-	throw_speed = 1
-	throw_range = 5
-	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS
-	stamina_damage = 15
-	stamina_cost = 8
-	stamina_crit_chance = 10
-	max_stack = 5
-	item_state = "cone_1"
-	wear_state = "cone_hat_1"
-	hat_offset_y = 8
-
-	setupProperties()
-		..()
-		setProperty("coldprot", 0) // it has a hole on top, after all
-		setProperty("heatprot", 0)
-		setProperty("meleeprot_head", 2)
-
-	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message(SPAN_NOTICE("[user] begins gathering up [src]\s!"))
-
-	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		UpdateStackAppearance()
-		boutput(user, SPAN_NOTICE("You finish gathering up [src]\s."))
-
-	attack_hand(mob/user)
-		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
-
-			if (!in_interact_range(src, user)) //no walking away
-				return
-
-			var/obj/item/clothing/head/constructioncone/new_stack = split_stack(1)
-			if (!istype(new_stack))
-				boutput(user, SPAN_ALERT("Invalid entry, try again."))
-				return
-			user.put_in_hand_or_drop(new_stack)
-			new_stack.add_fingerprint(user)
-			boutput(user, SPAN_NOTICE("You take 1 cone from the stack, leaving [src.amount] cones behind."))
-		else
-			..(user)
-
-
-	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/clothing/head/constructioncone))
-			if (src.loc == user)
-				if (ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if (H.head == src)
-						boutput(user, SPAN_ALERT("You can't stack cones when they are on your head!"))
-						return
-			var/success = stack_item(I)
-			if (!success)
-				boutput(user, SPAN_ALERT("You can't put any more cones in this stack!"))
-			else
-				if(!user.is_in_hands(src))
-					user.put_in_hand(src)
-				if(isrobot(user))
-					boutput(user, SPAN_NOTICE("You add [success] cones to the stack. It now has [I.amount] cones."))
-				else
-					boutput(user, SPAN_NOTICE("You add [src.amount - success] cones to the stack. It now has [src.amount] cones."))
-
-	_update_stack_appearance()
-		src.amount = clamp(src.amount, 1, src.max_stack)
-		icon_state = "cone_[src.amount]"
-		item_state = "cone_[src.amount]"
-		wear_state = "cone_hat_[src.amount]"
-
-	afterattack(var/turf/T, var/mob/user, reach, params)
-		if (!isturf(user.loc))
-			return
-
-		if (BOUNDS_DIST(T, user) > 0)
-			boutput(user, SPAN_NOTICE("You can't setup [src] that far away."))
-			return
-
-		if (!istype(T, /turf/simulated/floor))
-			return
-
-		var/obj/item/clothing/head/constructioncone/cone = new /obj/item/clothing/head/constructioncone
-		src.change_stack_amount(-1)
-
-		var/pox = cone.pixel_x
-		var/poy = cone.pixel_y
-
-		if (params)
-			if (islist(params) && params["icon-y"] && params["icon-x"])
-				pox = text2num(params["icon-x"]) - 16
-				poy = text2num(params["icon-y"]) - 16
-
-		cone.pixel_x = pox
-		cone.pixel_y = poy
-		cone.set_loc(T)
-		playsound(cone, 'sound/impact_sounds/tube_bonk.ogg', 20, TRUE, pitch=0.5)
-		..()
-
-	examine()
-		. = ..()
-		. += "There are [src.amount] cones on this stack."
-
-/obj/effect/boommarker
-	name = ""
-	icon = 'icons/effects/64x64.dmi'
-	icon_state = "impact_marker"
-	density = 0
-	anchored = ANCHORED
-	mouse_opacity = 0
-	desc = "Uh oh.."
-	pixel_x = -16
-	pixel_y = -16
 
 //Manta specific plants, straight copy, does not use the slow-down mechanic due to the alpha.
 
@@ -1303,53 +1150,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			command_alert("The Magnetic tether has been successfully repaired. Magnetic attachment points are online once again.", "Magnetic Tether Repaired", alert_origin = ALERT_STATION)
 			return
 
-#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
-/datum/random_event/special/mantacommsdown
-	name = "Communications Malfunction"
-
-	event_effect(var/source)
-		..()
-		if (random_events.announce_events)
-			command_alert("Communication tower has been severely damaged aboard NSS Manta. Ships automated communication system will now attempt to re-establish signal through backup channel. We estimate this will take eight to ten minutes.", "Communications Malfunction", alert_origin = ALERT_STATION)
-			playsound_global(world, 'sound/effects/commsdown.ogg', 100)
-			sleep(rand(80,100))
-			signal_loss += 100
-			sleep(rand(4800,6000))
-			signal_loss -= 100
-
-			if (random_events.announce_events)
-				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored", alert_origin = ALERT_STATION)
-			else
-				message_admins(SPAN_INTERNAL("Manta Comms event ceasing."))
-
-
-/datum/random_event/major/electricmalfunction
-	name = "Electrical Malfunction"
-
-	event_effect()
-		..()
-		var/obj/machinery/junctionbox/J = pick(by_type[/obj/machinery/junctionbox])
-		if (J.broken)
-			return
-		J.Breakdown()
-		command_alert("Certain junction boxes are malfunctioning around NSS Manta. Please seek out and repair the malfunctioning junction boxes before they lead to power outages.", "Electrical Malfunction", alert_origin = ALERT_STATION)
-
-/datum/random_event/special/namepending
-	name = "Name Pending"
-
-	event_effect()
-		..()
-		var/list/eligible = by_type[/obj/machinery/mantapropulsion].Copy()
-		for(var/i=0, i<3, i++)
-			var/obj/machinery/mantapropulsion/big/P = pick(eligible)
-			P.Breakdown()
-			eligible.Remove(P)
-			sleep(1 SECOND)
-
-		new /obj/effect/boommarker(pick_landmark(LANDMARK_BIGBOOM))
-#endif
-
-
 //-------------------------------------------- MANTA COMPATIBLE AREAS HERE --------------------------------------------
 //Also ugh, duplicate code.
 
@@ -1368,14 +1168,15 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /area
 	proc/removeManta(atom/movable/Obj)
-		mantaPushList.Remove(Obj)
-		Obj.temp_flags &= ~MANTA_PUSHING
+		REMOVE_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH, src)
+		EndOceanPush(Obj)
 		return
+
 	proc/addManta(atom/movable/Obj)
 		if(!istype(Obj, /obj/overlay) && !istype(Obj, /obj/machinery/light_area_manager) && istype(Obj, /atom/movable))
-			if(!(Obj.temp_flags & MANTA_PUSHING) && !(Obj.event_handler_flags & IMMUNE_MANTA_PUSH) && !Obj.anchored)
-				mantaPushList.Add(Obj)
-				Obj.temp_flags |= MANTA_PUSHING
+			if(!(HAS_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH)) && !(Obj.event_handler_flags & IMMUNE_OCEAN_PUSH) && !Obj.anchored)
+				APPLY_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH, src)
+				BeginOceanPush(Obj)
 		return
 
 /area/propellerpower
@@ -1393,7 +1194,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 /area/supply/sell_point/manta
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		addManta(Obj)
@@ -1474,161 +1275,6 @@ var/obj/manta_speed_lever/mantaLever = null
 
 //******************************************** MANTA SECRET STUFF HERE ********************************************
 
-
-
-//******************************************** NSS POLARIS STUFF ********************************************
-
-/area/crashsite
-	name = "Crash site"
-	icon_state = "green"
-
-/area/wrecknsspolaris
-	name = "Wreck of the NSS Polaris"
-	icon_state = "green"
-	sound_group = "polaris"
-	teleport_blocked = 1
-	sound_loop = 'sound/ambience/loop/Polarisloop.ogg'
-
-/area/wrecknsspolaris/vault
-	name = "NSS Polaris Vault"
-	requires_power = 0
-
-/area/wrecknsspolaris/outside
-	name = "Ouside the Wreck"
-	icon_state = "blue"
-	ambient_light = OCEAN_LIGHT
-
-/area/wrecknsspolaris/outside/teleport
-	name = "Outer Wreck (with teleport)"
-
-/area/wrecknsspolaris/outside/back
-	name = "Back of the Wreck"
-
-/obj/item/parts/human_parts/arm/right/polaris
-	name = "misplaced right arm"
-	desc = "Someone might need a hand with this."
-
-/obj/machinery/handscanner
-	name = "Hand Scanner"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "handscanner"
-	var/id = "polarisdoor"
-	var/used = 0
-
-/obj/machinery/hanscanner/New()
-	..()
-	UnsubscribeProcess()
-
-
-/obj/machinery/handscanner/attackby(obj/item/W, mob/user as mob)
-	if(istype(W, /obj/item/device/detective_scanner))
-		return
-	if (used == 0)
-		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
-			user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the hand and beeps, granting you access."))
-			playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-			for_by_tcl(M, /obj/machinery/door/airlock)
-				if (M.id == src.id)
-					if (M.density)
-						M.open()
-						M.operating = -1
-						used = 1
-
-
-
-/obj/machinery/handscanner/attack_hand(mob/user)
-	src.add_fingerprint(user)
-	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-	if (used == 0)
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.limbs && (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/polaris)))
-				user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the hand and beeps, granting you access."))
-
-				for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
-					if (M.id == src.id)
-						if (M.density)
-							M.open()
-
-				for_by_tcl(M, /obj/machinery/door/airlock)
-					if (M.id == src.id)
-						if (M.density)
-							M.open()
-							M.operating = -1
-							used = 1
-			else
-				boutput(user, SPAN_ALERT("Invalid biometric profile. Access denied."))
-	else
-		boutput(user, SPAN_ALERT("The door has already been opened. It looks like the mechanism has jammed for good."))
-
-
-/obj/item/storage/secure/ssafe/polaris
-	name = "captain's lockbox"
-	configure_mode = 0
-	random_code = 1
-	spawn_contents = list(/obj/item/card/id/polaris,
-	/obj/item/paper/manta_polarisnote,/obj/item/reagent_containers/emergency_injector/random,/obj/item/currency/spacecash/thousand,
-	/obj/item/currency/spacecash/thousand,/obj/item/currency/spacecash/thousand)
-
-/obj/item/card/id/polaris
-	name = "Sergeant's spare ID"
-	icon_state = "polaris"
-	registered = "Sgt. Wilkins"
-	assignment = "Sergeant"
-	access = list(access_polariscargo,access_heads)
-	keep_icon = TRUE
-
-/obj/item/card/id/blank_polaris
-	name = "blank Nanotrasen ID"
-	icon_state = "polaris"
-	keep_icon = TRUE
-
-/obj/item/broken_egun
-	name = "broken energy gun"
-	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "broken_egun"
-	desc = "Its a gun that has two modes, stun and kill, although this one is nowhere near working condition."
-	item_state = "energy"
-	force = 5
-
-/obj/item/blackbox
-	name = "flight recorder of NSS Polaris"
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "blackbox"
-	desc = "A flight recorder is an electronic recording device placed in an spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
-	item_state = "electropack"
-	force = 5
-
-/turf/unsimulated/floor/polarispit
-	name = "deep abyss"
-	desc = "You can't see the bottom."
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "pit"
-	fullbright = 0
-	pathable = 0
-	var/falltarget = LANDMARK_FALL_POLARIS
-	// this is the code for falling from abyss into ice caves
-	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
-	New()
-		src.AddComponent(/datum/component/pitfall/target_landmark,\
-			BruteDamageMax = 50,\
-			FallTime = 0 SECONDS,\
-			TargetLandmark = src.falltarget)
-		..()
-
-	polarispitwall
-		icon_state = "pit_wall"
-
-	marj
-		name = "dank abyss"
-		desc = "The smell rising from it somehow permeates the surrounding water."
-		falltarget = LANDMARK_FALL_MARJ
-
-		pitwall
-			icon_state = "pit_wall"
-
 //-------------------------------------------- NSS MANTA SECRET VAULT --------------------------------------------
 
 /obj/vaultdoor
@@ -1649,7 +1295,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /area/mantavault
 	name = "NSS Manta Secret Vault"
 	icon_state = "red"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sound_loop = 'sound/ambience/loop/manta_vault.ogg'
 	sound_group = "vault"
 

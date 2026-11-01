@@ -7,13 +7,15 @@
 	can_recycle = 0
 
 	New(var/loc, var/forceartiorigin)
-		..()
+		..(loc)
 		var/datum/artifact/pitcher/AS = new /datum/artifact/pitcher(src)
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 		SPAWN(0)
 			src.ArtifactSetup()
+
+		src.RemoveComponentsOfType(/datum/component/reagent_overlay)
 
 		if (prob(15))
 			src.reagents.inert = TRUE
@@ -107,6 +109,8 @@
 			reagents.add_reagent("omnizine", 50)
 		if (prob(15))
 			reagents.add_reagent("mutagen", 30)
+		if (prob(5))
+			reagents.add_reagent("hyper_vomitium", 10)
 		if (prob(10))
 			reagents.add_reagent("omega_mutagen", 30)
 		if (prob(5))
@@ -138,11 +142,6 @@
 	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		. = ..()
-		if(.) // successfully made person drink
-			src.ArtifactFaultUsed(target)
 
 	examine()
 		return list(desc)

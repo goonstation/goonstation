@@ -21,7 +21,7 @@
 			T.icon_state = "sand"
 			animate(T, time = 10 SECONDS)
 			animate(icon_state = initial(T.icon_state))
-			animate(icon = initial(T.icon))
+			animate(icon = get_initial_icon(T))
 	on_hit(atom/hit)
 		..()
 		var/turf/simulated/T2 = get_turf(hit)
@@ -30,7 +30,7 @@
 			T2.icon_state = "sand"
 			animate(T2, time = 10 SECONDS)
 			animate(icon_state = initial(T2.icon_state))
-			animate(icon = initial(T2.icon))
+			animate(icon = get_initial_icon(T2))
 		if (istype(hit, /mob/living/carbon/))
 			if (hit.getStatusDuration("stunned") > 0)
 				var/mob/living/carbon/human/H = hit
@@ -48,7 +48,7 @@
 				var/atom/movable/overlay/gibs/animation = null
 				animation = new(hit.loc)
 				animation.master = hit
-				flick("implode", animation)
+				FLICK("implode", animation)
 
 				H.unequip_all()
 				logTheThing(LOG_COMBAT, H, "is transformed into a crab by the crab gun at [log_loc(H)].")

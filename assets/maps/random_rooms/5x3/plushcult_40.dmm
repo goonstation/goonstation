@@ -1,0 +1,145 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/wood,
+/obj/decal/cleanable/blood,
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/obj/item/plate,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/item/material_piece/bone{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/decal/cleanable/cobweb,
+/obj/storage/crate/bloody,
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/black/corner{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/item/material_piece/bone{
+	pixel_y = -6;
+	pixel_x = 4
+	},
+/obj/stool,
+/obj/item/toy/plush/small/possum,
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/stool,
+/obj/item/toy/plush/small/fancyflippers{
+	pixel_y = 6;
+	pixel_x = -1
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/item/kitchen/utensil/knife/cleaver,
+/obj/decal/cleanable/blood,
+/obj/machinery/light/small/warm/very,
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/decal/cleanable/blood/hurting1/hurting2,
+/obj/stool,
+/obj/item/toy/plush/small/monkey,
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/decal/cleanable/blood/hurting1,
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/stool/bed,
+/obj/fakeobject/skeleton/decomposed_corpse,
+/obj/decal/cleanable/blood,
+/obj/decal/cleanable/blood/gibs,
+/obj/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/turf/simulated/floor/black/corner{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"N" = (
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/table/wood,
+/obj/candle_light{
+	pixel_y = 12
+	},
+/turf/simulated/floor/black/corner,
+/area/dmm_suite/clear_area)
+"U" = (
+/obj/machinery/light/small/warm/very{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/stool,
+/obj/item/toy/plush{
+	pixel_y = 6;
+	pixel_x = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/table/wood,
+/obj/candle_light{
+	pixel_y = 12
+	},
+/turf/simulated/floor/black/corner{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+d
+t
+D
+"}
+(2,1,1) = {"
+U
+V
+w
+"}
+(3,1,1) = {"
+y
+a
+o
+"}
+(4,1,1) = {"
+b
+s
+A
+"}
+(5,1,1) = {"
+X
+N
+T
+"}

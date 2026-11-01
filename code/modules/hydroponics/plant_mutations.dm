@@ -177,13 +177,15 @@ ABSTRACT_TYPE(/datum/plantmutation)
 
 // Pear Mutations
 
-/* This is cool and definitely does not belong in the trash, and should probably be legitimately attainable.
+
 /datum/plantmutation/pear/sickly
 	name = "Sickly Pear"
+	name_prefix = "Sickly "
 	crop = /obj/item/reagent_containers/food/snacks/plant/pear/sickly
-	assoc_reagents = list("too much")
-
-*/
+	iconmod = "PearSick"
+	assoc_reagents = list("mucus")
+	ENrange = list(null,10)
+	chance = 5
 
 // Melon Mutations
 
@@ -464,6 +466,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name = "Strange soybean"
 	name_prefix = "Strange "
 	crop = /obj/item/reagent_containers/food/snacks/plant/soy/soylent
+	assoc_reagents = list("badgrease")
 	iconmod = "Soylent"
 
 // Contusine Mutations
@@ -572,7 +575,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	special_proc_override = TRUE
 
 	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
-		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert)
+		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert) // Allowing this to be blocked by commutblocker, because it'd be funny/practical.
 		return
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
@@ -831,17 +834,29 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	infusion_reagents = list("radium")
 	chance = 0
 
-	proc/add_glow(obj/object)
-		object.add_simple_light("glowstick_tree", list(255, 0, 255, 100))
-		animate_rainbow_glow(object.simple_light, 5 SECONDS, 10 SECONDS)
+	proc/add_glow(obj/machinery/plantpot/POT)
+		// changed so that pots use vis_contents now
+		// object is now the overlay for the plant inside the actual pot
+		var/obj/overlay/object = POT.plant_sprite
+
+		// add lights to the plant pot
+		POT.add_simple_light("glowstick_tree", list(255, 0, 255, 100))
+		animate_rainbow_glow(POT.simple_light, 5 SECONDS, 10 SECONDS)
+
 		var/image/glowverlay = object.SafeGetOverlayImage("glowverlay", 'icons/obj/hydroponics/plants_crop.dmi', "TreeGlow-glow")
-		if (istype(object, /obj/decorative_pot)) //*dies of cringe*
+		if (istype(POT, /obj/decorative_pot)) //*dies of cringe*
 			glowverlay.pixel_x = 2
 		glowverlay.plane = PLANE_ABOVE_LIGHTING
 		object.UpdateOverlays(glowverlay, "glowverlay", 0, 1)
 
-	proc/remove_glow(obj/object)
-		object.remove_simple_light("glowstick_tree")
+	proc/remove_glow(obj/machinery/plantpot/POT)
+		// changed so that pots use vis_contents now
+		// object is now the overlay for the plant inside the actual pot
+		var/obj/overlay/object = POT.plant_sprite
+
+		// remove glow from the plant pot
+		POT.remove_simple_light("glowstick_tree")
+
 		object.UpdateOverlays(null, "glowverlay")
 
 	HYPmatured_proc_M(obj/machinery/plantpot/POT)
@@ -913,7 +928,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name = "Holo Rose"
 	iconmod = "HoloRose"
 	dont_rename_crop = TRUE
-	crop = /obj/item/plant/flower/rose/holorose
+	crop = /obj/item/clothing/head/flower/rose/holorose
 	chance = 0
 	infusion_reagents = list("luminol")
 

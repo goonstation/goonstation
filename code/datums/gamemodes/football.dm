@@ -40,7 +40,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
 			if (!istype(player)) continue
-			if (player.ready)
+			if (player.ready_play)
 				if (player.mind)
 					src.init_player(player, 0, 1)
 
@@ -192,6 +192,12 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		boutput(world,"<h1>FINISH!</h1><h2>Red team: [score_red] point\s</h2><h2>Blue team: [score_blue] point\s</h2>Thanks for playing this gimmick I guess, see you next time??")
 		update_game_clock()
 		update_scoreboard()
+		if(score_red > score_blue)
+			for (var/datum/mind/player in football_players["red"])
+				player.current.unlock_medal("Space Bowl Full Time Showman", TRUE)
+		else
+			for (var/datum/mind/player in football_players["blue"])
+				player.current.unlock_medal("Space Bowl Full Time Showman", TRUE)
 		the_football.blowthefuckup(500)
 
 	process()
@@ -238,7 +244,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 
 		footballer.equip_if_possible(new /obj/item/device/radio/headset(footballer), SLOT_EARS)
 
-		var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare(footballer) // for whatever reason, this is neccessary
+		var/obj/item/card/id/gold/captains_spare/I = new /obj/item/card/id/gold/captains_spare(footballer) // for whatever reason, this is neccessary
 		I.registered = "[footballer.name]"
 		I.icon = 'icons/obj/items/card.dmi'
 		I.icon_state = "fingerprint0"

@@ -24,7 +24,8 @@
 			"reinforced" = !BE.curable_by_mutadone,
 			"boosted" = (BE.power == 2), //it's a multiplier...
 			"synced" = BE.safety,
-			"cooldown" = BE.cooldown))
+			"cooldown" = BE.cooldown,
+			"is_power" = istype(BE, /datum/bioEffect/power)))
 	. = list(
 		"target_name" = target_mob,
 		"bioEffects" = bioEffects,
@@ -41,19 +42,28 @@
 	switch(action)
 		if ("addBioEffect")
 			var/input = tgui_input_text(ui.user, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null, allowEmpty = TRUE)
-			var/datum/bioEffect/type_to_add = get_one_match(input, /datum/bioEffect, cmp_proc=/proc/cmp_text_asc)
+			var/datum/bioEffect/type_to_add = get_one_match(input, /datum/bioEffect, use_concrete_types=TRUE, cmp_proc=/proc/cmp_text_asc)
+			if (!type_to_add)
+				return
 			target_mob.bioHolder.AddEffect(initial(type_to_add.id))
 			target_mob.onProcCalled("addBioEffect", list(initial(type_to_add.id)))
 			logTheThing(LOG_ADMIN, ui.user, "Added bioeffect [initial(type_to_add.id)] to [constructName(target_mob)]")
 			. = TRUE
 		if ("updateStability")
 			var/new_stability = round(text2num(params["value"]))
-			target_mob.bioHolder.genetic_stability = isnull(new_stability) ? 0 : max(new_stability, 0)
+			if (new_stability == -1) // set to -1 to clear forced stability
+				target_mob.bioHolder.forced_stability = null
+			else
+				target_mob.bioHolder.forced_stability = isnull(new_stability) ? 0 : max(new_stability, 0)
+			target_mob.bioHolder.calculateStability()
 			. = TRUE
 		if ("updateCooldown")
 			var/new_cooldown = round(text2num(params["value"]))
 			BE.cooldown = isnull(new_cooldown) ? 0 : max(new_cooldown, 0)
 			. = TRUE
+		if ("resetCooldown")
+			var/datum/bioEffect/power/power = BE
+			power.ability.last_cast = 0
 		if ("toggleBoosted")
 			var/old_power = BE.power
 			BE.power = BE.power == 1 ? 2 : 1
@@ -65,10 +75,10 @@
 		if ("toggleStabilized")
 			if (BE.stability_loss == 0)
 				BE.stability_loss = BE.global_instance.stability_loss
-				BE.holder.genetic_stability = max(0, BE.holder.genetic_stability -= BE.stability_loss) //update mob stability
+				BE.holder.calculateStability()
 			else
-				BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
 				BE.stability_loss = 0
+				BE.holder.calculateStability()
 			. = TRUE
 		if ("toggleSynced")
 			BE.safety = !BE.safety
@@ -79,4 +89,5 @@
 		if ("deleteBioEffect")
 			target_mob.bioHolder.RemoveEffect(params["id"])
 			logTheThing(LOG_ADMIN, ui.user, "Removed bioeffect [params["id"]] from [constructName(target_mob)]")
+			BE.holder.calculateStability()
 			. = TRUE

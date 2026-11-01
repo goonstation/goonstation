@@ -44,7 +44,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "P" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8
 	},
 /turf/simulated/floor/plating,

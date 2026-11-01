@@ -186,7 +186,7 @@ TYPEINFO(/obj/storage/closet/flock)
 			if(SEND_SIGNAL(src, COMSIG_FLOCK_ATTACK, user, TRUE))
 				return
 			var/force = W.force
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user, src)
 			playsound(src.loc, src.hitsound, 50, 1, pitch = 1.6)
 			src.take_damage(force, user)
@@ -334,91 +334,3 @@ TYPEINFO(/obj/lattice/flock)
 	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
 			[SPAN_BOLD("ID:")] Structural Foundation<br>\
 			[SPAN_BOLD("###=-")]")]"}
-
-/////////////
-// BARRICADE
-/////////////
-TYPEINFO(/obj/grille/flock)
-	mat_appearances_to_ignore = list("steel","gnesis")
-/obj/grille/flock
-	desc = "A glowing mesh of metallic fibres."
-	name = "barricade"
-	var/flock_id = "Reinforced barricade"
-	icon = 'icons/misc/featherzone.dmi'
-	icon_state = "barricade"
-	health = 50
-	health_max = 50
-	var/repair_per_resource = 1
-	shock_when_entered = FALSE
-	auto = FALSE
-	mat_changename = FALSE
-	mat_changedesc = FALSE
-	can_be_snipped = FALSE
-	can_be_unscrewed = FALSE
-	can_build_window = FALSE
-	default_material = "gnesis"
-
-	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
-		if (ruined)
-			return
-
-		if (istext(special_icon_state))
-			icon_state = initial(src.icon_state) + "-" + special_icon_state
-			return
-
-		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
-		switch(diff)
-			if(-INFINITY to 25)
-				icon_state = initial(src.icon_state) + "-3"
-			if(26 to 50)
-				icon_state = initial(src.icon_state) + "-2"
-			if(51 to 75)
-				icon_state = initial(src.icon_state) + "-1"
-			if(76 to INFINITY)
-				icon_state = initial(src.icon_state) + "-0"
-
-/obj/grille/flock/New()
-	..()
-	src.UpdateIcon()
-	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
-	src.AddComponent(/datum/component/flock_protection)
-
-// flockdrones can always move through
-/obj/grille/flock/Crossed(atom/movable/mover)
-	. = ..()
-	var/mob/living/critter/flock/drone/drone = mover
-	if(istype(drone) && !drone.floorrunning)
-		animate_flock_passthrough(mover)
-		. = TRUE
-	else if(istype(mover,/mob/living/critter/flock))
-		. = TRUE
-
-/obj/grille/flock/Cross(atom/movable/mover)
-	return !src.density || istype(mover,/mob/living/critter/flock)
-
-/obj/grille/flock/special_desc(dist, mob/user)
-	if (!isflockmob(user))
-		return
-	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
-			[SPAN_BOLD("ID:")] [src.flock_id]<br>\
-			[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
-			[SPAN_BOLD("###=-")]")]"}
-
-/obj/grille/flock/attack_hand(mob/user)
-	if (user.a_intent != INTENT_HARM)
-		return
-	..()
-
-/obj/grille/flock/bullet_act(obj/projectile/P)
-	if (istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
-		return
-	..()
-
-/obj/grille/flock/proc/repair(resources_available)
-	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
-	src.health += health_given
-	if (ruined)
-		src.set_density(TRUE)
-		src.ruined = FALSE
-	src.UpdateIcon()
-	return ceil(health_given / src.repair_per_resource)

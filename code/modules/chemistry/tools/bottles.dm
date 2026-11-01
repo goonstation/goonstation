@@ -12,7 +12,7 @@
 	initial_volume = 30
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	object_flags = NO_GHOSTCRITTER
 	fluid_overlay_states = 6
 
@@ -22,11 +22,12 @@
 /obj/item/reagent_containers/glass/bottle/plastic
 	name = "plastic bottle"
 	desc = "A small 3D-printed bottle."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()
 		. = ..()
-		AddComponent(/datum/component/biodegradable)
+		src.AddElement(/datum/element/biodegradable)
 
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
@@ -63,6 +64,13 @@
 	icon_state = "bottle_2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
+
+/obj/item/reagent_containers/glass/bottle/acetylsalicylic_acid
+	name = "bottle (acetylsalicylic acid)"
+	desc = "A small bottle containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
+	icon_state = "bottle_2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "acetylsalicylic_acid"
 
 /obj/item/reagent_containers/glass/bottle/insulin
 	name = "bottle (insulin)"
@@ -250,6 +258,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "cyanide"
 
+/obj/item/reagent_containers/glass/bottle/cytotoxin
+	name = "cytotoxin bottle"
+	desc = "A small bottle of cytotoxin, a potent poison originating from lifeforms around the frontier system."
+	icon_state = "bottle_2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "cytotoxin"
+
 /obj/item/reagent_containers/glass/bottle/fluorosurfactant
 	name = "fluorosurfactant bottle"
 	desc = "A small bottle of fluorosurfactant, a chemical that foams rapidly when mixed with water."
@@ -291,11 +306,12 @@
 /obj/item/reagent_containers/glass/bottle/chemical/plastic
 	name = "plastic chemical bottle"
 	desc = "A 3D-printed reagent storage bottle."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()
 		. = ..()
-		AddComponent(/datum/component/biodegradable)
+		src.AddElement(/datum/element/biodegradable)
 
 /obj/item/reagent_containers/glass/bottle/oil
 	name = "oil bottle"
@@ -392,6 +408,17 @@
 	fluid_overlay_states = 0
 	initial_reagents = "formaldehyde"
 
+/* ================================================== */
+/* -------------------- Forensic -------------------- */
+/* ================================================== */
+
+/obj/item/reagent_containers/glass/vial/silver_nitrate
+	name = "vial (silver nitrate)"
+	desc = "A small vial containing silver nitrate, used for revealing partial fingerprints."
+	amount_per_transfer_from_this = 1
+	splash_all_contents = FALSE
+	initial_reagents = "silver_nitrate"
+
 /* ============================================== */
 /* -------------------- Misc -------------------- */
 /* ============================================== */
@@ -427,3 +454,4 @@
 	initial_reagents = "cleaner"
 	amount_per_transfer_from_this = 10
 	fluid_overlay_states = 0
+	default_material = "plastic"

@@ -33,6 +33,9 @@
 
 	flock.updateEnemy(M)
 
+/datum/targetable/flockmindAbility/designateEnemy/logCast(atom/target)
+	return
+
 /datum/targetable/flockmindAbility/designateIgnore
 	name = "Designate Ignore"
 	desc = "Designate someone to be ignored by your Flock."
@@ -61,3 +64,6 @@
 		F.flock.removeEnemy(target)
 
 	F.flock.addIgnore(target)
+
+/datum/targetable/flockmindAbility/designateIgnore/logCast(atom/target)
+	return

@@ -9,20 +9,20 @@
 /obj/machinery/door/unpowered/wood/pyro{
 	pixel_y = -9
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "E" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "R" = (
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "U" = (
 /obj/deployable_turret/outpost/active/south,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 
 (1,1,1) = {"

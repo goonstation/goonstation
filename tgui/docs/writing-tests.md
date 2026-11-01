@@ -1,4 +1,4 @@
-## Jest
+## Vitest
 
 You can now write and run unit tests in tgui.
 
@@ -10,14 +10,12 @@ test('something', () => {
 });
 ```
 
-To run the tests, type the following into the terminal:
-
-```
-bin/tgui --test
-```
+Refer to [README](../README.md) to learn how to run tests.
 
 There is an example test in `packages/common/react.spec.ts`.
 
-You can read more about Jest here: https://jestjs.io/docs/en/getting-started
+You can read more about Vitest here: https://vitest.dev/
 
-Note, that there is still no real solution to test UIs for now, even though a lot of the support is here (jest + jsdom). That will come later.
+### Interfaces
+
+You can also test ingame interfaces. See `tgui\packages\tgui\interfaces\Radio\Radio.test.tsx` for an example.

@@ -1,4 +1,5 @@
 TYPEINFO(/obj/submachine/claw_machine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 5,
 				"conductive" = 5,
 				"crystal" = 5,
@@ -23,9 +24,11 @@ TYPEINFO(/obj/submachine/claw_machine)
 	var/list/prizes_rare = list(/obj/item/toy/plush/small/bee/cute,\
 	/obj/item/toy/plush/small/buddy/future,\
 	/obj/item/toy/plush/small/kitten/wizard,\
+	/obj/item/toy/plush/small/kitten/bingus,\
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
-	/obj/item/toy/plush/small/penguin/cool)
+	/obj/item/toy/plush/small/penguin/cool,\
+	/obj/item/toy/plush/small/shelterfrog)
 	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
 	/obj/item/toy/plush/small/tuba,\
 	/obj/item/toy/plush/small/chris,\
@@ -171,35 +174,77 @@ TYPEINFO(/obj/submachine/claw_machine)
 	var/obj/item/P = pick(prize_pool)
 	if(ispath(P))
 		P = new P(get_turf(src.M))
-		P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
+		if(istype(P,/obj/item/toy))
+			P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
 	else
 		P.set_loc(get_turf(src.M))
 	P.throw_at(M, 16, 3)
 
+/obj/submachine/claw_machine/menhir_room
+	desc = "You get the distinct impression that this wasn't stocked conventionally."
+	default_material = "cobryl"
+	uses_default_material_appearance = TRUE
+
+	prizes = list(/obj/item/reagent_containers/food/snacks/cube,\
+	/obj/item/reagent_containers/food/snacks/cube,\
+	/obj/item/raw_material/cobryl,\
+	/obj/item/raw_material/rock,\
+	/obj/item/toy/plush/small/bee,\
+	/obj/item/toy/plush/small/monkey,\
+	/obj/item/toy/plush/small/brullbar)
+	prizes_rare = list(/obj/item/wrench/grey,\
+	/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
+	/obj/item/device/light/glowstick/white,\
+	/obj/item/item_box/assorted/stickers,\
+	/obj/item/toy/plush/small/stress_ball,\
+	/obj/item/toy/plush/small/bee/cute,\
+	/obj/item/toy/plush/small/monkey/assistant,\
+	/obj/item/toy/plush/small/shelterfrog)
+	prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
+	/obj/item/toy/plush/small/tuba,\
+	/obj/item/toy/plush/small/chris,\
+	/obj/item/toy/plush/small/fancyflippers,\
+	/obj/item/toy/plush/small/billy,\
+	/obj/item/toy/plush/small/arthur,\
+	/obj/item/toy/plush/small/deneb,\
+	/obj/item/toy/plush/small/singuloose,\
+	/obj/item/device/multitool,\
+	/obj/item/parts/artifact_parts/arm/precursor/left,\
+	/obj/item/parts/artifact_parts/arm/precursor/right,\
+	/obj/item/parts/artifact_parts/leg/precursor/left,\
+	/obj/item/parts/artifact_parts/leg/precursor/right)
+
+
 /obj/item/toy/plush
 	name = "plush toy"
 	icon = 'icons/obj/plushies.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_plushie.dmi'
 	icon_state = "bear"
 	desc = "A cute and cuddly plush toy!"
+	default_material = "cotton"
 	throwforce = 3
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
 	rand_pos = 1
 
-/obj/item/toy/plush/proc/say_something(mob/user as mob)
-	if(user.client && !isghostcritter(user)) // stupid monkeys...
-		var/message = input("What should [src] say?")
-		message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
-		if (!message || BOUNDS_DIST(src, user) > 0)
-			return
-		phrase_log.log_phrase("plushie", message)
-		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
-		user.audible_message(SPAN_EMOTE("[src] says, \"[message]\""))
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.sims)
-				H.sims.affectMotive("fun", 1)
+/obj/item/toy/plush/proc/say_something(mob/user)
+	if(!user.client || isghostcritter(user)) // stupid monkeys...
+		return
+	if (user.hasStatus("muted") || user.bioHolder?.HasEffect("mute"))
+		boutput(user, SPAN_ALERT("You are unable to speak!"))
+		return
+	var/message = input("What should [src] say?")
+	message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+	if (!message || BOUNDS_DIST(src, user) > 0)
+		return
+	phrase_log.log_phrase("plushie", message)
+	logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
+	user.audible_message(SPAN_EMOTE("[src] says, \"[message]\""))
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (H.sims)
+			H.sims.affectMotive("fun", 1)
 
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)
@@ -220,10 +265,15 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/small/bee
 	name = "bee plush toy"
 	icon_state = "bee"
+	default_material = "beewool"
 
 /obj/item/toy/plush/small/bee/cute
 	name = "super cute bee plush toy"
 	icon_state = "bee_cute"
+
+/obj/item/toy/plush/small/bee/rd
+	name = "RD's Heisenbee plush"
+	desc = "A very special plush."
 
 /obj/item/toy/plush/small/buddy
 	name = "buddy plush toy"
@@ -241,6 +291,15 @@ TYPEINFO(/obj/submachine/claw_machine)
 	name = "wizard kitten plush toy"
 	icon_state = "kitten_wizard"
 
+/obj/item/toy/plush/small/kitten/bingus
+	name = "hairless sphynx kitten plush toy"
+	icon_state = "kitten_bingus"
+
+/obj/item/toy/plush/small/kitten/bingus/New()
+	. = ..()
+	if(prob(30))
+		src.name = pick("bingus plush toy", "rotisserie chicken plush toy")
+
 /obj/item/toy/plush/small/monkey
 	name = "monkey plush toy"
 	icon_state = "monkey"
@@ -256,6 +315,10 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/small/possum
 	name = "possum plush toy"
 	icon_state = "possum"
+
+/obj/item/toy/plush/small/possum/md
+	name = "MD's Morty plush"
+	desc = "Part of a matching set."
 
 /obj/item/toy/plush/small/brullbar
 	name = "brullbar plush toy"
@@ -277,6 +340,26 @@ TYPEINFO(/obj/submachine/claw_machine)
 	name = "super cool penguin plush toy"
 	icon_state = "penguin_cool"
 
+/obj/item/toy/plush/small/shelterfrog
+	name = "shelterfrog plush toy"
+	icon_state = "shelterfrog"
+
+/obj/item/toy/plush/small/shelterfrog/attack_self(mob/user as mob)
+	if (!ON_COOLDOWN(src,"ribbit",2 SECONDS))
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.sims)
+				H.sims.affectMotive("fun", 1)
+		src.ribbit()
+		src.add_fingerprint(user)
+		animate_door_squeeze(src)
+		user.visible_message(SPAN_EMOTE("[user] squeezes [src], and it croaks. Wow!"))
+	return
+
+/obj/item/toy/plush/small/shelterfrog/proc/ribbit()
+	playsound(src, 'sound/misc/croak.ogg', 50, TRUE)
+
+
 /obj/item/toy/plush/small/orca
 	name = "Lilac the orca"
 	icon_state = "orca"
@@ -284,6 +367,17 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/small/tuba
 	name = "Tuba the rat"
 	icon_state = "tuba"
+
+/obj/item/toy/plush/small/tuba/attack_self(mob/user as mob)
+	if (ON_COOLDOWN(src,"squeak",2 SECONDS))
+		return
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.sims?.affectMotive("fun", 1)
+	playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 50, TRUE)
+	src.add_fingerprint(user)
+	animate_door_squeeze(src)
+	user.visible_message(SPAN_EMOTE("[user] squeezes [src], and she squeaks. Wow!"))
 
 /obj/item/toy/plush/small/chris
 	name = "Chris the goat"
@@ -316,17 +410,20 @@ TYPEINFO(/obj/submachine/claw_machine)
 	desc = "Talk and fidget things out. It'll be okay."
 	icon_state = "stress_ball"
 	throw_range = 10
+	default_material = "synthrubber_yellow"
 
 /obj/item/toy/plush/small/stress_ball/attack_self(mob/user as mob)
-	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Fidget", "Say"))
-	if (!menuchoice)
+	animate_door_squeeze(src) //squish
+	if (ON_COOLDOWN(src, "squish", 1 SECOND))
 		return
-	if (menuchoice == "Fidget")
-		animate_door_squeeze(src) //squish
-		user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."))
-		boutput(user, SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")]."))
-	else if (menuchoice == "Say")
-		src.say_something(user)
+
+	if (prob(50) && isliving(user))
+		var/mob/living/stressed_person = user
+		if (stressed_person.blood_volume > 500 && !ON_COOLDOWN(src, "lower_blood_pressure", 10 SECONDS))
+			stressed_person.blood_volume -= rand(3,7)
+			boutput(user, SPAN_NOTICE(pick("Your head hurts a little less.", "You breathe a little easier.", "The pain in your chest lessens.")))
+
+	user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."), "You squeeze [src]. <br> [SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].")]", group = "stress_ball")
 
 /obj/item/toy/plush/small/deneb
 	name = "Deneb the swan"

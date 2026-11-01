@@ -145,7 +145,7 @@
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "av" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},

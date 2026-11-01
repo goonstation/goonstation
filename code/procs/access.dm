@@ -6,56 +6,9 @@
  */
 /obj/var/list/req_access = null
 /*
- * Text version of req_access, converted on instantiation (useful for applying vars to specific instances in a map)
- * Syntax is "x|y;z", where "|" delimit access groups, and ";" delimit access within each group.
- * To set to no access requirements, set this to an empty string.
- * To not affect requirements, this should be null.
- */
-/obj/var/req_access_txt = null
-/*
  * Override all access requirements if user is an administrator
  */
 /obj/var/admin_access_override = FALSE
-
-/*
- * Overrides the object's req_access var based on what's in req_access_txt (if set).
- */
-/obj/proc/update_access_from_txt()
-	// null req_access_txt means no change
-	if (!isnull(src.req_access_txt))
-		// empty string (or "0") req_access_txt means set to no access required
-		if (src.req_access_txt && src.req_access_txt != "0")
-			// reset src.req_access to build it up
-			src.req_access = list()
-			var/list/access_group_txts = splittext(src.req_access_txt, "|")
-			// loop through the access groups, adding them to src.req_access as they are resolved
-			for (var/access_group_txt in access_group_txts)
-				// sanity check for an empty access group (e.g. src.req_access_txt is "1|"), giving an empty string as the last access group
-				if (access_group_txt)
-					var/list/access_group = list()
-					var/list/access_group_strings = splittext(access_group_txt, ";")
-					// loop through the access group, adding them to the list for this group
-					for (var/access_string in access_group_strings)
-						// sanity check for an empty access string (e.g. src.req_access_txt is "1;", giving an empty string as the last access string
-						if (access_string)
-							// parse the access string
-							var/access_code = text2num(access_string)
-							if (!isnull(access_code))
-								// numerical code
-								access_group += access_code
-							// else
-								// string code
-								// TODO: some sensible lookup, possibly using access_name_lookup (but they're VERY wordy)
-					// add to the src.req_access list (assuming non-empty)
-					if (length(access_group) > 1)
-						// add the whole access group
-						// odd syntax is because += with a list on the right appends the items of the list, not the list itself, so we wrap in a list so it only unpacks once
-						src.req_access += list(access_group)
-					else if (length(access_group) == 1)
-						// add the single element
-						src.req_access += access_group[1]
-		else
-			src.req_access = null
 
 /**
  * Determines if a mob is allowed to use an object (or pass through
@@ -68,14 +21,16 @@
 	. = 0
 	if(M?.client?.holder?.ghost_interaction)
 		return 2
+	// check for admin access override
+	if (src.admin_access_override)
+		if (M?.client?.holder?.level >= LEVEL_SA)
+			return 2
+		else if(src.admin_access_override == ADMIN_ACCESS_OVERRIDE_ONLY)
+			return 0
 	// easy out for if no access is required
-	if (src.check_access(null))
+	if (!src.has_access_requirements())
 		return 1
 	if (M && ismob(M))
-		// check for admin access override
-		if (src.admin_access_override)
-			if (M.client?.holder?.level >= LEVEL_SA)
-				return 2
 		// check in-hand first
 		if (src.check_access(M.equipped()))
 			return 2
@@ -119,14 +74,7 @@
  */
 /obj/proc/check_access(obj/item/I)
 	// no requirements
-	if (!src.req_access)
-		return 1
-	// something's very wrong
-	if (!istype(src.req_access, /list))
-		return 1
-	// no requirements (also clean up src.req_access)
-	if (length(src.req_access) == 0)
-		src.req_access = null
+	if (!src.has_access_requirements())
 		return 1
 
 	var/obj/item/card/id/ID = get_id_card(I)
@@ -155,193 +103,135 @@
 			return 1
 	return 0
 
-//put in access num, check if i have that
-/obj/proc/has_access(var/acc)
-	// no requirements
-	if (!src.req_access)
-		return 1
-	// something's very wrong
-	if (!istype(src.req_access, /list))
-		return 1
-	// no requirements (also clean up src.req_access)
-	if (length(src.req_access) == 0)
-		src.req_access = null
-		return 1
-
-	for (var/req_access_group in src.req_access)
-		// access group is a list
-		if (islist(req_access_group))
-			var/list/req_access_group_list = req_access_group
-			if (acc in req_access_group_list)
-				return 1
-		// access group is a single number
-		else if (req_access_group == acc)
-			return 1
-
-	return 0
-
 /**
  * @param {mob} M Mob of which to check the implanted credentials
+ *
  * @return {bool} Whether mob has sufficient access via its implant
  */
 /obj/proc/check_implanted_access(mob/M)
 	var/has_access = 0
 	for (var/obj/item/implant/access/I in M)
-		if (I.owner != M)
+		if (I.owner != M || !I.online)
 			continue
 		if (check_access(I.access))
 			has_access = I.used()
 	return has_access
 
-// I moved all the duplicate definitions from jobs.dm to this global lookup proc.
-// Advantages: can be used by other stuff (bots etc), and there's less code to maintain (Convair880).
+
+/// Global lookup proc for access levels based on a job string (e.g. "Captain")
 /proc/get_access(job)
 	switch(job)
-		///////////////////////////// Heads of staff
+		if("Nanotrasen Responder")
+			return get_all_accesses() + list(access_centcom)
+		if("Syndicate Operative")
+			return get_all_accesses() + list(access_syndicate_shuttle)
+		if("Syndicate Commander")
+			return get_access("Syndicate Operative") + list(access_syndicate_commander)
+		// --------------------------- Heads of staff
 		if("Captain")
-			return get_all_accesses()
+			return get_all_accesses() + list(access_maxsec)
 		if("Head of Personnel")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_forensics_lockers,
-						access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
-						access_emergency_storage, access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
-						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-						access_kitchen, access_robotics, access_cargo, access_supply_console,
-						access_research, access_hydro, access_ranch, access_mail, access_ai_upload, access_pathology, access_researchfoyer,
-						access_telesci, access_teleporter, access_money)
+			return get_all_accesses() - list(access_captain, access_engineering_chief, access_medical_director, access_research_director,
+											access_securitylockers, access_brig, access_forensics_lockers, access_medical_lockers, access_engineering_power)
 		if("Head of Security")
-#ifdef RP_MODE
-			var/list/hos_access = get_all_accesses()
-			hos_access += access_maxsec
-			hos_access += access_armory
-			return hos_access
-#else
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers, access_forensics_lockers, access_armory,
-						access_tox, access_tox_storage, access_chemistry, access_medical, access_morgue, access_medlab,
-						access_emergency_storage, access_change_ids, access_eva, access_heads, access_medical_lockers,
-						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-						access_crematorium, access_kitchen, access_robotics, access_cargo,
-						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_mail, access_ai_upload,
-						access_engineering, access_teleporter, access_engineering_engine, access_engineering_power, access_engineering_control,
-						access_mining, access_pathology, access_researchfoyer)
-#endif
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
+						access_forensics_lockers, access_armory, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
+						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab, access_pharmacy,
+						access_crematorium, access_kitchen, access_robotics, access_cargo, access_money,
+						access_research, access_sysadmin, access_hydro, access_ranch, access_ai_upload,
+						access_tech_storage, access_maint_tunnels, access_bar, access_janitor, access_fine_small, access_fine_large,
+						access_engineering, access_teleporter, access_engineering_engine, access_engineering_control,
+						access_mining, access_researchfoyer, access_chapel_office, access_telesci,
+						access_engineering_storage, access_engineering_mechanic)
 		if("Research Director")
-			return list(access_research, access_research_director, access_dwaine_superuser,
+			return list(access_research, access_research_director, access_sysadmin,
 						access_tech_storage, access_maint_tunnels, access_heads, access_eva, access_tox,
 						access_tox_storage, access_chemistry, access_teleporter, access_ai_upload, access_researchfoyer, access_telesci,
 						access_artlab, access_robotdepot,
-						#ifdef SCIENCE_PATHO_MAP
-						, access_pathology
-						#endif
 						)
 		if("Medical Director")
 			return list(access_robotics, access_medical, access_morgue,
-						access_maint_tunnels, access_tech_storage, access_medical_lockers,
+						access_maint_tunnels, access_tech_storage, access_sysadmin, access_medical_lockers, access_pharmacy,
 						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload, access_teleporter
-						#ifndef SCIENCE_PATHO_MAP
-						, access_pathology
-						#endif
 						)
 		if("Chief Engineer")
-			return list(access_engineering, access_maint_tunnels, access_external_airlocks,
-						access_tech_storage, access_engineering_storage, access_engineering_eva, access_engineering_atmos,
-						access_engineering_power, access_engineering_engine, access_mining_shuttle,
+			return list(access_engineering, access_maint_tunnels,
+						access_tech_storage, access_sysadmin, access_engineering_storage, access_engineering_atmos,
+						access_engineering_power, access_engineering_engine,
 						access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
-						access_heads, access_ai_upload, access_construction, access_eva, access_cargo, access_supply_console, access_hangar, access_teleporter)
+						access_heads, access_ai_upload, access_eva, access_cargo, access_supply_console, access_teleporter)
 		if("Head of Mining", "Mining Supervisor")
-			return list(access_engineering, access_maint_tunnels, access_external_airlocks,
-						access_engineering_eva, access_mining_shuttle, access_mining,
-						access_mining_outpost, access_hangar, access_heads, access_ai_upload, access_construction, access_eva)
+			return list(access_engineering, access_maint_tunnels, access_mining,
+						access_mining_outpost, access_heads, access_ai_upload, access_eva)
 
-		///////////////////////////// Security
+		// --------------------------- Security
+		if("Nanotrasen Security Consultant")
+			return get_access("Security Officer") + list(access_heads, access_eva, access_fine_large)
 		if("Security Officer")
-#ifdef RP_MODE
-			return list(access_security, access_brig, access_forensics_lockers,
-				access_medical, access_medlab, access_morgue, access_securitylockers,
-				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
-				access_emergency_storage, access_chapel_office, access_kitchen,
-				access_bar, access_janitor, access_robotics, access_cargo, access_construction, access_hydro, access_mail,
-				access_engineering, access_maint_tunnels, access_external_airlocks,
-				access_tech_storage, access_engineering_storage, access_engineering_eva,
-				access_engineering_engine, access_mining_shuttle,
-				access_engineering_control, access_engineering_mechanic, access_mining, access_mining_outpost,
-				access_research, access_engineering_atmos, access_hangar, access_ranch, access_pathology, access_artlab, access_telesci,
-				access_researchfoyer, access_robotdepot)
-#else
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig, access_maint_tunnels,
-			access_medical, access_morgue, access_crematorium, access_research, access_cargo, access_engineering, access_engineering_control,
-			access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology, access_researchfoyer)
-#endif
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig,  access_ticket,
+			access_maint_tunnels, access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,
+			access_fine_small, access_chemistry, access_bar, access_kitchen, access_hydro, access_researchfoyer, access_mining
+			)
 		if("Vice Officer")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_maint_tunnels,access_hydro, access_bar, access_kitchen, access_ranch)
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_ticket, access_maint_tunnels,
+			access_hydro, access_bar, access_kitchen, access_ranch)
 		if("Security Assistant")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_maint_tunnels)
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_ticket, access_maint_tunnels)
 		if("Detective", "Forensic Technician")
-			return list(access_brig, access_carrypermit, access_contrabandpermit, access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_crematorium, access_medical, access_research)
+			return list(access_brig, access_carrypermit, access_contrabandpermit, access_security, access_forensics_lockers, access_ticket,
+			access_morgue, access_maint_tunnels, access_crematorium, access_medical, access_research)
 		if("Lawyer")
-			return list(access_morgue, access_maint_tunnels)
+			return list(access_morgue, access_maint_tunnels, access_security)
 
-		///////////////////////////// Medical
-		if("Medical Doctor")
+		// --------------------------- Medical
+		if("Medical Doctor", "Medical Trainee")
 			return list(access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Geneticist")
-			return list(access_medical, access_medical_lockers, access_morgue, access_medlab, access_maint_tunnels)
-		if("Pathologist")
-			#ifdef SCIENCE_PATHO_MAP
-			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_pathology, access_researchfoyer)
-			#else
-			return list(access_medical, access_medical_lockers, access_morgue, access_pathology, access_maint_tunnels)
-			#endif
+			return list(access_medical, access_medical_lockers, access_morgue, access_medlab)
 		if("Roboticist")
-			return list(access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
+			return list(access_maint_tunnels, access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue)
 		if("Pharmacist")
-			return list(access_research,access_tech_storage, access_maint_tunnels, access_chemistry,
-						access_medical_lockers, access_medical, access_morgue, access_researchfoyer)
-		if("Medical Assistant")
-			return list(access_maint_tunnels, access_tech_storage, access_medical, access_morgue)
+			return list(access_pharmacy, access_medical_lockers, access_medical, access_morgue)
 		if("Psychiatrist")
-			return list(access_medical, access_maint_tunnels)
+			return list(access_medical)
 		if("Medical Specialist")
 			return list(access_robotics, access_medical, access_morgue,
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
-						access_medlab) //Mdir minus head stuff
+						access_medlab, access_pharmacy) //Mdir minus head stuff
 
-		///////////////////////////// Science
-		if("Scientist")
+		// --------------------------- Science
+		if("Scientist", "Research Trainee")
 			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 		if("Chemist")
 			return list(access_research, access_chemistry, access_researchfoyer)
 		if("Toxins Researcher")
 			return list(access_research, access_tox, access_tox_storage, access_researchfoyer)
-		if("Research Assistant")
-			return list(access_maint_tunnels, access_tech_storage, access_research, access_chemistry, access_tox, access_researchfoyer, access_artlab, access_telesci, access_robotdepot) //notably not tox_storage, which is also the sci locker access for some fucking reason
 
-		//////////////////////////// Engineering
+		// --------------------------- Engineering
 		if("Atmospheric Technician")
-			return list(access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_control,
-						access_eva, access_engineering, access_engineering_storage, access_engineering_eva, access_engineering_atmos)
-		if("Engineer")
-			return list(access_engineering, access_maint_tunnels, access_external_airlocks, access_engineering_control,
+			return list(access_maint_tunnels, access_engineering_control, access_engineering_engine,
+						access_engineering_power, access_engineering, access_engineering_storage, access_engineering_atmos)
+		if("Engineer", "Technical Trainee")
+			return list(access_engineering, access_maint_tunnels, access_engineering_control,
 						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power,
-						access_tech_storage, access_engineering_mechanic, access_construction)
+						access_tech_storage, access_engineering_mechanic)
 		if("Miner")
-			return list(access_maint_tunnels, access_external_airlocks,
-						access_engineering_eva, access_mining_shuttle, access_mining,
-						access_mining_outpost, access_hangar)
+			return list(access_maint_tunnels, access_mining, access_mining_outpost)
 		if("Quartermaster")
-			return list(access_maint_tunnels, access_cargo, access_supply_console, access_hangar)
+			return list(access_maint_tunnels, access_cargo, access_supply_console)
 		if("Construction Worker")
-			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
+			return list(access_engineering, access_maint_tunnels, access_engineering_control,
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 
-		///////////////////////////// Civilian
+		// --------------------------- Civilian
 		if("Chaplain")
 			return list(access_morgue, access_chapel_office, access_crematorium)
 		if("Janitor")
 			return list(access_janitor, access_maint_tunnels, access_medical, access_morgue, access_crematorium)
 		if("Botanist", "Apiculturist")
-			return list(access_maint_tunnels, access_hydro)
+			return list(access_hydro, access_maint_tunnels)
 		if("Rancher")
-			return list(access_maint_tunnels, access_hydro, access_ranch)
+			return list(access_hydro, access_ranch, access_maint_tunnels)
 		if("Chef", "Sous-Chef")
 			return list(access_kitchen)
 		if("Bartender")
@@ -350,12 +240,12 @@
 			return list(access_bar, access_kitchen)
 		if("Clown", "Boxer", "Barber", "Mime", "Dungeoneer")
 			return list(access_maint_tunnels)
-		if("Assistant", "Staff Assistant", "Technical Assistant", "Radio Show Host")
+		if("Assistant", "Staff Assistant", "Radio Show Host")
 			return list(access_maint_tunnels, access_tech_storage)
 		if("Mail Courier")
-			return list(access_mail, access_heads, access_cargo, access_hangar, access_medical, access_researchfoyer, access_research, access_tech_storage)
+			return list(access_heads, access_cargo, access_medical, access_researchfoyer, access_research, access_tech_storage)
 
-		//////////////////////////// Other or gimmick
+		// --------------------------- Other or gimmick
 		if("VIP")
 			return list(access_heads, access_contrabandpermit) // Their cane is contraband.
 		if("Diplomat")
@@ -365,53 +255,55 @@
 		if("Club member")
 			return list(access_special_club)
 		if("Inspector", "Communications Officer")
-			return list(access_security, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
-						access_emergency_storage, access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch, access_pathology,
-						access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
-
+			return list(access_security, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
+						access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
+						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch,
+						access_researchfoyer, access_artlab, access_telesci, access_robotdepot, access_fine_small)
+		if("Hall Monitor")
+			return list(access_ticket)
+		if("Computer Operator")
+			return list(access_maint_tunnels, access_tech_storage, access_sysadmin, access_research, access_researchfoyer, access_robotdepot)
+		if("Admin")
+			return access_all_actually
 		else
 			return list()
 
 /proc/get_all_accesses()  // not adding the special stuff to this
-	return list(access_security, access_brig, access_forensics_lockers,
-	            access_medical, access_medlab, access_morgue, access_securitylockers,
-	            access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
-	            access_emergency_storage, access_change_ids, access_ai_upload,
-	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
-	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
-	            access_engineering, access_maint_tunnels, access_external_airlocks,
-	            access_tech_storage, access_engineering_storage, access_engineering_eva,
-	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
-	            access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
-	            access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_hangar, access_medical_director, access_special_club,
-				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money)
+#if defined(I_MEAN_ALL_ACCESS)
+	return access_all_actually
+#else
+	return list(access_security, access_brig, access_forensics_lockers, access_ticket, access_fine_small, access_fine_large,
+				access_medical, access_medlab, access_morgue, access_securitylockers,
+				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
+				access_change_ids, access_ai_upload,
+				access_teleporter, access_eva, access_heads, access_captain, access_head_of_personnel,
+				access_chapel_office, access_kitchen, access_medical_lockers,
+				access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch,
+				access_engineering, access_maint_tunnels,
+				access_tech_storage, access_engineering_storage,
+				access_engineering_power, access_engineering_engine,
+				access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
+				access_research, access_research_director, access_sysadmin, access_engineering_atmos, access_medical_director,
+				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money, access_pharmacy)
+#endif
 
-/proc/syndicate_spec_ops_access() //syndie spec ops need to get out of the listening post.
-	return list(access_security, access_brig, access_forensics_lockers,
-	            access_medical, access_medlab, access_morgue, access_securitylockers,
-	            access_tox, access_tox_storage, access_chemistry, access_carrypermit,
-	            access_emergency_storage, access_change_ids, access_ai_upload,
-	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
-	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
-	            access_engineering, access_maint_tunnels, access_external_airlocks,
-	            access_tech_storage, access_engineering_storage, access_engineering_eva,
-	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
-	            access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
-	            access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_hangar, access_medical_director, access_special_club, access_syndicate_shuttle,
-				access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
+// Generated at round start.
+var/list/access_name_lookup = null
+var/list/access_all_actually = null
 
-var/list/access_name_lookup //Generated at round start.
 
 /// Build the access_name_lookup table, to associate descriptions of accesses with their numerical value.
 /proc/generate_access_name_lookup()
+	if (!access_all_actually)
+		access_all_actually  = new /list(100)
+		for(var/i in 1 to 100)
+			access_all_actually[i] = i
+
 	if (access_name_lookup)
 		return
 
 	access_name_lookup = list()
-	var/list/accesses = get_all_accesses()
+	var/list/accesses = get_all_accesses() | access_armory | access_maxsec
 	for (var/accessNum in accesses)
 		access_name_lookup += "[get_access_desc(accessNum)]"
 
@@ -437,9 +329,7 @@ var/list/access_name_lookup //Generated at round start.
 		if(access_medical_lockers)
 			return "Medical Equipment"
 		if(access_medlab)
-			return "Med-Sci/Genetics"
-		if(access_pathology)
-			return "Pathology"
+			return "Genetics"
 		if(access_morgue)
 			return "Morgue"
 		if(access_tox)
@@ -454,12 +344,8 @@ var/list/access_name_lookup //Generated at round start.
 			return "Janitorial Equipment"
 		if(access_maint_tunnels)
 			return "Maintenance"
-		if(access_external_airlocks)
-			return "External Airlock"
-		if(access_emergency_storage)
-			return "Emergency Storage"
 		if(access_change_ids)
-			return "ID Computer"
+			return "Personnel Management"
 		if(access_ai_upload)
 			return "AI Upload"
 		if(access_supply_console)
@@ -472,8 +358,6 @@ var/list/access_name_lookup //Generated at round start.
 			return "Head's Quarters/Bridge"
 		if(access_captain)
 			return "Captain's Quarters"
-		if(access_all_personal_lockers)
-			return "Personal Locker Master Key"
 		if(access_chapel_office)
 			return "Chaplain's Office"
 		if(access_tech_storage)
@@ -484,16 +368,12 @@ var/list/access_name_lookup //Generated at round start.
 			return "Armory"
 		if(access_maxsec)
 			return "Head of Security's Office"
-		if(access_construction)
-			return "Construction Site"
 		if(access_kitchen)
 			return "Kitchen"
 		if(access_hydro)
 			return "Hydroponics"
 		if(access_ranch)
 			return "Ranch"
-		if(access_mail)
-			return "Mailroom"
 		if(access_research)
 			return "Research Sector"
 		if(access_research_director)
@@ -502,8 +382,6 @@ var/list/access_name_lookup //Generated at round start.
 			return "Engineering"
 		if(access_engineering_storage)
 			return "Engineering Storage"
-		if(access_engineering_eva)
-			return "Engineering EVA"
 		if(access_engineering_power)
 			return "Electrical Equipment (APCs)"
 		if(access_engineering_engine)
@@ -512,8 +390,6 @@ var/list/access_name_lookup //Generated at round start.
 			return "Mechanical Lab"
 		if(access_engineering_atmos)
 			return "Engineering Gas Storage/Atmospherics"
-		if(access_mining_shuttle)
-			return "Mining Outpost Shuttle"
 		if(access_engineering_control)
 			return "Engine Control Room"
 		if(access_engineering_chief)
@@ -522,8 +398,6 @@ var/list/access_name_lookup //Generated at round start.
 			return "Mining Department"
 		if(access_mining_outpost)
 			return "Mining Outpost"
-		if(access_hangar)
-			return "Hangar"
 		if(access_carrypermit)
 			return "Firearms Carry Permit"
 		if(access_contrabandpermit)
@@ -534,8 +408,8 @@ var/list/access_name_lookup //Generated at round start.
 			return "Robotics"
 		if(access_head_of_personnel)
 			return "Head of Personnel's Office"
-		if(access_dwaine_superuser)
-			return "DWAINE Superuser"
+		if(access_sysadmin)
+			return "Systems Administrator"
 		if(access_researchfoyer)
 			return "Research Foyer"
 		if(access_artlab)
@@ -546,6 +420,14 @@ var/list/access_name_lookup //Generated at round start.
 			return "Robot Depot"
 		if (access_money)
 			return "Budget Control"
+		if (access_ticket)
+			return "Ticketing"
+		if (access_fine_small)
+			return "Fines (Small)"
+		if (access_fine_large)
+			return "Fines (Large)"
+		if (access_pharmacy)
+			return "Pharmacy"
 
 
 proc/colorAirlock(access)
@@ -730,7 +612,6 @@ proc/fetchAirlock(access,variant)
 
 /obj/proc/set_access_list(var/list/L)
 	src.req_access = L.Copy()
-	src.req_access_txt = null
 
 
 

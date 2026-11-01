@@ -4,25 +4,6 @@
 #define IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON 3						// A generic-ass shitcurity baton
 #define IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON 4	// A generic, non-Beepsky brand secboton
 
-/// Idle, handles routing to basic patrol-or-dont secbotting
-#define SECBOT_IDLE					0
-/// Bot is angry, chasing someone or arresting them
-#define SECBOT_AGGRO				1
-/// Starting patrol, looking for a patrol node
-#define SECBOT_START_PATROL	2
-/// On patrol!
-#define SECBOT_PATROL				3
-/// Summoned by PDA
-#define SECBOT_SUMMON				4
-/// Idle again, but handles routing for guard-related stuff
-#define SECBOT_GUARD_IDLE		5
-/// Was ordered to guard an area. Checking to see if that's something it can do
-#define SECBOT_GUARD_START	6
-/// Currently guarding an area and milling about like an asshole
-#define SECBOT_GUARD				7
-/// Bot is angry, but was guarding an area and should go back to guarding after this
-#define SECBOT_GUARD_AGGRO	8
-
 /// Kill Path And Give Up
 /// Just kill their current path, likely invalid or unreachable or something
 #define KPAGU_CLEAR_PATH	0
@@ -32,10 +13,6 @@
 #define KPAGU_RETURN_TO_PATROL	2
 /// Clear aggro, revert to guard duty. mode = SECBOT_GUARD_IDLE
 #define KPAGU_RETURN_TO_GUARD		3
-
-#define PATROL_SPEED 6
-#define SUMMON_SPEED 3
-#define ARREST_SPEED 2.5
 
 #define BATON_INITIAL_DELAY (0.3 SECONDS)
 #define BATON_DELAY_PER_STUN (0.2 SECONDS)
@@ -77,7 +54,9 @@
 	var/last_target_cooldown = 10 SECONDS
 	emagged = 0 //Emagged Secbots view everyone as a criminal
 	health = 25
-	bot_voice = 'sound/misc/talk/bottalk_2.ogg'
+
+	voice_sound_override = 'sound/misc/talk/bottalk_2.ogg'
+
 	var/idcheck = 1 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
@@ -99,9 +78,9 @@
 	var/tmp/destination			// destination description tag
 	var/tmp/next_destination	// the next destination in the patrol route
 
-	var/move_patrol_step_delay = PATROL_SPEED	// multiplies how slowly the bot moves on patrol
-	var/move_summon_step_delay = SUMMON_SPEED	// same, but for summons. Lower is faster.
-	var/move_arrest_step_delay = ARREST_SPEED
+	var/move_patrol_step_delay = BOT::SPEED::SECBOT_PATROL	// multiplies how slowly the bot moves on patrol
+	var/move_summon_step_delay = BOT::SPEED::SECBOT_SUMMON	// same, but for summons. Lower is faster.
+	var/move_arrest_step_delay = BOT::SPEED::SECBOT_ARREST
 	var/emag_stages = 2 //number of times we can emag this thing
 	var/proc_available = 1 // Are we not on cooldown from having forced a process()?
 
@@ -173,7 +152,7 @@
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1
-	move_arrest_step_delay = ARREST_SPEED * 0.9 // beepsky has some experience chasing crimers
+	move_arrest_step_delay = BOT::SPEED::SECBOT_ARREST * 0.9 // beepsky has some experience chasing crimers
 	loot_baton_type = /obj/item/baton/beepsky
 	is_beepsky = IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
 	baton_charge_duration = BATON_CHARGE_DURATION_BEEPSKY
@@ -241,6 +220,9 @@
 	var/hat = null
 
 
+TYPEINFO(/obj/machinery/bot/secbot)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_SECURITY)
+
 /obj/machinery/bot/secbot
 	New()
 		..()
@@ -266,11 +248,6 @@
 		START_TRACKING_CAT(TR_CAT_DELETE_ME)
 		#endif
 
-	speak(var/message, var/sing, var/just_float)
-		if (src.emagged >= 2)
-			message = capitalize(ckeyEx(message))
-		. = ..()
-
 	pull(mob/user)
 		if (src.on)
 			boutput(user,SPAN_ALERT("<b>[src] resists being pulled around! Maybe deactivate it first.</b>"))
@@ -282,7 +259,7 @@
 		. = ..()
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc)
-				if (mode == SECBOT_AGGRO && target)
+				if (mode == BOT::MODE::SECBOT::AGGRO && target)
 					if ((BOUNDS_DIST(src, src.target) == 0))
 						src.baton_attack(src.target, 1)
 
@@ -291,27 +268,28 @@
 
 		dat += {"
 		<TT><B>Automatic Security Unit v2.0</B></TT><BR><BR>
-		Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
+		Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
 		Behaviour controls are [src.locked ? "locked" : "unlocked"]"}
 
 		if(!src.locked)
 			dat += {"<hr>
-			Check for Unauthorised Equipment: <A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
-			Check Security Records: <A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
-			Operating Mode: <A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
-			Issue Warnings: <A href='?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
-			Warning Threshold: [src.cuff_threat_threshold] | <A href='?src=\ref[src];operation=adjwarn;go=[1]'>\[+]</A> <A href='?src=\ref[src];operation=adjwarn;go=[0]'>\[-]</A><BR>
-			Auto Patrol: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
-			Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
-			Guard Lockdown: <A href='?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
-			<A href='?src=\ref[src];operation=guardhere'>Guard Here</A>"}
+			Check for Unauthorised Equipment: <A href='byond://?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
+			Check Security Records: <A href='byond://?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
+			Operating Mode: <A href='byond://?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
+			Issue Warnings: <A href='byond://?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
+			Warning Threshold: [src.cuff_threat_threshold] | <A href='byond://?src=\ref[src];operation=adjwarn;go=[1]'>\[+]</A> <A href='byond://?src=\ref[src];operation=adjwarn;go=[0]'>\[-]</A><BR>
+			Auto Patrol: <A href='byond://?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
+			Report Arrests: <A href='byond://?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
+			Guard Lockdown: <A href='byond://?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
+			<A href='byond://?src=\ref[src];operation=guardhere'>Guard Here</A>"}
 
-		if (user.client?.tooltipHolder)
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = "Securitron v2.0 controls",
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				mouse = params,
+				title = "Securitron v2.0 controls",
+				content = dat,
+			)
 
 		return
 
@@ -321,73 +299,64 @@
 		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["power"]) && (!src.locked || src.allowed(usr)))
-			src.on = !src.on
-			if (src.on)
-				add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
-				if (src.pulled_by)
-					src.pulled_by.remove_pulling()
-			else
-				remove_simple_light("secbot")
-			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
-			src.updateUsrDialog()
-			logTheThing(LOG_STATION, usr, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
+			src.toggle_power(0)
 
 		switch(href_list["operation"])
 			if ("idcheck")
 				src.idcheck = !src.idcheck
-				src.speak("Ten-Four. ID Scanner: [src.idcheck ? "ENGAGED" : "DISENGAGED"].")
+				src.say("Ten-Four. ID Scanner: [src.idcheck ? "ENGAGED" : "DISENGAGED"].")
 				src.updateUsrDialog()
 			if ("ignorerec")
 				src.check_records = !src.check_records
-				src.speak("Ten-Four. Security Records: [src.check_records ? "REFERENCED" : "IGNORED"].")
+				src.say("Ten-Four. Security Records: [src.check_records ? "REFERENCED" : "IGNORED"].")
 				src.updateUsrDialog()
 			if ("switchmode")
 				src.arrest_type = !src.arrest_type
-				src.speak("Ten-Four. Arrest Mode: [src.arrest_type ? "DETAIN" : "RESTRAIN"].")
+				src.say("Ten-Four. Arrest Mode: [src.arrest_type ? "DETAIN" : "RESTRAIN"].")
 				src.updateUsrDialog()
 			if("patrol")
 				src.auto_patrol = !src.auto_patrol
-				src.speak("Ten-Four. Auto-Patrol: [src.auto_patrol ? "ENGAGED" : "DISENGAGED"].")
+				src.say("Ten-Four. Auto-Patrol: [src.auto_patrol ? "ENGAGED" : "DISENGAGED"].")
 				src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 				updateUsrDialog()
 			if("report")
 				src.report_arrests = !src.report_arrests
-				src.speak("Ten-Four. [src.report_arrests ? "Reporting arrests on [FREQ_PDA]" : "No longer reporting arrests"].")
+				src.say("Ten-Four. [src.report_arrests ? "Reporting arrests on [FREQ_PDA]" : "No longer reporting arrests"].")
 				updateUsrDialog()
 			if("lockdown")
 				src.guard_area_lockdown = !src.guard_area_lockdown
-				src.speak("Ten-Four. [src.guard_area_lockdown ? "Arresting non-security, non-head personnel in guarded area" : "Standard guard-arrest protocol initiated"].")
+				src.say("Ten-Four. [src.guard_area_lockdown ? "Arresting non-security, non-head personnel in guarded area" : "Standard guard-arrest protocol initiated"].")
 				updateUsrDialog()
 			if("warning")
 				src.warn_minor_crime = !src.warn_minor_crime
-				src.speak("Ten-Four. [src.guard_area_lockdown ? "Will not restrain minor offenders" : "Treating all crimes equally"].")
+				src.say("Ten-Four. [src.guard_area_lockdown ? "Will not restrain minor offenders" : "Treating all crimes equally"].")
 				updateUsrDialog()
 			if("adjwarn")
 				if(href_list["go"] == "1")
 					src.cuff_threat_threshold++
-					src.speak("!", just_float = 1)
+					src.say("!")
 				else
 					src.cuff_threat_threshold--
-					src.speak("...", just_float = 1)
+					src.say("...")
 				src.cuff_threat_threshold = clamp(src.cuff_threat_threshold, 1, 15)
 				updateUsrDialog()
 			if("guardhere")
 				src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
-				if(src.mode == SECBOT_GUARD_START || src.mode == SECBOT_GUARD)
-					src.speak("Ten-Four. Guard orders deleted.")
+				if(src.mode == BOT::MODE::SECBOT::GUARD_START || src.mode == BOT::MODE::SECBOT::GUARD)
+					src.say("Ten-Four. Guard orders deleted.")
 				else if(isarea(get_area(src)))
 					src.guard_area = get_area(src)
-					src.mode = SECBOT_GUARD_START
-					src.speak("Ten-Four. Guarding curent area.")
+					src.mode = BOT::MODE::SECBOT::GUARD_START
+					src.say("Ten-Four. Guarding curent area.")
 				else
-					src.speak("ERROR 99-21: CURRENT AREA IS INVALID.")
+					src.say("ERROR 99-21: CURRENT AREA IS INVALID.")
 				updateUsrDialog()
 
 	attack_ai(mob/user as mob)
 		if (src.on && src.emagged)
 			boutput(user, SPAN_ALERT("[src] refuses your authority!"))
 			return
-		src.on = !src.on
+		src.toggle_power(0)
 		if (src.on && src.pulled_by)
 			src.pulled_by.remove_pulling()
 		src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
@@ -405,7 +374,7 @@
 
 
 			src.emagged++
-			src.on = 1
+			src.toggle_power(1)
 			if (src.pulled_by)
 				src.pulled_by.remove_pulling()
 			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
@@ -428,6 +397,27 @@
 			return 1
 		return 0
 
+	proc/toggle_power(var/force_on = 0)
+		if (!src)
+			return
+
+		if (force_on == 1)
+			src.on = 1
+		else
+			src.on = !src.on
+
+		if (src.on)
+			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+			if (src.pulled_by)
+				src.pulled_by.remove_pulling()
+		else
+			remove_simple_light("secbot")
+		src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
+		src.updateUsrDialog()
+		logTheThing(LOG_STATION, usr, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
+
+		return
+
 	demag(var/mob/user)
 		if (!src.emagged)
 			return 0
@@ -447,7 +437,7 @@
 		if(!src.emagged && prob(75))
 			src.emagged = 1
 			src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
-			src.on = 1
+			src.toggle_power(1)
 			if (src.pulled_by)
 				src.pulled_by.remove_pulling()
 		else
@@ -579,12 +569,13 @@
 			UpdateOverlays(null, "secbot_charged")
 
 	/// Hits someone with our baton, or charges it if it isnt
-	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0)
+	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0, var/extra_hits = 0)
 		if(force_attack || baton_charged)
 			src.baton_charging = 0
 			src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
 			var/maxstuns = 4
 			var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
+			stuncount += extra_hits
 
 			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
 			if (src.our_baton && istype(src.our_baton))
@@ -634,59 +625,59 @@
 
 		switch(mode)
 			/// No guard orders, start patrol if allowed, also look for people to heck up
-			if(SECBOT_IDLE)
+			if(BOT::MODE::SECBOT::IDLE)
 				src.doing_something = 0
 				look_for_perp()	// see if any criminals are in range
 				if(auto_patrol)	// still idle, and set to patrol
-					mode = SECBOT_START_PATROL	// switch to patrol mode
+					mode = BOT::MODE::SECBOT::START_PATROL	// switch to patrol mode
 
 			/// No guard orders, engaging target, seeking to arrest them
-			if(SECBOT_AGGRO, SECBOT_GUARD_AGGRO)
+			if(BOT::MODE::SECBOT::AGGRO, BOT::MODE::SECBOT::GUARD_AGGRO)
 				src.doing_something = 1
 				src.assault_target()
 
-			if(SECBOT_START_PATROL)	// start a patrol
+			if(BOT::MODE::SECBOT::START_PATROL)	// start a patrol
 				src.doing_something = 0
 				if(patrol_target)
 					if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-patrolstart", src.chatspam_cooldown)) // have a valid path, so go there
-						src.speak("Patrol Mode: ENGAGED.")
-					src.mode = SECBOT_PATROL
+						src.say("Patrol Mode: ENGAGED.")
+					src.mode = BOT::MODE::SECBOT::PATROL
 				else // no patrol target, so need a new one
 					find_patrol_target()
 
-			if(SECBOT_PATROL)		// patrol mode
+			if(BOT::MODE::SECBOT::PATROL)		// patrol mode
 				if(src.target)
-					src.mode = SECBOT_AGGRO
+					src.mode = BOT::MODE::SECBOT::AGGRO
 					src.process()
 				else
 					move_the_bot(move_patrol_step_delay)
 					look_for_perp()
 
-			if(SECBOT_SUMMON)		// summoned to PDA
+			if(BOT::MODE::SECBOT::SUMMON)		// summoned to PDA
 				src.doing_something = 1
-				if (!src.path) //null path means we couldn't find the target
-					src.speak("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
+				if(!src.path)
+					src.say("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
 					src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)	// switch back to what we should be
 
 			/// On guard duty, returning from distraction
-			if(SECBOT_GUARD_IDLE)
+			if(BOT::MODE::SECBOT::GUARD_IDLE)
 				src.doing_something = 0
 				if(isarea(src.guard_area))
 					if(get_area(get_turf(src)) == src.guard_area)
-						mode = SECBOT_GUARD
+						mode = BOT::MODE::SECBOT::GUARD
 					else
-						mode = SECBOT_GUARD_START
+						mode = BOT::MODE::SECBOT::GUARD_START
 						src.guard_start_no_announce = 1
 				else
-					mode = SECBOT_IDLE
+					mode = BOT::MODE::SECBOT::IDLE
 				look_for_perp()
 
 			/// On guard duty, check if we're in the place we're supposed to be
-			if(SECBOT_GUARD_START, SECBOT_GUARD)
+			if(BOT::MODE::SECBOT::GUARD_START, BOT::MODE::SECBOT::GUARD)
 				src.doing_something = 1
 				src.guard_target()
 
-			if(SECBOT_GUARD_AGGRO)
+			if(BOT::MODE::SECBOT::GUARD_AGGRO)
 				src.doing_something = 1
 				src.assault_target()
 
@@ -697,42 +688,42 @@
 			return
 
 		if(!isarea(src.guard_area)) // Area isnt? Back to patrol, I guess
-			src.speak("ERROR 99-24: INVALID AREA [src.guard_area]")
+			src.say("ERROR 99-24: INVALID AREA [src.guard_area]")
 			src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
 			return
 
 		if(src.guard_area?.name == "Space" || src.guard_area?.name == "Ocean") // Podsky we aint
-			src.speak("ERROR 99-29: SPECIFIED AREA '[src.guard_area]' OUT OF BOUNDS.")
+			src.say("ERROR 99-29: SPECIFIED AREA '[src.guard_area]' OUT OF BOUNDS.")
 			src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
 			return
 
 		if(get_area(get_turf(src)) == src.guard_area) // oh good we're here
-			if(src.mode == SECBOT_GUARD_START)
+			if(src.mode == BOT::MODE::SECBOT::GUARD_START)
 				if(!src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardarrived", src.chatspam_cooldown))
-					src.speak("Destination reached. Patrolling area.", just_float = 1)
-				src.mode = SECBOT_GUARD
+					src.say("Destination reached. Patrolling area.")
+				src.mode = BOT::MODE::SECBOT::GUARD
 
 		if(!moving && !ON_COOLDOWN(src, SECBOT_GUARDMOVE_COOLDOWN, src.guard_mill_cooldown))
 			var/list/T = get_area_turfs(src.guard_area, 1)
-			if(src.mode == SECBOT_GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardcalc", src.chatspam_cooldown))
-				src.speak("Calculating path to [src.guard_area]...", just_float = 1)
+			if(src.mode == BOT::MODE::SECBOT::GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardcalc", src.chatspam_cooldown))
+				src.say("Calculating path to [src.guard_area]...")
 			if(length(T) >= 1)
 				SPAWN(0)
 					for(var/i in 1 to 10) // Not every turf is accessible to the bot. But some might!
 						T = (pick(T))
 						src.navigate_to(T, src.bot_move_delay)
 						if(length(src.path) >= 1)
-							if(src.mode == SECBOT_GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardpathOK", src.chatspam_cooldown))
-								src.speak("Path calculated. Moving out.", just_float = 1)
+							if(src.mode == BOT::MODE::SECBOT::GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardpathOK", src.chatspam_cooldown))
+								src.say("Path calculated. Moving out.")
 							break
 						sleep(1 SECOND)
 					if(!src.path) // Can't get there? Eh just go back to patrolling
-						src.speak("ERROR 99-02: COULD NOT FIND PATH TO GUARD AREA.")
-						src.speak("Guard Mode: DISENGAGED.")
+						src.say("ERROR 99-02: COULD NOT FIND PATH TO GUARD AREA.")
+						src.say("Guard Mode: DISENGAGED.")
 						src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
 			else
-				src.speak("ERROR 99-81: AREA CONTAINS NO VALID TURFS.")
-				src.speak("Guard Mode: DISENGAGED.")
+				src.say("ERROR 99-81: AREA CONTAINS NO VALID TURFS.")
+				src.say("Guard Mode: DISENGAGED.")
 				src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
 
 	/// Makes the bot chase perps, hit them, and cuff them
@@ -740,32 +731,32 @@
 		var/kpagu // fun fact, the postalcode for Kpagu is 911101
 		/// Current mode determines what we're supposed to go back to when we're done
 		switch(src.mode)
-			if(SECBOT_GUARD, SECBOT_GUARD_START, SECBOT_GUARD_AGGRO, SECBOT_GUARD_IDLE)
+			if(BOT::MODE::SECBOT::GUARD, BOT::MODE::SECBOT::GUARD_START, BOT::MODE::SECBOT::GUARD_AGGRO, BOT::MODE::SECBOT::GUARD_IDLE)
 				kpagu = KPAGU_RETURN_TO_GUARD
 			else
 				kpagu = KPAGU_RETURN_TO_PATROL
 
 		/// Tango never up to begin with? Or some kind of not-human? Eh whatever give up
 		if(!istype(src.target, /mob/living/carbon/human))
-			speak("???", just_float = 1)
+			src.say("???")
 			src.KillPathAndGiveUp(kpagu)
 			return
 
 		// If the target is or goes invisible, give up, securitrons don't have thermal vision! :p
 		if((src.target.invisibility > INVIS_NONE)  && (!src.is_beepsky))
-			speak("?!", just_float = 1)
+			src.say("?!")
 			src.KillPathAndGiveUp(kpagu)
 			return
 
 		/// Tango hidden inside something or someone? Welp, can't hit them through a locker, so may as well give up!
 		if(src.target?.loc && !isturf(src.target.loc))
-			speak("?", just_float = 1)
+			src.say("?")
 			src.KillPathAndGiveUp(kpagu)
 			return
 
 		/// Tango down or tango hecked off or tango behind a bunch of stuff, give up and get back to work
 		if (src.target.hasStatus("handcuffed") || src.frustration >= 8)
-			speak("...", just_float = 1)
+			src.say("...")
 			src.KillPathAndGiveUp(kpagu)
 			return
 
@@ -780,7 +771,7 @@
 				src.weeoo()
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
-						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
+						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>", group = "storage_thud")
 					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
@@ -814,7 +805,7 @@
 				/// Charge em!
 				navigate_to(src.target, src.move_arrest_step_delay, max_dist = 30) // but they can go anywhere in that 13 tiles
 				if(!src.path || length(src.path) < 1)
-					speak("...?", just_float = 1)
+					src.say("...?")
 					src.KillPathAndGiveUp(kpagu)
 				else
 					weeoo()
@@ -822,7 +813,7 @@
 			/// Tango outside of charging distance?
 			else
 				src.frustration += 2
-				speak("...", just_float = 1)
+				src.say("...")
 
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
@@ -847,6 +838,8 @@
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
 				break
+			if(C.traitHolder?.hasTrait("wasitsomethingisaid") && src.threatlevel >= 1)
+				src.EngageTarget(C)
 			else
 				continue
 
@@ -861,7 +854,7 @@
 					continue
 				if(IN_RANGE(src, S, 7))
 					if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-drawaggro", src.chatspam_cooldown))
-						S.speak("ALLIED UNIT UNDER ATTACK. MOVING TO ASSIST.")
+						S.say("ALLIED UNIT UNDER ATTACK. MOVING TO ASSIST.")
 					S.EngageTarget(C, 0, 0, 0)
 
 		if(pda_help && !ON_COOLDOWN(src, SECBOT_HELPME_COOLDOWN, src.helpme_cooldown))
@@ -887,24 +880,24 @@
 		if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-yellatthem", src.chatspam_cooldown * 3))
 			src.YellAtPerp()
 		switch(src.mode)
-			if(SECBOT_IDLE, SECBOT_START_PATROL, SECBOT_PATROL, SECBOT_SUMMON, SECBOT_AGGRO)
-				src.mode = SECBOT_AGGRO
+			if(BOT::MODE::SECBOT::IDLE, BOT::MODE::SECBOT::START_PATROL, BOT::MODE::SECBOT::PATROL, BOT::MODE::SECBOT::SUMMON, BOT::MODE::SECBOT::AGGRO)
+				src.mode = BOT::MODE::SECBOT::AGGRO
 			else
-				src.mode = SECBOT_GUARD_AGGRO
+				src.mode = BOT::MODE::SECBOT::GUARD_AGGRO
 		weeoo()
 		process()	// ensure bot quickly responds to a perp
 
 	proc/YellAtPerp()
 		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
 		src.point(src.target, 1)
-		src.speak("Level [src.threatlevel] infraction alert!")
+		src.say("Level [src.threatlevel] infraction alert!")
 		switch(saything)
 			if('sound/voice/bcriminal.ogg')
-				src.speak("CRIMINAL DETECTED.")
+				src.say("CRIMINAL DETECTED.")
 			if('sound/voice/bjustice.ogg')
-				src.speak("PREPARE FOR JUSTICE.")
+				src.say("PREPARE FOR JUSTICE.")
 			if('sound/voice/bfreeze.ogg')
-				src.speak("FREEZE. SCUMBAG.")
+				src.say("FREEZE. SCUMBAG.")
 		playsound(src, saything, 50, FALSE)
 
 	proc/weeoo()
@@ -948,10 +941,6 @@
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
 
-		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
-			if(isnull(data_core.security.find_record("name", perp.name)))
-				threatcount += 5
-
 		// we have grounds to make an arrest, don't bother with further analysis
 		if(threatcount >= 4)
 			return threatcount
@@ -960,7 +949,7 @@
 			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
-				if(R["criminal"] == ARREST_STATE_ARREST)
+				if(R["criminal"] == SECURITY::ARREST::STATE::ARREST)
 					threatcount = 7
 					break
 
@@ -984,14 +973,14 @@
 			src.oldtarget_name = src.target?.name
 			src.target = null
 			ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
-			src.mode = SECBOT_GUARD_IDLE
+			src.mode = BOT::MODE::SECBOT::GUARD_IDLE
 		if(give_up == KPAGU_RETURN_TO_PATROL || give_up == KPAGU_CLEAR_ALL)
 			src.oldtarget_name = src.target?.name
 			src.target = null
 			ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
 			src.guard_area = null
 			src.guard_area_lockdown = FALSE
-			src.mode = SECBOT_IDLE
+			src.mode = BOT::MODE::SECBOT::IDLE
 
 	/// Sends the bot on to a patrol target. Or Summon target, if that's what patrol_target is set to
 	proc/move_the_bot(var/delay = 3)
@@ -1047,7 +1036,7 @@
 				auto_patrol = 0
 				src.KillPathAndGiveUp(2)
 				if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-patrolend", src.chatspam_cooldown))
-					src.speak("Patrol Mode: DISENGAGED.")
+					src.say("Patrol Mode: DISENGAGED.")
 				send_status()
 
 	proc/at_patrol_target()
@@ -1079,12 +1068,12 @@
 		// process control input
 			switch(signal_command)
 				if("stop")
-					src.mode = SECBOT_IDLE
+					src.mode = BOT::MODE::SECBOT::IDLE
 					src.auto_patrol = 0
 					return
 
 				if("go")
-					src.mode = SECBOT_IDLE
+					src.mode = BOT::MODE::SECBOT::IDLE
 					src.auto_patrol = 1
 					return
 
@@ -1094,13 +1083,13 @@
 
 				if("proc")
 					if (src.proc_available)
-						src.speak("!", just_float = 1)
+						src.say("!")
 						src.proc_available = 0
 						src.process()
 						SPAWN(3 SECONDS)
 							src.proc_available = 1
 					else
-						src.speak("...", just_float = 1)
+						src.say("...")
 					return
 
 				if("guard")
@@ -1146,9 +1135,9 @@
 		src.guard_area_lockdown = lockdown
 		if(isarea(A))
 			src.guard_area = A
-		src.mode = SECBOT_GUARD_START
+		src.mode = BOT::MODE::SECBOT::GUARD_START
 		if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardstart", src.chatspam_cooldown))
-			src.speak("Ten-Four. Guard orders confirmed.")
+			src.say("Ten-Four. Guard orders confirmed.")
 
 	proc/summon_bot(var/turf/target)
 		src.KillPathAndGiveUp(1)
@@ -1159,9 +1148,9 @@
 		src.next_destination = destination
 		src.destination = null
 		src.awaiting_beacon = 0
-		src.mode = SECBOT_SUMMON
+		src.mode = BOT::MODE::SECBOT::SUMMON
 		if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-summonstart", src.chatspam_cooldown))
-			src.speak("Responding to summon.")
+			src.say("Responding to summon.")
 		src.move_the_bot(move_summon_step_delay)
 
 	// send a radio signal with a single data key/value pair
@@ -1201,15 +1190,15 @@
 			say_thing = 'sound/voice/bsecureday.ogg'
 		switch(say_thing)
 			if('sound/voice/bgod.ogg')
-				src.speak("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TO-DAY.")
+				src.say("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TO-DAY.")
 			if('sound/voice/biamthelaw.ogg')
-				src.speak("I-AM-THE-LAW.")
+				src.say("I-AM-THE-LAW.")
 			if('sound/voice/bsecureday.ogg')
-				src.speak("HAVE A SECURE DAY.")
+				src.say("HAVE A SECURE DAY.")
 			if('sound/voice/bradio.ogg')
-				src.speak("YOU CANT OUTRUN A RADIO.")
+				src.say("YOU CANT OUTRUN A RADIO.")
 			if('sound/voice/bcreep.ogg')
-				src.speak("YOUR MOVE. CREEP.")
+				src.say("YOUR MOVE. CREEP.")
 			if('sound/voice/binsultbeep.ogg')
 				var/qbert = ""
 				for(var/i in 1 to rand(5,20))
@@ -1218,7 +1207,7 @@
 						qbert += " "
 				for(var/j in 1 to rand(2,5))
 					qbert += "[pick("!","?")]"
-				src.speak("[qbert]")
+				src.say("[qbert]")
 		playsound(src, say_thing, 50, FALSE, 0, 1)
 		ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.target?.name]", src.last_target_cooldown)
 
@@ -1278,7 +1267,12 @@
 			if(ishuman(master.target) && !uncuffable)
 				master.target.handcuffs = new /obj/item/handcuffs/guardbot(master.target)
 				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
+				master.target.update_clothing()
 				logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(master.target,"combat")] at [log_loc(master)].")
+
+			if(master.target.traitHolder?.hasTrait("wasitsomethingisaid")) //a little extra to make the trait funnier
+				var/extra_hits = (master.emagged >= 2) ? 20 : 4 //normal = 4. double emagged = 20. i just think its very funny
+				master.baton_attack(master.target, TRUE, extra_hits)
 
 			if(!uncuffable)
 				master.arrest_gloat()
@@ -1304,9 +1298,9 @@
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
 
 			switch(master.mode)
-				if(SECBOT_AGGRO)
+				if(BOT::MODE::SECBOT::AGGRO)
 					master.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
-				if(SECBOT_GUARD_AGGRO)
+				if(BOT::MODE::SECBOT::GUARD_AGGRO)
 					master.KillPathAndGiveUp(KPAGU_RETURN_TO_GUARD)
 				else
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
@@ -1376,6 +1370,9 @@
 		return
 	else
 		var/obj/item/secbot_assembly/A = new /obj/item/secbot_assembly
+		A.setMaterial(src.material)
+		A.forensic_holder = src.forensic_holder
+		S.forensic_holder.copy_to(A.forensic_holder)
 		user.u_equip(S)
 		user.put_in_hand_or_drop(A)
 		boutput(user, "You add the signaler to the helmet.")
@@ -1391,6 +1388,7 @@
 			boutput(user, "You weld a hole in [src]!")
 
 	else if (istype(W, /obj/item/device/prox_sensor) && src.build_step == 1)
+		W.forensic_holder.copy_to(src.forensic_holder)
 		src.build_step++
 		boutput(user, "You add the prox sensor to [src]!")
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_eye")
@@ -1398,6 +1396,7 @@
 		qdel(W)
 
 	else if (istype(W, /obj/item/parts/robot_parts/arm/) && src.build_step == 2)
+		W.forensic_holder.copy_to(src.forensic_holder)
 		src.build_step++
 		boutput(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
@@ -1406,50 +1405,43 @@
 		qdel(W)
 
 	else if (istype(W, /obj/item/baton/) && src.build_step >= 3)
+		var/obj/machinery/bot/secbot/secbot = null
 		if (istype(W, /obj/item/baton/beepsky))	// If we used Beepsky's dropped baton
 			var/obj/item/baton/Y = W
 			if (src.is_dead_beepsky)							// on Beepsky's corpse
 				boutput(user, "You return Officer Beepsky his trusty baton, reassembling the Securitron! Beep boop.")
-				new /obj/machinery/bot/secbot/beepsky(get_turf(src))
-				qdel(src)
-				user.u_equip(W)
-				qdel(W)
+				secbot = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
 			else												// On any other securitron assembly?
 				boutput(user, "You give the [src] [W] and connect a cable in the arm to the baton's parallel port, completing the Securitron! Beep boop.")
-				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-				S.beacon_freq = src.beacon_freq
-				get_radio_connection_by_id(S, "beacon").update_frequency(S.beacon_freq)
-				S.hat = src.hat
-				S.name = src.created_name		// We get an upgraded securitron
-				S.loot_baton_type = W.type	// So we can drop it all over again.
+				secbot = new(get_turf(src))
+				secbot.beacon_freq = src.beacon_freq
+				get_radio_connection_by_id(secbot, "beacon").update_frequency(secbot.beacon_freq)
+				secbot.hat = src.hat
+				secbot.name = src.created_name		// We get an upgraded securitron
 				if (Y.beepsky_held_this == 1)
-					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON	// So we drop Beepsky's baton, and not just some generic secbot one
+					secbot.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON	// So we drop Beepsky's baton, and not just some generic secbot one
 				else
-					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON // So we drop some generic secboton
-				qdel(src)
-				user.u_equip(W)
-				qdel(W)
+					secbot.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON // So we drop some generic secboton
 		else												// If we used any old stun baton
 			if (src.is_dead_beepsky)	// On Beepsky's corpse
 				boutput(user, "You give Officer Beepsky a stun baton, reassembling the Securitron! Beep boop.")
-				var/obj/machinery/bot/secbot/beepsky/S = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
-				S.is_beepsky = IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON // So Beepsky's corpse is his corpse
-				S.loot_baton_type = W.type	// Our baton isn't special
-				qdel(src)
-				user.u_equip(W)
-				qdel(W)
+				secbot = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
+				secbot.is_beepsky = IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON // So Beepsky's corpse is his corpse
 			else											// On any other securitron assembly?
 				boutput(user, "You give the [src] a stun baton, completing the Securitron! Beep boop.")
-				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-				S.beacon_freq = src.beacon_freq
-				get_radio_connection_by_id(S, "beacon").update_frequency(S.beacon_freq)
-				S.hat = src.hat
-				S.name = src.created_name
-				S.is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON // You're still not Beepsky
-				S.loot_baton_type = W.type	// Our baton isn't special either
-				qdel(src)
-				user.u_equip(W)
-				qdel(W)
+				secbot = new(get_turf(src))
+				secbot.beacon_freq = src.beacon_freq
+				get_radio_connection_by_id(secbot, "beacon").update_frequency(secbot.beacon_freq)
+				secbot.hat = src.hat
+				secbot.name = src.created_name
+				secbot.is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON // You're still not Beepsky
+		secbot.loot_baton_type = W.type	// Drop the same type of baton
+		secbot.setMaterial(src.material)
+		secbot.forensic_holder = src.forensic_holder
+		W.forensic_holder.copy_to(secbot.forensic_holder)
+		qdel(src)
+		user.u_equip(W)
+		qdel(W)
 
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
 		var/obj/item/rods/R = W
@@ -1499,8 +1491,5 @@
 #undef IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON
 #undef IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON
 #undef IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON
-#undef PATROL_SPEED
-#undef SUMMON_SPEED
-#undef ARREST_SPEED
 #undef BATON_INITIAL_DELAY
 #undef BATON_DELAY_PER_STUN

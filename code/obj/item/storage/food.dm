@@ -9,6 +9,8 @@
 	name = "glassware box"
 	icon_state = "glassware"
 	desc = "A box with glass cups for drinking liquids from."
+	SYNDICATE_STEALTH_DESCRIPTION("The label mentions something about \"nearly bottomless mimosas\".")
+	tooltip_flags = REBUILD_USER
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie = 7)
 
 /obj/item/storage/box/cutlery
@@ -140,7 +142,7 @@
 			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path(src)
 			src.storage.add_contents(newcandy)
 			if (prob(5))
-				newcandy.razor_blade = 1
+				newcandy.has_razor_blade = TRUE
 
 /obj/item/storage/box/popsicles
 	name = "popsicles"

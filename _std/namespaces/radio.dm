@@ -1,0 +1,173 @@
+/// Radio colours, CSS classes, and frequencies.
+CREATE_NAMESPACE(RADIO)
+
+
+//------------ Colours ------------//
+/// Radio colours.
+CREATE_NAMESPACE(RADIO, COL)
+
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/BRIG = "#FF5000")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/CIVILIAN = "#A10082")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/COMMAND = "#4F78A8")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/DETECTIVE = "#A00000")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/ENGINEERING = "#A86800")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/INTERCOM = "#008BA0")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/MEDICAL = "#3A88AC")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/NANOTRASEN = "#bfc200")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/OTHER = "#800080")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/RESEARCH = "#732DCE")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/SALVAGER = "#A18146")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/SECURITY = "#E00000")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/STANDARD = "#008000")
+ADD_TO_NAMESPACE(RADIO, COL)(var/const/SYNDICATE = "#962121")
+
+
+//------------ CSS ------------//
+/// Radio CSS classes.
+CREATE_NAMESPACE(RADIO, CSS)
+
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/CIVILIAN = "rcivilian")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/COMMAND = "rcommand")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/DETECTIVE = "rdetective")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/ENGINEERING = "rengineering")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/INTERCOM = "rintercom")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/INTERCOM_AI = "rintercomai")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/MEDICAL = "rmedical")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/NANOTRASEN = "rnanotrasen")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/OTHER = "rother")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/RESEARCH = "rresearch")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/SALVAGER = "rsalvager")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/SECURITY = "rsecurity")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/STANDARD = "rstandard")
+ADD_TO_NAMESPACE(RADIO, CSS)(var/const/SYNDICATE = "rsyndicate")
+
+
+//------------ Frequencies ------------//
+/// Radio frequencies.
+CREATE_NAMESPACE(RADIO, FREQ)
+
+/// Minimum selectable frequency.
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/MINIMUM = 1441)
+/// Maximum selectable frequency.
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/MAXIMUM = 1489)
+
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/CIVILIAN = 1355)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/COMMAND = 1358)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/DEFAULT = 1459)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/DETECTIVE = 1351)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/ENGINEERING = 1357)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/GANG = 1400)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/LOUDSPEAKERS = 1438)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/MEDICAL = 1356)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/MULTI = 1451)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/NANOTRASEN = 1350)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/PIRATE = 1353)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/RESEARCH = 1354)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/SALVAGER = 1349)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/SECURITY = 1359)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/SYNDICATE = 1352)
+ADD_TO_NAMESPACE(RADIO, FREQ)(var/const/WIZARD = 1089)
+
+/// Radio intercom frequencies.
+CREATE_NAMESPACE(RADIO, FREQ, INTERCOM)
+
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/AI = 1447)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/BOTANY = 1446)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/BRIDGE = 1442)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/BRIG = 1489)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/CARGO = 1455)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/CATERING = 1463)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/ENGINEERING = 1441)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/HEMERA = 777)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/MEDICAL = 1445)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/MINING = 1456)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/OWLERY = 1291)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/RESEARCH = 1443)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/SECURITY = 1485)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/SYNDCOMMAND = 6174)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/TERRA8 = 1156)
+ADD_TO_NAMESPACE(RADIO, FREQ, INTERCOM)(var/const/WIZARD = 1089)
+
+
+//------------ Helper Procs ------------//
+
+/// Returns the colour associated with a frequency.
+ADD_TO_NAMESPACE(RADIO)(proc/default_frequency_colour(freq))
+	return src.frequencies_to_colours[freq]
+
+/// Returns the CSS class associated with a frequency.
+ADD_TO_NAMESPACE(RADIO)(proc/default_frequency_class(freq))
+	var/class_to_return = src.frequencies_to_classes[freq]
+	if (!class_to_return)
+		for (var/datum/gang/gang as anything in global.get_all_gangs())
+			if (freq == gang.gang_frequency)
+				class_to_return = RADIO::CSS::SYNDICATE
+
+	return class_to_return || RADIO::CSS::OTHER
+
+/// An alist of radio frequencies and their associated channel colours.
+ADD_TO_NAMESPACE(RADIO)(var/alist/frequencies_to_colours = alist(
+	RADIO::FREQ::CIVILIAN				= RADIO::COL::CIVILIAN,
+	RADIO::FREQ::COMMAND				= RADIO::COL::COMMAND,
+	RADIO::FREQ::DEFAULT				= RADIO::COL::STANDARD,
+	RADIO::FREQ::DETECTIVE				= RADIO::COL::DETECTIVE,
+	RADIO::FREQ::ENGINEERING			= RADIO::COL::ENGINEERING,
+	RADIO::FREQ::GANG					= RADIO::COL::SYNDICATE,
+	RADIO::FREQ::MEDICAL				= RADIO::COL::MEDICAL,
+	RADIO::FREQ::NANOTRASEN				= RADIO::COL::NANOTRASEN,
+	RADIO::FREQ::PIRATE					= RADIO::COL::SYNDICATE,
+	RADIO::FREQ::RESEARCH				= RADIO::COL::RESEARCH,
+	RADIO::FREQ::SALVAGER				= RADIO::COL::SALVAGER,
+	RADIO::FREQ::SECURITY				= RADIO::COL::SECURITY,
+	RADIO::FREQ::SYNDICATE				= RADIO::COL::SYNDICATE,
+	RADIO::FREQ::WIZARD					= RADIO::COL::CIVILIAN,
+	RADIO::FREQ::INTERCOM::AI			= RADIO::COL::COMMAND,
+	RADIO::FREQ::INTERCOM::BRIDGE		= RADIO::COL::COMMAND,
+	RADIO::FREQ::INTERCOM::BRIG			= RADIO::COL::BRIG,
+	RADIO::FREQ::INTERCOM::CARGO		= RADIO::COL::ENGINEERING,
+	RADIO::FREQ::INTERCOM::CATERING		= RADIO::COL::CIVILIAN,
+	RADIO::FREQ::INTERCOM::ENGINEERING	= RADIO::COL::ENGINEERING,
+	RADIO::FREQ::INTERCOM::MEDICAL		= RADIO::COL::MEDICAL,
+	RADIO::FREQ::INTERCOM::RESEARCH		= RADIO::COL::RESEARCH,
+	RADIO::FREQ::INTERCOM::SECURITY		= RADIO::COL::SECURITY,
+))
+
+/// An alist of radio frequencies and their associated channel CSS classes.
+ADD_TO_NAMESPACE(RADIO)(var/alist/frequencies_to_classes = alist(
+	RADIO::FREQ::CIVILIAN		= RADIO::CSS::CIVILIAN,
+	RADIO::FREQ::COMMAND		= RADIO::CSS::COMMAND,
+	RADIO::FREQ::DEFAULT		= RADIO::CSS::STANDARD,
+	RADIO::FREQ::DETECTIVE		= RADIO::CSS::DETECTIVE,
+	RADIO::FREQ::ENGINEERING	= RADIO::CSS::ENGINEERING,
+	RADIO::FREQ::INTERCOM::AI	= RADIO::CSS::INTERCOM_AI,
+	RADIO::FREQ::MEDICAL		= RADIO::CSS::MEDICAL,
+	RADIO::FREQ::NANOTRASEN		= RADIO::CSS::NANOTRASEN,
+	RADIO::FREQ::PIRATE			= RADIO::CSS::SYNDICATE,
+	RADIO::FREQ::RESEARCH		= RADIO::CSS::RESEARCH,
+	RADIO::FREQ::SALVAGER		= RADIO::CSS::SALVAGER,
+	RADIO::FREQ::SECURITY		= RADIO::CSS::SECURITY,
+	RADIO::FREQ::SYNDICATE		= RADIO::CSS::SYNDICATE,
+	RADIO::FREQ::WIZARD			= RADIO::CSS::CIVILIAN,
+))
+
+/// An alist of radio frequencies and their associated channel names.
+ADD_TO_NAMESPACE(RADIO)(var/alist/frequencies_to_names = alist(
+	RADIO::FREQ::CIVILIAN		= "Civilian",
+	RADIO::FREQ::COMMAND		= "Command",
+	RADIO::FREQ::DEFAULT		= "General",
+	RADIO::FREQ::ENGINEERING	= "Engineering",
+	RADIO::FREQ::MEDICAL		= "Medical",
+	RADIO::FREQ::NANOTRASEN		= "Nanotrasen",
+	RADIO::FREQ::RESEARCH		= "Research",
+	RADIO::FREQ::SECURITY		= "Security",
+	RADIO::FREQ::INTERCOM::AI	= "AI Intercom",
+))
+
+/// If TRUE, all radios will initialise as bricked.
+ADD_TO_NAMESPACE(RADIO)(var/no_more_radios = FALSE)
+
+/// Bricks all radios globally.
+ADD_TO_NAMESPACE(RADIO)(proc/no_more_radio())
+	src.no_more_radios = TRUE
+	for_by_tcl(radio, /obj/item/device/radio)
+		radio.bricked = TRUE

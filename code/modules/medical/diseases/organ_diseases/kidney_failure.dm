@@ -57,7 +57,7 @@
 		if (2)
 			if (probmult(0.1))
 				boutput(H, SPAN_NOTICE("You feel better."))
-				H.resistances += src.type
+				H.add_ailment_resistance(src.type, src.type)
 				H.ailments -= src
 				return
 			if (probmult(8)) H.emote(pick("pale", "groan"))

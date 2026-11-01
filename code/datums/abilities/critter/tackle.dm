@@ -26,6 +26,20 @@
 			return 1
 		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, -1)
 		var/mob/MT = target
-		MT.changeStatus("knockdown", 3 SECONDS)
+		src.tackle_effect(MT)
 		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] tackles [MT]!</b>"), SPAN_ALERT("You tackle [MT]!"))
 		return FALSE
+
+	proc/tackle_effect(mob/target)
+		target.changeStatus("knockdown", 3 SECONDS)
+
+// weaker tackle, usually stuns but sometimes knocks down
+/datum/targetable/critter/tackle/weak
+	name = "Weak Tackle"
+	desc = "Tackle a mob, stunning them."
+	cooldown = 7 SECONDS
+
+	tackle_effect(mob/target)
+		target.changeStatus("stunned", 1 SECOND)
+		if (prob(25))
+			target.changeStatus("knockdown", 2 SECONDS)

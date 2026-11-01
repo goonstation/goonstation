@@ -41,6 +41,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		ownerStatus = S
 		src.name = S.name
 		overImg.icon_state = S.icon_state
+		LAZYLISTADD(S.hud_elements, src)
 #ifdef SHOW_ME_STATUSES
 		src.owner_mob = C
 		src.owner_mob.vis_contents |= src
@@ -56,6 +57,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				effect_obj.pixel_x -= 16
 		src.owner_mob = null
 #endif
+		LAZYLISTREMOVE(src.ownerStatus.hud_elements, src)
+		src.ownerStatus = null
 		. = ..()
 
 	clicked(list/params)
@@ -63,24 +66,24 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			ownerStatus.clicked(params)
 
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && ownerStatus)
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = ownerStatus.name,
-				"content" = ownerStatus.getTooltip() + "<br>[ownerStatus.duration != null ? "[round(ownerStatus.duration/10)] sec.":""]",
-				"theme" = "stamina"
-			))
+		if (usr.client.tooltips && ownerStatus)
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = ownerStatus.name,
+				content = ownerStatus.getTooltip() + "<br>[ownerStatus.duration != null ? "[round(ownerStatus.duration/10)] sec.":""]",
+				theme = "stamina"
+			)
 
 	MouseExited()
-		usr.client.tooltipHolder?.hideHover()
+		usr.client.tooltips?.hide(TOOLTIP_HOVER)
 
 	proc/update_value()
 		if(!ownerStatus)
 			return
 
-		src.overlays.Cut()
 		overImg.icon_state = ownerStatus.icon_state
-		src.overlays += overImg
+		src.UpdateOverlays(overImg, "status_icon")
 
 		if (ownerStatus.duration <= (5 SECONDS) && !isnull(ownerStatus.duration))
 			src.alpha = 175
@@ -143,8 +146,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	if(!globalInstance.preCheck(src))
 		return
 
-	if(hasStatus(statusId))
-		var/datum/statusEffect/S = hasStatus(statusId)
+	var/datum/statusEffect/S = hasStatus(statusId)
+	if(S)
 		setStatus(statusId, (isnull(S.maxDuration) ? (S.duration + duration):(min(S.duration + duration, S.maxDuration))), optional)
 		return S
 	else

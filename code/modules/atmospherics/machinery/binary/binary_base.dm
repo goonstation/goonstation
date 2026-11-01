@@ -73,7 +73,7 @@
 
 	..()
 
-/obj/machinery/atmospherics/binary/initialize()
+/obj/machinery/atmospherics/binary/initialize(player_caused_init)
 	if(node1 && node2) return
 
 	var/node2_connect = dir
@@ -81,14 +81,20 @@
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			node1 = target
 			break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			node2 = target
 			break
-
+	if(player_caused_init)
+		src.node1?.initialize(FALSE)
+		src.node2?.initialize(FALSE)
 	UpdateIcon()
 
 /obj/machinery/atmospherics/binary/build_network()

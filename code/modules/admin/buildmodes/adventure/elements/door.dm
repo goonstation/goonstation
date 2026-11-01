@@ -20,7 +20,8 @@
 			var/obj/adventurepuzzle/triggerable/door/door = new /obj/adventurepuzzle/triggerable/door(T)
 			door.name = door_name
 			door.icon_state = "door_[door_type]_closed"
-			door.set_dir(holder.dir)
+			if(holder.dir)
+				door.set_dir(holder.dir)
 			door.door_type = door_type
 			if (door_type == "glass" || door_type == "runes")
 				door.set_opacity(0)
@@ -70,7 +71,7 @@
 
 /obj/adventurepuzzle/triggerable/door/bump(var/atom/A)
 	if (ismob(A))
-		flick("door_[door_type]_deny", src)
+		FLICK("door_[door_type]_deny", src)
 
 /obj/adventurepuzzle/triggerable/door/proc/toggle()
 	if (src.opening)
@@ -91,7 +92,7 @@
 	if (src.opacity != orig_opacity)
 		src.set_opacity(orig_opacity)
 	src.set_density(1)
-	flick("door_[door_type]_closing", src)
+	FLICK("door_[door_type]_closing", src)
 	src.icon_state = "door_[door_type]_closed"
 	SPAWN(1 SECOND)
 		src.opening = 0
@@ -104,7 +105,7 @@
 	if (src.opening == 1)
 		return
 	src.opening = 1
-	flick("door_[door_type]_opening", src)
+	FLICK("door_[door_type]_opening", src)
 	SPAWN(1 SECOND)
 		src.set_density(0)
 		if (src.opacity != 0)
@@ -116,7 +117,7 @@
 /obj/adventurepuzzle/triggerable/door/attack_hand(mob/user)
 	if (src.density)
 		user.show_message(SPAN_ALERT("[src] won't open. Perhaps you need a key?"))
-	flick("door_[door_type]_deny", src)
+	FLICK("door_[door_type]_deny", src)
 
 /obj/adventurepuzzle/triggerable/door/serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 	..()

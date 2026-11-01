@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/cloaking_device)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 15
 
 /obj/item/cloaking_device
@@ -7,13 +8,13 @@ TYPEINFO(/obj/item/cloaking_device)
 	icon_state = "shield0"
 	var/base_icon_state = "shield"
 	var/active = 0
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
-	item_state = "electronic"
+	flags = TABLEPASS | CONDUCT | NOSHIELD
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 10
 	w_class = W_CLASS_SMALL
-	is_syndicate = 1
 	desc = "An illegal device that bends light around the user, rendering them invisible to regular vision."
 	stamina_damage = 0
 	stamina_cost = 0
@@ -30,7 +31,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		src.add_fingerprint(user)
 		if (src.active)
 			user.show_text("The [src.name] is now inactive.", "blue")
-			src.deactivate(user)
+			src.deactivate(user, TRUE)
 		else
 			if (src.activate(user))
 				user.show_text("The [src.name] is now active.", "blue")
@@ -55,22 +56,28 @@ TYPEINFO(/obj/item/cloaking_device)
 			return FALSE
 
 		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, PROC_REF(deactivate))
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak", INVIS_CLOAK)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY_CLOAK, "cloak", INVIS_CLOAK)
 		cloak_overlay.loc = user
 		user.client?.images += cloak_overlay
 		src.active = TRUE
 		src.UpdateIcon()
+		logTheThing(LOG_COMBAT, user, "Activates a cloaking device at [log_loc(user)]")
 		return TRUE
 
-	proc/deactivate(mob/user)
+	proc/deactivate(mob/user, deliberate = FALSE)
 		UnregisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak")
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY_CLOAK, "cloak")
 		cloak_overlay.loc = null
 		user.client?.images -= cloak_overlay
 		if(src.active && istype(user))
 			user.visible_message(SPAN_NOTICE("<b>[user]'s cloak is disrupted!</b>"))
+			user.playsound_local(src, "sparks", 50, 0)
 		src.active = FALSE
 		src.UpdateIcon()
+		if (deliberate)
+			logTheThing(LOG_COMBAT, user, "deactivates a cloaking device at [log_loc(user)]")
+		else
+			logTheThing(LOG_COMBAT, user || src.loc, "has their cloaking device disrupted at [log_loc(user)]")
 
 	// Fix for the backpack exploit. Spawn call is necessary for some reason (Convair880).
 	dropped(var/mob/user)
@@ -133,7 +140,7 @@ TYPEINFO(/obj/item/cloaking_device)
 				src.AddComponent(/datum/component/send_to_target_mob, src)
 				src.hunter_key = M.mind.key
 				START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
-				flick("[src.base_icon_state]-tele", src)
+				FLICK("[src.base_icon_state]-tele", src)
 
 		disposing()
 			. = ..()

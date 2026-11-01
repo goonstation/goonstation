@@ -9,6 +9,8 @@ proc/pick_landmark(name, default = null, ignorespecific = list())
 	else
 		return pick(landmarks[name] - ignorespecific)
 
+TYPEINFO(/obj/landmark)
+	analyser_flags = ANALYSER_BLACKLIST //Please stop trying to give these analyzer components
 /obj/landmark
 	name = "landmark"
 	icon = 'icons/map-editing/landmarks.dmi'
@@ -143,6 +145,9 @@ var/global/list/job_start_locations = list()
 	name = "Engineer"
 	icon_state = "engineer"
 
+/obj/landmark/start/job/technical_trainee
+	name = "Technical Trainee"
+	icon_state = "engineer"
 /obj/landmark/start/job/miner
 	name = "Miner"
 	icon_state = "miner"
@@ -157,6 +162,10 @@ var/global/list/job_start_locations = list()
 	name = "Medical Doctor"
 	icon_state = "medical_doctor"
 
+/obj/landmark/start/job/medical_trainee
+	name = "Medical Trainee"
+	icon_state = "medical_doctor"
+
 /obj/landmark/start/job/geneticist
 	name = "Geneticist"
 	icon_state = "geneticist"
@@ -165,8 +174,16 @@ var/global/list/job_start_locations = list()
 	name = "Roboticist"
 	icon_state = "roboticist"
 
+/obj/landmark/start/job/pharmacist
+	name = "Pharmacist"
+	icon_state = "pharmacist"
+
 /obj/landmark/start/job/scientist
 	name = "Scientist"
+	icon_state = "scientist"
+
+/obj/landmark/start/job/research_trainee
+	name = "Research Trainee"
 	icon_state = "scientist"
 
 // Security
@@ -199,7 +216,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_nt"
 
 /obj/landmark/start/job/podwars/NT/commander
-	name = "NanoTrasen Commander"
+	name = "NanoTrasen Pod Commander"
 	icon_state = "pod_nt_commander"
 
 /obj/landmark/start/job/podwars/syndie
@@ -207,7 +224,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_syndie"
 
 /obj/landmark/start/job/podwars/syndie/commander
-	name = "Syndicate Commander"
+	name = "Syndicate Pod Commander"
 	icon_state = "pod_syndie_commander"
 
 /* ===== Antagonist Starts ===== */
@@ -272,6 +289,26 @@ var/global/list/job_start_locations = list()
 		name = "missile latejoin spawn marker (north)"
 		dir = NORTH
 
+/obj/landmark/latejoin_job
+	name = "latejoin spawn marker"
+	icon_state = "x"
+
+/obj/landmark/latejoin_job/radio_show_host
+	name = "Radio Show Host Spawn"
+	name_override = LANDMARK_RADIO_SHOW_HOST_SPAWN
+
+/obj/landmark/latejoin_job/journalist
+	name = "Journalist Spawn"
+	name_override = LANDMARK_JOURNALIST_SPAWN
+
+/obj/landmark/latejoin_job/actor
+	name = "Actor Spawn"
+	name_override = LANDMARK_ACTOR_SPAWN
+
+/obj/landmark/latejoin_job/influencer
+	name = "Influencer Spawn"
+	name_override = LANDMARK_INFLUENCER_SPAWN
+
 /* ===== Misc Spawn/Start ===== */
 
 /obj/landmark/pest
@@ -324,6 +361,44 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/shuttle_transit
 	name = LANDMARK_SHUTTLE_TRANSIT
+
+/obj/landmark/menhir/doorway
+	name = LANDMARK_MENHIR_DOOR
+
+/obj/landmark/menhir/extrusion
+	name = LANDMARK_MENHIR_EXTRUSION
+
+/obj/landmark/menhir/node
+	name = LANDMARK_MENHIR_NODE
+
+/obj/landmark/menhir/outreach
+	name = LANDMARK_MENHIR_OUTREACH
+
+/obj/landmark/menhir/penance
+	name = LANDMARK_MENHIR_PENANCE
+
+/obj/landmark/menhir/coalesce
+	name = LANDMARK_MENHIR_COALESCE
+
+/obj/landmark/menhir/beyond
+	name = LANDMARK_MENHIR_BEYOND
+
+/obj/landmark/menhir/passage
+	name = LANDMARK_MENHIR_PASSAGE
+	icon_state = "x3"
+
+/obj/landmark/menhir/dark
+	name = LANDMARK_MENHIR_DARK
+	icon_state = "x"
+
+/obj/landmark/menhir/stuckscan
+	name = LANDMARK_MENHIR_STUCKSCAN
+	icon_state = "x4"
+
+/obj/landmark/menhir/room
+	name = "room vismirror landmark (tag me)"
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
 
 ///emergency shuttle launch sound origin
 /obj/landmark/shuttle_subwoofer
@@ -477,6 +552,16 @@ var/global/list/job_start_locations = list()
 	icon_state = "artifact_10"
 	spawnchance = 10
 
+/obj/landmark/spawner/artifact/more_precursor
+	name = "Artifact Spawn (More Often Precursor)"
+
+	spawn_the_thing()
+		if(prob(40))
+			Artifact_Spawn(get_turf(src),"precursor")
+		else
+			Artifact_Spawn(get_turf(src))
+		qdel(src)
+
 /* ===== LRT Landmarks ===== */
 
 // consider refactoring to be associative the other way around later
@@ -499,13 +584,16 @@ var/global/list/job_start_locations = list()
 	name = "Void Diner"
 
 /obj/landmark/lrt/icemoon
-	name = "Moon X15"
+	name = "Senex"
+
+/obj/landmark/lrt/icemoon2
+	name = "Senex II"
 
 /obj/landmark/lrt/solarium
 	name = "Sol"
 
 /obj/landmark/lrt/biodome
-	name = "Moon X05"
+	name = "Fatuus"
 
 /obj/landmark/lrt/mars_outpost
 	name = "Mars"
@@ -524,6 +612,19 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/lrt/observatory
 	name = "Observatory"
+
+/obj/landmark/lrt/watchfuleye
+	name = "Watchful-Eye Sensor"
+
+/obj/landmark/icemoon_medal
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/mob/living/L = AM
+		if (istype(L) && !isintangible(L))
+			L.unlock_medal("Ice Cold", TRUE)
 
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
@@ -567,6 +668,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/fall/sea/marj
 	name = LANDMARK_FALL_MARJ
 
+/obj/landmark/fall/sea/cult
+	name = LANDMARK_FALL_CULTIST
+
 /* ===== Visual Contents ===== */
 
 /obj/landmark/viscontents_spawn
@@ -582,11 +686,19 @@ var/global/list/job_start_locations = list()
 	/// /y offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
 	var/yOffset = 0
 	add_to_landmarks = FALSE
+	deleted_on_start = FALSE
 	/// modifier for restricting criteria of what gets warped by mirror
 	var/warptarget_modifier = LANDMARK_VM_WARP_ALL
 	var/novis = FALSE
-
 	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
+		if(global.current_state < GAME_STATE_PREGAME)
+			src.setup(loc, man_xOffset, man_yOffset, man_targetZ, man_warptarget_modifier)
+		else
+			SPAWN(1)
+				src.setup(loc, man_xOffset, man_yOffset, man_targetZ, man_warptarget_modifier)
+		..()
+
+	proc/setup(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
 		if (man_xOffset) src.xOffset = man_xOffset
 		if (man_yOffset) src.yOffset = man_yOffset
 		if (man_targetZ) src.targetZ = man_targetZ
@@ -596,16 +708,18 @@ var/global/list/job_start_locations = list()
 		if(novis)
 			var/turf/W = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 			W.warptarget = T
+			W.warptarget_modifier = warptarget_modifier
 		else
 			T.appearance_flags |= KEEP_TOGETHER
 			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 			if (T.vistarget)
 				if(warptarget_modifier)
 					T.vistarget.warptarget = T
+					T.vistarget.warptarget_modifier = warptarget_modifier
 				T.updateVis()
 				T.vistarget.fullbright = TRUE
 				T.vistarget.RL_Init()
-		..()
+		qdel(src)
 
 /obj/landmark/viscontents_spawn/no_vis
 	name = "instant hole spawn"
@@ -616,6 +730,10 @@ var/global/list/job_start_locations = list()
 	warptarget_modifier = LANDMARK_VM_WARP_NONE
 /// target turf for projecting its contents elsewhere
 /turf/var/turf/vistarget = null
+/// turfs to project speech to (overlaps with vistarget speech)
+/turf/var/list/listening_turfs = null
+/// turfs to project reachability of objects to  (overlaps somewhat with vistarget)
+/turf/var/list/reachable_turfs = null
 /// target turf for teleporting its contents elsewhere
 /turf/var/turf/warptarget = null
 /// control who gets warped to warptarget

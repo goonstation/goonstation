@@ -1,0 +1,3 @@
+# Browserslist config for autoprefixer
+last 5 edge versions
+last 6 chrome versions # OpenDream

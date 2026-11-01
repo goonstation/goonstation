@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "j" = (
 /obj/machinery/light/small/floor/greenish,
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/machinery/light/small/floor/greenish,
 /obj/decal/cleanable/writing{
@@ -13,7 +13,7 @@
 	pixel_y = 30
 	},
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "r" = (
 /obj/machinery/light/small/floor/greenish,
 /obj/decal/cleanable/writing{
@@ -21,27 +21,27 @@
 	pixel_y = -30
 	},
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /mob/living/critter/small_animal/slug{
 	pixel_y = 15;
 	dir = 8
 	},
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "J" = (
 /mob/living/critter/small_animal/slug/snail{
 	pixel_x = 15
 	},
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/item/clothing/head/party/random{
 	pixel_y = 9;
 	pixel_x = -3
 	},
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "R" = (
 /obj/item/clothing/head/party/random,
 /obj/decal/cleanable/writing{
@@ -49,13 +49,13 @@
 	pixel_x = 30
 	},
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "X" = (
 /obj/shrub{
 	dir = 4
 	},
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "Y" = (
 /mob/living/critter/small_animal/slug{
 	pixel_x = 10
@@ -65,7 +65,7 @@
 	pixel_x = -30
 	},
 /turf/simulated/nicegrass/random,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 j

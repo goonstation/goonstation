@@ -16,6 +16,7 @@
 				else
 					M.TakeDamage("chest", 15, 0)
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+					src.forensic_holder.copy_to(implanted.forensic_holder)
 					implanted.implanted(M, null, 2)
 					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 					if (!M.stat)
@@ -89,7 +90,7 @@
 	density = 0
 	layer = 10
 	alpha = 200
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
 
 	var/image/trgImage = null
 	var/obj/machinery/torpedo_console/master = null
@@ -141,7 +142,7 @@
 		if(tube)
 			inUse = TRUE
 			user.set_loc(src)
-			user.override_movement_controller = src.movement_controller
+			user.add_movement_controller(src.movement_controller)
 			user.pixel_y = -8
 			boutput(user, SPAN_HINT("<b>Press Q or E to exit targeting.</b>"))
 			vis_contents += user
@@ -187,7 +188,7 @@
 			if(controller.client && targeter)
 				controller.client.images -= targeter.trgImage
 				controller.client.eye = controller
-			controller.override_movement_controller = null
+			controller.remove_movement_controller(src.movement_controller)
 			controller = null
 			inUse = FALSE
 		return
@@ -484,9 +485,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 		changeIcon()
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(loaded) return loaded.Attackby(I, user)
-		else return ..()
+		if(loaded)
+			loaded.Attackby(I, user)
+		return ..()
 
+	bullet_act(obj/projectile/P)
+		if(src.loaded)
+			return src.loaded.bullet_act(P)
+		return ..()
 	proc/add(var/obj/torpedo/T)
 		if(loaded) return
 		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, T)) return
@@ -600,7 +606,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 	anchored = ANCHORED
 	throw_spin = 0
 	layer = 5
-	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_OCEAN_PUSH
 
 	var/lockdir = null
 
@@ -634,10 +640,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 		logTheThing(LOG_DIARY, user, " hits [src] with [I] at [log_loc(user)]", "combat")
 		dmg += I.force
 		if(dmg >= dmg_threshold)
-			logTheThing(LOG_COMBAT, user, " caused [src] to detonate at [log_loc(user)]")
-			logTheThing(LOG_DIARY, user, " caused [src] to detonate at [log_loc(user)]", "combat")
+			logTheThing(LOG_COMBAT, user, " caused [src] to launch at [log_loc(user)]")
+			logTheThing(LOG_DIARY, user, " caused [src] to launch at [log_loc(user)]", "combat")
 			breakLaunch()
 		return
+
+	bullet_act(obj/projectile/P)
+		. = ..()
+		if (QDELETED(src))
+			return
+
+		src.dmg += P.power
+		if (src.dmg >= src.dmg_threshold)
+			logTheThing(LOG_COMBAT, null, "\A [P] caused [src] to launch at [log_loc(src)]")
+			src.breakLaunch()
+
+
 
 	proc/changeIcon()
 		icon_state = (fired ? icon_state_fired : icon_state_off_tray)
@@ -663,6 +681,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 		changeIcon()
 
 	proc/launch(var/atom/target)
+		src.event_handler_flags |= IMMUNE_TRENCH_WARP
 		target_turf = get_turf(target)
 		if(launched) return
 		else launched = 1

@@ -35,15 +35,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 		T.aiImage.appearance = ma
 		T.aiImage.dir = pick(alldirs)
 		T.aiImage.loc = T
-
-
-		if(istype(T, /turf/space))
-			aiImagesLowPriority += T.aiImage
-		else
-			aiImages += T.aiImage
-		for_by_tcl(M, /mob/living/silicon/ai)
-			if (M.client)
-				M << T.aiImage
+		T.aiImage.override = TRUE
 
 		donecount++
 		thispct = round(donecount / totalcount)
@@ -93,6 +85,10 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	for (var/turf/T in (QDELETED(emitter) || !emitter.active) ? list() : view(emitter.range, get_turf(emitter.parent)))
 		new_coverage += T
 
+	if (prev_coverage ~= new_coverage)
+		emitter.coverage = new_coverage
+		return
+
 	var/list/turf/not_covered = prev_coverage - new_coverage
 	var/list/turf/now_covered = new_coverage - prev_coverage
 
@@ -134,6 +130,8 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 
 	LAZYLISTINIT(src.emitter_update_queue)
 	for (var/datum/component/camera_coverage_emitter/emitter as anything in emitters)
+		if (QDELETED(emitter))
+			continue
 		if (global.explosions.exploding || ON_COOLDOWN(emitter, "camera_coverage_update", CAM_UPDATE_COOLDOWN))
 			src.emitter_update_queue |= emitter
 			continue

@@ -1,6 +1,7 @@
 //WIP tugs
 
 TYPEINFO(/obj/tug_cart)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/tug_cart
@@ -12,7 +13,7 @@ TYPEINFO(/obj/tug_cart)
 	layer = MOB_LAYER + 1
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range_tri(C, user, src) || !can_act(user) || user.sleeping || user.lying)
 			return
 
 		if (!istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
@@ -25,7 +26,7 @@ TYPEINFO(/obj/tug_cart)
 			user.show_text("\The [C] is too heavy for \the [src]!", "red")
 			return
 
-		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
+		if (istype(C, /obj/tug_cart))
 			var/obj/tug_cart/connecting = C
 			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
@@ -41,7 +42,7 @@ TYPEINFO(/obj/tug_cart)
 				user.show_text("\The [src] already has a cart connected to it!", "red")
 				return
 
-		if (istype(C, /obj/storage/cart) && in_interact_range(C, src))
+		if (istypes(C, list(/obj/storage/cart, /obj/storage/secure/cart)))
 			var/obj/storage/cart/connecting = C
 			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
@@ -81,7 +82,7 @@ TYPEINFO(/obj/tug_cart)
 				boutput(user, SPAN_ALERT("That tile is blocked by [O]."))
 				return
 		src.visible_message("<b>[user]</b> unloads [load] from [src].")
-		unload(over_object)
+		unload()
 
 	proc/load(var/atom/movable/C)
 		/*if ((wires & wire_loadcheck) && !istype(C,/obj/storage/crate))
@@ -114,32 +115,35 @@ TYPEINFO(/obj/tug_cart)
 				C.pixel_y += 6
 				if (C.layer < layer)
 					C.layer = layer + 0.1
-				src.UpdateOverlays(C, "load")
+				src.vis_contents += C
 
-	proc/unload(var/turf/T)//var/dirn = 0)
+	proc/unload()
 		if (!load)
 			return
-		if (!isturf(T))
-			T = get_turf(T)
+		var/turf/T = get_turf(src)
 
-		load.set_loc(src.loc)
+		load.set_loc(T)
 
 		// in case non-load items end up in contents, dump every else too
 		// this seems to happen sometimes due to race conditions
 		// with items dropping as mobs are loaded
 
 		for (var/atom/movable/AM in src)
-			AM.set_loc(src.loc)
+			AM.set_loc(T)
 			AM.layer = initial(AM.layer)
 			AM.pixel_y = initial(AM.pixel_y)
+
+	relaymove(mob/user, direction, delay, running)
+		. = ..()
+		src.unload()
 
 	Exited(atom/movable/Obj, newloc)
 		. = ..()
 		if(src.load == Obj)
 			src.load.pixel_y -= 6
 			src.load.layer = initial(src.load.layer)
+			src.vis_contents -= src.load
 			src.load = null
-			src.UpdateOverlays(null, "load")
 
 	Move()
 		var/oldloc = src.loc
@@ -158,6 +162,7 @@ TYPEINFO(/obj/tug_cart)
 
 
 TYPEINFO(/obj/vehicle/tug)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/vehicle/tug
@@ -244,8 +249,8 @@ TYPEINFO(/obj/vehicle/tug)
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				rider.throw_at(target, 5, 1)
 				rider.buckled = null
+				src.vis_contents -= rider
 				rider = null
-				overlays = null
 				return
 			if (selfdismount)
 				boutput(rider, SPAN_NOTICE("You dismount from [src]."))
@@ -255,15 +260,15 @@ TYPEINFO(/obj/vehicle/tug)
 					C.show_message("<B>[rider]</B> dismounts from [src].", 1)
 			if (rider)
 				rider.buckled = null
+				src.vis_contents -= rider
 			rider = null
-			overlays = null
 			return
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range_tri(user, C, src) || !can_act(user) || user.sleeping || user.lying)
 			return
 
-		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
+		if (istype(C, /obj/tug_cart))
 			if (src == C) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
 			else if (!src.cart)
@@ -301,7 +306,7 @@ TYPEINFO(/obj/vehicle/tug)
 		target.set_loc(src)
 		rider = target
 		rider.pixel_y = 6
-		overlays += rider
+		src.vis_contents += rider
 		if (rider.restrained() || rider.stat)
 			rider.buckled = src
 

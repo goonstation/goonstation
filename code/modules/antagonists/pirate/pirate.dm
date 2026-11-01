@@ -3,6 +3,8 @@
 	display_name = "\improper Pirate"
 	antagonist_icon = "pirate"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/pirate
+	has_info_popup = FALSE
+
 
 	is_compatible_with(datum/mind/mind)
 		return isliving(mind.current)
@@ -55,11 +57,12 @@
 		H.equip_if_possible(new /obj/item/pinpointer/gold_bee(H), SLOT_IN_BACKPACK)
 		H.equip_if_possible(new /obj/item/clothing/glasses/eyepatch/pirate(H), SLOT_GLASSES)
 		H.equip_if_possible(new /obj/item/requisition_token/pirate(H), SLOT_R_STORE)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		H.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(H), SLOT_L_STORE)
 		H.equip_if_possible(new /obj/item/swords_sheaths/pirate(H), SLOT_BELT)
 		H.equip_if_possible(new /obj/item/pirate_hand_tele(H), SLOT_R_HAND)
 
 		H.equip_sensory_items()
+		H.equip_body_traits(extended_tank=TRUE)
 
 		H.traitHolder.addTrait("training_drinker")
 		H.addBioEffect("accent_pirate")
@@ -85,15 +88,15 @@
 		else
 			M.set_loc(pick_landmark(LANDMARK_PIRATE, LANDMARK_LATEJOIN))
 
-	first_mate
-		id = ROLE_PIRATE_FIRST_MATE
-		display_name = "\improper Pirate First Mate"
-		antagonist_icon = "pirate_first_mate"
+/datum/antagonist/pirate/first_mate
+	id = ROLE_PIRATE_FIRST_MATE
+	display_name = "\improper Pirate First Mate"
+	antagonist_icon = "pirate_first_mate"
 
-	captain
-		id = ROLE_PIRATE_CAPTAIN
-		display_name = "\improper Pirate Captain"
-		antagonist_icon = "pirate_captain"
+/datum/antagonist/pirate/captain
+	id = ROLE_PIRATE_CAPTAIN
+	display_name = "\improper Pirate Captain"
+	antagonist_icon = "pirate_captain"
 
 TYPEINFO(/obj/gold_bee)
 	mat_appearances_to_ignore = list("gold")
@@ -102,7 +105,7 @@ TYPEINFO(/obj/gold_bee)
 	desc = "The artist has painstakingly sculpted every individual strand of bee wool to achieve this breath-taking result. You could almost swear this bee is about to spontaneously take flight."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gold_bee"
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	density = 1
 	anchored = UNANCHORED
@@ -124,7 +127,7 @@ TYPEINFO(/obj/gold_bee)
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		src.visible_message(SPAN_COMBAT("<b>[user]</b> hits [src] with [W]!"))
 		src.take_damage(W.force / 3)
@@ -194,6 +197,7 @@ TYPEINFO(/obj/gold_bee)
 	access_type = list(POD_ACCESS_PIRATE)
 
 TYPEINFO(/obj/item/salvager_hand_tele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 5,
 				"energy" = 5,
 				"conductive_high" = 5,
@@ -203,7 +207,8 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A questionable portable teleportation device that is coupled to a specific location."
 	icon_state = "hand_tele"
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throwforce = 5
 	health = 5
 	w_class = W_CLASS_SMALL

@@ -15,11 +15,15 @@
 
 /obj/disposalholder
 	invisibility = INVIS_ALWAYS
-	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
-	var/active = 0	// true if the holder is moving, otherwise inactive
+	///Gas used to flush the holder; will appear at exit point if vent_on_exit is TRUE
+	var/datum/gas_mixture/gas
+	///Whether to emit gas at the exit point (disabled for mail chutes)
+	var/vent_on_exit = TRUE
+	///True if the holder is moving, otherwise inactive
+	var/active = 0
 	dir = 0
-	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
-	var/last_sound = 0
+	///Budget of steps the disposalholder is allowed to travel before going inactive (in case of loops)
+	var/count = 1000
 
 	var/slowed = 0 // when you move, slows you down
 
@@ -41,7 +45,7 @@
 			src.set_loc(D)
 
 		if (length(D.contents) > LOG_FLUSHING_THRESHOLD)
-			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.fingerprintslast)].")
+			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.get_last_ckey())].")
 
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
@@ -52,13 +56,15 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-			LAGCHECK(LAG_HIGH)
+
+			if (!global.instant_pipe_network)
+				LAGCHECK(LAG_HIGH)
 
 
 	// start the movement process
 	// argument is the disposal unit the holder started in
 	proc/start(var/obj/machinery/disposal/D)
-		if(!D.trunk || D.trunk.loc != D.loc)
+		if(!D.trunk || D.trunk.x != D.x || D.trunk.y != D.y)
 			D.expel(src)	// no trunk connected, so expel immediately
 			return
 
@@ -72,25 +78,25 @@
 
 	// movement process, persists while holder is moving through pipes
 	proc/process()
-		var/obj/disposalpipe/last
-		while(active)
-			sleep(0.1 SECONDS)		// was 1
-			if(slowed > 0)
-				slowed--
-				slowed = max(slowed,0)
-				sleep(1 SECONDS)
-			else
-				if (!loc)
-					return
-				var/obj/disposalpipe/curr = loc
-				last = curr
-				curr = curr.transfer(src)
-				if(!curr)
-					last.expel(src, get_turf(loc), dir)
+		var/delay = global.instant_pipe_network ? (0) : (0.1 SECONDS)
 
-				if(!(count--))
-					active = 0
-		return
+		while (src.active)
+			sleep(delay)
+
+			if (src.slowed > 0)
+				src.slowed = max(src.slowed - 1, 0)
+				sleep(1 SECONDS)
+
+			else if (src.loc)
+				var/obj/disposalpipe/current = src.loc
+				if (!current.transfer(src))
+					current.expel(src, get_turf(src.loc), src.dir)
+
+				if (!(src.count--))
+					src.active = FALSE
+
+			else
+				return
 
 	// find the turf which should contain the next pipe
 	proc/nextloc()
@@ -111,7 +117,7 @@
 
 	// merge two holder objects
 	// used when a a holder meets a stuck holder
-	proc/merge(var/obj/disposalholder/other)
+	proc/merge(obj/disposalholder/other)
 		for(var/atom/movable/AM in other)
 			AM.set_loc(src)	// move everything in other holder to this one
 		if(other.mail_tag && !src.mail_tag)
@@ -119,30 +125,31 @@
 		other.merged(src)
 		qdel(other)
 
-	proc/merged(var/obj/disposalholder/host)
+	proc/merged(obj/disposalholder/host)
 		return
 
 	// called when player tries to move while in a pipe
-	relaymove(mob/user as mob)
-		if (user.stat)
+	relaymove(mob/user, direction)
+		if (is_incapacitated(user))
 			return
+
+		var/turf/our_turf = get_turf(src)
 
 		// drsingh: attempted fix for Cannot read null.loc
-		if (src == null || src.loc == null || src.loc.loc == null)
+		if (src == null || our_turf == null)
 			return
 
-		for (var/mob/M in hearers(src.loc.loc))
+		for (var/mob/M in hearers(our_turf))
 			boutput(M, "<FONT size=[max(0, 5 - GET_DIST(src, M))]>CLONG, clong!</FONT>")
 
-		if(last_sound + 6 < world.time)
+		if(!ON_COOLDOWN(src, "pipeclang", 1 SECOND))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
-			last_sound = world.time
 			if(!istype(user,/mob/living/critter/small_animal))
 				damage_pipe()
 			if(prob(30))
 				slowed++
 
-	mob_flip_inside(var/mob/user)
+	mob_flip_inside(mob/user)
 		var/obj/disposalpipe/P = src.loc
 		if(!istype(P))
 			return
@@ -157,6 +164,24 @@
 		damage_pipe(5)
 		slowed++
 
+	assume_air(datum/air_group/giver)
+		src.gas.merge(giver)
+
+	remove_air(amount)
+		if (src.gas)
+			return src.gas.remove(amount)
+
+	return_air(direct)
+		if(direct)
+			return src.gas
+		. = ..()
+
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
+		if (src.gas && breath_request > 0)
+			return src.remove_air(breath_request * mult)
+		else
+			..()
+
 	proc/damage_pipe(var/amount = 3)
 		var/obj/disposalpipe/P = src.loc
 		if(istype(P))
@@ -166,8 +191,9 @@
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
-		location?.assume_air(gas)  // vent all gas to turf
-		gas = null
+		if(src.gas && src.vent_on_exit)
+			location?.assume_air(gas)  // vent all gas to turf
+		src.gas = null
 		return
 
 // Disposal pipes
@@ -193,6 +219,9 @@
 	plane = PLANE_FLOOR
 	var/base_icon_state	//! Initial icon state on map
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
+	var/welding_cost = 3 //! Amount of welding fuel it costs to install/remove
+	var/weldable = TRUE
+	var/cross_z = 0 //! When linking disposals, use this z-level. 0 results in current z-level
 
 
 	var/image/pipeimg = null
@@ -447,11 +476,11 @@
 		if (istype(I, /obj/item/tile)) //let people repair floors underneath pipes
 			T.Attackby(I, user)
 			return
-		if (T.intact)
+		if (T.intact && !istype(T, /turf/space))
 			return		// prevent interaction with T-scanner revealed pipes
 
 		if (isweldingtool(I))
-			if (I:try_weld(user, 3, noisy = 2))
+			if (src.weldable && I:try_weld(user, src.welding_cost, noisy = 2))
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
 				var/atom/wloc = I.loc
@@ -910,6 +939,13 @@
 	var/switch_dir = 0 //Direction of secondary port
 					//Same-tag holders are sent out this one.
 
+	attackby(obj/item/W, mob/user)
+		if(..(W, user)) return
+		if(ispulsingtool(W))
+			boutput(user, SPAN_ALERT("[src]'s mailtags can't be edited while anchored!"))
+			// This is 95% because I don't wanna copy/paste the mailtag-editing code, but also
+			// it makes it *marginally* harder to maliciously mess with mailtags
+
 	left
 		name = "mail junction"
 		icon_state = "pipe-sj1"
@@ -938,23 +974,27 @@
 
 	New()
 		..()
-		if(icon_state == "pipe-sj1")
-			switch_dir = turn(dir, -90)
-			dpdir = dir | switch_dir | turn(dir,180)
-		else if(icon_state == "pipe-sj2")
-			switch_dir = turn(dir, 90)
-			dpdir = dir | turn(dir, 90) | turn(dir,180)
-		else
-			switch_dir = turn(dir, 90)
-			dpdir = dir | turn(dir,90) | turn(dir, -90)
-		update()
-
-		if (src.mail_tag)
-			if (islist(src.mail_tag))
-				src.name = "mail junction (multiple destinations)"
+		// i didnt wanna do this but i dont see a good way to get this to work short of reworking disposal construction
+		SPAWN(0 SECONDS)
+			if (src.mail_tag)
+				if (islist(src.mail_tag))
+					if (src.mail_tag.len > 1)
+						src.name = "mail junction (multiple destinations)"
+					else
+						src.name = "mail junction ([src.mail_tag[1]])"
+				else
+					src.name = "mail junction ([src.mail_tag])"
+					src.mail_tag = params2list(src.mail_tag)
+			if(icon_state == "pipe-sj1")
+				switch_dir = turn(dir, -90)
+				dpdir = dir | switch_dir | turn(dir,180)
+			else if(icon_state == "pipe-sj2")
+				switch_dir = turn(dir, 90)
+				dpdir = dir | turn(dir, 90) | turn(dir,180)
 			else
-				src.name = "mail junction ([src.mail_tag])"
-				src.mail_tag = params2list(src.mail_tag)
+				switch_dir = turn(dir, 90)
+				dpdir = dir | turn(dir,90) | turn(dir, -90)
+			update()
 		return
 
 
@@ -990,7 +1030,7 @@
 		if(flipdir != dir)	// came from secondary or tertiary
 			var/senddir = dir	//Do we send this out the primary or secondary?
 			if(use_secondary && flipdir != switch_dir) //Oh, we're set to sort this out our side secondary
-				flick("[base_icon_state]-on", src)
+				FLICK("[base_icon_state]-on", src)
 				senddir = switch_dir
 			return senddir
 		else				// came from primary
@@ -1077,9 +1117,6 @@
 
 		qdel(src)
 
-TYPEINFO(/obj/disposalpipe/loafer)
-	mats = 100
-
 /obj/disposalpipe/chicken_disposal_pipe
 	name = "humane chicken processor"
 	desc = "a pipe segment designed to convert alive chickens into dead chickens"
@@ -1153,12 +1190,16 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 		return P
 
+TYPEINFO(/obj/disposalpipe/loafer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+	mats = 100
 /obj/disposalpipe/loafer
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
-	is_syndicate = 1
+	weldable = FALSE
 	var/is_doing_stuff = FALSE
+	HELP_MESSAGE_OVERRIDE("The disciplinary loaf processor cannot be detached by welding.")
 
 	horizontal
 		dir = EAST
@@ -1233,9 +1274,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
 					if(!isdead(M))
 						M:emote("scream")
-					M.death()
 					if (M.mind || M.client)
 						M.ghostize()
+					M.death()
 				else if (isitem(newIngredient))
 					var/obj/item/I = newIngredient
 					newLoaf.loaf_factor += I.w_class * 5
@@ -1326,10 +1367,6 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		src.reagents.add_reagent("silicate",10)
 		src.reagents.add_reagent("space_fungus",3)
 		src.reagents.add_reagent("synthflesh",10)
-
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) // only relevant if strangelet
 
 	proc/update()
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
@@ -1424,7 +1461,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				src.throwforce = 88
 				src.throw_range = 0
 				src.reagents.add_reagent("george_melonium",50)
-				START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+				src.AddElement(/datum/element/ghost_observable)
 
 				if (!src.processing)
 					src.processing = TRUE
@@ -1581,7 +1618,10 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	icon_state = "unblockoutlet"
 	anchored = ANCHORED
 	density = 1
+	weldable = FALSE
+	object_flags = NO_BLOCK_TABLE
 	var/turf/stuff_chucking_target
+	HELP_MESSAGE_OVERRIDE("The smart disposal outlet cannot be detached by welding.")
 
 	north
 		dir = NORTH
@@ -1611,7 +1651,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				break
 
 		if (allowDump)
-			flick("unblockoutlet-open", src)
+			FLICK("unblockoutlet-open", src)
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
@@ -1647,6 +1687,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	name = "filter disposal outlet"
 	desc = "A disposal outlet with a little sensor in it, to allow it to filter out unwanted things from the system."
 	icon_state = "unblockoutlet"
+	object_flags = NO_BLOCK_TABLE
 	var/turf/stuff_chucking_target
 	var/list/allowed_types = list()
 
@@ -1682,7 +1723,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				things_to_dump += A
 
 		if (things_to_dump.len)
-			flick("unblockoutlet-open", src)
+			FLICK("unblockoutlet-open", src)
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
@@ -1784,12 +1825,12 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		if (sense_mode == SENSE_TAG)
 			if (cmptext(H.mail_tag, sense_tag_filter))
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,ckey(H.mail_tag))
-				flick("pipe-mechsense-detect", src)
+				FLICK("pipe-mechsense-detect", src)
 
 		else if (sense_mode == SENSE_OBJECT)
 			if (H.contents.len)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
-				flick("pipe-mechsense-detect", src)
+				FLICK("pipe-mechsense-detect", src)
 
 		else
 			for (var/atom/aThing in H)
@@ -1801,7 +1842,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 								continue
 
 						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
-						flick("pipe-mechsense-detect", src)
+						FLICK("pipe-mechsense-detect", src)
 						break
 
 		return ..()
@@ -1915,14 +1956,16 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 	proc/getlinked()
 		linked = null
-		var/obj/machinery/vending/player/vendor = locate() in src.loc
+		var/z_target = src.cross_z ? src.cross_z : src.z
+
+		var/obj/machinery/vending/player/vendor = locate() in locate(src.x, src.y, z_target)
 		if (vendor)
 			src.linked = vendor
-		var/obj/machinery/disposal/D = locate() in src.loc
+		var/obj/machinery/disposal/D = locate() in locate(src.x, src.y, z_target)
 		if(D)
 			linked = D
 
-		var/obj/disposaloutlet/O = locate() in src.loc
+		var/obj/disposaloutlet/O = locate() in locate(src.x, src.y, z_target)
 		if(O)
 			linked = O
 
@@ -1959,6 +2002,8 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 /obj/disposalpipe/trunk/zlevel
 	icon_state = "pipe-v"
+	weldable = FALSE
+	HELP_MESSAGE_OVERRIDE("This pipe cannot be detached by welding.")
 
 	getlinked()
 		return
@@ -2003,6 +2048,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	dpdir = 0		// broken pipes have dpdir=0 so they're not found as 'real' pipes
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
+	welding_cost = 1
 
 	New()
 		..()
@@ -2020,6 +2066,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 // the disposal outlet machine
 
 TYPEINFO(/obj/disposaloutlet)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/disposaloutlet
@@ -2029,6 +2076,7 @@ TYPEINFO(/obj/disposaloutlet)
 	icon_state = "outlet"
 	density = 1
 	anchored = ANCHORED
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
@@ -2042,6 +2090,8 @@ TYPEINFO(/obj/disposaloutlet)
 	var/frequency = FREQ_PDA
 	var/flusher_id = null
 	throw_speed = 1
+	/// Items thrown per tick when expelling
+	var/eject_batch_size = 15
 
 
 	ex_act(var/severity)
@@ -2130,16 +2180,25 @@ TYPEINFO(/obj/disposaloutlet)
 				if(M.mail_id == src.flusher_id)
 					M.mail_tag = H.mail_tag
 
-		flick("outlet-open", src)
+		FLICK("outlet-open", src)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
-		sleep(2 SECONDS)	//wait until correct animation frame
+		if (!global.instant_pipe_network)
+			sleep(2 SECONDS)
+
 		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 
 		var/turf/expel_loc = get_turf(src)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
 			expel_loc = get_step(expel_loc, src.dir)
+		var/ejected = 0
 		for(var/atom/movable/AM in H)
+			if (ejected >= src.eject_batch_size && !global.instant_pipe_network)
+				ejected = 0
+				sleep(1 TICK)
+			if (AM.loc != H) // may have left or been deleted while we slept :(
+				continue
+			ejected++
 			ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)

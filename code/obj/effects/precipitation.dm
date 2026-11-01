@@ -84,6 +84,9 @@ particles/rain
 		var/datum/reagents/R = new
 		for(var/obj/effects/precipitation/P in effects)
 			var/turf/T = P.loc
+			if(isnull(T))
+				qdel(P)
+				continue
 			for(var/atom/movable/AM in T)
 				if(!(AM.event_handler_flags & USE_FLUID_ENTER)) continue
 

@@ -2,6 +2,7 @@
 #define DEBUG_MESSAGE(x) if (debug_messages) message_coders(x)
 #define DEBUG_MESSAGE_VARDBG(x,d) if (debug_messages) message_coders_vardbg(x,d)
 
+///Wrapper to let us runtime without killing the current proc, since CRASH only kills the exact proc it was called from
 /proc/stack_trace(var/thing_to_crash)
 	CRASH(thing_to_crash)
 
@@ -172,7 +173,7 @@ proc/dm_dump(var/x)
 								params.Remove("priority")
 								lines += {"[jointext(path, "") || "src"].add_filter("[name]", [priority], [src.dm_dump(params, list(), list(), return_main=TRUE, can_use_ref=FALSE)])"}
 							continue
-					if("datum_components", "comp_lookup")
+					if("datum_components", "signal_listeners")
 						continue // TODO
 					if("special")
 						if(istype(D, /obj/item))

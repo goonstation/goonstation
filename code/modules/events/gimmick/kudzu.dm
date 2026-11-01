@@ -27,7 +27,10 @@
 
 			boutput(user, "You plant the [src] on the [A].")
 			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
+			user.setStatus("kudzuwalk", INFINITE_STATUS)
+			global.get_master_kudzu_controller().grant_conversion()
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
+			GHOST.MESSAGE.send("<b>Kudzu</b> has been planted at [GHOST.MESSAGE.format_loc(src)].")
 			user.u_equip(src)
 			qdel(src)
 
@@ -119,14 +122,27 @@
 			if (21 to INFINITY) flavor = "vivacious"
 		return "[..()] It looks [flavor]."
 
+	proc/can_kudzu_walk(atom/A)
+		return ishuman(A) && istype(A:mutantrace, /datum/mutantrace/kudzu) || A.hasStatus("kudzuwalk")
+
 	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
-			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu))
-				animate_door_squeeze(A)
+			if(istype(A, /obj/projectile))
+				var/obj/projectile/projectile = A
+				if(istype(projectile.proj_data, /datum/projectile/syringe/kudzu_thorn))
+					return 1
+			if (src.can_kudzu_walk(A) || istype(A, /obj/icecube/kudzu))
 				return 1
 			return 0
 		return 1
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if (current_stage == 3 && src.can_kudzu_walk(AM))
+			animate_door_squeeze(AM)
+			if(!ON_COOLDOWN(AM, "kudzuwalk", 1 SECOND))
+				playsound(AM.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 
 	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
 		src.to_spread = to_spread
@@ -134,15 +150,14 @@
 		if (istype(T, /turf/space))
 			qdel(src)
 			return 1
-		else if (T)
+		..()
+		if (T)
 			T.temp_flags |= HAS_KUDZU
-
 			src.update_self()
 			if (src.run_life)
 				var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 				if (K)
 					K.kudzu += src
-		..()
 
 	set_loc(var/newloc as turf|mob|obj in world)
 		if (istype(newloc, /turf/space))
@@ -186,7 +201,7 @@
 
 		src.take_damage(dmg, "brute", user)
 
-		user.lastattacked  = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 /obj/spacevine/proc/update_self()
@@ -389,6 +404,7 @@
 		return
 
 /proc/get_master_kudzu_controller()
+	RETURN_TYPE(/datum/controller/process/kudzu)
 	for (var/datum/controller/process/kudzu/K in processScheduler.processes)
 		return K
 	return null
@@ -407,6 +423,7 @@
 	var/destroyed = 0
 	add_underlay = 0
 	health = 20
+	melttemp = 1000 //arbitrarily big number
 
 	New(loc, mob/M as mob)
 		..()
@@ -422,28 +439,18 @@
 				if(!isalive(M) && M.ghost?.mind?.get_player()?.dnr)
 					src.visible_message(SPAN_ALERT("The [src] opens, having drained all the nutrients from [M]!"))
 					M.gib()
-					flick("bulb-open-animation", src)
+					FLICK("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
 					SPAWN(1 SECOND)
 						qdel(src)
 
 				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					flick("bulb-open-animation", src)
+					FLICK("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
 					if(H in src)
-						H.full_heal()
-						if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
-							if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
-								H.ckey = H.last_client.ckey
-						if (istype(H.abilityHolder, /datum/abilityHolder/composite))
-							var/datum/abilityHolder/composite/Comp = H.abilityHolder
-							Comp.removeHolder(/datum/abilityHolder/kudzu)
-						else if (H.abilityHolder)
-							H.abilityHolder.dispose()
-							H.abilityHolder = null
-						H.set_mutantrace(/datum/mutantrace/kudzu)
-						H.show_antag_popup("kudzu")
+						var/datum/controller/process/kudzu/kudzu_controller = get_master_kudzu_controller()
+						kudzu_controller.process_corpse(H)
 					natural_opening = 1
 					qdel(src)
 		else

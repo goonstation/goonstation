@@ -194,7 +194,11 @@ else:
             time.sleep(1)
 
     if thread_url:
-        post_pr_comment("Created discussion thread: {}".format(thread_url))
+        comment_body = (
+            f"Created [discussion thread]({thread_url})."
+            f" Insert the following line into the changelog below the author:\n```\n(f){thread_url}\n```"
+        )
+        post_pr_comment(comment_body)
     else:
         print("All attempts failed. You are on your own, cowboy.")
         post_pr_comment("Failed to create a discussion thread. Try making your own: {}".format(URL + "/newthread.php?fid=" + os.environ["SUBFORUM_ID"]))

@@ -2,16 +2,22 @@
 
 #define GHOST_HAIR_ALPHA 192
 
+TYPEINFO(/mob/dead/observer)
+	start_listen_modifiers = list(LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS)
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST,LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST,LISTEN_INPUT_RADIO_GLOBAL_GHOST,LISTEN_INPUT_BLOBCHAT,LISTEN_INPUT_FLOCK_GLOBAL,LISTEN_INPUT_WRAITHCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /mob/dead/observer
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE_NOWARP
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP | IMMUNE_TRENCH_WARP
+	event_handler_flags =  IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP | IMMUNE_TRENCH_WARP
 	density = FALSE
 	canmove = TRUE
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
+
 	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true
 	var/observe_round = FALSE
 	var/health_shown = FALSE
@@ -24,7 +30,6 @@
 	/// Observer menu TGUI datum. Can be null.
 	var/datum/observe_menu/observe_menu = null
 	var/last_words = null //! Last words of the mob before they died
-	mob_flags = MOB_HEARS_ALL
 
 /mob/dead/observer/disposing()
 	corpse = null
@@ -105,34 +110,36 @@
 	var/datum/trait/trait
 	for (var/trait_id in P.traitPreferences.traits_selected)
 		trait = getTraitById(trait_id)
-		if (trait.mutantRace && src.icon == initial(src.icon))
+		if (trait.mutantRace && src.icon == get_initial_icon(src))
 			src.icon_state = trait.mutantRace.ghost_icon_state
 			is_mutantrace = TRUE
 			break
 
-	var/cust_one_state = P.AH.customization_first.id
-	var/cust_two_state = P.AH.customization_second.id
-	var/cust_three_state = P.AH.customization_third.id
+	var/cust_one_state = P.AH.customizations["hair_bottom"].style.id
+	var/cust_two_state = P.AH.customizations["hair_middle"].style.id
+	var/cust_three_state = P.AH.customizations["hair_top"].style.id
 
-	var/image/hair = image(P.AH.customization_first.icon, cust_one_state)
-	hair.color = P.AH.customization_first_color
+	var/image/hair = image(P.AH.customizations["hair_bottom"].style.icon, cust_one_state)
+	hair.color = P.AH.customizations["hair_bottom"].color
 	hair.alpha = GHOST_HAIR_ALPHA
 
 	var/force_hair = FALSE
 	if (istype(C.mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C.mob
 		force_hair = H.hair_override
+	else if ("mutant_hair" in P.traitPreferences.traits_selected) //ooughh
+		force_hair = TRUE
 
 	if (!is_mutantrace || force_hair || (is_mutantrace && ("bald" in P.traitPreferences.traits_selected)))
 		src.AddOverlays(hair, "hair")
 
-		var/image/beard = image(P.AH.customization_second.icon, cust_two_state)
-		beard.color = P.AH.customization_second_color
+		var/image/beard = image(P.AH.customizations["hair_middle"].style.icon, cust_two_state)
+		beard.color = P.AH.customizations["hair_middle"].color
 		beard.alpha = GHOST_HAIR_ALPHA
 		src.AddOverlays(beard, "beard")
 
-		var/image/detail = image(P.AH.customization_second.icon, cust_three_state)
-		detail.color = P.AH.customization_third_color
+		var/image/detail = image(P.AH.customizations["hair_middle"].style.icon, cust_three_state)
+		detail.color = P.AH.customizations["hair_top"].color
 		detail.alpha = GHOST_HAIR_ALPHA
 		src.AddOverlays(detail, "detail")
 
@@ -141,19 +148,19 @@
 		wig.mat_changename = 0
 		var/datum/material/wigmat = getMaterial("ectofibre")
 		wigmat = wigmat.getMutable()
-		wigmat.setColor(P.AH.customization_first_color)
+		wigmat.setColor(P.AH.customizations["hair_bottom"].color)
 		wig.setMaterial(wigmat)
 		wig.name = "ectofibre [name]'s hair"
 		wig.icon = 'icons/mob/human_hair.dmi'
 		wig.icon_state = cust_one_state
-		wig.color = P.AH.customization_first_color
+		wig.color = P.AH.customizations["hair_bottom"].color
 		wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 		wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
-		wig.wear_image.color = P.AH.customization_first_color
+		wig.wear_image.color = P.AH.customizations["hair_bottom"].color
 
 	if (!src.bioHolder) //For critter spawns
 		var/datum/bioHolder/newbio = new/datum/bioHolder(src)
-		newbio.mobAppearance.customization_first_color = hair.color
+		newbio.mobAppearance.customizations["hair_bottom"].color = hair.color
 		newbio.mobAppearance.e_color = P.AH.e_color
 		src.bioHolder = newbio
 
@@ -300,8 +307,7 @@
 			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, DNR status will be set, and you will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
-				for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
-					antagonist.handle_perma_cryo()
+				src.handle_perma_cryo()
 				src.mind?.get_player()?.dnr = TRUE
 				src.ghostize()
 				qdel(src)
@@ -367,7 +373,7 @@
 		if(istype(get_area(src), /area/afterlife))
 			qdel(src)
 
-		if(!mind?.get_player()?.dnr)
+		if(!(mind?.get_player()?.dnr || mind?.get_player()?.joined_observer))
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
@@ -439,36 +445,44 @@
 		return O
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair = image(src.AH_we_spawned_with.customization_first.icon, src.AH_we_spawned_with.customization_first.id)
-		hair.color = src.bioHolder.mobAppearance.customization_first_color
+		var/datum/appearanceHolder/temp_holder = null
+		if (QDELETED(src.AH_we_spawned_with))
+			if (QDELETED(src.bioHolder.mobAppearance))
+				CRASH("Ghostize called on a mob [src] with bioHolder but no non-null appearance holders")
+			else
+				temp_holder = src.bioHolder.mobAppearance
+		else
+			temp_holder = src.AH_we_spawned_with
+		var/image/hair = image(temp_holder.customizations["hair_bottom"].style.icon, temp_holder.customizations["hair_bottom"].style.id)
+		hair.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 		hair.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(hair, "hair")
 
-		var/image/beard = image(src.AH_we_spawned_with.customization_second.icon, src.AH_we_spawned_with.customization_second.id)
-		beard.color = src.bioHolder.mobAppearance.customization_second_color
+		var/image/beard = image(temp_holder.customizations["hair_middle"].style.icon, temp_holder.customizations["hair_middle"].style.id)
+		beard.color = src.bioHolder.mobAppearance.customizations["hair_middle"].color
 		beard.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(beard, "beard")
 
-		var/image/detail = image(src.AH_we_spawned_with.customization_third.icon, src.AH_we_spawned_with.customization_third.id)
-		detail.color = src.bioHolder.mobAppearance.customization_third_color
+		var/image/detail = image(temp_holder.customizations["hair_top"].style.icon, temp_holder.customizations["hair_top"].style.id)
+		detail.color = src.bioHolder.mobAppearance.customizations["hair_top"].color
 		detail.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(detail, "detail")
 
-		var/cust_one = src.bioHolder.mobAppearance.customization_first.id
+		var/cust_one = src.bioHolder.mobAppearance.customizations["hair_bottom"].style.id
 		if(cust_one && cust_one != "none")
 			O.wig = new
 			O.wig.mat_changename = 0
 			var/datum/material/wigmat = getMaterial("ectofibre")
 			wigmat = wigmat.getMutable()
-			wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
+			wigmat.setColor(src.bioHolder.mobAppearance.customizations["hair_bottom"].color)
 			O.wig.setMaterial(wigmat)
-			O.wig.name = "[O.name]'s hair"
+			O.wig.name = "[O.name]’s hair"
 			O.wig.icon = 'icons/mob/human_hair.dmi'
 			O.wig.icon_state = cust_one
-			O.wig.color = src.bioHolder.mobAppearance.customization_first_color
+			O.wig.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 			O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 			O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
-			O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
+			O.wig.wear_image.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 
 
 	return O
@@ -510,7 +524,7 @@
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.get_player()?.dnr)
+	if(!mind || !(mind.get_player()?.dnr || isadminghost(src)))
 		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
 		return
 
@@ -606,8 +620,18 @@
 	set category = null
 	set name = "Re-enter Corpse"
 	if(QDELETED(corpse) || corpse.loc == null)
-		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
+		if (!src.mind.brain)
+			tgui_alert(src, "You don't have a corpse or a last brain! If you're very sure you do, and this seems wrong, make a bug report!", "Remains Not Found")
+			return
+
+		boutput(src, SPAN_ALERT("You don't have a corpse, but your brain is still around!"))
+		var/atom/movable/brain_loc = global.outermost_movable(src.mind.brain)
+		if (istype(brain_loc, /mob))
+			src.insert_observer(brain_loc)
+		else
+			src.set_loc(get_turf(src.mind.brain))
 		return
+
 	if(src.client && src.client.holder && src.client.holder.state == 2)
 		var/rank = src.client.holder.rank
 		src.client.clear_admin_verbs()
@@ -645,9 +669,6 @@
 		OnMove()
 	else
 		boutput(usr, "Couldn't find anywhere in that area to go to!")
-
-/mob/dead/observer/say_understands(var/other)
-	return 1
 
 /* //dont need this anymores
 /mob/dead/observer/verb/toggle_wide()
@@ -698,7 +719,7 @@
 	set category = null
 
 	if (src.see_invisible >= INVIS_GHOST)
-		src.see_invisible = INVIS_NONE
+		src.see_invisible = INVIS_BELOW_GHOST
 		boutput(src, "You can no longer see other ghosts.", group="ghostsight")
 	else if(HAS_FLAG(src.sight, SEE_SELF))
 		src.sight &= ~SEE_SELF
@@ -720,6 +741,14 @@
 
 
 /mob/dead/observer/proc/insert_observer(var/atom/target)
+	if(target == src) //cant observe self, or it nullspaces
+		boutput(src, SPAN_NOTICE("You cannot observe yourself, silly."))
+		return
+	var/mob/targetMob = target
+	if(istype(targetMob) && isadmin(targetMob) && !targetMob.client?.player_mode && !isadmin(src)) //Activate the alarm bells
+		logTheThing(LOG_DEBUG, src, "observes non-player mode admin [constructName(target)]") //They shouldn't be here unless forced manually
+		message_admins("[key_name(src)] starts observing non-player mode admin [key_name(target)]")
+		boutput(targetMob.client, SPAN_ALERT("<b>[key_name(src)] IS OBSERVING YOU!! If you didn't do this, kick them out!</b>"))
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
 	src.set_loc(newobs)
 	newobs.attach_hud(hud)
@@ -761,14 +790,5 @@
 		src.client.mob = newobs
 	set_loc(newobs)
 	return newobs
-
-
-/mob/dead/observer/verb/ghostjump(x as num, y as num, z as num)
-	set name = ".ghostjump"
-	set hidden = TRUE
-
-	var/turf/T = locate(x, y, z)
-	if (can_ghost_be_here(src, T))
-		src.set_loc(T)
 
 #undef GHOST_HAIR_ALPHA

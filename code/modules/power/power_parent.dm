@@ -1,3 +1,9 @@
+/// net_id -> the data node its master is linked through
+var/global/alist/wired_routes = alist()
+
+/// Things that want every wired packet on their powernet, like packet sniffers
+/obj/var/wired_all_hearing = FALSE
+
 /obj/machinery/power
 	name = null
 	icon = 'icons/obj/power.dmi'
@@ -7,6 +13,8 @@
 	var/tmp/netnum = 0
 	/// If set to 1, communicate with other devices over cable network.
 	var/use_datanet = 0
+	/// The net_id our master is linked with, in [global.wired_routes]
+	var/tmp/routed_net_id = null
 	/// by default, power machines are connected by a cable in a neighbouring turf
 	/// if set to 0, requires a 0-X cable on this turf
 	var/directwired = 1
@@ -16,6 +24,36 @@
 	if (current_state > GAME_STATE_PREGAME)
 		SPAWN(0.1 SECONDS) // aaaaaaaaaaaaaaaa
 			recheck_powernet()
+
+/// Routes wired packets for `net_id` here, and every packet if master is `wired_all_hearing`
+/obj/machinery/power/proc/update_wired_route(atom/movable/new_master, net_id)
+	if (!src.use_datanet)
+		return
+	if (global.wired_routes[src.routed_net_id] == src)
+		global.wired_routes -= src.routed_net_id
+	OTHER_STOP_TRACKING_CAT(src, TR_CAT_WIRED_ALL_HEARING)
+	src.routed_net_id = new_master ? net_id : null
+	if (src.routed_net_id)
+		global.wired_routes[src.routed_net_id] = src
+	if (astype(new_master, /obj)?.wired_all_hearing)
+		OTHER_START_TRACKING_CAT(src, TR_CAT_WIRED_ALL_HEARING)
+
+/// Sends a wired packet to the data node its address is routed to and the all-hearing ones, or to every data node
+/obj/machinery/power/proc/send_data_signal(datum/signal/signal)
+	var/obj/machinery/power/target = global.wired_routes[signal.data["address_1"]]
+	if (target)
+		// Send the signal to sniffers and such
+		for (var/obj/machinery/power/all_hearing as anything in by_cat[TR_CAT_WIRED_ALL_HEARING])
+			if (all_hearing.powernet == src.powernet && all_hearing != src)
+				all_hearing.receive_signal(signal, TRANSMISSION_WIRE)
+		if (target.powernet == src.powernet && target != src)
+			target.receive_signal(signal, TRANSMISSION_WIRE)
+		return
+	// No target found. Blast it at everything
+	for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
+		if (device != src)
+			device.receive_signal(signal, TRANSMISSION_WIRE)
+		LAGCHECK(LAG_MED)
 
 /obj/machinery/power/set_loc(atom/target)
 	. = ..()
@@ -43,6 +81,7 @@
 			src.powernet.data_nodes += src
 
 /obj/machinery/power/disposing()
+	src.update_wired_route(null)
 	if(src.powernet)
 		src.powernet.nodes -= src
 		src.powernet.data_nodes -= src
@@ -54,8 +93,8 @@
 	. = ..()
 
 // common helper procs for all power machines
-/obj/machinery/power/proc/add_avail(var/amount)
-	powernet?.newavail += amount
+/obj/machinery/power/proc/add_avail(var/amount, var/process_loop = PROCESSING_EIGHTH)
+	powernet?.newavail += amount / 2**(PROCESSING_EIGHTH - process_loop)
 
 #ifdef MACHINE_PROCESSING_DEBUG
 	if(!detailed_power_data) detailed_power_data = new
@@ -66,9 +105,9 @@
 		station_power_generation["[round(world.time / ( 1 MINUTE ))]"] += amount
 
 
-/obj/machinery/power/proc/add_load(var/amount)
+/obj/machinery/power/proc/add_load(var/amount, process_loop = PROCESSING_EIGHTH)
 	if(powernet && powernet.newload + amount <= powernet.avail)
-		powernet.newload += amount
+		powernet.newload += amount / 2**(PROCESSING_EIGHTH - process_loop)
 		. = TRUE
 
 /obj/machinery/power/proc/surplus()
@@ -215,20 +254,38 @@ var/makingpowernetssince = 0
 			*/
 			. += C
 
+//checks for cables pointing directly into this machine but NOT passing under it
+//this fixes the issue of crossed pnets getting linked by dragging a stomper over them
+//macro'd because there's two dir vars and I hate copy paste
+#define CHECK_DIRECT_CONNECTIONS(dirvar)\
+	if(C.dirvar == cdir) {\
+		var/through_line = FALSE;\
+		for (var/obj/cable/center_cable in center) {\
+			if (turn(center_cable.d1, 180) == C.dirvar || turn(center_cable.d2, 180) == C.dirvar) {\
+				through_line = TRUE;\
+				break;\
+			}\
+		}\
+		if (!through_line) {\
+			. += C;\
+		}\
+	}
 /obj/machinery/power/proc/get_connections(unmarked = 0)
 	if(!directwired)
 		return get_indirect_connections(unmarked)
 
 	. = list()
 	var/cdir
-
+	var/turf/center = get_turf(src)
 	for(var/turf/T in orange(1, src))
 		cdir = get_dir(T, src)
 		for(var/obj/cable/C in T)
 			if(C.netnum && unmarked)
 				continue
-			if(C.d1 == cdir || C.d2 == cdir)
-				. += C
+			CHECK_DIRECT_CONNECTIONS(d1)
+			CHECK_DIRECT_CONNECTIONS(d2)
+
+#undef CHECK_DIRECT_CONNECTIONS
 
 /obj/machinery/power/proc/get_indirect_connections(unmarked = 0)
 	. = list()

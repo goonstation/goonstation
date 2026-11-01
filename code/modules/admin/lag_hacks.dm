@@ -13,14 +13,13 @@ client/proc/show_admin_lag_hacks()
 
 	var/HTML = {"
 	<html><head><title>Admin Lag Reductions</title></head><body>
-	<b><a href='?src=\ref[src];action=lightweight_doors'>Remove Light+Cam processing when doors open or close</a></b> (May jank up lights slightly)<br><br>
-	<b><a href='?src=\ref[src];action=lightweight_mobs'>Slow Life() Processing</a></b> (Extremely safe - Life() compensates for the change automatically)<br><br>
-	<b><a href='?src=\ref[src];action=slow_atmos'>Slow atmos processing</a></b> (May jank up the TEG/Hellburns)<br><br>
-	<b><a href='?src=\ref[src];action=slow_fluids'>Slow fluid processing</a></b> (Safe, just feels weird)<br><br>
-	<b><a href='?src=\ref[src];action=special_sea_fullbright'>Stop Sea Light processing on Z1</a></b> (Safe, makes the Z1 ocean a little ugly)<br><br>
-	<b><a href='?src=\ref[src];action=slow_ticklag'>Adjust ticklag bounds</a></b> (Manually adjust ticklag dilation upper and lower bounds! Compensate for lag, or go super smooth at lowpop!)<br><br>
-	<b><a href='?src=\ref[src];action=disable_deletions'>Disable Deletion Queue</a></b> (Garbage Collection will still run, but this stops hard deletions from happening.)<br><br>
-	<b><a href='?src=\ref[src];action=disable_ingame_logs'>Disable Ingame Logs</a></b> (Reduce the shitty logthething() lag! Make the admins angry! You can still access logs fine using the web version etc)
+	<b><a href='byond://?src=\ref[src];action=lightweight_mobs'>Slow Life() Processing</a></b> (Extremely safe - Life() compensates for the change automatically)<br><br>
+	<b><a href='byond://?src=\ref[src];action=slow_atmos'>Slow atmos processing</a></b> (May jank up the TEG/Hellburns)<br><br>
+	<b><a href='byond://?src=\ref[src];action=slow_fluids'>Slow fluid processing</a></b> (Safe, just feels weird)<br><br>
+	<b><a href='byond://?src=\ref[src];action=special_sea_fullbright'>Stop Sea Light processing on Z1</a></b> (Safe, makes the Z1 ocean a little ugly)<br><br>
+	<b><a href='byond://?src=\ref[src];action=slow_ticklag'>Adjust ticklag bounds</a></b> (Manually adjust ticklag dilation upper and lower bounds! Compensate for lag, or go super smooth at lowpop!)<br><br>
+	<b><a href='byond://?src=\ref[src];action=disable_deletions'>Disable Deletion Queue</a></b> (Garbage Collection will still run, but this stops hard deletions from happening.)<br><br>
+	<b><a href='byond://?src=\ref[src];action=disable_ingame_logs'>Disable Ingame Logs</a></b> (Reduce the shitty logthething() lag! Make the admins angry! You can still access logs fine using the web version etc)
 	</body></html>
 	"}
 	user.Browse(HTML,"window=alaghacks;size=400x390")
@@ -28,21 +27,6 @@ client/proc/show_admin_lag_hacks()
 
 //fluid_commands.dm
 //client/proc/special_fullbright()
-
-
-client/proc/lightweight_doors()
-	set name = "Force Doors Ignore Cameras and Lighting"
-	set desc = "Helps when server load is heavy. Creates really ugly dark spots, try not to use this often."
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set hidden = 1
-	ADMIN_ONLY
-
-	message_admins("[key_name(src)] is removing light/camera interactions from doors...")
-	SPAWN(0)
-		for(var/obj/machinery/door/D in by_type[/obj/machinery/door])
-			D.ignore_light_or_cam_opacity = TRUE
-			LAGCHECK(LAG_REALTIME)
-		message_admins("[key_name(src)] removed light/camera interactions from doors with Lag Reduction panel.")
 
 
 client/proc/lightweight_mobs()

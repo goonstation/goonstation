@@ -7,6 +7,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	mats = list("metal" = 1,
 				"conductive" = 1,
 				"crystal" = 1)
+	manufactured_type = /obj/machinery/conveyor/built
 }
 
 /obj/machinery/conveyor
@@ -24,7 +25,6 @@ TYPEINFO(/obj/machinery/conveyor) {
 	layer = 2
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	machine_registry_idx = MACHINES_CONVEYORS
-	mechanics_type_override = /obj/machinery/conveyor/built
 	HELP_MESSAGE_OVERRIDE("")
 	/// The direction the conveyor is going to. 1 if running forward, -1 if backwards, 0 if off
 	var/operating = CONVEYOR_STOPPED
@@ -52,6 +52,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 	event_handler_flags = USE_FLUID_ENTER
 	/// list of conveyor_switches that have us in their conveyors list
 	var/list/linked_switches
+	/// Stored operating direction for conveyors without linked switches
+	var/stored_operating
+	/// Sushi conveyor attached to a table?
+	var/obj/table/table = null
 
 	New()
 		. = ..()
@@ -216,8 +220,23 @@ TYPEINFO(/obj/machinery/conveyor) {
 	currentdir = dir_out
 	setdir()
 
+/obj/machinery/conveyor/proc/tableify(table)
+	src.table = table
+	src.layer = OBJ_LAYER
+	src.pixel_y = 4
+	src.update()
+
+/obj/machinery/conveyor/proc/untableify()
+	src.table = null
+	src.layer = initial(src.layer)
+	src.pixel_y = initial(src.pixel_y)
+	src.update()
+
 /obj/machinery/conveyor/initialize()
 	..()
+	src.table = locate() in get_turf(src)
+	if (src.table)
+		src.tableify(src.table)
 	// if the conveyor belt does not have dir_in or dir_out set they are calculated here according to the following heuristics
 	if(isnull(dir_in))
 		if(isnull(dir_out))
@@ -285,6 +304,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 	..()
 
 /obj/machinery/conveyor/disposing()
+	src.was_deconstructed_to_frame()
+	..()
+
+/obj/machinery/conveyor/was_deconstructed_to_frame(mob/user)
 	for(var/obj/machinery/conveyor/C in range(1,src))
 		if (C.next_conveyor == src)
 			C.next_conveyor = null
@@ -293,7 +316,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
 		S.conveyors -= src
 	id = null
-	..()
+	src.operating = CONVEYOR_STOPPED
 
 /// set the dir and target turf depending on the operating direction
 /obj/machinery/conveyor/proc/setdir()
@@ -320,14 +343,16 @@ TYPEINFO(/obj/machinery/conveyor) {
 		operating = CONVEYOR_STOPPED
 	if(!operating || (status & NOPOWER))
 		power_usage = 0
-		for(var/atom/movable/A in loc.contents)
+		for(var/atom/movable/A in loc?.contents)
 			walk(A, 0)
 	else
 		power_usage = 100
-		for(var/atom/movable/A in loc.contents)
+		for(var/atom/movable/A in loc?.contents)
 			move_thing(A)
 
 	var/new_icon = "conveyor-"
+	if (src.table)
+		new_icon += "thin-"
 
 	var/dir_in_char = "N"
 	switch (dir_in)
@@ -352,19 +377,20 @@ TYPEINFO(/obj/machinery/conveyor) {
 			dir_out_char = "W"
 
 
-	if (operating == CONVEYOR_STOPPED || operating == CONVEYOR_FORWARD)
+	if (operating == null || operating == CONVEYOR_STOPPED || operating == CONVEYOR_FORWARD)
 		new_icon += dir_in_char + dir_out_char
 	else if (operating == CONVEYOR_REVERSE)
 		new_icon += dir_out_char + dir_in_char
 
-	if (src.deconstructable)
+	if (src.deconstructable && !src.table)
 		src.icon_state = new_icon + "-map"
 		return
 
-	if (operating == CONVEYOR_STOPPED || (status & NOPOWER))
-		new_icon += "-still"
-	else
-		new_icon += "-run"
+	if (!src.table)
+		if (operating == CONVEYOR_STOPPED || (status & NOPOWER))
+			new_icon += "-still"
+		else
+			new_icon += "-run"
 
 	if (dir_in == dir_out)
 		new_icon = "conveyor-fuck"
@@ -405,6 +431,19 @@ TYPEINFO(/obj/machinery/conveyor) {
 		walk(A, movedir, move_lag, (32 / move_lag) * world.tick_lag)
 		A.glide_size = (32 / move_lag) * world.tick_lag
 
+	//for thinner conveyors, slowly nudge the items towards the center
+	if (src.table && prob(30))
+		if (A.pixel_x >= 7)
+			A.pixel_x--
+		else if (A.pixel_x <= -7)
+			A.pixel_x++
+
+		if (A.pixel_y >= 7)
+			A.pixel_y--
+		else if (A.pixel_y <= -7)
+			A.pixel_y++
+
+
 /obj/machinery/conveyor/Crossed(atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
@@ -425,7 +464,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 	if(!loc)
 		return
-	if (!can_convey(AM))
+	if(!can_convey(AM))
+		walk(AM, 0)
 		return
 
 	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
@@ -446,8 +486,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/get_desc()
 	if (src.deconstructable)
-		. += " [SPAN_NOTICE("It's cover seems to be open.")]"
-
+		. += " [SPAN_NOTICE("Its cover seems to be open.")]"
 
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
 	if (!usr)
@@ -539,7 +578,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 	else if (istype(I, /obj/item/cable_coil))	// if cable, see if a mob is present
 		var/mob/M = locate() in src.loc
-		if(M)
+		var/obj/item/cable_coil/coil = I
+		if(M && coil.use(1))
 			if (M == user)
 				src.visible_message(SPAN_NOTICE("[M] ties [himself_or_herself(M)] to the conveyor."))
 				// note don't check for lying if self-tying
@@ -552,10 +592,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 			M.buckled = src //behold the most mobile of stools
 			src.add_fingerprint(user)
-			I:use(1)
+
 			M.lying = 1
 			M.set_clothing_icon_dirty()
-			return
+		return
 
 			// else if no mob in loc, then allow coil to be placed
 	else if (isscrewingtool(I))
@@ -595,6 +635,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 		src.linked_switches += connected_switch
 		connected_switch.conveyors += src
 		user.show_text("You connect \the [src] to \the [connector.connectee].", "blue")
+	else if (src.table)
+		src.table.Attackby(I, user)
+
 // attack with hand, move pulled object onto conveyor
 
 /obj/machinery/conveyor/proc/toggle_deconstructability(var/mob/M)
@@ -602,13 +645,17 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 
 	if (src.deconstructable)
-		src.deconstruct_flags = null
+		src.deconstruct_flags = DECON_NONE
 		src.deconstructable = FALSE
 		M.show_text("You finish closing \the [src]'s panel.", "blue")
 		if (length(src.linked_switches))
 			var/obj/machinery/conveyor_switch/connected_switch = src.linked_switches[1]
 			src.operating = connected_switch.position
 			src.setdir()
+		else
+			src.operating = src.stored_operating
+			src.stored_operating = null
+			src.set_dir()
 		src.update()
 		return 1
 
@@ -617,6 +664,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 		src.deconstructable = TRUE
 		M.show_text("You finish opening \the [src]'s panel.", "blue")
 		if (length(src.linked_switches))
+			src.operating = CONVEYOR_STOPPED
+			src.setdir()
+		else
+			src.stored_operating = src.operating
 			src.operating = CONVEYOR_STOPPED
 			src.setdir()
 		src.update()
@@ -845,12 +896,12 @@ TYPEINFO(/obj/machinery/conveyor) {
 	use_power(50)
 	operating = 1
 	if(deployed)
-		flick("diverter10",src)
+		FLICK("diverter10",src)
 		icon_state = "diverter0"
 		sleep(1 SECOND)
 		deployed = 0
 	else
-		flick("diverter01",src)
+		FLICK("diverter01",src)
 		icon_state = "diverter1"
 		sleep(1 SECOND)
 		deployed = 1
@@ -890,6 +941,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	mats = list("metal" = 10,
 				"conductive" = 10,
 				"crystal" = 10)
+	manufactured_type = /obj/machinery/conveyor_switch/built
 }
 
 /// the conveyor control switch
@@ -897,7 +949,6 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
-	mechanics_type_override = /obj/machinery/conveyor_switch/built
 	icon_state = "switch-off"
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// current direction setting
@@ -1039,7 +1090,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			LAGCHECK(LAG_MED)
 
 		for (var/obj/machinery/conveyor/C as anything in conveyors)
-			if (C.id == src.id)
+			if (C.id == src.id && !C.deconstructable)
 				C.operating = src.position
 				C.setdir()
 				C.move_lag = CALC_DELAY(C)

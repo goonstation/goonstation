@@ -5,8 +5,6 @@
 	icon_state = "flash"
 	cooldown = 10 SECONDS
 	pointCost = 25
-	container_safety_bypass = TRUE
-
 
 	cast(atom/target)
 		. = ..()

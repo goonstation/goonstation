@@ -17,6 +17,11 @@
 		if (isrestrictedz(affected_mob.z))
 			boutput(affected_mob, SPAN_NOTICE("You feel a bit strange. Almost... guilty?"))
 			return
+		if (ishuman(affected_mob))
+			var/mob/living/carbon/human/H = affected_mob
+			if(H.shoes?.magnetic)
+				boutput(H, SPAN_NOTICE("You feel yourself being pulled away, but [H.shoes] keeps you stable."))
+				return
 
 		var/list/randomturfs = new/list()
 		for(var/turf/T in orange(affected_mob, 10))

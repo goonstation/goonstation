@@ -6,12 +6,12 @@ Essentially, you will stream this tracy Data to a file, and then read this file 
 
 You'll need several things:
 * A copy of [Tracy](https://github.com/wolfpld/tracy) on a client computer to view traces.
-* A `prof.dll/.so` produced by [para-byond-tracy](https://github.com/ParadiseSS13/byond-tracy) in the game directory.
+* A `prof.dll/.so` produced by [byond-tracy-writer](https://github.com/goonstation/byond-tracy-writer) in the game directory.
 * A compiled version of [RTracy](https://github.com/Dimach/rtracy), to stream the huge `.utracy` files.
 
 ## How 2 Do It
 
-1. Compile the game with `#define TRACY_PROFILER_HOOK`.
+1. Compile the game with `#define TRACY_PROFILER_HOOK`. Or, use the `Toggle-Tracy-Profiling` verb on actual live.
 2. Have prof.dll/so in the game directory.
 3. Run the game.
 4. The game will produce `.utracy` files inside `data/profiler/` that you'll need. They will be quite large. Expect up to 30GB.

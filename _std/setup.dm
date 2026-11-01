@@ -44,8 +44,6 @@
 
 //#define RESTART_WHEN_ALL_DEAD 1
 
-#define LOOC_RANGE 8
-
 // holiday toggles!
 
 #if (BUILD_TIME_MONTH == 10)
@@ -68,6 +66,10 @@
 #endif
 #if (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
 #define CANADADAY 1
+#endif
+
+#if (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 6)
+#define MIDSUMMER 1
 #endif
 
 // other toggles
@@ -105,7 +107,11 @@ var/ZLOG_START_TIME
 #endif
 
 //Amount of 1 Second ticks to spend in the pregame lobby before roundstart. Has been 150 seconds for a couple years.
-#define PREGAME_LOBBY_TICKS 180	// raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
+#ifndef RP_MODE
+#define PREGAME_LOBBY_TICKS 180	// reverted to 180 on classic cause 2 slo
+#else
+#define PREGAME_LOBBY_TICKS 300	// raised from 180 to 300 by popular demand
+#endif
 
 //The value of mapvotes. A passive vote is one done through player preferences, an active vote is one where the player actively chooses a map
 #define MAPVOTE_PASSIVE_WEIGHT 1
@@ -129,3 +135,24 @@ var/ZLOG_START_TIME
 
 //do we want to check incoming clients to see if theyre using a vpn?
 #define DO_VPN_CHECKS 1
+
+/// Call by name proc reference, checks if the proc exists on this type or as a global proc
+#define PROC_REF(X) (nameof(.proc/##X))
+/// Call by name verb references, checks if the verb exists on either this type or as a global verb.
+#define VERB_REF(X) (nameof(.verb/##X))
+/// Call by name verb reference, checks if the verb exists on either the given type or as a global verb
+#define TYPE_VERB_REF(TYPE, X) (nameof(##TYPE.verb/##X))
+/// Call by name proc reference, checks if the proc exists on given type or as a global proc
+#define TYPE_PROC_REF(TYPE, X) (nameof(##TYPE.proc/##X))
+/// Call by name proc reference, checks if the proc is existing global proc
+#define GLOBAL_PROC_REF(X) (/proc/##X)
+
+//////bad regexes/////
+//sort of TYPE_PROC_REF: \/.[^,]*(?!\/)\.proc\/
+
+//PROC_REF replace regex:
+/*
+\.proc\/([^ ,)]*)
+replace with:
+PROC_REF($1)
+*/

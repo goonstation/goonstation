@@ -4,16 +4,6 @@
 	artifact = 1
 	associated_datum = /datum/artifact/wallwand
 
-	afterattack(atom/target, mob/user , flag)
-		if (!src.ArtifactSanityCheck())
-			return
-		var/datum/artifact/A = src.artifact
-		if (A.activated && target.loc != user)
-			user.lastattacked = src
-			var/turf/T = get_turf(target)
-			A.effect_click_tile(src,user,T)
-			src.ArtifactFaultUsed(user)
-
 /datum/artifact/wallwand
 	associated_object = /obj/item/artifact/forcewall_wand
 	type_name = "Forcefield Wand"
@@ -53,6 +43,7 @@
 			for(wallloc = T.y - (src.wall_size - 1),wallloc < T.y + src.wall_size,wallloc++)
 				var/obj/forcefield/wand/FW = new /obj/forcefield/wand(locate(T.x,wallloc,T.z),src.wall_duration,src.icon_state)
 				FW.icon_state = src.icon_state
+		O.ArtifactFaultUsed(user)
 
 /obj/forcefield/wand
 	name = "force field"

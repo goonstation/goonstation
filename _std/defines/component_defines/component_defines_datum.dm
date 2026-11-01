@@ -6,6 +6,12 @@
 	#define COMSIG_COMPONENT_ADDED "component_added"
 	/// before a component is removed from a datum because of RemoveComponent: (/datum/component)
 	#define COMSIG_COMPONENT_REMOVING "component_removing"
+
+	/// When an element is added to a datum. (/datum/element)
+	#define COMSIG_ELEMENT_ATTACH "element_attached"
+	/// When an element is removed from a datum. (/datum/element)
+	#define COMSIG_ELEMENT_DETACH "element_detached"
+
 	/// just before a datum's disposing()
 	#define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 	/// when a variable is changed by admin varedit
@@ -28,11 +34,21 @@
 	#define COMSIG_AREA_ACTIVATED "area_activated"
 	/// area's active var set to false (when all clients leave)
 	#define COMSIG_AREA_DEACTIVATED "area_deactivated"
+	/// whenever a mob enters an area (entered mob)
+	#define COMSIG_AREA_ENTERED_BY_MOB "mob_entered_area"
+	/// whenever a mob exits an area (exited mob)
+	#define COMSIG_AREA_EXITED_BY_MOB "mob_exited_area"
+	/// whenever an atom enters the area indirectly (i.e. through teleportation or phase shift)
+	#define COMSIG_AREA_INDIRECT_ENTRY "atom_indirect_entry"
 
 // ---- TGUI signals ----
 	/// A TGUI window was opened by a user (receives tgui datum)
 	#define COMSIG_TGUI_WINDOW_OPEN "tgui_window_open"
+	/// A TGUI window has fully opened (tgui_window, client)
+	#define COMSIG_TGUI_WINDOW_VISIBLE "tgui_window_visible"
 
 // ---- reagents signals ----
 	/// When reagent scanned
 	#define COMSIG_REAGENTS_ANALYZED "reagents_analyzed"
+	/// When this reagent changes stops/starts processing reactions (reagents)
+	#define COMSIG_REAGENTS_PROCESSING_REACTIONS_CHANGE "reagents_processing_reactions_change"

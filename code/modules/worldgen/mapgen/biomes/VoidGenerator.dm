@@ -82,6 +82,7 @@
 	corridor_density = 1
 
 /datum/map_generator/void_generator
+	requires_full_cargo_launch_range = TRUE
 	///2D list of all biomes based on heat and humidity combos.
 	var/list/possible_biomes = list(
 	BIOME_LOW_HEAT = list(
@@ -157,8 +158,5 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check(flags)
 

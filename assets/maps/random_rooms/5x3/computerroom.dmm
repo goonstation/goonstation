@@ -76,7 +76,7 @@
 	pixel_x = -5;
 	pixel_y = 9
 	},
-/obj/item/disk/data/fixed_disk{
+/obj/item/disk/data/fixed_disk/hd64{
 	pixel_y = -2
 	},
 /turf/simulated/floor/plating,

@@ -18,16 +18,25 @@
 	var/last_fished = 0
 	/// true if the rod is currently "fishing", false if it isnt
 	var/is_fishing = FALSE
-	/// what tier of rod is this? can be 0, 1 or 2
+	/// what tier of rod is this? can be 1, 2 or 3
 	var/tier = 0
+	/// is this rod SHINY
+	var/gilded = FALSE
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(attackby_pre))
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(attackby_pre))  // Storage for a single lure item
+		src.create_storage(/datum/storage, can_hold = list(/obj/item/reagent_containers/food), max_wclass = W_CLASS_NORMAL, slots = 1)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
 		. = ..()
+
+	//get the kind of lure currently being used by the fishing rod
+	proc/get_lure()
+		if (length(src.storage.stored_items))
+			return src.storage.stored_items[1]
+		else return null
 
 	//todo: attack particle?? some sort of indicator of where we're fishing
 	proc/attackby_pre(source, atom/target, mob/user)
@@ -44,20 +53,38 @@
 				fishing_spot_type = type2parent(fishing_spot_type)
 			if (fishing_spot)
 				if (fishing_spot.rod_tier_required > src.tier)
-					user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
+					boutput(user, SPAN_ALERT("You need a higher tier rod to fish here!"))
 					return TRUE
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 				return TRUE //cancel the attack because we're fishing now
 
+	// we use overlays for the icon state but bake in the gilding for the inhand so this is kind of a mess
 	update_icon()
-		//state for fishing
-		if (src.is_fishing)
-			src.icon_state = "fishing_rod-active"
-			src.item_state = "fishing_rod-active"
-		//state for not fishing
+		var/inhand_state = "fishing_rod"
+		var/icon_state = "fishing_rod"
+
+		if (src.tier > 1)
+			icon_state += "_[src.tier]"
+
+		if (src.gilded)
+			var/gilded_overlay_state = "gilded"
+			//3 has a sliightly different handle so a unique gilded state
+			if (src.tier == 3)
+				gilded_overlay_state += "_3"
+			src.UpdateOverlays(image(src.icon, gilded_overlay_state), "gilded")
+			inhand_state += "-gilded"
 		else
-			src.icon_state = "fishing_rod-inactive"
-			src.item_state = "fishing_rod-inactive"
+			src.UpdateOverlays(null, "gilded")
+
+		if (src.is_fishing)
+			icon_state += "-active"
+			inhand_state += "-active"
+		else
+			icon_state += "-inactive"
+			inhand_state += "-inactive"
+
+		src.icon_state = icon_state
+		src.item_state = inhand_state
 
 /// (invisible) action for timing out fishing. this is also what lets the fishing spot know that we fished
 /datum/action/fishing
@@ -117,6 +144,12 @@
 			src.user.update_inhands()
 			return
 
+	onInterrupt(flag)
+		src.rod.is_fishing = FALSE
+		src.rod.UpdateIcon()
+		src.user.update_inhands()
+		. = ..()
+
 	onEnd()
 		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			..()
@@ -128,6 +161,10 @@
 
 		if (src.fishing_spot.try_fish(src.user, src.rod, target)) //if it returns one we successfully fished, otherwise lets restart the loop
 			..()
+			if (length(src.rod.storage.stored_items))
+				var/obj/item/lure = src.rod.storage.stored_items[1]
+				boutput(user, SPAN_NOTICE("[lure] was bit and is no longer stuck to [src.rod]."))
+				qdel(lure)
 			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()
 			src.user.update_inhands()
@@ -142,41 +179,17 @@
 	item_state = "fishing_rod-inactive"
 	tier = 1
 
-	update_icon()
-		if (src.is_fishing)
-			src.icon_state = "fishing_rod-active"
-			src.item_state = "fishing_rod-active"
-		else
-			src.icon_state = "fishing_rod-inactive"
-			src.item_state = "fishing_rod-inactive"
-
 /obj/item/fishing_rod/upgraded
 	name = "upgraded fishing rod"
 	icon_state = "fishing_rod_2-inactive"
 	item_state = "fishing_rod-inactive"
 	tier = 2
 
-	update_icon()
-		if (src.is_fishing)
-			src.icon_state = "fishing_rod_2-active"
-			src.item_state = "fishing_rod-active"
-		else
-			src.icon_state = "fishing_rod_2-inactive"
-			src.item_state = "fishing_rod-inactive"
-
 /obj/item/fishing_rod/master
 	name = "master fishing rod"
 	icon_state = "fishing_rod_3-inactive"
 	item_state = "fishing_rod-inactive"
 	tier = 3
-
-	update_icon()
-		if (src.is_fishing)
-			src.icon_state = "fishing_rod_3-active"
-			src.item_state = "fishing_rod-active"
-		else
-			src.icon_state = "fishing_rod_3-inactive"
-			src.item_state = "fishing_rod-inactive"
 
 /obj/item/fishing_rod/cybernetic
 	name = "cybernetic fishing rod"
@@ -210,6 +223,7 @@
 
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 11
 
 /obj/item/fish_portal
@@ -242,7 +256,7 @@ TYPEINFO(/obj/item/fish_portal)
 	name = "Aquatic Research Pool"
 	desc = "A small bulky pool that you can fish in. It has a low probability of containing various low-rarity fish."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fishing_pool"
 
@@ -306,7 +320,7 @@ TYPEINFO(/obj/item/fish_portal)
 	name = "master pool"
 
 /obj/fishing_pool/portable
-	anchored = 0
+	anchored = UNANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
@@ -329,6 +343,10 @@ TYPEINFO(/obj/item/fish_portal)
 	layer = MOB_LAYER + 0.1
 	var/working = FALSE
 	var/allowed = list(/obj/item/reagent_containers/food/fish)
+
+	New()
+		..()
+		AddComponent(/datum/component/transfer_input/quickloading, allowed)
 
 	attack_hand(var/mob/user)
 		if (!length(src.contents))
@@ -399,7 +417,7 @@ TYPEINFO(/obj/item/fish_portal)
 					amtload++
 				S.UpdateIcon()
 				boutput(user, SPAN_NOTICE("[amtload] fish loaded from the portable aquarium!"))
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 			return
 		else
 			var/proceed = FALSE
@@ -416,7 +434,7 @@ TYPEINFO(/obj/item/fish_portal)
 			W.dropped(user)
 
 /obj/submachine/fishing_upload_terminal/portable
-	anchored = 0
+	anchored = UNANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
@@ -448,6 +466,7 @@ TYPEINFO(/obj/item/fish_portal)
 	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 15,
 				"wood" = 5,
 				"energy_high" = 5,
@@ -460,14 +479,13 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
 	item_state = "syndie_fishing_rod-inactive"
 	hit_type = DAMAGE_STAB
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = TABLEPASS | USEDELAY
 	w_class = W_CLASS_NORMAL
 	force = 10
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	contraband = 4
-	is_syndicate = TRUE
 	tooltip_flags = REBUILD_DIST
 	var/obj/item/syndie_lure/lure = null
 	/// delay between tossing or reeling or etc
@@ -482,6 +500,8 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	var/line_length = 8
 	/// true if the rod is currently ""fishing"", false if it isnt
 	var/is_fishing = FALSE
+	/// is this rod SHINY
+	var/gilded = FALSE
 	HELP_MESSAGE_OVERRIDE({"The Glaucus starts with 7 damage on a melee reel, but stores up 3 onetime bonus damage on each ranged reel. If this reaches <b>25 damage</b>, or 6 ranged reels before a melee reel, the target will be stunned when damaged."})
 
 	New()
@@ -505,8 +525,8 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			src.lure.overlay_refs = I.overlay_refs?.Copy()
 			src.lure.plane = initial(src.lure.plane)
 			src.lure.layer = initial(src.lure.layer)
-			src.lure.tooltip_rebuild = 1
-			tooltip_rebuild = 1
+			src.lure.tooltip_rebuild = TRUE
+			tooltip_rebuild = TRUE
 		else
 			boutput(user, "You can't change the bait while the line is out!")
 		return
@@ -566,15 +586,24 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			else
 				src.pull_in_lure(user)
 
+	// we use overlays for the icon state but bake in the gilding for the inhand so this is kind of a mess
 	update_icon()
-		//state for fishing
-		if (src.is_fishing)
-			src.icon_state = "syndie_fishing_rod-active"
-			src.item_state = "syndie_fishing_rod-active"
-		//state for not fishing
+		var/inhand_state = "syndie_fishing_rod"
+		var/icon_state = "syndie_fishing_rod"
+		if (src.gilded)
+			var/gilded_overlay_state = "gilded_syndie"
+			src.UpdateOverlays(image(src.icon, gilded_overlay_state), "gilded")
+			inhand_state += "-gilded"
 		else
-			src.icon_state = "syndie_fishing_rod-inactive"
-			src.item_state = "syndie_fishing_rod-inactive"
+			src.UpdateOverlays(null, "gilded")
+		if (src.is_fishing)
+			icon_state += "-active"
+			inhand_state += "-active"
+		else
+			icon_state += "-inactive"
+			inhand_state += "-inactive"
+		src.icon_state = icon_state
+		src.item_state = inhand_state
 
 	disposing()
 		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
@@ -586,7 +615,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		if (!src.lure)
 			src.lure = new (src)
 			src.lure.rod = src
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			RegisterSignal(src.lure, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(max_range_check))
 		if (src.lure.owner && src.lure.loc != src.lure.owner)
 			src.lure.owner = null
@@ -700,15 +729,20 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			var/area/AR = get_area(M)
 			if (AR?.sanctuary || M.nodamage || (src.rod in M.equipped_list(check_for_magtractor = 0)))
 				return TRUE
+			var/fisherman_text
+			if(isliving(src.rod?.loc))
+				fisherman_text = " (rod held by [key_name(src.rod.loc.name)])"
 			if (do_weaken)
 				M.changeStatus("knockdown", 5 SECONDS)
 				M.TakeDamage(M.hand == LEFT_HAND ? "l_arm": "r_arm", 15, 0, 0, DAMAGE_STAB)
+				logTheThing(LOG_COMBAT, M, "falls for and is caught by a barbed fishing lure[fisherman_text] at [log_loc(src)]")
+			else
+				logTheThing(LOG_COMBAT, M, "is caught by a barbed fishing lure[fisherman_text] at [log_loc(src)]")
 			M.force_laydown_standup()
 
 			src.owner = M
 			src.set_loc(M)
 			M.visible_message(SPAN_ALERT("<b>[M] gets snagged by a fishing lure!</b>"))
-			logTheThing(LOG_COMBAT, M, "is caught by a barbed fishing lure at [log_loc(src)]")
 			M.emote("scream")
 			take_bleeding_damage(M, null, 10, DAMAGE_STAB)
 			M.UpdateDamageIcon()

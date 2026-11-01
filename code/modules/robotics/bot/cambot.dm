@@ -2,7 +2,6 @@
 // Cambot assembly
 
 // Cobbled together from bits of the other bots, mostly cleanbots and firebots.
-#define CAMBOT_MOVE_SPEED 8
 /obj/machinery/bot/cambot
 	name = "Cambot"
 	desc = "A little camera robot! Smile!"
@@ -15,6 +14,7 @@
 	health = 20
 	locked = 1
 	access_lookup = "Assistant"
+	bot_move_delay = BOT::SPEED::CAMBOT
 
 	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
@@ -39,6 +39,7 @@
 		if (src)
 			src.camera = new /obj/item/camera(src)
 			src.icon_state = "cambot[src.on]"
+			src.AddComponent(/datum/component/proximity)
 
 /obj/machinery/bot/cambot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -52,10 +53,20 @@
 
 		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		playsound(src, 'sound/weapons/flash.ogg', 50, TRUE)
-		flick("cambot-spark", src)
+		FLICK("cambot-spark", src)
 		src.emagged = 1
 		return 1
 	return 0
+
+/obj/machinery/bot/cambot/attackby(obj/item/W, mob/user) //guh
+	. = ..()
+	switch(W.hit_type)
+		if (DAMAGE_BURN)
+			src.health -= W.force * 0.75
+		else
+			src.health -= W.force * 0.5
+	if (src.health <= 0)
+		src.explode()
 
 /obj/machinery/bot/cambot/demag(var/mob/user)
 	if (!src.emagged)
@@ -180,7 +191,7 @@
 
 	// Let's find us a path to the target.
 	if (src.target && !length(src.path))
-		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 20)
+		src.navigate_to(get_turf(src.target), src.bot_move_delay, 1, 20)
 
 		if (!islist(src.path)) // Woops, couldn't find a path.
 			LAZYLISTADDUNIQUE(src.targets_invalid, src.target)
@@ -195,7 +206,7 @@
 	return
 
 /// Gotta catch those driveby moments
-/obj/machinery/bot/cambot/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/bot/cambot/EnteredProximity(atom/movable/AM)
 	if(!on || stunned || src.last_shot + src.shot_cooldown <= TIME || (src.idle && TIME < src.idle + src.idle_delay))
 		return
 
@@ -312,6 +323,9 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/prox_sensor))
 			var/obj/machinery/bot/cambot/B = new /obj/machinery/bot/cambot(get_turf(src))
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(src.forensic_holder)
 			B.name = src.created_name
 			user.u_equip(W)
 			user.u_equip(src)

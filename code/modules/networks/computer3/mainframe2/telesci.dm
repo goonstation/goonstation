@@ -54,6 +54,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	var/realy = 0
 	var/realz = 0
 	var/tmp/session = null
+	var/frequency = FREQ_TELESCI
 	var/obj/laser_sink/perm_portal/start_portal
 	var/obj/laser_sink/perm_portal/end_portal
 	var/image/disconnectedImage
@@ -73,13 +74,21 @@ TYPEINFO(/obj/machinery/networked/telepad)
 
 		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
-
+			MAKE_DEVICE_RADIO_PACKET_COMPONENT(src.net_id, "telepad", src.frequency)
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
+
+	was_deconstructed_to_frame(mob/user)
+		src.remove_portals()
+		. = ..()
+
+	disposing()
+		src.remove_portals()
+		. = ..()
 
 	ex_act()
 		return
@@ -89,61 +98,44 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		if (!src.host_id)
 			. += SPAN_ALERT("The [src.name]'s \"disconnected from host\" light is flashing.")
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Telepad")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"host_connection" = !!src.host_id
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		switch (action)
+			if ("reset_connection")
+				if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
+					return
+
+				if(!host_id && !old_host_id)
+					return
+
+				src.last_reset = world.time
+				var/rem_host = src.host_id ? host_id : old_host_id
+				src.host_id = null
+				//src.old_host_id = null
+				src.post_status(rem_host, "command","term_disconnect")
+				SPAWN(1 SECOND)
+					src.post_status(rem_host, "command","term_connect","device",src.device_tag)
+
+				src.updateUsrDialog()
+				return
+
 	attack_hand(mob/user)
 		if(..())
 			return
-
-		src.add_dialog(user)
-
-		var/dat = "<html><head><title>Telepad</title></head><body>"
-
-		var/readout_color = "#000000"
-		var/readout = "ERROR"
-		if(src.host_id)
-			readout_color = "#33FF00"
-			readout = "OK CONNECTION"
-		else
-			readout_color = "#F80000"
-			readout = "NO CONNECTION"
-
-		dat += "Host Connection: "
-		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
-
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
-
-		if (src.panel_open)
-			dat += net_switch_html()
-
-		user.Browse(dat,"window=telepad;size=245x302")
-		onclose(user,"telepad")
-		return
-
-	Topic(href, href_list)
-		if(..())
-			return
-
-		src.add_dialog(usr)
-		if (href_list["reset"])
-			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
-				return
-
-			if(!host_id && !old_host_id)
-				return
-
-			src.last_reset = world.time
-			var/rem_host = src.host_id ? host_id : old_host_id
-			src.host_id = null
-			//src.old_host_id = null
-			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN(0.5 SECONDS)
-				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
-
-			src.updateUsrDialog()
-			return
-
-
-		src.add_fingerprint(usr)
-		return
+		src.ui_interact(user)
 
 	updateUsrDialog()
 		..()
@@ -152,13 +144,81 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		else if (!src.overlays.len)
 			src.overlays += src.disconnectedImage
 
+	proc/receive_radio_signal(datum/signal/received_signal)
+		var/signal_sender = received_signal.data["sender"]
+		// we don't listen to any signals without a sender ID
+		if(!signal_sender)
+			return
+		//now, if we are not targeted by the package, we only listen to ping packets
+		if(received_signal.data["address_1"] != src.net_id)
+			if(received_signal.data["address_1"] == "ping")
+				var/datum/signal/new_signal = get_free_signal()
+				new_signal.source = src
+				new_signal.data["address_1"] = signal_sender
+				new_signal.data["sender"] = src.net_id
+				new_signal.data["command"] = "ping_reply"
+				new_signal.data["device"] = src.device_tag
+				new_signal.data["netid"] = src.net_id
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal)
+			return
+		//the only
+		var/signal_command = lowertext(received_signal.data["command"])
+		if(!signal_command)
+			return
+
+		switch(signal_command)
+			//with the help command, we send them information about any packets this object answers to
+			if("help")
+				var/datum/signal/new_signal = get_free_signal()
+				new_signal.data["address_1"] = signal_sender
+				new_signal.data["sender"] = src.net_id
+				if((!received_signal.data["topic"]))
+					new_signal.data["description"] = "Telepord pad, enables the teleportation of matter across long distances"
+					new_signal.data["topics"] = "status, coords"
+				else
+					new_signal.data["topic"] = received_signal.data["topic"]
+					switch(lowertext(received_signal.data["topic"]))
+						if("status")
+							new_signal.data["description"] = "Checks if the teleportation pad in question is connected to the mainframe and returns that mainframes network id. Does not require any arguments."
+						if("coords")
+							new_signal.data["description"] = "Returns the data of the internal GPS of the teleportation pad. Does not require any arguments."
+						else
+							new_signal.data["description"] = "ERROR: UNKNOWN TOPIC"
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal)
+
+			//with coords, we send the person the coordinates of the telepad. At last, the packet nerd is the answer to the telesci nerd's crime den
+			if("coords")
+				var/datum/signal/new_signal = get_free_signal()
+				var/turf/T = get_turf(src)
+				var/datum/zlevel/current_z_level = zlevels[T.z]
+				new_signal.data["address_1"] = signal_sender
+				new_signal.data["sender"] = src.net_id
+				new_signal.data["command"] = "coords_reply"
+				new_signal.data["x"] = "[T.x]"
+				new_signal.data["y"] = "[T.y]"
+				new_signal.data["location"] = "["Landmark: [current_z_level.display_name]"]"
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal)
+			if("status")
+				var/datum/signal/new_signal = get_free_signal()
+				new_signal.data["address_1"] = signal_sender
+				new_signal.data["sender"] = src.net_id
+				new_signal.data["command"] = "status_reply"
+				new_signal.data["status"] = "[src.host_id ? "connected" : "disconnected"]"
+				if(src.host_id)
+					new_signal.data["parameter"] = "[src.host_id]"
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal)
+
 	receive_signal(datum/signal/signal)
-		if(status & (NOPOWER|BROKEN) || !src.link)
+		if(status & (NOPOWER|BROKEN))
 			return
 		if(!signal || !src.net_id || signal.encryption)
 			return
 
-		if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
+		if(signal.transmission_method != TRANSMISSION_WIRE)
+			// we react differently to radio signals and give people the ability to ping us for coords
+			return src.receive_radio_signal(signal)
+		// if we are not listening to a radio signal, we only want to receive packets while connected.
+		if(!src.link)
 			return
 
 		var/target = signal.data["sender"]
@@ -328,12 +388,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 
 					if ("portal")
 						if (src.start_portal || src.end_portal)
-							if (start_portal)
-								qdel(start_portal)
-								start_portal = null
-							if (end_portal)
-								qdel(end_portal)
-								end_portal = null
+							src.remove_portals()
 
 							message_host("command=ack")
 							return
@@ -795,7 +850,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				return
 			if("chill")
 				for(var/mob/living/carbon/M in src.loc)
-					M.bodytemperature -= 100
+					M.changeBodyTemp(-100 KELVIN)
 					boutput(M, SPAN_ALERT("You feel colder!"))
 				return
 			if("tempblind")
@@ -949,6 +1004,14 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				new summon(src.loc)
 				return
 
+	proc/remove_portals()
+		if (start_portal)
+			qdel(start_portal)
+			start_portal = null
+		if (end_portal)
+			qdel(end_portal)
+			end_portal = null
+
 TYPEINFO(/obj/machinery/networked/teleconsole)
 	mats = 14
 
@@ -988,7 +1051,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	disposing()
 		. = ..()

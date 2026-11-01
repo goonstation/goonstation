@@ -58,6 +58,33 @@ ABSTRACT_TYPE(/datum/parallax_render_source_group)
 		for (var/atom/movable/screen/parallax_render_source/parallax_render_source as anything in new_parallax_render_sources)
 			animate(parallax_render_source, animation_time, alpha = 255, flags = ANIMATION_PARALLEL)
 
+/datum/parallax_render_source_group/proc/copy_parallax_render_sources_from_group(datum/parallax_render_source_group/donor_group, animation_time = 0)
+	var/list/atom/movable/screen/parallax_render_source/new_parallax_render_sources = list()
+	var/atom/movable/screen/parallax_render_source/parallax_render_source
+	for(parallax_render_source in donor_group.parallax_render_sources)
+		src.parallax_render_source_types_and_sources[parallax_render_source.type] = parallax_render_source
+		src.parallax_render_sources += parallax_render_source
+		new_parallax_render_sources += parallax_render_source
+
+		if (animation_time)
+			parallax_render_source.alpha = 0
+
+	// Assign parallax layers corresponding to the parallax layer render sources to the client.
+	for (var/client/client as anything in src.members)
+		client?.parallax_controller?.add_parallax_layer(new_parallax_render_sources)
+
+	if (animation_time)
+		for (parallax_render_source as anything in new_parallax_render_sources)
+			animate(parallax_render_source, animation_time, alpha = 255, flags = ANIMATION_PARALLEL)
+
+/datum/parallax_render_source_group/proc/update_parallax_render_source(parallax_render_source_type)
+	var/atom/movable/screen/parallax_render_source/parallax_render_source = src.parallax_render_source_types_and_sources[parallax_render_source_type]
+	if(istype(parallax_render_source))
+		parallax_render_source.tessellate()
+		for (var/client/client as anything in src.members)
+			client?.parallax_controller.recalculate_parallax_layer(parallax_render_source)
+
+
 /// Removes the specifed parallax layer render source type or types from the group, and their associated parallax layers.
 /datum/parallax_render_source_group/proc/remove_parallax_render_source(parallax_render_source_type_or_types, animation_time = 0)
 	// Format the render source types into a list to be interated through.

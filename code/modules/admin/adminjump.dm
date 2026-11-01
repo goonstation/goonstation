@@ -1,4 +1,4 @@
-/client/proc/Jump(var/area/A in by_type[/area])
+/client/proc/Jump(var/area/A as null|area in by_type[/area])
 	set desc = "Area to jump to"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Jump"
@@ -8,6 +8,8 @@
 	SHOW_VERB_DESC
 
 	if(config.allow_admin_jump)
+		if (!A)
+			A = tgui_input_list(usr, "Where do you want to jump?", "Jump", by_type[/area])
 		if(flourish)
 			shrink_teleport(src.mob)
 		var/turf/origin_turf = get_turf(usr)
@@ -144,6 +146,28 @@
 	set popup_menu = 0
 	ADMIN_ONLY
 	src.jumptocoord(x, y, z)
+
+/client/proc/jump_to_z(z = 1 as num)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Jump to Z"
+	set desc = "Jump to this coordinate on a different Z-level"
+
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if(config.allow_admin_jump)
+		if (z > world.maxz)
+			alert("Invalid coordinates")
+			return
+	var/turf/T = get_turf(src.mob)
+	src.jumptocoord(T.x, T.y, z)
+
+/client/proc/jtz(z = 1 as num)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "JTZ"
+	set popup_menu = FALSE
+	ADMIN_ONLY
+	src.jump_to_z(z)
 
 /client/proc/Getmob(var/mob/M in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

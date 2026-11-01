@@ -1,5 +1,8 @@
 // TRIGGERS
 
+// Maximum number of 5-letter words language artifacts will check in a sentence. Here to prevent abuse.
+#define ARTIFACT_LANGUAGE_SENTENCE_CHECK 3
+
 ABSTRACT_TYPE(/datum/artifact_trigger/)
 /datum/artifact_trigger
 	var/type_name = "bad artifact code"
@@ -97,3 +100,95 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	type_name = "Data"
 	stimulus_required = "data"
 	do_amount_check = 0
+
+/datum/artifact_trigger/language
+	type_name = "Language"
+	stimulus_required = "language"
+	hint_prob = 0 // uses custom way of giving hint
+	do_amount_check = FALSE
+	// number of vowels in picked word
+	var/num_vowels = 0
+	// positions of vowels in picked word
+	var/list/positions = list()
+	// list of all valid words
+	var/static/word_dict = null
+	var/static/list/vowels = list("a", "e", "i", "o", "u")
+
+	New(obj/artifact)
+		..()
+		if (!src.word_dict)
+			// need to account for words with no vowels
+			src.word_dict = dd_file2list("strings/letter_words_5.txt", " ")
+		var/picked_word = pick(src.word_dict)
+		for (var/i = 1 to 5)
+			if (picked_word[i] in src.vowels)
+				src.positions += "v" // vowel
+				src.num_vowels += 1
+			else
+				src.positions += "c" // consonant
+
+		if (artifact)
+			artifact.ensure_listen_tree()
+			artifact.listen_tree.AddListenInput(LISTEN_INPUT_OUTLOUD_RANGE_2)
+			artifact.listen_tree.AddListenEffect(LISTEN_EFFECT_ARTIFACT_TRIGGER)
+
+	proc/speech_act(text)
+		if (!text)
+			return
+		var/text_cleaned = ckey(text)
+		if (length(text_cleaned) == 5)
+			return speech_act_word(text_cleaned)
+
+		var/list/ignore_characters = list(".",",","!","?","(",")","*","%","$","#","/",";",":","\"","'","_","+","=","&")
+		for(var/char in ignore_characters)
+			text = replacetext(text, char, " ")
+		return speech_act_sentence(text)
+
+	proc/speech_act_word(var/text)
+		if (!(text in src.word_dict))
+			return "error"
+		var/input_vowels = 0
+		var/correct_vowels = 0
+		var/misplaced_vowels = 0
+		for (var/i = 1 to 5)
+			if (text[i] in src.vowels)
+				input_vowels += 1
+				if (src.positions[i] == "v")
+					correct_vowels += 1
+
+		if (input_vowels > src.num_vowels)
+			return " emits a [SPAN_BOLD("grumpy")] chime."
+		if (correct_vowels == src.num_vowels)
+			return "correct"
+		misplaced_vowels = input_vowels - correct_vowels
+
+		var/correct_vowel_msg = "[correct_vowels == 1 ? "a <b>high</b> chime" : "a series of [correct_vowels] <b>high</b> chimes"]"
+		var/misplaced_vowel_msg = "[misplaced_vowels == 1 ? "a <b>low</b> chime" : "a series of [misplaced_vowels] <b>low</b> chimes"]"
+
+		if (correct_vowels > 0 && misplaced_vowels > 0)
+			return " emits [correct_vowel_msg] and [misplaced_vowel_msg]."
+		if (correct_vowels > 0)
+			return " emits [correct_vowel_msg]."
+		return " emits [misplaced_vowel_msg]."
+
+	proc/speech_act_sentence(var/text)
+		if (!text)
+			return
+		var/list/words = splittext(text, " ")
+
+		var/check_count = 0
+		for(var/word in words)
+			word = ckey(word)
+			if((length(word) == 6 && copytext(word, 6, 7) == "s") || (length(word) == 7 && copytext(word, 6, 8) == "es"))
+				word = copytext(word, 1, 6) // Assume that the word is plural
+			else if(length(word) != 5)
+				continue
+			check_count++;
+			var/result_word = speech_act_word(word)
+			if(result_word == "correct")
+				return "correct"
+			if(check_count == ARTIFACT_LANGUAGE_SENTENCE_CHECK)
+				return "hint"
+		return "hint"
+
+#undef ARTIFACT_LANGUAGE_SENTENCE_CHECK

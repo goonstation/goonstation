@@ -1,7 +1,8 @@
 /datum/antagonist/conspirator
 	id = ROLE_CONSPIRATOR
+	antagonist_icon = "conspirator"
 	display_name = "conspirator"
-
+	wiki_link = "https://wiki.ss13.co/Conspirator"
 	var/static/list/datum/mind/conspirators
 	var/static/datum/objective/conspiracy/conspirator_objective
 	var/static/meeting_point
@@ -51,12 +52,6 @@
 
 	remove_equipment()
 		src.headset.remove_radio_upgrade()
-
-	do_popup(override)
-		if (!override)
-			override = "conspiracy"
-
-		..(override)
 
 	assign_objectives()
 		new /datum/objective/conspiracy(src.conspirator_objective.explanation_text, src.owner, src)

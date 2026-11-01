@@ -4,6 +4,9 @@
 	It's G R E A T.
 */
 
+/// Returns a stringified number with its associated +/- sign.
+#define SIGNED_NUM_STRING(NUM) (NUM >= 0 ? "+[NUM]" : "[NUM]")
+
 /// returns the length of a hud zone, adds 1 because these are coordinates of a cell in a grid, and not a corner of a cell in a grid
 #define HUD_ZONE_LENGTH(coords) (abs(coords["x_high"] - coords["x_low"]) + 1)
 

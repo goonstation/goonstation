@@ -5,14 +5,15 @@
  * @license MIT
  */
 
+import { Box, Button, ProgressBar, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { Box, Button, ProgressBar, Section, Stack } from '../../components';
 import { PortableHoldingTank } from '../common/PortableAtmos';
 import { LocalGeneratorData } from './type';
 
-export const LocalGenerator = (props, context) => {
-  const { act, data } = useBackend<LocalGeneratorData>(context);
+export const LocalGenerator = () => {
+  const { act, data } = useBackend<LocalGeneratorData>();
 
   const {
     name,
@@ -25,27 +26,27 @@ export const LocalGenerator = (props, context) => {
   } = data;
 
   const handleToggleBolts = () => {
-    act("toggle-bolts");
+    act('toggle-bolts');
   };
 
   const handleToggleGenerator = () => {
-    act("toggle-generator");
+    act('toggle-generator');
   };
 
   const handleSwapChargeTarget = () => {
-    act("swap-target");
+    act('swap-target');
   };
 
   const handleEjectTank = () => {
-    act("eject-tank");
+    act('eject-tank');
   };
 
   const handleEjectCell = () => {
-    act("eject-cell");
+    act('eject-cell');
   };
 
   const handleConnectAPC = () => {
-    act("connect-APC");
+    act('connect-APC');
   };
 
   return (
@@ -60,21 +61,16 @@ export const LocalGenerator = (props, context) => {
                     <Button
                       width={11.4}
                       onClick={() => handleToggleBolts()}
-                      icon={boltsStatus ? ("toggle-on") : ("toggle-off")}>
+                      icon={boltsStatus ? 'toggle-on' : 'toggle-off'}
+                    >
                       Toggle Floor Bolts
                     </Button>
                   </Stack.Item>
-                  <Stack.Item>
-                    Status:
-                  </Stack.Item>
+                  <Stack.Item>Status:</Stack.Item>
                   {boltsStatus ? (
-                    <Stack.Item color="good">
-                      ACTIVE
-                    </Stack.Item>
+                    <Stack.Item color="good">ACTIVE</Stack.Item>
                   ) : (
-                    <Stack.Item color="average">
-                      INACTIVE
-                    </Stack.Item>
+                    <Stack.Item color="average">INACTIVE</Stack.Item>
                   )}
                 </Stack>
               </Stack.Item>
@@ -84,21 +80,16 @@ export const LocalGenerator = (props, context) => {
                     <Button
                       width={11.4}
                       onClick={() => handleToggleGenerator()}
-                      icon={generatorStatus ? ("toggle-on") : ("toggle-off")}>
+                      icon={generatorStatus ? 'toggle-on' : 'toggle-off'}
+                    >
                       Toggle Generator
                     </Button>
                   </Stack.Item>
-                  <Stack.Item>
-                    Status:
-                  </Stack.Item>
+                  <Stack.Item>Status:</Stack.Item>
                   {generatorStatus ? (
-                    <Stack.Item color="good">
-                      ACTIVE
-                    </Stack.Item>
+                    <Stack.Item color="good">ACTIVE</Stack.Item>
                   ) : (
-                    <Stack.Item color="average">
-                      INACTIVE
-                    </Stack.Item>
+                    <Stack.Item color="average">INACTIVE</Stack.Item>
                   )}
                 </Stack>
               </Stack.Item>
@@ -108,21 +99,16 @@ export const LocalGenerator = (props, context) => {
                     <Button
                       width={11.4}
                       onClick={() => handleSwapChargeTarget()}
-                      icon="bolt">
+                      icon="bolt"
+                    >
                       Change Target
                     </Button>
                   </Stack.Item>
-                  <Stack.Item>
-                    Target:
-                  </Stack.Item>
+                  <Stack.Item>Target:</Stack.Item>
                   {chargeAPC ? (
-                    <Stack.Item color="good">
-                      APC
-                    </Stack.Item>
+                    <Stack.Item color="good">APC</Stack.Item>
                   ) : (
-                    <Stack.Item color="good">
-                      CELL
-                    </Stack.Item>
+                    <Stack.Item color="good">CELL</Stack.Item>
                   )}
                 </Stack>
               </Stack.Item>
@@ -130,68 +116,81 @@ export const LocalGenerator = (props, context) => {
           </Section>
           <PortableHoldingTank
             holding={holding}
-            onEjectTank={handleEjectTank} />
+            onEjectTank={handleEjectTank}
+          />
           <Section
             title="Internal Cell"
             height={7.25}
-            buttons={(
+            buttons={
               <Button
                 icon="eject"
                 disabled={!internalCell}
-                onClick={() => handleEjectCell()}>
+                onClick={() => handleEjectCell()}
+              >
                 Eject
               </Button>
-            )}>
+            }
+          >
             {internalCell ? (
               <Stack vertical>
                 <Stack.Item>
-                  <Box>
-                    {internalCell.name}
-                  </Box>
+                  <Box>{internalCell.name}</Box>
                 </Stack.Item>
                 <Stack.Item>
-                  <ProgressBar value={internalCell.chargePercent}
+                  <ProgressBar
+                    value={internalCell.chargePercent}
                     minValue={0}
                     maxValue={100}
-                    color={internalCell.chargePercent < 20 ? "red" : internalCell.chargePercent < 50 ? "yellow" : "green"} />
+                    color={
+                      internalCell.chargePercent < 20
+                        ? 'red'
+                        : internalCell.chargePercent < 50
+                          ? 'yellow'
+                          : 'green'
+                    }
+                  />
                 </Stack.Item>
               </Stack>
             ) : (
-              <Box
-                color="average">
-                No cell
-              </Box>)}
+              <Box color="average">No cell</Box>
+            )}
           </Section>
           <Section
             title="Local APC"
             height={7.25}
-            buttons={(
+            buttons={
               <Button
                 icon="wifi"
                 disabled={!holding}
-                onClick={() => handleConnectAPC()}>
+                onClick={() => handleConnectAPC()}
+              >
                 Connect
               </Button>
-            )}>
+            }
+          >
             {connectedAPC ? (
               <Stack vertical>
                 <Stack.Item>
-                  <Box>
-                    {connectedAPC.name}
-                  </Box>
+                  <Box>{connectedAPC.name}</Box>
                 </Stack.Item>
                 <Stack.Item>
-                  <ProgressBar value={connectedAPC.chargePercent}
+                  <ProgressBar
+                    value={connectedAPC.chargePercent}
                     minValue={0}
                     maxValue={100}
-                    color={connectedAPC.chargePercent < 20 ? "red" : connectedAPC.chargePercent < 50 ? "yellow" : "green"} />
+                    color={
+                      connectedAPC.chargePercent < 20
+                        ? 'red'
+                        : connectedAPC.chargePercent < 50
+                          ? 'yellow'
+                          : 'green'
+                    }
+                  />
                 </Stack.Item>
               </Stack>
             ) : (
-              <Box
-                color="average">
-                No connected APC
-              </Box>)}
+              <Box color="average">No connected APC</Box>
+            )}
           </Section>
         </Stack>
       </Window.Content>

@@ -109,9 +109,18 @@
 	for(var/key in key_list)
 		. |= key_list[key]
 
+///Flattens a keyed list into just its keys, discarding values
+/proc/flatten_list_to_keys(list/key_list)
+	RETURN_TYPE(/list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= key
+
 ///Make a normal list an associative one
 /proc/make_associative(list/flat_list)
-	RETURN_TYPE(/list)
+	RETURN_TYPE(/alist)
 	. = list()
 	for(var/thing in flat_list)
 		.[thing] = TRUE
@@ -201,13 +210,13 @@
  * You should only pass integers in.
  */
 proc/weighted_pick(list/L)
-	var/total = 0
 	var/item
+#ifdef CHECK_MORE_RUNTIMES
 	for(item in L)
 		if(isnull(L[item]))
 			stack_trace("weighted_pick given null weight: [json_encode(L)]")
-		total += L[item]
-	total = rand() * total
+#endif
+	var/total = rand() * values_sum(L)
 	for(item in L)
 		total -= L[item]
 		if(total <= 0)
@@ -292,10 +301,23 @@ proc/params2complexlist(params)
 	var/len = length(params)
 	var/element = null
 	var/a = 1,p_count = 1
+	var/escapee = null
+
 	while(a < len)
-		a++
+
+		//Replace characters escaped with a backslash
+		if(findtext(params,"\\",a,a+1))
+			escapee = params[a+1]
+			escapee = text2ascii(escapee)
+			if(escapee <= 126 && escapee >= 31) //Only ascii, a special character will never be unicode (famous last words)
+				escapee = "%[num2hex(escapee, 2)]"
+				params = splicetext(params,a,a+2,escapee)
+				len = length(params)
+
+		a++ //Increment after escapes but before parameter-value/list parsing
+
 		//Found a separator for a parameter-value pair. Store it
-		if(findtext(params,"&",a,a+1))
+		if(findtext(params,"&",a,a+1) || findtext(params,";",a,a+1))
 			. += params2list(copytext(params,1,a))
 			params = copytext(params,a+1)
 			len = length(params)
@@ -363,4 +385,11 @@ proc/params2complexlist(params)
 	var/listlen = length(x); \
 	for(var/i in 1 to round(listlen / 2)) \
 		x.Swap(i, listlen - i + 1) \
+	} while (0)
+
+/// Cuts elements from the start and end of the list.
+#define trim_list(L, start_amt, end_amt) \
+	do { \
+	L.Cut(length(L) - end_amt + 1); \
+	L.Cut(1, start_amt + 1) \
 	} while (0)

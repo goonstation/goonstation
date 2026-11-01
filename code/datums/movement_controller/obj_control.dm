@@ -59,7 +59,7 @@
 		..()
 		switch (name)
 			if("exit")
-				user.override_movement_controller = null
+				user.remove_movement_controller(src)
 				user.set_loc(get_turf(src.master))
 				user.reset_keymap()
 				user.client.eye = user

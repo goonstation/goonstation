@@ -947,7 +947,7 @@
 /obj/dialogueobj/polariscrate
 	name = "important looking crate"
 	desc = "So that's what NSS Polaris was delivering to Oshan Laboratory.. It looks important."
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "futurecrate"
 	density = 1
 	anchored = ANCHORED_ALWAYS
@@ -993,7 +993,7 @@
 			else return 1
 
 		onActivate(var/client/C)
-			flick("futurecrateopen",master.master)
+			FLICK("futurecrateopen",master.master)
 			playsound(C.mob.loc, 'sound/effects/polaris_crateopening.ogg', 50, 1,1)
 			master.master.icon_state = "futurecrateopened"
 			return

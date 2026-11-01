@@ -34,6 +34,8 @@
 #include "metadata_type_typos.dm"
 #include "rand.dm"
 #include "deletions.dm"
+#include "explosions.dm"
+#include "string_prefix_suffix.dm"
 #include "monkey_thunderdome.dm"
 #include "reagent_id_typos.dm"
 #include "record_database.dm"
@@ -46,7 +48,17 @@
 #include "trait_id_uniqueness.dm"
 #include "material_id_uniqueness.dm"
 #include "action_id_uniqueness.dm"
+#include "antag_popup_existence.dm"
 #include "job_name_uniqueness.dm"
+#include "mutation_combo_valid_ids.dm"
+#include "od_compile_bot.dm"
+#include "terrainify.dm"
+
+/// regression tests
+#include "regression/opaque_atom_tracking.dm"
+#include "regression/opaque_lighting.dm"
+#include "regression/reagent_transfer.dm"
+#include "regression/say_message.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

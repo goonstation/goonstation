@@ -1,5 +1,4 @@
 // by request
-#define DUCKBOT_MOVE_SPEED 8
 #define DUCKBOT_QUACK_COOLDOWN "duckbotquackdelay"
 #define DUCKBOT_AMUSEMENT_COOLDOWN "duckbotlovesongdelay"
 #define DUCKBOT_ANNOY_TIMEOUT "duckbotnerdobsessionlength"
@@ -18,7 +17,7 @@
 	anchored = UNANCHORED
 	on = 1 // ACTION
 	health = 5
-	bot_move_delay = DUCKBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::DUCKBOT
 	var/eggs = 0
 	/// When it gets to 100, free egg!
 	var/egg_process = 0
@@ -55,7 +54,7 @@
 				src.KillPathAndGiveUp(1)
 			else if(!ON_COOLDOWN(src, DUCKBOT_ANNOY_PATHING_COOLDOWN, src.annoy_path_cooldown))
 				var/turf/randwander = get_step_truly_rand(get_turf(src.annoy_target))
-				src.navigate_to(randwander, DUCKBOT_MOVE_SPEED, 0, 30)
+				src.navigate_to(randwander, src.bot_move_delay, 0, 30)
 		else
 			for_by_tcl(M, /mob)
 				if(IN_RANGE(src, M, 7))
@@ -65,10 +64,10 @@
 						break
 	else if(prob(95))
 		// this is not true random, instead it's a mostly non-direction-changing wall-hugging behaviour
-		src.navigate_to(get_step_rand(get_turf(src)))
+		src.navigate_to(get_step_rand(get_turf(src)), src.bot_move_delay)
 	else
 		// true random step
-		src.navigate_to(get_step_truly_rand(get_turf(src)))
+		src.navigate_to(get_step_truly_rand(get_turf(src)), src.bot_move_delay)
 
 /// Sends the duckbot to a random spot on the station
 /obj/machinery/bot/duckbot/proc/mystical_journey()
@@ -96,14 +95,14 @@
 	if(src.on == 1)
 		if(src.emagged == TRUE)
 			var/message = pick("QUacK", "WHaCKA", "quURK", "bzzACK", "quock", "queck", "WOcka", "wacKY","GOggEL","gugel","goEGL","GeGGal")
-			src.speak(message, 1, 1)
+			src.say(message, flags = SAYFLAG_SINGING, message_params = list("group" = "amusing_duck"))
 			wakka_wakka(TRUE) // Seek loser is TRUE
 			if(prob(70))
 				playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 1) // MUSIC
 		else
 			if(!ON_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN, src.quack_cooldown) && prob(60))
 				var/message = pick("wacka", "quack","quacky","gaggle")
-				src.speak(message, 1, 0)
+				src.say(message, flags = SAYFLAG_SINGING, message_params = list("group" = "amusing_duck"))
 			if(!src.moving)
 				if(prob(1))/* This is a clusterfuck no thanks
 					if(!ON_COOLDOWN(global, DUCKBOT_NATURAL_MIGRATION_COOLDOWN, 15 MINUTES)) // Time to fly south(ern solar array) for the winter
@@ -138,7 +137,7 @@
 
 		if(quack_now)
 			var/message = pick("wacka", "quack", "quacky", "gaggle")
-			src.speak(message, 1, 0)
+			src.say(message, flags = SAYFLAG_SINGING, message_params = list("group" = "amusing_duck"))
 			src.cooldowns[DUCKBOT_QUACK_COOLDOWN] = TIME + src.quack_cooldown
 	..()
 
@@ -153,7 +152,7 @@
 	var/dat
 	dat += "<TT><B>AMUSING DUCK</B></TT><BR>"
 	dat += "<B>toy series with strong sense for playing</B><BR><BR>"
-	dat += "LAY EGG IS: <A href='?src=\ref[src];on=1'>[src.on ? "TRUE!!!" : "NOT TRUE!!!"]</A><BR><BR>"
+	dat += "LAY EGG IS: <A href='byond://?src=\ref[src];on=1'>[src.on ? "TRUE!!!" : "NOT TRUE!!!"]</A><BR><BR>"
 	dat += "AS THE DUCK ADVANCING,FLICKING THE PLUMAGE AND YAWNING THE MOUTH GO WITH MUSIC & LIGHT.<BR>"
 	dat += "THE DUCK STOP,IT SWAYING TAIL THEN THE DUCK LAY AN EGG AS OPEN IT'S BUTTOCKS,<BR>GO WITH THE DUCK'S CALL"
 

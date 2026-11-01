@@ -114,6 +114,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
+"kz" = (
+/obj/item/device/multitool/orange,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
 "mm" = (
 /obj/storage/closet/emergency{
 	pixel_x = -8
@@ -741,9 +745,7 @@
 	pixel_x = 8;
 	pixel_y = -23
 	},
-/obj/blind_switch/area/south{
-	pixel_y = -22
-	},
+/obj/blind_switch/directional/south,
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
@@ -1255,7 +1257,7 @@ rk
 pT
 RZ
 WS
-tJ
+kz
 tI
 "}
 (12,1,1) = {"

@@ -109,7 +109,6 @@ var/global/datum/antagWeighter/antagWeighter
 			throw EXCEPTION("Empty history given")
 
 		var/poolSize = length(history)
-		var/targetPlayRate = config.play_antag_rates[role]
 		var/list/weightings = list()
 
 		//calculate our weightings
@@ -136,7 +135,7 @@ var/global/datum/antagWeighter/antagWeighter
 			//the lower % of rounds played as antag role in given round type, the higher weighting given
 			else
 				var/percentSelected = (selected / seen) * 100
-				weight = (targetPlayRate * poolSize) / percentSelected
+				weight = (10 * poolSize) / percentSelected
 
 				if (src.debug)
 					src.debugLog("(Weighting Calc) [ckey] has [selected] selections and [seen] participations. Calculated weight as [weight] (poolSize: [poolSize]).")

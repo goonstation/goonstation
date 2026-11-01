@@ -9,7 +9,7 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/railgun
 		HH.name = "S-51 Sustained Hardlight Barrager"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handrail"
 		HH.limb_name = "S-51 Sustained Hardlight Barrager"
 		HH.can_hold_items = 0
@@ -18,7 +18,7 @@
 
 	setup_loot_table()
 		..()
-		loot_table[/obj/item/currency/spacecash/buttcoin] = 500
+		loot_table[/obj/item/currency/buttcoin] = 500
 
 	setup_healths()
 		add_hh_robot(500, 1)

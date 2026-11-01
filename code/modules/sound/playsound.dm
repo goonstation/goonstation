@@ -2,6 +2,8 @@
 /// If music is playing this should return TRUE. But if music stopped playing only recently-ish it can sometimes return TRUE still.
 /// In some rare cases it can happen that this has a false negative too so like don't rely on this for anything super important, ok?
 proc/is_music_playing()
+	if (global.dj_panel?.active_music && !global.dj_panel.active_music.paused)
+		return TRUE
 	. = GET_COOLDOWN(global, "music")
 	if(!. && length(clients))
 		// alright now we do this wicked heuristic where we ask *some* client whether they have music playing, I'm sure that will work
@@ -20,28 +22,30 @@ proc/is_music_playing()
 		return
 
 	var/admin_key = admin_key(src)
-	vol = clamp(vol, 0, 100)
+	vol = clamp(vol, 0, ADMIN_SOUND_MAX_VOLUME)
 
 	var/sound/uploaded_sound = new()
 	uploaded_sound.file = S
 	uploaded_sound.wait = 0
 	uploaded_sound.volume = vol
 	uploaded_sound.repeat = 0
-	uploaded_sound.priority = 254
+	uploaded_sound.priority = SOUND_PRIORITY_ADMIN
 	uploaded_sound.channel = admin_sound_channel
 	uploaded_sound.frequency = freq
-	uploaded_sound.environment = -1
-	uploaded_sound.echo = -1
+	uploaded_sound.environment = SOUND_ENVIRONMENT_NONE
+	uploaded_sound.echo = SOUND_ECHO_NONE
 	if (!vol)
 		return
+	if (uploaded_sound.channel == dj_panel.active_music?.channel)
+		dj_panel.stop_music(stop_playback = FALSE)
 
 	logTheThing(LOG_ADMIN, src, "played sound [S]")
 	logTheThing(LOG_DIARY, src, "played sound [S]", "admin")
 	message_admins("[key_name(src)] played sound [S]")
 	SPAWN(0)
 		for (var/client/C in clients)
-			C.sound_playing[ admin_sound_channel ][1] = vol
-			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
+			C.sound_playing[uploaded_sound.channel][1] = vol
+			C.sound_playing[uploaded_sound.channel][2] = VOLUME_CHANNEL_ADMIN
 			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN ) / 100
 			C << uploaded_sound
 
@@ -50,40 +54,48 @@ proc/is_music_playing()
 				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played:</b>")][SPAN_NOTICE(" [S]")]")
 		dj_panel.move_admin_sound_channel()
 
-/client/proc/play_music_real(S as sound, var/freq as num)
+/// Pass a DJ panel to enable live playback controls.
+/client/proc/play_music_real(S as sound, var/freq as num, datum/dj_panel/panel)
 	if (!config.allow_admin_sounds)
 		alert("Admin sounds disabled")
 		return 0
 
+	var/datum/dj_music_track/track = panel?.active_music
 	var/sound/music_sound = new()
 	music_sound.file = S
 	music_sound.wait = 0
 	music_sound.repeat = 0
-	music_sound.priority = 254
+	music_sound.priority = SOUND_PRIORITY_ADMIN
 	music_sound.channel = admin_sound_channel
 	if(!freq)
 		music_sound.frequency = 1
 	else
 		music_sound.frequency = freq
-	music_sound.environment = -1
-	music_sound.echo = -1
+	music_sound.environment = SOUND_ENVIRONMENT_NONE
+	music_sound.echo = SOUND_ECHO_NONE
+	if (!panel && music_sound.channel == dj_panel.active_music?.channel)
+		dj_panel.stop_music(stop_playback = FALSE)
 
 	SPAWN(0)
 		var/admin_key = admin_key(src)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
+			if (panel && (!track || panel.active_music != track))
+				return
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 
-			if (src.djmode || src.non_admin_dj)
+			if (src && (src.djmode || src.non_admin_dj))
 				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b>")][SPAN_NOTICE(" [S]")]")
 
 			if (!client_vol)
 				continue
 
-			C.sound_playing[ admin_sound_channel ][1] = 1
-			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
-
-			music_sound.volume = client_vol
+			if (panel)
+				music_sound = panel.music_packet(C, FALSE)
+			else
+				C.sound_playing[music_sound.channel][1] = 100
+				C.sound_playing[music_sound.channel][2] = VOLUME_CHANNEL_ADMIN
+				music_sound.volume = client_vol
 			C << music_sound
 			if (src && !(src.stealth && !src.fakekey))
 				// Stealthed admins won't show the "now playing music" message,
@@ -92,11 +104,14 @@ proc/is_music_playing()
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
 		dj_panel.move_admin_sound_channel()
+		if (panel && track && panel.active_music == track)
+			panel.schedule_completion()
 	logTheThing(LOG_ADMIN, src, "started loading music [S]")
 	logTheThing(LOG_DIARY, src, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
 	// prevent radio station from interrupting us
-	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
+	if (!panel)
+		EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /client/proc/play_music_radio(soundPath, var/name)
@@ -132,7 +147,7 @@ proc/is_music_playing()
 	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
-/proc/play_music_remote(data)
+/proc/play_music_remote(data, from_topic = FALSE, silent = null)
 	if (!config.allow_admin_sounds)
 		alert("Admin sounds disabled")
 		return 0
@@ -160,13 +175,14 @@ proc/is_music_playing()
 			if (ismuted) //bullshit BYOND 0 is not null fuck you
 				continue
 
-			C.chatOutput.playMusic(data["file"], vol)
-			if (!adminC || !(adminC.stealth && !adminC.fakekey))
-				// Stealthed admins won't show the "now playing music" message,
-				// for added ability to be spooky.
-				if (remote_music_announcements)
-					boutput(C, "Playing <b>[data["title"]]</b> ([data["duration_human"]]).")
-				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+			C.chatOutput.playMusic(data["file"], vol, fromTopic = from_topic)
+			if (silent != TRUE)
+				if (!adminC || !(adminC.stealth && !adminC.fakekey))
+					// Stealthed admins won't show the "now playing music" message,
+					// for added ability to be spooky.
+					if (remote_music_announcements)
+						boutput(C, "Playing <b>[data["title"]]</b> ([data["duration_human"]]).")
+					boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 
 	if (adminC)
@@ -183,7 +199,10 @@ proc/is_music_playing()
 	var/channel_id = audio_channel_name_to_id[channel_name]
 	if(isnull(channel_id))
 		alert(usr, "Invalid channel.")
-	var/vol = input("Goes from 0-200. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
+	var/max = 200
+	if (channel_name == "admin")
+		max = 100
+	var/vol = input("Goes from 0-[max]. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
 	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
 	vol = clamp(vol, 0, 200)
 	src.setVolume(channel_id, vol/100 )
@@ -206,12 +225,11 @@ proc/is_music_playing()
 
 	ehjax.send(src, "browseroutput", "stopaudio") //For client-side audio
 
-	var/mute_channel = 1014
-	var/sound/stopsound = sound(null,wait = 0,channel=mute_channel)
-	for (var/i = 1 to 10)
-		stopsound.channel = mute_channel
-		src << 	stopsound
-		mute_channel ++
+	var/sound/stopsound = sound(null, wait = 0)
+	for (var/channel in SOUNDCHANNEL_ADMIN_LOW to SOUNDCHANNEL_ADMIN_HIGH)
+		stopsound.channel = channel
+		src << stopsound
+		src.sound_playing[channel][1] = 0
 
 /client/verb/stop_the_radio()
 	set category = "Commands"
@@ -259,7 +277,32 @@ proc/is_music_playing()
 
 
 /proc/play_youtube_remote_url(mob/M, video_url)
+	var/static/datum/cobalt_tools/cobalt_tools
+	if (!cobalt_tools)
+		cobalt_tools = new
 	message_admins(SPAN_NOTICE("[key_name(M)] started loading remote music: [video_url]"))
+	try
+		var/list/filename_and_url = cobalt_tools.request_tunnel(video_url)
+		var/filename = filename_and_url[1]
+		var/url = filename_and_url[2]
+		// Check if the first character is a !, which means the request failed
+		if (url[1] == "!")
+			message_admins(SPAN_ALERT("Error returned from cobalt tools remote music thing: [url]."))
+			return
+		var/mock_data = list()
+		mock_data["admin_ckey"] = M.ckey
+		mock_data["key"] = M.ckey
+		mock_data["file"] = url
+		mock_data["title"] = filename
+		mock_data["filesize"] = "?"
+		mock_data["duration_human"] = "?"
+		play_music_remote(mock_data)
+	catch (var/exception/e)
+		message_admins(SPAN_ALERT("Error returned from cobalt tools remote music thing: [json_encode(e)]."))
+		return
+
+
+/* rip yt-dlg
 	try
 		var/datum/apiRoute/remoteMusic/playRemoteMusic = new
 		playRemoteMusic.buildBody(video_url, roundId, M.ckey)
@@ -269,6 +312,7 @@ proc/is_music_playing()
 		message_admins(SPAN_NOTICE("Error returned from youtube server thing: [error.message]."))
 		boutput(M, "<span class='bold' class='notice'>Error returned from youtube server thing: [error.message].</span>")
 		return
+*/
 
 	// prevent radio station from interrupting us
 	// Wire note: This essentially means "extend the duration by the time we think it will take the API to download the song and get back to us"

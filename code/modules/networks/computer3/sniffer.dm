@@ -4,25 +4,33 @@
 	name = "Packet Sniffer"
 	desc = "An electronic device designed to intercept network transmissions."
 	icon_state = "sniffer0"
-	item_state = "electronic"
+	item_state = "electronics"
 	w_class = W_CLASS_BULKY
 	rand_pos = 0
+	wired_all_hearing = TRUE
 	var/mode = 0
 	var/obj/machinery/power/data_terminal/link = null
 	var/filter_id = null
+	var/destination_filter_id = null
 	var/list/sniffFilters = list()
 	var/last_intercept = 0
-	var/list/packet_data = list()
-	var/max_logs = 8
+	var/list/packet_logs = list()
+	var/captured_packets = 0
+	var/max_logs = 50
+
+	New()
+		..()
+		if (global.current_state < GAME_STATE_PLAYING)
+			new /obj/item/paper/packets(src.loc)
 
 	attack_ai(mob/user as mob)
 		if(mode)
-			src.interacted(user)
+			src.ui_interact(user)
 		return
 
 	attack_hand(mob/user)
 		if(mode)
-			src.interacted(user)
+			src.ui_interact(user)
 			return
 
 		else
@@ -36,7 +44,7 @@
 					var/obj/machinery/power/data_terminal/test_link = locate() in T
 					if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 						src.link = test_link
-						src.link.master = src
+						src.link.set_master(src)
 
 						anchored = ANCHORED
 						mode = 1
@@ -57,72 +65,69 @@
 				mode = 0
 				user.visible_message("[user] detaches the [src] from the data terminal.","You detach the [src] from the data terminal.")
 				icon_state = "sniffer0"
-				src.link?.master = null
+				src.link?.set_master(null)
 				src.link = null
 				return
 		else
 			..()
 
 	attack_self(mob/user as mob)
-		return interacted(user)
+		src.ui_interact(user)
 
-	proc/interacted(mob/user as mob)
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "PacketSniffer")
+			ui.open()
 
-		var/dat = "<html><head><title>Packet Sniffer</title></head><body>"
+	ui_data(mob/user)
+		. = list(
+			"connected" = !!(src.mode && src.link),
+			"packet_logs" = src.packet_logs,
+			"captured_packets" = src.captured_packets,
+			"max_logs" = src.max_logs,
+			"filter" = src.filter_id,
+			"destination_filter" = src.destination_filter_id,
+		)
 
-		dat += "Current sender filter: <a href='byond://?src=\ref[src];filtid=1'>[src.filter_id ? src.filter_id : "NONE"]</a><br>"
-
-		dat += "<hr><b>Packet log:</b><hr>"
-		if(packet_data.len)
-			for(var/a in packet_data)
-				dat += "<tt>[a]</tt><br>"
-		else
-			dat += "<b>NONE</b>"
-
-		dat += "<hr>"
-		user.Browse(dat,"window=packets")
-		onclose(user,"packets")
-		return
-
-	Topic(href, href_list)
-		..()
-
-		if (!issilicon(usr) && !isAIeye(usr))
-			if (!(src in usr.contents) && !(src.master in usr.contents) && !(istype(src.loc, /turf) && (BOUNDS_DIST(src, usr) == 0)))
-				return
-			if (usr.stat || usr.restrained())
-				return
-
-			src.add_fingerprint(usr)
-		src.add_dialog(usr)
-
-		if(href_list["filtid"])
-			var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text
-			if (!t)
+	ui_act(action, params, datum/tgui/ui)
+		. = ..()
+		if (.)
+			return
+		switch (action)
+			if ("set_filter")
+				src.set_filter(ui.user)
+				. = TRUE
+			if ("set_filter_direct")
+				var/filter_id = params["filter"]
+				if (istext(filter_id) && length(filter_id) == 8 && is_hex(filter_id))
+					src.filter_id = filter_id
+					. = TRUE
+			if ("clear_filter")
 				src.filter_id = null
-				src.updateIntDialog()
-				return
+				. = TRUE
+			if ("set_destination_filter_direct")
+				var/filter_id = params["filter"]
+				if (istext(filter_id) && length(filter_id) == 8 && is_hex(filter_id))
+					src.destination_filter_id = filter_id
+					. = TRUE
+			if ("clear_destination_filter")
+				src.destination_filter_id = null
+				. = TRUE
+			if ("clear_logs")
+				src.packet_logs = list()
+				. = TRUE
 
-			if (!issilicon(usr) && !isAIeye(usr))//Only check range for organics
-				if (!in_interact_range(src, usr) || usr.stat || usr.restrained())
-					return
+	proc/set_filter(mob/user)
+		var/filt_id = tgui_input_text(user, "Please enter new 8 digit hex value filter net id", \
+			src.name, src.filter_id, 8)
+		if (isnull(filt_id))
+			return
+		if (length(filt_id) != 8 || !is_hex(filt_id))
+			src.filter_id = null
+			return
 
-			if(length(t) != 8 || !is_hex(t))
-				src.filter_id = null
-				src.updateIntDialog()
-				return
-
-			src.filter_id = t
-			src.updateIntDialog()
-
-		return
-
-	proc/updateIntDialog()
-		if(mode)
-			src.updateUsrDialog()
-		else
-			src.updateSelfDialog()
-		return
+		src.filter_id = filt_id
 
 	receive_signal(datum/signal/signal)
 		if(!mode || !src.link)
@@ -133,8 +138,23 @@
 		if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
 			return
 
-		var/target = signal.data["sender"]
-		if(src.filter_id && src.filter_id != target)
+		// Source candidates also determine the field shown first in the route trace.
+		var/static/list/source_fields = list("sender", "netid")
+		var/source_field = null
+		var/source_address = null
+		var/source_filter_matched = !src.filter_id
+		for (var/field_name as anything in source_fields)
+			var/address = signal.data[field_name]
+			if (!address)
+				continue
+			if (!source_field)
+				source_field = field_name
+				source_address = address
+			if (cmptext(src.filter_id, address))
+				source_filter_matched = TRUE
+		if (!source_filter_matched)
+			return
+		if (src.destination_filter_id && !cmptext(src.destination_filter_id, signal.data["address_1"]))
 			return
 
 		var/badcheck = 0
@@ -147,18 +167,53 @@
 
 		if(!src.last_intercept || src.last_intercept + 40 <= world.time)
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 25, 1)
-		//src.packet_data = signal.data:Copy()
-		var/newdat = "<b>\[[time2text(world.timeofday,"mm:ss")]:[(world.timeofday%10)]\]:</b>"
+
+		var/list/packet_fields = list()
+		var/payload_length = 0
 		for (var/i in signal.data)
-			newdat += "[strip_html(i)][isnull(signal.data[i]) ? "; " : "=[strip_html(signal.data[i])]; "]"
+			var/field_name = "[i]"
+			var/field_value = isnull(signal.data[i]) ? null : \
+				"[signal.data[i]]"
+			packet_fields += list(list(
+				"name" = field_name,
+				"value" = field_value,
+			))
+			payload_length += length(field_name) + length(field_value)
+
+		var/device_tag = signal.data["device"]
+		if (!device_tag && istype(signal.source, /obj/machinery/networked))
+			var/obj/machinery/networked/network_device = signal.source
+			device_tag = network_device.device_tag
+		else if (!device_tag && istype(signal.source, /obj/item/peripheral/network/powernet_card))
+			device_tag = "PNET_ADAPTER"
+		else if (!device_tag && istype(signal.source, /obj/machinery/manufacturer))
+			var/obj/machinery/manufacturer/manufacturer = signal.source
+			device_tag = manufacturer.device_tag
+		else if (!device_tag && istype(signal.source, /obj/machinery/communications_dish))
+			device_tag = "PNET_COM_ARRAY"
+
+		src.captured_packets++
+		var/list/packet_record = list(
+			"sequence" = src.captured_packets,
+			"stamp" = "\[[time2text(world.timeofday,"mm:ss")]:[(world.timeofday%10)]\]",
+			"device" = device_tag ? "[device_tag]" : null,
+			"source_name" = source_field,
+			"source_address" = source_address ? "[source_address]" : null,
+			"fields" = packet_fields,
+			"payload_length" = payload_length,
+		)
 
 		if (signal.data_file)
-			. = signal.data_file.asText()
-			newdat += "<br>Included file ([strip_html(signal.data_file.name)], [strip_html(signal.data_file.extension)]): [. ? . : "Not printable."]"
+			var/file_text = signal.data_file.asText()
+			packet_record["file"] = list(
+				"name" = "[signal.data_file.name]",
+				"extension" = "[signal.data_file.extension]",
+				"content" = isnull(file_text) ? null : "[file_text]",
+				"size" = signal.data_file.size,
+			)
 
-		src.packet_data += newdat
-		if (length(src.packet_data) > src.max_logs)
-			src.packet_data.Cut(1,2)
+		src.packet_logs += list(packet_record)
+		if (length(src.packet_logs) > src.max_logs)
+			src.packet_logs.Cut(1, 2)
 		src.last_intercept = world.time
-		src.updateIntDialog()
 		return

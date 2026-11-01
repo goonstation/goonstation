@@ -37,7 +37,7 @@
 		This fine piece of machinery can construct entire rooms from blueprints."
 	density = 1
 	opacity = 0
-	anchored = UNANCHORED
+	anchored = UNANCHORED // Set to ANCHORED_ALWAYS when locked.
 	processing_tier = PROCESSING_FULL
 	event_handler_flags = NO_MOUSEDROP_QOL
 
@@ -77,7 +77,7 @@
 	MouseDrop_T(obj/item/W, mob/user)
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
 			return
-		else
+		else if(isitem(W))
 			if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
 				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
 				W.set_loc(src)
@@ -114,6 +114,9 @@
 				src.deactivate()
 
 			if("Lock")
+				if(!isturf(src.loc))
+					boutput(user, SPAN_ALERT("The machine cannot lock into place here."))
+					return
 				if (src.building)
 					boutput(user, SPAN_ALERT("Lock status can't be changed with a build in progress."))
 					return
@@ -267,7 +270,26 @@
 				if(!is_valid_abcu_object(spawned_object))
 					qdel(spawned_object)
 
+	proc/check_build_area()
+		for(var/obj/O in src.markers)
+			qdel(O)
+		src.invalid_count = 0
+		for(var/datum/tileinfo/T in src.current_bp.roominfo)
+			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
+			var/obj/effects/abcuMarker/O = null
+
+			if(istype(pos, /turf/space))
+				O = new/obj/effects/abcuMarker(pos)
+			else if(pos.can_build && pos.z == Z_LEVEL_STATION)
+				O = new/obj/effects/abcuMarker(pos)
+			else
+				O = new/obj/effects/abcuMarker/red(pos)
+				src.invalid_count++
+			src.markers.Add(O)
+
 	proc/prepare_build(mob/user)
+		src.check_build_area()
+
 		if(src.invalid_count)
 			boutput(usr, SPAN_ALERT("The machine can not build on anything but empty space. Check for red markers."))
 			return
@@ -350,19 +372,8 @@
 
 	proc/activate(mob/user)
 		src.locked = TRUE
-		src.anchored = ANCHORED
-		src.invalid_count = 0
-		for(var/datum/tileinfo/T in src.current_bp.roominfo)
-			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
-			var/obj/effects/abcuMarker/O = null
-
-			if(istype(pos, /turf/space))
-				O = new/obj/effects/abcuMarker(pos)
-			else
-				O = new/obj/effects/abcuMarker/red(pos)
-				src.invalid_count++
-
-			src.markers.Add(O)
+		src.anchored = ANCHORED_ALWAYS
+		src.check_build_area()
 		boutput(user, SPAN_NOTICE("Building this will require [src.current_bp.cost_metal] metal and [src.current_bp.cost_crystal] glass sheets."))
 		src.visible_message("[src] locks into place and begins humming softly.")
 
@@ -489,7 +500,8 @@
 // whitelists/blacklists applied during both saving and loading, so it's functionally retroactive
 #define WHITELIST_OBJECTS list( \
 	/obj/stool, \
-	/obj/grille, \
+	/obj/mesh/catwalk, \
+	/obj/mesh/grille, \
 	/obj/lattice, \
 	/obj/window, \
 	/obj/machinery/door, \
@@ -532,7 +544,7 @@
 	/obj/submachine/claw_machine, \
 	/obj/submachine/chem_extractor, \
 	/obj/submachine/chef_oven, \
-	/obj/submachine/chef_sink, \
+	/obj/machinery/sink, \
 	/obj/machinery/launcher_loader, \
 	/obj/machinery/optable, \
 	/obj/machinery/mass_driver, \
@@ -547,11 +559,13 @@
 	/obj/securearea, \
 	/obj/machinery/mixer, \
 	/obj/submachine/foodprocessor, \
+	/obj/machinery/gravity_tether/current_area, \
 	\
 )
 // blacklist overrules whitelist
 #define BLACKLIST_OBJECTS list( \
 	/obj/disposalpipe/loafer, \
+	/obj/machinery/disposal/extradimensional, \
 	/obj/submachine/slot_machine/item, \
 	/obj/machinery/portable_atmospherics/canister, \
 	/obj/window/crystal, \
@@ -559,7 +573,18 @@
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
-#define BLACKLIST_TURFS list(/turf/simulated/floor/specialroom/sea_elevator_shaft, /turf/simulated/shuttle, /turf/simulated/floor/shuttle, /turf/simulated/wall/auto/shuttle)
+#define BLACKLIST_TURFS list(\
+	/turf/simulated/floor/auto/elevator_shaft, \
+	/turf/simulated/shuttle, \
+	/turf/simulated/floor/shuttle, \
+	/turf/simulated/floor/arctic_elevator_shaft, \
+	/turf/simulated/wall/auto/shuttle, \
+	/turf/simulated/wall/void, \
+	/turf/simulated/wall/auto/feather/strong, \
+	/turf/simulated/wall/airbridge, \
+	/turf/simulated/wall/ancient, \
+	/turf/simulated/wall/auto/asteroid, \
+)
 
 /datum/abcu_blueprint
 	var/cost_metal = 0
@@ -629,7 +654,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 		save["type"] << curr.type
 		save["dir"] << curr.dir
 		save["state"] << curr.icon_state
-		if (curr.icon != initial(curr.icon))
+		if (curr.icon != get_initial_icon(curr))
 			save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
 		turf_count++
 
@@ -783,7 +808,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	icon_state = "blueprintmarker"
 	item_state = "gun"
 
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
 	var/prints_left = 5

@@ -6,7 +6,7 @@
 	real_name = "security cordon"
 	desc = "A small cordon of security tape, used to keep assistants off crime scenes."
 	density = 1
-	flags = FPRINT | USEDELAY | ON_BORDER
+	flags = USEDELAY | ON_BORDER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 

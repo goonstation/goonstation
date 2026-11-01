@@ -11,6 +11,13 @@
 //Observables /obj/observable  X
 //Cyborgs /mob/living/silicon/robot  X
 
+TYPEINFO(/mob/living/intangible/aieye)
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_listen_languages = null
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/intangible/aieye
 	name = "\improper AI eye"
 	icon = 'icons/mob/ai.dmi'
@@ -25,9 +32,19 @@
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
+	use_stamina = FALSE // floating ghostly eyes dont get tired
+
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	voice_name = "synthesized voice"
+	voice_type = "cyborg"
+	speech_verb_say = "states"
+	speech_verb_ask = "queries"
+	speech_verb_exclaim = "declares"
+	speech_bubble_icon_sing = "noterobot"
+	speech_bubble_icon_sing_bad = "noterobot"
 
 	var/mob/living/silicon/ai/mainframe = null
-	var/last_loc = 0
+	var/atom/last_loc = 0
 
 	var/list/last_range = list()
 	var/list/current_range = list()
@@ -35,6 +52,12 @@
 	var/x_edge = 0
 	var/y_edge = 0
 	var/turf/T = 0
+
+	/// client view width in tiles + some padding for flickering, obtained from in-game inspection
+	var/static/v_width = 12
+	/// client view height in tiles + some padding for flickering, obtained from in-game inspection
+	var/static/v_height = 9
+	var/list/open_viewports = list()
 
 	var/outer_eye_atom = null
 
@@ -47,44 +70,40 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_AI_EYE)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		AddComponent(/datum/component/minimap_marker, MAP_AI, "ai_eye")
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_OBSERVER, "ai_eye")
+		src.setStatus("camera_awareness", INFINITE_STATUS)
 
 	Login()
 		.=..()
 		src.client.show_popup_menus = 1
-		var/client_color = src.client.color
-		src.client.color = "#000000"
-		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
-			if (!src.client) // just client things
-				return
-			src.client.images += aiImages
-			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-			src.update_name_tag()
-			src.job = "AI"
-			if (src.mind)
-				src.mind.assigned_role = "AI"
-			animate(src.client, 0.3 SECONDS, color = client_color)
-			var/sleep_counter = 0
-			for(var/image/I as anything in aiImagesLowPriority)
-				src.client << I
-				if(sleep_counter++ % (300 * 10) == 0)
-					LAGCHECK(LAG_LOW)
+		if (!src.client) // just client things
+			return
+		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+		src.update_name_tag()
+		src.job = "AI"
+		if (src.mind)
+			src.mind.assigned_role = "AI"
+		SPAWN(0)
+			src.remove_viewport_statics()
+			src.add_all_statics()
+
+		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(src_turf_changed))
 
 	Logout()
-		var/client/cl = src.last_client
-		if (!cl)
+		if (!src.last_client)
 			return ..()
 		SPAWN(0)
-			cl?.images -= aiImages
-			var/sleep_counter = 0
-			for(var/image/I as anything in aiImagesLowPriority)
-				cl?.images -= I
-				if(sleep_counter++ % (300 * 10) == 0)
-					LAGCHECK(LAG_LOW)
-
+			src.remove_all_statics()
+			src.add_viewport_statics()
+		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
 		.=..()
+
+	clear_offline_indicator()
+		..()
+		src.mainframe.clear_offline_indicator()
 
 	isAIControlled()
 		return 1
@@ -102,7 +121,7 @@
 			C.apply_keybind("robot_tg")
 
 	process_move(keys)
-		if(keys && src.move_dir && !src.override_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
+		if(keys && src.move_dir && !src.get_active_movement_controller() && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
 			var/mob/living/intangible/aieye/O = src
 			O.set_loc(get_turf(src))
 		. = ..()
@@ -125,8 +144,53 @@
 		if(src.loc.z != 1)	//you may only move on the station z level!!!
 			src.cancel_camera()
 
-	proc/update_statics()	//update seperate from move(). Mostly same code.
-		return
+	proc/add_all_statics()
+#ifndef SKIP_CAMERA_COVERAGE
+		if (!src.loc || !src.client)
+			return
+		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
+			src.client.images |= T.aiImage
+#endif
+
+	proc/remove_all_statics()
+		if (!src.last_client)
+			return
+		var/atom/center = src.last_loc
+		for (var/turf/T as anything in (block(center?.x - src.v_width, center?.y - src.v_height, center?.z, center?.x + src.v_width, center?.y + src.v_height, center?.z) + src.get_viewport_turfs()))
+			src.last_client.images -= T.aiImage
+
+	proc/get_viewport_turfs()
+		var/list/turfs = list()
+		for (var/datum/viewport/vp as anything in src.open_viewports)
+			turfs |= vp.handler.vis_contents
+		return turfs
+
+	proc/add_viewport_statics()
+#ifndef SKIP_CAMERA_COVERAGE
+		if (!src.last_client)
+			return
+		for (var/turf/T as anything in src.get_viewport_turfs())
+			src.last_client.images |= T.aiImage
+#endif
+
+	proc/remove_viewport_statics()
+		if (!src.last_client)
+			return
+		for (var/turf/T as anything in src.get_viewport_turfs())
+			src.last_client.images -= T.aiImage
+
+	proc/src_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
+#ifndef SKIP_CAMERA_COVERAGE
+		SPAWN(0)
+			var/list/add_block = block(new_turf.x - src.v_width, new_turf.y - src.v_height, new_turf.z, new_turf.x + src.v_width, new_turf.y + src.v_height, new_turf.z) + src.get_viewport_turfs()
+			var/list/remove_block = block(old_turf.x - src.v_width, old_turf.y - src.v_height, old_turf.z, old_turf.x + src.v_width, old_turf.y + src.v_height, old_turf.z)
+
+			for (var/turf/T as anything in (remove_block - add_block))
+				src.client.images -= T.aiImage
+
+			for (var/turf/T as anything in (add_block - remove_block))
+				src.client.images |= T.aiImage
+#endif
 
 	set_loc(atom/newloc)
 		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION) // Sorry!
@@ -165,11 +229,16 @@
 				if(in_ai_range)
 					O.receive_silicon_hotkey(src)
 				else
-					src.show_text("Your mainframe was unable relay this command that far away!", "red")
+					src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 				return
 
 		//var/inrange = in_interact_range(target, src)
 		//var/obj/item/equipped = src.equipped()
+
+		if(src.client.check_any_key(KEY_OPEN) && istype(target, /mob/living/silicon))
+			var/mob/living/silicon/S = target
+			src.mainframe.deploy_to_shell(S)
+			return
 
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			if (src.targeting_ability)
@@ -188,7 +257,7 @@
 				src.set_loc(target)
 
 			if (GET_DIST(src, target) > 0)
-				src.set_dir(get_dir(src, target))
+				src.set_dir(get_dir_accurate(src, target, FALSE)) // Eye faces target when interacting
 
 			if(in_ai_range)
 				target.attack_ai(src, params, location, control)
@@ -246,45 +315,25 @@
 		else
 			return 0.75 + movement_delay_modifier
 
-	say_understands(var/other)
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace.exclusive_language)
-				return 1
-		if (isrobot(other))
-			return 1
-		if (isshell(other))
-			return 1
-		if (ismainframe(other))
-			return 1
-		return ..()
+	say_over_channel()
+		src.mainframe.say_over_channel()
 
-	say(var/message)
-		if (src.mainframe)
-			src.mainframe.say(message)
-		else
-			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
-
-	say_radio()
-		src.mainframe.say_radio()
-
-	say_main_radio(msg as text)
-		src.mainframe.say_main_radio(msg)
+	say_over_main_radio(msg as text)
+		src.mainframe.say_over_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
 		..()
 		if (mainframe)
 			mainframe.emote(act, voluntary)
 
-	hearing_check(var/consciousness_check = 0) //can't hear SHIT - everything is passed from the AI mob through send_message and whatever
-		return 0
-
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
 
-	vomit()
-		return 0 //can't puke
+	clamp_values()
+		. = ..()
+		src.stuttering = 0
+		src.druggy = 0
+		src.jitteriness = 0
 
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
@@ -297,7 +346,13 @@
 		if (length(src.client?.getViewportsByType(VIEWPORT_ID_AI)) >= src.mainframe.viewport_limit)
 			boutput(src, SPAN_ALERT("You lack the computing resources needed to open another viewport."))
 		else
-			. = ..()
+			src.open_viewports += ..()
+			src.add_all_statics()
+
+	on_close_viewport(datum/viewport/vp)
+		src.remove_all_statics()
+		src.open_viewports -= vp
+		src.add_all_statics()
 
 	proc/mainframe_check()
 		if (mainframe)
@@ -305,16 +360,6 @@
 				mainframe.return_to(src)
 		else
 			death()
-
-	verb/show_laws()
-		set category = "AI Commands"
-		set name = "Show Laws"
-
-		if (src.mainframe)
-			mainframe.show_laws(0, src)
-		else
-			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
-		return
 
 	verb/cmd_return_mainframe()
 		set category = "AI Commands"
@@ -327,7 +372,6 @@
 		if(mainframe)
 			last_loc = src.loc
 			mainframe.return_to(src)
-			update_statics()
 		else
 			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
@@ -338,41 +382,16 @@
 		if (mainframe)
 			mainframe.ai_view_crew_manifest()
 
-	verb/ai_state_laws_standard()
+	verb/ai_interact_laws()
 		set category = "AI Commands"
-		set name = "State Standard Laws"
-		if (mainframe)
-			mainframe.ai_state_laws_standard()
+		set name = "Laws"
+		mainframe?.interact_laws()
 
-	verb/ai_state_laws_all()
+	verb/ai_customization()
 		set category = "AI Commands"
-		set name = "State All Laws"
-		if (mainframe)
-			mainframe.ai_state_laws_all()
+		set name = "Customize Status"
 
-	verb/ai_set_laws_all()
-		set category = "AI Commands"
-		set name = "Set Fake Laws"
-		if (mainframe)
-			mainframe.ai_set_fake_laws()
-
-	verb/ai_state_laws_fake()
-		set category = "AI Commands"
-		set name = "State Fake Laws"
-		if (mainframe)
-			mainframe.ai_state_fake_laws()
-
-	verb/ai_statuschange()
-		set category = "AI Commands"
-		set name = "AI status"
-		if (mainframe)
-			mainframe.ai_statuschange()
-
-	verb/ai_colorchange()
-		set category = "AI Commands"
-		set name = "AI Color"
-		if (mainframe)
-			mainframe.ai_colorchange()
+		mainframe?.ai_customize_options_menu()
 
 	verb/reset_apcs()
 		set category = "AI Commands"
@@ -394,12 +413,16 @@
 		if (mainframe)
 			mainframe.unbolt_all_airlocks()
 
+	verb/show_alerts()
+		set category = "AI Commands"
+		set name = "Show Alert Minimap"
+		mainframe?.open_alert_minimap(src)
+
 	verb/toggle_alerts_verb()
 		set category = "AI Commands"
 		set name = "Toggle Alerts"
-		set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alerts'."
-		if (mainframe)
-			mainframe.toggle_alerts_verb()
+		set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alert Minimap'."
+		mainframe?.toggle_alerts_verb()
 
 	verb/access_area_apc()
 		set category = "AI Commands"
@@ -511,9 +534,20 @@
 		set desc = "Change your name."
 		mainframe?.rename_self()
 
+	verb/go_offline()
+		set category = "AI Commands"
+		set name = "Go Offline"
+		set desc = "Disconnect your brain such that a new AI can take your place."
+		mainframe?.go_offline()
+
 	stopObserving()
 		src.set_loc(get_turf(src))
 		src.observing = null
+
+	examine_verb(atom/A as mob|obj|turf in view(,usr))
+		if (!seen_by_camera(A))
+			return
+		. = ..()
 
 //---TURF---//
 /turf/var/image/aiImage

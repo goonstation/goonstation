@@ -4,6 +4,7 @@
 /obj/machinery/manufacturer/general
 	name = "general manufacturer"
 	supplemental_desc = "This one produces tools and other hardware, as well as general-purpose items like replacement lights."
+	forensic_pattern_prefix = "GEN"
 	free_resources = list(/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5,
 		/obj/item/material_piece/glass = 5)
@@ -14,12 +15,17 @@
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/welder,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/weldingmask,
 		/datum/manufacture/metal,
+		/datum/manufacture/metal/bulk,
 		/datum/manufacture/metalR,
+		/datum/manufacture/metalR/bulk,
 		/datum/manufacture/rods2,
 		/datum/manufacture/glass,
+		/datum/manufacture/glass/bulk,
 		/datum/manufacture/glassR,
+		/datum/manufacture/glassR/bulk,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
 		/datum/manufacture/miniplasmatank,
@@ -72,16 +78,20 @@
 		/datum/manufacture/harmonica,
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
+		/datum/manufacture/bullet_9mm_frangible,
 		/datum/manufacture/bullet_smoke,
 		/datum/manufacture/stapler,
 		/datum/manufacture/bagpipe,
 		/datum/manufacture/fiddle,
 		/datum/manufacture/whistle)
 
+TYPEINFO(/obj/machinery/manufacturer/general/grody)
+	manufactured_type = /obj/machinery/manufacturer/general
 /obj/machinery/manufacturer/general/grody
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
 	supplemental_desc = "This one has seen better days. There are bits and pieces of the internal mechanisms poking out the side."
+	forensic_pattern_prefix = "GRODY"
 	free_resources = list()
 	malfunction = TRUE
 	wires = 15 & ~(1 << 3) // This cuts the malfunction wire, so the fab malfunctions immediately
@@ -91,6 +101,7 @@
 	supplemental_desc = "This one produces robot parts, cybernetic organs, and other robotics-related equipment."
 	icon_state = "fab-robotics"
 	icon_base = "robotics"
+	forensic_pattern_prefix = "ROBO"
 	free_resources = list(/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5,
 		/obj/item/material_piece/glass = 5)
@@ -118,6 +129,7 @@
 		/datum/manufacture/cybereye_spectro,
 		/datum/manufacture/cybereye_prodoc,
 		/datum/manufacture/cybereye_camera,
+		/datum/manufacture/cybereye_monitor,
 		/datum/manufacture/shell_frame,
 		/datum/manufacture/ai_interface,
 		/datum/manufacture/latejoin_brain,
@@ -138,7 +150,6 @@
 		/datum/manufacture/stapler,
 		/datum/manufacture/surgical_spoon,
 		/datum/manufacture/implanter,
-		/datum/manufacture/secbot,
 		/datum/manufacture/medbot,
 		/datum/manufacture/firebot,
 		/datum/manufacture/floorbot,
@@ -155,14 +166,14 @@
 		/datum/manufacture/robup_speed,
 		/datum/manufacture/robup_mag,
 		/datum/manufacture/robup_meson,
+		/datum/manufacture/robup_pressure,
 		/datum/manufacture/robup_aware,
 		/datum/manufacture/robup_physshield,
 		/datum/manufacture/robup_fireshield,
 		/datum/manufacture/robup_teleport,
-		/datum/manufacture/robup_visualizer,
 		/datum/manufacture/robup_efficiency,
 		/datum/manufacture/robup_repair,
-		/datum/manufacture/implant_robotalk,
+		/datum/manufacture/scream_synth,
 		/datum/manufacture/sbradio,
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
@@ -177,7 +188,11 @@
 		/datum/manufacture/cyberlung_right,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
+		/datum/manufacture/metal/bulk,
+		/datum/manufacture/metalR,
+		/datum/manufacture/metalR/bulk,
 		/datum/manufacture/glass,
+		/datum/manufacture/glass/bulk,
 		/datum/manufacture/asimov_laws,
 		/datum/manufacture/borg_linker)
 
@@ -195,10 +210,12 @@
 	supplemental_desc = "This one produces medical equipment and sterile clothing."
 	icon_state = "fab-med"
 	icon_base = "med"
+	forensic_pattern_prefix = "MEDIC"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2,
-		/obj/item/material_piece/cloth/cottonfabric = 2)
+		/obj/item/material_piece/cloth/cottonfabric = 2,
+		/obj/item/material_piece/cobryl = 2)
 	available = list(
 		/datum/manufacture/scalpel,
 		/datum/manufacture/circular_saw,
@@ -211,11 +228,23 @@
 		/datum/manufacture/glasses,
 		/datum/manufacture/visor,
 		/datum/manufacture/deafhs,
+		/datum/manufacture/wheelchair,
+		/datum/manufacture/roller_bed,
+		/datum/manufacture/iv_stand,
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/mender_refill_cartridge,
 		/datum/manufacture/penlight,
 		/datum/manufacture/stethoscope,
+		/datum/manufacture/empty_autoinjector/orange,
+		/datum/manufacture/empty_autoinjector/red,
+		/datum/manufacture/empty_autoinjector/blue,
+		/datum/manufacture/empty_autoinjector/green,
+		/datum/manufacture/empty_autoinjector/yellow,
+		/datum/manufacture/empty_autoinjector/purple,
+		/datum/manufacture/empty_autoinjector/black,
+		/datum/manufacture/empty_autoinjector/white,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,
@@ -236,31 +265,36 @@
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
 		/datum/manufacture/floppydisk,
+		/datum/manufacture/medicalalertbutton,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
-		/datum/manufacture/cyberappendix,
-		/datum/manufacture/cyberpancreas,
-		/datum/manufacture/cyberspleen,
-		/datum/manufacture/cyberintestines,
-		/datum/manufacture/cyberstomach,
-		/datum/manufacture/cyberkidney,
-		/datum/manufacture/cyberliver,
-		/datum/manufacture/cyberlung_left,
-		/datum/manufacture/cyberlung_right,
 		/datum/manufacture/empty_kit,
+		/datum/manufacture/empty_kit/brute,
+		/datum/manufacture/empty_kit/fire,
+		/datum/manufacture/empty_kit/toxin,
+		/datum/manufacture/empty_kit/oxygen,
+		/datum/manufacture/empty_kit/brain,
+		/datum/manufacture/empty_kit/mental,
+		/datum/manufacture/empty_docbag,
+		/datum/manufacture/chembarrel,
+		/datum/manufacture/chembarrel/yellow,
+		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-		/datum/manufacture/glass
+		/datum/manufacture/glass,
+		/datum/manufacture/cane,
+		/datum/manufacture/cane/fourlegged,
+		/datum/manufacture/cane/tennisball
 	)
 
-	hidden = list(/datum/manufacture/cyberheart,
-	/datum/manufacture/cybereye)
+	hidden = list()
 
 /obj/machinery/manufacturer/science
 	name = "science fabricator"
 	supplemental_desc = "This one produces science equipment for experiments as well as expeditions."
 	icon_state = "fab-sci"
 	icon_base = "sci"
+	forensic_pattern_prefix = "SCI"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2,
@@ -268,19 +302,26 @@
 		/obj/item/material_piece/cobryl = 2)
 	available = list(
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/gps,
-		/datum/manufacture/crowbar,
+		/datum/manufacture/crowbar/purple,
+		/datum/manufacture/wrench/purple,
+		/datum/manufacture/welder/purple,
 		/datum/manufacture/extinguisher,
-		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,
+		/datum/manufacture/gastank,
 		/datum/manufacture/artifactforms,
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/chembarrel,
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
+		/datum/manufacture/places_pipes/science,
+		/datum/manufacture/RCDammo,
 		/datum/manufacture/condenser,
 		/datum/manufacture/fractionalcondenser,
+		/datum/manufacture/dropper_funnel,
+		/datum/manufacture/portable_dispenser,
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
@@ -311,10 +352,12 @@
 	supplemental_desc = "This one produces mining equipment like concussive charges and powered tools."
 	icon_state = "fab-mining"
 	icon_base = "mining"
+	forensic_pattern_prefix = "MINING"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
 	available = list(/datum/manufacture/pick,
+		/datum/manufacture/powered_shovel,
 		/datum/manufacture/powerpick,
 		/datum/manufacture/blastchargeslite,
 		/datum/manufacture/blastcharges,
@@ -333,6 +376,7 @@
 #endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
+		/datum/manufacture/magnetic_shoes,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
@@ -340,6 +384,7 @@
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
+		/datum/manufacture/breach_pouch,
 		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
 #ifdef UNDERWATER_MAP
@@ -349,6 +394,7 @@
 		/datum/manufacture/geigercounter,
 		/datum/manufacture/eyes_meson,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/ore_accumulator,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
@@ -356,12 +402,15 @@
 		/datum/manufacture/mining_magnet
 #endif
 		)
+	hidden = list(/datum/manufacture/baseball_mining
+	)
 
 /obj/machinery/manufacturer/hangar
 	name = "ship component fabricator"
 	supplemental_desc = "This one produces modules for space pods or minisubs."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
+	forensic_pattern_prefix = "SHIP"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
@@ -384,10 +433,21 @@
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/burst_ltlaser,
+		/datum/manufacture/engine_scout,
 		/datum/manufacture/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+#ifndef UNDERWATER_MAP
+		/datum/manufacture/pod/lateral_thrusters,
+		/datum/manufacture/pod/afterburner,
+#endif
+		/datum/manufacture/pod/light_shielding,
+		/datum/manufacture/pod/heavy_shielding,
+		/datum/manufacture/pod/auto_repair_kit,
+		/datum/manufacture/pod/weapons_loader,
+		/datum/manufacture/pod/gunner_support,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
@@ -397,11 +457,12 @@
 	supplemental_desc = "This one can create a wide variety of one-size-fits-all jumpsuits, as well as backpacks and radio headsets."
 	icon_state = "fab-jumpsuit"
 	icon_base = "jumpsuit"
+	forensic_pattern_prefix = "UNIFORM"
 	free_resources = list(/obj/item/material_piece/cloth/cottonfabric = 5,
 		/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
+	available = list(/datum/manufacture/shoes,
 		/datum/manufacture/shoes_brown,
 		/datum/manufacture/shoes_white,
 		/datum/manufacture/flippers,
@@ -445,17 +506,21 @@
 		/datum/manufacture/backpack_red,
 		/datum/manufacture/backpack_green,
 		/datum/manufacture/backpack_blue,
+		/datum/manufacture/backpack_brown,
 		/datum/manufacture/satchel,
 		/datum/manufacture/satchel_red,
 		/datum/manufacture/satchel_green,
-		/datum/manufacture/satchel_blue)
+		/datum/manufacture/satchel_blue,
+		/datum/manufacture/satchel_brown,
+		/datum/manufacture/handkerchief)
 
 	hidden = list(/datum/manufacture/breathmask,
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
-		/datum/manufacture/handkerchief,
 		/datum/manufacture/tricolor,
-		/datum/manufacture/hat_ltophat)
+		/datum/manufacture/hat_ltophat,
+		/datum/manufacture/baseball_staffie,
+		/datum/manufacture/baseball_nt)
 
 /// cogwerks - a gas extractor for the engine
 
@@ -465,6 +530,7 @@
 	icon_state = "fab-atmos"
 	icon_base = "atmos"
 	accept_blueprints = FALSE
+	forensic_pattern_prefix = "ATMOS"
 	available = list(
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/air_can/large,
@@ -479,8 +545,10 @@
 /obj/machinery/manufacturer/mechanic
 	name = "reverse-engineering fabricator"
 	desc = "A specialized manufacturing unit designed to create new things (or copies of existing things) from blueprints."
-	icon_state = "fab-hangar"
-	icon_base = "hangar"
+	icon_state = "fab-reverse"
+	icon_base = "reverse"
+	forensic_pattern_prefix = "REVERSE"
+
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
@@ -490,95 +558,93 @@
 	supplemental_desc = "This one can produce blank ID cards and access implants."
 	icon_state = "fab-access"
 	icon_base = "access"
+	forensic_pattern_prefix = "ACCESS"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
-	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter)
-	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
+	available = list(/datum/manufacture/id_card,
+		/datum/manufacture/implant_access,
+		/datum/manufacture/implanter,
+		/datum/manufacture/radio_upgrade/engineering,
+		/datum/manufacture/radio_upgrade/research,
+		/datum/manufacture/radio_upgrade/medical,
+		/datum/manufacture/radio_upgrade/civilian)
+	hidden = list(/datum/manufacture/id_card_gold,
+		/datum/manufacture/implant_access_infinite,
+		/datum/manufacture/radio_upgrade/command,
+		/datum/manufacture/baseball_command)
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
-//and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "personnel manufacturer"
-	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
+	supplemental_desc = "This one is a multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
+	forensic_pattern_prefix = "UNIFORM"
 	free_resources = list(/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5,
 		/obj/item/material_piece/glass = 5,
 		/obj/item/material_piece/cloth/cottonfabric = 5)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/id_card,
-		/datum/manufacture/implant_access,
-		/datum/manufacture/implanter,
-		/datum/manufacture/shoes,
-		/datum/manufacture/shoes_brown,
-		/datum/manufacture/shoes_white,
-		/datum/manufacture/flippers,
-		/datum/manufacture/civilian_headset,
-		/datum/manufacture/jumpsuit_assistant,
-		/datum/manufacture/jumpsuit,
-		/datum/manufacture/jumpsuit_white,
-		/datum/manufacture/jumpsuit_pink,
-		/datum/manufacture/jumpsuit_red,
-		/datum/manufacture/jumpsuit_orange,
-		/datum/manufacture/jumpsuit_yellow,
-		/datum/manufacture/jumpsuit_green,
-		/datum/manufacture/jumpsuit_blue,
-		/datum/manufacture/jumpsuit_purple,
-		/datum/manufacture/jumpsuit_black,
-		/datum/manufacture/jumpsuit_brown,
-		/datum/manufacture/pride_lgbt,
-		/datum/manufacture/pride_ace,
-		/datum/manufacture/pride_aro,
-		/datum/manufacture/pride_bi,
-		/datum/manufacture/pride_inter,
-		/datum/manufacture/pride_lesb,
-		/datum/manufacture/pride_gay,
-		/datum/manufacture/pride_nb,
-		/datum/manufacture/pride_pan,
-		/datum/manufacture/pride_poly,
-		/datum/manufacture/pride_trans,
-		/datum/manufacture/hat_black,
-		/datum/manufacture/hat_white,
-		/datum/manufacture/hat_pink,
-		/datum/manufacture/hat_red,
-		/datum/manufacture/hat_yellow,
-		/datum/manufacture/hat_orange,
-		/datum/manufacture/hat_green,
-		/datum/manufacture/hat_blue,
-		/datum/manufacture/hat_purple,
-		/datum/manufacture/hat_tophat)
 
-	hidden = list(/datum/manufacture/id_card_gold,
-		/datum/manufacture/implant_access_infinite,
-		/datum/manufacture/breathmask,
-		/datum/manufacture/patch,
-		/datum/manufacture/tricolor,
-		/datum/manufacture/hat_ltophat)
+	New()
+		src.available = /obj/machinery/manufacturer/uniform::available | /obj/machinery/manufacturer/personnel::available
+		src.hidden = /obj/machinery/manufacturer/uniform::hidden | /obj/machinery/manufacturer/personnel::hidden
+		. = ..()
+
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "crate manufacturer"
 	supplemental_desc = "This one produces crates, carts, that sort of thing. Y'know, box stuff."
 	icon_state = "fab-crates"
 	icon_base = "crates"
+	forensic_pattern_prefix = "CARGO"
 	free_resources = list(/obj/item/material_piece/steel = 1,
 		/obj/item/material_piece/organic/wood = 1)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/crate,
-		/datum/manufacture/packingcrate,
-		/datum/manufacture/wooden,
-		/datum/manufacture/medical,
-		/datum/manufacture/biohazard,
-		/datum/manufacture/freezer)
+	available = list(
+		/datum/manufacture/crate,
+		/datum/manufacture/crate/wooden,
+		/datum/manufacture/crate/wooden/packing,
+		/datum/manufacture/crate/medical,
+		/datum/manufacture/crate/biohazard,
+		/datum/manufacture/crate/freezer,
+		/datum/manufacture/crate/secure,
+		/datum/manufacture/crate/secure/secure_transfer,
+		/datum/manufacture/crate/secure/confiscated_items,
+		/datum/manufacture/crate/secure/armory,
+		/datum/manufacture/crate/secure/hazard,
+		/datum/manufacture/crate/secure/engineering,
+		/datum/manufacture/crate/secure/medical,
+		/datum/manufacture/crate/secure/hydroponics,
+		/datum/manufacture/cart,
+		/datum/manufacture/cart/forensic,
+		/datum/manufacture/cart/mechanic,
+		/datum/manufacture/cart/medical,
+		/datum/manufacture/cart/trash,
+		/datum/manufacture/locker/secure,
+		/datum/manufacture/locker/secure/command,
+		/datum/manufacture/locker/secure/security,
+		/datum/manufacture/locker/secure/contraband,
+		/datum/manufacture/locker/secure/research,
+		/datum/manufacture/locker/secure/engineering,
+		/datum/manufacture/locker/secure/medical,
+		/datum/manufacture/locker/secure/hydroponics,
+		)
 
-	hidden = list(/datum/manufacture/classcrate)
+	hidden = list(
+		/datum/manufacture/crate/class,
+		/datum/manufacture/crate/secure/syndicate,
+		/datum/manufacture/cart/hotdog,
+		/datum/manufacture/locker/secure/nanotrasen,
+		/datum/manufacture/baseball_cargo)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"
 	desc = "This manufacturing unit seems to have been loaded with a bunch of nonstandard blueprints, apparently to be useful in surviving \"extreme scenarios\"."
 	icon_state = "fab-crates"
 	icon_base = "crates"
+	forensic_pattern_prefix = "ZOMBIE"
 	free_resources = list(/obj/item/material_piece/steel = 50,
 		/obj/item/material_piece/copper = 50,
 		/obj/item/material_piece/glass = 50,
@@ -590,6 +656,7 @@
 		/datum/manufacture/suture,
 		/datum/manufacture/scalpel,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/armor_vest,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/harmonica,
@@ -624,6 +691,7 @@
 	desc = "This one produces specialist engineering devices."
 	icon_state = "fab-engineering"
 	icon_base = "engineering"
+	forensic_pattern_prefix = "ENGI"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
@@ -637,16 +705,24 @@
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/accessgun,
+		/datum/manufacture/pinpointer_apc,
+		/datum/manufacture/gravity_scanner,
 		/datum/manufacture/RCD,
+		/datum/manufacture/places_pipes,
 		/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
+		/datum/manufacture/eyes_meson,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
+		/datum/manufacture/pod/weapon/efif1,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/heavy_firesuit,
+		/datum/manufacture/magnetic_shoes,
 		/datum/manufacture/floodlight,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
@@ -655,9 +731,10 @@
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,
-#endif
-#ifdef MAP_OVERRIDE_OSHAN
-		/datum/manufacture/cable/reinforced,
+		/datum/manufacture/turbine_shaft,
+		/datum/manufacture/current_turbine,
+#else
+		/datum/manufacture/mechanics/gravity_tether_area,
 #endif
 		/datum/manufacture/mechanics/laser_mirror,
 		/datum/manufacture/mechanics/laser_splitter,
@@ -669,7 +746,13 @@
 		/datum/manufacture/interdictor_rod_lambda,
 		/datum/manufacture/interdictor_rod_sigma,
 		/datum/manufacture/interdictor_rod_epsilon,
-		/datum/manufacture/interdictor_rod_phi
+		/datum/manufacture/interdictor_rod_phi,
+#ifdef HOTSPOTS_ENABLED
+	/datum/manufacture/dowsing_rod,
+	/datum/manufacture/capture_unit,
+	/datum/manufacture/powered_shovel,
+	/datum/manufacture/cable/reinforced,
+#endif
 	)
 
 	New()

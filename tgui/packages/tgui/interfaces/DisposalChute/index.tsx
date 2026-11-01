@@ -6,11 +6,23 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, LabeledList, ProgressBar, Stack } from '../../components';
+import {
+  Box,
+  Button,
+  Divider,
+  LabeledList,
+  ProgressBar,
+  Stack,
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { ListSearch } from '../common/ListSearch';
-import { DisposalChuteConfigLookup, DisposalChuteData, DisposalChuteState } from './type';
+import {
+  DisposalChuteConfigLookup,
+  DisposalChuteData,
+  DisposalChuteState,
+} from './type';
 
 const disposalChuteConfigLookup: DisposalChuteConfigLookup = {
   [DisposalChuteState.Off]: {
@@ -27,8 +39,8 @@ const disposalChuteConfigLookup: DisposalChuteConfigLookup = {
   },
 };
 
-export const DisposalChute = (_props, context) => {
-  const { act, data } = useBackend<DisposalChuteData>(context);
+export const DisposalChute = () => {
+  const { act, data } = useBackend<DisposalChuteData>();
   const {
     name,
     destinations = null,
@@ -39,18 +51,14 @@ export const DisposalChute = (_props, context) => {
   } = data;
 
   const disposalChuteConfig = disposalChuteConfigLookup[mode];
-  const {
-    pumpColor,
-    pumpText,
-  } = disposalChuteConfig;
+  const { pumpColor, pumpText } = disposalChuteConfig;
 
   return (
-    <Window
-      title={name}
-      width={355}
-      height={destinations ? 350 : 140}
-    >
-      <Window.Content className="disposal-chute-interface" scrollable={!!destinations}>
+    <Window title={name} width={355} height={destinations ? 350 : 140}>
+      <Window.Content
+        className="disposal-chute-interface"
+        // scrollable={!!destinations}
+      >
         <Stack vertical>
           <Stack.Item>
             <LabeledList>
@@ -75,10 +83,11 @@ export const DisposalChute = (_props, context) => {
             buttons={
               <Button
                 icon="power-off"
-                content={mode ? 'Enabled' : 'Disabled'}
                 color={mode ? 'green' : 'red'}
                 onClick={() => act('togglePump')}
-              />
+              >
+                {mode ? 'Enabled' : 'Disabled'}
+              </Button>
             }
           >
             <Box color={pumpColor}>{pumpText}</Box>
@@ -87,18 +96,17 @@ export const DisposalChute = (_props, context) => {
             label="Chute Handle"
             buttons={
               <Button
-                icon={destinations ? "envelope" : "trash-alt"}
-                content={flush ? "Flushing" : "Flush"}
+                icon={destinations ? 'envelope' : 'trash-alt'}
                 color={flush ? '' : 'red'}
                 onClick={() => act('toggleHandle')}
-              />
+              >
+                {flush ? 'Flushing' : 'Flush'}
+              </Button>
             }
           >
-            <Button
-              content="Eject Contents"
-              icon="eject"
-              onClick={() => act('eject')}
-            />
+            <Button icon="eject" onClick={() => act('eject')}>
+              Eject Contents
+            </Button>
           </LabeledList.Item>
         </LabeledList>
         {!!destinations && (
@@ -110,11 +118,11 @@ export const DisposalChute = (_props, context) => {
                   <LabeledList.Item
                     label="Destination"
                     buttons={
-                      <Button
-                        icon="search"
-                        content="Rescan"
-                        onClick={() => act('rescanDest')} />
-                    } >
+                      <Button icon="search" onClick={() => act('rescanDest')}>
+                        Rescan
+                      </Button>
+                    }
+                  >
                     {destinationTag}
                   </LabeledList.Item>
                 </LabeledList>
@@ -134,34 +142,27 @@ export const DisposalChute = (_props, context) => {
 };
 
 interface DestinationSearchProps {
-  destinations: string[],
-  destinationTag: string,
+  destinations: string[];
+  destinationTag: string;
 }
 
-const DestinationSearch = (props: DestinationSearchProps, context) => {
-  const {
-    destinations = [],
-    destinationTag,
-  } = props;
-  const { act } = useBackend(context);
+const DestinationSearch = (props: DestinationSearchProps) => {
+  const { destinations, destinationTag } = props;
+  const { act } = useBackend();
 
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const handleSelectDestination = (destination: string) => act('select-destination', {
-    destination,
-  });
-
-  const filteredDestinations = (
-    destinations.filter(destination => destination.includes(searchText))
-  );
+  const handleSelectDestination = (destination: string) =>
+    act('select-destination', {
+      destination,
+    });
 
   return (
     <ListSearch
       autoFocus
-      currentSearch={searchText}
-      onSearch={setSearchText}
+      fuzzy="smart"
+      height={12}
       onSelect={handleSelectDestination}
-      options={filteredDestinations}
-      selectedOption={destinationTag}
+      options={destinations}
+      selectedOptions={destinationTag ? [destinationTag] : []}
     />
   );
 };

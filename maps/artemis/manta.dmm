@@ -293,7 +293,7 @@
 /turf/space,
 /area/ship/manta)
 "xq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -312,7 +312,7 @@
 	},
 /area/ship/manta)
 "zG" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet{
 	dir = 8;

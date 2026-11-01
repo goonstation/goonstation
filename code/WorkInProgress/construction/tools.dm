@@ -14,7 +14,7 @@
 			qdel(src)
 
 /obj/ai_frame
-	name = "\improper Asimov 5 Artifical Intelligence"
+	name = "\improper Asimov 5 Artificial Intelligence"
 	desc = "An artificial intelligence unit which requires the brain of a living organism to function as a neural processor."
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
@@ -119,14 +119,14 @@
 			return
 
 		src.add_dialog(user)
-		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
+		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='byond://?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
 
 		if(src.locked && !can_access_remotely(user))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
-			t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
-			t += text("Currently firing at <A href='?src=\ref[];firesAt=1'>[]</a><br><br>", src, firesat)
-			t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br><br>", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
+			t += text("Turrets [] - <A href='byond://?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
+			t += text("Currently firing at <A href='byond://?src=\ref[];firesAt=1'>[]</a><br><br>", src, firesat)
+			t += text("Currently set for [] - <A href='byond://?src=\ref[];toggleLethal=1'>Change to []?</a><br><br>", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
 
 		user.Browse(t, "window=turretid")
 		onclose(user, "turretid")
@@ -169,6 +169,7 @@
 			aTurret.setState(enabled, lethal)
 
 TYPEINFO(/obj/item/room_marker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/room_marker
@@ -244,7 +245,7 @@ TYPEINFO(/obj/item/room_marker)
 
 			var/dense = 0
 			for (var/obj/O in C)
-				if (istype(O, /obj/machinery/door) || istype(O, /obj/grille) || istype(O, /obj/window) || istype(O, /obj/table))
+				if (istype(O, /obj/machinery/door) || istype(O, /obj/mesh/grille) || istype(O, /obj/window) || istype(O, /obj/table))
 					dense = 1
 					break
 			if (dense)
@@ -276,6 +277,7 @@ TYPEINFO(/obj/item/room_marker)
 		return affected
 
 TYPEINFO(/obj/item/clothing/glasses/construction)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/clothing/glasses/construction
@@ -288,7 +290,7 @@ TYPEINFO(/obj/item/clothing/glasses/construction)
 	icon = 'icons/obj/items/tools/lampman.dmi'
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
 	icon_state = "bio-white"
-	flags = FPRINT | TABLEPASS | EXTRADELAY
+	flags = TABLEPASS | EXTRADELAY
 	w_class = W_CLASS_SMALL
 	click_delay = 1
 	prefix = "bio"
@@ -299,6 +301,7 @@ TYPEINFO(/obj/item/clothing/glasses/construction)
 		inventory_counter.update_number(metal_ammo)
 
 TYPEINFO(/obj/item/material_shaper)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/material_shaper
@@ -306,7 +309,7 @@ TYPEINFO(/obj/item/material_shaper)
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "shaper"
 	item_state = "gun"
-	flags = FPRINT | TABLEPASS | EXTRADELAY
+	flags = TABLEPASS | EXTRADELAY
 	click_delay = 1
 
 	var/mode = 0
@@ -494,7 +497,14 @@ TYPEINFO(/obj/item/material_shaper)
 			processing = 0
 			user.visible_message(SPAN_NOTICE("[user] finishes stuffing materials into [src]."))
 
+#define ROOM_PLANNER_FLOORS "floors"
+#define ROOM_PLANNER_WALLS "walls"
+#define ROOM_PLANNER_RESTORE "restore original"
+#define ROOM_PLANNER_CHARGES_PER_MATERIAL 20
+#define ROOM_PLANNER_CYBORG_CELL_USAGE 50
+
 TYPEINFO(/obj/item/room_planner)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/room_planner
@@ -502,14 +512,15 @@ TYPEINFO(/obj/item/room_planner)
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "plan"
 	item_state = "gun"
-	flags = FPRINT | TABLEPASS | EXTRADELAY
+	flags = TABLEPASS | EXTRADELAY
 	w_class = W_CLASS_SMALL
 	click_delay = 1
+	inventory_counter_enabled = TRUE
 
 	var/selecting = 0
 	var/mode = null
-	var/icons = list("floors", "walls", "restore original")
-	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
+	var/icons = list(ROOM_PLANNER_FLOORS, ROOM_PLANNER_WALLS, ROOM_PLANNER_RESTORE)
+	var/marker_class = list(ROOM_PLANNER_FLOORS = /obj/plan_marker/floor, ROOM_PLANNER_WALLS = /obj/plan_marker/wall)
 	/// icon file selected
 	var/selectedicon
 	/// iconstate selected
@@ -518,6 +529,12 @@ TYPEINFO(/obj/item/room_planner)
 	var/selectedmod
 	// var/pod_turf = 0
 	var/turf_op = 0
+	/// how many tiles it can convert
+	var/charges = 100
+	/// maximum amount of stored "ammo"
+	var/max_charges = 1000
+	/// Cyborg battery cost charge per use
+	var/charge_cost = ROOM_PLANNER_CYBORG_CELL_USAGE
 
 	var/list/wallicons = list(
 		"diner" = 'icons/turf/walls/derelict.dmi',
@@ -533,6 +550,19 @@ TYPEINFO(/obj/item/room_planner)
 		"lead gray" = 'icons/turf/walls/lead/gray.dmi',
 		"lead white" = 'icons/turf/walls/lead/white.dmi',
 		"ancient smooth" = 'icons/turf/walls/ancient_smooth.dmi',
+		"tempus green" = 'icons/turf/walls/unused/walls_tempus-green.dmi',
+		"tempus white" = 'icons/turf/walls/unused/walls_tempus-white.dmi',
+		"black red" = 'icons/turf/walls/supernorn/reinforced/red.dmi',
+		"orange" = 'icons/turf/walls/supernorn/standard/orange.dmi',
+		"yellow" = 'icons/turf/walls/supernorn/standard/yellow.dmi',
+		"beehive" = 'icons/turf/walls/beehive.dmi',
+		"hedge" = 'icons/turf/walls/hedge.dmi',
+		"ice" = 'icons/turf/walls/ice.dmi',
+		"mossy rock" = 'icons/turf/walls/mossy_rock.dmi',
+		"panel" = 'icons/turf/walls/panel.dmi',
+		"marsoutpost" = 'icons/turf/walls/marsoutpost.dmi',
+		"precursor" = 'icons/turf/walls/precursor.dmi',
+
 	)
 	var/list/wallmods = list(
 		"diner" = "oldr-",
@@ -548,13 +578,44 @@ TYPEINFO(/obj/item/room_planner)
 		"lead gray" = "leadg-",
 		"lead white" = "leadw-",
 		"ancient smooth" = "interior-",
+		"tempus green" = "",
+		"tempus white" = "",
+		"black red" = "norn-",
+		"orange" = "norn-",
+		"yellow" = "norn-",
+		"beehive" = "bee-",
+		"hedge" = "hedge-",
+		"ice" = "ice-",
+		"mossy rock" = "rock-",
+		"panel" = "interior-",
+		"marsoutpost" = "interior-",
+		"precursor" = "interior-",
+
 	)
 
-	attack_self(mob/user as mob)
-		// This seems to not actually stop anything from working so just axing it.
-		//if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
-		//	boutput(user, SPAN_ALERT("You can only use this tool in construction mode."))
+	HELP_MESSAGE_OVERRIDE("You can recharge the Floor and Wall Designer with processed cloth materials.")
 
+	New()
+		. = ..()
+		if(src.inventory_counter_enabled)
+			src.inventory_counter.update_number(src.charges)
+
+	attackby(obj/item/I, mob/user, params)
+		if (!istype_exact(src, /obj/item/room_planner))
+			return ..()
+		if (istype(I, /obj/item/material_piece) && (I.material.getMaterialFlags() & MATERIAL_CLOTH))
+			if(src.charges + ROOM_PLANNER_CHARGES_PER_MATERIAL > src.max_charges)
+				boutput(user, SPAN_NOTICE("\The [src] refuses \the [I.material.getName()] as it is too full."))
+				return
+			src.charges += ROOM_PLANNER_CHARGES_PER_MATERIAL
+			src.inventory_counter.update_number(src.charges)
+			boutput(user, SPAN_NOTICE("You load \an [I.material.getName()] into \the [src]. It has [src.charges] remaining charges."), "designer-reload")
+			I.change_stack_amount(-1)
+			user.playsound_local(loc, 'sound/machines/paper_shredder.ogg', 30, 1)
+			return
+		. = ..()
+
+	attack_self(mob/user as mob)
 		if (selecting)
 			return
 
@@ -563,9 +624,9 @@ TYPEINFO(/obj/item/room_planner)
 		// mode selection for floor planner
 		mode = tgui_input_list(message="What to mark?", title="Marking", items=icons)
 		if(!mode)
-			mode = "floors"
+			mode = ROOM_PLANNER_FLOORS
 		var/states = list()
-		if (mode == "restore original")
+		if (mode == ROOM_PLANNER_RESTORE)
 			boutput(user, SPAN_NOTICE("Now set for restoring appearance."))
 			selecting = 0
 			return
@@ -573,15 +634,15 @@ TYPEINFO(/obj/item/room_planner)
 		// icon selection
 		// selectedicon is the file we selected
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
-		if (mode == "floors")
+		if (mode == ROOM_PLANNER_FLOORS)
 			selectedtype = null
-			states += (icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
+			states += (get_icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
 			selectedicon = 'icons/turf/construction_floors.dmi'
 			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
 			if(newtype)
 				selectedtype = newtype
 
-		if (mode == "walls")
+		if (mode == ROOM_PLANNER_WALLS)
 			selectedtype = null
 			selectedicon = null
 			selectedmod = null
@@ -596,7 +657,7 @@ TYPEINFO(/obj/item/room_planner)
 			selecting = 0
 			return
 
-		if (mode == "floors" || (mode == "walls" && findtext(selectedtype, "window") != 0))
+		if (mode == ROOM_PLANNER_FLOORS || (mode == ROOM_PLANNER_WALLS && findtext(selectedtype, "window") != 0))
 			turf_op = 0
 		else
 			turf_op = 1
@@ -613,44 +674,78 @@ TYPEINFO(/obj/item/room_planner)
 		if (GET_DIST(T, user) > 3)
 			return 0
 
-		if (mode == "restore original") //For those who want to undo the carnage
+		if (mode == ROOM_PLANNER_RESTORE) //For those who want to undo the carnage
 			if (istype(T, /turf/simulated/floor))
 				if (!T.intact)
 					return
 				var/turf/simulated/floor/F = T
-				F.icon = initial(F.icon)
+				F.icon = get_initial_icon(F)
 				F.icon_state = F.roundstart_icon_state
 				F.set_dir(F.roundstart_dir)
 			else if (istype(T, /turf/simulated/wall))
-				T.icon = initial(T.icon)
+				T.icon = get_initial_icon(T)
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
+					W.mod = W::mod
 					W.UpdateIcon()
 					W.update_neighbors()
 			return
+
 		var/obj/plan_marker/old = null
 		for (var/obj/plan_marker/K in T)
 			if (istype(K, /obj/plan_marker/floor) || istype(K, /obj/plan_marker/wall))
 				old = K
 				break
 		if (old)
-			old.Attackby(src, user)
+			if (src.consume_charge(user))
+				old.Attackby(src, user)
 		else if (!isnull(selectedtype))
+			if (iswall(T) && mode != ROOM_PLANNER_WALLS)
+				boutput(user, SPAN_NOTICE("Currently in [mode] mode, cannot change walls."))
+				return
+			if (isfloor(T) && mode != ROOM_PLANNER_FLOORS)
+				boutput(user, SPAN_NOTICE("Currently in [mode] mode, cannot change floors."))
+				return
 			var/class = marker_class[mode]
-			old = new class(T, selectedicon, selectedtype, mode)
-
-			old.set_dir(get_dir(user, T))
-			// if (pod_turf)
-			// 	old:allows_vehicles = 1
-			old.turf_op = turf_op
-			old:check(selectedmod)
+			if (src.consume_charge(user))
+				old = new class(T, selectedicon, selectedtype, mode)
+				old.set_dir(get_dir(user, T))
+				old.turf_op = turf_op
+				old:check(selectedmod)
 		else
 			boutput(user, SPAN_ALERT("No type selected for current mode!"))
 			return 0
-		boutput(user, SPAN_NOTICE("Done."))
-
+		if(src.inventory_counter_enabled)
+			src.inventory_counter.update_number(src.charges)
 		return 1
+
+	/// Check if the designer has enough ammo (carbon) or charge (silicon) to be used
+	proc/consume_charge(mob/user)
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			if (S.cell && S.cell.charge >= src.charge_cost)
+				S.cell.use(src.charge_cost)
+				return TRUE
+			boutput(user, SPAN_ALERT("\The [src] requires more power to continue decorating!"))
+			user.playsound_local(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+			return FALSE
+		else
+			if (src.charges > 0)
+				src.charges -= 1
+				return TRUE
+			boutput(user, SPAN_ALERT("\The [src] requires more cloth to continue decorating!"))
+			user.playsound_local(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+			return FALSE
+
+/obj/item/room_planner/cyborg
+	inventory_counter_enabled = FALSE
+
+#undef ROOM_PLANNER_FLOORS
+#undef ROOM_PLANNER_WALLS
+#undef ROOM_PLANNER_RESTORE
+#undef ROOM_PLANNER_CHARGES_PER_MATERIAL
+#undef ROOM_PLANNER_CYBORG_CELL_USAGE
 
 /obj/plan_marker
 	name = "\improper Plan Marker"
@@ -733,7 +828,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in N
+				var/obj/mesh/grille/Gr = locate() in N
 				if (Gr)
 					borders_mask -= 1
 					gcount--
@@ -745,7 +840,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in S
+				var/obj/mesh/grille/Gr = locate() in S
 				if (Gr)
 					borders_mask -= 2
 					gcount--
@@ -757,7 +852,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in E
+				var/obj/mesh/grille/Gr = locate() in E
 				if (Gr)
 					borders_mask -= 4
 					gcount--
@@ -769,7 +864,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in W
+				var/obj/mesh/grille/Gr = locate() in W
 				if (Gr)
 					borders_mask -= 8
 					gcount--
@@ -814,7 +909,7 @@ TYPEINFO(/obj/item/room_planner)
 
 		origin.use_materials(2, borders)
 
-		var/obj/grille/G = new /obj/grille(L)
+		var/obj/mesh/grille/G = new /obj/mesh/grille(L)
 		G.setMaterial(metal)
 
 		var/mask = bmask
@@ -894,6 +989,7 @@ TYPEINFO(/obj/item/room_planner)
 			var/turf/simulated/wall/auto/AT = T
 			AT.icon = src.icon
 			AT.icon_state = "[selectedmod][connectdir]"
+			AT.mod = selectedmod
 
 			qdel(src)
 

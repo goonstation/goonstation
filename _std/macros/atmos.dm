@@ -43,7 +43,13 @@
 #define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD
 
 /// Moles in a standard cell after which visible gases are visible
+/// gas overlays have continuous opacity based on molarity
 #define MOLES_GAS_VISIBLE	1
+// Shows up at half the density of the other gases.
+#define MOLES_N2O_VISIBLE (MOLES_GAS_VISIBLE / 2)
+
+/// Factor that reduces the number of gas opacity levels, higher = better performance and worse visuals
+#define ALPHA_GAS_COMPRESSION 4
 
 /// Plasma Tile Overlay Id
 #define GAS_IMG_PLASMA 0
@@ -52,35 +58,43 @@
 /// Rad Particles Tile Overlay Id
 #define GAS_IMG_RAD 2
 
-/// Enables gas overlays to have continuous opacity based on molarity
-#define ALPHA_GAS_OVERLAYS
-/// Factor that reduces the number of gas opacity levels, higher = better performance and worse visuals
-#define ALPHA_GAS_COMPRESSION 4
-
-#ifdef ALPHA_GAS_OVERLAYS
-/// Given gas mixture's graphics var and gas overlay id and gas moles sets the graphics so the gas is rendered if there are right conditions
-#define UPDATE_GAS_MIXTURE_GRAPHIC(VISUALS_STATE, OVERLAY_ID, MOLES) do { \
+/// Given gas mixture's graphics var and a gas overlay id and that gases moles and its alpha curve,
+/// sets the graphics so the gas is rendered if there are right conditions
+#define UPDATE_GAS_MIXTURE_GRAPHIC(VISUALS_STATE, OVERLAY_ID, MOLES, VISIBLE_ABOVE, ALPHA_BASE, ALPHA_DIV, ALPHA_MUL) do { \
 	var/_base_alpha = 0; \
-	if(UNLINT(OVERLAY_ID == GAS_IMG_N2O)) {if(MOLES > MOLES_GAS_VISIBLE / 2) _base_alpha = 95 + MOLES / 8 * 180;} \
-	else {if(MOLES > MOLES_GAS_VISIBLE) _base_alpha = 30 + MOLES / 40 * 125;} \
+	if(MOLES > VISIBLE_ABOVE) _base_alpha = ALPHA_BASE + MOLES / ALPHA_DIV * ALPHA_MUL; \
 	VISUALS_STATE |= (round(min(255, _base_alpha) / ALPHA_GAS_COMPRESSION) << (OVERLAY_ID * 8)); \
 	} while(0)
+
 /// Given the VISUALS_STATE bit field and gas overlay id as defined above it possibly adds the right overlay to TILE_GRAPHIC
 #define UPDATE_TILE_GAS_OVERLAY(VISUALS_STATE, TILE_GRAPHIC, OVERLAY_ID) \
 	if(VISUALS_STATE & (0xff << (OVERLAY_ID * 8))) {\
 		gas_overlays[1 + OVERLAY_ID].alpha = ((VISUALS_STATE >> (OVERLAY_ID * 8)) & 0xff) * ALPHA_GAS_COMPRESSION ; \
 		TILE_GRAPHIC.overlays.Add(gas_overlays[1 + OVERLAY_ID]) \
 	}
-#else
-/// Given gas mixture's graphics var and gas overlay id and gas moles sets the graphics so the gas is rendered if there are right conditions
-#define UPDATE_GAS_MIXTURE_GRAPHIC(VISUALS_STATE, OVERLAY_ID, MOLES) \
-	if(MOLES > MOLES_GAS_VISIBLE) \
-		VISUALS_STATE |= (1 << OVERLAY_ID)
-/// Given the VISUALS_STATE bit field and gas overlay id as defined above it possibly adds the right overlay to TILE_GRAPHIC
-#define UPDATE_TILE_GAS_OVERLAY(VISUALS_STATE, TILE_GRAPHIC, OVERLAY_ID) \
-	if(VISUALS_STATE & (1 << OVERLAY_ID)) \
-		TILE_GRAPHIC.overlays.Add(gas_overlays[1 + OVERLAY_ID])
-#endif
+
+/**
+ *	List of gases that can draw a tile overlay
+ *	Format: MACRO(gas_var, overlay_id, visible_above_moles, alpha_base, alpha_div, alpha_mul, tint_color, ARGS)
+ *	A new gas also needs a GAS_IMG_* id and a matching entry in /turf/simulated/var/gas_overlays at the right idx.
+ */
+#define APPLY_TO_GRAPHIC_GASES(MACRO, ARGS...) \
+	MACRO(toxins, GAS_IMG_PLASMA, MOLES_GAS_VISIBLE, 30, 40, 125, "#d27ce4", ARGS) \
+	MACRO(nitrous_oxide, GAS_IMG_N2O, MOLES_N2O_VISIBLE, 95, 8, 180, "#d2d2d2", ARGS) \
+	MACRO(radgas, GAS_IMG_RAD, MOLES_GAS_VISIBLE, 30, 40, 125, "#8cd359", ARGS)
+
+#define _GAS_MAY_BE_VISIBLE(GAS, OVERLAY_ID, VISIBLE_ABOVE, ALPHA_BASE, ALPHA_DIV, ALPHA_MUL, TINT_COLOR, MIXTURE) (MIXTURE).GAS > VISIBLE_ABOVE ||
+
+/** TRUE when a mixture might be drawing, or might need to stop drawing, a gas overlay. */
+#define GAS_MIXTURE_MAY_BE_VISIBLE(MIXTURE) ((MIXTURE).graphic || APPLY_TO_GRAPHIC_GASES(_GAS_MAY_BE_VISIBLE, MIXTURE) FALSE)  // the FALSE is there so the last || in the macro isnt left hanging
+
+#define _GAS_MIXTURE_COLOR(GAS, OVERLAY_ID, VISIBLE_ABOVE, ALPHA_BASE, ALPHA_DIV, ALPHA_MUL, TINT_COLOR, COLOR, MIXTURE) \
+	if ((MIXTURE).GAS > VISIBLE_ABOVE) {COLOR = TINT_COLOR};
+/**
+ * Tints COLOR to match whichever visible gases MIXTURE holds.
+ * When several visible gases are present, the last one in that list wins.
+ */
+#define GAS_MIXTURE_COLOR(COLOR, MIXTURE) APPLY_TO_GRAPHIC_GASES(_GAS_MIXTURE_COLOR, COLOR, MIXTURE)
 
 /// liters in a normal breath
 #define BREATH_VOLUME 0.5
@@ -267,6 +281,7 @@ What can break when adding new gases:
 	* Returns the color of a given gas ID.
 	*
 	* This is used only in the gas mixer computer as of now.
+	* Garash - 2024: Hi, this is the tgui gas mixer computer speaking, we still use it!
 	*/
 proc/gas_text_color(gas_id)
 	switch(gas_id)
@@ -343,13 +358,13 @@ proc/gas_text_color(gas_id)
 	if (UNLINT(HIDDEN)) { \
 		src.ClearSpecificOverlays("[DIR]"); \
 		break; \
-		}  \
+	}  \
 	var/pipe_state = NODE ? "intact" : "exposed"; \
 	var/pipe_cached = pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"]; \
 	if (!pipe_cached) { \
-		pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"] = icon('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "[pipe_state]_[NODE ? null : SIZE]", DIR); \
-		pipe_cached = pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"]; \
-		} \
+		pipe_cached = icon('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "[pipe_state]_[NODE ? null : SIZE]", DIR); \
+		pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"] = pipe_cached; \
+	} \
 	var/image/pipe_image = mutable_appearance(pipe_cached); \
 	pipe_image.color = COLOUR ? COLOUR : "#B4B4B4"; \
 	pipe_image.layer = src.layer - 0.001; \
@@ -357,7 +372,23 @@ proc/gas_text_color(gas_id)
 	src.AddOverlays(pipe_image, "[DIR]"); \
 	} while(0)
 
+//Used solely for simple pipes. Possible states are "exposed" and "intact".
+#define SET_SIMPLE_PIPE_UNDERLAY(NODE, DIR) do { \
+	var/pipe_state = NODE ? "intact" : "exposed"; \
+	var/pipe_cached = pipe_underlay_cache["[pipe_state]_[DIR]"]; \
+	if (!pipe_cached) { \
+		pipe_cached = icon('icons/obj/atmospherics/pipes/pipe.dmi', "ends_[pipe_state]", DIR); \
+		pipe_underlay_cache["simple_[pipe_state]_[DIR]"] = pipe_cached; \
+	} \
+	var/image/pipe_image = mutable_appearance(pipe_cached); \
+	pipe_image.color = src.color; \
+	pipe_image.layer = src.layer - 0.001; \
+	pipe_image.appearance_flags |= RESET_TRANSFORM | RESET_COLOR | KEEP_APART; \
+	src.AddOverlays(pipe_image, "[DIR]"); \
+	} while(0)
+
 #define issimplepipe(X) istype(X, /obj/machinery/atmospherics/pipe/simple)
+#define ismanifoldorquad(X) (istype(X, /obj/machinery/atmospherics/pipe/manifold) || istype(X, /obj/machinery/atmospherics/pipe/quadway))
 
 //check if we should hide our pipe ends
 #define CHECKHIDEPIPE(X) (intact && issimulatedturf(X.loc) && X.level == UNDERFLOOR)
