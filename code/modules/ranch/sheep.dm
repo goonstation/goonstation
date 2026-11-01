@@ -38,6 +38,8 @@
 
 	var/wool_grown = 0
 
+	var/wool_counter = 0
+
 	var/wool_type = /obj/item/material_piece/cloth/wool/white
 
 	var/custom_icon = FALSE
