@@ -242,6 +242,8 @@
 		///LIFE PROCESS
 		//Most stuff gets handled here but i've left some other code below because all living mobs can use it
 
+		SEND_SIGNAL(src, COMSIG_LIVING_LIFEPROCESS_TICK, environment)
+
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if(src.disposed) return
