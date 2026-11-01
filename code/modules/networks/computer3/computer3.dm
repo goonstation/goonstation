@@ -344,6 +344,7 @@
 					src.active_program = os
 
 				src.hd.root.add_file(os)
+				os.setup_disk(src.hd)
 
 		src.post_system()
 
