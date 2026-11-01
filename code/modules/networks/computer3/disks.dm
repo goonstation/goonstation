@@ -352,6 +352,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	New()
 		. = ..()
 		START_TRACKING
+		src.AddComponent(/datum/component/replace_on_cryo)
 		// I'm not including the captain here so you can see when they recollect it.
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, message_admins_too=FALSE)
 		SPAWN(1 SECOND) //Give time to actually generate network passes I guess.
