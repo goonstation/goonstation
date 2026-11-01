@@ -340,7 +340,7 @@
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- aquatic signals ----
-		/// When `Life()` ticks, irrespective of whether the mob is dead. (mob, mult, datum/gas_mixture/environment)
+		/// If the mob has an aquatic breathing component, returns the water need.
 		#define COMSIG_AQUATIC_GET_WATER_NEED "aquatic_get_water_need"
 
 // ---- human signals ----
