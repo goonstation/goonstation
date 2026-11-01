@@ -441,7 +441,7 @@
 	///////////////////////////////////////////////
 	////// special handling for selling an item ///
 	///////////////////////////////////////////////
-	proc/sold_item(datum/commodity/C, obj/S, count, mob/user as mob)
+	proc/sold_item(datum/commodity/C, atom/S, count, mob/user as mob)
 		. = C.price * count
 
 	///////////////////////////////////
@@ -476,12 +476,16 @@
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
 				var/list/sold_string = list()
-				for (var/obj/item/sellitem in O.contents)
-					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
+				for (var/atom/A in O.contents)
+					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, A)
 					if(tradetype)
-						cratevalue += sold_item(tradetype, sellitem, sellitem.amount, user)
-						qdel(sellitem)
-						sold_string[sellitem.type] += sellitem.amount
+						var/amount = 1
+						if(isitem(A))
+							var/obj/item/I = A
+							amount = I.amount
+						cratevalue += sold_item(tradetype, A, amount, user)
+						qdel(A)
+						sold_string[A.type] += amount
 				if(log_trades && length(sold_string))
 					logTheThing(LOG_STATION, user, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
 				if(cratevalue)
