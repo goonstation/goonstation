@@ -390,10 +390,14 @@ TYPEINFO(/atom)
 	return
 
 /atom/proc/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_FLUID_ENTERED, F)
+	. = 0
 
 /atom/proc/ExitedFluid(obj/fluid/F as obj)
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_FLUID_EXITED, F)
+	. = 0
 
 /atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, atom/old_loc)
 	.=0

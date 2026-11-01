@@ -1336,21 +1336,19 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	var/out_of_water_debuff = 2
 	var/in_water_buff = 2
-	var/datum/lifeprocess/aquatic_breathing/aquabreath_process = null
 
 	restore_life_processes()
 		. = ..()
-		aquabreath_process = add_lifeprocess(/datum/lifeprocess/aquatic_breathing,src.in_water_buff,src.out_of_water_debuff)
+		src.AddComponent(/datum/component/aquatic_breathing, src.in_water_buff, src.out_of_water_debuff, CALLBACK(src, PROC_REF(move_callback)))
 
 	reduce_lifeprocess_on_death()
+		src.RemoveComponentsOfType(/datum/component/aquatic_breathing)
 		. = ..()
-		remove_lifeprocess(/datum/lifeprocess/aquatic_breathing)
 
-	Move(NewLoc, direct)
-		. = ..()
-		if(src.aquabreath_process.water_need && prob(20 * src.aquabreath_process.water_need))
+	proc/move_callback(datum/component/aquatic_breathing/C)
+		if (C.water_need && prob(20 * C.water_need))
 			hit_twitch(src)
-			src.visible_message("<b>[src]</b> [pick("flops around desperately","gasps","shudders")].")
+			src.visible_message("<b>[src]</b> [pick("flops around desperately", "gasps", "shudders")].")
 
 	grow_up()
 		..()

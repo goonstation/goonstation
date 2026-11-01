@@ -22,6 +22,10 @@
 	#define COMSIG_ATOM_CROSSED "atom_crossed"
 	/// when something triggers Uncrossed by exiting this atom's turf (/atom/movable)
 	#define COMSIG_ATOM_UNCROSSED "atom_uncrossed"
+	/// When this atom enters a turf with a fluid. (/atom, /obj/fluid)
+	#define COMSIG_ATOM_FLUID_ENTERED "atom_fluid_entered"
+	/// When this atom leaves a turf with a fluid. (/atom, /obj/fluid)
+	#define COMSIG_ATOM_FLUID_EXITED "atom_fluid_exited"
 	/// When something that's caused an AM to be slipped ends that slip. (thing, /atom/movable/victim)
 	#define COMSIG_ATOM_SLIP_END "mov_throw_end"
 	/// When something calls UpdateIcon, before the icon is updated
@@ -334,6 +338,10 @@
 // ---- living signals ----
 		/// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
+
+// ---- aquatic signals ----
+		/// When `Life()` ticks, irrespective of whether the mob is dead. (mob, mult, datum/gas_mixture/environment)
+		#define COMSIG_AQUATIC_GET_WATER_NEED "aquatic_get_water_need"
 
 // ---- human signals ----
 
