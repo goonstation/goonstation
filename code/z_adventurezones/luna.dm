@@ -1173,7 +1173,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.wired_connection = test_link
-					src.wired_connection.master = src
+					src.wired_connection.set_master(src, src.net_id)
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))

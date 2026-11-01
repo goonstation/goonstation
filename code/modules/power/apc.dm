@@ -232,7 +232,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	if(src.area?.area_apc == src)
 		src.area.area_apc = null
 	cell = null
-	terminal?.master = null
+	terminal?.set_master(null)
 	terminal = null
 	..()
 
@@ -433,7 +433,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 						var/obj/machinery/power/terminal/newTerm = locate(/obj/machinery/power/terminal) in src.loc
 						if (istype(newTerm) && !newTerm.master)
 							src.terminal = newTerm
-							newTerm.master = src
+							newTerm.set_master(src, src.net_id)
 							newTerm.set_dir(initial(src.dir)) //Can't use CURRENT dir because it is set to south on spawn.
 
 					status &= ~BROKEN //Clear broken flag
@@ -634,7 +634,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	else
 		src.terminal = new/obj/machinery/power/terminal(src.loc)
 	src.terminal.set_dir(tdir)
-	src.terminal.master = src
+	src.terminal.set_master(src, src.net_id)
 
 /obj/machinery/power/apc/attack_ai(mob/user)
 	if (src.aidisabled && !src.wiresexposed)

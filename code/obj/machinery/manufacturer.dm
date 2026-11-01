@@ -156,7 +156,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/obj/machinery/power/data_terminal/test_link = locate() in T
 			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 				src.link = test_link
-				src.link.master = src
+				src.link.set_master(src, src.net_id)
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 5)
 
@@ -201,7 +201,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.sound_damaged = null
 		src.sound_destroyed = null
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		for (var/obj/O in src.contents)

@@ -19,6 +19,10 @@
 	var/turf/T = new_loc
 	if(istype(T) && level==UNDERFLOOR) hide(T.intact)
 
+/// Sets `master`, use this instead of assigning it directly
+/obj/machinery/power/terminal/proc/set_master(obj/machinery/new_master, net_id)
+	src.master = new_master
+
 /obj/machinery/power/terminal/disposing()
 	if (src.powernet && src.powernet.data_nodes)
 		src.powernet.data_nodes -= src
@@ -112,6 +116,10 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 	disposing()
 		master = null
 		..()
+
+	/// Sets `master`, use this instead of assigning it directly
+	proc/set_master(atom/movable/new_master, net_id)
+		src.master = new_master
 
 	receive_signal(datum/signal/signal)
 		if(!signal)

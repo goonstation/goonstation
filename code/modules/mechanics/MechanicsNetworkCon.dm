@@ -40,7 +40,7 @@
 
 	disposing()
 		if(src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 		..()
 
@@ -60,14 +60,14 @@
 		src.icon_state = "generic0"
 		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 			src.link = test_link
-			src.link.master = src
+			src.link.set_master(src, src.net_id)
 			src.icon_state = "generic1"
 
 	loosen()
 		resetConnection()
 		src.icon_state = "generic-p"
 		if(src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 	proc/spacket(var/datum/mechanicsMessage/input)
