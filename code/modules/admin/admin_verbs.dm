@@ -693,9 +693,6 @@ var/list/special_pa_observing_verbs = list(
 	else
 		src.view = "15x15"
 
-
-	usr.see_in_dark = initial(usr.see_in_dark)
-
 	if(src.holder)
 		src.holder.level = 0
 
