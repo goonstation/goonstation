@@ -6,7 +6,7 @@
 		/obj/icecube,
 	)
 
-/datum/element/lifeprocess/decomposition/process(mob/living/carbon/human/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/decomposition/process(mob/living/carbon/human/target, mult, datum/gas_mixture/environment)
 	if (!isdead(target))
 		return
 
@@ -35,7 +35,6 @@
 		src.create_miasma(target, T)
 
 	if (environment)
-		var/mult = src.get_multiplier(target)
 		var/temperature_modifier = (environment.temperature - T20C) / 10
 		target.time_until_decomposition -= clamp(2 SECONDS + temperature_modifier, 0, 6 SECONDS) * mult
 

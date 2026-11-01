@@ -1,12 +1,10 @@
 /datum/element/lifeprocess/robot
 	target_type = /mob/living/silicon/robot
 
-/datum/element/lifeprocess/robot/process(mob/living/silicon/robot/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/robot/process(mob/living/silicon/robot/target, mult, datum/gas_mixture/environment)
 	if (!target.part_chest || !target.part_head)
 		target.death()
 		return
-
-	var/mult = src.get_multiplier(target)
 
 	if (target.stuttering)
 		target.stuttering = max(target.stuttering - (0.33 * mult), 0)

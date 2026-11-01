@@ -8,11 +8,10 @@
 		"You should probably get your head checked out!",
 	)
 
-/datum/element/lifeprocess/brain/process(mob/living/carbon/human/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/brain/process(mob/living/carbon/human/target, mult, datum/gas_mixture/environment)
 	if (isdead(target))
 		return
 
-	var/mult = src.get_multiplier(target)
 	switch (target.get_brain_damage())
 		// Moderate brain damage.
 		if (BRAIN_DAMAGE_MODERATE to BRAIN_DAMAGE_MAJOR)

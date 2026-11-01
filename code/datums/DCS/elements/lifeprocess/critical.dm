@@ -1,8 +1,6 @@
-/datum/element/lifeprocess/critical/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/critical/process(mob/living/target, mult, datum/gas_mixture/environment)
 	if (isdead(target) || target.bioHolder?.HasEffect("revenant"))
 		return
-
-	var/mult = src.get_multiplier(target)
 
 	// OXY damage counts 50%, BRUTE + BURN count 167%. Calculated before oxygen deprivation effects applied below.
 	var/death_health = target.health + (target.get_oxygen_deprivation() * 0.5) - ((target.get_burn_damage() + target.get_brute_damage()) * 0.67)

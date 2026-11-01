@@ -1,8 +1,6 @@
-/datum/element/lifeprocess/status_update/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/status_update/process(mob/living/target, mult, datum/gas_mixture/environment)
 	if (isdead(target) || target.bioHolder?.HasEffect("revenant"))
 		return
-
-	var/mult = src.get_multiplier(target)
 
 	target.stamina_max = max((STAMINA_MAX + target.get_stam_mod_max()), 0)
 	target.stamina = min(target.stamina, target.stamina_max)

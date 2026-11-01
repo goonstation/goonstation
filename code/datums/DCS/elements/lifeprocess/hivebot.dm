@@ -1,7 +1,7 @@
 /datum/element/lifeprocess/hivebot
 	target_type = /mob/living/silicon/hivebot
 
-/datum/element/lifeprocess/hivebot/process(mob/living/silicon/hivebot/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/hivebot/process(mob/living/silicon/hivebot/target, mult, datum/gas_mixture/environment)
 	target.hud.update_charge()
 	target.health = target.max_health - (target.fireloss + target.bruteloss)
 

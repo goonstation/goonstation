@@ -1,4 +1,4 @@
-/datum/element/lifeprocess/faith/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/faith/process(mob/living/target, mult, datum/gas_mixture/environment)
 	if (!target.client || !isliving(target) || !isalive(target) || isghostcritter(target) || isintangible(target))
 		return
 
@@ -6,7 +6,6 @@
 	// At FAITH_STARTING, faith generated will decrease linearly.
 	var/datum/trait/job/chaplain/chaplain_training = target.traitHolder?.getTrait("training_chaplain")
 	if (chaplain_training)
-		var/mult = src.get_multiplier(target)
 		var/amount = min(FAITH_STARTING / max(chaplain_training.faith, 1), FAITH_GEN_BASE) * mult
 		if (amount > 0)
 			chaplain_training.faith += amount * chaplain_training.faith_mult
@@ -27,7 +26,6 @@
 	if (target.traitHolder?.hasTrait("atheist"))
 		return
 
-	var/mult = src.get_multiplier(target)
 	var/amount = FAITH_GEN_BASE * mult
 	for_by_tcl(chaplain, /datum/trait/job/chaplain)
 		if (amount > 0)

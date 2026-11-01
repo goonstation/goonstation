@@ -5,7 +5,7 @@
 		/obj/machinery/atmospherics/unary/cryo_cell,
 	)
 
-/datum/element/lifeprocess/breath/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/breath/process(mob/living/target, mult, datum/gas_mixture/environment)
 	if (isdead(target))
 		return
 
@@ -14,9 +14,7 @@
 	if (manual_breathing?.breath_timer > 15)
 		return
 
-	var/mult = src.get_multiplier(target)
 	var/datum/organ_status/lung/status_updates = new()
-
 	var/atom/underwater = null
 	var/bubble_breathing = FALSE
 

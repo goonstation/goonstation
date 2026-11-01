@@ -1,4 +1,4 @@
-/datum/element/lifeprocess/stuns_lying/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/stuns_lying/process(mob/living/target, mult, datum/gas_mixture/environment)
 	var/lying_old = target.lying
 	var/can_lie = src.can_lie(target)
 

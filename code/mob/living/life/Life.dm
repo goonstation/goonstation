@@ -244,7 +244,8 @@
 		///LIFE PROCESS
 		//Most stuff gets handled here but i've left some other code below because all living mobs can use it
 
-		SEND_SIGNAL(src, COMSIG_LIVING_LIFEPROCESS_TICK, environment)
+		var/mult = clamp(TIME - src.last_life_tick, LIFE_PROCESS_TICK_SPACING, LIFE_PROCESS_CAP_TICK_SPACING) / LIFE_PROCESS_TICK_SPACING
+		SEND_SIGNAL(src, COMSIG_LIVING_LIFEPROCESS_TICK, mult, environment)
 
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)

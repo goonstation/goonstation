@@ -1,4 +1,4 @@
-/datum/element/lifeprocess/hud/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/hud/process(mob/living/target, mult, datum/gas_mixture/environment)
 	if (!target.client)
 		return
 

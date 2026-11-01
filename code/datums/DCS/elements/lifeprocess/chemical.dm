@@ -1,11 +1,9 @@
-/datum/element/lifeprocess/chemical/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/chemical/process(mob/living/target, mult, datum/gas_mixture/environment)
 	if (isdead(target) || target.nodamage)
 		return
 
 	var/datum/reagents/reagents = target.reagents
 	if (reagents?.total_volume > 0)
-		var/mult = src.get_multiplier(target)
-
 		reagents.temperature_reagents(target.bodytemperature, 100 * mult, 100, 15 * mult)
 
 		if (global.blood_system && reagents.get_reagent(target.blood_id))

@@ -1,4 +1,4 @@
-/datum/element/lifeprocess/gravity/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/gravity/process(mob/living/target, mult, datum/gas_mixture/environment)
 	var/turf/T = get_turf(target)
 	if (!istype(T))
 		return
@@ -52,13 +52,13 @@
 
 	switch (gforce)
 		if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
-			src.handle_low_gravity(target, gforce)
+			src.handle_low_gravity(target, mult, gforce)
 
 		if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)
-			src.handle_high_gravity(target, gforce)
+			src.handle_high_gravity(target, mult, gforce)
 
 /// Handle the effects of low gravity on a (human) target.
-/datum/element/lifeprocess/gravity/proc/handle_low_gravity(mob/living/carbon/human/target, gforce)
+/datum/element/lifeprocess/gravity/proc/handle_low_gravity(mob/living/carbon/human/target, mult, gforce)
 	if (!istype(target) || target.lying || target.is_spacefaring())
 		return
 
@@ -66,7 +66,6 @@
 		return
 
 	// 0-10% chance of continuing, increasing as gforce decreases.
-	var/mult = src.get_multiplier(target)
 	var/continue_chance = round((GFORCE_EARTH_GRAVITY - gforce) / 10)
 	if ((gforce > GFORCE_GRAVITY_MINIMUM) && !probmult(continue_chance))
 		return
@@ -134,9 +133,7 @@
 				boutput(target, SPAN_ALERT("You feel the blood rush to your head, disorienting you."), "grav-life")
 
 /// Handle the effects of high gravity on a target.
-/datum/element/lifeprocess/gravity/proc/handle_high_gravity(mob/living/target, gforce)
-	var/mult = src.get_multiplier(target)
-
+/datum/element/lifeprocess/gravity/proc/handle_high_gravity(mob/living/target, mult, gforce)
 	if (gforce >= GFORCE_MOB_PANCAKE_THRESHOLD)
 		var/gib_counter = GET_ATOM_PROPERTY(target, PROP_ATOM_GRAVITY_GIB_COUNTER)
 

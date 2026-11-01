@@ -1,5 +1,4 @@
-/datum/element/lifeprocess/disability/process(mob/living/target, datum/gas_mixture/environment)
-	var/mult = src.get_multiplier(target)
+/datum/element/lifeprocess/disability/process(mob/living/target, mult, datum/gas_mixture/environment)
 	var/atom/A = target.loc
 
 	// Missteps.

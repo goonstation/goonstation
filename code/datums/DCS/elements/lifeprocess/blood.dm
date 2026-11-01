@@ -1,4 +1,4 @@
-/datum/element/lifeprocess/blood/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/blood/process(mob/living/target, mult, datum/gas_mixture/environment)
 	if (!global.blood_system)
 		return
 
@@ -7,7 +7,6 @@
 		return
 
 	var/datum/reagents/reagents = target.reagents
-	var/mult = src.get_multiplier(target)
 
 	// This early return fires for the majority of the time this proc is called.
 	if (target.last_tick_regular_blood_range && (target.blood_volume == 500) && (reagents?.total_volume <= 0))

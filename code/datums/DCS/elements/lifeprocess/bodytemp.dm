@@ -1,8 +1,7 @@
-/datum/element/lifeprocess/bodytemp/process(mob/living/target, datum/gas_mixture/environment)
+/datum/element/lifeprocess/bodytemp/process(mob/living/target, mult, datum/gas_mixture/environment)
 	if (!environment)
 		return
 
-	var/mult = src.get_multiplier(target)
 	var/loc_temp = src.get_loc_temp(target, environment, mult)
 
 	// Alive mobs slowly return to their base body temperature.
