@@ -1,9 +1,10 @@
 /datum/element/lifeprocess
+	VAR_PROTECTED/target_type = /mob/living
 	// This *slightly* breaks element purity, but it's better than these being components.
 	VAR_PRIVATE/alist/last_process_by_target = alist()
 
 /datum/element/lifeprocess/Attach(mob/living/target)
-	if (!istype(target))
+	if (!istype(target, target_type))
 		return DCS::ERR::ELEMENT_INCOMPATIBLE
 
 	src.last_process_by_target[target] = TIME
