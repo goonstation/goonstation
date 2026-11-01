@@ -351,6 +351,8 @@ To remove:
 #define PROP_ATOM_GRAVITY_IMMUNE(x) x("gravity_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 /// Does this atom make things inside it immune to gravity per-tick effects?
 #define PROP_ATOM_GRAVITY_IMMUNE_INSIDE(x) x("gravity_immune_inside", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+/// Used by the gravity lifeprocess to keep track of a mob's gib counter without needing to hold state.
+#define PROP_ATOM_GRAVITY_GIB_COUNTER(x) x("gravity_gib_counter", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 
 #define PROP_ATOM_LUCK(x) x("luck", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 
