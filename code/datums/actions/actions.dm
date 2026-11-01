@@ -784,7 +784,7 @@
 				duration = round(duration / 2)
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(SPAN_ALERT("<B>[owner] attempts to handcuff [target]!</B>"), 1)
+			O.show_message(SPAN_ALERT("<B>[owner] attempts to [cuffs.cuff_name] [target]!</B>"), 1)
 
 	onEnd()
 		..()
@@ -794,20 +794,23 @@
 
 		if (initial(cuffs.amount) > 1)
 			if (cuffs.amount < 1)
-				boutput(ownerMob, SPAN_ALERT("There's nothing left in the [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape roll" : "ziptie"]."))
+				boutput(ownerMob, SPAN_ALERT("There's nothing left in \the [cuffs]."))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			var/obj/item/handcuffs/tape/inner_cuffs = new /obj/item/handcuffs/tape
 			inner_cuffs.apply_multiplier = cuffs.apply_multiplier
 			inner_cuffs.remove_self_multiplier = cuffs.remove_self_multiplier
 			inner_cuffs.remove_other_multiplier = cuffs.remove_other_multiplier
+			inner_cuffs.appearance = cuffs.appearance
+			inner_cuffs.cuff_adjective = cuffs.cuff_adjective
+			inner_cuffs.cuff_name = cuffs.cuff_name
 			cuffs.amount--
 			if (cuffs.amount < 1 && cuffs.delete_on_last_use)
 				ownerMob.u_equip(cuffs)
-				boutput(ownerMob, SPAN_ALERT("You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"]."))
+				boutput(ownerMob, SPAN_ALERT("You used up the remaining length of [cuffs.cuff_name]."))
 				qdel(cuffs)
 			else
-				boutput(ownerMob, SPAN_NOTICE("The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left."))
+				boutput(ownerMob, SPAN_NOTICE("The [cuffs.name] now has [cuffs.amount] lengths of [cuffs.cuff_name] left."))
 			cuffs = inner_cuffs
 		else
 			ownerMob.u_equip(cuffs)
@@ -817,7 +820,7 @@
 
 		cuffs.cuff(target)
 		for(var/mob/O in AIviewers(ownerMob))
-			O.show_message(SPAN_ALERT("<B>[owner] handcuffs [target]!</B>"), 1)
+			O.show_message(SPAN_ALERT("<B>[owner] [cuffs.cuff_name]s [target]!</B>"), 1)
 
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
 	duration = 70
@@ -856,7 +859,7 @@
 				duration = round(duration / 2)
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(SPAN_ALERT("<B>[owner] attempts to remove [target]'s handcuffs!</B>"), 1)
+			O.show_message(SPAN_ALERT("<B>[owner] attempts to remove [target]'s [src.target.handcuffs?.cuff_name || "restraint"]s!</B>"), 1)
 
 	onEnd()
 		..()
@@ -866,7 +869,7 @@
 			H.handcuffs.drop_handcuffs(H)
 			H.update_inv()
 			for(var/mob/O in AIviewers(H))
-				O.show_message(SPAN_ALERT("<B>[owner] manages to remove [target]'s handcuffs!</B>"), 1)
+				O.show_message(SPAN_ALERT("<B>[owner] manages to remove [target]'s [src.target.handcuffs?.cuff_name || "restraint"]s!</B>"), 1)
 			logTheThing(LOG_COMBAT, owner, "removes [constructTarget(target,"combat")]'s handcuffs at [log_loc(owner)].")
 
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
@@ -881,13 +884,16 @@
 
 	onStart()
 		..()
+
+		var/cuff_name = "restraint"
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			duration = round(duration * H.handcuffs.remove_self_multiplier)
+			cuff_name = H.handcuffs?.cuff_name || "restraint"
 
 		owner.visible_message(
-			SPAN_ALERT("<B>[owner] attempts to remove the handcuffs!</B>"),
-			SPAN_ALERT("You attempt to remove your handcuffs. (This will take around [round(duration/10)] seconds and you need to stand still)")
+			SPAN_ALERT("<B>[owner] attempts to remove the [cuff_name]s!</B>"),
+			SPAN_ALERT("You attempt to remove your [cuff_name]s. (This will take around [round(duration/10)] seconds and you need to stand still)")
 		)
 
 	onUpdate()
@@ -900,12 +906,20 @@
 		..()
 		if(!(flag & INTERRUPT_ACTION))
 			if (owner.hasStatus("handcuffed"))
-				boutput(owner, SPAN_ALERT("Your attempt to remove your handcuffs was interrupted!"))
+				var/cuff_name = "restraint"
+				if(ishuman(src.owner))
+					var/mob/living/carbon/human/H = owner
+					cuff_name = H.handcuffs?.cuff_name || "restraint"
+				boutput(owner, SPAN_ALERT("Your attempt to remove your [cuff_name]s was interrupted!"))
 			src.resumable = FALSE
 
 	onResume(datum/action/attempted)
 		. = ..()
-		boutput(owner, SPAN_ALERT("You're still removing your handcuffs. (Around [round((src.duration-src.time_spent())/10)] seconds remaining)"), "handcuff_removal")
+		var/cuff_name = "restraint"
+		if(ishuman(src.owner))
+			var/mob/living/carbon/human/H = owner
+			cuff_name = H.handcuffs?.cuff_name || "restraint"
+		boutput(owner, SPAN_ALERT("You're still removing your [cuff_name]s. (Around [round((src.duration-src.time_spent())/10)] seconds remaining)"), "handcuff_removal")
 
 	onEnd()
 		..()
@@ -913,8 +927,8 @@
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
 			H.visible_message(
-				SPAN_ALERT("<B>[H] manages to remove the handcuffs!</B>"),
-				SPAN_NOTICE("You successfully remove your handcuffs.")
+				SPAN_ALERT("<B>[H] manages to remove the [H.handcuffs?.cuff_name || "restraint"]s!</B>"),
+				SPAN_NOTICE("You successfully remove your [H.handcuffs?.cuff_name || "restraint"]s.")
 			)
 			logTheThing(LOG_COMBAT, H, "removes their own handcuffs at [log_loc(H)].")
 
