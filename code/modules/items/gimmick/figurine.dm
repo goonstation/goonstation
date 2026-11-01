@@ -1152,7 +1152,6 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "vifizzahrd"
 		ckey = "vithesilly"
 	whele
-
 		name = "\improper Miss Funny Business"
 		icon_state = "missfunnybusiness"
 		ckey = "whele"
