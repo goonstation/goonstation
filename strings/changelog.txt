@@ -1,4 +1,9 @@
 
+(t)sun nov 01 26
+(u)ANNmagedon
+(p)28143
+(e)|
+(+)The captain now can roll a goal to keep their spare ID in their office.
 (t)sat oct 31 26
 (u)ZeWaka
 (p)27933
