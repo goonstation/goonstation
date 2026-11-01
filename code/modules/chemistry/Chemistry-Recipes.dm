@@ -5673,3 +5673,23 @@
 		mix_phrase = "The mixture slowly thickens into a velvety spread."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
+
+	caramelsauce
+		name = "Caramel Sauce"
+		id = "caramelsauce"
+		result = "caramelsauce"
+		required_reagents = list("sugar" = 1, "water" = 1, "vanilla" = 1, "butter" = 1)
+		min_temperature = T0C + 100
+		result_amount = 2
+		mix_phrase = "The ingredients melts and blend into a smooth, glossy caramel sauce."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	caramelmacchiato
+		name = "Caramel macchiato"
+		id = "caramelmacchiato"
+		result = "caramelmacchiato"
+		required_reagents = list("frothedmilk" = 2, "espresso" = 2, "vanilla" = 1, "caramelsauce" = 1)
+		result_amount = 4
+		mix_phrase = "The espresso blends with the sweet vanilla as a thick layer of velvety milk foam settles on top."
+		drinkrecipe = TRUE

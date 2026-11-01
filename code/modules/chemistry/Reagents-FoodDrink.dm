@@ -5108,3 +5108,25 @@ datum
 			description = "A thick, velvety spread that clings to everything it touches."
 			reagent_state = SOLID
 			taste = list("rich", "sweet")
+
+		fooddrink/caramelsauce
+			name = "caramel sauce"
+			id = "caramelsauce"
+			fluid_r = 210
+			fluid_g = 145
+			fluid_b = 45
+			description = "A thick, glossy golden-brown sauce with a rich sweetness."
+			reagent_state = LIQUID
+			taste = list("rich", "sweet", "sugary")
+
+		fooddrink/caffeinated/caramelmacchiato
+			name = "caramel macchiato"
+			id = "caramelmacchiato"
+			fluid_r = 230
+			fluid_g = 175
+			fluid_b = 45
+			description = "A sweet, creamy coffee with a rich espresso kick and a hint of vanilla."
+			reagent_state = LIQUID
+			taste = list("sweet", "creamy", "rich")
+			thirst_value = 1
+			caffeine_content = 0.8
