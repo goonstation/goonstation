@@ -570,6 +570,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/spraybottle/cleaner = 5,
 		/obj/item/reagent_containers/glass/bottle/cleaner = 3,
 		/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
+		/obj/item/broom = 5,
 		/obj/item/mop = 5,
 		/obj/item/sponge = 5,
 		/obj/item/mousetrap/armed = 5,
