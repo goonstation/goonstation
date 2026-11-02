@@ -120,6 +120,15 @@
 		icon_state = "[W.up ? "welddown" : "weldup"]"
 		..()
 
+/obj/ability_button/toggle_visor
+	name = "Toggle Visor"
+	icon_state = "weldup"
+
+	execute_ability() // Should find a common parent between this and the above
+		var/obj/item/clothing/head/helmet/hardhat/security/hos/helmet = the_item
+		helmet.visor_up ? helmet.flip_down(the_mob) : helmet.flip_up(the_mob)
+		src.icon_state = "[helmet.visor_up ? "welddown" : "weldup"]"
+		..()
 
 /obj/ability_button/coat_toggle
 	name = "(Un)Button Coat"
