@@ -212,6 +212,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment/jam)
 	desc = "No relation to any grunge bands."
 	icon_state = "pear-jam"
 	food_color = "#D3CB21"
+	initial_reagents = list("sugar"=25,"juice_pear"=25)
 
 /obj/item/reagent_containers/food/snacks/condiment/jam/peachjam
 	name = "peach jam"
