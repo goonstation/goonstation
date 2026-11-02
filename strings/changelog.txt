@@ -1,5 +1,9 @@
 
 (t)mon nov 02 26
+(u)EmeraldCrow
+(p)28197
+(e)🎨|C-Sprites
+(*)Adds the Miss Funny Business figurine. Go gambling for figurines today!
 (u)TealSeer
 (p)28218
 (e)🪲🖥️|C-Bug, A-Computers
