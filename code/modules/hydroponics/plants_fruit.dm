@@ -317,7 +317,6 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	isgrass = 1
 	endurance = 6
 	genome = 19
-	assoc_reagents = list("water") //96%
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
 
 /datum/plant/fruit/mustard
