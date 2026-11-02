@@ -857,21 +857,24 @@
 
 /obj/item/storage/belt/utility/nt_engineer
 	name = "specialist engineering belt"
-	desc = "A high capacity engineering belt."
+	desc = "A high capacity engineering belt, with both a holster for an RCD and a clip for holding fire extinguishers."
+	icon_state = "utilitybelt_nt"
+	item_state = "utility_nt"
 	can_hold = list(
 		/obj/item/rcd,
 		/obj/item/rcd_ammo,
 		/obj/item/deconstructor,
 		/obj/item/tool/omnitool/dualconstruction_device,
-		/obj/item/sheet,
-		/obj/item/tile
+		/obj/item/extinguisher
 	)
 	spawn_contents = list(
-		/obj/item/rcd/construction,
+		/obj/item/rcd/construction/NT,
 		/obj/item/rcd_ammo/medium,
 		/obj/item/tool/omnitool/NT,
+		/obj/item/weldingtool/high_cap/blue,
 		/obj/item/tool/omnitool/dualconstruction_device/NT,
-		/obj/item/device/analyzer/atmospheric/upgraded
+		/obj/item/device/analyzer/atmospheric/upgraded,
+		/obj/item/extinguisher/large
 	)
 
 /obj/item/storage/belt/utility/prepared/ceshielded

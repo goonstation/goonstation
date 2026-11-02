@@ -220,10 +220,10 @@ TYPEINFO(/obj/machinery/power/furnace)
 		var/started_full = fuel == maxfuel
 		var/fuel_name = initial(W.name)
 		if (W.material)
-			if (W.material.getProperty("flammable") <= 1)
+			if (W.material.getProperty(MATERIAL::PROPERTY::FLAMMABLE) <= 1)
 				return 0
 			else
-				var/fuel_amount = (10 * (2 ** (W.material.getProperty("flammable") - 2)))
+				var/fuel_amount = (10 * (2 ** (W.material.getProperty(MATERIAL::PROPERTY::FLAMMABLE) - 2)))
 				if (W.amount == 1)
 					fuel += fuel_amount
 				else

@@ -59,14 +59,15 @@ ADD_TO_NAMESPACE(GHOST, MESSAGE)(proc/send(message))
 	src.announcer.say(message, flags = SAYFLAG_IGNORE_HTML, message_params = list("atom_listeners_to_be_excluded" = wraiths))
 
 /// Formats the name of a mob as `<b>Name</b>`, with a link to observe that mob.
-ADD_TO_NAMESPACE(GHOST, MESSAGE)(proc/format_atom(atom/A, plaintext = FALSE))
+ADD_TO_NAMESPACE(GHOST, MESSAGE)(proc/format_atom(atom/A, display_text, plaintext = FALSE))
 	if (!istype(A))
 		return
 
+	display_text ||= "<b>[A.name]</b>"
 	if (plaintext || !GHOST.can_observe(A))
-		return "<b>[A.name]</b>"
+		return display_text
 
-	return "<a href='byond://?src=\ref[GHOST.MESSAGE.TOPIC];action=observe_atom;target=\ref[A]' title='Observe'><b>[A.name]</b></a>"
+	return "<a href='byond://?src=\ref[GHOST.MESSAGE.TOPIC];action=observe_atom;target=\ref[A]' title='Observe'>[display_text]</a>"
 
 /// Formats the position of an atom as `(x, y, z) in Location`, with a link to teleport to those coordinates.
 ADD_TO_NAMESPACE(GHOST, MESSAGE)(proc/format_loc(atom/A, plaintext = FALSE))

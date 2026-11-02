@@ -91,6 +91,17 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		for (var/datum/db_record/personnel/medical/R as anything in medical)
 			R.update_from_scan(target)
 
+		// Arrests
+		var/list/datum/db_record/citation/arrest/arrests = global.data_core.get_open_arrests(target.real_name)
+		if (length(arrests))
+			var/assignment = "Unknown"
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				assignment = global.get_id_card(H.wear_id)?.assignment
+
+			for (var/datum/db_record/citation/arrest/arrest as anything in arrests)
+				arrest.close(user.name, assignment, "Warrant closed via RecordTrak.")
+
 		// Security
 		var/list/datum/db_record/personnel/security/security = global.data_core.security.find_records("name", target.real_name)
 		if (!length(security))
@@ -102,7 +113,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			R.update_from_scan(target)
 			R["criminal"] = src.modes[src.mode]
 			R["sec_flag"] = src.sechud_flag
-			target.update_arrest_icon()
 			src.active2 = R
 
 		// Bank

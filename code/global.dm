@@ -117,6 +117,20 @@ var/global
 	"Flat" = 'icons/cursors/target/flat.dmi',
 	"Small" = 'icons/cursors/target/small.dmi')
 
+	list/cursors_selection_range_1 = list("Default" = 'icons/cursors/target/default-range_1.dmi',
+	"Red" = 'icons/cursors/target/red-range_1.dmi',
+	"Green" = 'icons/cursors/target/green-range_1.dmi',
+	"Blue" = 'icons/cursors/target/blue-range_1.dmi',
+	"Yellow" = 'icons/cursors/target/yellow-range_1.dmi',
+	"Cyan" = 'icons/cursors/target/cyan-range_1.dmi',
+	"White" = 'icons/cursors/target/white-range_1.dmi',
+	"Rainbow" = 'icons/cursors/target/rainbow-range_1.dmi',
+	"Animated Rainbow" = 'icons/cursors/target/rainbowanimated-range_1.dmi',
+	"Flashing" = 'icons/cursors/target/flashing-range_1.dmi',
+	"Minimalistic" = 'icons/cursors/target/minimalistic-range_1.dmi',
+	"Flat" = 'icons/cursors/target/flat-range_1.dmi',
+	"Small" = 'icons/cursors/target/small-range_1.dmi')
+
 	list/hud_style_selection = list("New" = 'icons/mob/hud_human_new.dmi',
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',

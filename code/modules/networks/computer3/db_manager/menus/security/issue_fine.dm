@@ -1,8 +1,8 @@
-/datum/db_manager_menu/issue_fine
+/datum/db_manager_menu/issue_citation/fine
 	VAR_PRIVATE/target = null
 	VAR_PRIVATE/amount = null
 
-/datum/db_manager_menu/issue_fine/load(target, amount)
+/datum/db_manager_menu/issue_citation/fine/load(target, amount)
 	src.target = target
 	src.amount = amount
 
@@ -35,11 +35,11 @@
 
 	src.parent.print_text(text)
 
-/datum/db_manager_menu/issue_fine/unload()
+/datum/db_manager_menu/issue_citation/fine/unload()
 	src.target = null
 	src.amount = null
 
-/datum/db_manager_menu/issue_fine/input_text(text)
+/datum/db_manager_menu/issue_citation/fine/input_text(text)
 	if (!src.target)
 		text = trimtext(strip_html(text))
 
@@ -86,4 +86,5 @@
 		global.data_core.fines.add_record(fine)
 
 		fine.attempt_approve(src.parent.authenticated, src.parent.account.assignment, src.parent.account.access)
+		src.parent.current_record_group = src.record_group
 		src.parent.switch_menu_to("record_view", fine)
