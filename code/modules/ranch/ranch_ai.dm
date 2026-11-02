@@ -38,9 +38,12 @@
 		. += feed
 	if(!src.eat_bodies)
 		return
-	var/mob/living/critter/small_animal/ranch_base/ranch_critter = holder.owner
-	if(ranch_critter.stage == RANCH_STAGE_CHILD)
-		return
+	var/eater_type = null
+	if(istype(holder.owner, /mob/living/critter/small_animal/ranch_base))
+		var/mob/living/critter/small_animal/ranch_base/ranch_critter = holder.owner
+		if(ranch_critter.stage == RANCH_STAGE_CHILD)
+			return
+		eater_type = ranch_critter.species_type
 	for(var/mob/living/L in view(max_dist, holder.owner))
 		if(isalive(L))
 			continue
@@ -52,7 +55,7 @@
 				continue
 		else if(isunconscious(L)) // Kill critters before eating them
 			continue
-		if(istype(L, ranch_critter.species_type)) // Cannibalism prevention
+		if(istype(L, eater_type)) // Cannibalism prevention
 			continue
 		. += L
 
