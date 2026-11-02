@@ -468,14 +468,21 @@ var/global/list/module_editors = list()
 
 	src.UpdateName()
 
+// since silicons can update their names on a whim, we need to make sure the botcard is updated as well
 /mob/living/silicon/UpdateName()
 	..()
 	src.botcard.registered = src.name
+	src.botcard.update_name()
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
 	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
+
+// borgs and ai shells can be turned into one another, so this makes sure the botcard is up to date in those cases
+/mob/living/silicon/robot/UpdateName()
+	..()
+	src.botcard.assignment = src.dependent ? "AI Shell" : "Cyborg"
 
 /proc/borgify_name(var/start_name = "Robot")
 	if (!start_name) // somehow
@@ -566,41 +573,155 @@ var/global/list/module_editors = list()
 /mob/living/silicon/proc/remove_radio_upgrade()
 	return FALSE
 
+/mob/living/silicon/proc/get_message_mob()
+	RETURN_TYPE(/mob)
+	return src
+
+/mob/living/silicon/proc/interact_laws(chosen_lawset=null, chosen_action=null)
+	var/list/lawset_choices = list(SILICON::LAWS::SET::REAL, SILICON::LAWS::SET::ASIMOV, SILICON::LAWS::SET::FAKE)
+	if (src.syndicate)
+		lawset_choices += SILICON::LAWS::SET::SYNDICATE
+
+	if (isnull(chosen_lawset))
+		chosen_lawset = tgui_input_list(src.get_message_mob(), "Interact with which Lawset?", "Choose Lawset", lawset_choices)
+	if (isnull(chosen_lawset))
+		return
+
+	if (isnull(chosen_action))
+		var/list/action_choices = list(SILICON::LAWS::ACTION::VIEW, SILICON::LAWS::ACTION::STATE)
+		if (chosen_lawset == SILICON::LAWS::SET::FAKE)
+			action_choices += SILICON::LAWS::ACTION::EDIT
+		chosen_action = tgui_input_list(src.get_message_mob(), "What action with [chosen_lawset]?", "Choose Action", action_choices)
+	if (isnull(chosen_action))
+		return
+
+	var/list/laws = src.get_law_list(chosen_lawset)
+	var/mob/message_mob = src.get_message_mob()
+
+	switch(chosen_action)
+		if (SILICON::LAWS::ACTION::VIEW)
+			if (length(laws) == 0)
+				boutput(message_mob, SPAN_ALERT("No laws in [chosen_lawset]!"))
+				return
+
+			boutput(message_mob, SPAN_BOLD("The [chosen_lawset] are:"))
+			for (var/number in laws)
+				boutput(message_mob, "[number]. [laws[number]]")
+
+			return
+
+		if (SILICON::LAWS::ACTION::STATE)
+			if (chosen_lawset == SILICON::LAWS::SET::REAL)
+				if (tgui_alert(message_mob, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
+					return
+
+			var/list/say_targets = list()
+			for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+				var/prefix_choice = prefix_module.get_prefix_choices()
+				if(!length(prefix_choice))
+					continue
+				say_targets += prefix_choice
+
+			say_targets += "Local"
+
+			var/choice
+			if (length(say_targets) == 1)
+				choice = say_targets[1]
+			else
+				choice = tgui_input_list(message_mob, "Select output channel", "State All Laws", say_targets)
+
+			if (!choice)
+				return
+
+			if(ON_COOLDOWN(message_mob, "state_laws", SILICON::LAWS::DELAY::STATE_LAWS))
+				boutput(message_mob, SPAN_ALERT("Your law processor needs time to cool down!"))
+				return
+
+			var/prefix = ""
+			if (choice != "Local")
+				prefix = say_targets[choice]
+
+			logTheThing(LOG_SAY, src, "states laws from '[chosen_lawset]'")
+
+			if (chosen_lawset == SILICON::LAWS::SET::FAKE)
+				// fake laws include number prefix
+				for (var/law in laws)
+					src.say("[prefix] [law]")
+					sleep(SILICON::LAWS::DELAY::PER_LAW)
+				return
+
+			for (var/number in laws)
+				src.say("[prefix] [number]. [laws[number]]")
+				sleep(SILICON::LAWS::DELAY::PER_LAW)
+
+		if (SILICON::LAWS::ACTION::EDIT)
+			if (chosen_lawset != SILICON::LAWS::SET::FAKE) // how ??
+				boutput(message_mob, SPAN_NOTICE("You can only edit your fake lawset!"))
+				return
+			src.set_fake_laws()
+
+
+/// Provides a list of law strings dependent on the `SILICON::LAWS::SET::*` provided.
+/mob/living/silicon/proc/get_law_list(lawset)
+	RETURN_TYPE(/list)
+	switch(lawset)
+		if(SILICON::LAWS::SET::REAL)
+			if(src.dependent) //are you a shell?
+				if(src.mainframe?.law_rack_connection)
+					return src.mainframe.law_rack_connection.format_for_irc()
+			else if(src.law_rack_connection)
+				return src.law_rack_connection.format_for_irc()
+			return list() // lawless
+
+		if(SILICON::LAWS::SET::FAKE)
+			if (src.dependent)
+				return src.mainframe?.fake_laws
+			else
+				return src.fake_laws
+		if(SILICON::LAWS::SET::ASIMOV)
+			return list(
+				"1" = /obj/item/aiModule/asimov1::lawText,
+				"2" = /obj/item/aiModule/asimov2::lawText,
+				"3" = /obj/item/aiModule/asimov3::lawText,
+			)
+		if(SILICON::LAWS::SET::ROBOCOP)
+			return list(
+				"1" = /obj/item/aiModule/robocop1::lawText,
+				"2" = /obj/item/aiModule/robocop2::lawText,
+				"3" = /obj/item/aiModule/robocop3::lawText,
+				"4" = /obj/item/aiModule/robocop4::lawText,
+			)
+		if(SILICON::LAWS::SET::CORPORATE)
+			return list(
+				"1" = /obj/item/aiModule/nanotrasen1::lawText,
+				"2" = /obj/item/aiModule/nanotrasen2::lawText,
+				"3" = /obj/item/aiModule/nanotrasen3::lawText,
+			)
+		if(SILICON::LAWS::SET::SYNDICATE)
+			return list(
+				"1" = /obj/item/aiModule/syndicate/law1::lawText,
+				"2" = /obj/item/aiModule/syndicate/law2::lawText,
+				"3" = /obj/item/aiModule/syndicate/law3::lawText,
+				"4" = /obj/item/aiModule/syndicate/law4::lawText,
+			)
+	return list()
+
 /mob/living/silicon/proc/set_fake_laws()
 	#define FAKE_LAW_LIMIT 12
-	var/fake_lawset_choices = list ("Real Laws", "Fake Laws", "Asimov Laws (Default)", "Robocop Laws", "Corporate Laws", "Syndicate Laws")
-	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", fake_lawset_choices)
+	var/fake_lawset_choices = list (SILICON::LAWS::SET::REAL, SILICON::LAWS::SET::FAKE, SILICON::LAWS::SET::ASIMOV, SILICON::LAWS::SET::ROBOCOP, SILICON::LAWS::SET::CORPORATE, SILICON::LAWS::SET::SYNDICATE)
+	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", SILICON::LAWS::SET::FAKE, fake_lawset_choices)
 	if (!law_base_choice)
 		return
+
 	var/law_base = ""
-	switch(law_base_choice)
-		if("Real Laws")
-			if(src.law_rack_connection)
-				law_base = src.law_rack_connection.format_for_logs("\n")
-			else
-				law_base = ""
-		if("Fake Laws")
-			for(var/fake_law in src.fake_laws)
-				// this is just the default input for the user, so it should be fine
-				law_base += "[html_decode(fake_law)]\n"
-		if("Asimov Laws (Default)")
-			law_base += "1: [/obj/item/aiModule/asimov1::lawText]\n"
-			law_base += "2: [/obj/item/aiModule/asimov2::lawText]\n"
-			law_base += "3: [/obj/item/aiModule/asimov3::lawText]\n"
-		if("Robocop Laws")
-			law_base += "1: [/obj/item/aiModule/robocop1::lawText]\n"
-			law_base += "2: [/obj/item/aiModule/robocop2::lawText]\n"
-			law_base += "3: [/obj/item/aiModule/robocop3::lawText]\n"
-			law_base += "4: [/obj/item/aiModule/robocop4::lawText]\n"
-		if("Corporate Laws")
-			law_base += "1: [/obj/item/aiModule/nanotrasen1::lawText]\n"
-			law_base += "2: [/obj/item/aiModule/nanotrasen2::lawText]\n"
-			law_base += "3: [/obj/item/aiModule/nanotrasen3::lawText]\n"
-		if("Syndicate Laws")
-			law_base += "1: [/obj/item/aiModule/syndicate/law1::lawText]\n"
-			law_base += "2: [/obj/item/aiModule/syndicate/law2::lawText]\n"
-			law_base += "3: [/obj/item/aiModule/syndicate/law3::lawText]\n"
-			law_base += "4: [/obj/item/aiModule/syndicate/law4::lawText]\n"
+	var/laws = src.get_law_list(law_base_choice)
+	if (law_base_choice == SILICON::LAWS::SET::FAKE)
+		// fake laws include number prefix
+		for (var/law in laws)
+			law_base += "[law]\n"
+	else
+		for (var/number in laws)
+			law_base += "[number]. [laws[number]]\n"
 
 	var/raw_law_text = tgui_input_text(usr, "Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base, multiline = TRUE)
 	if(!raw_law_text)
@@ -621,73 +742,8 @@ var/global/list/module_editors = list()
 			continue
 		fake_laws += nice_law
 
-	src.show_fake_laws()
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::VIEW) // show them to the player
 	#undef FAKE_LAW_LIMIT
-
-/mob/living/silicon/proc/state_fake_laws()
-	var/mob/message_mob = src
-	if (istype(src, /mob/living/silicon/ai))
-		var/mob/living/silicon/ai/AI = src
-		message_mob = AI.get_message_mob()
-
-	if (GET_COOLDOWN(src, "state_laws"))
-		boutput(message_mob, SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	var/list/say_targets = list()
-
-	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-		var/prefix_choice = prefix_module.get_prefix_choices()
-		if(!length(prefix_choice))
-			continue
-		say_targets += prefix_choice
-
-	say_targets += "Local"
-
-	var/choice
-	if (length(say_targets) == 1)
-		choice = say_targets[1]
-	else
-		choice = tgui_input_list(message_mob, "Select output channel", "State Fake Laws", say_targets)
-
-	if (!choice)
-		return
-
-	var/list/laws = src.shell ? src.mainframe.fake_laws : src.fake_laws
-
-	if (length(laws) == 0)
-		boutput(message_mob, SPAN_ALERT("Fake laws not set!"))
-		return
-
-	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-		boutput(message_mob, SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	var/prefix = ""
-	if (choice != "Local")
-		prefix = say_targets[choice]
-
-	for(var/a_law in laws)
-		sleep(1 SECOND)
-		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
-		src.say(html_decode("[prefix] [a_law]"))
-		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
-
-/mob/living/silicon/proc/show_fake_laws()
-	var/mob/message_mob = src
-	if (istype(src, /mob/living/silicon/ai))
-		var/mob/living/silicon/ai/AI = src
-		message_mob = AI.get_message_mob()
-
-	var/list/laws = src.shell ? src.mainframe.fake_laws : src.fake_laws
-
-	if (length(laws) == 0)
-		boutput(message_mob, SPAN_ALERT("Fake laws not set!"))
-		return
-
-	message_mob.show_message(SPAN_BOLD("Your fake laws are: "))
-	for(var/a_law in laws)
-		message_mob.show_message(a_law)
 
 /mob/living/silicon/get_unequippable()
 	return
@@ -716,6 +772,21 @@ var/global/list/module_editors = list()
 /mob/living/silicon/clear_offline_indicator()
 	..()
 	src.mainframe?.clear_offline_indicator()
+
+/mob/living/silicon/proc/set_always_monospaced(do_monospaced = TRUE, mob/user = src)
+	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	if(!do_monospaced)
+		decorator.inverted = FALSE
+		boutput(user, SPAN_NOTICE("All speech now regular text by default."))
+	else
+		decorator.inverted = TRUE
+		boutput(user, SPAN_NOTICE("All speech now monospaced by default."))
+	if(src.mainframe && !isAI(src)) // safety check to prevent possible infinite loop if mainframe is ever accidentally set on an ai
+		src.mainframe.set_always_monospaced(do_monospaced = do_monospaced)
+
+/mob/living/silicon/proc/toggle_monospace_mode(mob/user = src)
+	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	src.set_always_monospaced(!decorator.inverted, user)
 
 /datum/statusEffect/low_power
 	id = "low_power"

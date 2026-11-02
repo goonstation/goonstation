@@ -37,7 +37,7 @@ removepiece = function (position) {
 
 var piececlick = function (e) {
   e.preventDefault();
-  var stone = e.srcElement;
+  var stone = e.target;
   stone.parentElement.removeChild(stone);
   byond(
     'command',
@@ -98,10 +98,10 @@ checkhand = function (color) {
 
 var gridclick = function (e) {
   e.preventDefault();
-  var coordinates = e.srcElement.coords.split(',');
+  var coordinates = e.target.coords.split(',');
   globalx = coordinates[0];
   globaly = coordinates[1];
-  globaltile = e.srcElement;
+  globaltile = e.target;
 
   byond('command', 'checkhand');
 };

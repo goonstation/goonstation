@@ -1187,7 +1187,7 @@
 		name = "Fluffy Critter"
 		id = "fluffycritter"
 		result = "fluffycritter"
-		required_reagents = list("rum" = 1, "juice_lime" = 1, "lemonade" = 1, "juice_strawberry" = 1)
+		required_reagents = list("planter" = 2, "juice_lime" = 1, "juice_strawberry" = 1)
 		result_amount = 4
 		mix_phrase = "The drink coos. Aww."
 		mix_sound = 'sound/voice/babynoise.ogg'
@@ -3272,8 +3272,8 @@
 		name = "Oculine"
 		id = "oculine"
 		result = "oculine"
-		required_reagents = list("atropine" = 1, "saline" = 1, "spaceacillin" = 1)
-		result_amount = 4
+		required_reagents = list("lube" = 1, "saline" = 1, "salicylic_acid" = 1)
+		result_amount = 3
 		mix_phrase = "The mixture settles, becoming a milky white."
 
 	mannitol // COGWERKS CHEM REVISION PROJECT: maybe this could be Mannitol, side effect: makes u pee?
@@ -5662,7 +5662,7 @@
 		required_reagents = list("frothedmilk" = 1, "espresso" = 1)
 		result_amount = 2
 		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
-    
+
 	dulcedeleche
 		name = "Dulce de leche"
 		id = "dulcedeleche"

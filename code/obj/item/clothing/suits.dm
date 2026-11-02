@@ -19,6 +19,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/coat_style = null
 	/// Used for hoodies (and anything that uses the toggle_hood component)
 	var/hooded = FALSE
+	/// If `TRUE`, override `src.wear_layer` with the max of `src.wear_layer` and `MOB_BACK_SUIT_LAYER`.
+	var/override_layer_on_back = TRUE
 
 
 	setupProperties()
@@ -29,7 +31,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 	equipped(mob/user, slot)
 		. = ..()
-		if (slot == SLOT_BACK)
+		if (slot == SLOT_BACK && src.override_layer_on_back)
 			src.wear_layer = max(src.wear_layer, MOB_BACK_SUIT_LAYER) // set to a higher layer, unless they're on an even higher layer
 		var/mob/living/carbon/human/H = user
 		if (src.hooded && istype(H) && H.head)
@@ -539,8 +541,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 /obj/item/clothing/suit/det_suit/beepsky
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
-	icon_state = "ntjacket_o"
-	coat_style = "ntjacket"
+	icon_state = "wornjacket_o"
+	coat_style = "wornjacket"
 
 	setupProperties()
 		..()
@@ -820,6 +822,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	icon_state = "bedsheet"
 	item_state = "bedsheet"
 	layer = MOB_LAYER
+	default_material = "cotton"
+	material_amt = 3 // Matches materials produced when torn
 	throwforce = 1
 	w_class = W_CLASS_TINY
 	throw_speed = 2
@@ -854,7 +858,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	New()
 		..()
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("cotton"), appearance = FALSE, setname = FALSE)
 
 	attack_hand(mob/user)
 		if (src.bed)
@@ -1541,6 +1544,17 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		setProperty("viralprot", 50)
 		setProperty("chemprot", 60)
 
+/obj/item/clothing/suit/space/ntso/engineer
+	name = "NT engineering pressure suit"
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit an insignia to mark its protection against radiation. The fabric on this model is highly fire resistant and houses batiline plating."
+	icon_state = "ntso_engineer"
+	item_state = "ntso_engineer"
+
+/obj/item/clothing/suit/space/ntso/engineer/setupProperties()
+		..()
+		src.setProperty("radprot", 50)
+		src.setProperty("heatprot", 45)
+
 /obj/item/clothing/suit/space/ntso/bellona
 	name = "NTSO combat dress"
 	desc = "A modernized NTSO combat suit, with an integrated energy shield."
@@ -1582,11 +1596,11 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	onMaterialChanged()
 		. = ..()
 		if (istype(src.material))
-			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
+			var/prot = max(0, (5 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 10)
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
-			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
+			prot =  clamp(((src.material.getProperty(MATERIAL::PROPERTY::CHEM_RESIST) - 4) * 15), 0, 70) // 30 would be default for metal.
 			setProperty("chemprot", prot)
 		return
 
@@ -1628,7 +1642,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
 		var/prot_rad = round(renfMat.calc_radiation_prot() / 2, 5)
 		setProperty("radprot", prot_rad)
-		var/prot = max(0, renfMat.getProperty("density") - 3) / 2
+		var/prot = max(0, renfMat.getProperty(MATERIAL::PROPERTY::DENSITY) - 3) / 2
 		setProperty("meleeprot", 3 + prot)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
@@ -2161,7 +2175,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	name = "hi-vis vest"
 	desc = "For when you just have to be seen!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi' // 32x32 so the reflection, which renders on its own plane, turns with the body when lying down
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "hi-vis"
 	item_state = "hi-vis"
@@ -2201,7 +2215,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	desc = "A coat that makes you even more visible!"
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	icon_state = "puffer-hivis"
 	item_state = "puffer-hivis"
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -2661,6 +2674,36 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "autumn_jacket"
 	item_state = "autumn_jacket"
+
+/obj/item/clothing/suit/jacket/trench
+	name = "trench coat"
+	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
+	icon_state = "trench_coat"
+	item_state = "trench_coat"
+	coat_style = "trench_coat"
+
+/obj/item/clothing/suit/jacket/trench/New()
+	..()
+	src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
+
+/obj/item/clothing/suit/jacket/corduroy
+	name = "corduroy jacket"
+	desc = "A hard-wearing jacket with a corduroy-lined collar and cuffs."
+	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
+	icon_state = "corduroy_jacket"
+	item_state = "corduroy_jacket"
+
+/obj/item/clothing/suit/autumn_scarf
+	name = "autumn scarf"
+	desc = "A dull-colored striped scarf with decorative fringe on both ends."
+	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
+	icon_state = "autumn_scarf"
+	item_state = "autumn_scarf"
+	c_flags = ONBACK
+	override_layer_on_back = FALSE
 
 // New chaplain stuff
 

@@ -31,7 +31,7 @@ TYPEINFO(/datum/component/radioactive)
 			return COMPONENT_INCOMPATIBLE
 		. = ..()
 		var/atom/A = parent
-		if(A.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+		if(HAS_ATOM_PROPERTY(A, PROP_ATOM_NEVER_RADIOACTIVE))
 			// This material is immune to radiation. Don't register for anything.
 			src.radStrength = 0
 			src.radStrength_neutron = 0
@@ -150,7 +150,7 @@ TYPEINFO(/datum/component/radioactive)
 		if (!i_am_original)
 			return
 		var/atom/PA = parent
-		if(PA.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+		if(HAS_ATOM_PROPERTY(PA, PROP_ATOM_NEVER_RADIOACTIVE))
 			return
 
 		src.radStrength = min(100, src.radStrength + R.radStrength)

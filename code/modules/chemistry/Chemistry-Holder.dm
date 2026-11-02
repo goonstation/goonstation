@@ -411,7 +411,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if (islist(src.addiction_tally) && length(src.addiction_tally)) // if we got some addictions to process
 			//DEBUG_MESSAGE("metabolize([target]) addiction_tally processing")
 			for (var/rid in src.addiction_tally) // look at each addiction tally
-				if (src.reagent_list.Find(rid)) // if we find that we've got that reagent in us right now
+				if (src.reagent_list[rid]) // if we find that we've got that reagent in us right now
 					//DEBUG_MESSAGE("[rid] currently in holder, continuing")
 					continue // our tally's gunna go up for this reagent when it runs on_mob_life() below, so don't reduce it
 				//DEBUG_MESSAGE("src.addiction_tally\[[rid]\] was [src.addiction_tally[rid]], now [src.addiction_tally[rid] - 0.2]")

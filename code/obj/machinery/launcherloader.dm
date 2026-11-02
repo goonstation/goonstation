@@ -400,7 +400,7 @@
 				"name" = scan.registered,
 				"role" = scan.assignment,
 				"icon" = icon_src,
-				"balance" = account?.get_field("current_money"),
+				"balance" = account?["current_money"],
 			)
 		else
 			.["card"] = null
@@ -502,7 +502,7 @@
 
 	src.destinations["Third Party"] = "REQ-THIRDPARTY"
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
-		src.destinations[RC.name] = RC.req_code
+		src.destinations["[RC.name] ([RC.req_code])"] = RC.req_code
 
 /obj/item/portable_barcoder/attack_self(mob/user)
 	src.select_destination(user)

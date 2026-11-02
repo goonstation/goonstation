@@ -540,46 +540,42 @@
 
 /// Tickets/Fines
 /datum/crewCredits/proc/generate_citation_data()
-	if(length(data_core.tickets))
-		var/list/people_with_tickets = list()
-		for (var/datum/ticket/T in data_core.tickets)
-			people_with_tickets |= T.target
+	var/alist/ticket_data_by_recipient = alist()
+	for (var/datum/db_record/citation/ticket/ticket as anything in global.data_core.tickets.records)
+		var/recipient = ticket["target"]
+		ticket_data_by_recipient[recipient] ||= list()
+		ticket_data_by_recipient[recipient] += list(list(
+			"reason" = ticket["reason"],
+			"issuer" = ticket["issuer"],
+			"issuer_job" = ticket["issuer_job"],
+		))
 
-		for(var/ticket_target in people_with_tickets)
-			var/list/tickets = list()
-			for(var/datum/ticket/ticket in data_core.tickets)
-				if(ticket.target == ticket_target)
-					tickets += list(list(
-						"reason" = html_decode(ticket.reason),
-						"issuer" = html_decode(ticket.issuer),
-						"issuer_job" = html_decode(ticket.issuer_job),
-					))
-			src.citation_tab_data[CITATION_TAB_SECTION_TICKETS] += list(list(
-				"name" = html_decode(ticket_target),
-				"citations" = tickets,
-			))
+	for (var/ticket_target, ticket_data in ticket_data_by_recipient)
+		src.citation_tab_data[CITATION_TAB_SECTION_TICKETS] += list(list(
+			"name" = html_decode(ticket_target),
+			"citations" = ticket_data,
+		))
 
-	if(length(data_core.fines))
-		var/list/people_with_fines = list()
-		for (var/datum/fine/F in data_core.fines)
-			people_with_fines |= F.target
+	var/alist/fine_data_by_recipient = alist()
+	for (var/datum/db_record/citation/fine/fine as anything in global.data_core.fines.records)
+		var/recipient = fine["target"]
+		var/approved = (fine["status"] != "PENDING")
+		var/paid = (fine["status"] == "PAID")
 
-		for(var/fine_target in people_with_fines)
-			var/list/fines = list()
-			for(var/datum/fine/fine in data_core.fines)
-				if(fine.target == fine_target)
-					fines += list(list(
-						"reason" = fine.reason,
-						"issuer" = fine.issuer,
-						"issuer_job" = fine.issuer_job,
-						"amount" = fine.amount,
-						"approver" = fine.approver,
-						"approver_job" = fine.approver_job,
-						"paid_amount" = fine.paid_amount,
-						"paid" = fine.paid
-					))
+		fine_data_by_recipient[recipient] ||= list()
+		fine_data_by_recipient[recipient] += list(list(
+			"reason" = fine["reason"],
+			"issuer" = fine["issuer"],
+			"issuer_job" = fine["issuer_job"],
+			"amount" = fine["amount"],
+			"approver" = (approved ? fine["approver"] : null),
+			"approver_job" = (approved ? fine["approver_job"] : null),
+			"paid_amount" = fine["paid_amount"],
+			"paid" = paid,
+		))
 
-			src.citation_tab_data[CITATION_TAB_SECTION_FINES] += list(list(
-				"name" = fine_target,
-				"citations" = fines,
-			))
+	for (var/fine_target, fine_data in fine_data_by_recipient)
+		src.citation_tab_data[CITATION_TAB_SECTION_FINES] += list(list(
+			"name" = html_decode(fine_target),
+			"citations" = fine_data,
+		))

@@ -115,8 +115,8 @@
 	desc = "Go into a bloody frenzy on a weakened target and rip them to shreds."
 	cooldown = 50 SECONDS
 	icon_state = "lash"
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "harbinger_frame"
+	border_icon = 'icons/mob/wraith_ui.dmi'
+	border_icon_state = "harbinger_frame"
 
 	frenzy_low = 5
 	frenzy_high = 5
@@ -130,11 +130,6 @@
 	start_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	attack_sounds = list("sound/impact_sounds/Flesh_Tear_3.ogg", "sound/impact_sounds/Flesh_Stab_1.ogg")
 	attack_verbs = list("lashes at", "whips", "slashes", "tears at", "lacerates")
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
 /datum/targetable/critter/frenzy/fermid
 	name = "Swarm"

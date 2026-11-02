@@ -117,8 +117,7 @@ TYPEINFO(/mob/living)
 	var/stamina_max = STAMINA_MAX
 	var/stamina_regen = STAMINA_REGEN
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE
-	var/list/stamina_mods_regen = list()
-	var/list/stamina_mods_max = list()
+	var/alist/stamina_mods_max = alist()
 
 	var/last_sleep = 0 //used for sleep_bubble
 
@@ -137,7 +136,9 @@ TYPEINFO(/mob/living)
 	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
-	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	src.AddElement(/datum/element/ghost_observable)
+	// The silhouette is created before atom.New() loads runtime artwork.
+	src.load_runtime_icon()
 	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
@@ -173,7 +174,6 @@ TYPEINFO(/mob/living)
 	vision.flash(duration)
 
 /mob/living/disposing()
-	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
@@ -1821,6 +1821,10 @@ TYPEINFO(/mob/living)
 /mob/living/proc/handle_perma_cryo()
 	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 		antagonist.handle_perma_cryo()
+	var/datum/job/job = find_job_in_controller_by_string(src.mind?.assigned_role)
+	if(istype(job) && job.unique)
+		SPAWN(5 MINUTES)
+			job.assigned = max(0, job.assigned - 1)
 
 /mob/living/proc/handle_cryo()
 	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)

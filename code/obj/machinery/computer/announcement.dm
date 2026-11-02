@@ -387,3 +387,7 @@
 		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/syndicate)
 		SPAWN(0)
 			src.foldUpIntoBriefcase()
+
+/obj/machinery/computer/announcement/shuttle
+	name = "Shuttle Announcement Computer"
+	area_name = "Emergency Shuttle"

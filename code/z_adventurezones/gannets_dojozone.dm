@@ -318,6 +318,7 @@ Contents:
 	desc = "A pretty japanese cherry tree. You don't find a lot of these away from earth."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "sakuratree"
+	season_affected = FALSE
 
 /obj/tree/sakura_tree/tree_2
 	icon_state = "sakuratree2"
@@ -447,7 +448,7 @@ Contents:
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.getMaterialFlags() & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
+					if((R.material?.getMaterialFlags() & MATERIAL_METAL) && R.material.getProperty(MATERIAL::PROPERTY::DENSITY) >= 3 && R.material.getProperty(MATERIAL::PROPERTY::HARDNESS) >= 2)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else

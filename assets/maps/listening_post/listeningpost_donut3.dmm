@@ -620,6 +620,9 @@
 /obj/machinery/codereader/syndicate{
 	pixel_y = 5
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/grey/side,
 /area/listeningpost/general)
 "BY" = (

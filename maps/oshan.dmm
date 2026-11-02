@@ -10186,7 +10186,7 @@
 /obj/item/photo/beepsky1{
 	desc = "You can see a securitron on the photo.  Looks kinda familiar. It appears to be holding a \"#1 Son\" mug.  Is...is that a young Officer Beepsky?"
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "bay" = (
 /obj/crevice{
@@ -11593,7 +11593,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "bgS" = (
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "bgT" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -12607,7 +12607,7 @@
 /area/station/engine/inner)
 "blk" = (
 /obj/table/auto,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "bln" = (
 /obj/table/auto,
@@ -24070,7 +24070,7 @@
 "cJn" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/machinery/vending/coffee,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "cJA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -24879,7 +24879,7 @@
 	pixel_x = 7;
 	pixel_y = 3
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "doh" = (
 /obj/overlay{
@@ -25148,6 +25148,9 @@
 	icon_state = "2-4"
 	},
 /obj/storage/cart/forensic/detective,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "dyE" = (
@@ -25838,7 +25841,7 @@
 "dVU" = (
 /obj/random_item_spawner/gross/one_or_zero,
 /obj/noticeboard/persistent/conspiracy,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "dVZ" = (
 /obj/cable{
@@ -25899,11 +25902,12 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -4
 	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
 /obj/machinery/computer3/terminal/zeta{
 	dir = 8;
 	setup_os_string = "ZETA_MAINFRAME"
 	},
-/obj/cable,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -30309,7 +30313,7 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "hqS" = (
 /turf/simulated/wall/auto/martian,
@@ -32649,7 +32653,7 @@
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /obj/blind_switch/directional/south,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "jro" = (
 /turf/simulated/floor/plating/damaged2,
@@ -32789,7 +32793,7 @@
 /obj/stool/chair/dining/wood{
 	dir = 8
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "jxz" = (
 /obj/decal/cleanable/blood/gibs{
@@ -33711,7 +33715,7 @@
 "kdM" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/light/small/sticky/blueish,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "kdS" = (
 /obj/stool/chair/office/red{
@@ -33763,7 +33767,7 @@
 /obj/table/wood/auto,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/item/reagent_containers/food/snacks/onionchips,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "kgP" = (
 /turf/simulated/floor/stairs{
@@ -33929,7 +33933,7 @@
 "koG" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small/sticky/blueish,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "koW" = (
 /obj/machinery/power/data_terminal,
@@ -36607,7 +36611,7 @@
 /area/station/crew_quarters/lounge/port)
 "mlH" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "mlX" = (
 /obj/cable{
@@ -36630,7 +36634,7 @@
 	dir = 4;
 	name = "rusty airlock"
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "mmV" = (
 /obj/table/reinforced/auto,
@@ -37270,7 +37274,7 @@
 /area/station/maintenance/northeast)
 "mMB" = (
 /obj/machinery/light/small/sticky/blueish,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "mMZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -39093,7 +39097,7 @@
 /area/station/crew_quarters/toilets)
 "ole" = (
 /obj/decal/cleanable/dirt/dirt5,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "olj" = (
 /obj/item/raw_material/rock,
@@ -39145,7 +39149,7 @@
 /obj/stool/chair/dining/wood{
 	dir = 1
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "oop" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -40133,7 +40137,7 @@
 /area/station/crew_quarters/market)
 "pcC" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "pee" = (
 /obj/cable{
@@ -41794,9 +41798,15 @@
 	name = "Net Cafe"
 	})
 "quk" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/light/incandescent/netural{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data{
+	name = "Security Records"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -42264,7 +42274,7 @@
 /area/station/maintenance/east)
 "qMk" = (
 /obj/stool/chair/dining/wood,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "qMx" = (
 /obj/machinery/phone/wall{
@@ -43010,7 +43020,7 @@
 /area/station/hallway/primary/north)
 "rpA" = (
 /obj/decal/cleanable/dirt/dirt4,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "rpF" = (
 /obj/item/cigbutt,
@@ -43543,7 +43553,7 @@
 /area/station/garden/zen)
 "rIl" = (
 /obj/random_item_spawner/gross/one_or_zero,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "rIW" = (
 /obj/window_blinds/cog2/left{
@@ -45056,7 +45066,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "sLd" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "sLA" = (
 /obj/disposalpipe/segment{
@@ -45485,7 +45495,7 @@
 "sZp" = (
 /obj/item/cigbutt,
 /obj/decal/cleanable/dirt/jen,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "tag" = (
 /obj/machinery/door/airlock/pyro/security/alt{
@@ -46375,7 +46385,7 @@
 /area/station/hangar/medical)
 "tNe" = (
 /obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "tOj" = (
 /obj/cable{
@@ -47081,7 +47091,7 @@
 	pixel_y = -5
 	},
 /obj/item/pen/pencil,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "upN" = (
 /obj/storage/cart/trash,
@@ -49070,7 +49080,7 @@
 "vZA" = (
 /obj/table/wood/auto,
 /obj/item/clothing/head/tinfoil_hat,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "vZV" = (
 /obj/mapping_helper/access/engineering_mechanic,
@@ -50278,7 +50288,7 @@
 	},
 /obj/item/paper_bin,
 /obj/decal/cleanable/dirt/dirt5,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "wPf" = (
 /obj/fakeobject/skeleton{
@@ -50303,7 +50313,7 @@
 /obj/stool/chair/dining/wood{
 	dir = 4
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "wQy" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
@@ -51512,7 +51522,7 @@
 /area/martian_trader)
 "xKv" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "xKH" = (
 /obj/machinery/door/airlock/pyro/alt{
@@ -52022,7 +52032,7 @@
 /area/station/crew_quarters/lounge/port)
 "ydw" = (
 /obj/machinery/vending/snack,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "ydC" = (
 /obj/cable{
@@ -115865,6 +115875,7 @@ byY
 bCM
 nVP
 aqn
+aqn
 bFU
 bFU
 bFU
@@ -115878,8 +115889,7 @@ bFU
 bFU
 bFU
 bFU
-bFU
-bFU
+aqn
 aqn
 aqn
 aqn
@@ -116467,7 +116477,7 @@ bzg
 byY
 byY
 bCM
-byq
+nVP
 aqn
 bFU
 bFU
@@ -116765,12 +116775,12 @@ aOO
 qFn
 wNg
 byi
-qeZ
+bzg
 byY
 byY
 bCM
-byo
-byq
+nVP
+aqn
 bFU
 bFU
 bFU
@@ -117067,12 +117077,12 @@ aOO
 xpF
 qDu
 byi
-bWZ
+bzg
 byY
 byY
 bCM
-wRa
-fYf
+byq
+aqn
 bFU
 bFU
 bFU
@@ -117368,13 +117378,13 @@ qFn
 mPe
 mPe
 jXd
-tbp
-bzg
+byi
+qeZ
 byY
 byY
-kLf
-oIU
-nVP
+bCM
+byo
+byq
 bFU
 bFU
 bFU
@@ -117671,12 +117681,12 @@ qzO
 aOO
 vEV
 byi
-bzk
+bWZ
 byY
 byY
 bCM
-mnx
-doK
+wRa
+fYf
 bFU
 bFU
 bFU
@@ -117972,13 +117982,13 @@ qFn
 mPe
 aOO
 rLf
-byi
-diY
-bAp
-bAp
-bCR
-byo
-byq
+tbp
+bzg
+byY
+byY
+kLf
+oIU
+nVP
 bFU
 bFU
 bFU
@@ -118275,12 +118285,12 @@ mPe
 mPe
 qzO
 byi
-nVP
-bAq
-bAq
-nVP
-byq
-aqn
+bzk
+byY
+byY
+bCM
+mnx
+doK
 bFU
 bFU
 bFU
@@ -118577,12 +118587,12 @@ jUm
 nTU
 aOO
 byi
-bzf
-bAn
-bAn
-bCS
+diY
+bAp
+bAp
+bCR
+byo
 byq
-aqn
 bFU
 bFU
 bFU
@@ -118879,11 +118889,11 @@ vTR
 aoj
 nYY
 byi
-bzk
-bAo
-bAo
-bCQ
 nVP
+bAq
+bAq
+nVP
+byq
 aqn
 bFU
 bFU
@@ -119181,13 +119191,12 @@ mPe
 mPe
 sBF
 byi
-bzg
-byY
-byY
-bCM
-nVP
+bzf
+bAn
+bAn
+bCS
+byq
 aqn
-aqn
 bFU
 bFU
 bFU
@@ -119201,7 +119210,8 @@ bFU
 bFU
 bFU
 bFU
-aqn
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -119483,27 +119493,27 @@ aoj
 mPe
 tsu
 byi
-bzg
-byY
-byY
-bCM
+bzk
+bAo
+bAo
+bCQ
 nVP
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -119789,23 +119799,23 @@ bzg
 byY
 byY
 bCM
-byq
+nVP
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -120082,32 +120092,32 @@ aqn
 aqn
 anx
 anx
-byq
+anx
+mPe
+mPe
+mPe
 byi
-vQw
-byi
-byi
-bzk
+bzg
 byY
 byY
-bCQ
-byq
-byq
+bCM
 nVP
-byq
-byq
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -120384,31 +120394,31 @@ aqn
 aqn
 aqn
 aqn
-nVP
-cXA
-bAn
-ngC
-bAn
-yiS
+anx
+mPe
+mPe
+mPe
+byi
+bzg
 byY
 byY
-hbh
-bAn
-ngC
-bAn
-vNf
+bCM
 nVP
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -120686,20 +120696,20 @@ aqn
 aqn
 aqn
 aqn
-nVP
-bzl
-bAp
-bAp
-bAp
-ikm
+anx
+mPe
+mPe
+mPe
+byi
+bzg
 byY
 byY
-vqP
-bAp
-bAp
-bAp
-bCR
+bCM
 nVP
+aqn
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -120988,20 +120998,20 @@ aqn
 aqn
 aqn
 aqn
-byq
-cXB
-mEu
-cXB
-byq
+anx
+mPe
+mPe
+mPe
+byi
 bzg
-bAo
-bAo
+byY
+byY
 bCM
 byq
-cXB
-mEu
-cXB
-byq
+aqn
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -121291,18 +121301,18 @@ aqn
 aqn
 aqn
 byq
-bEa
+byi
+vQw
+byi
+byi
+bzk
+byY
+byY
+bCQ
 byq
-bEa
 byq
-bzl
-bAp
-bAp
-bCR
+nVP
 byq
-bEa
-byq
-bEa
 byq
 aqn
 aqn
@@ -121592,20 +121602,20 @@ aqn
 aqn
 aqn
 aqn
-byq
-bEc
-byq
-bEc
-byq
 nVP
-oID
-oID
+cXA
+bAn
+ngC
+bAn
+yiS
+byY
+byY
+hbh
+bAn
+ngC
+bAn
+vNf
 nVP
-byq
-bEc
-byq
-bEc
-byq
 aqn
 aqn
 aqn
@@ -121894,20 +121904,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aBF
-aqn
-aqn
-aqn
-aqn
+nVP
+bzl
+bAp
+bAp
+bAp
+ikm
+byY
+byY
+vqP
+bAp
+bAp
+bAp
+bCR
+nVP
 aqn
 aqn
 aqn
@@ -122196,20 +122206,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-jPN
-aqn
-aqn
-aqn
-aqn
+byq
+cXB
+mEu
+cXB
+byq
+bzg
+bAo
+bAo
+bCM
+byq
+cXB
+mEu
+cXB
+byq
 aqn
 aqn
 aqn
@@ -122498,20 +122508,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aBF
-aqn
-aqn
-aqn
-aqn
+byq
+bEa
+byq
+bEa
+byq
+bzl
+bAp
+bAp
+bCR
+byq
+bEa
+byq
+bEa
+byq
 aqn
 aqn
 aqn
@@ -122800,20 +122810,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-bEb
-aqn
-aqn
-aqn
-aqn
+byq
+bEc
+byq
+bEc
+byq
+nVP
+oID
+oID
+nVP
+byq
+bEc
+byq
+bEc
+byq
 aqn
 aqn
 aqn
@@ -123111,7 +123121,7 @@ aqn
 aqn
 aqn
 aqn
-iMf
+aBF
 aqn
 aqn
 aqn
@@ -123413,7 +123423,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+jPN
 aqn
 aqn
 aqn
@@ -123715,7 +123725,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+aBF
 aqn
 aqn
 aqn
@@ -124017,7 +124027,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+bEb
 aqn
 aqn
 aqn
@@ -124319,7 +124329,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+iMf
 aqn
 aqn
 aqn

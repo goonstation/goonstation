@@ -40,7 +40,7 @@
 
 		src.pixel_w = x_offset
 		src.pixel_z = y_offset
-		UPDATE_TESSELLATION_ALIGNMENT(src)
+		UPDATE_TESSELLATION_ALIGNMENT(src, src.parallax_render_source)
 
 /// Animates the parallax layer so that it appears to be infinitely moving in one direction, using the `scroll_speed`, `parallax_value`, and `scroll_angle` variables.
 /atom/movable/screen/parallax_layer/proc/scroll_layer()

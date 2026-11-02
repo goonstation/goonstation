@@ -126,34 +126,10 @@
 		src.minimap_render.pixel_x += canvas_offset
 		src.minimap_render.pixel_y += canvas_offset
 
-/// Checks whether a turf is rendered on this minimap type.
-/datum/minimap/area_map/proc/valid_turf(turf/T)
-	if (!T.loc)
-		return FALSE
-
-	var/area/A = T.loc
-	if (!(src.minimap_type & A.minimaps_to_render_on))
-		return FALSE
-
-	return TRUE
 
 /// Gets the bounds used to focus this minimap.
 /datum/minimap/area_map/proc/get_focal_bounds()
-	var/max_x = src.x_min
-	var/min_x = src.x_max
-	var/max_y = src.y_min
-	var/min_y = src.y_max
-
-	for (var/turf/T as anything in block(locate(src.x_min, src.y_min, src.z_level), locate(src.x_max, src.y_max, src.z_level)))
-		if (!src.valid_turf(T))
-			continue
-
-		max_x = max(max_x, T.x)
-		min_x = min(min_x, T.x)
-		max_y = max(max_y, T.y)
-		min_y = min(min_y, T.y)
-
-	return list("max_x" = max_x, "min_x" = min_x, "max_y" = max_y, "min_y" = min_y)
+	return global.minimap_renderer?.get_minimap_focal_bounds(src.z_level, src.minimap_type, src.x_min, src.x_max, src.y_min, src.y_max)
 
 /// Locate the focal point of the map using its focal bounds.
 /datum/minimap/area_map/proc/find_focal_point()

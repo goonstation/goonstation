@@ -22,6 +22,12 @@
 	#define COMSIG_ATOM_CROSSED "atom_crossed"
 	/// when something triggers Uncrossed by exiting this atom's turf (/atom/movable)
 	#define COMSIG_ATOM_UNCROSSED "atom_uncrossed"
+	/// When this atom enters a turf with a fluid. (/atom, /obj/fluid)
+	#define COMSIG_ATOM_FLUID_ENTERED "atom_fluid_entered"
+	/// When this atom leaves a turf with a fluid. (/atom, /obj/fluid)
+	#define COMSIG_ATOM_FLUID_EXITED "atom_fluid_exited"
+	/// When something that's caused an AM to be slipped ends that slip. (thing, /atom/movable/victim)
+	#define COMSIG_ATOM_SLIP_END "mov_throw_end"
 	/// When something calls UpdateIcon, before the icon is updated
 	#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
 	/// When something calls UpdateIcon, after the icon is updated
@@ -256,6 +262,10 @@
 	#define COMSIG_MOB_LOGIN "mob_login"
 	/// When a client logs out of a mob
 	#define COMSIG_MOB_LOGOUT "mob_logout"
+	/// When a target observer starts observing this mob
+	#define COMSIG_MOB_OBSERVER_ATTACHED "mob_observer_attached"
+	/// When a target observer stops observing this mob
+	#define COMSIG_MOB_OBSERVER_DETACHED "mob_observer_detached"
 	/// At the beginning of when an attackresults datum is being set up
 	#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
 	/// When a mob dies (gibbed bool)
@@ -314,6 +324,8 @@
 	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
 	/// Sent to cancel a mob viewing a camera
 	#define COMSIG_MOB_CANCEL_CAMERA "mob_cancel_camera"
+	/// Sent when a disease is cured from a mob (cured disease master, cured strain)
+	#define COMSIG_MOB_DISEASE_CURED "mob_disease_cured"
 
 	// ---- cloaking device signal ----
 
@@ -328,6 +340,10 @@
 // ---- living signals ----
 		/// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
+
+// ---- aquatic signals ----
+		/// If the mob has an aquatic breathing component, returns the water need.
+		#define COMSIG_AQUATIC_GET_WATER_NEED "aquatic_get_water_need"
 
 // ---- human signals ----
 
