@@ -3598,6 +3598,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 		var/tmp/turf/current_beacon_loc = null
 		var/tmp/awaiting_beacon = 0
 		var/tmp/current_tour_text = null
+		var/tmp/speaking_tour_text = FALSE // we're speaking, so don't interject
 		var/tmp/tour_delay = 0
 		var/tmp/neat_things = 0		//Bitfield to mark neat things seen on a tour.
 		var/tmp/recent_nav_attempts = 0
@@ -3652,7 +3653,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						state = STATE_FINDING_BEACON
 						return
 
-					if(prob(tip_prob) && !src.distracted && !GET_COOLDOWN(src.master, "tip"))
+					if(prob(tip_prob) && !src.distracted && !src.speaking_tour_text && !GET_COOLDOWN(src.master, "tip"))
 						master.say(get_random_tip())
 						ON_COOLDOWN(src.master, "tip", 10 SECONDS)
 
@@ -3675,7 +3676,6 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						return	//I realize this doesn't check if they're dead.  Buddies can't always tell, ok!! Maybe if people had helpful power lights too
 
 					speak_with_pause(current_tour_text, yield_to_neat=TRUE)
-					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 					if (next_beacon_id)
 						state = STATE_FINDING_BEACON
@@ -3717,6 +3717,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			var/proc_delay = master.base_tick_spacing*(2**(master.processing_tier-1))
 
 			SPAWN(0) // do not delay doWork
+				src.speaking_tour_text = TRUE
 				//Delay for active destraction
 				while(yield_to_neat && distracted)
 					awaiting_beacon++
@@ -3748,7 +3749,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 								speak_with_maptext(copytext(html_encode(tour_line), 1, MAX_MESSAGE_LEN), TRUE)
 								sleep(5 SECONDS)
 					else
-						speak_with_maptext(copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN), TRUE)
+						speak_with_maptext(copytext(html_encode(text), 1, MAX_MESSAGE_LEN), TRUE)
+				src.speaking_tour_text = FALSE
+				if (src.master)
+					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 
 #define MAPTEXT_SLICE_SIZE 100 // Reduce maptext slice size to avoid 4 rows
