@@ -926,7 +926,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 			RegisterSignal(L, COMSIG_MOVABLE_MOVED, PROC_REF(make_ice))
 			old_base_body_temp = L.base_body_temp
 			L.base_body_temp = T0C
-			L.add_lifeprocess(/datum/lifeprocess/melt,5)
+			L.AddElement(/datum/element/lifeprocess/melt)
 
 	onRemove()
 		. = ..()
@@ -936,7 +936,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 			L.alpha = old_alpha
 			L.base_body_temp = old_base_body_temp
 			UnregisterSignal(L, COMSIG_MOVABLE_MOVED)
-			L.remove_lifeprocess(/datum/lifeprocess/melt)
+			L.RemoveElement(/datum/element/lifeprocess/melt)
 
 	proc/make_ice()
 		if (!locate(/obj/decal/icefloor) in get_turf(owner))

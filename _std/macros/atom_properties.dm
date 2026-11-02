@@ -174,8 +174,7 @@ To remove:
 #define PROP_UPDATE_SIGHT(target, prop, old_val) do {\
 	if(!isliving(target)) break; \
 	var/mob/living/_living_mob = target; \
-	var/datum/lifeprocess/sight/_sightprocess = _living_mob.lifeprocesses?[/datum/lifeprocess/sight]; \
-	_sightprocess?.Process(); \
+	_living_mob.update_sight(); \
 } while(0)
 
 #define PROP_UPDATE_TELEBLOCK_CAT(target, prop, old_val) do { \

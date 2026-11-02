@@ -46,8 +46,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	New()
 		..()
-		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/blood)
+		src.RemoveElement(/datum/element/lifeprocess/blindness)
+		src.RemoveElement(/datum/element/lifeprocess/blood)
 
 		if(name == initial(name))
 			name = "sawfly [pick(sawflynames)]-[rand(1,999)]"
@@ -164,12 +164,12 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
 
-		remove_lifeprocess(/datum/lifeprocess/disability)
-		remove_lifeprocess(/datum/lifeprocess/hud)
-		remove_lifeprocess(/datum/lifeprocess/mutations)
-		remove_lifeprocess(/datum/lifeprocess/organs)
-		remove_lifeprocess(/datum/lifeprocess/sight)
-		remove_lifeprocess(/datum/lifeprocess/statusupdate)
+		src.RemoveElement(/datum/element/lifeprocess/disability)
+		src.RemoveElement(/datum/element/lifeprocess/hud)
+		src.RemoveElement(/datum/element/lifeprocess/mutations)
+		src.RemoveElement(/datum/element/lifeprocess/organs)
+		src.RemoveElement(/datum/element/lifeprocess/sight)
+		src.RemoveElement(/datum/element/lifeprocess/status_update)
 
 
 	proc/blowup() //chance to activate when they die and get EMP'd

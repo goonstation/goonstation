@@ -1609,7 +1609,7 @@ TYPEINFO(/mob/living)
 /mob/living/take_radiation_dose(Sv,internal=FALSE)
 	// if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
 	// but we should still allow ourselves to heal
-	if(Sv > 0 && !src.lifeprocesses[/datum/lifeprocess/radiation])
+	if(Sv > 0 && !src.HasElement(/datum/element/lifeprocess/radiation))
 		return
 	var/actual_dose = ..()
 	if(actual_dose > 0.2 && !internal)

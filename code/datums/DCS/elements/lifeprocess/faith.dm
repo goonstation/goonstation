@@ -4,15 +4,9 @@
 
 	// At 0 faith, Chaplains will generate as much as a normal person in the Chapel.
 	// At FAITH_STARTING, faith generated will decrease linearly.
-	var/datum/trait/job/chaplain/chaplain_training = target.traitHolder?.getTrait("training_chaplain")
-	if (chaplain_training)
-		var/amount = min(FAITH_STARTING / max(chaplain_training.faith, 1), FAITH_GEN_BASE) * mult
-		if (amount > 0)
-			chaplain_training.faith += amount * chaplain_training.faith_mult
-		else
-			chaplain_training.faith += amount
-
-		return
+	if (target.traitHolder?.hasTrait("training_chaplain"))
+		var/amount = min(FAITH_STARTING / max(global.get_chaplain_faith(target), 1), FAITH_GEN_BASE) * mult
+		global.modify_chaplain_faith(target, amount)
 
 	// Non-Chaplains need to be in the Chapel.
 	if (!istype(get_area(target), /area/station/chapel))
@@ -26,9 +20,26 @@
 	if (target.traitHolder?.hasTrait("atheist"))
 		return
 
-	var/amount = FAITH_GEN_BASE * mult
-	for_by_tcl(chaplain, /datum/trait/job/chaplain)
+	global.add_faith(FAITH_GEN_BASE * mult)
+
+
+/proc/add_faith(amount)
+	for_by_tcl(chaplain_training, /datum/trait/job/chaplain)
 		if (amount > 0)
-			chaplain.faith += amount * chaplain.faith_mult
+			chaplain_training.faith += amount * chaplain_training.faith_mult
 		else
-			chaplain.faith += amount
+			chaplain_training.faith += amount
+
+/proc/get_chaplain_faith(mob/target)
+	var/datum/trait/job/chaplain/chaplain_training = target.traitHolder?.getTrait("training_chaplain")
+	if (chaplain_training)
+		return chaplain_training.faith
+
+/proc/modify_chaplain_faith(mob/target, amount)
+	var/datum/trait/job/chaplain/chaplain_training = target.traitHolder?.getTrait("training_chaplain")
+	if (amount > 0)
+		chaplain_training.faith += amount * chaplain_training.faith_mult
+	else
+		chaplain_training.faith += amount
+
+	return chaplain_training.faith

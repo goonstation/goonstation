@@ -963,7 +963,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
 
 		src.ai = new /datum/aiHolder/human/yank(src)
-		remove_lifeprocess(/datum/lifeprocess/blindness)
+		src.RemoveElement(/datum/element/lifeprocess/blindness)
 		src.ai.disable()
 
 	initializeBioholder()
@@ -1001,7 +1001,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
 
 		src.ai = new /datum/aiHolder/human/yank(src)
-		remove_lifeprocess(/datum/lifeprocess/blindness)
+		src.RemoveElement(/datum/element/lifeprocess/blindness)
 		src.ai.disable()
 
 	initializeBioholder()

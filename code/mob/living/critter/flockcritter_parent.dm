@@ -70,7 +70,7 @@ TYPEINFO(/mob/living/critter/flock)
 	src.flock = F || get_default_flock()
 
 	..()
-	remove_lifeprocess(/datum/lifeprocess/radiation)
+	src.RemoveElement(/datum/element/lifeprocess/radiation)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)

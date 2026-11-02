@@ -116,8 +116,8 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	death(var/gibbed, var/do_drop_equipment = 1)
 		..()
-		remove_lifeprocess(/datum/lifeprocess/chicken/egg_timer)
-		remove_lifeprocess(/datum/lifeprocess/chems)
+		src.RemoveElement(/datum/element/lifeprocess/ranch/chicken/egg_timer)
+		src.RemoveElement(/datum/element/lifeprocess/chemical)
 		name = "dead [name]"
 		real_name = "[name]"
 		desc = "Rest in peace, lil' nugget."
@@ -197,44 +197,6 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	proc/special_hatch(var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E)
 		return
-
-/datum/lifeprocess/chicken/egg_timer
-	process()
-		var/mob/living/critter/small_animal/ranch_base/chicken/C = critter_owner
-		if(istype(C))
-			var/mult = get_multiplier()
-			if(C.named)
-				C.egg_timer = max(0, (C.egg_timer - mult/20))
-			else
-				C.egg_timer = max(0, (C.egg_timer - mult))
-
-/datum/lifeprocess/chicken/produce_reagent
-	process()
-		var/mob/living/critter/small_animal/ranch_base/chicken/glass/G = critter_owner
-		if(istype(G))
-
-			var/datum/reagents/R = new()
-			var/amt = 5*get_multiplier()
-			R.maximum_volume = amt
-			R.add_reagent(G.my_reagent_id,amt)
-			if(prob(50))
-				R.reaction(G,INGEST)
-			else
-				R.reaction(G,TOUCH)
-
-			R.trans_to(G,amt)
-
-			R = null
-
-/datum/lifeprocess/honk_randomly
-	process()
-		if(prob(5 + (5 * get_multiplier())))
-			playsound(get_turf(owner), "sound/musical_instruments/Bikehorn_[rand(1,2)].ogg", 30, 1)
-
-/datum/lifeprocess/cluwne_honk_randomly
-	process()
-		if(prob(5 + (5 * get_multiplier())))
-			playsound(get_turf(owner), "sound/voice/cluwnelaugh[rand(1,3)].ogg", 35, 1)
 
 /mob/living/critter/small_animal/ranch_base/chicken/white
 	name = "chick"
@@ -536,11 +498,11 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	restore_life_processes()
 		. = ..()
-		add_lifeprocess(/datum/lifeprocess/honk_randomly)
+		src.AddElement(/datum/element/lifeprocess/honk_randomly)
 
 	reduce_lifeprocess_on_death()
 		. = ..()
-		remove_lifeprocess(/datum/lifeprocess/honk_randomly)
+		src.RemoveElement(/datum/element/lifeprocess/honk_randomly)
 
 	proc/transform_into_mime()
 		var/mob/living/critter/small_animal/ranch_base/chicken/mime/M = null
@@ -612,11 +574,11 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	restore_life_processes()
 		. = ..()
-		add_lifeprocess(/datum/lifeprocess/cluwne_honk_randomly)
+		src.AddElement(/datum/element/lifeprocess/cluwne_honk_randomly)
 
 	reduce_lifeprocess_on_death()
 		. = ..()
-		remove_lifeprocess(/datum/lifeprocess/cluwne_honk_randomly)
+		src.RemoveElement(/datum/element/lifeprocess/cluwne_honk_randomly)
 
 	grow_up()
 		..()
@@ -707,7 +669,7 @@ All other chickens in this file are non-secret. Please be respectful.
 			name = "[reagent_name]-filled glass chick"
 			real_name = "[reagent_name]-filled glass chick"
 			logTheThing(LOG_DEBUG, null, "Reagent-producing chicken was born, will make [reagent_name] ([reagent_id])")
-			add_lifeprocess(/datum/lifeprocess/chicken/produce_reagent)
+			src.AddElement(/datum/element/lifeprocess/ranch/chicken/produce_reagent)
 
 		if(!is_masc)
 			src.evolutions += new/datum/ranch/evolution/chicken/feed_threshold/stone
@@ -715,12 +677,12 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	reduce_lifeprocess_on_death()
 		. = ..()
-		remove_lifeprocess(/datum/lifeprocess/chicken/produce_reagent)
+		src.RemoveElement(/datum/element/lifeprocess/ranch/chicken/produce_reagent)
 
 	restore_life_processes()
 		. = ..()
 		if(src.my_reagent_id)
-			add_lifeprocess(/datum/lifeprocess/chicken/produce_reagent)
+			src.AddElement(/datum/element/lifeprocess/ranch/chicken/produce_reagent)
 
 	on_reagent_change(add)
 		. = ..()
@@ -1526,8 +1488,8 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	restore_life_processes()
 		. = ..()
-		add_lifeprocess(/datum/lifeprocess/melt,5)
-		add_lifeprocess(/datum/lifeprocess/bodytemp)
+		src.AddElement(/datum/element/lifeprocess/melt)
+		src.AddElement(/datum/element/lifeprocess/bodytemp)
 
 	Life(datum/controller/process/mobs/parent)
 		. = ..()
@@ -1568,23 +1530,6 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	ai_controlled
 		is_npc = 1
-
-/datum/lifeprocess/melt
-	var/damage_amount = 5
-
-	New(new_owner,arguments)
-		. = ..()
-		if(length(arguments) >= 1)
-			damage_amount = arguments[1]
-
-	process()
-		var/mob/living/L = owner
-		if(istype(L))
-			if(L.bodytemperature >= (L.base_body_temp + L.temp_tolerance))
-				L.TakeDamage("All",0,damage_amount,0,DAMAGE_BURN)
-			else if (L.bodytemperature <= (L.base_body_temp - L.temp_tolerance))
-				L.TakeDamage("All",0,-damage_amount,0,DAMAGE_BURN)
-
 
 
 /mob/living/critter/small_animal/ranch_base/chicken/ghost
@@ -1776,8 +1721,8 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	restore_life_processes()
 		. = ..()
-		add_lifeprocess(/datum/lifeprocess/melt,5)
-		add_lifeprocess(/datum/lifeprocess/bodytemp)
+		src.AddElement(/datum/element/lifeprocess/melt)
+		src.AddElement(/datum/element/lifeprocess/bodytemp)
 
 	Life(datum/controller/process/mobs/parent)
 		. = ..()

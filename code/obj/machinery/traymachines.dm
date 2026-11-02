@@ -292,7 +292,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 /*~ Morgue ~*/
 //-----------------------------------------------------
 
-//Morgues prevent decomposition, but that functionality is handled by /datum/lifeprocess/decomposition
+//Morgues prevent decomposition, but that functionality is handled by /datum/element/lifeprocess/decomposition
 /obj/machinery/traymachine/morgue
 	name = "morgue"
 	icon = 'icons/obj/morgue.dmi'

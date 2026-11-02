@@ -198,7 +198,7 @@
 	return internal.remove_air_volume(volume_needed)
 
 /// Handle taking a single breath. Returns the number of lungs that took a breath.
-/datum/element/lifeprocess/breath/proc/handle_breath(mob/living/target, datum/gas_mixture/breath, atom/underwater, mult) //'underwater' really applies for any reagent that gets deep enough. but what ever
+/datum/element/lifeprocess/breath/proc/handle_breath(mob/living/target, datum/gas_mixture/breath, atom/underwater, mult)
 	var/datum/organ_status/lung/status_updates = new
 	var/area/A = get_area(target)
 

@@ -1,59 +1,4 @@
-/datum/lifeprocess
-	var/mob/living/owner
-	var/last_process = 0
-
-	/// This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/tick_spacing = LIFE_PROCESS_TICK_SPACING
-	/// highest TIME allowance between ticks to try to play catchup with realtime thingo
-	var/const/cap_tick_spacing = LIFE_PROCESS_CAP_TICK_SPACING
-
-	var/mob/living/carbon/human/human_owner = null
-	var/mob/living/silicon/hivebot/hivebot_owner = null
-	var/mob/living/silicon/robot/robot_owner = null
-	var/mob/living/silicon/ai/ai_mainframe_owner = null
-	var/mob/living/critter/critter_owner = null
-
-	New(new_owner,arguments)
-		..()
-		last_process = TIME
-
-		owner = new_owner
-		if (ishuman(owner))
-			human_owner = owner
-		if (istype(owner,/mob/living/silicon/hivebot))
-			hivebot_owner = owner
-		if (istype(owner,/mob/living/silicon/robot))
-			robot_owner = owner
-		if (istype(owner,/mob/living/silicon/ai))
-			ai_mainframe_owner = owner
-		if (istype(owner,/mob/living/critter))
-			critter_owner = owner
-
-	disposing()
-		..()
-		owner = null
-		human_owner = null
-		hivebot_owner = null
-		robot_owner = null
-		ai_mainframe_owner = null
-		critter_owner = null
-
-	proc/Process(datum/gas_mixture/environment)
-		SHOULD_NOT_OVERRIDE(TRUE)
-		process(environment)
-		last_process = TIME
-
-	proc/process(datum/gas_mixture/environment)
-		PROTECTED_PROC(TRUE)
-		//SHOULD_NOT_SLEEP(TRUE)
-
-	proc/get_multiplier()
-		.= clamp(TIME - last_process, tick_spacing, cap_tick_spacing) / tick_spacing
-
 /mob/living
-	var/list/lifeprocesses = list()
-
-	//remove these evntually cause lifeporcesses handl ethem
 	var/last_life_tick = 0 //and this ones just the whole lifetick
 	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
 	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
@@ -61,22 +6,6 @@
 	var/life_context = "begin"
 
 	var/last_tick_regular_blood_range = FALSE
-
-	proc/add_lifeprocess(type,...)
-		var/datum/lifeprocess/L = null
-		if (length(args) > 1)
-			var/arguments = args.Copy(2)
-			L = new type(src,arguments)
-		else
-			L = new type(src)
-		lifeprocesses?[type] = L
-		return L
-
-	proc/remove_lifeprocess(type)
-		if(!lifeprocesses) return //sometimes list is null, causes runtime.
-		var/datum/lifeprocess/L = lifeprocesses[type]
-		lifeprocesses -= type
-		qdel(L)
 
 	proc/get_heat_protection()
 		var/thermal_protection = 10 // base value
@@ -124,102 +53,95 @@
 	src.change_misstep_chance(-INFINITY)
 	restore_life_processes()
 
-/mob/living/disposing()
-	for (var/datum/lifeprocess/L in lifeprocesses)
-		remove_lifeprocess(L)
-	lifeprocesses.len = 0
-	lifeprocesses = null
-	..()
 
 /mob/living/carbon/human
-	var/list/heartbeatOverlays = list()
 	var/last_human_life_tick = 0
 
 /mob/living/critter/restore_life_processes()
-	..()
-	add_lifeprocess(/datum/lifeprocess/blood)
-	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
-	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
-	add_lifeprocess(/datum/lifeprocess/chems)
-	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/hud)
-	add_lifeprocess(/datum/lifeprocess/mutations)
-	add_lifeprocess(/datum/lifeprocess/organs)
-	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
-	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/radiation)
-	add_lifeprocess(/datum/lifeprocess/gravity)
+	. = ..()
+	src.AddElement(/datum/element/lifeprocess/blood)
+	src.AddElement(/datum/element/lifeprocess/chemical)
+	src.AddElement(/datum/element/lifeprocess/disability)
+	src.AddElement(/datum/element/lifeprocess/hud)
+	src.AddElement(/datum/element/lifeprocess/mutations)
+	src.AddElement(/datum/element/lifeprocess/organs)
+	src.AddElement(/datum/element/lifeprocess/sight)
+	src.AddElement(/datum/element/lifeprocess/status_update)
+	src.AddElement(/datum/element/lifeprocess/stuns_lying)
+	src.AddElement(/datum/element/lifeprocess/blindness)
+	src.AddElement(/datum/element/lifeprocess/radiation)
+	src.AddElement(/datum/element/lifeprocess/gravity)
 
 /mob/living/carbon/human/restore_life_processes()
-	..()
-	add_lifeprocess(/datum/lifeprocess/blood)
-	add_lifeprocess(/datum/lifeprocess/bodytemp)
-	add_lifeprocess(/datum/lifeprocess/breath)
-	add_lifeprocess(/datum/lifeprocess/chems)
-	add_lifeprocess(/datum/lifeprocess/critical)
-	remove_lifeprocess(/datum/lifeprocess/decomposition) // only happens when mob is dead
-	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/hud)
-	add_lifeprocess(/datum/lifeprocess/mutations)
-	add_lifeprocess(/datum/lifeprocess/organs)
-	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
-	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/radiation)
-	add_lifeprocess(/datum/lifeprocess/faith)
-	add_lifeprocess(/datum/lifeprocess/gravity)
+	. = ..()
+	src.AddElement(/datum/element/lifeprocess/blood)
+	src.AddElement(/datum/element/lifeprocess/bodytemp)
+	src.AddElement(/datum/element/lifeprocess/breath)
+	src.AddElement(/datum/element/lifeprocess/chemical)
+	src.AddElement(/datum/element/lifeprocess/critical)
+	src.AddElement(/datum/element/lifeprocess/disability)
+	src.AddElement(/datum/element/lifeprocess/hud)
+	src.AddElement(/datum/element/lifeprocess/mutations)
+	src.AddElement(/datum/element/lifeprocess/organs)
+	src.AddElement(/datum/element/lifeprocess/sight)
+	src.AddElement(/datum/element/lifeprocess/status_update)
+	src.AddElement(/datum/element/lifeprocess/stuns_lying)
+	src.AddElement(/datum/element/lifeprocess/blindness)
+	src.AddElement(/datum/element/lifeprocess/radiation)
+	src.AddElement(/datum/element/lifeprocess/faith)
+	src.AddElement(/datum/element/lifeprocess/gravity)
+
+	src.RemoveElement(/datum/element/lifeprocess/decomposition)
 
 /mob/living/carbon/cube/restore_life_processes()
-	..()
-	add_lifeprocess(/datum/lifeprocess/chems)
-	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/hud)
-	add_lifeprocess(/datum/lifeprocess/organs)
-	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
-	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/radiation)
+	. = ..()
+	src.AddElement(/datum/element/lifeprocess/chemical)
+	src.AddElement(/datum/element/lifeprocess/disability)
+	src.AddElement(/datum/element/lifeprocess/hud)
+	src.AddElement(/datum/element/lifeprocess/organs)
+	src.AddElement(/datum/element/lifeprocess/sight)
+	src.AddElement(/datum/element/lifeprocess/status_update)
+	src.AddElement(/datum/element/lifeprocess/stuns_lying)
+	src.AddElement(/datum/element/lifeprocess/blindness)
+	src.AddElement(/datum/element/lifeprocess/radiation)
 
 /mob/living/silicon/ai/restore_life_processes()
-	..()
-	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/faith)
+	. = ..()
+	src.AddElement(/datum/element/lifeprocess/sight)
+	src.AddElement(/datum/element/lifeprocess/blindness)
+	src.AddElement(/datum/element/lifeprocess/disability)
+	src.AddElement(/datum/element/lifeprocess/faith)
 
 /mob/living/silicon/hivebot/restore_life_processes()
-	..()
-	add_lifeprocess(/datum/lifeprocess/hud)
-	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
-	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/hivebot_signal)
+	. = ..()
+	src.AddElement(/datum/element/lifeprocess/hud)
+	src.AddElement(/datum/element/lifeprocess/sight)
+	src.AddElement(/datum/element/lifeprocess/stuns_lying)
+	src.AddElement(/datum/element/lifeprocess/blindness)
+	src.AddElement(/datum/element/lifeprocess/hivebot)
 
 /mob/living/silicon/robot/restore_life_processes()
-	..()
-	add_lifeprocess(/datum/lifeprocess/hud)
-	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
-	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/robot_locks)
-	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/faith)
-	add_lifeprocess(/datum/lifeprocess/gravity)
+	. = ..()
+	src.AddElement(/datum/element/lifeprocess/hud)
+	src.AddElement(/datum/element/lifeprocess/sight)
+	src.AddElement(/datum/element/lifeprocess/stuns_lying)
+	src.AddElement(/datum/element/lifeprocess/blindness)
+	src.AddElement(/datum/element/lifeprocess/disability)
+	src.AddElement(/datum/element/lifeprocess/faith)
+	src.AddElement(/datum/element/lifeprocess/gravity)
+	src.AddElement(/datum/element/lifeprocess/robot)
 
 
 /mob/living/silicon/drone/restore_life_processes()
-	..()
-	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	. = ..()
+	src.AddElement(/datum/element/lifeprocess/stuns_lying)
 
 /mob/living/intangible/aieye/restore_life_processes()
 	. = ..()
-	add_lifeprocess(/datum/lifeprocess/disability) // for misstep
+	src.AddElement(/datum/element/lifeprocess/disability) // for misstep
+
+
+
 
 /mob/living/Life(datum/controller/process/mobs/parent)
 	if (..())
@@ -246,15 +168,6 @@
 
 		var/mult = clamp(TIME - src.last_life_tick, LIFE_PROCESS_TICK_SPACING, LIFE_PROCESS_CAP_TICK_SPACING) / LIFE_PROCESS_TICK_SPACING
 		SEND_SIGNAL(src, COMSIG_LIVING_LIFEPROCESS_TICK, mult, environment)
-
-		var/datum/lifeprocess/L
-		for (var/thing in src.lifeprocesses)
-			if(src.disposed) return
-			L = src.lifeprocesses?[thing]
-			if(!L)
-				logTheThing(LOG_DEBUG, src, "had lifeprocess [thing] removed during Life() probably.")
-				continue
-			L.Process(environment)
 
 		update_item_abilities()
 
@@ -476,9 +389,9 @@
 		losebreath = clamp(losebreath, 0, 25) // stop going up into the thousands, goddamn
 
 	proc/update_sight()
-		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
-		if (L)
-			L.Process()
+		// Extremely cursed. Anti-pattern. Do not repeat.
+		var/datum/element/lifeprocess/sight/sight = src._GetElement(/datum/element/lifeprocess/sight)
+		sight?.process(src, 0)
 
 	update_canmove()
 		// update buckled
@@ -515,15 +428,11 @@
 		src.canmove = TRUE
 
 	force_laydown_standup() //immediately force a laydown
-		if(!lifeprocesses)
-			return
-		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/stuns_lying]
-		if (L)
-			L.Process()
-		src.update_canmove()
-		L = lifeprocesses?[/datum/lifeprocess/blindness]
-		if (L)
-			L.Process()
+		// Extremely cursed. Anti-pattern. Do not repeat.
+		var/datum/element/lifeprocess/stuns_lying/stuns = src._GetElement(/datum/element/lifeprocess/stuns_lying)
+		stuns?.process(src, 0)
+		var/datum/element/lifeprocess/blindness/blindness = src._GetElement(/datum/element/lifeprocess/blindness)
+		blindness?.process(src, 0)
 
 		if (src.client)
 			updateOverlaysClient(src.client)
@@ -665,3 +574,71 @@
 		if (shoes)
 			if (shoes.protective_temperature > temp)
 				. += (shoes.protective_temperature/10)
+
+
+/mob/living/proc/handle_organs(var/mult = 1)//for things that arent humans, and dont override to use actual organs - they might use digestion ok
+	src.organHolder?.stomach?.handle_digestion(mult)
+
+/mob/living/carbon/human/handle_organs(var/mult = 1)
+	if (src.ignore_organs)
+		return
+
+	if (!src.organHolder)
+		src.organHolder = new(src)
+		sleep(1 SECOND)
+
+	var/datum/organHolder/oH = src.organHolder
+	if (!oH.head && !isskeleton(src) && !src.nodamage) // skeletons can survive without their head
+		src.death()
+
+	// time to find out why this wasn't added - cirr
+	oH.handle_organs(mult)
+
+
+	if (!oH.skull && oH.head && !isskeleton(src) && !src.nodamage) // skeletons can also survive without their skull because reasons
+		src.death()
+		src.visible_message(SPAN_ALERT("<b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!"),\
+		SPAN_ALERT("Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!"))
+
+	//Wire note: Fix for Cannot read null.loc
+	else if (oH.skull?.loc != src)
+		oH.skull = null
+
+	if (!oH.brain)
+		if (!src.nodamage)
+			src.death()
+	else if (oH.brain.loc != src)
+		oH.brain = null
+
+	if (!oH.heart)
+		if (!ischangeling(src) && !src.nodamage)
+			if (src.get_oxygen_deprivation())
+				src.take_brain_damage(3 * mult)
+			else if (prob(10))
+				src.take_brain_damage(1 * mult)
+
+			src.changeStatus("knockdown", 5 * mult SECONDS)
+			src.losebreath += 20 * mult
+			src.take_oxygen_deprivation(20 * mult)
+	else
+		if (oH.heart.loc != src)
+			oH.heart = null
+		else if (oH.heart.robotic && oH.heart.emagged && !oH.heart.broken)
+			src.changeStatus("drowsy", -20 SECONDS)
+			if (src.sleeping) src.sleeping = 0
+		else if (oH.heart.robotic && !oH.heart.broken)
+			src.changeStatus("drowsy", -10 SECONDS)
+			if (src.sleeping) src.sleeping = 0
+		else if (oH.heart.broken)
+			if (src.get_oxygen_deprivation())
+				src.take_brain_damage(3 * mult)
+			else if (prob(10))
+				src.take_brain_damage(1 * mult)
+
+			changeStatus("knockdown", 2 * mult SECONDS)
+			src.losebreath += 20 * mult
+			src.take_oxygen_deprivation(20 * mult)
+		else if (src.organHolder.heart.get_damage() > 100)
+			src.contract_disease(/datum/ailment/malady/flatline,null,null,1)
+
+	// lungs are skipped until they can be removed/whatever

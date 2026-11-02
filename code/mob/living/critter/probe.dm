@@ -69,7 +69,7 @@ TYPEINFO(/mob/living/critter/robotic/probe)
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_SELF_HARM, src)
-		src.remove_lifeprocess("gravity")
+		src.RemoveElement(/datum/element/lifeprocess/gravity)
 		src.deployment_turf = get_turf(src)
 		src.name = "[pick("peculiar","quirky","strange","cold","intricate","odd","curious")] [pick("visage","proxy","interface","attendant")]"
 		src.data_interface = new /obj/item/implant/access/infinite(src)

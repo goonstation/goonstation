@@ -1243,13 +1243,3 @@ Frequency:
 		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.removeOverlayComposition(/datum/overlayComposition/low_signal)
-
-/datum/lifeprocess/hivebot_signal
-	process(var/datum/gas_mixture/environment)
-		if(hivebot_owner?.mainframe)
-			if((get_step(hivebot_owner.mainframe, 0)?.z == get_step(hivebot_owner, 0)?.z) || (inunrestrictedz(hivebot_owner) && inonstationz(hivebot_owner.mainframe)))
-				hivebot_owner.delStatus("low_signal")
-			else
-				hivebot_owner.setStatus("low_signal", INFINITE_STATUS)
-		..()
-

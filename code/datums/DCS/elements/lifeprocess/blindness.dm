@@ -21,7 +21,7 @@
 		return
 
 	switch (eyes_blinded)
-		if (EYEBLIND_L & EYEBLIND_R)
+		if (EYEBLIND_L | EYEBLIND_R)
 			H.addOverlayComposition(/datum/overlayComposition/blinded)
 			H.removeOverlayComposition(/datum/overlayComposition/blinded_l_eye)
 			H.removeOverlayComposition(/datum/overlayComposition/blinded_r_eye)

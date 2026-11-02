@@ -2710,7 +2710,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = FALSE
 	New()
 		..()
-		add_lifeprocess(/datum/lifeprocess/disability) // so that they stop jittering
+		src.AddElement(/datum/element/lifeprocess/disability) // so that they stop jittering
 		START_TRACKING
 	disposing()
 		. = ..()

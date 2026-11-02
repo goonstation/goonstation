@@ -29,7 +29,7 @@
 		..()
 		setup_loot_table()
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
-		src.remove_lifeprocess("gravity")
+		src.RemoveElement(/datum/element/lifeprocess/gravity)
 
 		src.name = "[initial(name)] [drone_designation]-[rand(num_max)]"
 		src.real_name = src.name

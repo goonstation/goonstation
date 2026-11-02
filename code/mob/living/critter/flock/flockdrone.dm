@@ -180,9 +180,7 @@
 	controller = pilot
 	src.flock_name_tag.set_info_tag(src.controller.real_name)
 	src.client?.set_color()
-	//hack to make night vision apply instantly
-	var/datum/lifeprocess/sight/sight_process = src.lifeprocesses[/datum/lifeprocess/sight]
-	sight_process?.Process()
+	src.update_sight()
 	src.hud?.update_intent()
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	composite.addHolderInstance(pilot.abilityHolder, TRUE)
