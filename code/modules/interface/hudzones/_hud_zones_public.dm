@@ -107,3 +107,27 @@
 	src.remove_element(elem_alias)
 	src.recalculate_offsets()
 	return TRUE
+
+/**
+ * ### Hides or shows the hud element associated with `elem_alias`
+ *
+ * Hidden elements are taken off the screen and the rest of the zone moves up to fill the gap,
+ * keeping registration order. Showing it again puts it back in its original slot.
+ *
+ * Returns `null` if passed improper args, `FALSE` if nothing changed, `TRUE` otherwise
+ */
+/datum/hud_zone/proc/set_element_hidden(elem_alias, hidden)
+	if (!elem_alias)
+		return null
+
+	var/datum/hud_element/element = src.elements[elem_alias]
+	if (!element || element.hidden == !!hidden)
+		return FALSE
+
+	element.hidden = !!hidden
+	if (element.hidden)
+		src.master.remove_screen(element.screen_obj)
+	else
+		src.master.add_screen(element.screen_obj)
+	src.recalculate_offsets()
+	return TRUE

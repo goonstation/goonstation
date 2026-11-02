@@ -49,6 +49,8 @@
 	for (var/adjust_index in 1 to length(elements))
 		var/adjust_alias = elements[adjust_index]
 		var/datum/hud_element/to_adjust = elements[adjust_alias]
+		if (to_adjust.hidden)
+			continue
 		src.adjust_offset(to_adjust)
 
 /// internal use only. accepts an element and tries to position that element in the zone based on current element positions.

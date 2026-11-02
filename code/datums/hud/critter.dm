@@ -90,6 +90,10 @@
 	if (src.master.can_bleed)
 		health_zone.register_element(src.create_bleeding_element(), "bleeding")
 
+	// warnings start inactive, so they stay out of the way until they have something to show
+	for (var/warning in list("oxygen", "fire", "toxin", "rad", "bleeding"))
+		health_zone.set_element_hidden(warning, TRUE)
+
 	src.create_throwing_element()
 
 	src.create_intent_element()
@@ -188,12 +192,14 @@
 	if (!src.oxygen)
 		return
 	src.oxygen.icon_state = "oxy[status]"
+	src.show_warning("oxygen", status)
 
 /// sets the breathing fire icon on the hud to show breathing fire status
 /datum/hud/critter/proc/set_breathing_fire(var/status)
 	if (!src.fire)
 		return
 	src.fire.icon_state = "fire[status]"
+	src.show_warning("fire", status)
 
 /// updates the hand icon(s) to reflect which hand is active
 /datum/hud/critter/proc/update_hands()
@@ -359,6 +365,7 @@
 	if (!src.bleeding) return //doesn't have a hud element to update
 	if (isdead(src.master))
 		src.bleeding.icon_state = "blood0"
+		src.show_warning("bleeding", FALSE)
 		src.bleeding.tooltip_options = list("theme" = "healthDam0")
 		return
 
@@ -379,6 +386,7 @@
 			theme = 6
 
 	src.bleeding.icon_state = "blood[state]"
+	src.show_warning("bleeding", state)
 	src.bleeding.tooltip_options = list("theme" = "healthDam[theme]")
 
 /// updates temperature hud element
@@ -430,6 +438,7 @@
 	if (!src.toxin)
 		return
 	src.toxin.icon_state = "tox[status]"
+	src.show_warning("toxin", status)
 
 /// updates radiation hud element
 /datum/hud/critter/proc/update_rad_indicator()
@@ -437,6 +446,11 @@
 		return
 	var/status = (TIME - src.master.last_radiation_dose_time) < LIFE_PROCESS_TICK_SPACING
 	src.rad.icon_state = "rad[status]"
+	src.show_warning("rad", status)
+
+/// Warning indicators only take up a slot in the health zone while they're active, so there are no gaps between the rest
+/datum/hud/critter/proc/show_warning(elem_alias, active)
+	src.get_hudzone("health_zone")?.set_element_hidden(elem_alias, !active)
 
 /// updates resting status
 /datum/hud/critter/proc/update_resting()

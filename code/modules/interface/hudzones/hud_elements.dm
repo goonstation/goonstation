@@ -10,6 +10,8 @@
 	var/height = 1
 	/// The actual screen object
 	var/atom/movable/screen/hud/screen_obj = null
+	/// Hidden elements are taken off the screen and skipped when positioning, so the zone closes up around them
+	var/hidden = FALSE
 
 /datum/hud_element/New(screen_obj, width = 1, height = 1)
 	. = ..()
