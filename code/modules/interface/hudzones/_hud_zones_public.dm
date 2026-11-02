@@ -43,7 +43,7 @@
 	if (!coords || !alias || isnull(horizontal_edge) || isnull(vertical_edge) || isnull(ignore_overlap))
 		return null
 
-	if (!src.hud_zones || !src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
+	if (!src.hud_zones || src.hud_zones[alias] || !src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
 		return FALSE
 
 	var/datum/hud_zone/zone = new/datum/hud_zone(src, coords, alias, dirvalues["[horizontal_edge]"], dirvalues["[vertical_edge]"], ignore_overlap)
@@ -53,15 +53,18 @@
 /// Deletes a hud zone and all elements inside of it
 /datum/hud/proc/delete_hud_zone(alias)
 	var/datum/hud_zone/hud_zone = src.get_hudzone(alias)
+	if (!hud_zone)
+		return
 
 	// remove elements
 	var/list/elements = hud_zone.elements
 	for (var/element_alias in elements)
-		var/datum/hud_element/to_delete = elements[element_alias] // ZEWAKA TODO: does this work with assoc lists
-		elements.Remove(to_delete)
+		var/datum/hud_element/to_delete = elements[element_alias]
+		src.remove_screen(to_delete.screen_obj)
 		qdel(to_delete)
+	elements.Cut()
 
-	src.hud_zones.Remove(hud_zone)
+	src.hud_zones -= alias
 	qdel(hud_zone)
 
 

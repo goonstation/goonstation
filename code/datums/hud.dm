@@ -124,8 +124,8 @@
 					H.master = null
 		src.objects = null
 
-		for (var/datum/hud_zone/zone in src.hud_zones)
-			qdel(zone)
+		for (var/zone_alias in src.hud_zones)
+			qdel(src.hud_zones[zone_alias])
 		src.hud_zones = null
 
 		src.clear_master()

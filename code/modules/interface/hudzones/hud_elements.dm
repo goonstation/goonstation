@@ -36,6 +36,10 @@
 	if (!element || !elem_alias)
 		return null
 
+	if (src.elements[elem_alias])
+		logTheThing(LOG_DEBUG, src, "<B>ZeWaka/Hudzones:</B> Couldn't add element [elem_alias] to zone [src] because that alias is already registered.")
+		return FALSE
+
 	if (!ignore_area)
 		if (element.height != 1)
 			logTheThing(LOG_DEBUG, src, "<B>ZeWaka/Hudzones:</B> Couldn't add element [elem_alias] to zone [src] because height was not 1 (height: [element.height]).")
@@ -46,7 +50,7 @@
 			return FALSE
 
 	src.elements[elem_alias] = element // adds element to internal list
-	src.master.objects += element.screen_obj // adds element to the tracked object list (for adding to clients)
+	src.master.add_screen(element.screen_obj) // adds element to the tracked object list and shows it to clients
 	return TRUE
 
 /**
@@ -60,8 +64,10 @@
 		return null
 
 	var/datum/hud_element/to_remove = src.elements[elem_alias]
+	if (!to_remove)
+		return FALSE
 
 	src.elements.Remove(elem_alias)
-	src.master.objects.Remove(to_remove.screen_obj)
+	src.master.remove_screen(to_remove.screen_obj)
 	qdel(to_remove)
 	return TRUE
