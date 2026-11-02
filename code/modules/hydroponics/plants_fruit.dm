@@ -31,6 +31,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	endurance = 0
 	genome = 20
 	nectarlevel = 10
+	assoc_reagents = list("juice_grape")
 	mutations = list(/datum/plantmutation/grapes/green, /datum/plantmutation/grapes/fruit)
 	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/seedless)
 
@@ -316,6 +317,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	isgrass = 1
 	endurance = 6
 	genome = 19
+	assoc_reagents = list("water") //96%
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
 
 /datum/plant/fruit/mustard
