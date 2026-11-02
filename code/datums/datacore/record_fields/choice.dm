@@ -2,7 +2,7 @@
 	VAR_PROTECTED/list/choices = null
 	VAR_PROTECTED/leading_zero_count = null
 
-/datum/record_field/choice/New(name, value, list/choices)
+/datum/record_field/choice/New(parent, name, value, list/choices)
 	src.choices = list()
 	for (var/choice as anything in choices)
 		src.choices[choice] = TRUE

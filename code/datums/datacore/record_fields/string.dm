@@ -3,7 +3,7 @@
 	VAR_PROTECTED/regex_string = null
 	VAR_PROTECTED/regex/validation_regex = null
 
-/datum/record_field/string/New(name, value, regex_string)
+/datum/record_field/string/New(parent, name, value, regex_string)
 	src.regex_string = regex_string
 	if (src.regex_string)
 		src.validation_regex = regex("^" + src.regex_string + "$")

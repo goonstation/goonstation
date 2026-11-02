@@ -26252,7 +26252,9 @@
 	},
 /area/space)
 "nCr" = (
-/obj/machinery/computer/tetris,
+/obj/machinery/computer/tetris{
+	dir = 4
+	},
 /obj/blind_switch/directional/west{
 	pixel_y = 4
 	},

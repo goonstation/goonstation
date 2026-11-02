@@ -257,7 +257,3 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 		return TRUE
 
 	return FALSE
-
-/// Called when this database manager is used to update a record field.
-/datum/computer/file/terminal_program/db_manager/proc/on_field_update(datum/db_record/record, key, old_value, new_value)
-	return

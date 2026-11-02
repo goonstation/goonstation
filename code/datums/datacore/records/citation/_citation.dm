@@ -1,10 +1,5 @@
+ABSTRACT_TYPE(/datum/db_record/citation)
 /datum/db_record/citation
-	fields = alist(
-		"id" 		= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
-		"time"		= new /datum/record_field/string("Time", "00:00:00"),
-		"type"		= new /datum/record_field/choice("Type", "TICKET", list("TICKET", "FINE")),
-		"target"	= new /datum/record_field/string("Target", "Unknown"),
-	)
 
 /datum/db_record/citation/to_display_string()
 	return src["id"] + ": " + src["target"]
@@ -18,6 +13,7 @@
 		src.get_recipient(),
 		src.get_approver(),
 		src.get_reason(),
+		src.get_resolution(),
 		src.get_footer(),
 	)
 
@@ -42,15 +38,19 @@
 
 /datum/db_record/citation/proc/get_header()
 	PROTECTED_PROC(TRUE)
-	var/time = src["time"]
-	var/display_time = copytext(time, 1, 11) + " " + copytext(time, 12, 20)
-
 	return {"\
 		<font face="Monospace" color="453425">\
 		<center>\
 		<font size="4">[src["authority"]]</font><br>\
 		<font size="3">[global.station_name]</font><br><br>\
 		</center>\
+		[src.get_date()]\
+	"}
+
+/datum/db_record/citation/proc/get_date()
+	var/time = src["time"]
+	var/display_time = copytext(time, 1, 11) + " " + copytext(time, 12, 20)
+	return {"\
 		<table width="365px">\
 		<tr><td width="200px">DATE OF ISSUE</td><td>[display_time]</td></tr>\
 		</table>\
@@ -78,6 +78,10 @@
 		<tr><td width="100px">REASON</td><td>[src["reason"]]</td></tr>\
 		</table>\
 	"}
+
+/datum/db_record/citation/proc/get_resolution()
+	PROTECTED_PROC(TRUE)
+	return
 
 /datum/db_record/citation/proc/get_footer()
 	PROTECTED_PROC(TRUE)

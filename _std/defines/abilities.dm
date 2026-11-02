@@ -18,3 +18,8 @@
 /// Cannot cast in VR
 #define ABILITY_AREA_CHECK_VR_ONLY 2
 
+// Note that these defines exist as they're the most useful ones. However, if even-wider reticules
+// are added, they should be given a new define roughly corresponding to their radius
+#define AIM_ASSIST_NONE -1		/// Never use aim assist (only register targets directly clicked on)
+#define AIM_ASSIST_SAME_TILE 0	/// Only search for alternative mob targets on the same tile that was clicked over
+#define AIM_ASSIST_1_TILE 1		/// Search for mobs in a 1-tile radius (Euclidean distance), using a larger targeting reticule

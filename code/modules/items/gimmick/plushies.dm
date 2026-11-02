@@ -24,6 +24,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	var/list/prizes_rare = list(/obj/item/toy/plush/small/bee/cute,\
 	/obj/item/toy/plush/small/buddy/future,\
 	/obj/item/toy/plush/small/kitten/wizard,\
+	/obj/item/toy/plush/small/kitten/bingus,\
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool,\
@@ -289,6 +290,15 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/small/kitten/wizard
 	name = "wizard kitten plush toy"
 	icon_state = "kitten_wizard"
+
+/obj/item/toy/plush/small/kitten/bingus
+	name = "hairless sphynx kitten plush toy"
+	icon_state = "kitten_bingus"
+
+/obj/item/toy/plush/small/kitten/bingus/New()
+	. = ..()
+	if(prob(30))
+		src.name = pick("bingus plush toy", "rotisserie chicken plush toy")
 
 /obj/item/toy/plush/small/monkey
 	name = "monkey plush toy"

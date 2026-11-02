@@ -2700,8 +2700,7 @@
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hmicro";
-	name = "broken microwave oven";
-	pixel_y = 10
+	name = "broken microwave oven"
 	},
 /turf/simulated/floor/industrial,
 /area/space)
@@ -4668,8 +4667,7 @@
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hmicro";
-	name = "broken microwave oven";
-	pixel_y = 10
+	name = "broken microwave oven"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
@@ -11333,21 +11331,13 @@
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "aYx" = (
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "aYy" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles5"
 	},
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "aYD" = (
 /obj/cable{
@@ -11503,32 +11493,20 @@
 /obj/decal/floatingtiles{
 	dir = 4
 	},
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "aZs" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4"
 	},
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "aZt" = (
 /obj/decal/floatingtiles{
 	dir = 8;
 	icon_state = "floattiles3"
 	},
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "aZv" = (
 /obj/cable{
@@ -11614,11 +11592,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "aZN" = (
 /obj/fakeobject/lighttube_broken{
@@ -11694,26 +11668,18 @@
 	dir = 1;
 	icon_state = "floattiles4"
 	},
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "bab" = (
 /obj/map/light/void,
 /obj/item/clothing/head/void_crown,
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "bac" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/void,
 /area/h7/lab)
 "bad" = (
 /obj/cable{
@@ -11801,19 +11767,11 @@
 	dir = 8;
 	icon_state = "floattiles6"
 	},
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "bay" = (
 /obj/item/tile/steel,
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "baB" = (
 /obj/cable{
@@ -11934,19 +11892,11 @@
 /obj/decal/floatingtiles{
 	dir = 1
 	},
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "baW" = (
 /obj/decal/floatingtiles,
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "baX" = (
 /obj/cable{
@@ -17267,11 +17217,7 @@
 /area/diner/motel/pool)
 "gxv" = (
 /mob/living/critter/small_animal/floateye,
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
+/turf/simulated/floor/void,
 /area/h7/lab)
 "gxH" = (
 /obj/stool/chair/couch/yellow{
@@ -19413,8 +19359,7 @@
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hmicro";
-	name = "broken microwave oven";
-	pixel_y = 10
+	name = "broken microwave oven"
 	},
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)

@@ -19,6 +19,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/coat_style = null
 	/// Used for hoodies (and anything that uses the toggle_hood component)
 	var/hooded = FALSE
+	/// If `TRUE`, override `src.wear_layer` with the max of `src.wear_layer` and `MOB_BACK_SUIT_LAYER`.
+	var/override_layer_on_back = TRUE
 
 
 	setupProperties()
@@ -29,7 +31,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 	equipped(mob/user, slot)
 		. = ..()
-		if (slot == SLOT_BACK)
+		if (slot == SLOT_BACK && src.override_layer_on_back)
 			src.wear_layer = max(src.wear_layer, MOB_BACK_SUIT_LAYER) // set to a higher layer, unless they're on an even higher layer
 		var/mob/living/carbon/human/H = user
 		if (src.hooded && istype(H) && H.head)
@@ -1594,11 +1596,11 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	onMaterialChanged()
 		. = ..()
 		if (istype(src.material))
-			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
+			var/prot = max(0, (5 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 10)
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
-			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
+			prot =  clamp(((src.material.getProperty(MATERIAL::PROPERTY::CHEM_RESIST) - 4) * 15), 0, 70) // 30 would be default for metal.
 			setProperty("chemprot", prot)
 		return
 
@@ -1640,7 +1642,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
 		var/prot_rad = round(renfMat.calc_radiation_prot() / 2, 5)
 		setProperty("radprot", prot_rad)
-		var/prot = max(0, renfMat.getProperty("density") - 3) / 2
+		var/prot = max(0, renfMat.getProperty(MATERIAL::PROPERTY::DENSITY) - 3) / 2
 		setProperty("meleeprot", 3 + prot)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
@@ -2672,6 +2674,36 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "autumn_jacket"
 	item_state = "autumn_jacket"
+
+/obj/item/clothing/suit/jacket/trench
+	name = "trench coat"
+	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
+	icon_state = "trench_coat"
+	item_state = "trench_coat"
+	coat_style = "trench_coat"
+
+/obj/item/clothing/suit/jacket/trench/New()
+	..()
+	src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
+
+/obj/item/clothing/suit/jacket/corduroy
+	name = "corduroy jacket"
+	desc = "A hard-wearing jacket with a corduroy-lined collar and cuffs."
+	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
+	icon_state = "corduroy_jacket"
+	item_state = "corduroy_jacket"
+
+/obj/item/clothing/suit/autumn_scarf
+	name = "autumn scarf"
+	desc = "A dull-colored striped scarf with decorative fringe on both ends."
+	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
+	icon_state = "autumn_scarf"
+	item_state = "autumn_scarf"
+	c_flags = ONBACK
+	override_layer_on_back = FALSE
 
 // New chaplain stuff
 
