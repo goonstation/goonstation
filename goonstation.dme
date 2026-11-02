@@ -316,6 +316,7 @@
 #include "code\datums\DCS\components\alpha_clothing.dm"
 #include "code\datums\DCS\components\analyzable.dm"
 #include "code\datums\DCS\components\angle_watcher.dm"
+#include "code\datums\DCS\components\aquatic_breathing.dm"
 #include "code\datums\DCS\components\arable.dm"
 #include "code\datums\DCS\components\assembly_comp.dm"
 #include "code\datums\DCS\components\auto_reagent.dm"

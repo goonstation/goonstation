@@ -33,7 +33,7 @@
 	var/mob/living/critter/aquatic/king_crab/K = holder.owner
 	if(K.kill_them)
 		K.emote("dance")
-	else if(K.aquabreath_process.water_need)
+	else if(SEND_SIGNAL(K, COMSIG_AQUATIC_GET_WATER_NEED))
 		K.emote("scream")
 	else
 		step_rand(K, 0)

@@ -11,7 +11,7 @@
 	var/batbomb = 0
 
 	EnteredFluid(obj/fluid/F as obj, atom/oldloc)
-
+		. = ..()
 		src.visible_message(SPAN_ALERT("[src] dissolves into [F]!"))
 
 		if(src.batbomb)

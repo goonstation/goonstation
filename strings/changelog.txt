@@ -1,4 +1,18 @@
 
+(t)mon nov 02 26
+(u)EmeraldCrow
+(p)28197
+(e)🎨|C-Sprites
+(*)Adds the Miss Funny Business figurine. Go gambling for figurines today!
+(u)TealSeer
+(p)28218
+(e)🪲🖥️|C-Bug, A-Computers
+(+)Fixed certain ThinkDOS computers spawning without the help library
+(t)sun nov 01 26
+(u)ANNmagedon
+(p)28143
+(e)|
+(+)The captain now can roll a goal to keep their spare ID in their office.
 (t)sat oct 31 26
 (u)ZeWaka
 (p)27933
