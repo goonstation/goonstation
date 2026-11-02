@@ -10688,7 +10688,6 @@
 "cUC" = (
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/table/reinforced/auto,
-/obj/disposalpipe/segment,
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/escape)
