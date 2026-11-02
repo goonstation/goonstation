@@ -1,4 +1,9 @@
 
+(t)mon nov 02 26
+(u)TealSeer
+(p)28218
+(e)🪲🖥️|C-Bug, A-Computers
+(+)Fixed certain ThinkDOS computers spawning without the help library
 (t)sun nov 01 26
 (u)ANNmagedon
 (p)28143
