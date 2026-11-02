@@ -20,7 +20,7 @@
 
 		if (critter_owner)
 			critter_owner.hud.update_health()
-			critter_owner.hud.stamina_bar.update_value(owner)
+			critter_owner.hud.stamina_bar?.update_value(owner)
 			critter_owner.hud.update_temp_indicator()
 			critter_owner.hud.update_blood_indicator()
 			critter_owner.hud.update_pulling()
@@ -29,7 +29,7 @@
 
 		if (human_owner)
 			human_owner.hud.update_health_indicator()
-			human_owner.hud.stamina_bar.update_value(owner)
+			human_owner.hud.stamina_bar?.update_value(owner)
 			human_owner.hud.update_temp_indicator()
 			human_owner.hud.update_blood_indicator()
 			human_owner.hud.update_pulling()

@@ -66,13 +66,13 @@
 // kill me
 /mob/living/carbon/human/add_stamina(x as num)
 	. = ..()
-	if(src.hud.stamina_bar?.last_update != TIME)
-		src.hud.stamina_bar.update_value(src)
+	if(src.hud?.stamina_bar?.last_update != TIME)
+		src.hud?.stamina_bar?.update_value(src)
 
 /mob/living/critter/add_stamina(x as num)
 	. = ..()
-	if(src.hud.stamina_bar?.last_update != TIME)
-		src.hud.stamina_bar.update_value(src)
+	if(src.hud?.stamina_bar?.last_update != TIME)
+		src.hud?.stamina_bar?.update_value(src)
 
 //Removes stamina
 /mob/proc/remove_stamina(x)
@@ -96,13 +96,13 @@
 // make it end
 /mob/living/carbon/human/remove_stamina(x as num)
 	. = ..()
-	if(src.hud.stamina_bar?.last_update != TIME)
-		src.hud.stamina_bar.update_value(src)
+	if(src.hud?.stamina_bar?.last_update != TIME)
+		src.hud?.stamina_bar?.update_value(src)
 
 /mob/living/critter/remove_stamina(x as num)
 	. = ..()
-	if(src.hud.stamina_bar?.last_update != TIME)
-		src.hud.stamina_bar.update_value(src)
+	if(src.hud?.stamina_bar?.last_update != TIME)
+		src.hud?.stamina_bar?.update_value(src)
 
 /// Adds 'get up' stun reduction, from taking beatdown damage.
 /mob/proc/revenge_stun_reduction(stamina_damage, brute, burn, damage_type )
@@ -141,10 +141,10 @@
 	stamina = clamp(x, STAMINA_NEG_CAP, stamina_max)
 
 // this will never be unified
-/mob/living/carbon/human/remove_stamina(x as num)
+/mob/living/carbon/human/set_stamina(x as num)
 	. = ..()
 	src.hud?.stamina_bar?.update_value(src)
-/mob/living/critter/remove_stamina(x as num)
+/mob/living/critter/set_stamina(x as num)
 	. = ..()
 	src.hud?.stamina_bar?.update_value(src)
 
