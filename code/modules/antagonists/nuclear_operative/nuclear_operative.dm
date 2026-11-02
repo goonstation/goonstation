@@ -121,7 +121,7 @@
 			var/obj/item_type = initial(purchased_item.path)
 			purchases += list(
 				list(
-					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+					"iconBase64" = "[icon2base64(icon(get_initial_icon(item_type), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
 					"name" = "[purchased_item]",
 				)
 			)
@@ -132,7 +132,7 @@
 				var/obj/item_type = initial(purchased_item.items[1])
 				purchases += list(
 					list(
-						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"iconBase64" = "[icon2base64(icon(get_initial_icon(item_type), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
 						"name" = "[purchased_item.name]", // Dont include TC cost bc commander uplink doesnt use TC
 					)
 				)

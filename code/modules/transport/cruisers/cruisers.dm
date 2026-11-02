@@ -900,11 +900,7 @@
 
 	New()
 		. = ..()
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 
 /obj/machinery/cruiser_status_panel
 	name = "Status panel"

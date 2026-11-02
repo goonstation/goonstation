@@ -82,6 +82,9 @@ TYPEINFO(/obj/item/rcd)
 	var/matter_remove_window = 8
 	var/time_remove_window = 5 SECONDS
 
+	var/matter_remove_firelock = 8
+	var/time_remove_firelock = 5 SECONDS
+
 	var/matter_remove_light_fixture = 1
 	var/time_remove_light_fixture = 3 SECONDS
 
@@ -374,6 +377,10 @@ TYPEINFO(/obj/item/rcd)
 
 		if (istype(A, /obj/machinery/light))
 			src.do_rcd_action(user, A, "deconstructing \the [A]", matter_remove_light_fixture, time_remove_light_fixture, PROC_REF(do_deconstruction), src, "light fixture")
+			return
+
+		if (istype(A, /obj/machinery/door/firedoor)) //adding removal of firelock
+			src.do_rcd_action(user, A, "deconstructing \the [A]", matter_remove_firelock, time_remove_firelock, PROC_REF(do_deconstruction), src, "firelock")
 			return
 
 	proc/do_build_wall_light(atom/A, mob/user, obj/item/light_parts/LP)

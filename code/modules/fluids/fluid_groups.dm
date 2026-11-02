@@ -509,7 +509,7 @@
 
 		src.master_reagent_id = src.reagents?.get_master_reagent_id()
 
-		var/master_opacity = !src.drains_floor && src.reagents?.get_master_reagent_gas_opaque()
+		var/master_opacity = (!src.drains_floor && src.reagents?.get_master_reagent_gas_opaque()) ? TRUE : FALSE
 
 		var/depth_changed = 0 //force icon update later in the proc if fluid member depth changed
 		var/last_icon = 0
@@ -594,7 +594,10 @@
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			//air specific (messy)
-			fluid_ma.opacity = master_opacity
+			// set_opacity() first so the turf's opaque count, lighting and camera coverage are correct
+			if (F.opacity != master_opacity)
+				F.set_opacity(master_opacity)
+			UNLINT(fluid_ma.opacity = master_opacity) // a mutable_appearance
 			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
 			F.appearance = fluid_ma
 			F.name = initial(F.name) // i don't know what the fuck is going on with the appearances here

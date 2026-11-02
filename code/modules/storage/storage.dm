@@ -193,6 +193,11 @@
 			return FALSE
 		checkloc = checkloc.loc
 
+	// item is still inside another storage, move it out properly
+	if (W.stored)
+		W.stored.transfer_stored_item(W, src.linked_item, TRUE, user)
+		return
+
 	// add item to storage
 	src.add_contents(W, user, visible)
 

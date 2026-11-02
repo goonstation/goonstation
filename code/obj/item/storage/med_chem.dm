@@ -181,7 +181,7 @@
 
 /obj/item/storage/firstaid/docbag/field_surgeon/NT
 	icon_state = "docbag_nt" // Sprite by TekoTheTeapot
-	item_state = "docbag3"
+	item_state = "docbag_nt"
 	kit_styles = null
 
 /* -------------------- First Aid Kits - VR -------------------- */
@@ -497,6 +497,11 @@
 	name = "pill bottle (mannitol)"
 	desc = "Contains pills used to treat... brain damage."
 	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 7)
+
+/obj/item/storage/pill_bottle/bronadyl
+	name = "pill bottle (Bronadyl)"
+	desc = "A cheap hay fever medication."
+	spawn_contents = list(/obj/item/reagent_containers/pill/bronadyl = 3)
 
 /* -------------------- Pill Bottles - Drugs -------------------- */
 /obj/item/storage/pill_bottle/CBD

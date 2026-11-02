@@ -686,12 +686,42 @@ Frequency:
 	onclose(src, "radio")
 	return
 
+/mob/living/silicon/hivebot/verb/cmd_interact_laws()
+	set category = "Robot Commands"
+	set name = "Laws"
+
+	src.interact_laws()
+	return
+
 /mob/living/silicon/hivebot/verb/cmd_show_laws()
 	set category = "Robot Commands"
-	set name = "Show Laws"
+	set name = "View Real Laws (Current)"
+	src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::VIEW)
 
-	src.show_laws()
-	return
+/mob/living/silicon/hivebot/verb/cmd_state_laws()
+	set category = "Robot Commands"
+	set name = "State Real Laws (Current)"
+	src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::STATE)
+
+/mob/living/silicon/hivebot/verb/cmd_state_standard_laws()
+	set category = "Robot Commands"
+	set name = "State Asimov Laws (Default)"
+	src.interact_laws(SILICON::LAWS::SET::ASIMOV, SILICON::LAWS::ACTION::STATE)
+
+/mob/living/silicon/hivebot/verb/robot_set_fake_laws()
+	set category = "Robot Commands"
+	set name = "Edit Fake Laws"
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::EDIT)
+
+/mob/living/silicon/hivebot/verb/robot_state_fake_laws()
+	set category = "Robot Commands"
+	set name = "State Fake Laws"
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::STATE)
+
+/mob/living/silicon/hivebot/verb/robot_show_fake_laws()
+	set category = "Robot Commands"
+	set name = "View Fake Laws"
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::VIEW)
 
 /mob/living/silicon/hivebot/verb/open_nearest_door()
 	set category = "Robot Commands"

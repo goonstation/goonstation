@@ -304,7 +304,7 @@ ABSTRACT_TYPE(/obj/item)
 		..()
 		tooltip_rebuild = TRUE
 		if (istype(src.material))
-			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
+			burn_possible = src.material.getProperty(MATERIAL::PROPERTY::FLAMMABLE) > 1 ? TRUE : FALSE
 			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
 				burn_remains = BURN_REMAINS_MELT
 			else
@@ -334,10 +334,19 @@ ABSTRACT_TYPE(/obj/item)
 		return
 
 /obj/item/New()
+	if (istext(src.wear_image_icon))
+		src.wear_image_icon = file(src.wear_image_icon)
+	if (istext(src.inhand_image_icon))
+		src.inhand_image_icon = file(src.inhand_image_icon)
 	// this is dumb but it won't let me initialize vars to image() for some reason
 	wear_image = image(wear_image_icon)
 	wear_image.icon_state = icon_state //Why was this null until someone actually wore it? Made manipulation impossible.
 	inhand_image = image(inhand_image_icon)
+	// Clothing compares these fields with the resources in its rendered images.
+	if (isfile(src.wear_image_icon))
+		src.wear_image_icon = src.wear_image.icon
+	if (isfile(src.inhand_image_icon))
+		src.inhand_image_icon = src.inhand_image.icon
 	if (src.rand_pos)
 		if (!src.pixel_x) // just in case
 			src.pixel_x = rand(-8,8)
@@ -1375,6 +1384,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			click_delay -= frenzy
 			sleep(3 SECONDS)
 			click_delay += frenzy
+
+	src.material_trigger_when_hit(target, user, MATERIAL::IMPACT::MELEE)
+	target.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 
 	src.material_on_attack_use(user, target)
 	for (var/atom/A in target)

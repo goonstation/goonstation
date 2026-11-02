@@ -1101,7 +1101,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 			return
 		if (user.hasStatus("drunk"))
 			var/mob/living/carbon/human/H = user
-			H.apply_automated_arrest("DUI.", "Drove while inebriated.")
+			H.apply_automated_arrest("Driving under the influence.")
 		mob_target.set_loc(src)
 		rider = mob_target
 		handle_button_addition()

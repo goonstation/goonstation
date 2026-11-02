@@ -24323,13 +24323,7 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
+/obj/pool/ladder,
 /obj/channel{
 	required_to_pass = 210
 	},
@@ -34769,7 +34763,9 @@
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
 "ikb" = (
-/obj/machinery/computer/tetris,
+/obj/machinery/computer/tetris{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ikf" = (

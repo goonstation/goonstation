@@ -727,6 +727,7 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 
 /// checks an item for an id card
 /proc/get_id_card(obj/item/I)
+	RETURN_TYPE(/obj/item/card/id)
 	if (istype(I, /obj/item/card/id))
 		return I
 	if (istype(I, /obj/item/device/pda2))

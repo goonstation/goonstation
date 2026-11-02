@@ -33,14 +33,15 @@
 	. = !isnull(C?.connection_id) && C.connection_id == src.connection_id || \
 			!isnull(connection_id) && connection_id == src.connection_id
 	if(.)
-		src.network?.unregister(src)
+		if(!src.send_only)
+			src.network?.unregister(src)
 		src.address = C?.address || address
 		src.net_tags = C?.net_tags || net_tags
 		src.all_hearing = C?.all_hearing || all_hearing
 		src.receive_packet_proc = C?.receive_packet_proc || receive_packet_proc
 		src.network = C?.network || network
 		src.send_only = C?.send_only || send_only
-		if(src.send_only)
+		if(!src.send_only)
 			src.network?.register(src)
 
 /datum/component/packet_connected/proc/update_network(datum/packet_network/new_network)
@@ -54,10 +55,10 @@
 	if(send_only == new_send_only)
 		return
 	src.send_only = new_send_only
-	if(src.send_only)
-		src.network?.register(src)
-	else
+	if(src.send_only) // send-only devices don't receive
 		src.network?.unregister(src)
+	else
+		src.network?.register(src)
 
 /datum/component/packet_connected/proc/update_address(new_address)
 	if(new_address == src.address)

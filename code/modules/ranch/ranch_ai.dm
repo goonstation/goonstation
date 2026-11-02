@@ -246,6 +246,9 @@
 			for(var/mob/M in view(target_range, ranch_critter))
 				if(isalive(M))
 					if(!(M in ranch_critter.my_friends))
+						if(ranch_critter.faction)
+							if(!faction_check(ranch_critter, M))
+								continue
 						if(!istype(M, ranch_critter.species_type))
 							return precondition() * FIGHT_PRIORITY
 		for(var/mob/M in ranch_critter.shit_list)
@@ -337,6 +340,9 @@
 					continue
 				if(M in ranch_critter.my_friends)
 					continue
+				if(ranch_critter.faction)
+					if(!faction_check(ranch_critter, M))
+						continue
 				if(!istype(M, ranch_critter.species_type))
 					. += M
 			return
