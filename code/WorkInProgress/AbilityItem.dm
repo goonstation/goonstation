@@ -122,7 +122,7 @@
 
 /obj/ability_button/toggle_visor
 	name = "Toggle Visor"
-	icon_state = "weldup"
+	icon_state = "welddown"
 
 	execute_ability() // Should find a common parent between this and the above
 		var/obj/item/clothing/head/helmet/hardhat/security/hos/helmet = the_item

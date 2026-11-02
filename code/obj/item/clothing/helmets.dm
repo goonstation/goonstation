@@ -746,7 +746,7 @@
 	icon_state = "helmet-hos"
 	item_state = "helmet-hos"
 	desc = "Somewhat protects your head from being bashed in a little more than an ordinary helmet. It has a cool stripe too to distinguish it from less cool helmets."
-	abilities = list(/obj/ability_button/toggle_visor)
+	abilities = list(/obj/ability_button/flashlight_hardhat, /obj/ability_button/toggle_visor)
 	var/visor_up = TRUE // The visor's current position
 
 	setupProperties()
