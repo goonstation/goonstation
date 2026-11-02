@@ -209,7 +209,7 @@
 		if (target.get_oxygen_deprivation())
 			target.take_oxygen_deprivation(-50 * mult)
 
-		return
+		return 0
 
 	if (underwater || !breath || (TOTAL_MOLES(breath) == 0))
 		if (istype(target.loc, /turf/space))
@@ -238,6 +238,10 @@
 		src.update_breath_hud(target, status_updates)
 		return 0
 
+	return src.take_breath(target, breath, underwater, status_updates, mult)
+
+/datum/element/lifeprocess/breath/proc/take_breath(mob/living/target, datum/gas_mixture/breath, atom/underwater, datum/organ_status/lung/status_updates, mult)
+	var/mob/living/carbon/human/H = astype(target)
 	var/datum/gas_mixture/left_breath = breath.remove_ratio(0.5)
 	var/datum/gas_mixture/right_breath = breath.remove_ratio(1) // 1, because the remaining air now takes up 100% of the breath.
 	left_breath.volume = right_breath.volume = breath.volume / 2
