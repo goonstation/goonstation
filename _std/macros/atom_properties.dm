@@ -313,7 +313,7 @@ To remove:
 #define PROP_MOB_LYCANTHROPY_RESIST(x) x("lycanthropy_resist", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //resists involuntary transforms
 #define PROP_MOB_ALCOHOL_RESIST(x) x("alcohol_resist", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 #define PROP_MOB_FAST_BUILD(x) x("fast_build", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob constructs most things faster
-// A firm grip prevents humans from dropping held items in certain cases
+// A firm grip prevents mobs from dropping held items in certain cases
 #define PROP_MOB_GRIP_FIRM_LEFT(x) x("grip_firm_left", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_GRIP_FIRM_RIGHT(x) x("grip_firm_right", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
