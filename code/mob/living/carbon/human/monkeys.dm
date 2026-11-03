@@ -297,8 +297,10 @@ TYPEINFO(/mob/living/carbon/human/npc/monkey)
 						continue
 					things_to_pick += O
 				if(prob(15))
-					for(var/mob/M in range(1, get_turf(src)))
-						things_to_pick += M
+					for(var/mob/living/fucker in range(1, get_turf(src)))
+						if(fucker.invisibility > 0)
+							continue
+						things_to_pick += fucker
 				if(!length(things_to_pick))
 					src.emote(pick("whimper", "growl", "scowl", "grimace", "sulk", "pout", "shrug", "yawn"))
 				else if(prob(15) && src.bioHolder.HasOneOfTheseEffects("midas", "inkglands", "healingtouch")) // this monkey's all gene'd up

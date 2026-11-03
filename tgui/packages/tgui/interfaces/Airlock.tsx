@@ -78,7 +78,7 @@ export const Airlock = () => {
       {!userPerms['airlock'] && !userPerms['accessPanel'] && (
         <Window
           width={355}
-          height={455}
+          height={485}
           title={`Airlock - ${truncate(name, 19)}`}
         >
           <Window.Content>
@@ -106,7 +106,7 @@ const AirlockAndAccessPanel = () => {
 
   const [tabIndex, setTabIndex] = useState(1);
   return (
-    <Window width={355} height={490} title={`Airlock - ${truncate(name, 19)}`}>
+    <Window width={355} height={520} title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <Tabs>
           <Tabs.Tab
@@ -178,7 +178,7 @@ const AccessPanelOnly = () => {
   const { name } = data;
 
   return (
-    <Window width={355} height={455} title={`Airlock - ${truncate(name, 19)}`}>
+    <Window width={355} height={485} title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <AccessPanel />
       </Window.Content>

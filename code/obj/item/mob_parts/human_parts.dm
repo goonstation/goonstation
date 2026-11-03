@@ -367,7 +367,7 @@
 	get_limb_print()
 		if(holder?.bioHolder?.default_fingerprints)
 			return holder.bioHolder.default_fingerprints.id
-		return build_id_fingerprint(FORENSIC_CHARS_FINGERPRINTS)
+		return build_id_unique(/proc/build_id_fingerprint, list(FORENSIC_CHARS_FINGERPRINTS))
 
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
@@ -826,14 +826,14 @@
 
 /obj/item/parts/human_parts/arm/left/hot
 	name = "left hot arm"
-	icon_state = "arm_left"
+	icon_state = "arm_left_hot"
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
 	limb_type = /datum/limb/hot
-	handlistPart = "hand_left"
+	handlistPart = "l_arm_hot"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)
@@ -845,14 +845,14 @@
 
 /obj/item/parts/human_parts/arm/right/hot
 	name = "right hot arm"
-	icon_state = "arm_right"
+	icon_state = "arm_right_hot"
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
 	limb_type = /datum/limb/hot
-	handlistPart = "hand_right"
+	handlistPart = "r_arm_hot"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)

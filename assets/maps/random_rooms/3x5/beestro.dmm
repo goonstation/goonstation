@@ -10,7 +10,7 @@
 /obj/item/reagent_containers/food/snacks/beefood{
 	pixel_x = 7
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "f" = (
 /obj/decal/poster/wallsign/newtonscrew{
@@ -22,26 +22,26 @@
 	pixel_x = -7;
 	pixel_y = 7
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "g" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/bee_egg_carton{
 	pixel_y = 6
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "i" = (
 /obj/item/sticker/bee{
 	pixel_y = 3;
 	pixel_x = -33
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "k" = (
 /obj/stool,
 /obj/critter/domestic_bee,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "u" = (
 /obj/stool,
@@ -49,24 +49,24 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "v" = (
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "x" = (
 /obj/stool,
 /obj/item/toy/plush/small/bee,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "A" = (
 /obj/critter/domestic_bee/small,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "D" = (
 /obj/stool,
 /obj/critter/domestic_bee/sea,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "F" = (
 /obj/item/sticker/bee{
@@ -76,26 +76,26 @@
 	dir = 4
 	},
 /obj/critter/domestic_bee/buddy,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "G" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
 /obj/mapping_helper/glassware_spawn,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "I" = (
 /obj/table/reinforced/bar/auto,
 /obj/random_item_spawner/tableware/maybe_few,
 /obj/item/kitchen/utensil/spoon,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "U" = (
 /obj/machinery/door/window/eastright{
 	name = "Beestro Bar Door"
 	},
 /obj/critter/domestic_bee/chef,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "V" = (
 /obj/table/reinforced/bar/auto,
@@ -113,7 +113,7 @@
 /obj/item/reagent_containers/food/drinks/milk{
 	pixel_y = 7
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

@@ -75,12 +75,7 @@
 			owner.set_dir(input_dir)
 			owner.facing = input_dir
 
-			if (input_magnitude)
-				if (input_dir & (input_dir-1))
-					owner.set_dir(NORTH)
-					owner.transform = turn(M,arctan(input_y,input_x))
-				else
-					owner.transform = null
+
 			last_dir = owner.dir
 
 			if (input_x || input_y)

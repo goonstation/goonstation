@@ -367,7 +367,7 @@
 				if (prob(chunk_chance))
 					create_chunk(get_turf(user))
 
-		src.material_trigger_when_attacked(W, user, 1)
+		src.material_trigger_when_hit(W, user, MATERIAL::IMPACT::MELEE)
 
 		src.take_damage(damage,damage_mult,damtype,user)
 

@@ -15,6 +15,7 @@
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "SpendSpacebux", "Spend Spacebux")
+			ui.set_autoupdate(FALSE) // nothing changes anyways
 			ui.open()
 
 	ui_state(mob/user)
@@ -30,7 +31,9 @@
 				list(
 					"pname" = p.name,
 					"cost" = p.cost,
-					"img" = icon2base64(icon(initial(p.icon), initial(p.icon_state), dir=p.icon_dir, frame=p.icon_frame, moving=0)),
+					"icon" = get_tgui_icon(get_initial_icon(p)),
+					"icon_state" = p.icon_state,
+					"icon_dir" = p.icon_dir || SOUTH,
 				)
 			)
 			//If you have a purchased item: set held

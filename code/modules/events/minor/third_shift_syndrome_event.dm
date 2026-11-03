@@ -1,6 +1,7 @@
 /datum/random_event/minor/third_shift_syndrome
 	name = "Third Shift Syndrome"
-	weight = 10
+	weight = 5
+	var/const/tss_infect_percentage = 0.075
 
 	event_effect()
 		..()
@@ -19,7 +20,7 @@
 		if (!length(potential_victims))
 			return
 
-		var/target_count = max(1, ceil(length(potential_victims) * 0.1))
+		var/target_count = max(1, ceil(length(potential_victims) * tss_infect_percentage))
 		for (var/i in 1 to target_count)
 			var/mob/living/carbon/human/patient = pick(potential_victims)
 			potential_victims -= patient

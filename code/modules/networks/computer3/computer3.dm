@@ -73,7 +73,7 @@
 				/obj/item/peripheral/drive,
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/printer)
-			setup_starting_program = /datum/computer/file/terminal_program/medical_records
+			setup_starting_program = /datum/computer/file/terminal_program/db_manager/medtrak
 
 
 
@@ -98,7 +98,7 @@
 				/obj/item/peripheral/drive,
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
-			setup_starting_program = /datum/computer/file/terminal_program/secure_records
+			setup_starting_program = /datum/computer/file/terminal_program/db_manager/secmate
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -125,7 +125,7 @@
 				/obj/item/peripheral/drive,
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/printer)
-			setup_starting_program = /datum/computer/file/terminal_program/bank_records
+			setup_starting_program = /datum/computer/file/terminal_program/db_manager/bankboss
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -147,8 +147,8 @@
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
 			setup_starting_program = list(
-				/datum/computer/file/terminal_program/bank_records,
-				/datum/computer/file/terminal_program/secure_records,
+				/datum/computer/file/terminal_program/db_manager/bankboss,
+				/datum/computer/file/terminal_program/db_manager/secmate,
 				/datum/computer/file/terminal_program/job_controls,
 			)
 
@@ -344,12 +344,30 @@
 					src.active_program = os
 
 				src.hd.root.add_file(os)
+				os.setup_disk(src.hd)
 
 		src.post_system()
 
 
 
 	return
+
+/obj/machinery/computer3/ui_status(mob/user, datum/ui_state/state)
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = min(tgui_broken_state.can_use_topic(src, user),
+						tgui_physical_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
+	else
+		. = min(state.can_use_topic(src, user),
+						tgui_broken_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
+
 /obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)

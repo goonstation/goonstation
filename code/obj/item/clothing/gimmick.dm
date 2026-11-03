@@ -1764,9 +1764,12 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 		desc = "On close inspection, you estimate wearing this suit grants you the proportional strength of ten mentor mice."
 		icon_state = "mentorsuit"
 
+		can_equip(mob/user, slot)
+			return ..() && (user?.client?.is_mentor() || isadmin(user))
+
 		pickup(mob/user)
 			..()
-			if (user?.client && user.client.is_mentor() || isadmin(user))
+			if (src.can_equip(user))
 				return
 			SPAWN(0.1) //Delay required to not cause a visual bug
 				boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
@@ -1779,7 +1782,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 		equipped(mob/user)
 			..()
-			if (user?.client && user.client.is_mentor() || isadmin(user))
+			if (src.can_equip(user))
 				return
 			SPAWN(0.1) //Delay required to not cause a visual bug
 				boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
@@ -1817,9 +1820,12 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 					playsound(src.loc,'sound/voice/animal/glorp/glorp1.ogg',50,TRUE)
 
 
+		can_equip(mob/user, slot)
+			return ..() && user?.client && isadmin(user)
+
 		pickup(mob/user)
 			..()
-			if (user?.client && isadmin(user))
+			if (src.can_equip(user))
 				return
 			SPAWN(0.1) //Delay required to not cause a visual bug
 				boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
@@ -1832,7 +1838,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 		equipped(mob/user)
 			..()
-			if (user?.client && isadmin(user))
+			if (src.can_equip(user))
 				return
 			SPAWN(0.1) //Delay required to not cause a visual bug
 				boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))

@@ -427,7 +427,7 @@ Contents:
 
 		currentFolder.add_file( new /datum/computer/file/terminal_program/email (src) )
 
-		src.root.add_file( new /datum/computer/file/terminal_program/secure_records {req_access = list(access_lunar_breakdoor);} (src) )
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/secmate {req_access = list(access_lunar_breakdoor);} (src) )
 
 /obj/machinery/computer3/generic/lunarsec
 	name = "Security computer"
@@ -1173,7 +1173,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.wired_connection = test_link
-					src.wired_connection.master = src
+					src.wired_connection.set_master(src, src.net_id)
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))

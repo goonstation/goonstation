@@ -319,27 +319,9 @@
 		green
 			icon_state = "pda-clown-green"
 
-		proc/on_mob_throw_end(mob/M)
-			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
-			LAZYLISTREMOVE(M.attached_objs, src)
-			src.glide_size = initial(src.glide_size)
-
-		Crossed(atom/movable/AM)
-			..()
-			if (istype(src.loc, /turf/space))
-				return
-			if (iscarbon(AM))
-				var/mob/M = AM
-				LAZYLISTADDUNIQUE(M.attached_objs, src)
-				src.glide_size = M.glide_size
-				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end))
-				if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type = THROW_PEEL_SLIP, params = list("slip_obj" = src)))
-					boutput(M, SPAN_NOTICE("You slipped on the PDA!"))
-					if (M.bioHolder.HasEffect("clumsy"))
-						M.changeStatus("knockdown", 5 SECONDS)
-						JOB_XP(M, "Clown", 1)
-				else
-					src.on_mob_throw_end(M)
+		New()
+			. = ..()
+			src.AddElement(/datum/element/slippery)
 
 	janitor
 		name = "Janitor PDA"
@@ -541,6 +523,9 @@
 
 /obj/item/device/pda2/attack_self(mob/user as mob)
 	if(!user.client)
+		return
+	if(!user.sight_check(TRUE))
+		boutput(user, SPAN_ALERT("You can't see the screen."))
 		return
 	if(!user.literate)
 		boutput(user, SPAN_ALERT("You don't know how to read, the screen is meaningless to you."))
@@ -1188,7 +1173,8 @@
 	proc/display_message(var/message)
 		if (ismob(loc))
 			var/mob/M = loc
-			M.show_message(message)
+			if(M.literate && M.sight_check(TRUE))
+				M.show_message(message)
 
 	proc/run_program(datum/computer/file/pda_program/program)
 		if((!program) || (!program.holder))
@@ -1269,6 +1255,8 @@
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.show_message(SPAN_ALERT("Your [src] explodes!"), 1)
+			if(isdead(M) && !isturf(M.loc))
+				M.ex_act(3) //Always gib dead wearer even if in a locker or something
 
 		if(T)
 			T.hotspot_expose(700,125)
@@ -1306,6 +1294,11 @@
 		if (E.mainframe)
 			return 1
 	return ..(user)
+
+// cyborgs shouldn't be able to eject ID cards from their PDA
+/obj/item/device/pda2/cyborg/eject_id_card(var/mob/user as mob)
+	boutput(user, SPAN_ALERT("The ID card is soldered firmly into [src.name]!"))
+	return
 
 /*
  *	PDA 2 ~help file~

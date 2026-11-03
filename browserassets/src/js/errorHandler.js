@@ -18,16 +18,7 @@
       typeof overrideDefault === 'undefined' ? false : overrideDefault;
     file = escaper(file);
 
-    //Prevent debug logging for those using anything lower than IE 10
-    var trident = navigator.userAgent.match(/Trident\/(\d)\.\d(?:;|$)/gi);
-    var msie = document.documentMode;
-    var suppressLogging =
-      (msie && msie < 10) || (trident && parseInt(trident) < 6);
-
-    //Ok enough is enough, this prevents A CERTAIN PLAYER (Studenterhue) from spamming the error logs with bullshit
-    if (!window.JSON) {
-      suppressLogging = true;
-    }
+    var suppressLogging = false;
 
     window.onerror = function (msg, url, line, col, error) {
       if (

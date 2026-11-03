@@ -306,3 +306,10 @@
 		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, TRUE)
+
+/obj/item/storage/briefcase/nanotrasen
+	name = "\improper NanoTrasen Briefcase"
+	icon_state = "briefcase_nt"
+	item_state = "briefcase_nt"
+	desc = "A very official looking briefcase emblazoned with the NanoTrasen logo. Fancy."
+	spawn_contents = list(/obj/item/paper = 2, /obj/item/pen/NT)

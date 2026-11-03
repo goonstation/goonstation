@@ -204,6 +204,18 @@
 				T.onRemove(owner)
 		traits.Cut()
 
+	proc/removeAllButMutant()
+		for (var/id in traits)
+			var/datum/trait/T = traits[id]
+			if(!isnull(T.mutantRace))
+				continue
+
+			if(!isnull(owner))
+				if(T.isMoveTrait)
+					moveTraits.Remove(T.id)
+				T.onRemove(owner)
+				traits -= id
+
 	proc/getTrait(id)
 		RETURN_TYPE(/datum/trait)
 		return traits[id]
@@ -834,6 +846,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is trained in engineering."
 	id = "training_engineer"
 
+	onAdd(mob/owner)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD, src)
+
+	onRemove(mob/owner)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD, src)
+
 /datum/trait/job/security
 	name = "Security Training"
 	desc = "Subject is trained in generalized robustness and asskicking."
@@ -877,7 +897,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "training_clown"
 
 	onAdd(var/mob/owner)
-		owner.AddComponent(/datum/component/death_confetti)
+		owner.AddElement(/datum/element/death_confetti)
 		owner.bioHolder?.AddEffect("accent_comic", innate = TRUE)
 		owner.bioHolder?.AddEffect("clumsy", innate = TRUE)
 		if (isliving(owner))
@@ -1335,6 +1355,14 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "carpenter"
 	id = "carpenter"
 	points = -1
+
+	onAdd(mob/owner)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD, src)
+
+	onRemove(mob/owner)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD, src)
 
 /datum/trait/kleptomaniac
 	name = "Kleptomaniac"

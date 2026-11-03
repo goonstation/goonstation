@@ -79,6 +79,7 @@
 		if (!istype(person) || job?.special_spawn_location)
 			return 0
 
+		person.set_loc(src)
 		set_hibernating(person, TRUE)
 		folks_to_spawn += person
 		their_jobs += job
@@ -405,7 +406,7 @@
 			var/mob/living/carbon/human/H = usr
 			if((H.limbs && (!H.limbs.l_arm && !H.limbs.r_arm)))
 				handless = TRUE
-		if (!in_interact_range(src, usr) || is_incapacitated(usr) || (!handless && usr.restrained()))
+		if (!in_interact_range(src, usr) || is_incapacitated(usr, ignore_no_power = TRUE) || (!handless && usr.restrained()))
 			return
 
 		if (isdead(usr) || isobserver(usr))
