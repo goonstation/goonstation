@@ -120,6 +120,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
+	handlistPart = "legL-treads"
 	material_amt = ROBOT_TREAD_METAL_COST
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -158,6 +159,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
+	handlistPart = "legR-treads"
 	material_amt = ROBOT_TREAD_METAL_COST
 	powerdrain = 2.5
 	step_image_state = "tracksR"
