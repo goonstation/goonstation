@@ -425,7 +425,10 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/flash,
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit,
-	/obj/item/clipboard)
+	/obj/item/clipboard,
+	/obj/item/clothing/suit/Trenchcoat_tan,
+	/obj/item/clothing/gloves/brownleather,
+	/obj/item/clothing/head/det_hat_tan)
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"
@@ -863,7 +866,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/reagentscanner,
 	/obj/item/reagent_containers/glass/wateringcan,
 	/obj/item/paper/book/from_file/hydroponicsguide,
-	/obj/item/device/appraisal)
+	/obj/item/device/appraisal,
+	/obj/item/clothing/gloves/brownleather)
 
 /obj/storage/secure/closet/civilian/ranch
 	name = "\improper Rancher supplies locker"
@@ -880,7 +884,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/sponge,\
 	/obj/item/kitchen/food_box/egg_box/rancher,
 	/obj/item/storage/box/knitting,
-	/obj/item/storage/box/nametags)
+	/obj/item/storage/box/nametags,
+	/obj/item/clothing/gloves/brownleather)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"

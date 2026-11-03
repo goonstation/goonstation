@@ -2298,3 +2298,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	icon_state = "rabbithat"
 	item_state = "rabbithat"
 	seal_hair = TRUE
+
+/obj/item/clothing/head/det_hat_tan
+	name = "Detective's hat"
+	desc = "Someone who wears this will look very smart."
+	icon_state = "detective-tan"
+	item_state = "detective-tan"
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 3)

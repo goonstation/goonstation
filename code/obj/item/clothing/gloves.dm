@@ -879,3 +879,17 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.75)
+
+/obj/item/clothing/gloves/brownleather
+	desc = "These are some thick leather gloves!"
+	name = "Leather gloves"
+	icon_state = "BrownLeather"
+	item_state = "BrownLeather"
+	protective_temperature = 1500
+	material_prints = "Brown leather fibers"
+	fingertip_color = "#875c33"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 3)
+		setProperty("heatprot", 3)

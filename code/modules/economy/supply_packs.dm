@@ -2051,12 +2051,14 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 //Western
 /datum/supply_packs/west_coats
 	name = "Dusty Old Coats"
-	desc = "4x coats in various colors."
+	desc = "7x coats in various colors."
 	category = "Civilian Department"
 	contains = list(/obj/item/clothing/suit/gimmick/guncoat,
 			/obj/item/clothing/suit/gimmick/guncoat/black,
 			/obj/item/clothing/suit/gimmick/guncoat/tan,
-			/obj/item/clothing/suit/gimmick/guncoat/dirty)
+			/obj/item/clothing/suit/gimmick/guncoat/dirty,
+			/obj/item/clothing/suit/Trenchcoat_brown,/obj/item/clothing/suit/Trenchcoat_grey,
+			/obj/item/clothing/suit/Trenchcoat_green)
 	cost = PAY_TRADESMAN*5
 	containername = "Dusty Old Clothing Crate"
 	containertype = /obj/storage/crate/wooden
