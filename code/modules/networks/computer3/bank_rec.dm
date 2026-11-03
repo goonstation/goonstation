@@ -195,22 +195,12 @@
 
 		if(MENU_INDEX)
 			if (lowertext(command) == FIELDNUM_NEWREC)
-				var/datum/db_record/general_record = new
-				general_record["name"] = "New Record"
-				general_record["full_name"] = "New Record"
-				general_record["id"] = "[num2hex(rand(1, 0xffffff), 6)]"
-				general_record["rank"] = "Unassigned"
-				general_record["sex"] = "Other"
-				general_record["pronouns"] = "Unknown"
-				general_record["age"] = "Unknown"
-				general_record["fingerprint_right"] = "Unknown"
-				general_record["fingerprint_left"] = "Unknown"
-				general_record["p_stat"] = "Active"
-				general_record["m_stat"] = "Stable"
-				data_core.general.add_record(general_record)
-				src.active_general = general_record
+				var/datum/db_record/personnel/general/record = new()
+				record["id"] = global.data_core.generate_id()
+				global.data_core.general.add_record(record)
+				src.active_general = record
 				src.active_bank = null
-				src.log_wrapper("Created new general record [general_record["id"]].")
+				src.log_wrapper("Created new general record [record["id"]].")
 
 				if (src.print_active_record())
 					src.menu = MENU_IN_RECORD
@@ -266,16 +256,9 @@
 					if (src.active_bank)
 						return
 
-					var/datum/db_record/B = new /datum/db_record( )
-					B["name"] = src.active_general["name"]
-					B["id"] = src.active_general["id"]
-					B["current_money"] = 0
-					B["unionized"] = "No"
-					B["wage"] = 0
-					B["pda_net_id"] = null
-					B["notes"] = "No notes."
-					data_core.bank.add_record(B)
-					src.active_bank = B
+					var/datum/db_record/personnel/bank/record = new(src.active_general)
+					global.data_core.bank.add_record(record)
+					src.active_bank = record
 
 					src.print_active_record()
 					src.menu = MENU_IN_RECORD

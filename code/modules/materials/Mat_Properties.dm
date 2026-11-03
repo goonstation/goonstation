@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 	proc/getValueMerged(var/value_left, var/value_right, var/left_bias, var/right_bias)
 		var/result = (value_left * left_bias) + (value_right * right_bias)
-		return round(result)
+		return result // Results get rounded after TRIGGERS_ON_MIX has been called
 
 	proc/onValueChanged(var/datum/material/M, var/new_value)
 		return
@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/datum/material_property)
 		if(value_right == INFINITY)
 			return value_left
 		var/result = (value_left * left_bias) + (value_right * right_bias)
-		return round(result)
+		return result
 
 /// Literally just indicating that it can be refined into good nuclear fuel in the centrifuge
 /datum/material_property/spent_fuel

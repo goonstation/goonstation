@@ -2254,15 +2254,6 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 90 SECONDS
 	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
-/datum/manufacture/robup_visualizer
-	name = "Construction Visualizer"
-	item_requirements = list("crystal" = 4,
-							 "conductive" = 6)
-	item_outputs = list(/obj/item/roboupgrade/visualizer)
-	create = 1
-	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
-
 /datum/manufacture/scream_synth
 	name = "Scream Synthesizer"
 	item_requirements = list("conductive" = 2, "metal" = 2, "insulated" = 2)
@@ -3979,7 +3970,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 /************ NADIR RESONATORS ************/
 
 /datum/manufacture/resonator_type_ax
-	name = "Type-AX Resonator"
+	name = "Axial Resonator - Type-AX"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive_high" = 20,
 							 "crystal" = 20,
@@ -3990,7 +3981,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_sm
-	name = "Type-SM Resonator"
+	name = "Shear Moderator - Type-SM"
 	item_requirements = list("metal_dense" = 10,
 							 "conductive_high" = 20,
 							 "crystal" = 10,
@@ -4001,7 +3992,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_fq
-	name = "Type-FQ Resonator"
+	name = "Field Quantizer - Type-FQ"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive_high" = 20,
 							 "koshmarite" = 10,

@@ -2435,12 +2435,15 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		return output
 
+TYPEINFO(/obj/machinery/networked/secdetector)
+	mats = 12
 
 //IR tripwire/threat analyzer.
 /obj/machinery/networked/secdetector
 	name = "IR Detector"
 	desc = "An infrared tripwire and video camera coupled with a sophisticated threat-analysis system."
 	icon_state = "secdetector0"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	device_tag = "PNET_IR_DETECT"
 
 	var/detector_id = null
@@ -2577,7 +2580,9 @@ TYPEINFO(/obj/machinery/networked/printer)
 		if (active_time > 0)
 			active_time--
 			if (!active_time)
-				//src.state = src.online
+				qdel(src.scan_beam)
+				src.scan_beam = null
+				src.state = src.online
 				src.UpdateIcon(src.online)
 
 		switch (src.state)

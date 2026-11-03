@@ -111,10 +111,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/teleporter
 	name = "circuit board (teleporter)"
 	computertype = /obj/machinery/computer/teleporter
-/obj/item/circuitboard/secure_data
-	name = "circuit board (secure data)"
-	computertype = /obj/machinery/computer/secure_data
-	icon_state = "circuit_security"
 /obj/item/circuitboard/atmospheresiphonswitch
 	name = "circuit board (atmosphere siphon control)"
 	computertype = /obj/machinery/computer/atmosphere/siphonswitch

@@ -36433,10 +36433,6 @@
 	pixel_x = 4;
 	pixel_y = -9
 	},
-/obj/item/stamp/hop{
-	pixel_y = 11;
-	pixel_x = -4
-	},
 /obj/item/hand_labeler{
 	pixel_x = -3;
 	pixel_y = -15
@@ -38840,6 +38836,10 @@
 	},
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 10
+	},
+/obj/item/stamp/hop{
+	pixel_x = 3;
+	pixel_y = 9
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/hop)
@@ -66338,7 +66338,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 kYD
 kYD
 kYD
@@ -66354,8 +66353,9 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -66639,8 +66639,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -66656,8 +66654,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -66941,8 +66941,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -66959,8 +66957,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -67240,8 +67240,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -67261,8 +67259,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -67541,8 +67541,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -67563,8 +67561,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -67843,8 +67843,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -67864,8 +67862,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -68145,8 +68145,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -68165,8 +68163,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -68447,8 +68447,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 kYD
 kYD
 kYD
@@ -68468,8 +68470,6 @@ kYD
 kYD
 kYD
 ajO
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -68749,8 +68749,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -68770,8 +68768,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -69051,8 +69051,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -69073,8 +69071,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -69354,8 +69354,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -69375,8 +69373,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -69659,8 +69659,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -69677,8 +69675,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -69961,8 +69961,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 kYD
 kYD
 kYD
@@ -69978,8 +69976,10 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa
@@ -70264,7 +70264,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 kYD
 kYD
 kYD
@@ -70280,8 +70279,9 @@ kYD
 kYD
 kYD
 kYD
-aaa
-aaa
+kYD
+kYD
+kYD
 aaa
 aaa
 aaa

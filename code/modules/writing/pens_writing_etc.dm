@@ -975,6 +975,8 @@
 	item_state = "clipboard0"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
+	default_material = "wood"
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	throw_speed = 3
 	throw_range = 10
 	desc = "You can put paper on it. Ah, technology!"
@@ -1102,6 +1104,9 @@
 		src.add_stuff(O, user)
 
 	proc/add_stuff(obj/item/I, mob/user)
+		if(istype(I) && I.cant_drop)
+			return
+			
 		if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
 			if (length(src.contents) >= src.max_items)
 				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))

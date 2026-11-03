@@ -66,6 +66,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/computer/announcement/syndicate,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "lv" = (

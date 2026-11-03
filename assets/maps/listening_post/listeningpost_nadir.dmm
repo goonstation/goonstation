@@ -175,6 +175,9 @@
 	name = "Dubious Hand Scanner";
 	pixel_x = 25
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/vestibule)
 "hK" = (
@@ -401,12 +404,12 @@
 	},
 /area/listeningpost/vestibule)
 "op" = (
-/obj/machinery/computer/secure_data{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable/black{
 	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)

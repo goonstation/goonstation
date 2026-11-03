@@ -141,25 +141,12 @@
 /datum/cable_placement/proc/resolve(list/params)
 	src.hover_turf = null
 	src.hover_dir = 0
-	var/client/C = src.user?.client
-	if (!C)
+	var/list/click_location = get_turf_pixel_clicked_over(user, params)
+	if(!click_location)
 		return FALSE
-	var/static/regex/screen_loc_parser = regex(@"^(\d+):(\d*),(\d+):(\d*)$")
-	if (!screen_loc_parser.Find(params["screen-loc"]))
-		return FALSE
-	var/turf/eye = get_turf(C.virtual_eye)
-	if (!eye)
-		return FALSE
-	var/tile_x = text2num(screen_loc_parser.group[1])
-	var/pixel_x = text2num(screen_loc_parser.group[2])
-	var/tile_y = text2num(screen_loc_parser.group[3])
-	var/pixel_y = text2num(screen_loc_parser.group[4])
-	// screen-loc columns are viewport tiles, so the centre column depends on how wide the viewport is:
-	// client.view is the text "21x15" while widescreen is on, and a plain number otherwise.
-	var/view_width = istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH
-	var/turf/T = locate(eye.x + (C.pixel_x / world.icon_size) + (tile_x - 1 - (view_width - 1) / 2),\
-		eye.y + (C.pixel_y / world.icon_size) + (tile_y - 1 - (TILE_HEIGHT - 1) / 2),\
-		eye.z)
+	var/turf/T = click_location["turf"]
+	var/pixel_x = click_location["pixel_x"]
+	var/pixel_y = click_location["pixel_y"]
 	if (!T)
 		return FALSE
 	src.hover_turf = T

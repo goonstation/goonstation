@@ -605,6 +605,9 @@
 							CR.configured_insertion_level = val/100
 							. = TRUE
 
+	meteorhit(obj/meteor)
+		src.ex_act(2)
+
 	ex_act(severity)
 		var/comp_throw_prob = 0
 		switch(severity)

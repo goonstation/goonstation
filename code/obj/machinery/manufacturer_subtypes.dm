@@ -168,7 +168,6 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/robup_physshield,
 		/datum/manufacture/robup_fireshield,
 		/datum/manufacture/robup_teleport,
-		/datum/manufacture/robup_visualizer,
 		/datum/manufacture/robup_efficiency,
 		/datum/manufacture/robup_repair,
 		/datum/manufacture/scream_synth,

@@ -348,6 +348,7 @@ TYPEINFO(/mob)
 		src.ghost.corpse = null
 
 	for(var/mob/dead/target_observer/TO in observers)
+		SEND_SIGNAL(src, COMSIG_MOB_OBSERVER_DETACHED, TO)
 		LAZYLISTREMOVE(observers, TO)
 		TO.ghostize()
 
@@ -960,14 +961,13 @@ TYPEINFO(/mob)
 			output += SPAN_ALERT("Sorry, could not retrieve your medal information.")
 			return
 
-		medals = medals["data"]
 		if (length(medals) == 0)
 			boutput(src, "<b>You don't have any medals.</b>")
 			return
 
 		output += "<b>Medals:</b>"
 		for (var/medal in medals)
-			output += "&emsp;[medal["medal"]["title"]]"
+			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
 		output += {"<br><a href="[goonhub_href("/players/[player.id]")]" target="_blank">Medal Details</a>"}
 		tgui_message(src, output.Join("<br>"), "Medals")

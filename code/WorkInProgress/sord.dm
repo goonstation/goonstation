@@ -690,14 +690,13 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 	var/image/fluid_image
 	var/list/whitelist = list()
 	var/safe = 1
-	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine", "acetylsalicylic_acid")
+	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine")
 
 
 	New()
 		..()
 		if (src.safe && islist(chem_whitelist) && length(chem_whitelist))
-			src.whitelist = chem_whitelist
-			src.whitelist += src.additional_whitelist
+			src.whitelist = chem_whitelist + src.additional_whitelist
 
 	update_icon()
 		if (src.reagents.total_volume)

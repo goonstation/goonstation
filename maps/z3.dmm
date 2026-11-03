@@ -8941,7 +8941,7 @@
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat)
 "aRl" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
 "aRm" = (

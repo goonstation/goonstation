@@ -124,8 +124,10 @@ TYPEINFO(/mob/new_player)
 
 			else
 				if (src.client.authenticated) spawned_in_keys += "[src.ckey]"
-				for (var/sound in global.dj_panel.preloaded_sounds)
-					src.client << load_resource(sound, -1)
+				for (var/name in global.dj_panel.sound_library)
+					var/datum/dj_library_sound/upload = global.dj_panel.sound_library[name]
+					if (upload.preloaded)
+						src.client << load_resource(upload.file, -1)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (current_state == GAME_STATE_PLAYING)

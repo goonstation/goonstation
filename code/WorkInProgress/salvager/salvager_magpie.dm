@@ -100,7 +100,9 @@ var/datum/magpie_manager/magpie_man = new
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager/tinted,
-						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub/tinted )
+						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub/tinted,
+						 "/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager/tinted,
+						 "/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub/tinted )
 
 /datum/manufacture/communications/salvager
 	name = "Salvager Communication Array"

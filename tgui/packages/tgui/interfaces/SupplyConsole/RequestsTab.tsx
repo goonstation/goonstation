@@ -10,8 +10,15 @@ import { Button, Section, Table } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { SupplyConsoleData } from './type';
 
-export const SupplyConsoleRequestsTab = () => {
+interface SupplyConsoleRequestsTabProps {
+  can_accept_orders: boolean;
+}
+
+export const SupplyConsoleRequestsTab = (
+  props: SupplyConsoleRequestsTabProps,
+) => {
   const { data, act } = useBackend<SupplyConsoleData>();
+  const { can_accept_orders } = props;
   return (
     <Section title="Cargo Requests" fill>
       <Table>
@@ -33,19 +40,21 @@ export const SupplyConsoleRequestsTab = () => {
             <Table.Cell>{order.requester}</Table.Cell>
             <Table.Cell>{order.cost}⪽</Table.Cell>
             <Table.Cell>{order.console_location}</Table.Cell>
-            <Table.Cell py="2px">
-              <Button
-                color="good"
-                icon="check"
-                iconColor="white"
-                tooltip="Approve"
-                onClick={() =>
-                  act('place_order', {
-                    ref: order.order_ref,
-                  })
-                }
-              />
-            </Table.Cell>
+            {can_accept_orders && (
+              <Table.Cell py="2px">
+                <Button
+                  color="good"
+                  icon="check"
+                  iconColor="white"
+                  tooltip="Approve"
+                  onClick={() =>
+                    act('place_order', {
+                      ref: order.order_ref,
+                    })
+                  }
+                />
+              </Table.Cell>
+            )}
             <Table.Cell py="2px">
               <Button
                 color="bad"

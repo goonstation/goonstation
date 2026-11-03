@@ -1877,11 +1877,16 @@ ABSTRACT_TYPE(/area/sim/gunsim)
 		return global.station_areas
 	// We need to update
 	. = list()
-	for_by_tcl(poss_area, /area/station)
-		for(var/turf/T in poss_area)
-			if(!isfloor(T) || is_blocked_turf(T) || T.z != Z_LEVEL_STATION)
-				continue
-			.[poss_area.name] = poss_area
+	// Walking the station z once is several times cheaper than reading every station area's contents
+	var/list/area/checked_areas = list()
+	for(var/turf/T as anything in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+		var/area/station/A = T.loc
+		if(!istype(A) || checked_areas[A]) // one accessible turf per area is all we need
+			continue
+		if(!isfloor(T) || is_blocked_turf(T))
+			continue
+		checked_areas[A] = TRUE
+		.[A.name] = A
 	global.area_list_is_up_to_date = TRUE
 	global.station_areas = .
 
@@ -2899,6 +2904,10 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Power Room"
 	icon_state = "engine_power"
 	sound_environment = 5
+
+/area/station/engine/engineering/aquarium
+	name = "Chief Engineer's Aquarium"
+	icon_state = "yellow"
 
 TYPEINFO(/area/station/engine/power/transmission)
 	valid_bounty_area = FALSE

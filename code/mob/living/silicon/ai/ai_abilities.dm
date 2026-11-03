@@ -423,32 +423,22 @@
 		if (..())
 			return 1
 
-		var/obj/item/aiModule/ability_expansion/security_vision/expansion = get_law_module()
+		var/obj/item/aiModule/ability_expansion/security_vision/expansion = src.get_law_module()
+		var/obj/machinery/computer3/generic/secure_data/sec_comp = expansion.sec_comp
+		sec_comp.Attackhand(src.holder.owner)
 
-		var/found = FALSE
-		var/t1 = "[target.name]"
-		t1 = adminscrub(t1)
-		expansion.sec_comp.active_record_general = null
-		expansion.sec_comp.active_record_security = null
-		t1 = lowertext(t1)
-		for (var/datum/db_record/R as anything in data_core.general.records)
-			if ((lowertext(R["name"]) == t1 || t1 == lowertext(R["dna"]) || t1 == lowertext(R["id"])))
-				expansion.sec_comp.active_record_general = R
-		if (!expansion.sec_comp.active_record_general)
-			expansion.sec_comp.temp = "Could not locate record [t1]."
+		// Issuing commands to a computer this way is a little cursed, but then again so is putting a computer inside an AI module.
+		if (sec_comp.active_program.authenticated)
+			sec_comp.unload_program(sec_comp.active_program)
 		else
-			for (var/datum/db_record/E as anything in data_core.security.records)
-				if ((E["name"] == expansion.sec_comp.active_record_general["name"] || E["id"] == expansion.sec_comp.active_record_general["id"]))
-					expansion.sec_comp.active_record_security = E
-					expansion.sec_comp.temp = null
-					found = TRUE
-					break
-			expansion.sec_comp.screen = 4 //SECREC_VIEW_RECORD
+			sec_comp.active_program.input_text("login")
 
-		if(found)
-			expansion.sec_comp.Attackhand(holder.owner)
-		else
-			boutput(holder.owner, "Could not locate record for [t1]")
+		sleep(1)
+		sec_comp.active_program.input_text("SecMate")
+		sleep(1)
+		sec_comp.active_program.input_text("2")
+		sleep(1)
+		sec_comp.active_program.input_text(target.name)
 
 /datum/targetable/ai/module/prodocs
 	name = "Camera Scan"

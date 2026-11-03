@@ -1024,7 +1024,7 @@
 			return
 
 	proc/insert_pen(obj/item/insertedPen, mob/user)
-		if (!istype(insertedPen))
+		if (!istype(insertedPen) || insertedPen.cant_drop)
 			return
 		if (user)
 			user.u_equip(insertedPen)

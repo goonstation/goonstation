@@ -6,10 +6,12 @@
  */
 import { Image } from 'tgui-core/components';
 
-import { resource } from '../../../goonstation/cdn';
+import { useResource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
 const FlocktraceContentWindow = () => {
+  const resource = useResource();
+
   return (
     <div className="traitor-tips">
       <h1 className="center">You are a Flocktrace!</h1>

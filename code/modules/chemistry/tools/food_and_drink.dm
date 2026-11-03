@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	var/heal_amt = 0 							//! Amount this food heals for when eaten
 	var/fill_amt = 1							//! Amount of space this takes up in a stomach
-	var/required_utensil = null 				//! Which utensil we need to use to eat this
+	var/required_utensils = null 				//! Which utensils can be used to eat this
 	var/food_color = null 						//! Color for various food items
 	var/custom_food = TRUE 						//! Can it be used to make custom food like for pizzas
 	var/festivity = 0 							//! Amount of cheer this food adds/subtracts when eaten
@@ -292,9 +292,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (!bypass_utensils)
 				var/utensil = null
 
-				if ((src.required_utensil == REQUIRED_UTENSIL_FORK || src.required_utensil == REQUIRED_UTENSIL_FORK_OR_SPOON) && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
+				if(HAS_FLAG(src.required_utensils, FOOD::UTENSIL::FORK) && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
 					utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
-				else if ((src.required_utensil == REQUIRED_UTENSIL_SPOON || src.required_utensil == REQUIRED_UTENSIL_FORK_OR_SPOON) && isspooningtool(user.equipped()))
+				else if(HAS_FLAG(src.required_utensils, FOOD::UTENSIL::SPOON) && isspooningtool(user.equipped()))
 					utensil = user.equipped()
 
 				// If it's a plastic fork we've found then test if we've broken it
@@ -311,13 +311,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						plastic_spoon.break_utensil(M)
 						utensil = null
 
-				if (!utensil && (src.required_utensil))
-					switch(src.required_utensil)
-						if (REQUIRED_UTENSIL_FORK_OR_SPOON)
+				if (!utensil && (src.required_utensils))
+					switch(src.required_utensils)
+						if (FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON)
 							boutput(M, SPAN_ALERT("You need a fork or spoon to eat [src]!"))
-						if (REQUIRED_UTENSIL_FORK)
+						if (FOOD::UTENSIL::FORK)
 							boutput(M, SPAN_ALERT("You need a fork to eat [src]!"))
-						if (REQUIRED_UTENSIL_SPOON)
+						if (FOOD::UTENSIL::SPOON)
 							boutput(M, SPAN_ALERT("You need a spoon to eat [src]!"))
 
 					M.visible_message(SPAN_ALERT("[user] stares glumly at [src]."))

@@ -64,7 +64,7 @@
 	bites_left = 2
 	heal_amt = 2
 	food_effects = list("food_refreshed")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 /obj/item/reagent_containers/food/snacks/cookie
 	name = "sugar cookie"
@@ -80,7 +80,7 @@
 	food_color = "#CC9966"
 	festivity = 1
 	food_effects = list("food_refreshed")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 	New()
 		..()
@@ -146,7 +146,7 @@
 		frosted = 1
 		initial_volume = 40
 		initial_reagents = list("sugar" = 10, "ectoplasm"=10)
-		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+		meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 	butter
 		name = "butter cookie"
@@ -202,7 +202,7 @@
 	initial_reagents = list("sugar" = 30, "cream" = 10)
 	var/frosted = 0
 	food_effects = list("food_refreshed")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 	New()
 		..()
@@ -283,7 +283,7 @@
 		initial_volume = 100
 		initial_reagents = list("sugar" = 20, "ectoplasm"=20, "cream" = 10)
 		food_effects = list("food_refreshed_big")
-		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+		meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/soup
@@ -291,7 +291,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A soup of indeterminable type."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	fill_amt = 3
 	heal_amt = 1
@@ -322,17 +322,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "tomato soup"
 	desc = "A rich and creamy soup made from tomatoes."
 	icon_state = "tomsoup"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_effects = list("food_warm","food_refreshed")
-	meal_time_flags = MEAL_TIME_LUNCH
+	meal_time_flags = FOOD::MEAL::LUNCH
 
 /obj/item/reagent_containers/food/snacks/soup/guacamole
 	name = "guacamole"
 	desc = "A spiced paste made of smashed avocados."
 	icon_state = "guacamole"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#007B1C"
@@ -343,7 +343,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "mint chutney"
 	desc = "A flavorful paste that smells strongly of mint."
 	icon_state = "mintchutney"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#2DAB1F"
@@ -354,7 +354,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "refried beans"
 	desc = "A dish made of mashed beans cooked with lard. It has bits of bacon in it."
 	icon_state = "refriedbeans"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#AA7777"
@@ -365,18 +365,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "chili con carne"
 	desc = "Meat pieces in a spicy pepper sauce. Delicious."
 	icon_state = "tomsoup"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("capsaicin"=20)
 	food_effects = list("food_warm","food_sweaty")
-	meal_time_flags = MEAL_TIME_LUNCH
+	meal_time_flags = FOOD::MEAL::LUNCH
 
 /obj/item/reagent_containers/food/snacks/soup/queso
 	name = "chili con queso"
 	desc = "Spicy mexican cheese stuff."
 	icon_state = "custard"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#FF8C00"
@@ -387,7 +387,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "chili con flagration"
 	desc = "God damn. This stuff smells strong."
 	icon_state = "tomsoup"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("capsaicin"=50)
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "El Diablo"
 	desc = "You feel overheated just looking at this dish."
 	icon_state = "hotchili"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 2
 	heal_amt = 6
 	initial_reagents = list("el_diablo"=90)
@@ -407,7 +407,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "gruel"
 	desc = "Asking if you can have more is probably ill-advised."
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 0
 	food_color = "#808080"
@@ -421,23 +421,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "porridge"
 	desc = "Mushy rice. Basically."
 	icon_state = "porridge"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 1
 	food_color = "#E1E1E1"
 	food_effects = list("food_brute")
-	meal_time_flags = MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/soup/oatmeal
 	name = "oatmeal"
 	desc = "Sometimes the station gets the fun kind with the little candy dinosaur eggs. This isn't the fun kind."
 	icon_state = "oatmeal-plain"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	var/randomized = 1
 	food_effects = list("food_brute")
-	meal_time_flags = MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::BREAKFAST
 
 	New()
 		..()
@@ -459,7 +459,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name= "cream of mushroom"
 	desc = "A thick soup that can be made from various mushrooms."
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("cream"=10)
@@ -469,7 +469,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name= "cream of mushroom"
 	desc = "A thick soup that can be made from various mushrooms."
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("amanitin"=30, "cream"=10)
@@ -479,7 +479,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name= "cream of mushroom"
 	desc = "A thick soup that can be made from various mushrooms."
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("psilocybin"=20,"LSD"=20,"space_drugs"=20, "cream"=10)
@@ -490,12 +490,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A meal of mostly plants. Good for healthy eating."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "salad"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 2
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_energized", "food_refreshed")
-	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::LUNCH | FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/cereal_box
 	name = "cereal box -'Cookie Swirlies'"
@@ -627,7 +627,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 5
 	heal_amt = 2
 	food_effects = list("food_energized")
-	meal_time_flags = MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::BREAKFAST
 
 #define DONK_COLD 0
 #define DONK_WARM 1
@@ -730,9 +730,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 3
 	bites_left = 4
 	heal_amt = 4
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	food_effects = list("food_energized_big")
-	meal_time_flags = MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/meatball
 	name = "meatball"
@@ -751,7 +751,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "swedish meatballs"
 	desc = "It's even got a little rice-paper swedish flag in it. How cute."
 	icon_state = "swede_mball"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	bites_left = 6
 	heal_amt = 2
@@ -905,7 +905,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	doants = 0
 	food_effects = list("food_explosion_resist")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 /obj/item/reagent_containers/food/snacks/popcorn
 	name = "popcorn"
@@ -915,7 +915,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 4
 	heal_amt = 1
 	food_effects = list("food_cateyes")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 /obj/item/reagent_containers/food/snacks/spaghetti
 	name = "spaghetti noodles"
@@ -923,7 +923,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "spag-plain"
 	var/random_name = TRUE
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 1
 	bites_left = 3
@@ -976,7 +976,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "boneless spaghetti"
 	desc = "Eh, this isn't very good at all..."
 	icon_state = "spag-dish"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 60
@@ -995,11 +995,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "spaghetti with tomato sauce"
 	desc = "Eh, the sauce tastes pretty bland..."
 	icon_state = "spag-dish"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 3
 	bites_left = 5
 	food_effects = list("food_energized","food_brute","food_burn")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 	New()
 		. = ..()
@@ -1032,23 +1032,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Pasta in a creamy, cheesy sauce."
 	icon_state = "spag-alfredo"
 	random_name = FALSE
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 3
 	bites_left = 5
 	food_effects = list("food_energized","food_brute","food_burn")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/spaghetti/spicy
 	name = "spaghetti arrabbiata"
 	desc = "Quite spicy!"
 	icon_state = "spag-dish-spicy"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 60
 	initial_reagents = list("capsaicin"=50,"omnizine"=5,"synaptizine"=5)
 	food_effects = list("food_energized","food_brute","food_burn")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 	/// Is this spaghetti under high security? (ie will it burn non security members who eat it)
 	var/secured = FALSE
 
@@ -1076,13 +1076,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "spaghetti and meatballs"
 	desc = "That's better!"
 	icon_state = "spag-meatball"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
 	initial_reagents = "synaptizine"
 	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 	New()
 		. = ..()
@@ -1093,51 +1093,51 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Spaghetti AND fried chicken? You must be dreaming."
 	icon_state = "spag-chickenparm"
 	random_name = FALSE
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
 	initial_reagents = "synaptizine"
 	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/spaghetti/chickenalfredo
 	name = "chicken alfredo"
 	desc = "Fettucine alfredo with grilled chicken on top."
 	icon_state = "spag-c-alfredo"
 	random_name = FALSE
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
 	initial_reagents = "synaptizine"
 	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/lasagna
 	name = "lasagna"
 	desc = "Layers of saucy, cheesy goodness."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "lasagna"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
 	initial_reagents = "omnizine"
 	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti
 	name = "pizza-ghetti"
 	desc = "This is just- It's pizza and spaghetti on a plate? They're not even touching. What gives?"
 	icon_state = "pizzaghetti"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 50
 	initial_reagents = list("quebon"=25,"nicotine"=5,"gravy"=5,"pizza"=5) // staples of french canadian life
 	food_effects = list("food_sweaty")
-	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+	meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 	New()
 		. = ..()
@@ -1296,7 +1296,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "bagel"
 	heal_amt = 1
 	food_effects = list("food_explosion_resist")
-	meal_time_flags = MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::BREAKFAST
 	var/random_bagel = TRUE
 
 	New()
@@ -1443,7 +1443,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 30
 	initial_reagents = list("porktonium"=10)
 	food_effects = list("food_sweaty")
-	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::LUNCH | FOOD::MEAL::SNACK
 
 	banana
 		name = "banana-corndog"
@@ -1457,7 +1457,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		icon_state = "corndogbr"
 		heal_amt = 5
 		food_effects = list("food_hp_up_big")
-		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+		meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 	elvis
 		name = "hounddog-on-a-stick"
@@ -1473,7 +1473,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		icon_state = "hauntedcorndog"
 		heal_amt = 5
 		food_effects = list("food_all")
-		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+		meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 	on_reagent_change()
 		..()
@@ -1498,7 +1498,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	var/herb = 0
 	initial_volume = 30
 	initial_reagents = list("porktonium"=10)
-	meal_time_flags = MEAL_TIME_LUNCH
+	meal_time_flags = FOOD::MEAL::LUNCH
 
 	on_reagent_change()
 		..()
@@ -1756,7 +1756,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	initial_volume = 5
 	initial_reagents = list("love"=1)
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 	/*New()
 		..()
@@ -1855,7 +1855,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 4
 	stage = 2
 	food_effects = list("food_energized_big", "food_warm")
-	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::LUNCH | FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/steak
 	name = "steak"
@@ -1868,14 +1868,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=3)
 	food_effects = list("food_hp_up", "food_brute")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 	human
 		desc = "Made of people."
 		var/hname = null
 		var/job = null
 		food_effects = list("food_hp_up_big", "food_brute")
-		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+		meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 	monkey
 		name = "monkey steak"
@@ -1886,7 +1886,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		desc = "And they thought processed food was artificial..."
 		icon_state = "meat-plant-grilled"
 		initial_reagents = list("cholesterol"=2)
-		meal_time_flags = MEAL_TIME_DINNER
+		meal_time_flags = FOOD::MEAL::DINNER
 
 	sheep
 		name = "sheep steak"
@@ -1900,7 +1900,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		food_color = "#999966"
 		initial_reagents = list("cholesterol" = 3, "neurotoxin" = 10) // changeling blood boiled off
 		food_effects = list("food_hp_up_big", "food_brute") //helpful enzymes or something idk
-		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+		meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/turkey
 	name = "roast turkey"
@@ -1948,7 +1948,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 30
 	initial_reagents = list("gravy" = 10) //drippings
 	food_effects = list("food_hp_up_big", "food_brute")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/turkey_slice
 	name = "turkey slice"
@@ -1961,7 +1961,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 30
 	initial_reagents = list("gravy" = 10) //drippings
 	food_effects = list("food_hp_up_big", "food_brute")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/fish_fingers
 	name = "fish fingers"
@@ -1972,7 +1972,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 2
 	food_color = "#FFCC33"
 	food_effects = list("food_burn", "food_sweaty", "food_tox")
-	meal_time_flags = MEAL_TIME_LUNCH
+	meal_time_flags = FOOD::MEAL::LUNCH
 
 /obj/item/reagent_containers/food/snacks/shrimp
 	name = "cooked shrimp meat"
@@ -1993,7 +1993,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	food_color = "#FFFF99"
 	food_effects = list("food_explosion_resist")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/omelette
 	name = "omelette"
@@ -2002,18 +2002,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 3
 	bites_left = 3
 	heal_amt = 4
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	food_color = "#FFCC00"
 	initial_volume = 10
 	initial_reagents = list("cholesterol"=1)
 	food_effects = list("food_energized", "food_deep_burp")
-	meal_time_flags = MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/omelette/bee
 	name = "deep-space hell omelette"
 	desc = "<tt>BEE EGGS</tt> make this a delightful breakfast food."
 	icon_state = "hell-omelette"
-	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+	meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/pancake
 	name = "pancakes"
@@ -2025,7 +2025,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	var/syrup = 0
 	food_color = "#FFFF99"
 	food_effects = list("food_deep_fart", "food_energized")
-	meal_time_flags = MEAL_TIME_BREAKFAST | MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::BREAKFAST | FOOD::MEAL::DINNER
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/syrup))
@@ -2053,12 +2053,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 2
 	bites_left = 5
 	heal_amt = 1
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_color = "#FFFFFF"
 	initial_volume = 50
 	initial_reagents = list("mashedpotatoes"=25)
 	food_effects = list("food_explosion_resist", "food_hp_up")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/mashedbrains
 	name = "mashed brains"
@@ -2067,7 +2067,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 2
 	bites_left = 5
 	heal_amt = 1
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_color = "#FF6699"
 	food_effects = list("food_hp_up_big")
 
@@ -2082,7 +2082,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				else if(prob(1))
 					boutput(M, SPAN_NOTICE("You feel smarter."))
 					H:bioHolder:RandomEffect("good")
-	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+	meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/meatloaf
 	name = "meatloaf"
@@ -2091,11 +2091,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 4
 	bites_left = 5
 	heal_amt = 1
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=2)
 	food_effects = list("food_hp_up_big")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner
 	name = "INVISIBLE GHOST OF PANCHO VILLA'S BAKER BROTHER, GARY VILLA"
@@ -2199,7 +2199,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 2
 	food_color = "#6A532D"
 	food_effects = list("food_refreshed_big")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 /obj/item/reagent_containers/food/snacks/biscuit
 	name = "biscuit"
@@ -2246,7 +2246,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#6A532D"
 	initial_reagents = list("butter"=3)
 	food_effects = list("food_energized")
-	meal_time_flags = MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/hardtack
 	name = "Hardtack"
@@ -2288,7 +2288,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 3
 	heal_amt = 2
 	food_effects = list("food_bad_breath")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	name = "goldfish cracker"
@@ -2298,7 +2298,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 1
 	heal_amt = 6
 	initial_reagents = list("enriched_msg"=1)
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 /obj/item/reagent_containers/food/snacks/deviledegg
 	name = "deviled egg"
@@ -2309,26 +2309,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	food_color = "#6A532D"
 	food_effects = list("food_energized")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 /obj/item/reagent_containers/food/snacks/eggsalad
 	name = "egg salad"
 	desc = "A meal of mostly egg. Good for eating eggs."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "eggsalad"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 2
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_energized", "food_bad_breath")
-	meal_time_flags = MEAL_TIME_LUNCH
+	meal_time_flags = FOOD::MEAL::LUNCH
 
 // Haggis and Scotch Eggs by Cirrial, 2017
 /obj/item/reagent_containers/food/snacks/haggis
 	name = "haggis"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "haggis"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	var/isbutt = 0
 	fill_amt = 4
 	bites_left = 6
@@ -2368,7 +2368,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/haggis/ass
 	name = "haggass"
 	isbutt = 1
-	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+	meal_time_flags = FOOD::MEAL::FORBIDDEN_TREAT
 
 	New()
 		..()
@@ -2382,7 +2382,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 1
 	heal_amt = 2
 	food_effects = list("food_burn", "food_tox")
-	meal_time_flags = MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::BREAKFAST
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/)) src.bites_left += 1
@@ -2526,7 +2526,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A filling plate of rice and beans."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "riceandbeans"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	bites_left = 6
 	heal_amt = 2
@@ -2537,19 +2537,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A plate of fried rice. There's even an egg!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "friedrice"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	bites_left = 6
 	heal_amt = 3
 	food_effects = list("food_brute", "food_all")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/omurice
 	name = "omurice"
 	desc = "The ketchup drawing looks like George."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "omurice"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	bites_left = 4
 	heal_amt = 2
@@ -2560,12 +2560,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Not a sandwich."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "risotto"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	bites_left = 6
 	heal_amt = 2
 	food_effects = list("food_all", "food_energized_big")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/zongzi
 	name = "zongzi"
@@ -2684,7 +2684,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#cd692b"
 	initial_volume = 15
 	food_effects = list("food_brute")
-	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::SNACK | FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/painauchocolat
 	name = "pain au chocolat"
@@ -2696,7 +2696,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#cd692b"
 	initial_volume = 15
 	food_effects = list("food_brute","food_energized")
-	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::SNACK | FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/danish_apple
 	name = "apple danish"
@@ -2708,7 +2708,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#40C100"
 	initial_volume = 15
 	food_effects = list("food_brute","food_refreshed")
-	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::SNACK | FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/danish_cherry
 	name = "cherry danish"
@@ -2720,7 +2720,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#CC0000"
 	initial_volume = 15
 	food_effects = list("food_burn","food_refreshed")
-	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::SNACK | FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/danish_blueb
 	name = "blueberry danish"
@@ -2732,7 +2732,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#0000FF"
 	initial_volume = 15
 	food_effects = list("food_burn","food_energized")
-	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::SNACK | FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/danish_weed
 	name = "cannadanish"
@@ -2756,7 +2756,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#ffc758"
 	initial_volume = 15
 	food_effects = list("food_burn","food_energized")
-	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::SNACK | FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/cinnamonbun
 	name = "cinnamon bun"
@@ -2769,7 +2769,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = list("sugar"=10, "cinnamon"=10)
 	food_effects = list("food_burn","food_warm")
-	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::SNACK | FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/chocolate_cherry
 	name = "chocolate covered cherry"
@@ -2781,14 +2781,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#492b21"
 	initial_volume = 15
 	food_effects = list("food_burn","food_energized")
-	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::SNACK | FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/tandoorichicken
 	name = "tandoori chicken"
 	desc = "This one wasn't actually cooked in a tandoor, the cylindrical clay oven for which the dish is named. Don't tell."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "tandoorichicken"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 2
 	bites_left = 4
@@ -2801,7 +2801,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A rich Indian curry full of potatoes, carrots, and peas."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "potatocurry"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 4
 	heal_amt = 2
 	bites_left = 5
@@ -2814,7 +2814,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A creamy Thai curry made with coconut milk, served on a bed of rice."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "coconutcurry"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 2
 	bites_left = 5
@@ -2827,7 +2827,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A sweet-and-spicy curry that expertly balances the tang of pineapple with the heat of the curry powder."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "chickenpapplecurry"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 4
 	heal_amt = 2
 	bites_left = 5
@@ -2840,7 +2840,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A hearty bowl of real Japanese ramen with a halved boiled egg; not the instant stuff!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ramen"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 2
 	bites_left = 5
@@ -2853,7 +2853,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of very chewy wheat noodles and fish cake served in a warm, savoury broth."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
@@ -2866,7 +2866,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of very chewy wheat noodles with a halved boiled egg in a fragrant curry broth."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon_curry"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
@@ -2879,7 +2879,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of tender bean curd, onions, and minced meat in a spicy oil suspension."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "mapo_tofu"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
@@ -2892,7 +2892,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of tender bean curd, onions, and minced synthmeat in a spicy oil suspension."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "mapo_tofu_synth"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
@@ -2937,7 +2937,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Stewed and caramalized vegetables. Remy not included."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ratatouille"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	heal_amt = 2
 	bites_left = 3
@@ -2948,14 +2948,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Brain served in gravy. There are some almonds in it, not sure where those came from."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "maghaz"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 3
 	initial_volume = 10
 	initial_reagents = "gravy"
 	food_effects = list("food_explosion_resist", "food_hp_up_big", "brain_food_ithillid")
-	meal_time_flags = MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::DINNER
 
 // Dippable food
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
@@ -3035,7 +3035,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	initial_volume = 20
 	initial_reagents = list("chocolate" = 5)
 	food_effects = list("food_warm","food_energized")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 /obj/item/reagent_containers/food/snacks/flapjack
 	name = "flapjack"
@@ -3048,7 +3048,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	initial_volume = 10
 	initial_reagents = list("sugar" = 5)
 	food_effects = list("food_warm","food_energized")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 /obj/item/reagent_containers/food/snacks/dessert_batch
@@ -3097,7 +3097,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A bowl of plain cooked rice."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "rice_bowl"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized")
 	bites_left = 5
 	heal_amt = 1
@@ -3107,18 +3107,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A bowl of cooked rice with a raw egg yolk and soy sauce on top. Otherwise known as tamago kake gohan."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "egg_on_rice"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized_big","food_refreshed")
 	bites_left = 5
 	heal_amt = 2
-	meal_time_flags = MEAL_TIME_BREAKFAST
+	meal_time_flags = FOOD::MEAL::BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/katsudon
 	name = "katsudon"
 	desc = "A bowl of rice topped with egg and a deep fried meat cutlet. You'll feel like a winner eating this for sure!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "katsu_bowl"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized","food_warm","food_brute")
 	bites_left = 5
 	heal_amt = 3
@@ -3128,7 +3128,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A bowl of rice topped with thin slices of sauced meat and onions. This one has an egg yolk on top!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "beef_bowl"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized","food_warm","food_brute")
 	bites_left = 5
 	heal_amt = 3
@@ -3138,7 +3138,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "Basically just gyūdon but with melted cheese on top of it. Yum!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "cheese_beef_bowl"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized_big","food_warm","food_brute")
 	bites_left = 5
 	heal_amt = 3
@@ -3148,7 +3148,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A small bowl of soup made with dashi stock and miso paste."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "miso_soup"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	food_effects = list("food_warm","food_refreshed","food_disease_resist")
 	bites_left = 4
 	heal_amt = 1
@@ -3158,7 +3158,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A Korean dish of rice, grilled meat, vegetables, and gochujang. Served in a hot stone pot!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "bibimbap"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_warm","food_hp_up_big")
 	bites_left = 5
 	heal_amt = 5
@@ -3169,7 +3169,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "Japanese curry with rice and a deep fried meat cutlet. A hearty, home-cooked meal."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "katsu_curry"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	food_effects = list("food_warm","food_energized","food_brute")
 	bites_left = 5
 	heal_amt = 3
@@ -3180,12 +3180,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "flan"
 	food_color = "#fac34d"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 3
 	heal_amt = 2
 	initial_reagents = list("sugar" = 10, "vanilla" = 10)
 	food_effects = list("food_energized")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 /obj/item/reagent_containers/food/snacks/proc/random_pigblanket_name()
 	.= pick(list("pigs in a blanket", "pig in a blanket", "little pigs in blanket", "pork sausage links in a blanket", "kolache", "avisance", "fransk hot dog", "sausage horns", "saucijzenbroodje", "sausage roll"))
@@ -3198,7 +3198,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	bites_left = 2
 	heal_amt = 1
 	food_effects = list("food_sweaty")
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 
 	New()
 		..()
@@ -3211,16 +3211,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	icon_state = "fruit_salad"
 	bites_left = 3
 	food_effects = list("food_energized", "food_refreshed")
-	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
+	meal_time_flags = FOOD::MEAL::LUNCH | FOOD::MEAL::DINNER
 
 /obj/item/reagent_containers/food/snacks/bowl_of_dulce_de_leche
 	name = "bowl of dulce de leche"
 	desc = "A small bowl of rich, sweet dulce de leche."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "dulce_de_leche"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 4
 	initial_reagents = list("dulcedeleche" = 50)
-	meal_time_flags = MEAL_TIME_SNACK
+	meal_time_flags = FOOD::MEAL::SNACK
 	use_bite_mask = FALSE
 	dropped_item = /obj/item/reagent_containers/food/drinks/bowl

@@ -7,6 +7,8 @@
 	throw_speed = 4
 	throw_range = 5
 	w_class = W_CLASS_TINY
+	default_material = "wood"
+	material_amt = MATERIAL::AMOUNT::ROD
 	stamina_damage = 0
 	stamina_cost = 0
 	var/broken = 0

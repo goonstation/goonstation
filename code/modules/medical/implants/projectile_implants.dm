@@ -160,6 +160,7 @@
 
 		blowdart
 			name = "blowdart"
+			pull_out_name = "dart"
 			desc = "a sharp little dart with a little poison reservoir."
 			icon_state = "blowdart"
 			leaves_wound = FALSE

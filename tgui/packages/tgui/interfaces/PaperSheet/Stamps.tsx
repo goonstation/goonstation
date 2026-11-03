@@ -26,6 +26,7 @@ export const PaperSheetStamper: React.FC<PaperSheetStamperProps> = ({
   stampClass,
   stamps,
 }) => {
+  const { act } = useBackend();
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
   const [rotate, setRotate] = useState(0);
@@ -88,7 +89,6 @@ export const PaperSheetStamper: React.FC<PaperSheetStamperProps> = ({
     if (e.pageY <= WINDOW_TITLEBAR_HEIGHT) {
       return;
     }
-    const { act } = useBackend();
     const stampObj = {
       x,
       y,

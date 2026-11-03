@@ -2030,6 +2030,8 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	icon_state = "hedron-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
+
+	var/welding = FALSE
 	powered_item_state = "gun"
 	powered_mining_sound = 'sound/items/Welder.ogg'
 	c_flags = ONBELT
@@ -2048,11 +2050,13 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 
 	power_up(var/mob/user)
 		src.set_icon_state("hedron-M")
+		src.welding = FALSE
 		FLICK("hedron-WtoM", src)
 		..()
 
 	power_down(var/mob/user)
 		src.set_icon_state("hedron-W")
+		src.welding = TRUE
 		FLICK("hedron-MtoW", src)
 		..()
 
@@ -2557,7 +2561,7 @@ TYPEINFO(/obj/item/cargotele)
 	mining_marker.alpha = 200
 	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_image(mining_marker)
 	SPAWN(2 MINUTES)
-		if(AST && AST.marker_expiration_time <= TIME)
+		if(AST && istype(AST) && AST.marker_expiration_time <= TIME)
 			AST.clear_marker()
 
 ///// MINER TRAITOR ITEM /////

@@ -577,6 +577,9 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/combust(obj/item/W) // cogwerks- flammable items project
 	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
 		return
+	var/area/area = get_area(src)
+	if (!area || area.virtual)
+		return
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	src.burning = TRUE
 	src.firesource = FIRESOURCE_OPEN_FLAME

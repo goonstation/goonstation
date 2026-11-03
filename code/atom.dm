@@ -537,15 +537,6 @@ TYPEINFO(/obj/item/disk)
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
-	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	var/override_type = src.type
-	while(!isnull(typeinfo.manufactured_type) && override_type != typeinfo.manufactured_type) //Recursively go up the list of manufacture overrides.
-		override_type = typeinfo.manufactured_type
-		typeinfo = get_type_typeinfo(override_type)
-
-	if (typeinfo.analyser_flags & (ANALYSER_ALLOWED | ANALYSER_SKIP_IF_FAIL | ANALYSER_FAILFEEDBACK)) // typeinfo.mats &&
-		src.AddComponent(/datum/component/analyzable, override_type)
-
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things

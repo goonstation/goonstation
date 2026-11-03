@@ -541,6 +541,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/effects/precipitation)) continue
 			if (istype(AM, /obj/overlay/tile_effect)) continue
+			if (istype(AM, /obj/forcefield/event)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			if (istype(AM, /obj/decal/tile_edge) && istypes(S, turf_to_skip)) continue
 			AM.set_loc(T)

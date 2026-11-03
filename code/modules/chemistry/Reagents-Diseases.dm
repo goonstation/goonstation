@@ -384,6 +384,17 @@ datum
 			transparency = 70
 			disease = /datum/ailment/disease/space_madness
 
+		disease/phantom_payroll
+			name = "phantom payroll"
+			id = "phantom_payroll"
+			description = "A muted grey-blue fluid that smells faintly of stale coffee and printer toner."
+			reagent_state = LIQUID
+			fluid_r = 82
+			fluid_g = 96
+			fluid_b = 118
+			transparency = 150
+			disease = /datum/ailment/disease/third_shift_syndrome
+
 		disease/grave_dust // Vampire Plague
 			name = "grave dust"
 			id = "grave dust"

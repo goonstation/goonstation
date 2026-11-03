@@ -152,7 +152,7 @@
 					if(new_tag in src.mail_tag)
 						boutput(user, SPAN_ALERT("[new_tag] is already included in the mailtags!"))
 						return
-					if(contains_chars(new_tag, list("*")))
+					if(findtext(new_tag, "*"))
 						boutput(user, SPAN_ALERT("\"*\" cannot be used in mailtags!"))
 						return
 					if(is_blank_string(new_tag))

@@ -72,5 +72,10 @@
 	"tgstationTestExplorer.project.defines": [
 		"#define UNIT_TESTS"
 	],
-	"prettier.configPath": ""
+	"prettier.configPath": "",
+	"ss13BuildFlags.configPath": "tools/build_flags.json",
+	"ss13BuildFlags.baseTask": "dm: build - goonstation.dme",
+	"ss13BuildFlags.injectionMode": "write-file",
+	"ss13BuildFlags.localDefinesPath": "_std/__build.local.dm",
+	"ss13BuildFlags.definesDocPath": "_std/__build.dm"
 }

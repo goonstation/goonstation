@@ -441,10 +441,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"id" = (
-/obj/machinery/computer/secure_data/detective_computer,
-/turf/simulated/floor,
-/area/station/devzone)
 "ii" = (
 /obj/machinery/networked/test_apparatus/pitching_machine,
 /obj/machinery/power/data_terminal,
@@ -4785,7 +4781,7 @@ Yx
 Yx
 Yx
 ng
-id
+Yx
 PF
 Cq
 ng

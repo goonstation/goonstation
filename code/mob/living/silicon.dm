@@ -717,6 +717,28 @@ var/global/list/module_editors = list()
 	..()
 	src.mainframe?.clear_offline_indicator()
 
+/mob/living/silicon/proc/set_always_monospaced(do_monospaced = TRUE, mob/user = src)
+	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	if(!do_monospaced)
+		decorator.inverted = FALSE
+		boutput(user, SPAN_NOTICE("All speech now regular text by default."))
+	else
+		decorator.inverted = TRUE
+		boutput(user, SPAN_NOTICE("All speech now monospaced by default."))
+	if(src.mainframe && !isAI(src)) // safety check to prevent possible infinite loop if mainframe is ever accidentally set on an ai
+		src.mainframe.set_always_monospaced(do_monospaced = do_monospaced)
+
+/mob/living/silicon/proc/toggle_monospace_mode(mob/user = src)
+	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	src.set_always_monospaced(!decorator.inverted, user)
+
+/mob/living/silicon/verb/toggle_monospace()
+	set category = "Robot Commands"
+	set name = "Toggle Monospace Speech"
+	set desc = "Switches your speech between normal and forced-monospace mode."
+
+	src.toggle_monospace_mode(src)
+
 /datum/statusEffect/low_power
 	id = "low_power"
 	name = "Low Power"

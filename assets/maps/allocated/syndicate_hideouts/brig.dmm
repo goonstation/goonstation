@@ -1,0 +1,462 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/cordon,
+/area/cordon/dark)
+"b" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/machinery/drainage,
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/cheese{
+	pixel_x = 6;
+	pixel_y = -6;
+	name = "slice of soggy cheese pizza";
+	desc = "A cheesy pizza slice with thick tomato sauce. It looks quite soggy."
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"c" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	dir = 2
+	},
+/obj/mapping_helper/button/pair{
+	dir = 9
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"d" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"e" = (
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"f" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"g" = (
+/obj/table/syndicate/auto,
+/obj/machinery/phone/unlisted{
+	stripe_color = "#ff0000"
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/syndicate_station/hideout)
+"h" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/syndicate_station/hideout)
+"i" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/wood/five,
+/area/syndicate_station/hideout)
+"j" = (
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/syndicate_station/hideout)
+"k" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/syringe,
+/turf/simulated/floor/wood/five,
+/area/syndicate_station/hideout)
+"l" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/vending/cola/red,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"m" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/wood/five,
+/area/syndicate_station/hideout)
+"n" = (
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/syndicate_station/hideout)
+"o" = (
+/obj/submachine/slot_machine,
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"p" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"r" = (
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"t" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"u" = (
+/obj/table/syndicate/auto,
+/obj/item/material_piece/cloth,
+/obj/item/clothing/gloves/black{
+	pixel_y = 13
+	},
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/syndicate_station/hideout)
+"v" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	dir = 2
+	},
+/obj/mapping_helper/button/pair{
+	dir = 9
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/syndicate_station/hideout)
+"w" = (
+/obj/machinery/light/incandescent,
+/obj/table/syndicate/auto,
+/obj/item/handcuffs/guardbot{
+	pixel_y = -8
+	},
+/obj/item/electronics/frame/flatpack/broadcast_camera/unidentified{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/syndicate_station/hideout)
+"x" = (
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/syndicate_station/hideout)
+"y" = (
+/obj/machinery/sink/slim{
+	pixel_y = 16
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"z" = (
+/obj/table/syndicate/auto,
+/obj/item/kitchen/utensil/knife,
+/turf/simulated/floor/wood/five,
+/area/syndicate_station/hideout)
+"A" = (
+/obj/machinery/sink/slim{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/simulated/floor/wood/five,
+/area/syndicate_station/hideout)
+"C" = (
+/obj/fitness/stacklifter,
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"E" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"G" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 12
+	},
+/obj/item/instrument/harmonica,
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"H" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/syndicate_station/hideout)
+"I" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"J" = (
+/obj/stool/chair/black{
+	dir = 8
+	},
+/turf/simulated/floor/wood/five,
+/area/syndicate_station/hideout)
+"L" = (
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/syndicate_station/hideout)
+"M" = (
+/obj/storage/closet/wardrobe/orange,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/syndicate_station/hideout)
+"N" = (
+/obj/item/device/radio/intercom,
+/obj/table/syndicate/auto,
+/obj/item/wirecutters,
+/turf/simulated/floor/wood/five,
+/area/syndicate_station/hideout)
+"O" = (
+/turf/simulated/floor/wood/five,
+/area/syndicate_station/hideout)
+"P" = (
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"Q" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 4
+	},
+/turf/simulated/floor/wood/five,
+/area/syndicate_station/hideout)
+"R" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"S" = (
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"X" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"Y" = (
+/obj/machinery/disposal/extradimensional/exit{
+	pixel_y = 3
+	},
+/obj/machinery/light/incandescent,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/engine/glow,
+/area/syndicate_station/hideout)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+H
+H
+H
+H
+H
+H
+H
+H
+H
+H
+a
+a
+"}
+(3,1,1) = {"
+a
+H
+b
+p
+H
+o
+C
+H
+H
+Y
+H
+H
+a
+"}
+(4,1,1) = {"
+a
+H
+y
+P
+H
+E
+r
+h
+g
+n
+L
+H
+a
+"}
+(5,1,1) = {"
+a
+H
+I
+H
+H
+r
+r
+R
+e
+S
+j
+H
+a
+"}
+(6,1,1) = {"
+a
+H
+r
+r
+r
+r
+r
+h
+c
+S
+j
+H
+a
+"}
+(7,1,1) = {"
+a
+H
+d
+t
+r
+r
+G
+H
+l
+S
+j
+H
+a
+"}
+(8,1,1) = {"
+a
+H
+H
+H
+H
+H
+H
+H
+f
+S
+j
+H
+a
+"}
+(9,1,1) = {"
+a
+a
+H
+z
+Q
+A
+H
+x
+X
+S
+j
+H
+a
+"}
+(10,1,1) = {"
+a
+a
+H
+N
+m
+O
+i
+e
+S
+S
+j
+H
+a
+"}
+(11,1,1) = {"
+a
+a
+H
+k
+J
+O
+H
+v
+M
+w
+u
+H
+a
+"}
+(12,1,1) = {"
+a
+a
+H
+H
+H
+H
+H
+H
+H
+H
+H
+H
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

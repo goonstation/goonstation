@@ -1397,7 +1397,7 @@ TYPEINFO(/turf/simulated)
 
 /turf/unsimulated/floor/ballpit
 	name = "ball pit"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	icon_state = "ballpitfloor"
 
 /turf/simulated/floor/concrete
