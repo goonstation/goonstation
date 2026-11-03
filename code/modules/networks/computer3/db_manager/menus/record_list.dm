@@ -41,7 +41,7 @@
 
 	var/index_number = round(max(global.text2num_safe(command), 0))
 	if (index_number == 0)
-		src.parent.switch_menu_to(src.parent.current_record_group.main_menu)
+		src.parent.previous_menu()
 		return
 
 	var/list/datum/db_record/records = src.parent.current_record_group.get_records()

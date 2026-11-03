@@ -1,4 +1,5 @@
 /datum/db_manager_menu/field_input
+	add_to_user_journey = FALSE
 	var/datum/db_record/record = null
 	VAR_PRIVATE/key = null
 	VAR_PRIVATE/datum/record_field/field = null
@@ -22,4 +23,4 @@
 
 /datum/db_manager_menu/field_input/input_text(text)
 	if (src.field.input_text(src, text))
-		src.parent.switch_menu_to("record_view", src.record)
+		src.parent.previous_menu()
