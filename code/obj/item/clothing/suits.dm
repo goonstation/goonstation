@@ -2435,6 +2435,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.5)
 
 	New()
 		..()
@@ -2453,7 +2455,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 
 	setupProperties()
 		..()
-		setProperty("coldprot", 25)
+		setProperty("coldprot", 20)
 
 	New()
 		..()
@@ -2473,7 +2475,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 
 	setupProperties()
 		..()
-		setProperty("coldprot", 25)
+		setProperty("coldprot", 20)
 
 	New()
 		..()
@@ -2492,7 +2494,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 
 	setupProperties()
 		..()
-		setProperty("coldprot", 25)
+		setProperty("coldprot", 20)
 
 	New()
 		..()
