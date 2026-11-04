@@ -7,6 +7,8 @@
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/server_region = null
 	var/server_on_hub = TRUE
+	/// Currently unimplemented, used to distinguish between regular and tomato servers for example
+	var/server_group_id = 1
 
 	var/server_specific_configs = 0		// load extra config files (by port)
 

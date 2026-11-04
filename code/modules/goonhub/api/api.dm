@@ -115,12 +115,23 @@ var/global/datum/apiHandler/apiHandler
 	 *
 	 */
 	proc/queryAPI(datum/apiRoute/route = null, attempt = 1)
-		if (!enabled)
-			src.apiError(list("message" = "API Error: Cancelled query due to disabled apiHandler"))
-			return FALSE
 		if (!route)
 			src.apiError(list("message" = "API Error: Cancelled query due to missing route parameter"))
 			return FALSE
+		if (!src.enabled)
+			var/database/db
+			try
+				db = FALLBACK_DB.open("fallback_db_[config.server_id].sqlite", config.server_id, config.server_group_id)
+			catch(var/error)
+				src.apiError(list("message" = "Fallback API DB error: [error]"))
+				return FALSE
+
+			var/list/response = route.local_fallback(db)
+			if (isnull(response))
+				src.apiError(list("message" = "API Error: Cancelled query due to disabled apiHandler and no local fallback"))
+				return FALSE
+			var/datum/apiModel/model = new route.correct_response
+			model.SetupFromResponse(response)
 
 		var/req_route = "[config.goonhub_api_endpoint][route.path][route.routeParams ? "/[route.formatRouteParams()]" : ""]/?[route.formatQueryParams()]"
 		var/headers = list(
