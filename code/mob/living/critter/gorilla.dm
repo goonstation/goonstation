@@ -69,14 +69,6 @@ TYPEINFO(/mob/living/critter/gorilla)
 		if(!ON_COOLDOWN(src, "gorilla_ook", 5 SECONDS))
 			src.visible_message(SPAN_ALERT("<b>[src] screeches!</b>"))
 			playsound(src.loc, 'sound/voice/screams/monkey_scream.ogg', 90, 1, pitch=0.3)
-		else
-			return ..()
-
-	hand_attack(atom/target, params) // feedback for smashing windows and such
-		if(istypes(target, list(/obj/window, /obj/mesh/grille, /obj/table, /obj/blob)))
-			if(!ON_COOLDOWN(src, "gorilla_ook", 5 SECONDS))
-				src.visible_message(SPAN_ALERT("<b>[src] screeches!</b>"))
-				playsound(src.loc, 'sound/voice/screams/monkey_scream.ogg', 90, 1, pitch=0.3)
 		return ..()
 
 	critter_ability_attack(mob/target)

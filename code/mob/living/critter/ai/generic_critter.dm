@@ -482,6 +482,9 @@
 	ai_turbo = TRUE // have gorillas gone too far...
 	max_dist = 7
 	score_by_distance_only = FALSE
+	/// Window must always score higher than grilles or they will be attacked under the window. Only 1 score difference is needed for tie break.
+	/// Much higher scores are prioritised over distance. Put subtypes before types in this list if ever adding both.
+	var/list/target_priorities = list(/obj/blob = 100, /obj/window = 1, /obj/mesh/grille = 0, /obj/table = 0)
 
 /datum/aiTask/sequence/goalbased/critter/smash_stuff/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -498,25 +501,16 @@
 		C.set_a_intent(INTENT_HARM)
 
 /datum/aiTask/sequence/goalbased/critter/smash_stuff/get_targets()
-	var/list/windows = list()
-	var/list/other_shit = list()
-
-	for (var/obj/O in view(src.max_dist, holder.owner))
-
-		if(istype(O, /obj/window)) // windows gotta go above grilles in return or they magically punch the grille beneath the window.
-			if(istype(O, /obj/window/auto/reinforced/indestructible)) // please stop punching an indestructible window forever
-				continue
-			windows += O
-
-		else if(istype(O, /obj/mesh/grille) || istype(O, /obj/table) || istype(O, /obj/blob))
-			other_shit += O
-
-	return windows + other_shit
+	. = list()
+	for(var/obj/O in view(src.max_dist, holder.owner))
+		if(istypes(O, src.target_priorities))
+			. += O
 
 /datum/aiTask/sequence/goalbased/critter/smash_stuff/score_target(atom/target)
 	. = ..()
-	if(istype(target, /obj/blob))
-		. += 100 // gorillas HATE blobs. Never forget the gorilla-blob war.
+	for(var/target_type in src.target_priorities)
+		if(istype(target, target_type))
+			return . + src.target_priorities[target_type]
 
 /datum/aiTask/succeedable/critter/smash_stuff
 	name = "smashing stuff subtask"
@@ -540,8 +534,7 @@
 		var/atom/A = holder.target
 		if(C && A && BOUNDS_DIST(C, A) == 0)
 			C.set_dir(get_dir(C, A))
-			C.set_a_intent(INTENT_HARM)
-			C.hand_attack(A)
+			C.critter_basic_attack(A)
 			src.has_started = TRUE
 
 /datum/aiTask/succeedable/critter/smash_stuff/on_reset()
