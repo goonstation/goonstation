@@ -1182,6 +1182,24 @@
 	time = 5 SECONDS
 	category = MANUFACTURER::CATEGORY::TOOL
 
+/datum/manufacture/camera
+	name = "Disposable Camera"
+	item_requirements = list("metal" = 10,
+							 "conductive" = 3,
+							 "glass" = 2)
+	item_outputs = list(/obj/item/camera)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
+/datum/manufacture/camera_film
+	name = "Camera Film Cartridge"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/camera_film)
+	create = 1
+	time = 1 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
 /******************** Medical **************************/
 
 /datum/manufacture/scalpel
