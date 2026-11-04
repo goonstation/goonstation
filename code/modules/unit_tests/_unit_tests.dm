@@ -53,6 +53,7 @@
 #include "mutation_combo_valid_ids.dm"
 #include "od_compile_bot.dm"
 #include "terrainify.dm"
+#include "fallback_db.dm"
 
 /// regression tests
 #include "regression/reagent_transfer.dm"
