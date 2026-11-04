@@ -1198,7 +1198,7 @@
 	item_outputs = list(/obj/item/camera_film)
 	create = 1
 	time = 1 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /******************** Medical **************************/
 
