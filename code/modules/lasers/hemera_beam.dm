@@ -48,7 +48,7 @@
 				continue
 			targetable_z += zlevel.z
 		if (length(targetable_z))
-			pick(targetable_z)
+			targetZLevel = pick(targetable_z)
 
 	hopOffset *= 3
 
