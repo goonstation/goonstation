@@ -1259,6 +1259,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 		src.copy_filters_to(B)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 		qdel(src)
 		return
 
