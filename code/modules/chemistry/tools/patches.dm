@@ -464,7 +464,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	var/static/list/sfx = list('sound/items/mender.ogg','sound/items/mender2.ogg')
 
-	var/refill_rate = 1 // units per tick of refill rate
+	var/refill_rate = 0 // units per tick of refill rate
 
 	New()
 		..()
@@ -569,7 +569,9 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	process()
 		..()
 		var/refill_reagent = initial(src.initial_reagents)
-		if (!src.borg || !istext(refill_reagent))
+		if(src.refill_rate <= 0)
+			return
+		if (!istext(refill_reagent))
 			return
 
 		var/remaining_capacity = src.reagents.maximum_volume - src.reagents.total_volume
@@ -611,6 +613,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		name = "cybernetic brute auto-mender"
 		desc = "A small electronic device designed to topically apply healing chemicals. This cybernetic version refills over time."
 		borg = 1
+		refill_rate = 1
 
 	high_capacity
 		initial_volume = 500
@@ -622,6 +625,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		name = "cybernetic burn auto-mender"
 		desc = "A small electronic device designed to topically apply healing chemicals. This cybernetic version refills over time."
 		borg = 1
+		refill_rate = 1
 
 	high_capacity
 		initial_volume = 500
