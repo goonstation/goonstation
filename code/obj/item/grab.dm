@@ -601,7 +601,7 @@
 
 	src.Bumped(M)
 	random_brute_damage(G.affecting, rand(2,3))
-	src.material_trigger_when_attacked(G.affecting, user, 1)
+	src.material_trigger_when_hit(G.affecting, user, MATERIAL::IMPACT::MELEE)
 	G.affecting.material_on_attack_use(user, src)
 	G.affecting.TakeDamage("chest", rand(4,5))
 	playsound(G.affecting.loc, "punch", 25, 1, -1)

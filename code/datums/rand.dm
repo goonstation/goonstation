@@ -43,13 +43,13 @@
 		. = L[index]
 
 	proc/xor_weighted_pick(list/L)
-		var/total = 0
 		var/item
+#ifdef CHECK_MORE_RUNTIMES
 		for(item in L)
 			if(isnull(L[item]))
 				stack_trace("weighted_pick given null weight: [json_encode(L)]")
-			total += L[item]
-		total = xor_rand() * total
+#endif
+		var/total = xor_rand() * values_sum(L)
 		for(item in L)
 			total -= L[item]
 			if(total <= 0)

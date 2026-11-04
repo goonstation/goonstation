@@ -700,7 +700,9 @@
 					5 ;"contest-other10",
 					5 ;"contest-other11",
 					5 ;"contest-other12",
-					5 ;"contest-other13"
+					5 ;"contest-other13",
+					// I have been radicalized - TekoTheTeapot
+					1 ;"mandarin_belief"
 					)
 				switch(which)
 					if("fuckII")
@@ -805,6 +807,10 @@
 					if("contest-other13")
 						src.name = "Cluwne XVII"
 						src.icon_state = "cluwnexvii"
+					if("mandarin_belief")
+						src.name = "I Want to Believe"
+						src.icon_state = "mandarin_belief"
+						src.desc = "\"An odd poster that seems to support some inane conspiracy involving citrus fruits.\""
 
 			attack_hand(mob/user)
 				. = ..()

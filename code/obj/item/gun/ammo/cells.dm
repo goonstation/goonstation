@@ -153,11 +153,11 @@ TYPEINFO(/obj/item/ammo/power_cell)
 		..()
 		if(istype(src.material))
 
-			max_charge = round((material.getProperty("electrical") ** 2) * 4, 25)
+			max_charge = round((material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) ** 2) * 4, 25)
 
 			recharge_rate = 0
-			recharge_rate += material.getProperty("radioactive")/4
-			recharge_rate += material.getProperty("n_radioactive")/2
+			recharge_rate += material.getProperty(MATERIAL::PROPERTY::RADS)/4
+			recharge_rate += material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON)/2
 
 
 		charge = max_charge
@@ -171,11 +171,11 @@ TYPEINFO(/obj/item/ammo/power_cell)
 		if(genMat)
 			src.name = "[genMat.getName()]-doped [src.name]"
 
-			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
+			var/conductivity = (2 * coreMat.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) + genMat.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND)) / 3 //if self-charging, use a weighted average of the conductivities
 			max_charge = round((conductivity ** 2) * 4, 25)
 
-			recharge_rate = (coreMat.getProperty("radioactive") / 2 + coreMat.getProperty("n_radioactive") \
-			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 6 //weight this too
+			recharge_rate = (coreMat.getProperty(MATERIAL::PROPERTY::RADS) / 2 + coreMat.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON) \
+			+ genMat.getProperty(MATERIAL::PROPERTY::RADS)  + genMat.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON) * 2) / 6 //weight this too
 
 			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate, recharge_delay)
 

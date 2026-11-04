@@ -665,10 +665,6 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		src.target_turf = target_turf
 		if (duration)
 			src.duration = duration
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -704,6 +700,8 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		owner.visible_message(SPAN_NOTICE("[owner] begins constructing \a [furniture_name]!"))
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onResume(datum/action/bar/icon/furniture_build/attempted) //guaranteed since we only resume with the same type
 		..()
@@ -735,10 +733,6 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 			icon_state = the_tool.icon_state
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -753,6 +747,8 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		..()
 		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] begins disassembling [the_furniture]."))
+		if (src.owner && HAS_ATOM_PROPERTY(src.owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onEnd()
 		..()

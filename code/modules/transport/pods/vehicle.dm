@@ -1187,7 +1187,7 @@
 
 		if (was_seen_boarding && V.pilot == owner && ishuman(owner) && owner.hasStatus("drunk"))
 			var/mob/living/carbon/human/H = owner
-			H.apply_automated_arrest("DUI.", "Drove while inebriated.", requires_camera_seen = FALSE)
+			H.apply_automated_arrest("Driving under the influence.", requires_camera_seen = FALSE)
 
 /datum/action/bar/icon/eject_pod
 	duration = 50

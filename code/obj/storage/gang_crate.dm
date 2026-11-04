@@ -111,13 +111,9 @@
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
 
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-		..()
-
 	New()
 		..()
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 		src.light = image('icons/obj/storage/locker.dmi',"gangcratefulllight")
 		src.name = pick(list("Legitimate Business Crate", "Legal Supply Crate", "Digestive Biscuit Supply Crate", "Innocuous Goods Crate", "Inconspicuous Crate"))
 		if (locked)

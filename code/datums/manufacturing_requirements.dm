@@ -84,7 +84,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/conductive
 	name = "Conductive"
 	id = "conductive"
-	property_id = "electrical"
+	property_id = MATERIAL::PROPERTY::ELECTRIC_COND
 	property_threshold = 6
 
 /datum/manufacturing_requirement/match_property/conductive/high
@@ -95,13 +95,13 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/thermal_conductive
 	name = "Thermally Conductive"
 	id = "heat"
-	property_id = "thermal"
+	property_id = MATERIAL::PROPERTY::THERMAL_COND
 	property_threshold = 6
 
 /datum/manufacturing_requirement/match_property/dense
 	name = "High Density Matter"
 	id = "dense"
-	property_id = "density"
+	property_id = MATERIAL::PROPERTY::DENSITY
 	property_threshold = 4
 
 /datum/manufacturing_requirement/match_property/dense/super
@@ -117,7 +117,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/energy
 	name = "Radioactive"
 	id = "energy_property"
-	property_id = "radioactive"
+	property_id = MATERIAL::PROPERTY::RADS
 	property_threshold = 2
 
 /datum/manufacturing_requirement/match_property/energy/high
@@ -128,7 +128,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/insulated
 	name = "Insulative Material"
 	id = "insulated_property"
-	property_id = "electrical"
+	property_id = MATERIAL::PROPERTY::ELECTRIC_COND
 	property_threshold = 4
 
 	match_property(datum/material/M)
@@ -142,13 +142,13 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/tough
 	name = "Tough Material"
 	id = "tough"
-	property_id = "density"
+	property_id = MATERIAL::PROPERTY::DENSITY
 	property_threshold = 10
 
 	match_property(datum/material/M)
 		// This specific check is based off the hardness of mauxite and bohrum.
 		// Mauxite ends up being 10 in here, while bohrum ends up being 16.
-		return ((M.getProperty("hard") * 2) + M.getProperty("density")) >= src.property_threshold
+		return ((M.getProperty(MATERIAL::PROPERTY::HARDNESS) * 2) + M.getProperty(MATERIAL::PROPERTY::DENSITY)) >= src.property_threshold
 
 /datum/manufacturing_requirement/match_property/tough/extreme
 	name = "Extremely Tough Material"
@@ -158,7 +158,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/reflective
 	name = "Reflective"
 	id = "reflective"
-	property_id = "reflective"
+	property_id = MATERIAL::PROPERTY::REFLECT
 	property_threshold = 6
 
 #define MATCH_ANY 1 //! Pass as long as at least one flag is set.

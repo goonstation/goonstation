@@ -344,12 +344,30 @@
 					src.active_program = os
 
 				src.hd.root.add_file(os)
+				os.setup_disk(src.hd)
 
 		src.post_system()
 
 
 
 	return
+
+/obj/machinery/computer3/ui_status(mob/user, datum/ui_state/state)
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = min(tgui_broken_state.can_use_topic(src, user),
+						tgui_physical_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
+	else
+		. = min(state.can_use_topic(src, user),
+						tgui_broken_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
+
 /obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)

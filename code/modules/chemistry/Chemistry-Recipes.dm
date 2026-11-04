@@ -3272,8 +3272,8 @@
 		name = "Oculine"
 		id = "oculine"
 		result = "oculine"
-		required_reagents = list("atropine" = 1, "saline" = 1, "spaceacillin" = 1)
-		result_amount = 4
+		required_reagents = list("lube" = 1, "saline" = 1, "salicylic_acid" = 1)
+		result_amount = 3
 		mix_phrase = "The mixture settles, becoming a milky white."
 
 	mannitol // COGWERKS CHEM REVISION PROJECT: maybe this could be Mannitol, side effect: makes u pee?
@@ -4978,7 +4978,7 @@
 		name = "Deageinium"
 		id = "deageinium"
 		result = "deageinium"
-		required_reagents = list("sugar" = 1, "epinephrine" = 1, "juice_apple" = 1, "chickensoup" = 1, "milk_powder" = 1)
+		required_reagents = list("sugar" = 1, "epinephrine" = 1, "juice_pear" = 1, "chickensoup" = 1, "milk_powder" = 1)
 		result_amount = 3
 		min_temperature = T0C + 21
 		mix_phrase = "The bubbling mixture gives off a scent of angst, sickeningly sweet soda and life."
@@ -5662,7 +5662,7 @@
 		required_reagents = list("frothedmilk" = 1, "espresso" = 1)
 		result_amount = 2
 		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
-    
+
 	dulcedeleche
 		name = "Dulce de leche"
 		id = "dulcedeleche"
