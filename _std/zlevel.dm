@@ -74,7 +74,6 @@ var/global/list/datum/zlevel/zlevels = null
 
 /datum/zlevel/main/crash
 	display_name = "Crash Site"
-	gforce = GFORCE_EARTH_GRAVITY
 
 /datum/zlevel/main/podwars
 	display_name = "Spess"
