@@ -5,7 +5,7 @@
 //
 
 /// Returns the `/datum/hud_zone` with `zone_alias`, null if passed bad arguments
-/datum/hud/proc/get_hudzone(zone_alias)
+/datum/hud/proc/get_hudzone(zone_alias) as /datum/hud_zone
 	RETURN_TYPE(/datum/hud_zone)
 	if (!zone_alias)
 		return null
@@ -38,11 +38,12 @@
 *
 * Returns: `null` if passed bad arguments, `FALSE` if there was an error placing it, the new /datum/hud_zone otherwise
 **/
-/datum/hud/proc/create_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE)
+/datum/hud/proc/create_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE) as /datum/hud_zone
+	RETURN_TYPE(/datum/hud_zone)
 	if (!coords || !alias || isnull(horizontal_edge) || isnull(vertical_edge) || isnull(ignore_overlap))
 		return null
 
-	if (!src.hud_zones || !src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
+	if (!src.hud_zones || src.hud_zones[alias] || !src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
 		return FALSE
 
 	var/datum/hud_zone/zone = new/datum/hud_zone(src, coords, alias, dirvalues["[horizontal_edge]"], dirvalues["[vertical_edge]"], ignore_overlap)
@@ -52,22 +53,25 @@
 /// Deletes a hud zone and all elements inside of it
 /datum/hud/proc/delete_hud_zone(alias)
 	var/datum/hud_zone/hud_zone = src.get_hudzone(alias)
+	if (!hud_zone)
+		return
 
 	// remove elements
 	var/list/elements = hud_zone.elements
 	for (var/element_alias in elements)
-		var/datum/hud_element/to_delete = elements[element_alias] // ZEWAKA TODO: does this work with assoc lists
-		elements.Remove(to_delete)
+		var/datum/hud_element/to_delete = elements[element_alias]
+		src.remove_screen(to_delete.screen_obj)
 		qdel(to_delete)
+	elements.Cut()
 
-	src.hud_zones.Remove(hud_zone)
+	src.hud_zones -= alias
 	qdel(hud_zone)
 
 
 // -- Elements --
 
 /// Returns the `/datum/hud_element` with alias `elem_alias`, `null` if passed improper args
-/datum/hud_zone/proc/get_element(elem_alias)
+/datum/hud_zone/proc/get_element(elem_alias) as /datum/hud_element
 	RETURN_TYPE(/datum/hud_element)
 	if (!elem_alias)
 		return null
@@ -104,5 +108,29 @@
 
 	// Remove and recalculate
 	src.remove_element(elem_alias)
+	src.recalculate_offsets()
+	return TRUE
+
+/**
+ * ### Hides or shows the hud element associated with `elem_alias`
+ *
+ * Hidden elements are taken off the screen and the rest of the zone moves up to fill the gap,
+ * keeping registration order. Showing it again puts it back in its original slot.
+ *
+ * Returns `null` if passed improper args, `FALSE` if nothing changed, `TRUE` otherwise
+ */
+/datum/hud_zone/proc/set_element_hidden(elem_alias, hidden)
+	if (!elem_alias)
+		return null
+
+	var/datum/hud_element/element = src.elements[elem_alias]
+	if (!element || element.hidden == !!hidden)
+		return FALSE
+
+	element.hidden = !!hidden
+	if (element.hidden)
+		src.master.remove_screen(element.screen_obj)
+	else
+		src.master.add_screen(element.screen_obj)
 	src.recalculate_offsets()
 	return TRUE

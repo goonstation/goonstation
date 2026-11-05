@@ -8,7 +8,7 @@ This allows for wrapping around functionality, for example if you have hud eleme
 If you are developing a new zone, it's recommended to take hud_layout_guide.png and color it in as you go.
 This makes it easier to see where things are in relation to each other.
 
-**It's important to keep in mind that coordinates are relative to the bottom left, with the corner being 1,1.**
+**It's important to keep in mind that coordinates are relative to the bottom left corner being 1,1.**
 
 ## **Only supports elements that are 32px/'1' height (variable width is fine).**
 
