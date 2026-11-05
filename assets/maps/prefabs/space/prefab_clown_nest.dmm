@@ -43,10 +43,6 @@
 "eb" = (
 /turf/variableTurf/clear,
 /area/allowGenerate)
-"eE" = (
-/obj/decal/cleanable/cobweb,
-/turf/unsimulated/wall/auto/web,
-/area/prefab/clown_nest)
 "eJ" = (
 /obj/item/material_piece/cloth/spidersilk{
 	pixel_x = 4;
@@ -192,13 +188,6 @@
 	},
 /turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
-"tP" = (
-/obj/item/material_piece/cloth/spidersilk{
-	pixel_x = 1
-	},
-/obj/decal/cleanable/cobwebFloor,
-/turf/unsimulated/wall/auto/web,
-/area/prefab/clown_nest)
 "tX" = (
 /mob/living/critter/spider/clown,
 /turf/unsimulated/floor/auto/web,
@@ -220,6 +209,10 @@
 	pixel_x = -2;
 	pixel_y = 5
 	},
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
+"wg" = (
+/obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "xI" = (
@@ -396,11 +389,21 @@
 	},
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
+"PG" = (
+/obj/decal/cleanable/cobweb,
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
 "PL" = (
 /turf/variableTurf/wall,
 /area/prefab/clown_nest)
 "PT" = (
 /mob/living/critter/spider/clownqueen,
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
+"Qm" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = 1
+	},
 /turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Sn" = (
@@ -832,7 +835,7 @@ JG
 PL
 PL
 PL
-eE
+KJ
 KJ
 KJ
 KJ
@@ -898,7 +901,7 @@ PL
 EN
 cs
 tX
-cs
+wg
 KJ
 KJ
 PL
@@ -929,7 +932,7 @@ Ty
 KJ
 AJ
 xJ
-tP
+KJ
 KJ
 KJ
 PL
@@ -961,7 +964,7 @@ Ty
 KJ
 WP
 xJ
-cs
+Qm
 KJ
 KJ
 PL
@@ -1087,7 +1090,7 @@ PL
 Ty
 fr
 bT
-xJ
+PG
 xJ
 cs
 nl

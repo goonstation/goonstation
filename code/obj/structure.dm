@@ -546,6 +546,7 @@ TYPEINFO(/obj/structure/woodwall)
 		wall._health = wall._max_health
 		wall.updateHealth()
 		wood.change_stack_amount(-1)
+
 /obj/structure/woodwall/web
 	name = "thick webbing"
 	desc = "Many strings of spider silk stretched between the walls."
@@ -556,33 +557,23 @@ TYPEINFO(/obj/structure/woodwall)
 	_max_health = 20
 
 	attack_hand(mob/user)
-		if (ishuman(user) && !user.is_zombie)
-			var/mob/living/carbon/human/H = user
-			if (src.anti_z && H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
-				H.set_loc(get_turf(src))
-				if (_health > 15)
-					H.visible_message(SPAN_NOTICE("<b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!"))
-					boutput(H, SPAN_ALERT("<b>OWW! You bruise yourself slightly!"))
-					playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
-					random_brute_damage(H, 5)
-					src.changeHealth(rand(0, -2))
-				return
-
 		if (ishuman(user))
 			user.lastattacked = get_weakref(src)
 			src.visible_message(SPAN_ALERT("<b>[user]</b> tears at the [src]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
-			//Zombies do less damage
-			var/mob/living/carbon/human/H = user
-			if (istype(H.mutantrace, /datum/mutantrace/zombie))
-				if(prob(40))
-					H.emote("scream")
-				src.changeHealth(rand(0, -2))
-			else
-				src.changeHealth(rand(-1, -3))
+			src.changeHealth(rand(-1, -3))
 			hit_twitch(src)
 			return
 		else
+			return
+
+	attackby(obj/item/W, mob/user)
+		if (issnippingtool(W) || iscuttingtool(W) || issawingtool(W))
+			new /obj/item/material_piece/cloth/spidersilk(get_turf(src))
+			src.visible_message("[user] cuts at the [src] with [W], harvesting some silk.")
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+			src.changeHealth(rand(-5, -10))
+			hit_twitch(src)
 			return
 
 	changeHealth(var/change = 0)
@@ -620,9 +611,9 @@ TYPEINFO(/obj/structure/woodwall)
     _max_health = 5
     opacity = 0
     attackby(obj/item/W, mob/user)
-        if (issnippingtool(W))
+        if (issnippingtool(W) || iscuttingtool(W) || issawingtool(W))
             new /obj/item/material_piece/cloth/spidersilk(get_turf(src))
-            src.visible_message("[user] neatly cuts [src] with [W].")
+            src.visible_message("[user] cuts at the [src] with [W], harvesting some silk.")
             qdel(src)
 
     updateHealth(var/prevHealth)
