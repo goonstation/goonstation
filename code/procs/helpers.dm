@@ -125,7 +125,7 @@ var/global/obj/fuckyou/flashDummy
 		target_r = O
 	if(wattage && isliving(target)) //Grilles can reroute arcflashes
 		for(var/obj/mesh/grille/L in range(target,1)) // check for nearby grilles
-			var/arcprob = L.material?.getProperty("electrical") >= 6 ? 60 : 30
+			var/arcprob = L.material?.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) >= 6 ? 60 : 30
 			if(!L.ruined && L.anchored)
 				if (prob(arcprob) && L.get_connection()) // hopefully half the default is low enough
 					target = L
@@ -1366,18 +1366,11 @@ proc/outermost_movable(atom/movable/target)
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
 //Shoves a jump to link or whatever in the thing :effort:
-/proc/showCoords(x, y, z, plaintext, holder, ghostjump)
-	var text
-	if(isrestrictedz(z) && ghostjump)
-		ghostjump = FALSE
-		plaintext = TRUE
+/proc/showCoords(x, y, z, plaintext, holder)
 	if (plaintext)
-		text += "[x], [y], [z]"
-	else if(ghostjump)
-		text += "<a href='byond://winset?command=.ghostjump [x] [y] [z]' title='Jump to Coords'>[x],[y],[z]</a>"
+		return "[x],[y],[z]"
 	else
-		text += "<a href='byond://?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
-	return text
+		return "<a href='byond://?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
 
 // hi I'm haine -throws more crap onto the pile-
 /proc/rand_deci(var/num1 = 1, var/num2 = 0, var/num3 = 2, var/num4 = 0)
@@ -2483,18 +2476,22 @@ proc/can_act(var/mob/M, var/include_cuffs = 1)
 
 /// Returns true if the given mob is incapacitated. `ignore_no_power` skips the cyborg no-power/no-cell statuses.
 proc/is_incapacitated(mob/M, ignore_no_power = FALSE)
-	var/datum/statusEffect/lockdown/lockdown_effect = M.hasStatus("lockdown_robot") || M.hasStatus("lockdown_ai")
-	if(!istype(lockdown_effect) || lockdown_effect?.fake)
-		lockdown_effect = null
-	return (M &&(\
-		M.hasStatus("stunned") || \
-		M.hasStatus("knockdown") || \
-		M.hasStatus("unconscious") || \
-		M.hasStatus("paralysis") || \
-		M.hasStatus("pinned") || \
-		lockdown_effect || \
-		(!ignore_no_power && (M.hasStatus("no_power_robot") || M.hasStatus("no_cell_robot"))) || \
-		M.stat)) && !M.client?.holder?.ghost_interaction
+	if (!M || M.client?.holder?.ghost_interaction)
+		return FALSE
+	if (M.stat)
+		return TRUE
+	for (var/datum/statusEffect/status as anything in M.statusEffects)
+		switch (status.id)
+			if ("stunned", "knockdown", "unconscious", "paralysis", "pinned")
+				return TRUE
+			if ("no_power_robot", "no_cell_robot")
+				if (!ignore_no_power)
+					return TRUE
+			if ("lockdown_robot", "lockdown_ai")
+				var/datum/statusEffect/lockdown/lockdown = status
+				if (!lockdown.fake) // emagged/syndicate
+					return TRUE
+	return FALSE
 
 /// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()
@@ -2605,19 +2602,6 @@ proc/total_cross(turf/T, atom/movable/mover)
 		if(!.)
 			return
 
-
-// Used to send a message to all ghosts when something Interesting has happened
-// Any message sent to this should just be a funny comment on something logged elsewhere,
-// so they probably don't need to be logged here again (e.g. death alerts)
-
-var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
-
-/proc/message_ghosts(message, show_wraith = FALSE)
-	var/list/mob/living/intangible/wraith/wraiths = list()
-	for (var/datum/antagonist/antagonist_datum as anything in global.get_all_antagonists(ROLE_WRAITH))
-		wraiths[antagonist_datum.owner.current] = TRUE
-
-	global.deadchat_announcer.say(message, flags = SAYFLAG_IGNORE_HTML, message_params = list("atom_listeners_to_be_excluded" = wraiths))
 
 /// Find a client based on ckey
 /proc/find_client(ckey)

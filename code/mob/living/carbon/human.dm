@@ -673,12 +673,7 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
-			var/turf/where = get_turf(src)
-			var/where_text = "Unknown (?, ?, ?)"
-			if (where)
-				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
-
-			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] has died at [GHOST.MESSAGE.format_loc(src)].")
 #ifdef DATALOGGER
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
@@ -1252,9 +1247,8 @@
 	return 0
 
 /mob/living/carbon/human/restrained()
-	if (src.hasStatus("handcuffed"))
-		return 1
-	if (src.hasStatus("incorporeal"))
+	var/static/list/restraining_statuses = list("handcuffed", "incorporeal")
+	if (src.hasStatus(restraining_statuses))
 		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
@@ -2070,8 +2064,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		S.set_head(src.organHolder.head)
 		S.head_moved() // update tracking
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
@@ -2115,8 +2110,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	src.organHolder.create_organs()
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
@@ -2212,7 +2208,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 					O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 				boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-				src.handcuffs.material_trigger_when_attacked(src, src, 1)
+				src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 				src.handcuffs.destroy_handcuffs(src)
 				return
 			if (iswerewolf(src))
@@ -2222,7 +2218,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				else
 					src.visible_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</b>"))
 					boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
-					src.handcuffs.material_trigger_when_attacked(src, src, 1)
+					src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 					src.handcuffs.destroy_handcuffs(src)
 					return
 		if (src.is_hulk())
@@ -2230,25 +2226,25 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			src.handcuffs.destroy_handcuffs(src)
 		else if ( src.limbs && src.limbs.l_arm?.breaks_cuffs && src.limbs.r_arm?.breaks_cuffs)
 			for (var/mob/O in AIviewers(src))
 				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with [src.limbs.l_arm.kind_of_limb & LIMB_ROBOT ? "machine-like" : "unnatural"] strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			src.handcuffs.destroy_handcuffs(src)
 		else
 			src.last_resist = world.time + 100
 			var/calcTime
 			if (src.handcuffs.material)
-				calcTime = clamp((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density"))*5 SECONDS, 20 SECONDS, 50 SECONDS)
+				calcTime = clamp((src.handcuffs.material.getProperty(MATERIAL::PROPERTY::HARDNESS) + src.handcuffs.material.getProperty(MATERIAL::PROPERTY::DENSITY))*5 SECONDS, 20 SECONDS, 50 SECONDS)
 			else
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
 			if (!src.canmove)
 				calcTime *= 1.5
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
 	return 0
 
@@ -2924,7 +2920,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/turf/T = get_turf(src)
 
 	if (T)
-		if (T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
+		if (space_movement && T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
 			. -= space_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
@@ -3139,32 +3135,25 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		if (-INFINITY to 0)
 			src.health_mon.icon_state = "0"
 
-/mob/living/carbon/human/proc/apply_automated_arrest(var/reason, var/details, var/major_crime = FALSE, var/requires_camera_seen = TRUE, var/use_visible_name = TRUE)
-	if(!seen_by_camera(src) && requires_camera_seen)
+/mob/living/carbon/human/proc/apply_automated_arrest(reason, requires_camera_seen = TRUE, use_visible_name = TRUE)
+	if (requires_camera_seen && !global.seen_by_camera(src))
 		return
+
 	var/target_name = src.name
-	if(!use_visible_name)
+	if (!use_visible_name || src.face_visible())
 		target_name = src.real_name
-	else if(src.face_visible())
-		target_name = src.real_name
-	var/crime_field = "mi_crim"
-	if(major_crime)
-		crime_field = "ma_crim"
 
-	var/datum/db_record/sec_record = data_core.security.find_record("name", target_name)
-	if(!sec_record)
+	var/datum/db_record/personnel/security/record = global.data_core.security.find_record("name", target_name)
+	if (!record || (record["criminal"] == SECURITY::ARREST::STATE::ARREST))
 		return
-	if(sec_record["criminal"] == SECURITY::ARREST::STATE::ARREST)
-		return
-	sec_record["criminal"] = SECURITY::ARREST::STATE::ARREST
-	sec_record[crime_field] = reason
-	if(details)
-		sec_record["[crime_field]_d"] = details
 
-	for (var/mob/living/carbon/human/H in mobs) //Anyone could be pretending to be the target, all of them need updating
-		if (H.real_name == target_name || H.name == target_name)
-			H.update_arrest_icon()
-	return
+	var/datum/db_record/citation/arrest/arrest = new(
+		target = target_name,
+		issuer = "MAINFRAME",
+		issuer_job = "N/A",
+		reason = reason,
+	)
+	global.data_core.arrests.add_record(arrest)
 
 /mob/living/carbon/human/proc/update_arrest_icon()
 	if (!src.arrestIcon)
@@ -3284,7 +3273,7 @@ mob/living/carbon/human/has_genetics()
 			if (istype(I, /obj/item/implant/projectile))
 				wound_count++
 		if(wound_count)
-			scan.add_text("Gunshot wounds: [wound_count] fragments detected")
+			scan.add_text("Gunshot wounds: [wound_count] fragments detected") // Seems to double-count for some reason?
 
 /mob/living/carbon/human/proc/get_fingerprint(var/ignore_gloves = FALSE, force_hand = -1)
 	RETURN_TYPE(/datum/forensic_data/fingerprint)

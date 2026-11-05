@@ -43,7 +43,7 @@ interface RewardData {
 export const MedalRewards = () => {
   const { data } = useBackend<MedalRewardsData>();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterAvailable, setFilterAvailable] = useState(false);
+  const [filterAvailable, setFilterAvailable] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const filteredRewards = data.rewards
     // Never show medals they have not earned
@@ -75,6 +75,7 @@ export const MedalRewards = () => {
             <Stack fill>
               <Stack.Item grow>
                 <Input
+                  autoFocus
                   fluid
                   value={searchQuery}
                   onChange={setSearchQuery}

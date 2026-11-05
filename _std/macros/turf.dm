@@ -26,6 +26,9 @@
 
 #define wall_window_check(x) (isturf(x) && (istypes(x, list(/turf/simulated/wall/auto, /turf/unsimulated/wall/auto) || (locate(/obj/mapping_helper/wingrille_spawn) in x) || (locate(/obj/window) in x))))
 
+/// Returns true if x is a trench turf
+#define istrench(x) (istypes(x,list(/turf/simulated/floor/auto/trench,/turf/unsimulated/floor/auto/trench)))
+
 /**
 	* Creates typepaths for an unsimulated turf, a simulated turf, an airless simulated turf, and an airless unsimulated turf at compile time.
 	*

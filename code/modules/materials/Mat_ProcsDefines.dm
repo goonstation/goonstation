@@ -36,9 +36,9 @@ var/global/list/material_cache
 /// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
-		explosion_resistance = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_resistance
-		explosion_protection = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_protection
-		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
+		explosion_resistance = material.hasProperty(MATERIAL::PROPERTY::DENSITY) ? sqrt(round(max(4, material.getProperty(MATERIAL::PROPERTY::DENSITY)) - 4)) : explosion_resistance
+		explosion_protection = material.hasProperty(MATERIAL::PROPERTY::DENSITY) ? sqrt(round(max(4, material.getProperty(MATERIAL::PROPERTY::DENSITY)) - 4)) : explosion_protection
+		if( !(flags & CONDUCT) && (src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) >= 5)) flags |= CONDUCT
 
 
 /// Simply removes a material from an object.
@@ -305,11 +305,11 @@ proc/get_icon_states(icon)
 		src.material.triggerTemp(src, temperature_applied)
 	return
 
-/// Called when the item is attacked with another atom for mat effects.
+/// Called when the item is hit by another atom for mat effects.
 /// If someone is smashed against the item or with hands, the mob itself is expected to be passed as attackatom
-/atom/proc/material_trigger_when_attacked(var/atom/attackatom, var/mob/attacker, var/meleeorthrow, var/situation_modifier)
+/atom/proc/material_trigger_when_hit(var/atom/attackatom, var/mob/attacker, var/impact_type, var/situation_modifier)
 	if (src.material)
-		src.material.triggerOnHit(src, attackatom, attacker, meleeorthrow)
+		src.material.triggerOnHit(src, attackatom, attacker, impact_type)
 	return
 
 ///Called when an item is picked up for mat effects
@@ -452,19 +452,19 @@ proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/materia
 	var/hTC1 = 5
 	var/hTC2 = 5
 	if(matA)
-		if(matA.hasProperty("thermal") && matA.hasProperty("electrical"))
-			hTC1 = (max(matA.getProperty("thermal"),0) + max(matA.getProperty("electrical"),0))/2
-		else if(matA.hasProperty("thermal"))
-			hTC1 = max(matA.getProperty("thermal"),0)
-		else if(matA.hasProperty("electrical"))
-			hTC1 = max(matA.getProperty("electrical"),0)
+		if(matA.hasProperty(MATERIAL::PROPERTY::THERMAL_COND) && matA.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+			hTC1 = (max(matA.getProperty(MATERIAL::PROPERTY::THERMAL_COND),0) + max(matA.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND),0))/2
+		else if(matA.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+			hTC1 = max(matA.getProperty(MATERIAL::PROPERTY::THERMAL_COND),0)
+		else if(matA.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+			hTC1 = max(matA.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND),0)
 	if(matB)
-		if(matB.hasProperty("thermal") && matB.hasProperty("electrical"))
-			hTC2 = (max(matB.getProperty("thermal"),0) + max(matB.getProperty("electrical"),0))/2
-		else if(matB.hasProperty("thermal"))
-			hTC2 = max(matB.getProperty("thermal"),0)
-		else if(matB.hasProperty("electrical"))
-			hTC2 = max(matB.getProperty("electrical"),0)
+		if(matB.hasProperty(MATERIAL::PROPERTY::THERMAL_COND) && matB.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+			hTC2 = (max(matB.getProperty(MATERIAL::PROPERTY::THERMAL_COND),0) + max(matB.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND),0))/2
+		else if(matB.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+			hTC2 = max(matB.getProperty(MATERIAL::PROPERTY::THERMAL_COND),0)
+		else if(matB.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+			hTC2 = max(matB.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND),0)
 	//average thermal conductivity approximated as 10^(x/5)-1
 	//common values 0 = 0, 5 = 10, 10 = 100
 	return ((10**(hTC1/5)-1)+(10**(hTC2/5)-1))/2

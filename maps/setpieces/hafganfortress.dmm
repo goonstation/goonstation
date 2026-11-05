@@ -774,7 +774,7 @@
 	})
 "cj" = (
 /obj/disposalpipe/segment/vertical,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -1534,7 +1534,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/bent/west,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -8329,7 +8329,7 @@
 	pixel_x = 10
 	},
 /obj/map/light/screen,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -8614,7 +8614,7 @@
 	})
 "wE" = (
 /obj/disposalpipe/segment/bent/west,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -11507,7 +11507,7 @@
 "Eu" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -13538,14 +13538,6 @@
 "Jm" = (
 /obj/cable/conduit,
 /turf/unsimulated/floor/concrete,
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
-"Jn" = (
-/turf/unsimulated/grimycarpet,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -16154,7 +16146,7 @@
 	})
 "Qf" = (
 /obj/disposalpipe/segment/horizontal,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -22386,8 +22378,8 @@ Nc
 cj
 cj
 eq
-Jn
-Jn
+ul
+ul
 MV
 Qd
 Qd

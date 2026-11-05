@@ -252,7 +252,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 /datum/targetable/ghost_observer/reenter_corpse
 	name = "Re-enter Corpse"
-	desc = "Re-enter your original corpse."
+	desc = "Re-enter your original corpse, or locate your brain if your corpse does not exist."
 	icon_state = "reenter-corpse"
 	targeted = 0
 	cooldown = 0
