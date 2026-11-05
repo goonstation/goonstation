@@ -2420,7 +2420,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
 
-/obj/item/clothing/suit/Trenchcoat_tan
+/obj/item/clothing/suit/det_Trenchcoat
 	name = "Dusty Trench Coat"
 	desc = "Like the Good Ole' Times."
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
@@ -2442,16 +2442,16 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		..()
 		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
-/obj/item/clothing/suit/Trenchcoat_brown
+/obj/item/clothing/suit/Trenchcoat
 	name = "Trench Coat"
 	desc = "A dusty Trench coat, it feels odly familiar."
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-	icon_state = "Tcoat-Brown_o"
-	item_state = "Tcoat-Brown_o"
+	icon_state = "null"
+	item_state = "null"
 	body_parts_covered = TORSO|LEGS|ARMS
-	coat_style = "Tcoat-Brown"
+	coat_style = "null"
 
 	setupProperties()
 		..()
@@ -2461,42 +2461,20 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		..()
 		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
-/obj/item/clothing/suit/Trenchcoat_grey
-	name = "Trench Coat"
-	desc = "A dusty Trench coat, it feels odly familiar."
-	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-	icon_state = "Tcoat-Grey_o"
-	item_state = "Tcoat-Grey_o"
-	body_parts_covered = TORSO|LEGS|ARMS
-	coat_style = "Tcoat-Grey"
+	brown
+		icon_state = "Tcoat-Brown_o"
+		item_state = "Tcoat-Brown_o"
+		coat_style = "Tcoat-Brown"
+
+	grey
+		icon_state = "Tcoat-Grey_o"
+		item_state = "Tcoat-Grey_o"
+		coat_style = "Tcoat-Grey"
+
+	green
+		icon_state = "Tcoat-Green_o"
+		item_state = "Tcoat-Green_o"
+		coat_style = "Tcoat-Green"
 
 
-	setupProperties()
-		..()
-		setProperty("coldprot", 20)
-
-	New()
-		..()
-		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
-
-/obj/item/clothing/suit/Trenchcoat_green
-	name = "Trench Coat"
-	desc = "A dusty Trench coat, it feels odly familiar."
-	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-	icon_state = "Tcoat-Green_o"
-	item_state = "Tcoat-Green_o"
-	body_parts_covered = TORSO|LEGS|ARMS
-	coat_style = "Tcoat-Green"
-
-	setupProperties()
-		..()
-		setProperty("coldprot", 20)
-
-	New()
-		..()
-		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
