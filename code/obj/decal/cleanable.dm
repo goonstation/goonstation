@@ -1751,10 +1751,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
     icon_state = "websack1"
     random_icon_states = list("websack1", "websack2")
 
-	attackby(obj/item/W, mob/user)
-		if (issnippingtool(W) || iscuttingtool(W) || issawingtool(W))
-			new /obj/item/material_piece/cloth/spidersilk(get_turf(src))
-			src.visible_message("[user] cuts at the [src] with [W], harvesting some silk.")
-			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
-			hit_twitch(src)
-			return
+    attackby(obj/item/W, mob/user)
+        if (issnippingtool(W) || iscuttingtool(W) || issawingtool(W))
+            src.visible_message("[user] cuts at the [src] with [W].")
+            playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+            qdel(src)
+            return
