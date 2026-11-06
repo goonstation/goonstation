@@ -33,6 +33,19 @@
 /obj/decal/poster/wallsign/duck,
 /turf/simulated/wall/auto/reinforced/jen/orange,
 /area/super_store)
+"eg" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/fakeobject{
+	desc = "It's probably broken.";
+	dir = 6;
+	icon = 'icons/obj/power.dmi';
+	icon_state = "solar_panel";
+	name = "solar panel"
+	},
+/turf/space,
+/area/space)
 "ez" = (
 /obj/decal/poster/wallsign/toy_gun,
 /turf/simulated/wall/auto/reinforced/jen/orange,
@@ -41,6 +54,37 @@
 /obj/submachine/claw_machine,
 /obj/map/light/screen,
 /turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"eF" = (
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/green,
+/area/super_store/backrooms)
+"eO" = (
+/obj/table/auto,
+/obj/item/decoration/ashtray{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/obj/item/paper/super_store1{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"fS" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"gc" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/wall/auto/reinforced/jen/orange,
 /area/super_store)
 "gB" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -72,6 +116,20 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"hG" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/disposalpipe/trunk{
+	dir = 2
+	},
+/obj/machinery/disposal{
+	name = "Amusing Duck Loading Chute"
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"hH" = (
+/obj/lattice,
+/turf/space,
+/area/space)
 "iu" = (
 /obj/table/round/auto,
 /obj/item/toy/plush/small/monkey/assistant,
@@ -95,6 +153,10 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"jq" = (
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
 "kb" = (
 /obj/table/round/auto,
 /obj/item/cloth/towel/clown{
@@ -107,6 +169,24 @@
 "lm" = (
 /turf/simulated/floor/greenwhite,
 /area/super_store/backrooms)
+"lx" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"mc" = (
+/obj/decal/cleanable/mail_fraud,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"mq" = (
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/disposaloutlet/south,
+/turf/simulated/floor/grass,
+/area/super_store)
 "mN" = (
 /turf/simulated/floor/grass,
 /area/super_store)
@@ -128,7 +208,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
 "nN" = (
-/obj/machinery/computer/arcade,
+/obj/machinery/computer/tetris{
+	dir = 8
+	},
 /obj/map/light/screen,
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
@@ -156,6 +238,11 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"oM" = (
+/obj/storage/closet/wardrobe/green,
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "oV" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "Candy Shop";
@@ -164,6 +251,45 @@
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/engine/glow/blue,
 /area/super_store/hangar)
+"pz" = (
+/obj/machinery/bot/secbot/super_store,
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"pE" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"pM" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"pY" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"qq" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"qH" = (
+/obj/machinery/vending/coffee{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "rm" = (
 /obj/table/round/auto,
 /obj/item/gun/kinetic/foamdartrevolver,
@@ -185,6 +311,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"tk" = (
+/obj/stool/chair/couch{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "tw" = (
 /obj/table/round/auto,
 /obj/item/toy/figure{
@@ -213,6 +345,14 @@
 /obj/item/toy/handheld/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"vB" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
 "vM" = (
 /obj/storage/crate/bin/trash,
 /turf/simulated/floor/bluegreen,
@@ -240,9 +380,43 @@
 "wA" = (
 /turf/simulated/floor/sanitary,
 /area/super_store/backrooms)
+"yi" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/communications_dish,
+/turf/space,
+/area/space)
+"ym" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "yp" = (
 /turf/simulated/floor/bluegreen,
 /area/super_store)
+"yD" = (
+/obj/fakeobject{
+	desc = "It's probably broken.";
+	dir = 6;
+	icon = 'icons/obj/power.dmi';
+	icon_state = "solar_panel";
+	name = "solar panel"
+	},
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"zU" = (
+/obj/table/auto,
+/obj/item/paper/super_store3,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "Ap" = (
 /obj/table/round/auto,
 /obj/item/gun/kinetic/foamdartrevolver{
@@ -259,10 +433,19 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"Ar" = (
+/obj/machinery/vending/cigarette,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "AM" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/bluegreen,
 /area/super_store)
+"Bu" = (
+/obj/decal/poster/wallsign/dont_panic,
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store/backrooms)
 "BE" = (
 /obj/table/round/auto,
 /obj/item/toy/cellphone{
@@ -306,6 +489,19 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"CJ" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"DC" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "DY" = (
 /obj/decal/poster/wallsign/neonsparkle,
 /turf/simulated/wall/auto/reinforced/jen/orange,
@@ -344,10 +540,18 @@
 	},
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
+"FA" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/communications_dish,
+/turf/space,
+/area/space)
 "FZ" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8
 	},
+/obj/decal/cleanable/cobweb,
 /turf/simulated/floor/green,
 /area/super_store/backrooms)
 "Gf" = (
@@ -370,6 +574,17 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"GN" = (
+/obj/lattice,
+/obj/fakeobject{
+	desc = "It's probably broken.";
+	dir = 6;
+	icon = 'icons/obj/power.dmi';
+	icon_state = "solar_panel";
+	name = "solar panel"
+	},
+/turf/space,
+/area/space)
 "GR" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1
@@ -394,6 +609,16 @@
 /obj/item/gun/kinetic/foamdartgun,
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"Ii" = (
+/obj/mopbucket,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"KX" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "LU" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/green,
@@ -429,6 +654,13 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/super_store)
+"NQ" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "Op" = (
 /obj/table/round/auto,
 /obj/item/inner_tube/duck{
@@ -471,15 +703,25 @@
 /area/super_store)
 "Pg" = (
 /obj/table/monodesk,
-/obj/decoration/paperstack/small{
-	pixel_x = -4;
-	pixel_y = 7
-	},
 /obj/item/decoration/ashtray{
 	pixel_x = 7;
 	pixel_y = 0
 	},
+/obj/item/paper/super_store2,
 /turf/simulated/floor/greenwhite,
+/area/super_store/backrooms)
+"PS" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"Qi" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/wall/auto/reinforced/jen/orange,
 /area/super_store/backrooms)
 "QH" = (
 /turf/simulated/floor/carpet/arcade,
@@ -487,10 +729,23 @@
 "Ry" = (
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
+"Rz" = (
+/obj/table/auto,
+/obj/decal/cleanable/desk_clutter,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "RA" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/orange,
 /area/super_store)
+"RS" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "Sn" = (
 /turf/simulated/wall/auto/reinforced/jen/orange,
 /area/super_store/hangar)
@@ -511,6 +766,10 @@
 /obj/machinery/bot/duckbot,
 /turf/simulated/floor/grass,
 /area/super_store)
+"Uc" = (
+/obj/decal/poster/wallsign/poster_sol,
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store/backrooms)
 "UB" = (
 /obj/cabinet/ammo,
 /turf/simulated/floor/bluegreen,
@@ -523,12 +782,23 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/super_store)
+"Vg" = (
+/obj/stool/chair/office/green{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "Vo" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
+"VG" = (
+/obj/decal/cleanable/balloon,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
 "Wa" = (
 /obj/table/round/auto,
 /obj/item/toy/plush/small/bee{
@@ -545,6 +815,14 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"Wr" = (
+/obj/displaycase/alarmed/super_store,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"Wy" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "WN" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8
@@ -669,7 +947,7 @@ MD
 MD
 MD
 MD
-HQ
+qq
 HQ
 HQ
 HQ
@@ -701,27 +979,27 @@ eA
 eA
 eA
 MD
-HQ
-HQ
-HQ
-HQ
-HQ
+hH
+pM
+FA
+pM
+PS
 HQ
 HQ
 HQ
 "}
 (4,1,1) = {"
 HQ
-HQ
-HQ
-HQ
+CJ
+eg
+yD
 YK
+Qi
+Qi
 YK
-YK
-YK
-Ry
-Ry
-Ry
+DC
+Wy
+Wy
 MD
 Tb
 mN
@@ -733,29 +1011,29 @@ QH
 QH
 QH
 MD
-HQ
-HQ
-HQ
-HQ
-HQ
+hH
+yi
+RS
+yi
+lx
 HQ
 HQ
 HQ
 "}
 (5,1,1) = {"
-HQ
-HQ
-HQ
-HQ
+pE
+hH
+eg
+GN
 YK
 Ha
 wA
 GV
 Ry
 Ry
-Ry
-MD
-mN
+hG
+gc
+mq
 Zs
 mN
 RA
@@ -766,9 +1044,9 @@ nN
 QH
 MD
 MD
-HQ
-HQ
-HQ
+hH
+hH
+lx
 HQ
 HQ
 HQ
@@ -776,9 +1054,9 @@ HQ
 "}
 (6,1,1) = {"
 HQ
-HQ
-HQ
-HQ
+vB
+eg
+GN
 YK
 wA
 wA
@@ -809,7 +1087,7 @@ HQ
 (7,1,1) = {"
 HQ
 HQ
-HQ
+YK
 YK
 YK
 Nl
@@ -817,13 +1095,13 @@ YK
 YK
 FZ
 SH
-SH
+eF
 MD
 MD
 RA
 RA
 ST
-QH
+VG
 HZ
 Yz
 sf
@@ -840,7 +1118,7 @@ HQ
 "}
 (8,1,1) = {"
 HQ
-HQ
+YK
 YK
 YK
 YK
@@ -872,7 +1150,7 @@ HQ
 "}
 (9,1,1) = {"
 HQ
-HQ
+YK
 YK
 Ry
 WN
@@ -904,7 +1182,7 @@ HQ
 "}
 (10,1,1) = {"
 HQ
-HQ
+YK
 YK
 Ry
 Ry
@@ -936,9 +1214,9 @@ HQ
 "}
 (11,1,1) = {"
 HQ
-HQ
 YK
-Ry
+YK
+Wr
 Ry
 Ry
 YK
@@ -949,7 +1227,7 @@ ef
 yp
 mV
 yp
-yp
+pz
 MD
 Fg
 wn
@@ -968,7 +1246,7 @@ HQ
 "}
 (12,1,1) = {"
 HQ
-HQ
+YK
 YK
 Ry
 Ry
@@ -1000,7 +1278,7 @@ HQ
 "}
 (13,1,1) = {"
 HQ
-HQ
+YK
 YK
 YK
 YK
@@ -1033,16 +1311,16 @@ HQ
 (14,1,1) = {"
 HQ
 HQ
-HQ
 YK
-Ry
+YK
+Ar
 Ry
 Ry
 WN
 Ry
-Ry
-Ry
-Ry
+Wy
+Vg
+zU
 MD
 UB
 AM
@@ -1067,14 +1345,14 @@ HQ
 HQ
 HQ
 YK
+qH
 Ry
 Ry
 Ry
 Ry
 Ry
-Ry
-Ry
-Ry
+Wy
+Rz
 MD
 UB
 yp
@@ -1103,10 +1381,10 @@ YK
 Vo
 YK
 YK
+eO
 Ry
-Ry
-Ry
-Ry
+Wy
+Wy
 EN
 yp
 yp
@@ -1130,15 +1408,15 @@ HQ
 HQ
 HQ
 HQ
-YK
+Uc
+KX
 Ry
+Wy
+Bu
+tk
 Ry
-Ry
-YK
-Ry
-Ry
-Ry
-Ry
+Ii
+Wy
 MD
 NO
 vM
@@ -1148,7 +1426,7 @@ GL
 ON
 ch
 oI
-QH
+jq
 MD
 MD
 HQ
@@ -1164,13 +1442,13 @@ HQ
 HQ
 YK
 YK
-Ry
+oM
 Fs
 YK
-Ry
-Ry
+ym
+mc
 Fs
-Ry
+fS
 MD
 MD
 MD
@@ -1205,15 +1483,15 @@ YK
 YK
 MD
 MD
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
+NQ
+NQ
+pY
+NQ
+NQ
+NQ
+NQ
+pY
+lx
 HQ
 HQ
 HQ
