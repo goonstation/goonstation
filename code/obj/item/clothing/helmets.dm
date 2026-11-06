@@ -741,6 +741,7 @@
 			src.icon_state = "helmet-sec"
 			src.item_state = "helmet-sec"
 
+#define HOS_HELMET_TOGGLED_FLAGS (SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR)
 /obj/item/clothing/head/helmet/hardhat/security/hos
 	name = "head of security helmet"
 	icon_state = "helmet-hos"
@@ -748,6 +749,7 @@
 	desc = "Somewhat protects your head from being bashed in a little more than an ordinary helmet. It has a cool stripe too to distinguish it from less cool helmets."
 	abilities = list(/obj/ability_button/flashlight_hardhat, /obj/ability_button/toggle_visor)
 	var/visor_up = TRUE // The visor's current position
+	HELP_MESSAGE_OVERRIDE("Use the <b>Toggle Visor</b> ability to toggle space resistance.")
 
 	setupProperties()
 		..()
@@ -762,7 +764,7 @@
 		src.see_face = FALSE
 		src.icon_state = "helmet-hos-visor-down"
 		src.item_state = "helmet-hos-visor-down"
-		src.c_flags |= (SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR)
+		src.c_flags |= HOS_HELMET_TOGGLED_FLAGS
 		src.hides_from_examine |= (C_EARS|C_MASK|C_GLASSES)
 		setProperty("space_movespeed", 0.2)
 		if (ishuman(user) && user.head == src)
@@ -776,14 +778,14 @@
 		src.see_face = TRUE
 		src.icon_state = "helmet-hos"
 		src.item_state = "helmet-hos"
-		src.c_flags &= ~(SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR)
+		src.c_flags &= ~HOS_HELMET_TOGGLED_FLAGS
 		src.hides_from_examine &= ~(C_EARS|C_MASK|C_GLASSES)
 		setProperty("space_movespeed", 0)
 		if (ishuman(user) && user.head == src)
 			user.update_clothing()
 		if (!silent)
 			boutput(user, SPAN_HINT("You flip the visor up. The helmet no longer provides space resistance."))
-
+#undef HOS_HELMET_TOGGLED_FLAGS
 
 
 /obj/item/clothing/head/helmet/hardhat/security/improved // Azungar's more out of style helmet that can only be bought through QM.
