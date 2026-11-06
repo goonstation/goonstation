@@ -94,8 +94,8 @@
 	name = "Super! Friend 2053 Catalogue"
 	desc= "The latest and greatest enjoyment products."
 	icon_state = "duck_magazine"
-	sizex = 1758
-	sizey = 1243
+	sizex = 1055
+	sizey = 746
 
 /obj/item/paper/super_store1
 	name = "scribbled note"

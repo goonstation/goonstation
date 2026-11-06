@@ -4,11 +4,11 @@
 /turf/simulated/wall/auto/reinforced/jen/orange,
 /area/super_store)
 "br" = (
-/obj/table/reinforced,
 /obj/item/paper/image/businesscard/super_store,
 /obj/item/paper/image/businesscard/super_store,
 /obj/item/paper/image/businesscard/super_store,
 /obj/item/paper/image/businesscard/super_store,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/bluegreen,
 /area/super_store)
 "ch" = (
@@ -23,6 +23,10 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"dF" = (
+/obj/storage/crate,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "dJ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -46,6 +50,13 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"ev" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/obj/storage/crate,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "ez" = (
 /obj/decal/poster/wallsign/toy_gun,
 /turf/simulated/wall/auto/reinforced/jen/orange,
@@ -140,13 +151,13 @@
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
 "iA" = (
-/obj/table/monodesk,
 /obj/item/luggable_computer/personal,
+/obj/table/monodesk/auto,
 /turf/simulated/floor/greenwhite,
 /area/super_store/backrooms)
 "ja" = (
-/obj/table/monodesk,
 /obj/item/device/audio_log/radioship/large/super_store,
+/obj/table/monodesk/auto,
 /turf/simulated/floor/greenwhite,
 /area/super_store/backrooms)
 "ji" = (
@@ -195,8 +206,8 @@
 /turf/simulated/floor/grass,
 /area/super_store)
 "mV" = (
-/obj/table/reinforced,
 /obj/machinery/cashreg,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/bluegreen,
 /area/super_store)
 "nk" = (
@@ -716,12 +727,12 @@
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
 "Pg" = (
-/obj/table/monodesk,
 /obj/item/decoration/ashtray{
 	pixel_x = 7;
 	pixel_y = 0
 	},
 /obj/item/paper/super_store2,
+/obj/table/monodesk/auto,
 /turf/simulated/floor/greenwhite,
 /area/super_store/backrooms)
 "Pp" = (
@@ -747,6 +758,12 @@
 "QH" = (
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"Rw" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary,
+/area/super_store/backrooms)
 "Ry" = (
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
@@ -787,6 +804,12 @@
 /obj/machinery/bot/duckbot,
 /turf/simulated/floor/grass,
 /area/super_store)
+"Tr" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/bluegreen,
+/area/super_store)
 "Uc" = (
 /obj/decal/poster/wallsign/poster_sol,
 /turf/simulated/wall/auto/reinforced/jen/orange,
@@ -796,11 +819,11 @@
 /turf/simulated/floor/bluegreen,
 /area/super_store)
 "Ve" = (
-/obj/table/reinforced,
 /obj/item/paper/image/duck_magazine{
 	pixel_x = -7;
 	pixel_y = 3
 	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/bluegreen,
 /area/super_store)
 "Vg" = (
@@ -1079,7 +1102,7 @@ vB
 eg
 GN
 YK
-wA
+Rw
 wA
 YK
 YK
@@ -1173,15 +1196,15 @@ HQ
 HQ
 YK
 YK
-Ry
-WN
+dF
+ev
 Ry
 YK
 Pg
 SH
 SH
 ez
-yp
+Tr
 br
 yp
 yp
@@ -1205,7 +1228,7 @@ HQ
 HQ
 YK
 YK
-Ry
+dF
 Ry
 Ry
 GV
@@ -1269,9 +1292,9 @@ HQ
 HQ
 YK
 YK
+dF
 Ry
-Ry
-Ry
+dF
 Gf
 ja
 Ei
