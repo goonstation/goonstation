@@ -44,8 +44,8 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "ez" = (
 /obj/decal/poster/wallsign/toy_gun,
 /turf/simulated/wall/auto/reinforced/jen/orange,
@@ -128,8 +128,12 @@
 /area/super_store/backrooms)
 "hH" = (
 /obj/lattice,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
+"hK" = (
+/obj/random_pod_spawner/random_putt_spawner,
+/turf/simulated/floor/engine/glow/blue,
+/area/super_store/hangar)
 "iu" = (
 /obj/table/round/auto,
 /obj/item/toy/plush/small/monkey/assistant,
@@ -174,8 +178,8 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "mc" = (
 /obj/decal/cleanable/mail_fraud,
 /turf/simulated/floor/grime,
@@ -244,11 +248,11 @@
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
 "oV" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	id = "Candy Shop";
-	name = "Carlisle's Confections Parking"
-	},
 /obj/forcefield/energyshield/perma,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	id = "super_store";
+	name = "Debris-19 Xtreme Gaming Parking"
+	},
 /turf/simulated/floor/engine/glow/blue,
 /area/super_store/hangar)
 "pz" = (
@@ -260,30 +264,30 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay4,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "pM" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "pY" = (
 /obj/lattice{
 	dir = 1;
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay4,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "qq" = (
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay4,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "qH" = (
 /obj/machinery/vending/coffee{
 	dir = 1
@@ -351,8 +355,8 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay4,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "vM" = (
 /obj/storage/crate/bin/trash,
 /turf/simulated/floor/bluegreen,
@@ -386,8 +390,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/communications_dish,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "ym" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -409,8 +413,8 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "zU" = (
 /obj/table/auto,
 /obj/item/paper/super_store3,
@@ -473,6 +477,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"Cs" = (
+/obj/machinery/r_door_control{
+	id = "super_store"
+	},
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store/hangar)
 "CA" = (
 /obj/table/round/auto,
 /obj/item/brick{
@@ -495,8 +505,8 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay4,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "DC" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/ash,
@@ -545,8 +555,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/communications_dish,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "FZ" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8
@@ -583,8 +593,8 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "GR" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1
@@ -602,8 +612,8 @@
 /turf/simulated/floor/sanitary,
 /area/super_store/backrooms)
 "HQ" = (
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "HZ" = (
 /obj/table/round/auto,
 /obj/item/gun/kinetic/foamdartgun,
@@ -619,6 +629,10 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
+"LM" = (
+/obj/machinery/light/small/floor/purpleish,
+/turf/simulated/floor/engine/glow/blue,
+/area/super_store/hangar)
 "LU" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/green,
@@ -659,8 +673,8 @@
 	dir = 1;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "Op" = (
 /obj/table/round/auto,
 /obj/item/inner_tube/duck{
@@ -710,6 +724,13 @@
 /obj/item/paper/super_store2,
 /turf/simulated/floor/greenwhite,
 /area/super_store/backrooms)
+"Pp" = (
+/obj/machinery/door_control/podbay{
+	id = "super_store";
+	pixel_x = -26
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/super_store/hangar)
 "PS" = (
 /obj/lattice{
 	dir = 9;
@@ -717,8 +738,8 @@
 	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
 /obj/machinery/light/runway_light/delay4,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "Qi" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/jen/orange,
@@ -744,8 +765,8 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "Sn" = (
 /turf/simulated/wall/auto/reinforced/jen/orange,
 /area/super_store/hangar)
@@ -1110,7 +1131,7 @@ QH
 GF
 Yv
 hi
-hi
+Pp
 hi
 oV
 HQ
@@ -1174,7 +1195,7 @@ MD
 QH
 Mj
 hi
-hi
+LM
 hi
 oV
 HQ
@@ -1206,7 +1227,7 @@ ez
 QH
 MD
 hi
-hi
+hK
 hi
 oV
 HQ
@@ -1302,7 +1323,7 @@ MD
 QH
 Mj
 hi
-hi
+LM
 hi
 oV
 HQ
@@ -1333,7 +1354,7 @@ MD
 ef
 QH
 MD
-hi
+hK
 hi
 hi
 oV
@@ -1400,7 +1421,7 @@ MD
 Sn
 Sn
 Sn
-Sn
+Cs
 HQ
 HQ
 "}

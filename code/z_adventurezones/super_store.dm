@@ -172,6 +172,6 @@
 	proc/on_alarm(obj/displaycase/case)
 		src.emag_act(null, null)
 		src.emag_act(null, null)
-		src.say("ROBBERY IN PROGRESS. LOCKDOWN IN EFFECT.")
+		src.say("ROBBERY IN PROGRESS. LOCKDOWN IN EFFECT")
 		src.summon_bot(get_turf(case))
 

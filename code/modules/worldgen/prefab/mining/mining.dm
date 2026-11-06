@@ -284,6 +284,14 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabSizeX = 26
 		prefabSizeY = 23
 
+	super_store // Bamlord's X-treme gaming super store
+		maxNum = 1
+		probability = 100
+		prefabPath = "assets/maps/prefabs/space/prefab_super_friend.dmm"
+		prefabSizeX = 20
+		prefabSizeY = 30
+
+
 // Drone Spawners
 	drone_common
 		maxNum = 8
