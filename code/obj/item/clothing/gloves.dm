@@ -888,6 +888,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	protective_temperature = 1500
 	material_prints = "Brown leather fibers"
 	fingertip_color = "#875c33"
+	mat_changename = FALSE
+	default_material = "leather"
 
 	setupProperties()
 		..()
