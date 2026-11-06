@@ -1,0 +1,1256 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aF" = (
+/obj/machinery/illuminated_sign/open_neon,
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store)
+"br" = (
+/obj/table/reinforced,
+/obj/item/paper/image/businesscard/super_store,
+/obj/item/paper/image/businesscard/super_store,
+/obj/item/paper/image/businesscard/super_store,
+/obj/item/paper/image/businesscard/super_store,
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"ch" = (
+/obj/table/round/auto,
+/obj/item/toy/plush/small/penguin{
+	pixel_x = 2;
+	pixel_y = 9
+	},
+/obj/item/toy/plush/small/orca{
+	pixel_x = 0;
+	pixel_y = -6
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"dJ" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/green,
+/area/super_store/backrooms)
+"ef" = (
+/obj/decal/poster/wallsign/duck,
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store)
+"ez" = (
+/obj/decal/poster/wallsign/toy_gun,
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store)
+"eA" = (
+/obj/submachine/claw_machine,
+/obj/map/light/screen,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"gB" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"hi" = (
+/turf/simulated/floor/engine/glow/blue,
+/area/super_store/hangar)
+"hj" = (
+/obj/submachine/ATM{
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"ho" = (
+/obj/table/round/auto,
+/obj/item/clothing/head/pinwheel_hat{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/pinwheel_hat{
+	pixel_x = 0;
+	pixel_y = -11
+	},
+/obj/item/clothing/head/pinwheel_hat{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"iu" = (
+/obj/table/round/auto,
+/obj/item/toy/plush/small/monkey/assistant,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"iA" = (
+/obj/table/monodesk,
+/obj/item/luggable_computer/personal,
+/turf/simulated/floor/greenwhite,
+/area/super_store/backrooms)
+"ja" = (
+/obj/table/monodesk,
+/obj/item/device/audio_log/radioship/large/super_store,
+/turf/simulated/floor/greenwhite,
+/area/super_store/backrooms)
+"ji" = (
+/obj/table/round/auto,
+/obj/item/storage/box/costume/baseball_clown{
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"kb" = (
+/obj/table/round/auto,
+/obj/item/cloth/towel/clown{
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/obj/item/clothing/mask/cursedclown_hat,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"lm" = (
+/turf/simulated/floor/greenwhite,
+/area/super_store/backrooms)
+"mN" = (
+/turf/simulated/floor/grass,
+/area/super_store)
+"mV" = (
+/obj/table/reinforced,
+/obj/machinery/cashreg,
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"nk" = (
+/obj/table/round/auto,
+/obj/item/rubberduck{
+	pixel_x = -1;
+	pixel_y = -4
+	},
+/obj/item/rubberduck{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"nN" = (
+/obj/machinery/computer/arcade,
+/obj/map/light/screen,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"nZ" = (
+/obj/table/round/auto,
+/obj/item/storage/box/crayon{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/rubber_hammer,
+/obj/machinery/light/incandescent/purpleish{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"oI" = (
+/obj/table/round/auto,
+/obj/item/toy/plush/small/singuloose{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/toy/plush/small/tuba{
+	pixel_x = -3;
+	pixel_y = -1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"oV" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	id = "Candy Shop";
+	name = "Carlisle's Confections Parking"
+	},
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/engine/glow/blue,
+/area/super_store/hangar)
+"rm" = (
+/obj/table/round/auto,
+/obj/item/gun/kinetic/foamdartrevolver,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"rU" = (
+/obj/filing_cabinet,
+/turf/simulated/floor/greenwhite,
+/area/super_store/backrooms)
+"sf" = (
+/obj/table/round/auto,
+/obj/item/gun/kinetic/foamdartshotgun{
+	pixel_x = 0;
+	pixel_y = -5
+	},
+/obj/item/gun/kinetic/foamdartshotgun{
+	pixel_x = 0;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"tw" = (
+/obj/table/round/auto,
+/obj/item/toy/figure{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/obj/item/toy/figure{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/toy/figure{
+	pixel_x = -9;
+	pixel_y = 16
+	},
+/obj/machinery/light/incandescent/purpleish{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"tR" = (
+/obj/table/round/auto,
+/obj/item/toy/gooncode{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/obj/item/toy/handheld/arcade,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"vM" = (
+/obj/storage/crate/bin/trash,
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"wn" = (
+/obj/table/round/auto,
+/obj/item/toy/figure{
+	pixel_x = 2;
+	pixel_y = 0
+	},
+/obj/item/toy/figure{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/toy/figure{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/toy/figure{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"wA" = (
+/turf/simulated/floor/sanitary,
+/area/super_store/backrooms)
+"yp" = (
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"Ap" = (
+/obj/table/round/auto,
+/obj/item/gun/kinetic/foamdartrevolver{
+	pixel_x = 1;
+	pixel_y = 15
+	},
+/obj/item/old_grenade/foam_dart{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/old_grenade/foam_dart{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"AM" = (
+/obj/machinery/light/incandescent/blueish,
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"BE" = (
+/obj/table/round/auto,
+/obj/item/toy/cellphone{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/item/toy/cellphone{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/obj/machinery/light/incandescent/purpleish{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"BY" = (
+/obj/table/round/auto,
+/obj/item/toy/handheld/robustris{
+	pixel_x = 2;
+	pixel_y = 0
+	},
+/obj/item/toy/handheld/robustris{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"CA" = (
+/obj/table/round/auto,
+/obj/item/brick{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/brick{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/horseshoe{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"DY" = (
+/obj/decal/poster/wallsign/neonsparkle,
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store)
+"Eb" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"Ei" = (
+/obj/machinery/light/incandescent/blueish{
+	dir = 4
+	},
+/turf/simulated/floor/green,
+/area/super_store/backrooms)
+"EN" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/simulated/floor/grime,
+/area/super_store)
+"Fg" = (
+/obj/table/round/auto,
+/obj/item/instrument/bikehorn/airhorn{
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/item/instrument/bikehorn/airhorn{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"Fs" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"FZ" = (
+/obj/machinery/light/incandescent/blueish{
+	dir = 8
+	},
+/turf/simulated/floor/green,
+/area/super_store/backrooms)
+"Gf" = (
+/obj/machinery/phone/wall,
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store/backrooms)
+"GF" = (
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"GL" = (
+/obj/table/round/auto,
+/obj/item/clothing/head/frog_hat{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/moustache{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"GR" = (
+/obj/machinery/light/incandescent/blueish{
+	dir = 1
+	},
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"GV" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"Ha" = (
+/obj/machinery/sink/slim{
+	pixel_y = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/super_store/backrooms)
+"HQ" = (
+/turf/space,
+/area/space)
+"HZ" = (
+/obj/table/round/auto,
+/obj/item/gun/kinetic/foamdartgun,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"LU" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/green,
+/area/super_store)
+"Mj" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/orange,
+/area/super_store)
+"Mw" = (
+/obj/table/round/auto,
+/obj/item/clothing/suit/gimmick/mouse{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/clothing/suit/gimmick/mouse{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"MD" = (
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store)
+"Nl" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/super_store/backrooms)
+"NO" = (
+/obj/machinery/vending/cola/red{
+	dir = 8
+	},
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"Op" = (
+/obj/table/round/auto,
+/obj/item/inner_tube/duck{
+	pixel_x = 1;
+	pixel_y = 11
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"OM" = (
+/obj/table/round/auto,
+/obj/item/satchel/figurines{
+	pixel_x = 1;
+	pixel_y = 18
+	},
+/obj/item/dice/magic8ball{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/rubber_chicken{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"ON" = (
+/obj/table/round/auto,
+/obj/item/clothing/shoes/moon{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/clothing/shoes/rocket,
+/obj/item/clothing/shoes/cowboy{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/machinery/light/incandescent/purpleish{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"Pg" = (
+/obj/table/monodesk,
+/obj/decoration/paperstack/small{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/turf/simulated/floor/greenwhite,
+/area/super_store/backrooms)
+"QH" = (
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"Ry" = (
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"RA" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/orange,
+/area/super_store)
+"Sn" = (
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store/hangar)
+"SB" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/green,
+/area/super_store/backrooms)
+"SH" = (
+/turf/simulated/floor/green,
+/area/super_store/backrooms)
+"ST" = (
+/obj/decal/poster/wallsign/neonretro,
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store)
+"Tb" = (
+/obj/machinery/bot/duckbot,
+/turf/simulated/floor/grass,
+/area/super_store)
+"UB" = (
+/obj/cabinet/ammo,
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"Ve" = (
+/obj/table/reinforced,
+/obj/item/paper/image/duck_magazine{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/turf/simulated/floor/bluegreen,
+/area/super_store)
+"Vo" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"Wa" = (
+/obj/table/round/auto,
+/obj/item/toy/plush/small/bee{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/toy/plush/small/bunny/mask{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/obj/item/toy/plush/small/kitten/bingus{
+	pixel_x = -6;
+	pixel_y = -12
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"WN" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"WV" = (
+/obj/table/round/auto,
+/obj/item/clothing/suit/gimmick/hotdog{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/clothing/suit/gimmick/hotdog{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/gimmickbomb/hotdog{
+	pixel_x = -8;
+	pixel_y = -10
+	},
+/obj/item/clothing/under/gimmick/spiderman{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"Yv" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store)
+"Yz" = (
+/obj/table/round/auto,
+/obj/item/toy/sword{
+	pixel_x = 1;
+	pixel_y = 17
+	},
+/obj/item/toy/sword{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/machinery/light/incandescent/purpleish{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"YK" = (
+/turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store/backrooms)
+"YU" = (
+/obj/table/round/auto,
+/obj/item/old_grenade/moustache{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/chicken{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/machinery/light/incandescent/purpleish{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
+"Zs" = (
+/obj/machinery/bot/duckbot,
+/obj/machinery/light/small/floor/frostedred,
+/turf/simulated/floor/grass,
+/area/super_store)
+
+(1,1,1) = {"
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+"}
+(2,1,1) = {"
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+MD
+MD
+MD
+MD
+MD
+MD
+MD
+MD
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+"}
+(3,1,1) = {"
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+YK
+YK
+YK
+YK
+MD
+MD
+MD
+MD
+MD
+MD
+eA
+eA
+eA
+eA
+MD
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+"}
+(4,1,1) = {"
+HQ
+HQ
+HQ
+HQ
+YK
+YK
+YK
+YK
+Ry
+Ry
+Ry
+MD
+Tb
+mN
+Tb
+RA
+QH
+QH
+QH
+QH
+QH
+MD
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+"}
+(5,1,1) = {"
+HQ
+HQ
+HQ
+HQ
+YK
+Ha
+wA
+GV
+Ry
+Ry
+Ry
+MD
+mN
+Zs
+mN
+RA
+QH
+nN
+nN
+nN
+QH
+MD
+MD
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+"}
+(6,1,1) = {"
+HQ
+HQ
+HQ
+HQ
+YK
+wA
+wA
+YK
+YK
+Eb
+YK
+MD
+Tb
+mN
+Tb
+MD
+QH
+MD
+MD
+DY
+QH
+MD
+MD
+MD
+Sn
+Sn
+Sn
+Sn
+HQ
+HQ
+"}
+(7,1,1) = {"
+HQ
+HQ
+HQ
+YK
+YK
+Nl
+YK
+YK
+FZ
+SH
+SH
+MD
+MD
+RA
+RA
+ST
+QH
+HZ
+Yz
+sf
+QH
+QH
+GF
+Yv
+hi
+hi
+hi
+oV
+HQ
+HQ
+"}
+(8,1,1) = {"
+HQ
+HQ
+YK
+YK
+YK
+YK
+YK
+iA
+SB
+SH
+MD
+MD
+MD
+GR
+yp
+gB
+QH
+QH
+QH
+QH
+QH
+QH
+QH
+MD
+hi
+hi
+hi
+oV
+HQ
+HQ
+"}
+(9,1,1) = {"
+HQ
+HQ
+YK
+Ry
+WN
+Ry
+YK
+Pg
+SH
+SH
+ez
+yp
+br
+yp
+yp
+MD
+rm
+Ap
+BE
+BY
+tR
+MD
+QH
+Mj
+hi
+hi
+hi
+oV
+HQ
+HQ
+"}
+(10,1,1) = {"
+HQ
+HQ
+YK
+Ry
+Ry
+Ry
+GV
+lm
+SH
+SH
+LU
+yp
+Ve
+yp
+yp
+MD
+MD
+MD
+MD
+MD
+MD
+ez
+QH
+MD
+hi
+hi
+hi
+oV
+HQ
+HQ
+"}
+(11,1,1) = {"
+HQ
+HQ
+YK
+Ry
+Ry
+Ry
+YK
+rU
+SH
+SH
+ef
+yp
+mV
+yp
+yp
+MD
+Fg
+wn
+tw
+OM
+CA
+MD
+QH
+aF
+hi
+hi
+hi
+oV
+HQ
+HQ
+"}
+(12,1,1) = {"
+HQ
+HQ
+YK
+Ry
+Ry
+Ry
+Gf
+ja
+Ei
+SH
+MD
+MD
+MD
+hj
+yp
+gB
+QH
+QH
+QH
+QH
+QH
+QH
+QH
+MD
+hi
+hi
+hi
+oV
+HQ
+HQ
+"}
+(13,1,1) = {"
+HQ
+HQ
+YK
+YK
+YK
+YK
+YK
+YK
+YK
+dJ
+MD
+MD
+MD
+UB
+yp
+MD
+nk
+Op
+nZ
+kb
+ji
+MD
+QH
+Mj
+hi
+hi
+hi
+oV
+HQ
+HQ
+"}
+(14,1,1) = {"
+HQ
+HQ
+HQ
+YK
+Ry
+Ry
+Ry
+WN
+Ry
+Ry
+Ry
+Ry
+MD
+UB
+AM
+MD
+MD
+MD
+MD
+MD
+MD
+ef
+QH
+MD
+hi
+hi
+hi
+oV
+HQ
+HQ
+"}
+(15,1,1) = {"
+HQ
+HQ
+HQ
+YK
+Ry
+Ry
+Ry
+Ry
+Ry
+Ry
+Ry
+Ry
+MD
+UB
+yp
+MD
+Mw
+WV
+YU
+Wa
+iu
+MD
+QH
+Yv
+hi
+hi
+hi
+oV
+HQ
+HQ
+"}
+(16,1,1) = {"
+HQ
+HQ
+HQ
+YK
+YK
+Vo
+YK
+YK
+Ry
+Ry
+Ry
+Ry
+EN
+yp
+yp
+gB
+QH
+QH
+QH
+QH
+QH
+QH
+GF
+MD
+Sn
+Sn
+Sn
+Sn
+HQ
+HQ
+"}
+(17,1,1) = {"
+HQ
+HQ
+HQ
+YK
+Ry
+Ry
+Ry
+YK
+Ry
+Ry
+Ry
+Ry
+MD
+NO
+vM
+MD
+ho
+GL
+ON
+ch
+oI
+QH
+MD
+MD
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+"}
+(18,1,1) = {"
+HQ
+HQ
+HQ
+YK
+YK
+Ry
+Fs
+YK
+Ry
+Ry
+Fs
+Ry
+MD
+MD
+MD
+MD
+MD
+MD
+MD
+MD
+MD
+MD
+MD
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+"}
+(19,1,1) = {"
+HQ
+HQ
+HQ
+HQ
+YK
+YK
+YK
+YK
+YK
+YK
+YK
+YK
+MD
+MD
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+"}
+(20,1,1) = {"
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+"}
