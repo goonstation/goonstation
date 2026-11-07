@@ -1,9 +1,12 @@
 
 /// Instead of `#include "foo.dmm"` use the following macro which will also store information about the loaded z-level
-#define INCLUDE_MAP(PATH) \
+#define INCLUDE_MAP(MAP_PATH, DATUM_PATH) \
 	/datum/_zlevel_helper/inner/get_zlevels() \
-		{ . = ..() + list(PATH);}\
-	INCLUDE PATH
+		{ . = ..() + list(list("path"=MAP_PATH,"datum"=DATUM_PATH));}\
+	INCLUDE MAP_PATH
+
+// Saved as list of associated lists
+// (["path": "../path.dmm", "datum": /datum/zlevel/subpath], ["path": "../path.dmm", "datum": /datum/zlevel/subpath])
 
 /// List containing all z-level datums indexed by their z coordinate
 var/global/list/datum/zlevel/zlevels = null
@@ -17,15 +20,20 @@ var/global/list/datum/zlevel/zlevels = null
 	/// Z coordinate of this z-level
 	var/z
 	/// gforce applied to all non-space tiles on this zlevel
-	var/gforce = 1
+	var/gforce = GFORCE_GRAVITY_MINIMUM
 	/// name displayed when someone ingame wants to know which z-level they are
 	var/display_name = "Unknown"
+	/// teleportation inside the z-level is (mostly) prohibited
+	var/teleport_restricted = TRUE
+	/// ghosts cannot float around on the z-level
+	var/ghost_restricted = TRUE
 
 	New(path, z)
 		..()
 		src.path = path
 		src.z = z
 		src.generate_name()
+		src.set_gforce(src.gforce, FALSE)
 
 	proc/generate_name()
 		var/list/path_parts = splittext(path, "/")
@@ -33,9 +41,68 @@ var/global/list/datum/zlevel/zlevels = null
 		var/filename_parts = splittext(filename, ".")
 		src.name = filename_parts[1]
 
+	proc/set_gforce(new_gforce, update_tethers=FALSE)
+		src.gforce = new_gforce
+		if (update_tethers)
+			if (new_gforce == 0)
+				SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_CHANGE, src.z, GFORCE_EARTH_GRAVITY) // were going to space vegas, babey
+			else if (new_gforce >= GFORCE_EARTH_GRAVITY)
+				SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_CHANGE, src.z, 0) // shut off on terrestiral gravity
+
+		for (var/turf/T as anything in block(locate(1, 1, src.z), locate(world.maxx, world.maxy, src.z)))
+			T.gforce_area_rev = 0
+
 	// eventual plan is to add more properties to this (tele blockability, observability etc.) and create some subtypes which are chosen based on path
 	// instead of base /datum/zlevel being used
 
+/datum/zlevel/main
+	teleport_restricted = FALSE
+	ghost_restricted = FALSE
+
+/datum/zlevel/main/dev
+	display_name = "Dev Zone"
+	gforce = GFORCE_EARTH_GRAVITY
+
+/datum/zlevel/main/station
+	display_name = "Station"
+
+/datum/zlevel/main/station/terrestrial
+	gforce = GFORCE_EARTH_GRAVITY
+
+/datum/zlevel/main/ship
+	display_name = "Ship"
+
+/datum/zlevel/main/crash
+	display_name = "Crash Site"
+
+/datum/zlevel/main/podwars
+	display_name = "Spess"
+
+/datum/zlevel/adventure
+	display_name = "Restricted"
+
+/datum/zlevel/debris
+	teleport_restricted = FALSE
+	ghost_restricted = FALSE
+
+/datum/zlevel/debris/space
+	display_name = "Debris Field"
+
+/datum/zlevel/debris/underwater
+	display_name = "Deep Trench"
+	ghost_restricted = TRUE // *only* ghosst restricted
+	gforce = GFORCE_EARTH_GRAVITY
+
+/datum/zlevel/mining
+	teleport_restricted = FALSE
+	ghost_restricted = FALSE
+
+/datum/zlevel/mining/space
+	display_name = "Asteroid Field"
+
+/datum/zlevel/mining/underwater
+	display_name = "Trench"
+	gforce = GFORCE_EARTH_GRAVITY
 
 // internals
 
@@ -48,43 +115,6 @@ var/global/list/datum/zlevel/zlevels = null
 proc/init_zlevel_datums()
 	var/datum/_zlevel_helper/inner/helper = new
 	global.zlevels = list()
-	for(var/path in helper.get_zlevels())
-		global.zlevels += new /datum/zlevel(path, length(global.zlevels) + 1)
-
-	#ifndef UNDERWATER_MAP
-	global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_GRAVITY_MINIMUM, FALSE)
-	if (length(global.zlevels) >= Z_LEVEL_DEBRIS)
-		global.set_zlevel_gforce(Z_LEVEL_DEBRIS, GFORCE_GRAVITY_MINIMUM, FALSE)
-	if (length(global.zlevels) >= Z_LEVEL_MINING)
-		global.set_zlevel_gforce(Z_LEVEL_MINING, GFORCE_GRAVITY_MINIMUM, FALSE)
-	#else
-	global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, FALSE)
-	if (length(global.zlevels) >= Z_LEVEL_DEBRIS)
-		global.set_zlevel_gforce(Z_LEVEL_DEBRIS, GFORCE_EARTH_GRAVITY, FALSE)
-	if (length(global.zlevels) >= Z_LEVEL_MINING)
-		global.set_zlevel_gforce(Z_LEVEL_MINING, GFORCE_EARTH_GRAVITY, FALSE)
-	#endif
-
-	// display_name-setting... god, i feel like i commit crimes here
-	for(var/datum/zlevel/manipulated_zlevel in global.zlevels)
-		var/name_to_set = "Unknown"
-		switch(manipulated_zlevel.z)
-			if (Z_LEVEL_STATION)
-				name_to_set = "[capitalize(station_or_ship())]"
-			if (Z_LEVEL_ADVENTURE)
-				name_to_set = "Restricted"
-			if (Z_LEVEL_DEBRIS)
-				#ifdef UNDERWATER_MAP
-				name_to_set = "Deep Trench"
-				#else
-				name_to_set = "Debris Field"
-				#endif
-			if (Z_LEVEL_MINING)
-				#ifdef UNDERWATER_MAP
-				name_to_set =  "Trench"
-				#else
-				name_to_set =  "Asteroid Field"
-				#endif
-			else
-				continue
-		manipulated_zlevel.display_name = name_to_set
+	for (var/z_level in helper.get_zlevels())
+		var/datum_path = z_level["datum"] // extract the path so we can call it below without syntax errors
+		global.zlevels += new datum_path(z_level["path"], length(global.zlevels) + 1)
