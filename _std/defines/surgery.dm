@@ -19,3 +19,7 @@
 #define BACK_SURGERY_STEP_ONE 1
 #define BACK_SURGERY_STEP_TWO 2
 #define BACK_SURGERY_OPENED 3
+
+#define LIMB_REMOVE_STAGE_SECURE 0 // The limb is secure and has not been cut
+#define LIMB_REMOVE_STAGE_CUT 1	// Surgery has cut the limb but it is not loose
+#define LIMB_REMOVE_STAGE_LOOSE 2 // The limb is loose (ie: could fall off!)

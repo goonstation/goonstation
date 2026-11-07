@@ -2636,7 +2636,6 @@ TYPEINFO(/mob)
 			L.is_npc = FALSE
 		if(isobserver(src.ghost))
 			qdel(src.ghost)
-
 	src.HealDamage("All", INFINITY, INFINITY, INFINITY)
 	src.stuttering = 0
 	src.losebreath = 0
