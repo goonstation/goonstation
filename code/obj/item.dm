@@ -693,17 +693,13 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 #undef CYBORG_STACK_CAPACITY
 #undef GHOSTDRONE_STACK_CAPACITY
 
-/// Whether its holder takes priority over stacks when choosing a receiver.
-/obj/item/proc/is_preferred_stack_receiver()
-	return isrobot(src.loc) || isghostdrone(src.loc) || istype(src.loc, /obj/item/magtractor)
-
 /obj/item/proc/stack_item(obj/item/other)
 	var/obj/item/stacker
 	var/obj/item/stackee
 	if(QDELETED(other))
 		return 0
 
-	if (other.is_preferred_stack_receiver())
+	if (isrobot(other.loc) || isghostdrone(other.loc) || istype(other.loc, /obj/item/magtractor))
 		stacker = other
 		stackee = src
 	else
