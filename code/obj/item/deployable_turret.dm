@@ -12,6 +12,8 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
+	var/datum/projectile/current_projectile
+	var/current_projectile_amount = INFINITY
 	var/damage_words = "mostly undamaged!"
 	var/icon_tag = null
 	var/quick_deploy_fuel = 0
@@ -42,6 +44,10 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 
 	proc/spawn_turret(var/direct)
 		var/obj/deployable_turret/turret = new src.associated_turret(src.loc, direct)
+		turret.setMaterial(src.material)
+		turret.current_projectile = src.current_projectile
+		turret.current_projectile_amount = src.current_projectile_amount
+		turret.forensic_holder = src.forensic_holder
 		turret.health = src.turret_health // NO FREE REPAIRS, ASSHOLES
 		turret.damage_words = src.damage_words
 		turret.quick_deploy_fuel = src.quick_deploy_fuel
@@ -125,6 +131,8 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	var/external_angle = 180 // used for determining target validity
 	var/projectile_type = null
 	var/datum/projectile/current_projectile
+	var/current_projectile_amount = INFINITY // If using custom rounds, keeps track of how many are left.
+	var/ejection_container = null // Type of container to use when ejecting custom rounds
 	var/burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
 	var/fire_rate = 3 // rate of fire in shots per second
 	var/angle_arc_size = 45
@@ -152,18 +160,18 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		else
 			src.forensic_profile = register_id("=[build_id(FORENSIC_CHARS_BALLISTICS, 9)]=")
 
-		src.icon_state = "[src.icon_tag]_base"
-		src.appearance_flags |= RESET_TRANSFORM
-		src.underlays += src
-		src.appearance_flags &= ~RESET_TRANSFORM
+		var/image/turret_base = image(src.icon, "[src.icon_tag]_base")
+		turret_base.appearance_flags = src.appearance_flags | RESET_TRANSFORM
+		turret_base.apply_material_appearance(src.material)
+		src.underlays += turret_base
+
 		src.icon_state = "[src.icon_tag]_off"
 		src.appearance_flags |= PIXEL_SCALE
 
 		var/matrix/M = matrix()
 		src.transform = M.Turn(src.external_angle)
 		processing_items |= src
-		if(active)
-			set_projectile()
+		set_projectile(null)
 
 		#ifdef LOW_SECURITY
 		START_TRACKING_CAT(TR_CAT_DELETE_ME)
@@ -181,9 +189,20 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		processing_items.Remove(src)
 		..()
 
+	setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+		. = ..()
+		var/image/turret_base = image(src.icon, "[src.icon_tag]_base")
+		turret_base.appearance_flags = src.appearance_flags | RESET_TRANSFORM
+		turret_base.apply_material_appearance(src.material)
+		src.underlays = turret_base
 
 	get_desc(dist)
 		. = "<br>[SPAN_NOTICE("It looks [src.damage_words]. It is [src.anchored ? "secured to" : "unsecured from"] the floor and powered [src.active ? "on" : "off"].")]"
+		var/obj/item/ammo/bullets/ammo = new src.ejection_container
+		if(src.current_projectile.coating)
+			. += SPAN_NOTICE(" It is currently loaded with [src.current_projectile_amount] [src.current_projectile.coating.getName()]-coated [ammo.sname] rounds.")
+		else
+			. += SPAN_NOTICE(" It uses [ammo.sname] rounds.")
 
 	on_forensic_scan(datum/forensic_scan/scan)
 		. = ..()
@@ -211,10 +230,17 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 			else
 				src.external_angle = (180) // how did you get here?
 
-	proc/set_projectile()
-		current_projectile = new projectile_type
-		current_projectile.shot_number = burst_size
-		current_projectile.shot_delay = 10/fire_rate
+	proc/set_projectile(var/obj/item/ammo/bullets/ammo)
+		if(!ammo)
+			src.current_projectile = new src.projectile_type
+			src.current_projectile_amount = INFINITY
+		else
+			src.current_projectile = new ammo.ammo_type.type
+			src.current_projectile.coating = ammo.ammo_type.coating
+			src.current_projectile.coating_amount = ammo.ammo_type.coating_amount
+			src.current_projectile_amount = ammo.amount_left
+		src.current_projectile.shot_number = src.burst_size
+		src.current_projectile.shot_delay = 10 / src.fire_rate
 
 	proc/shoot(target)
 		SPAWN(0)
@@ -234,12 +260,17 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 					var/obj/item/casing/turret_casing = new src.current_projectile.casing(picked_turf, src)
 					var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
 					turret_casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
+					turret_casing.material_amt = src.current_projectile.coating_amount * GUN_KINETIC_MATERIAL_RATIO_CASING
+					turret_casing.setMaterial(src.current_projectile.coating)
 					// prevent infinite casing stacks
 					if (length(picked_turf.contents) > 10)
 						SPAWN(30 SECONDS)
 							if (!QDELETED(turret_casing) && get_turf(turret_casing) == picked_turf)
 								qdel(turret_casing)
 				sleep(src.current_projectile.shot_delay)
+			src.current_projectile_amount--
+			if(!src.current_projectile_amount)
+				src.set_projectile(null)
 		shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
 	proc/process()
@@ -326,12 +357,54 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 
 		else if (istype(W, /obj/item/card/emag)) //emags should be sneaky
 			..()
+
+		else if(istype(W, /obj/item/ammo/bullets))
+			src.load_ammo(user, W)
+
+		else if(ispryingtool(W))
+			if(src.current_projectile_amount == INFINITY)
+				boutput(user, "No custom ammo to eject.")
+				return
+			var/obj/item/ammo/bullets/ammo
+			while(src.current_projectile_amount > 0)
+				ammo = new src.ejection_container
+				ammo.ammo_type = src.current_projectile
+				ammo.amount_left = min(ammo.max_amount, src.current_projectile_amount)
+				src.current_projectile_amount -= ammo.amount_left
+				ammo.pixel_x = rand(-8, 8)
+				ammo.pixel_y = rand(-8, 8)
+				ammo.set_loc(src.loc)
+			user.visible_message("[user] ejects the [ammo] from the [src].", "You eject the [ammo] from the [src] turret.")
+			playsound(src, 'sound/machines/weapons-reloading.ogg', 50, TRUE, pitch = 1.5)
+			src.set_projectile(null)
+
 		else
 			src.health = src.health - W.force
 			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
 			attack_particle(user,src)
 			src.check_health()
 			..()
+
+	proc/load_ammo(var/mob/user, var/obj/item/ammo/bullets/ammo)
+		if(ammo.amount_left == 0)
+			boutput(user, "The [ammo] is empty.")
+			return
+		if(ammo.ammo_type.is_same_ammo(src.current_projectile))
+			if(src.current_projectile_amount != INFINITY)
+				src.current_projectile_amount += ammo.amount_left
+				user.visible_message("[user] loads the [ammo] into the [src].", "You load the [ammo] into the [src] turret.")
+				playsound(src, 'sound/weapons/gunload_mprt.ogg', 50, TRUE, pitch = 1.5)
+				qdel(ammo)
+			else
+				boutput(user, "No need to load that type of ammo.")
+			return
+		if(src.current_projectile_amount == INFINITY)
+			src.set_projectile(ammo)
+			user.visible_message("[user] loads the [ammo] into the [src].", "You load the [ammo] into the [src] turret.")
+			playsound(src, 'sound/weapons/gunload_mprt.ogg', 50, TRUE, pitch = 1.5)
+			qdel(ammo)
+			return
+		boutput(user, "You need to eject the currently loaded ammo with a crowbar before you can load a different type of ammo.")
 
 	//actionbar procs
 	///Anchor if unanchored, unanchor if anchored
@@ -352,7 +425,6 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 			src.waiting = 0
 			src.target = null
 		else
-			src.set_projectile()
 			src.active = 1
 			src.icon_state = "[src.icon_tag]_idle"
 
@@ -362,7 +434,6 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		src.quick_deploy_fuel--
 		src.visible_message(SPAN_ALERT("[src]'s quick deploy system engages, automatically securing it!"))
 		playsound(src.loc, 'sound/items/Welder2.ogg', 30, 1)
-		set_projectile()
 		src.anchored = ANCHORED
 		src.active = 1
 		src.icon_state = "[src.icon_tag]_idle"
@@ -401,6 +472,10 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 
 	proc/spawn_deployer()
 		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc)
+		deployer.setMaterial(src.material)
+		deployer.current_projectile = src.current_projectile
+		deployer.current_projectile_amount = src.current_projectile_amount
+		deployer.forensic_holder = src.forensic_holder
 		deployer.turret_health = src.health // NO FREE REPAIRS, ASSHOLES
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
@@ -516,11 +591,13 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	get_help_message(dist, mob/user)
 		if (!src.deconstructable || !src.can_toggle_activation)
 			return
+		var/obj/item/ammo/bullets/ammo = new src.ejection_container
 		. = {"Activation/maintenance:
 		1. Use a <b>welding tool</b> to secure it.
 		2. Use a <b>screwdriver</b> to turn it on.
 		3. (Optional) Click it with a <b>wrench</b> and then click a location to rotate the turret in that direction.
 		4. (Optional) While it's on, use a <b>welding tool</b> to repair any damage.
+		5. (Optional) Click it with custom <b>[ammo.sname]</b> ammunition to load custom rounds. Use a <b>crowbar</b> to unload them.
 
 		Disassembly:
 		1. Use a <b>screwdriver</b> to turn it off.
@@ -542,6 +619,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	name = "NAS-T"
 	desc = "A Nuclear Agent Sentry Turret."
 	projectile_type = /datum/projectile/bullet/akm
+	ejection_container = /obj/item/ammo/bullets/akm
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
 	burst_size = 4
@@ -571,6 +649,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	max_health = 125
 	range = 5
 	projectile_type = /datum/projectile/bullet/abg
+	ejection_container = /obj/item/ammo/bullets/abg
 	burst_size = 1
 	fire_rate = 1
 	angle_arc_size = 60
@@ -598,6 +677,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	max_health = 125
 	range = 7
 	projectile_type = /datum/projectile/bullet/revolver_38/lb
+	ejection_container = /obj/item/ammo/bullets/a38/mag/lb
 	burst_size = 2
 	fire_rate = 1
 	angle_arc_size = 60

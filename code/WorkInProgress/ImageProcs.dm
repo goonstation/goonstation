@@ -1,5 +1,7 @@
 
 /image/proc/apply_material_appearance(var/datum/material/material, var/ignore_trigger = FALSE)
+	if(!material)
+		return
 	if(material.getTexture())
 		var/icon/icon_tex = GetTexturedIcon(src.icon, material.getTexture())
 		if(!isnull(icon_tex))
