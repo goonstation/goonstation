@@ -175,7 +175,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define DISPOSE_IS_QDEL
 
 /// Toggle this to enable perspective wall icons in .dmm-compatible map editors. By default, icons in the editor will be flat.
-#define USE_PERSPECTIVE_EDITOR_WALLS
+//#define USE_PERSPECTIVE_EDITOR_WALLS
 
 /// Enable additional world.log logging.
 //#define Z_LOG_ENABLE
