@@ -268,7 +268,7 @@
 			H.losebreath = 0
 		if(ismob(owner))
 			if(src.power == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_ANAEROBIC, src.type)
 			else
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
 		health_update_queue |= owner
@@ -277,11 +277,11 @@
 		. = ..()
 		if(ismob(owner))
 			if(oldval == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_ANAEROBIC, src.type)
 			else
 				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
 			if(newval == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_ANAEROBIC, src.type)
 			else
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
 
@@ -289,7 +289,7 @@
 		. = ..()
 		if(ismob(owner))
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
-			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_ANAEROBIC, src.type)
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"
