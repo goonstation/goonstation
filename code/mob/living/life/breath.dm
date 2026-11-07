@@ -81,7 +81,7 @@
 
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
-		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(owner, PROP_MOB_ANAEROBIC))
 			src.update_breath_hud(status_updates)
 			if(owner.losebreath)
 				owner.losebreath -= (1.3 * mult) // base losebreath recovery

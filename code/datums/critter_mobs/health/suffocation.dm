@@ -45,7 +45,7 @@
 		if (istype(loc, /turf))
 			breath = loc.remove_air(TOTAL_MOLES(environment) * BREATH_PERCENTAGE)
 		if (holder.does_it_metabolize())
-			if (holder.reagents.has_reagent("lexorin") || HAS_ATOM_PROPERTY(holder, PROP_MOB_REBREATHING))
+			if (holder.reagents.has_reagent("lexorin") || HAS_ATOM_PROPERTY(holder, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(holder, PROP_MOB_ANAEROBIC))
 				gain_breath(2)
 				return
 		if (istype(loc, /obj/))
