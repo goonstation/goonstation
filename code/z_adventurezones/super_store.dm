@@ -94,13 +94,14 @@
 	name = "Super! Friend 2053 Catalogue"
 	desc= "The latest and greatest enjoyment products."
 	icon_state = "duck_magazine"
+	path = "images/arts/business_superfriend.png"
 	sizex = 1055
 	sizey = 746
 
 /obj/item/paper/super_store1
 	name = "scribbled note"
 	info = "Hey Sal.<br> \
-			Some guys came by asking about the Cyalume replica swords again. They wanted to place a bulk order of the 2050 model in red color. \
+			Some guys came by asking about the old Cyalume replica swords again. They wanted to place a bulk order of the 2050 model in red color. \
 			I told them we don't stock those anymore after those customs officials came and confiscated that batch, but they kept just putting more \
 			and more money on the counter saying 'maybe this will change your tune'. I told them it's out of my hands and they got really angry. \
 			Said they're gonna pay you a visit and give you a 'piece of their time'. I said I don't think that's the right phrase and then the big \
@@ -175,3 +176,96 @@
 		src.say("ROBBERY IN PROGRESS. LOCKDOWN IN EFFECT")
 		src.summon_bot(get_turf(case))
 
+
+/mob/living/carbon/human/super_store_employee
+	is_npc = TRUE
+	gender = MALE
+	real_name = "Jenkins \"buckshot\" Wriggley"
+
+	// both used for dialogue stuff
+	var/concerned = FALSE
+	var/fired = FALSE
+
+
+	New()
+		..()
+		src.equip_new_if_possible(/obj/item/clothing/shoes/white, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/jersey/red, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+		if(prob(1))
+			src.equip_new_if_possible(/obj/item/clothing/suit/gimmick/pickle, SLOT_WEAR_SUIT) // rare pickle
+		else
+			src.equip_new_if_possible(/obj/item/clothing/suit/gimmick/hotdog, SLOT_WEAR_SUIT)
+
+		SPAWN(1 SECOND) // in case he loads before the alarmed case does. I love prefabs.
+			for_by_tcl(case, /obj/displaycase)
+				if (istype(case, /obj/displaycase/alarmed/super_store))
+					RegisterSignal(case, COMSIG_DISPLAYCASE_ALARM, PROC_REF(crash_out))
+
+	initializeBioholder()
+		. = ..()
+		bioHolder.age = 27
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.underwear = "boxers"
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+		var/area/area = get_area(src)
+		if(can_act(src) && area?.active)
+			if(!ON_COOLDOWN(src, "employee_talk", 20 SECONDS))
+				talk_shit(area)
+
+			if(!src.fired && !istype(src.wear_suit, /obj/item/clothing/suit/gimmick/hotdog) && !istype(src.wear_suit, /obj/item/clothing/suit/gimmick/pickle))
+				src.fired = TRUE
+				src.concerned = TRUE
+				src.say("You think I was fucking joking? I'm totally fired now, asshole")
+
+	proc/talk_shit(area/A)
+		if(!src.concerned)
+			if(istype(A, /area/super_store/backrooms))
+				src.say(pick(
+					"Oh yea. Just fucking walk into the employee area. Sure.", \
+					"I don't care. Go wherever. Take a shit in the staff toilet.", \
+					"Don't smash the display case in the backroom or I'm fucked.", \
+					"You tryna kick back and smoke somethin?", \
+					"You some kinda salvager or some shit?", \
+					"Just don't steal the Mod. 00. Or it's my ass on the line." \
+				))
+			else
+				src.say(pick(
+					"Welcome to Debris-19 Gaming Super store.", \
+					"Feel free to browse. Take a look around.", \
+					"You can shoplift, I don't really care.", \
+					"Man... how did I get here.", \
+					"I love those ducks. They're so amusing.", \
+					"I know what it looks like. But I've got big things coming soon.", \
+					"If I don't wear this suit I'll be fired instantly. It's got a tracker.", \
+					"I don't really remember when I started working here, or how.", \
+					"You ever met my bro Bill?", \
+					"You seen those salvagers round here?. Assholes blew my high.", \
+					"Don't ask for the recalled cyalume swords. Bunch of suits came round and took em.", \
+					"You from that big ass station? Man... Must be nice.", \
+					"Sal don't let me play robustris on shift anymore. Fucking asshole." \
+				))
+		else
+			src.say(pick(
+				"Man. You've fucked us all. You're a real jerk.", \
+				"THIS IS A PRIVATE DOMICILE! GET THE HELL OUT!", \
+				"Mr Duckman is gonna fuck us up. Thanks, asshole.", \
+				"How am I gonna explain this shit to Sal.", \
+				"I'm so fired. All because of YOU.", \
+				"I should beat your ass.", \
+				"I got friends, bro. Friends that will gib your ass." \
+			))
+
+	proc/crash_out()
+		if(src.concerned || !can_act(src))
+			return
+		src.say(pick(
+			"BRO. WHAT THE FUCK DID YOU JUST DO!", \
+			"Oh fuck. OH FUCK.", \
+			"WE'RE SO FUCKED.", \
+			"SAL IS GONNA KILL ME! FUCK!" \
+		))
+		src.concerned = TRUE

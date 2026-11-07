@@ -360,6 +360,10 @@
 /obj/item/toy/handheld/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"vd" = (
+/obj/machinery/gravity_tether/multi_area/super_store,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "vB" = (
 /obj/lattice{
 	dir = 10;
@@ -808,6 +812,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/mob/living/carbon/human/super_store_employee,
 /turf/simulated/floor/bluegreen,
 /area/super_store)
 "Uc" = (
@@ -1196,7 +1201,7 @@ HQ
 HQ
 YK
 YK
-dF
+vd
 ev
 Ry
 YK
