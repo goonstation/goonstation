@@ -1,6 +1,17 @@
-#define GUTTER_LIGHTING_LEVEL 45
+#define GUTTER_LIGHTING_LEVEL 15
+
+/turf/simulated/floor/auto/trench/gutter
+	name = "gutter"
+	intact = FALSE
+	can_fill = FALSE
+	step_material = "step_lattice"
+	base_icon_state = "gutter" // sprite adapted from 35below reinforced walls
+
+	edge_overlays()
+		return
 
 /turf/unsimulated/floor/auto/trench/gutter
+	name = "gutter"
 	intact = FALSE
 	can_fill = FALSE
 	step_material = "step_lattice"
