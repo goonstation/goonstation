@@ -154,7 +154,7 @@ def get_thread_id():
     pull_but_as_issue = pull.as_issue() # what the fuck github
     for comment in pull_but_as_issue.get_comments():
         if comment.body.startswith(COMMENT_PREFIX):
-            return int(comment.body.split("=")[1])
+            return int(comment.body.splitlines()[0].split("=")[1])
     return None
 
 icon = os.environ["POST_ICON"]
