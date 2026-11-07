@@ -1,23 +1,23 @@
 /datum/effects/system/spark_spread
 	var/number = 3
-	var/cardinals = 0
+	var/spread_cardinal = FALSE
 	var/turf/location
 	var/atom/holder
 	var/total_sparks = 0 // To stop it being spammed and lagging!
 	var/list/livesparks = new
 
-/datum/effects/system/spark_spread/proc/set_up(n = 3, c = 0, loca)
-	if(n > 10)
-		n = 10
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
+/datum/effects/system/spark_spread/proc/set_up(number = 3, spread_cardinal = FALSE, location)
+	if(number > 10)
+		number = 10
+	src.number = number
+	src.spread_cardinal = spread_cardinal
+	if(isturf(location))
+		src.location = location
 	else
-		location = get_turf(loca)
+		src.location = get_turf(location)
 
-/datum/effects/system/spark_spread/proc/attach(atom/atom)
-	holder = atom
+/datum/effects/system/spark_spread/proc/attach(atom/A)
+	holder = A
 
 /datum/effects/system/spark_spread/proc/detach()
 	holder = null
@@ -79,7 +79,7 @@
 
 			// Set direction and distance to travel
 			var/direction
-			if(src.cardinals)
+			if(src.spread_cardinal)
 				direction = pick(cardinal)
 			else
 				direction = pick(alldirs)
