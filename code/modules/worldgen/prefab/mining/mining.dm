@@ -284,9 +284,9 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabSizeX = 26
 		prefabSizeY = 23
 
-	super_store // Bamlord's X-treme gaming super store
+	super_store // Bamlord's X-treme gaming super store with first edition antique laser
 		maxNum = 1
-		probability = 100
+		probability = 20
 		prefabPath = "assets/maps/prefabs/space/prefab_super_friend.dmm"
 		prefabSizeX = 20
 		prefabSizeY = 30
