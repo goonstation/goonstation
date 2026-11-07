@@ -9,7 +9,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	thermal_conductivity = 0.04
-	heat_capacity = 225000
+	heat_capacity = 225
 	// Related to overlay application in break/burn_tile() only
 	can_burn = TRUE
 	can_break = TRUE
@@ -736,7 +736,7 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
-	heat_capacity = 325000
+	heat_capacity = 3250
 	allows_vehicles = TRUE
 	can_burn = FALSE
 	can_break = FALSE

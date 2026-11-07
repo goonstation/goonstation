@@ -468,12 +468,12 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 			T.remove_air(ATMOS_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * mult)
 
 		if (istype(T))
-			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = CARBON_OUTPUT_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult
+			var/datum/gas_mixture/normal/payload = new /datum/gas_mixture/normal
+			payload.set_carbon_dioxide(CARBON_OUTPUT_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult)
 			if (src.check_tank_oxygen(src.inlet_tank))
-				payload.temperature = clamp(src.inlet_tank.air_contents.temperature + EXHAUST_TEMP_INCREASE, EXHAUST_TEMP_INCREASE, T100C) // hotter than intake
+				payload.set_temperature(clamp(src.inlet_tank.air_contents.temperature() + EXHAUST_TEMP_INCREASE, EXHAUST_TEMP_INCREASE, T100C)) // hotter than intake
 			else
-				payload.temperature = T.air.temperature
+				payload.set_temperature(T.air.temperature())
 
 			T.assume_air(payload)
 
@@ -584,19 +584,19 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 			return
 
 		var/datum/gas_mixture/G = T.return_air()
-		if (G.oxygen <= 0)
+		if (G.oxygen() <= 0)
 			return FALSE
 
-		return G.oxygen / TOTAL_MOLES(G)
+		return G.oxygen() / TOTAL_MOLES(G)
 
 	proc/check_tank_oxygen(obj/item/tank/T)
 		if (!src || !T || !T.air_contents)
 			return FALSE
 
-		if (T.air_contents.oxygen <= 0)
+		if (T.air_contents.oxygen() <= 0)
 			return FALSE
 
-		return T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)
+		return T.air_contents.oxygen() / TOTAL_MOLES(T.air_contents)
 
 	proc/get_output_cable()
 		var/list/cables = src.get_connections()

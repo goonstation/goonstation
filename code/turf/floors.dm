@@ -9,7 +9,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	thermal_conductivity = 0.04
-	heat_capacity = 225000
+	heat_capacity = 225
 	default_material = "steel"
 
 	turf_flags = MOB_SLIP | MOB_STEP
@@ -1224,7 +1224,7 @@ DEFINE_FLOORS(minitiles/black,
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
-	heat_capacity = 325000
+	heat_capacity = 325
 	reinforced = TRUE
 	allows_vehicles = TRUE
 	step_material = "step_plating"

@@ -177,7 +177,6 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			src.flags &= ~FLUID_DENSE
 			src.gas_impermeable = 0
 			src.pathable = 1
-			src.update_air_properties()
 			src.set_opacity(0)
 			if(!src.floorintact)
 				src.setIntact(FALSE)
@@ -196,7 +195,6 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.flags |= FLUID_DENSE
 		src.gas_impermeable = 1
 		src.pathable = 0
-		src.update_air_properties()
 		if (src.visible)
 			if (src.material)
 				src.set_opacity(src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY ? FALSE : TRUE)
@@ -291,7 +289,6 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.set_density(1)
 		src.gas_impermeable = 1
 		src.pathable = 0
-		src.update_air_properties()
 		if (src.visible)
 			src.set_opacity(0)
 			src.set_opacity(1)
