@@ -156,8 +156,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
 "iA" = (
-/obj/item/luggable_computer/personal,
 /obj/table/monodesk/auto,
+/obj/item/luggable_computer/personal/sals_laptop,
 /turf/simulated/floor/greenwhite,
 /area/super_store/backrooms)
 "ja" = (

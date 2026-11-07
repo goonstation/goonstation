@@ -101,7 +101,7 @@
 /obj/item/paper/super_store1
 	name = "scribbled note"
 	info = "Hey Sal.<br> \
-			Some guys came by asking about the old Cyalume replica swords again. They wanted to place a bulk order of the 2050 model in red color. \
+			Those salvs came by asking about the old Cyalume replica swords again. They wanted to collect a bulk order of the 2050 model in red color. \
 			I told them we don't stock those anymore after those customs officials came and confiscated that batch, but they kept just putting more \
 			and more money on the counter saying 'maybe this will change your tune'. I told them it's out of my hands and they got really angry. \
 			Said they're gonna pay you a visit and give you a 'piece of their time'. I said I don't think that's the right phrase and then the big \
@@ -166,6 +166,86 @@
 	-Break into NT employee market. Free duck samples?"}
 
 
+// Sals computer
+/obj/machinery/computer3/luggable/personal/sals_laptop
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/super_store
+
+/obj/item/luggable_computer/personal/sals_laptop
+	name = "sal's laptop"
+	desc = "Looks like an aging gaming model."
+	luggable_type = /obj/machinery/computer3/luggable/personal/sals_laptop
+
+/obj/item/disk/data/fixed_disk/hd64/super_store
+	New()
+		..()
+		var/datum/computer/folder/newfolder = new /datum/computer/folder
+		newfolder.name = "logs"
+		src.root.add_file(newfolder)
+		newfolder.add_file(new /datum/computer/file/record/c3help(src))
+
+		newfolder = new /datum/computer/folder
+		newfolder.name = "bin"
+		src.root.add_file(newfolder)
+		newfolder.add_file(new /datum/computer/file/terminal_program/writewizard(src))
+
+		newfolder = new /datum/computer/folder
+		newfolder.name = "mail"
+		src.root.add_file(newfolder)
+		newfolder.add_file(new /datum/computer/file/record/super_store/important_offer(src))
+		newfolder.add_file(new /datum/computer/file/record/super_store/customs_notice(src))
+		newfolder.add_file(new /datum/computer/file/record/super_store/pay_up(src))
+
+// Sals computer files
+/datum/computer/file/record/super_store
+	important_offer
+		name = "important_offer"
+		New()
+			..()
+			src.fields = list("FROM: king_wyatt@spacemail.com",\
+			"SUBJECT: important offer", \
+			"Hey Sal, I've come across something big.", \
+			"Got one of these red VR headsets.", \
+			"You know the ones. I need to shift it fast.", \
+			"I'll do you for 2k. Or we do consignment?", \
+			"Let me know asap. need to get rid of it.", \
+			"-wyatt." \
+			)
+
+	customs_notice
+		name = "customs_notice"
+		New()
+			..()
+			src.fields = list("FROM: customs@frontier_authority.org",\
+			"SUBJECT: notice of inspection", \
+			"FOR IMMEDIATE ATTENTION", \
+			"Your business is subject to enforcement action.", \
+			"Customs officials will arrive for inspection.", \
+			"Please ensure all documentation is prepared.", \
+			"As a reminder, all goods that have passed through", \
+			"Amantes are now subject to additional checks.", \
+			"We look forward to continued cooperation.", \
+			"-Customs Dept. Frontier Authority"
+			)
+
+	pay_up
+		name = "pay_up"
+		New()
+			..()
+			src.fields = list("FROM: silva@magpie.net",\
+			"SUBJECT: pay up sal", \
+			"Sal you fuck. quit running so scared.", \
+			"convenient youre never in store when", \
+			"my contractors come round to visit you.", \
+			"youre a slippery bastard sal. just cos", \
+			"we were on mars together dont mean that", \
+			"u can fuckin rip me off. i want compensated.", \
+			"either pay up or hand over those sabers.", \
+			"those syndies already paid for 30 units.", \
+			"you fucked it sal. if they ask im blaming", \
+			"you. they wont be kind like me. fuck you.",
+			"-silva"
+			)
+
 /obj/item/gun/energy/antique/first_edition
 	name = "Super! Friend First Edition Mod. 00 Kit Laser"
 	desc = "It's a FIRST EDITION kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display!"
@@ -195,8 +275,8 @@
 	real_name = "Jenkins \"Buckshot\" Wriggley"
 
 	// both used for dialogue stuff
-	var/concerned = FALSE
-	var/fired = FALSE
+	var/concerned = FALSE // you smashed the display case
+	var/fired = FALSE // you took off his mandatory hotdog suit
 
 
 	New()
@@ -281,3 +361,4 @@
 			"SAL IS GONNA KILL ME! FUCK!" \
 		))
 		src.concerned = TRUE
+
