@@ -153,6 +153,18 @@
 
 	-Sal."}
 
+/obj/item/paper/super_store4
+	name = "to-do list"
+	info = {"<center><h2>Sal's To-do list</h2></center><br>
+	-Scam that asshole on Luna for his original Mod. 00 <br>
+	-Deal with those salvage punks who keep tryna hustle the staff (hire mercs? dunno) <br>
+	-Call Cousin Briggs <br>
+	-Find replacement for Jenkins <br>
+	-Fire Jenkins <br>
+	-Get investment back from Big Manny (Don't forget it's 4000 CREDITS not 400.) <br>
+	-Call that dumbass contractor who didn't install a way to get out the duck enclosure. <br>
+	-Break into NT employee market. Free duck samples?"}
+
 
 /obj/item/gun/energy/antique/first_edition
 	name = "Super! Friend First Edition Mod. 00 Kit Laser"
@@ -180,7 +192,7 @@
 /mob/living/carbon/human/super_store_employee
 	is_npc = TRUE
 	gender = MALE
-	real_name = "Jenkins \"buckshot\" Wriggley"
+	real_name = "Jenkins \"Buckshot\" Wriggley"
 
 	// both used for dialogue stuff
 	var/concerned = FALSE
@@ -212,7 +224,7 @@
 		if (..(parent))
 			return 1
 		var/area/area = get_area(src)
-		if(can_act(src) && area?.active)
+		if(can_act(src, FALSE) && area?.active)
 			if(!ON_COOLDOWN(src, "employee_talk", 20 SECONDS))
 				talk_shit(area)
 

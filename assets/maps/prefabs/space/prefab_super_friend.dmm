@@ -1,6 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aF" = (
-/obj/machinery/illuminated_sign/open_neon,
+/obj/machinery/illuminated_sign/open_neon{
+	on = 1
+	},
 /turf/simulated/wall/auto/reinforced/jen/orange,
 /area/super_store)
 "br" = (
@@ -23,6 +25,11 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"da" = (
+/obj/storage/crate,
+/obj/item/record/lay_egg_is_true,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "dF" = (
 /obj/storage/crate,
 /turf/simulated/floor/grime,
@@ -87,10 +94,8 @@
 /area/super_store/backrooms)
 "fS" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
+/obj/table/auto,
+/obj/machinery/microwave,
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
 "gc" = (
@@ -453,8 +458,15 @@
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
 "Ar" = (
-/obj/machinery/vending/cigarette,
 /obj/decal/cleanable/cobweb,
+/obj/storage/secure/closet/fridge,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
+"Az" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/obj/table/auto,
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
 "AM" = (
@@ -642,6 +654,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
 /obj/decal/cleanable/rust/jen,
+/obj/item/paper/super_store4,
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
 "LM" = (
@@ -758,6 +771,13 @@
 "Qi" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/jen/orange,
+/area/super_store/backrooms)
+"Qw" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
 /area/super_store/backrooms)
 "QH" = (
 /turf/simulated/floor/carpet/arcade,
@@ -1108,7 +1128,7 @@ eg
 GN
 YK
 Rw
-wA
+Qw
 YK
 YK
 Eb
@@ -1297,7 +1317,7 @@ HQ
 HQ
 YK
 YK
-dF
+da
 Ry
 dF
 Gf
@@ -1496,7 +1516,7 @@ Fs
 YK
 ym
 mc
-Fs
+Az
 fS
 MD
 MD
