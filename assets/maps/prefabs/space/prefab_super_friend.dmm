@@ -4,7 +4,7 @@
 	on = 1
 	},
 /turf/simulated/wall/auto/reinforced/jen/orange,
-/area/super_store)
+/area/super_store/hangar)
 "br" = (
 /obj/item/paper/image/businesscard/super_store,
 /obj/item/paper/image/businesscard/super_store,
@@ -13,6 +13,19 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor/bluegreen,
 /area/super_store)
+"bP" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 9;
+	pixel_y = 0
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = -9;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/engine/glow/blue,
+/area/super_store/hangar)
 "ch" = (
 /obj/table/round/auto,
 /obj/item/toy/plush/small/penguin{
@@ -92,6 +105,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
+"fF" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/communications_dish,
+/turf/variableTurf/clear,
+/area/noGenerate)
 "fS" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/table/auto,
@@ -186,6 +207,10 @@
 /obj/item/clothing/mask/cursedclown_hat,
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
+"ku" = (
+/obj/rack,
+/turf/simulated/floor/grime,
+/area/super_store/backrooms)
 "lm" = (
 /turf/simulated/floor/greenwhite,
 /area/super_store/backrooms)
@@ -369,6 +394,13 @@
 /obj/machinery/gravity_tether/multi_area/super_store,
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
+"vl" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/plating,
+/area/super_store/hangar)
 "vB" = (
 /obj/lattice{
 	dir = 10;
@@ -381,6 +413,9 @@
 /obj/storage/crate/bin/trash,
 /turf/simulated/floor/bluegreen,
 /area/super_store)
+"vT" = (
+/turf/simulated/floor/plating,
+/area/super_store/hangar)
 "wn" = (
 /obj/table/round/auto,
 /obj/item/toy/figure{
@@ -447,6 +482,13 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
+"An" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
 "Ap" = (
 /obj/table/round/auto,
 /obj/item/gun/kinetic/foamdartrevolver{
@@ -647,6 +689,13 @@
 "HQ" = (
 /turf/variableTurf/clear,
 /area/noGenerate)
+"HT" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
 "HZ" = (
 /obj/table/round/auto,
 /obj/item/gun/kinetic/foamdartgun,
@@ -673,8 +722,8 @@
 /area/super_store)
 "Mj" = (
 /obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/orange,
-/area/super_store)
+/turf/simulated/floor/carpet/arcade,
+/area/super_store/hangar)
 "Mw" = (
 /obj/table/round/auto,
 /obj/item/clothing/suit/gimmick/mouse{
@@ -817,6 +866,10 @@
 "Sn" = (
 /turf/simulated/wall/auto/reinforced/jen/orange,
 /area/super_store/hangar)
+"Sp" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/engine/glow/blue,
+/area/super_store/hangar)
 "SB" = (
 /obj/stool/chair{
 	dir = 1
@@ -927,7 +980,7 @@
 "Yv" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/jen/orange,
-/area/super_store)
+/area/super_store/hangar)
 "Yz" = (
 /obj/table/round/auto,
 /obj/item/toy/sword{
@@ -1151,11 +1204,11 @@ DY
 QH
 MD
 MD
-MD
 Sn
 Sn
 Sn
 Sn
+aF
 HQ
 HQ
 "}
@@ -1184,7 +1237,7 @@ QH
 QH
 zf
 Yv
-hi
+bP
 Pp
 hi
 oV
@@ -1215,7 +1268,7 @@ QH
 QH
 QH
 QH
-MD
+Sn
 hi
 hi
 hi
@@ -1229,7 +1282,7 @@ YK
 YK
 vd
 ev
-Ry
+ku
 YK
 Pg
 SH
@@ -1279,7 +1332,7 @@ MD
 MD
 ez
 QH
-MD
+Sn
 hi
 hK
 hi
@@ -1343,7 +1396,7 @@ QH
 QH
 QH
 QH
-MD
+Sn
 hi
 hi
 hi
@@ -1385,7 +1438,7 @@ HQ
 "}
 (14,1,1) = {"
 HQ
-HQ
+An
 YK
 YK
 Ar
@@ -1407,7 +1460,7 @@ MD
 MD
 ef
 QH
-MD
+Sn
 hK
 hi
 hi
@@ -1417,7 +1470,7 @@ HQ
 "}
 (15,1,1) = {"
 HQ
-HQ
+An
 HQ
 YK
 qH
@@ -1440,7 +1493,7 @@ iu
 MD
 QH
 Yv
-hi
+Sp
 hi
 hi
 oV
@@ -1449,7 +1502,7 @@ HQ
 "}
 (16,1,1) = {"
 HQ
-HQ
+An
 HQ
 YK
 YK
@@ -1471,9 +1524,9 @@ QH
 QH
 QH
 GF
-MD
 Sn
 Sn
+vl
 Sn
 Cs
 HQ
@@ -1481,7 +1534,7 @@ HQ
 "}
 (17,1,1) = {"
 HQ
-HQ
+An
 HQ
 Uc
 KX
@@ -1503,18 +1556,18 @@ ch
 oI
 jq
 MD
-MD
-HQ
-HQ
-HQ
-HQ
+Sn
+Sn
+vT
+Sn
+aF
 HQ
 HQ
 "}
 (18,1,1) = {"
 HQ
-HQ
-HQ
+fF
+HT
 YK
 YK
 oM
@@ -1535,11 +1588,11 @@ MD
 MD
 MD
 MD
-HQ
-HQ
-HQ
-HQ
-HQ
+Sn
+Sn
+vl
+Sn
+An
 HQ
 HQ
 "}
@@ -1566,12 +1619,12 @@ NQ
 NQ
 NQ
 pY
+NQ
+NQ
+NQ
+NQ
+NQ
 lx
-HQ
-HQ
-HQ
-HQ
-HQ
 HQ
 HQ
 "}
