@@ -2689,6 +2689,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	isFlying = TRUE
 	has_genes = FALSE
 
+	New()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_SILVER_VULNERABILITY, src, 50)
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]

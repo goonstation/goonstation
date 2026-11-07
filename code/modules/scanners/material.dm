@@ -44,16 +44,16 @@ TYPEINFO(/obj/item/device/matanalyzer)
 			report += "</ul>"
 		else
 			report += "<li>The material properties are completely unremarkable.</li>"
-		var/report_trigger = analyze_material_triggers(mat)
+		var/report_trigger = analyze_material_triggers(target)
 		if(report_trigger)
 			report += "<li>[SPAN_NOTICE("Material Effects:")]</li>" + report_trigger
 		return report
 
-	proc/analyze_material_triggers(var/datum/material/mat)
+	proc/analyze_material_triggers(var/atom/target)
 		var/list/trigger_desc = list()
 		for(var/X in triggerVars)
-			for(var/datum/materialProc/mat_proc in mat.vars[X])
-				var/desc = mat_proc.get_scan_desc()
+			for(var/datum/materialProc/mat_proc in target.material.vars[X])
+				var/desc = mat_proc.get_scan_desc(target)
 				if(!desc)
 					continue
 				var/desc_match = FALSE

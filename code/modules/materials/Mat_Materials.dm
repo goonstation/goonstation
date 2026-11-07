@@ -374,6 +374,15 @@ ABSTRACT_TYPE(/datum/material)
 			if(istype(P, materialProcType)) return 1
 		return 0
 
+	/// Get the generation number of this material. Returns -1 if it doesn't exist.
+	proc/getTriggerGeneration(var/triggerListName as text, materialProcType)
+		var/list/L = src.vars[triggerListName]
+		for(var/datum/materialProc/P in L)
+			if(!istype(P, materialProcType))
+				continue
+			return L[P]
+		return -1
+
 	///Triggers is specified using one of the TRIGGER_ON_ defines
 	proc/removeTrigger(var/triggerListName as text, var/inType)
 		if(!src.mutable)
@@ -936,6 +945,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty(MATERIAL::PROPERTY::REFLECT, 6)
 		setProperty(MATERIAL::PROPERTY::ELECTRIC_COND, 6)
 		setProperty(MATERIAL::PROPERTY::MELTING_POINT, 1235 KELVIN)
+		addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/silver/on_pickup())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/silver/on_life())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/silver/on_hit())
 
 /datum/material/metal/batiline
 	mat_id = "batiline"
@@ -1104,6 +1116,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty(MATERIAL::PROPERTY::DENSITY, 4)
 		setProperty(MATERIAL::PROPERTY::HARDNESS, 2)
 		setProperty(MATERIAL::PROPERTY::MELTING_POINT, 1600 KELVIN)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/silver_vulnerability_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/silver_vulnerability_remove())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
@@ -1775,6 +1789,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty(MATERIAL::PROPERTY::RADS_NEUTRON, 1)
 		setProperty(MATERIAL::PROPERTY::DENSITY, 5)
 		setProperty(MATERIAL::PROPERTY::MELTING_POINT, 6000 KELVIN)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/silver_vulnerability_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/silver_vulnerability_remove())
 
 /datum/material/organic/viscerite
 	mat_id = "viscerite"
@@ -2101,6 +2117,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty(MATERIAL::PROPERTY::DENSITY, 1)
 		setProperty(MATERIAL::PROPERTY::HARDNESS, 1)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ethereal_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/silver_vulnerability_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/silver_vulnerability_remove())
 // Fabrics
 
 ABSTRACT_TYPE(/datum/material/fabric)
@@ -2369,6 +2387,8 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty(MATERIAL::PROPERTY::HARDNESS, 1)
 		setProperty(MATERIAL::PROPERTY::ELECTRIC_COND, 1)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ethereal_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/silver_vulnerability_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/silver_vulnerability_remove())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
@@ -2388,6 +2408,8 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty(MATERIAL::PROPERTY::THERMAL_COND, 9)
 		setProperty(MATERIAL::PROPERTY::RADS, 3)
 		setProperty(MATERIAL::PROPERTY::ELECTRIC_COND, 7)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/silver_vulnerability_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/silver_vulnerability_remove())
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_itchy_onlife())
 
 

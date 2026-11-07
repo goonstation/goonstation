@@ -51,6 +51,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		AddComponent(/datum/component/hattable, TRUE, FALSE, default_hat_y, 0, 0.75)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_SILVER_VULNERABILITY, src, 50)
 		START_TRACKING
 		hud = new(src)
 		src.attach_hud(hud)
