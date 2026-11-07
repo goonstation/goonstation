@@ -1046,10 +1046,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			icon_state = the_wrench.icon_state
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1064,6 +1060,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		..()
 		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] begins taking apart [the_storage]."))
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			duration = round(duration / 2)
 
 	onEnd()
 		..()
