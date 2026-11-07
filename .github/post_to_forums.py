@@ -29,6 +29,8 @@ LOGOUT = {
     "logoutkey": "let's hope this wasn't necessary",
 }
 
+COMMENT_PREFIX = "Created discussion thread:" # Comments starting with this plain text string will be picked up as existing forum posts
+
 s = requests.Session()
 
 def markdown_to_mybb(markdown):
@@ -151,8 +153,8 @@ def get_thread_id():
     pull = repo.get_pull(int(os.environ["PR_NUM"]))
     pull_but_as_issue = pull.as_issue() # what the fuck github
     for comment in pull_but_as_issue.get_comments():
-        if comment.body.startswith("Created discussion thread:"):
-            return int(comment.body.split("=")[1])
+        if comment.body.startswith(COMMENT_PREFIX):
+            return int(comment.body.splitlines()[0].split("=")[1])
     return None
 
 icon = os.environ["POST_ICON"]
@@ -195,7 +197,7 @@ else:
 
     if thread_url:
         comment_body = (
-            f"Created [discussion thread]({thread_url})."
+            f"{COMMENT_PREFIX} {thread_url}\n\n"
             f" Insert the following line into the changelog below the author:\n```\n(f){thread_url}\n```"
         )
         post_pr_comment(comment_body)
