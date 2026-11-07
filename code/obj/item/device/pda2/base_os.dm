@@ -897,6 +897,7 @@
 						src.master.r_tone.MessageAction(signal.data["message"])
 
 					src.master.display_alert(alert_beep, previewtext, groupAddress, src.ManageRecentCallers(sendername))
+					src.master.hud_message(signal.data["message"])
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						if (islist(groupAddress))
