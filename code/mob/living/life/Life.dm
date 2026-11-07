@@ -143,7 +143,6 @@
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)
-	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
@@ -162,7 +161,6 @@
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)
-	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
@@ -176,7 +174,6 @@
 	add_lifeprocess(/datum/lifeprocess/disability)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/organs)
-	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
@@ -184,7 +181,6 @@
 
 /mob/living/silicon/ai/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/disability)
 	add_lifeprocess(/datum/lifeprocess/faith)
@@ -192,7 +188,6 @@
 /mob/living/silicon/hivebot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/hud)
-	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
@@ -201,7 +196,6 @@
 /mob/living/silicon/robot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/hud)
-	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
@@ -469,11 +463,6 @@
 		sleeping = clamp(sleeping, 0, 20)
 		stuttering = clamp(stuttering, 0, 50)
 		losebreath = clamp(losebreath, 0, 25) // stop going up into the thousands, goddamn
-
-	proc/update_sight()
-		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
-		if (L)
-			L.Process()
 
 	update_canmove()
 		// update buckled

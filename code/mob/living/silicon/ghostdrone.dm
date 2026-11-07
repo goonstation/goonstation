@@ -1198,6 +1198,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone/deluxe)
 
 /mob/living/silicon/ghostdrone/deluxe
 	sees_static = FALSE
+	innate_vision = /datum/vision_modifier/ghostdrone_deluxe
 
 	New()
 		..()
@@ -1217,15 +1218,3 @@ TYPEINFO(/mob/living/silicon/ghostdrone/deluxe)
 		name = real_name
 
 		src.cell.genrate = 100
-
-
-	Life(datum/controller/process/mobs/parent)
-		if (client)
-			src.see_in_dark = SEE_DARK_FULL
-
-			if (client.adventure_view)
-				src.see_invisible = INVIS_ADVENTURE
-			else
-				src.see_invisible = INVIS_CONSTRUCTION
-
-		..()
