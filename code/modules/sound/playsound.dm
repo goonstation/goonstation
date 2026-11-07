@@ -260,6 +260,9 @@ proc/is_music_playing()
 	src.verbs -= /client/verb/stop_all_sounds
 	for(var/sound/s in SoundQuery())
 		if (!s.channel) return //fixes a list index out of bounds from the channel stop below - possibly SoundQuery bug
+		var/list/notes = global.instrument_note_channels[s.channel]
+		if (length(notes))
+			clear_instrument_note_listener(src, notes)
 		s.status |= SOUND_UPDATE
 		s.volume = 0
 		sound_playing[ s.channel ][1] = 0

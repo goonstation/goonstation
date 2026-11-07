@@ -350,7 +350,9 @@
 	// Pass act type messages to ui_act
 	if(type && copytext(type, 1, 5) == "act/")
 		var/act_type = copytext(type, 5)
-		if(act_type != "play_note") // |GOONSTATION-ADD| Avoid music spamming logs
+		// |GOONSTATION-ADD| Keep instrument note traffic out of the TGUI log.
+		var/static/list/instrument_note_actions = list("play_note", "start_note", "stop_note", "stop_notes")
+		if(!(act_type in instrument_note_actions))
 			log_tgui(user, "Action: [act_type] [href_list["payload"]]",
 				window = window,
 				src_object = src_object)
