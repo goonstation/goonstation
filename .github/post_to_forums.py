@@ -197,7 +197,7 @@ else:
 
     if thread_url:
         comment_body = (
-            f"{COMMENT_PREFIX} {thread_url}"
+            f"{COMMENT_PREFIX} {thread_url}\n\n"
             f" Insert the following line into the changelog below the author:\n```\n(f){thread_url}\n```"
         )
         post_pr_comment(comment_body)
