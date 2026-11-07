@@ -256,7 +256,7 @@
 	name = "Mr Duckman"
 	desc = "The Guardian of the Gaming store"
 
-	initialize()
+	initialize() // prefab loading is a bit weird, so signals added on initialize instead of new
 		..()
 		for_by_tcl(case, /obj/displaycase)
 			if (istype(case, /obj/displaycase/alarmed/super_store))
@@ -268,6 +268,31 @@
 		src.say("ROBBERY IN PROGRESS. LOCKDOWN IN EFFECT")
 		src.summon_bot(get_turf(case))
 
+/obj/machinery/bot/guardbot/bootleg/super_store
+	name = "Super! Protector Friend V"
+	desc = "Now with more taser!"
+	setup_default_startup_task = /datum/computer/file/guardbot_task/security/crazy
+	setup_default_tool_path = /obj/item/device/guardbot_tool/taser
+	no_camera = 1
+
+	initialize()
+		..()
+		for_by_tcl(case, /obj/displaycase)
+			if (istype(case, /obj/displaycase/alarmed/super_store))
+				RegisterSignal(case, COMSIG_DISPLAYCASE_ALARM, PROC_REF(on_alarm))
+
+	proc/on_alarm()
+		if(!src.on)
+			src.turn_on()
+			if(!src.on) // no charge
+				return
+		src.add_task(src.model_task, 1, 1)
+		if(src.idle)
+			if(src.charge_dock)
+				src.charge_dock.eject_robot()
+		else
+			src.wakeup()
+		src.say("SUPER! PROTECTION PROTOCOL ENGAGE!")
 
 /mob/living/carbon/human/super_store_employee
 	is_npc = TRUE

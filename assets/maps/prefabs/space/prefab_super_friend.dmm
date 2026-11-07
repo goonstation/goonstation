@@ -26,8 +26,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/super_store)
 "da" = (
-/obj/storage/crate,
-/obj/item/record/lay_egg_is_true,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bootleg/super_store,
 /turf/simulated/floor/grime,
 /area/super_store/backrooms)
 "dF" = (
@@ -435,6 +435,12 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"zf" = (
+/obj/machinery/light/incandescent/purpleish,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bootleg/super_store,
+/turf/simulated/floor/carpet/arcade,
+/area/super_store)
 "zU" = (
 /obj/table/auto,
 /obj/item/paper/super_store3,
@@ -1176,7 +1182,7 @@ Yz
 sf
 QH
 QH
-GF
+zf
 Yv
 hi
 Pp
