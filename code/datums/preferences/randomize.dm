@@ -198,23 +198,23 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=FEMALE, random_only=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, allow_pref_blacklist=FALSE, gender=FEMALE, random_only=TRUE))
 			hair_bottom.style = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=MALE, random_only=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, allow_pref_blacklist=FALSE, gender=MALE, random_only=TRUE))
 			hair_bottom.style = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, style_filter=CUSTOMIZATION.group__hair_facial))
+			var/type_second = pick(get_available_custom_style_types(H?.client, allow_pref_blacklist=FALSE, style_filter=CUSTOMIZATION.group__hair_facial))
 			hair_middle.style = new type_second
 			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=MALE, random_only=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, allow_pref_blacklist=FALSE, gender=MALE, random_only=TRUE))
 			hair_bottom.style = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=FEMALE, random_only=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, allow_pref_blacklist=FALSE, gender=FEMALE, random_only=TRUE))
 			hair_bottom.style = new type_first
 
 	if (!has_second)

@@ -272,17 +272,17 @@
 			F["[profileNum]_underwear_color"] >> AH.u_color
 
 			if(!istype(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style, /datum/customization_style))
-				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style, no_gimmick=TRUE)
+				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style, allow_pref_blacklist=FALSE)
 			if(!istype(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style, /datum/customization_style))
-				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style, no_gimmick=TRUE)
+				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style, allow_pref_blacklist=FALSE)
 			if(!istype(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style, /datum/customization_style))
-				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style, no_gimmick=TRUE)
+				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style, allow_pref_blacklist=FALSE)
 			if(!istype(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style_original, /datum/customization_style))
-				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style_original = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style_original, no_gimmick=TRUE)
+				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style_original = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style_original, allow_pref_blacklist=FALSE)
 			if(!istype(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style_original, /datum/customization_style))
-				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style_original = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style_original, no_gimmick=TRUE)
+				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style_original = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style_original, allow_pref_blacklist=FALSE)
 			if(!istype(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style_original, /datum/customization_style))
-				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style_original = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style_original, no_gimmick=TRUE)
+				src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style_original = find_style_by_name(src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style_original, allow_pref_blacklist=FALSE)
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] >> src.job_favorite

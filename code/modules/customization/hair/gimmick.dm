@@ -1,7 +1,10 @@
 TYPEINFO(/datum/customization_style/hair/gimmick)
-	style_type = CUSTOMIZATION::CATEGORY::HAIR_GIMMICK
-	gimmick = TRUE
+	style_category = CUSTOMIZATION::CATEGORY::HAIR_GIMMICK
+
 ABSTRACT_TYPE(/datum/customization_style/hair/gimmick)
+/datum/customization_style/hair/gimmick
+	allow_prefs = FALSE
+
 /datum/customization_style/hair/gimmick/afroHA
 	name = "Afro: Alternating Halves"
 	id = "afroHA"

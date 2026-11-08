@@ -1,5 +1,5 @@
 TYPEINFO(/datum/customization_style/hair/hairup)
-	style_type = CUSTOMIZATION::CATEGORY::HAIR_HAIRUP
+	style_category = CUSTOMIZATION::CATEGORY::HAIR_HAIRUP
 ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 
 /datum/customization_style/hair/hairup/bun
@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/longtwintail_half
 	name = "Long Twin Tails: Split"
 	id = "longtwintail_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/glamponytail
 	name = "Glam Ponytail"
@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/glamponytail_half
 	name = "Glam Ponytail: Split"
 	id = "glamponytail_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/rockponytail
 	name = "Rock Ponytail"
@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/rockponytail_half
 	name = "Rock Ponytail: Split"
 	id = "rockponytail_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/spikyponytail
 	name = "Spiky Ponytail"
@@ -123,7 +123,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/pig_half
 	name = "Pigtails: Split"
 	id = "pig_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/pompompigtail
 	name = "Pompom Pigtails"
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/wavy_tail_half
 	name = "Wavy Ponytail: Split"
 	id = "wavy_tail_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/puffball
 	name = "Puffball"
@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/puffball_split
 	name = "Puffball: Split"
 	id = "puffball_split"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/crown_braid
 	name = "Crown Braid"
@@ -185,7 +185,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/massive_braids_split
 	name = "Massive Braids: Split"
 	id = "mega_braids_split"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/chignon
 	name = "Chignon"
@@ -200,42 +200,42 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/hairpart_highpony
 	name = "Hair Parts: High Ponytail"
 	id = "spud_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/hairpart_wavypony
 	name = "Hair Parts: Wavy Ponytail"
 	id = "wavyponytail_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/hairpart_spikypony
 	name = "Hair Parts: Spiky Ponytail"
 	id = "spikyponytail_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/hairpart_messypony
 	name = "Hair Parts: Messy Ponytail"
 	id = "messyponytail_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/hairpart_pigtails
 	name = "Hair Parts: Pigtails"
 	id = "pig_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/hairpart_doublebuns
 	name = "Hair Part: Double Buns"
 	id = "doublebun_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/hairpart_highbun
 	name = "Hair Part: High Bun"
 	id = "high_bun_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/hairpart_crownbraid
 	name = "Hair Part: Crown Braid"
 	id = "crownbraid_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/scorpion_braid
 	name = "Scorpion Braid"
@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/scorpion_braid_alternating
 	name = "Scorpion Braid: Alternating"
 	id = "scorpion_braid_alternating"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/Side_Pigtails
 	name = "Side Pigtails"
@@ -268,14 +268,14 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/side_pigtailspart
 	name = "Hair Parts: Side Pigtails"
 	id = "side_pigtails_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/scorpion_braid_part
 	name = "Hair Parts: Scorpion Braid"
 	id = "scorpion_braid_part"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/hairup/scorpion_braid_alternating_part
 	name = "Hair Parts: Scorpion Braid Alternating"
 	id = "scorpion_braid_alternating_part"
-	random_allowed = FALSE
+	allow_random = FALSE

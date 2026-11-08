@@ -1,5 +1,5 @@
 TYPEINFO(/datum/customization_style/hair/short)
-	style_type = CUSTOMIZATION::CATEGORY::HAIR_SHORT
+	style_category = CUSTOMIZATION::CATEGORY::HAIR_SHORT
 ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/afro
 	name = "Afro"
@@ -8,77 +8,77 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/afro_fade
 	name = "Afro: Faded"
 	id = "afro_fade"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroHR
 	name = "Afro: Left Half"
 	id = "afroHR"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroHL
 	name = "Afro: Right Half"
 	id = "afroHL"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroST
 	name = "Afro: Top"
 	id = "afroST"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroSM
 	name = "Afro: Middle Band"
 	id = "afroSM"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroSB
 	name = "Afro: Bottom"
 	id = "afroSB"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroSL
 	name = "Afro: Left Side"
 	id = "afroSL"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroSR
 	name = "Afro: Right Side"
 	id = "afroSR"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroSC
 	name = "Afro: Center Streak"
 	id = "afroSC"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroCNE
 	name = "Afro: NE Corner"
 	id = "afroCNE"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroCNW
 	name = "Afro: NW Corner"
 	id = "afroCNW"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroCSE
 	name = "Afro: SE Corner"
 	id = "afroCSE"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroCSW
 	name = "Afro: SW Corner"
 	id = "afroCSW"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroSV
 	name = "Afro: Tall Stripes"
 	id = "afroSV"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/afroSH
 	name = "Afro: Long Stripes"
 	id = "afroSH"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/sidepart_afro
 	name = "Afro: Sidepart"
@@ -137,17 +137,17 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/clownT
 	name = "Clown: Top"
 	id = "clownT"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/clownM
 	name = "Clown: Middle Band"
 	id = "clownM"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/clownB
 	name = "Clown: Bottom"
 	id = "clownB"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/combed_s
 	name = "Combed"
@@ -196,7 +196,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/flick_half
 	name = "Flick: Split"
 	id = "flick_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/floof
 	name = "Floof"
@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/pompS
 	name = "Pompadour: Greaser Shine"
 	id = "pompS"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/scruffy
 	name = "Scruffy"
@@ -327,7 +327,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/combedfrontbangs
 	name = "Bangs: Combed Front"
 	id = "combedfrontbangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/combedfrontshort
 	name = "Combed Front Short"
@@ -336,7 +336,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/combedfrontshortbangs
 	name = "Bangs: Combed Front Short"
 	id = "combedfrontshortbangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/longfront
 	name = "Long Front"
@@ -345,7 +345,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/longfrontbangs
 	name = "Bangs: Long Front"
 	id = "longfrontbangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/salty
 	name = "Salty"
@@ -386,7 +386,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/curly_bob_fade
 	name = "Curly Bob: Faded"
 	id = "curly_bob_fade"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/charming
 	name = "Charming"
@@ -399,7 +399,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/spoonbangs
 	name = "Bangs: Spoon"
 	id = "spoonbangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/messy_waves
 	name = "Messy Waves"
@@ -408,7 +408,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/messy_waves_half
 	name = "Messy Waves: Split"
 	id = "messy_waves_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/messy_wicks
 	name = "Messy Wicks"
@@ -421,7 +421,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/messy_wicks_split
 	name = "Messy Wicks: Split"
 	id = "messy_wicks_split"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/neat_wicks
 	name = "Neat Wicks"
@@ -434,7 +434,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/neat_wicks_split
 	name = "Neat Wicks: Split"
 	id = "neat_wicks_split"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/blunt_bob
 	name = "Blunt Bob"
@@ -507,7 +507,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/blunt_pomp_fade
 	name = "Blunt Pompadour: Faded"
 	id = "blunt_pomp_fade"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/big_pomp
 	name = "Big Pompadour"
@@ -517,7 +517,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/big_pomp_fade
 	name = "Big Pompadour: Faded"
 	id = "big_pomp_fade"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/duck_ass
 	name = "Ducktail"
@@ -531,59 +531,59 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/pageboy_fade
 	name = "Pageboy: Faded"
 	id = "pageboy_fade"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/cockatielbang
 	name = "Bangs: Cockatiel"
 	id = "cockatielbang"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/combedfringebangs
 	name = "Bangs: Combed Fringe"
 	id = "combedfringebangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/longeyebangs
 	name = "Bangs: Eye cover"
 	id = "longeyebangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/wavybang
 	name = "Bangs: Wavy"
 	id = "wavybang"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/tied_bangs
 	name = "Bangs: Tied"
 	id = "tied_bangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/tied_bangs_long
 	name = "Bangs: Tied Long"
 	id = "tied_bangs_long"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/bluntsidebang
 	name = "Bangs: Blunt Side"
 	id = "bluntsidebang"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/emobang
 	name = "Bangs: Emo"
 	id = "emobang"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/lopsidedbang
 	name = "Bangs: Lopsided"
 	id = "lopsidedbang"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/curtainbangs
 	name = "Bangs: Curtain"
 	id = "curtainbangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/short/scorpion_bangs
 	name = "Bangs: Scorpion"
 	id = "scorpion_bangs"
-	random_allowed = FALSE
+	allow_random = FALSE

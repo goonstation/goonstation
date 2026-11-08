@@ -1,60 +1,60 @@
 TYPEINFO(/datum/customization_style/hair/long)
-	style_type = CUSTOMIZATION::CATEGORY::HAIR_LONG
+	style_category = CUSTOMIZATION::CATEGORY::HAIR_LONG
 ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/chub2_s
 	name = "Bang: Left"
 	id = "chub2_s"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/chub_s
 	name = "Bang: Right"
 	id = "chub_s"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/twobangs_long
 	name = "Two Bangs: Long"
 	id = "2bangs_long"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/twobangs_short
 	name = "Two Bangs: Short"
 	id = "2bangs_short"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/flatbangs
 	name = "Bangs: Flat"
 	id = "flatbangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/shortflatbangs
 	name = "Bangs: Flat Shorter"
 	id = "shortflatbangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/longwavebangs
 	name = "Bangs: Long Wavy"
 	id = "longwavebangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/shortwavebangs
 	name = "Bangs: Short Wavy"
 	id = "shortwavebangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/sidebangs
 	name = "Bangs: Sides"
 	id = "sidebangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/mysterybangs
 	name = "Bangs: Mysterious"
 	id = "mysterybangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/vbangs
 	name = "V-Bangs"
 	id = "v_bangs"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/bedhead
 	name = "Bedhead"
@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/dreadsA
 	name = "Dreadlocks: Alternating"
 	id = "dreadsA"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/long_dreads
 	name = "Long Dreadlocks"
@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/long_dreads_split
 	name = "Long Dreadlocks: Split"
 	id = "long_dreads_split"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/fabio
 	name = "Fabio"
@@ -144,12 +144,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/streakbangR
 	name = "Bang: Streak Right"
 	id = "streakbangR"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/streakbangL
 	name = "Bang: Streak Left"
 	id = "streakbangL"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/kingofrockandroll
 	name = "Kingmetal"
@@ -211,7 +211,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/box_braids_split
 	name = "Box Braids: Split"
 	id = "box_braids_split"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/bubble_braids
 	name = "Bubble Braids"
@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/bubble_braids_split
 	name = "Bubble Braids: Split"
 	id = "bubble_braids_split"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/longsidepart_s
 	name = "Long Flip"
@@ -247,7 +247,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/longwaves_half
 	name = "Waves: Split"
 	id = "longwaves_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/pulledb
 	name = "Pulled Back"
@@ -300,7 +300,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/smoothwave_half
 	name = "Smooth Waves: Split"
 	id = "smoothwave_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/mermaid
 	name = "Mermaid"
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/violet_half
 	name = "Violet: Split"
 	id = "violet_half"
-	random_allowed = FALSE
+	allow_random = FALSE
 
 /datum/customization_style/hair/long/willow
 	name = "Willow"
@@ -420,4 +420,4 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/ringlets_fade
 	name = "Ringlets: Faded"
 	id = "ringlet_fade"
-	random_allowed = FALSE
+	allow_random = FALSE

@@ -1,11 +1,11 @@
 TYPEINFO(/datum/customization_style/hair/facial)
-	style_type = CUSTOMIZATION::CATEGORY::HAIR_MOUSTACHE
+	style_category = CUSTOMIZATION::CATEGORY::HAIR_MOUSTACHE
 ABSTRACT_TYPE(/datum/customization_style/hair/facial)
 /datum/customization_style/hair/facial
 	default_layer = MOB_HAIR_LAYER1
 
 TYPEINFO(/datum/customization_style/hair/facial/moustache)
-	style_type = CUSTOMIZATION::CATEGORY::HAIR_MOUSTACHE
+	style_category = CUSTOMIZATION::CATEGORY::HAIR_MOUSTACHE
 ABSTRACT_TYPE(/datum/customization_style/hair/facial/moustache)
 /datum/customization_style/hair/facial/moustache
 
@@ -50,7 +50,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/facial/moustache)
 	id = "watson"
 
 TYPEINFO(/datum/customization_style/hair/facial/beard)
-	style_type = CUSTOMIZATION::CATEGORY::HAIR_BEARD
+	style_category = CUSTOMIZATION::CATEGORY::HAIR_BEARD
 ABSTRACT_TYPE(/datum/customization_style/hair/facial/beard)
 /datum/customization_style/hair/facial/beard
 
@@ -123,7 +123,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/facial/beard)
 	id = "trampstains"
 
 TYPEINFO(/datum/customization_style/hair/facial/sideburns)
-	style_type = CUSTOMIZATION::CATEGORY::HAIR_SIDEBURNS
+	style_category = CUSTOMIZATION::CATEGORY::HAIR_SIDEBURNS
 ABSTRACT_TYPE(/datum/customization_style/hair/facial/sideburns)
 /datum/customization_style/hair/facial/sideburns
 
