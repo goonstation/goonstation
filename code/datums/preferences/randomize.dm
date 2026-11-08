@@ -205,7 +205,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 			hair_bottom.style = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, style_filter=CUSTOMIZATION::HAIR.facial_hair))
+			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, style_filter=CUSTOMIZATION.group__hair_facial))
 			hair_middle.style = new type_second
 			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 

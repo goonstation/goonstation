@@ -2,9 +2,9 @@
 // - rename variables in typeinfo and /datum/customization_style itself for consistency, see stash
 
 TYPEINFO(/datum/customization_style)
-	var/style_slot = CUSTOMIZATION::SLOT::HAIR
+	var/style_slot = null
 	/// For filtering out different types.
-	var/style_type = CUSTOMIZATION::HAIR::SHORT
+	var/style_type = null
 	/// Does this style have some special unlock condition? (medal, rank, etc.)
 	var/special_criteria = FALSE
 	/// Is this a gimmick style? Exclude it from Character Prefs.
@@ -103,16 +103,21 @@ ABSTRACT_TYPE(/datum/customization_style)
 	for (var/datum/customization_style/style as anything in available)
 		var/typeinfo/datum/customization_style/typeinfo = get_type_typeinfo(style)
 
-		if (islist(style_filter) && length(style_filter))
-			for (var/filter_item in style_filter)
-				if ((filter_item == typeinfo.style_slot) || (filter_item == typeinfo.style_type))
+		if (typeinfo.style_slot && typeinfo.style_type)
+			if (islist(style_filter) && length(style_filter))
+				var/allow = FALSE
+				for (var/filter_item in style_filter)
+					if ((filter_item == typeinfo.style_slot) || (filter_item == typeinfo.style_type))
+						allow = TRUE
+						break
+				if (!allow)
+					available -= style
 					continue
-				available -= style
-				break
 
-		else if (style_filter)
-			if ((style_filter != typeinfo.style_slot) && (style_filter != typeinfo.style_type))
-				available -= style
+			else if (style_filter)
+				if ((style_filter != typeinfo.style_slot) && (style_filter != typeinfo.style_type))
+					available -= style
+					continue
 
 		var/style_gender = initial(style.gender)
 		if (gender && style_gender && (style_gender != gender))
