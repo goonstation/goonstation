@@ -1605,7 +1605,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.parallax_data += "<br><b>Abzu</b> - HYCEAN PLANET<br>\
 			Surface Outposts: OSHAN LABORATORY, NEON DEEPWATER RESEARCH FACILITY<br>\
 			Ocean planet. Surface is bathed in extreme radiation by the young star ŠID.<br>\
-			High density of flora & fauna marked it as a location of intrest to NanoTrasen during the ATLAS frontier survey of 2052.<br>\
+			High density of flora & fauna marked it as a location of intrest to NanoTrasen during the CLAIRON frontier survey of 2052.<br>\
 			(you are here)<br>"
 			#endif
 
