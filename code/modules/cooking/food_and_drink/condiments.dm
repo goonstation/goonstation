@@ -268,3 +268,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment/jam)
 	icon_state = "paper-jam"
 	food_color = "#FFFFFF"
 	initial_reagents = list("sugar"=25,"paper"=25)
+
+/obj/item/reagent_containers/food/snacks/condiment/caramelsauce
+	name = "caramel sauce"
+	desc = "Sweet, sticky, and deliciously golden!"
+	icon_state = "vanilla-extract"
+	food_color = "#D2902D"
+	initial_volume = 30
+	initial_reagents = "caramelsauce"

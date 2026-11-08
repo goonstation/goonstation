@@ -2195,3 +2195,10 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	/obj/item/paper = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
 	output = /obj/item/reagent_containers/food/snacks/condiment/jam/paperjam
+
+/datum/recipe/caramelsauce
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/caramelsauce
