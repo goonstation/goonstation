@@ -92,24 +92,24 @@ var/global/list/locked_styles = list()
 
 /proc/select_custom_style(mob/living/carbon/human/user, style_filter = CUSTOMIZATION::SLOT::HAIR, allow_pref_blacklist = TRUE)
 	var/list/datum/customization_style/options = list()
-	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(user.client, style_filter, allow_pref_blacklist = allow_pref_blacklist))
-		options[initial(styletype.name)] = styletype
+	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(user.client, style_filter, allow_pref_blacklist = allow_pref_blacklist))
+		options[initial(style_type.name)] = style_type
 	var/new_style = tgui_input_list(user, "Please select style", "Style", options)
 	var/selected_type = options[new_style]
 	if (selected_type)
 		return new selected_type
 
 /proc/find_style_by_name(var/target_name, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, allow_pref_blacklist = TRUE)
-	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, style_filter, allow_pref_blacklist = allow_pref_blacklist))
-		if (cmptext(initial(styletype.name), target_name))
-			return new styletype
+	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, allow_pref_blacklist = allow_pref_blacklist))
+		if (cmptext(initial(style_type.name), target_name))
+			return new style_type
 	stack_trace("Couldn't find a customization_style with the name \"[target_name]\".")
 	return new /datum/customization_style/none
 
 /proc/find_style_by_id(var/target_id, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, allow_pref_blacklist = TRUE)
-	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, style_filter, allow_pref_blacklist = allow_pref_blacklist))
-		if (initial(styletype.id) == target_id)
-			return new styletype
+	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, allow_pref_blacklist = allow_pref_blacklist))
+		if (initial(style_type.id) == target_id)
+			return new style_type
 	stack_trace("Couldn't find a customization_style with the id \"[target_id]\".")
 	return new /datum/customization_style/none
 
