@@ -339,7 +339,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		var/hasHumanEyes = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_EYES)
 		var/hasHumanSkintone = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_SKINTONE)
 		var/hasHumanHair = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_HAIR)
-		var/colorChannels = list("Bottom Detail", "Mid Detail", "Top Detail")
+		var/colorChannels = list("Bottom Hair", "Mid Hair", "Top Hair")
 		if (!hasHumanHair)
 			colorChannels = src.target_mob.mutantrace.color_channel_names
 
