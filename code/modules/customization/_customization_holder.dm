@@ -1,5 +1,13 @@
-/// Holds all the customization information.
+// todo: implement slot_type usage over hardcoded style filter overrides
+
+/*
+ * /datum/customizationHolder
+ * Holds all the customization information.
+ */
+ABSTRACT_TYPE(/datum/customizationHolder)
 /datum/customizationHolder
+	var/slot_type = CUSTOMIZATION::SLOT::HAIR
+
 	/// The color that gets used for determining your colors
 	var/color = "#101010"
 	/// The color that was set by the player's preferences
@@ -10,6 +18,10 @@
 	var/datum/customization_style/style_original = new /datum/customization_style/none
 	/// The Y offset to display this image
 	var/offset_y = 0
+
+ABSTRACT_TYPE(/datum/customizationHolder/hair)
+/datum/customizationHolder/hair
+	slot_type = CUSTOMIZATION::SLOT::HAIR
 
 /datum/customizationHolder/hair/bottom
 	style =  new /datum/customization_style/hair/short/short
