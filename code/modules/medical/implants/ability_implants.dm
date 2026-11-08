@@ -4,7 +4,13 @@
 
 /obj/item/implant/ability
 	abilities = list(/obj/ability_button/implant)
-	var/ability_icon_state //Override the icon state on the granted ability button to this
+	var/ability_icon_state = null //Override the icon state on the granted ability button to this
+
+	New()
+		. = ..()
+		if(!isnull(src.ability_icon_state))
+			for(var/obj/ability_button/implant/implant_ability in src.ability_buttons)
+				implant_ability.icon_state = src.ability_icon_state
 
 	implanted(mob/M, mob/I)
 		. = ..()
@@ -48,6 +54,7 @@
 /obj/item/implant/ability/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
+	ability_icon_state = "freedom"
 	var/uses = 1
 	impcolor = "r"
 	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
@@ -86,6 +93,7 @@
 /obj/item/implant/ability/signaler
 	name = "signaler implant"
 	icon_state = "implant-r"
+	ability_icon_state = "signaler"
 	impcolor = "r"
 	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	var/obj/item/device/radio/signaler/signaler = null
