@@ -65,9 +65,9 @@
 		var/list/possible_hairstyles
 
 		if (prob(50))
-			possible_hairstyles = pick(get_available_custom_style_types(gender=FEMALE))
+			possible_hairstyles = pick(get_available_custom_style_types(style_filter=CUSTOMIZATION::SLOT::HAIR, gender=FEMALE))
 		else
-			possible_hairstyles = pick(get_available_custom_style_types(gender=MALE))
+			possible_hairstyles = pick(get_available_custom_style_types(style_filter=CUSTOMIZATION::SLOT::HAIR, gender=MALE))
 
 		var/datum/customization_style/hair_type
 		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))

@@ -332,7 +332,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		src.preview?.add_client(user?.client)
 
 		if (!genetek_hair_styles.len)
-			for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(user.client))
+			for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(user.client, CUSTOMIZATION::SLOT::HAIR))
 				var/datum/customization_style/CS = new styletype
 				genetek_hair_styles += CS.name
 
