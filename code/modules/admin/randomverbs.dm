@@ -711,21 +711,21 @@
 			src.tf_holder.mobAppearance.flavor_text = new_text
 
 		else if (href_list["hair_bottom"])
-			var/new_style = select_custom_style(usr)
+			var/new_style = select_custom_style(usr, src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].slot_type)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = new_style
 				src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style_original = new_style
 
 		else if (href_list["hair_middle"])
-			var/new_style = select_custom_style(usr)
+			var/new_style = select_custom_style(usr, src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].slot_type)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style = new_style
 				src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style_original = new_style
 
 		else if (href_list["hair_top"])
-			var/new_style = select_custom_style(usr)
+			var/new_style = select_custom_style(usr, src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].slot_type)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style = new_style
