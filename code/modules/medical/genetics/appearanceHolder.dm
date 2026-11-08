@@ -20,10 +20,10 @@
 	var/head_icon_state = "head"
 
 	// It's probably smarter to have customizations in an associative list for later - Glamurio
-	var/list/datum/customizationHolder/customizations = list(
-		CUSTOMIZATION::LAYER::HAIR_BOTTOM = new /datum/customizationHolder/hair/bottom,
-		CUSTOMIZATION::LAYER::HAIR_MIDDLE = new /datum/customizationHolder/hair/middle,
-		CUSTOMIZATION::LAYER::HAIR_TOP = new /datum/customizationHolder/hair/top,
+	var/list/datum/customization_slot/customizations = list(
+		CUSTOMIZATION::LAYER::HAIR_BOTTOM = new /datum/customization_slot/hair/bottom,
+		CUSTOMIZATION::LAYER::HAIR_MIDDLE = new /datum/customization_slot/hair/middle,
+		CUSTOMIZATION::LAYER::HAIR_TOP = new /datum/customization_slot/hair/top,
 	)
 
 	/// Currently changes which sprite sheet is used
@@ -227,8 +227,8 @@
 
 	proc/CopyOtherCustomizationAppearance(var/datum/appearanceHolder/toCopy)
 		for(var/holder in src.customizations)
-			var/datum/customizationHolder/custom = src.customizations[holder]
-			var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
+			var/datum/customization_slot/custom = src.customizations[holder]
+			var/datum/customization_slot/customCopy = toCopy.customizations[holder]
 			custom.color_original = customCopy.color_original
 			custom.color = customCopy.color
 			custom.style_original = customCopy.style_original
@@ -237,7 +237,7 @@
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
-	// I might have messed this up when introducting customizationHolders - Glamurio
+	// I might have messed this up when introducting customization_slots - Glamurio
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 
@@ -256,8 +256,8 @@
 			for(var/holder in src.customizations)
 				if (!src.CanCopyCustomization(toCopy))
 					continue
-				var/datum/customizationHolder/custom = src.customizations[holder]
-				var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
+				var/datum/customization_slot/custom = src.customizations[holder]
+				var/datum/customization_slot/customCopy = toCopy.customizations[holder]
 
 				custom.color = StaggeredCopyHex(custom.color, customCopy.color, adjust_denominator)
 				custom.style = customCopy.style

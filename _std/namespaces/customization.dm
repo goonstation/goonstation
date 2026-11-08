@@ -1,11 +1,11 @@
 //------------ Customization ------------//
-/// Namespace for `/datum/customizationHolder` and `/datum/customization_style`.
+/// Namespace for `/datum/customization_slot` and `/datum/customization_style`.
 CREATE_NAMESPACE(CUSTOMIZATION)
 
-/// `/datum/customizationHolder` layers. E.g. bottom, middle, top hair layers.
+/// `/datum/customization_slot` layers. E.g. bottom, middle, top hair layers.
 CREATE_NAMESPACE(CUSTOMIZATION, LAYER)
 
-/// `/datum/customizationHolder` slots. E.g. hair, underwear.
+/// `/datum/customization_slot` slots. E.g. hair, underwear.
 CREATE_NAMESPACE(CUSTOMIZATION, SLOT)
 
 /// Customization style categories. E.g. short, long hair.

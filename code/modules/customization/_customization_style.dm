@@ -114,11 +114,11 @@ var/global/list/locked_styles = list()
 	return new /datum/customization_style/none
 
 TYPEINFO(/datum/customization_style)
-	/// Affects which `/datum/customizationHolder/`s this can be equipped in.
-	/// See `CUSTOMIZATION::SLOT` namespace and `/datum/customizationHolder/var/slot_type`.
+	/// Affects which `/datum/customization_slot/`s this can be equipped in.
+	/// See `CUSTOMIZATION::SLOT` namespace and `/datum/customization_slot/var/slot_type`.
 	var/style_slot = null
 	/// `/datum/customization_style`s are organized into categories which affect sort order in lists.
-	/// For hair: scissors and razor blades can only apply certain categories of styles to a `/datum/customizationHolder/`.
+	/// For hair: scissors and razor blades can only apply certain categories of styles to a `/datum/customization_slot/`.
 	/// See `CUSTOMIZATION::CATEGORY` namespace.
 	var/style_category = null
 

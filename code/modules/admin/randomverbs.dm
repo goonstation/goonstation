@@ -943,9 +943,9 @@
 	proc/sanitize_null_values(var/mob/living/carbon/human/target_mob)
 		if (!target_mob || !target_mob.bioHolder || !target_mob.bioHolder.mobAppearance) return
 		var/datum/appearanceHolder/AH = target_mob.bioHolder.mobAppearance
-		var/datum/customizationHolder/hair_bottom = AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM]
-		var/datum/customizationHolder/hair_middle = AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE]
-		var/datum/customizationHolder/hair_top = AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP]
+		var/datum/customization_slot/hair_bottom = AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM]
+		var/datum/customization_slot/hair_middle = AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE]
+		var/datum/customization_slot/hair_top = AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP]
 		if (!src.tf_holder.mobAppearance.gender || !(src.tf_holder.mobAppearance.gender == MALE || src.tf_holder.mobAppearance.gender == FEMALE))
 			src.tf_holder.mobAppearance.gender = MALE
 		if (!AH)

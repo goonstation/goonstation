@@ -452,9 +452,9 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 		update_preview_icon()
 			var/datum/appearanceHolder/AH = new()
-			var/datum/customizationHolder/hair_bottom = AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM]
-			var/datum/customizationHolder/hair_middle = AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE]
-			var/datum/customizationHolder/hair_top = AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP]
+			var/datum/customization_slot/hair_bottom = AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM]
+			var/datum/customization_slot/hair_middle = AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE]
+			var/datum/customization_slot/hair_top = AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP]
 
 			AH.CopyOther(src.target_mob.bioHolder.mobAppearance)
 			AH.e_color = src.e_color
