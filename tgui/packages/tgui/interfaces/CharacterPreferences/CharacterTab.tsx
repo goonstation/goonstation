@@ -112,21 +112,21 @@ export const CharacterTab = () => {
             />
           </LabeledList.Item>
           <LabeledList.Divider />
-          <LabeledList.Item label="Top Detail">
+          <LabeledList.Item label="Top Hair">
             <CustomDetail
               id="hairTop"
               color={data.hairTopColor}
               style={data.hairTopStyle}
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Middle Detail">
+          <LabeledList.Item label="Middle Hair">
             <CustomDetail
               id="hairMiddle"
               color={data.hairMiddleColor}
               style={data.hairMiddleStyle}
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Bottom Detail">
+          <LabeledList.Item label="Bottom Hair">
             <CustomDetail
               id="hairBottom"
               color={data.hairBottomColor}
