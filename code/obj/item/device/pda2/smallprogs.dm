@@ -1592,10 +1592,22 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.y = T.y
 			src.z = T.z
 			src.parallax_data = ""
+
 			var/list/render_sources = usr.client?.parallax_controller?.parallax_render_sources
 			for (var/atom/movable/screen/parallax_render_source/source in render_sources)
 				if (source.visible_to_gps)
 					src.parallax_data += "<br><b>[source.name]</b> - [source.desc]<br>"
+
+			#if defined(MAP_OVERRIDE_NADIR)
+			src.parallax_data += "<br><b>[/atom/movable/screen/parallax_render_source/planet/magus::name]</b> - [/atom/movable/screen/parallax_render_source/planet/magus::desc]<br>(you are here)<br>"
+			#elif defined(UNDERWATER_MAP) // underwater + not nadir = abzu
+			//given how far abzu is from everything, its unlikely they would become parallax sources.
+			src.parallax_data += "<br><b>Abzu</b> - HYCEAN PLANET<br>\
+			Surface Outposts: OSHAN LABORATORY, NEON DEEPWATER RESEARCH FACILITY<br>\
+			Ocean planet. Surface is bathed in extreme radiation by the young star ŠID.<br>\
+			High density of flora & fauna marked it as a location of intrest to NanoTrasen during the ATLAS frontier survey of 2052.<br>\
+			(you are here)<br>"
+			#endif
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
