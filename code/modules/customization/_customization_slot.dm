@@ -1,5 +1,3 @@
-// todo: implement slot_type usage over hardcoded style filter overrides
-
 /// `/datum/customization_slot`
 /// Holds all the customization information.
 ABSTRACT_TYPE(/datum/customization_slot)
