@@ -2,17 +2,17 @@
 /// Namespace for `/datum/customizationHolder` and `/datum/customization_style`.
 CREATE_NAMESPACE(CUSTOMIZATION)
 
-/// Customization style slots.
-CREATE_NAMESPACE(CUSTOMIZATION, SLOT)
-
-/// Customization layers.
+/// `/datum/customizationHolder` layers. E.g. bottom, middle, top hair layers.
 CREATE_NAMESPACE(CUSTOMIZATION, LAYER)
 
-/// Customization style categories.
+/// `/datum/customizationHolder` slots. E.g. hair, underwear.
+CREATE_NAMESPACE(CUSTOMIZATION, SLOT)
+
+/// Customization style categories. E.g. short, long hair.
 CREATE_NAMESPACE(CUSTOMIZATION, CATEGORY)
 
 //------------ Hair ------------//
-// Hair slot type.
+/// Hair slot.
 ADD_TO_NAMESPACE(CUSTOMIZATION, SLOT)(var/const/HAIR = "slot-hair")
 
 // Hair slot layers.
