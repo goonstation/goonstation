@@ -1,6 +1,10 @@
+// todo:
+// - rename variables in typeinfo and /datum/customization_style itself for consistency, see stash
+
 TYPEINFO(/datum/customization_style)
+	var/style_slot = CUSTOMIZATION::SLOT::HAIR
 	/// For filtering out different types.
-	var/style_type = null
+	var/style_type = CUSTOMIZATION::HAIR::SHORT
 	/// Does this style have some special unlock condition? (medal, rank, etc.)
 	var/special_criteria = FALSE
 	/// Is this a gimmick style? Exclude it from Character Prefs.
@@ -56,12 +60,12 @@ ABSTRACT_TYPE(/datum/customization_style)
 	var/typeinfo/datum/customization_style/typeinfo_a = get_type_typeinfo(a)
 	var/typeinfo/datum/customization_style/typeinfo_b = get_type_typeinfo(b)
 
-	return cmp_numeric_asc(CUSTOMIZATION.type_weights[typeinfo_a.style_type], CUSTOMIZATION.type_weights[typeinfo_b.style_type])
+	return cmp_numeric_asc(CUSTOMIZATION.sort_order.Find(typeinfo_a.style_type), CUSTOMIZATION.sort_order.Find(typeinfo_b.style_type))
 
 /// Gets all the customization_styles which are available to a given client. Can be filtered by slot, type, and gender. Can exclude gimmick and
 /// non-random types.
 ///
-/// `style_filter` can be within the `CUSTOMIZATION::SLOT` namespace, or any customization style type namespace.
+/// `style_filter` can accept individual slots in `CUSTOMIZATION::SLOT` or types in `CUSTOMIZATION::TYPE`, either individually or as a `/list`.
 /proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, no_gimmick = FALSE, random_only = FALSE)
 	// Defining static vars with no value doesn't overwrite them with null if we call the proc multiple times
 	// Styles with no restriction
@@ -98,10 +102,17 @@ ABSTRACT_TYPE(/datum/customization_style)
 
 	for (var/datum/customization_style/style as anything in available)
 		var/typeinfo/datum/customization_style/typeinfo = get_type_typeinfo(style)
-		if (style_filter && typeinfo.style_type)
-			if ((style_filter != typeinfo.style_type) && (style_filter != CUSTOMIZATION.type_to_slot[typeinfo.style_type]))
+
+		if (islist(style_filter) && length(style_filter))
+			for (var/filter_item in style_filter)
+				if ((filter_item == typeinfo.style_slot) || (filter_item == typeinfo.style_type))
+					continue
 				available -= style
-				continue
+				break
+
+		else if (style_filter)
+			if ((style_filter != typeinfo.style_slot) && (style_filter != typeinfo.style_type))
+				available -= style
 
 		var/style_gender = initial(style.gender)
 		if (gender && style_gender && (style_gender != gender))

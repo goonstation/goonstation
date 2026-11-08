@@ -69,7 +69,7 @@ var/global/list/hair_details = list("einstein" = /datum/customization_style/hair
 	"flick" = list(/datum/customization_style/hair/short/flick_fade, /datum/customization_style/hair/short/flick_half),\
 	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
 	"smoothwave" = list(/datum/customization_style/hair/long/smoothwave_fade, /datum/customization_style/hair/long/smoothwave_half),\
-	"longbeard" = /datum/customization_style/hair/facial/longbeardfade,\
+	"longbeard" = /datum/customization_style/hair/facial/beard/longbeardfade,\
 	"pomp" = /datum/customization_style/hair/short/pompS,\
 	"mohawk" = list(/datum/customization_style/hair/short/mohawkFT, /datum/customization_style/hair/short/mohawkFB, /datum/customization_style/hair/short/mohawkS),\
 	"emo" = /datum/customization_style/hair/short/emoH,\
@@ -205,7 +205,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 			hair_bottom.style = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, style_filter=CUSTOMIZATION::HAIR::FACIAL))
+			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, style_filter=CUSTOMIZATION::HAIR.facial_hair))
 			hair_middle.style = new type_second
 			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 

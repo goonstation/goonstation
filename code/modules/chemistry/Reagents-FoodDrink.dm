@@ -637,7 +637,12 @@ datum
 
 				if (probmult(8) && (M.gender == "male"))
 					if (M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "gt" && M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "neckbeard" && M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "fullbeard" && M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "longbeard")
-						var/second_type = pick(/datum/customization_style/hair/facial/gt,/datum/customization_style/hair/facial/neckbeard,/datum/customization_style/hair/facial/fullbeard,/datum/customization_style/hair/facial/longbeard)
+						var/second_type = pick(
+							/datum/customization_style/hair/facial/beard/gt,
+							/datum/customization_style/hair/facial/beard/neckbeard,
+							/datum/customization_style/hair/facial/beard/fullbeard,
+							/datum/customization_style/hair/facial/beard/longbeard,
+						)
 						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  new second_type
 						M.set_face_icon_dirty()
 						boutput(M, SPAN_NOTICE("You feel manly!"))
@@ -832,7 +837,7 @@ datum
 					if(H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id != "dreads" || H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
 						H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = new /datum/customization_style/hair/long/dreads
-						H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  new /datum/customization_style/hair/facial/fullbeard
+						H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  new /datum/customization_style/hair/facial/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
 						M.bioHolder.AddEffect("accent_pirate")
 

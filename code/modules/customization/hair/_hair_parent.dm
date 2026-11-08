@@ -1,4 +1,5 @@
 TYPEINFO(/datum/customization_style/hair)
+	style_slot = CUSTOMIZATION::SLOT::HAIR
 	style_type = CUSTOMIZATION::HAIR::SHORT
 ABSTRACT_TYPE(/datum/customization_style/hair)
 /datum/customization_style/hair
