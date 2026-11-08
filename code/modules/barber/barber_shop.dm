@@ -2,15 +2,15 @@
 #define SHAVE 2
 
 // hairea options
-#define BOTTOM_DETAIL 1
-#define MIDDLE_DETAIL 2
-#define TOP_DETAIL 3
-#define ALL_HAIR 4
+#define HAIR_AREA_BOTTOM 1
+#define HAIR_AREA_MIDDLE 2
+#define HAIR_AREA_TOP 3
+#define HAIR_AREA_ALL 4
 #define EYES 5
 
-#define HAIR_1_FUCKED 1
-#define HAIR_2_FUCKED 2
-#define HAIR_3_FUCKED 4
+#define HAIR_AREA_BOTTOM_FUCKED 1
+#define HAIR_AREA_MIDDLE_FUCKED 2
+#define HAIR_AREA_TOP_FUCKED 4
 #define EYES_FUCKED 8
 
 /obj/item/clothing/head/wig
@@ -42,19 +42,19 @@
 /obj/item/clothing/head/wig/spawnable
 	icon = 'icons/mob/human_hair.dmi'
 	icon_state = "bald"
-	var/first_id = "none"
-	var/first_color = "#101010"
-	var/second_id = "none"
-	var/second_color = "#101010"
-	var/third_id = "none"
-	var/third_color = "#101010"
+	var/hair_bottom_id = "none"
+	var/hair_bottom_color = "#101010"
+	var/hair_middle_id = "none"
+	var/hair_middle_color = "#101010"
+	var/hair_top_id = "none"
+	var/hair_top_color = "#101010"
 
 	New()
 		..()
 		var/hair_list = list()
-		hair_list[first_id] = first_color
-		hair_list[second_id] = second_color
-		hair_list[third_id] = third_color
+		hair_list[hair_bottom_id] = hair_bottom_color
+		hair_list[hair_middle_id] = hair_middle_color
+		hair_list[hair_top_id] = hair_top_color
 		src.setup_wig(hair_list)
 
 ///Randomized wig for the cargo crate
@@ -65,19 +65,19 @@
 		var/list/possible_hairstyles
 
 		if (prob(50))
-			possible_hairstyles = pick(get_available_custom_style_types(filter_gender=FEMININE))
+			possible_hairstyles = pick(get_available_custom_style_types(gender=FEMALE))
 		else
-			possible_hairstyles = pick(get_available_custom_style_types(filter_gender=MASCULINE))
+			possible_hairstyles = pick(get_available_custom_style_types(gender=MALE))
 
 		var/datum/customization_style/hair_type
 		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))
 		hair_type = pick(possible_hairstyles)
-		first_id = initial(hair_type.id)
-		first_color = picked_color
+		hair_bottom_id = initial(hair_type.id)
+		hair_bottom_color = picked_color
 		if (prob(33))
 			hair_type = pick(possible_hairstyles)
-			second_id = initial(hair_type.id)
-			second_color = picked_color
+			hair_middle_id = initial(hair_type.id)
+			hair_middle_color = picked_color
 		..()
 
 /// Wig that automatically attaches to humans
@@ -94,14 +94,14 @@
 
 			var/list/splut = splittext(cool_style, ",")
 			if (length(splut) >= 1)
-				src.first_id = splut[1]
-				src.first_color = cool_color
+				src.hair_bottom_id = splut[1]
+				src.hair_bottom_color = cool_color
 			if (length(splut) >= 2)
-				src.second_id = splut[2]
-				src.second_color = cool_color
+				src.hair_middle_id = splut[2]
+				src.hair_middle_color = cool_color
 			if (length(splut) >= 3)
-				src.third_id = splut[3]
-				src.third_color = cool_color
+				src.hair_top_id = splut[3]
+				src.hair_top_color = cool_color
 
 		. = ..()
 
@@ -248,9 +248,9 @@
 						yoinked = TRUE
 					else if(!victim.is_bald())
 						//they have hair to yoink
-						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_bottom"].color, victim.bioHolder.mobAppearance.customizations["hair_bottom"].style)
-						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_middle"].color, victim.bioHolder.mobAppearance.customizations["hair_middle"].style)
-						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_top"].color, victim.bioHolder.mobAppearance.customizations["hair_top"].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style)
 						stolen_hair = victim.create_wig()
 						boutput(victim, SPAN_ALERT("the [src] takes your hair clean off!"))
 						yoinked = TRUE
@@ -288,9 +288,9 @@
 	flags = TABLEPASS
 	default_material = "plastic"
 	//Default Colors
-	var/customization_first_color = "#FFFFFF"
+	var/dye_color = "#FFFFFF"
 	var/uses_left
-	var/hair_group = ALL_HAIR
+	var/hair_group = HAIR_AREA_ALL
 	var/image/dye_image
 
 	New()
@@ -308,13 +308,13 @@
 		src.hair_group = hair_group >= 5 ? 1 : hair_group + 1
 		var/which_part
 		switch (hair_group)
-			if (BOTTOM_DETAIL)
+			if (HAIR_AREA_BOTTOM)
 				which_part = "bottom group of hair"
-			if (MIDDLE_DETAIL)
+			if (HAIR_AREA_MIDDLE)
 				which_part = "middle group of hair"
-			if (TOP_DETAIL)
+			if (HAIR_AREA_TOP)
 				which_part = "top group of hair"
-			if (ALL_HAIR)
+			if (HAIR_AREA_ALL)
 				which_part = "entire coiffure"
 			if (EYES)
 				which_part = "eyes"
@@ -391,11 +391,11 @@
 			var/mob/living/carbon/human/famtofuckup = null
 			passed_dye_roll = 0
 			if(prob(33))
-				recolor_these_hair_layers_instead |= HAIR_1_FUCKED
+				recolor_these_hair_layers_instead |= HAIR_AREA_BOTTOM_FUCKED
 			if(prob(33))
-				recolor_these_hair_layers_instead |= HAIR_2_FUCKED
+				recolor_these_hair_layers_instead |= HAIR_AREA_MIDDLE_FUCKED
 			if(prob(33))
-				recolor_these_hair_layers_instead |= HAIR_3_FUCKED
+				recolor_these_hair_layers_instead |= HAIR_AREA_TOP_FUCKED
 			if(prob(33))
 				recolor_these_hair_layers_instead |= EYES_FUCKED
 			if (ishuman(user) && prob(50)) // dye your own hair, idiot
@@ -404,14 +404,14 @@
 			else // dye their hair, idiot
 				user.visible_message("[user] slips and dumps the [src] all over [M]'s head!")
 				famtofuckup = M
-			if (recolor_these_hair_layers_instead & HAIR_1_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
-			if (recolor_these_hair_layers_instead & HAIR_2_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
-			if (recolor_these_hair_layers_instead & HAIR_3_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
+			if (recolor_these_hair_layers_instead & HAIR_AREA_BOTTOM_FUCKED)
+				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.dye_color
+			if (recolor_these_hair_layers_instead & HAIR_AREA_MIDDLE_FUCKED)
+				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.dye_color
+			if (recolor_these_hair_layers_instead & HAIR_AREA_TOP_FUCKED)
+				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.dye_color
 			if (recolor_these_hair_layers_instead & EYES_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.e_color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.e_color = bottle.dye_color
 				famtofuckup.emote("scream")
 			boutput(user, "And now you're out of dye. Well done.")
 			src.uses_left = 0
@@ -419,28 +419,28 @@
 
 		if(passed_dye_roll)
 			switch(bottle.hair_group)
-				if(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL)
+				if(HAIR_AREA_BOTTOM, HAIR_AREA_MIDDLE, HAIR_AREA_TOP)
 					if(!is_barber && prob(25))
 						boutput(M, "[SPAN_ALERT("Oh no, you dyed the wrong thing!")] Maybe they won't notice?")
-						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
+						bottle.hair_group = pick(list(HAIR_AREA_BOTTOM, HAIR_AREA_MIDDLE, HAIR_AREA_TOP) - bottle.hair_group)
 					switch(bottle.hair_group)
-						if(BOTTOM_DETAIL)
-							M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
-						if(MIDDLE_DETAIL)
-							M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
-						if(TOP_DETAIL)
-							M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
-				if(ALL_HAIR)
+						if(HAIR_AREA_BOTTOM)
+							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.dye_color
+						if(HAIR_AREA_MIDDLE)
+							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.dye_color
+						if(HAIR_AREA_TOP)
+							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.dye_color
+				if(HAIR_AREA_ALL)
 					if(src.uses_left < 3)
 						boutput(M, SPAN_NOTICE("This dyejob's going to need a full bottle!"))
 						return
 					else
-						M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.dye_color
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.dye_color
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.dye_color
 
 				if(EYES)
-					M.bioHolder.mobAppearance.e_color = bottle.customization_first_color
+					M.bioHolder.mobAppearance.e_color = bottle.dye_color
 					result_msg1 ="[user] dumps the [src] into [M]'s eyes!"
 					result_msg2 =SPAN_NOTICE("You dump the [src] in [M]'s eyes.")
 					result_msg3 =SPAN_ALERT("[user] dumps the [src] into your eyes!")
@@ -453,10 +453,10 @@
 			user.tri_message(M, result_msg1,\
 												result_msg2,\
 												result_msg3)
-			if (bottle.hair_group == ALL_HAIR)
+			if (bottle.hair_group == HAIR_AREA_ALL)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
 				src.use_dye(TRUE)
-			else if(src.uses_left > 1 && is_barber && bottle.hair_group != ALL_HAIR)
+			else if(src.uses_left > 1 && is_barber && bottle.hair_group != HAIR_AREA_ALL)
 				src.use_dye()
 				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
@@ -521,7 +521,7 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 		. = list()
 		.["bottle"] = !!src.bottle
 		.["uses_left"] = src.bottle?.uses_left
-		.["bottle_color"] = src.bottle?.customization_first_color
+		.["bottle_color"] = src.bottle?.dye_color
 
 	attack_hand(mob/user)
 		if(status & BROKEN)
@@ -566,15 +566,15 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 
 				if("fillb")
 					if(src.bottle)
-						bottle.customization_first_color = params["selectedColor"]
+						bottle.dye_color = params["selectedColor"]
 						bottle.uses_left = 3
-						bottle.dye_image.color = bottle.customization_first_color
+						bottle.dye_image.color = bottle.dye_color
 						bottle.UpdateOverlays(bottle.dye_image, "dye_color")
 
 				if("emptyb")
 					if(src.bottle)
 						bottle.uses_left = 0
-						bottle.customization_first_color = initial(bottle.customization_first_color)
+						bottle.dye_color = initial(bottle.dye_color)
 						bottle.ClearSpecificOverlays("dye_color")
 
 				if("insertb")
@@ -587,14 +587,14 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 
 // Barber stuff
 
-#undef BOTTOM_DETAIL
-#undef MIDDLE_DETAIL
-#undef TOP_DETAIL
-#undef ALL_HAIR
+#undef HAIR_AREA_BOTTOM
+#undef HAIR_AREA_MIDDLE
+#undef HAIR_AREA_TOP
+#undef HAIR_AREA_ALL
 #undef EYES
-#undef HAIR_1_FUCKED
-#undef HAIR_2_FUCKED
-#undef HAIR_3_FUCKED
+#undef HAIR_AREA_BOTTOM_FUCKED
+#undef HAIR_AREA_MIDDLE_FUCKED
+#undef HAIR_AREA_TOP_FUCKED
 #undef EYES_FUCKED
 #undef HAIRCUT
 #undef SHAVE

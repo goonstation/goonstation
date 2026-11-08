@@ -93,12 +93,12 @@
 	initializeBioholder() //We need bioholder data intialised so we can use it elsewhere.
 		bioHolder.ownerName = name
 		bioHolder.ownerType = src.type
-		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/moustache/vandyke
-		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#241200"
-		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/none
-		bioHolder.mobAppearance.customizations["hair_middle"].color = "#241200"
-		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/none
-		bioHolder.mobAppearance.customizations["hair_top"].color = "#241200"
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style =  new /datum/customization_style/hair/facial/vandyke
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = "#241200"
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = "#241200"
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = "#241200"
 		bioHolder.mobAppearance.e_color = "#363978"
 		bioHolder.mobAppearance.s_tone = "#FFCC99"
 		bioHolder.age = 52

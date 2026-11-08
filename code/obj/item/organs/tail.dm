@@ -45,11 +45,11 @@
 		if(src.colorful)
 			if (AHL && istype(AHL, /datum/appearanceHolder))
 				src.organ_color_1 = AHL.s_tone
-				src.organ_color_2 = AHL.customizations["hair_middle"].color
+				src.organ_color_2 = AHL.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
 				src.donor_AH = AHL
 			else if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
-				src.organ_color_1 = fix_colors(src.donor_AH.customizations["hair_bottom"].color)
-				src.organ_color_2 = fix_colors(src.donor_AH.customizations["hair_middle"].color)
+				src.organ_color_1 = fix_colors(src.donor_AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color)
+				src.organ_color_2 = fix_colors(src.donor_AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color)
 			else	// Just throw some colors in there or something
 				src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
 				src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))

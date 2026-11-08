@@ -48,12 +48,12 @@
 
 	proc/update_color(datum/appearanceHolder/AH, side)
 		if(src.change_iris)
-			if (AH.customizations["hair_bottom"].style.id == "hetcro[side]")
-				src.iris_color = AH.customizations["hair_bottom"].color
-			else if (AH.customizations["hair_middle"].style.id == "hetcro[side]")
-				src.iris_color = AH.customizations["hair_middle"].color
-			else if (AH.customizations["hair_top"].style.id == "hetcro[side]")
-				src.iris_color = AH.customizations["hair_top"].color
+			if (AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id == "hetcro[side]")
+				src.iris_color = AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+			else if (AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id == "hetcro[side]")
+				src.iris_color = AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+			else if (AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.id == "hetcro[side]")
+				src.iris_color = AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 			else
 				src.iris_color = AH.e_color
 			if (AH.mutant_race.mutant_appearance_flags & LIGHT_EYES)
