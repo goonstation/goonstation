@@ -1,4 +1,9 @@
 
+(t)sun nov 08 26
+(u)Mr. Moriarty
+(p)28236
+(e)💅🖥️|C-QoL, A-Computers
+(*)Database managers (SecMate, etc) now remember previous menus, allowing users to backtrack through them instead of (sometimes) being ejected in an unrelated records list.
 (t)mon nov 02 26
 (u)EmeraldCrow
 (p)28197
