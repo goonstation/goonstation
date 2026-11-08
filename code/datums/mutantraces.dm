@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	/// List of 0 to 3 strings representing the names for the color channels
 	/// used in the character creator. For vanilla humans (or HAS_HUMAN_HAIR)
-	/// this is list("Bottom Detail", "Mid Detail", "Top Detail").
+	/// this is list("Bottom Hair", "Mid Hair", "Top Hair").
 	var/list/color_channel_names = list()
 
 	var/blood_color = null

@@ -863,13 +863,13 @@
 		dat += "Update ID/PDA/Manifest: <a href='byond://?src=\ref[src];updateid=1'>[src.update_wearid ? "YES" : "NO"]</a><br>"
 		dat += "</td><td><b>Preview</b><br><img src=polymorphicon.png height=64 width=64></td></tr></table>"
 
-		dat += "<hr><b>Bottom Detail</b><br>"
+		dat += "<hr><b>Bottom Hair</b><br>"
 		dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color]\"><tr><td>C1</td></tr></table></font>"
 		dat += "Style: <a href='byond://?src=\ref[src];hair_bottom=input'>[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.name]</a>"
-		dat += "<hr><b>Mid Detail</b><br>"
+		dat += "<hr><b>Mid Hair</b><br>"
 		dat += "<a href='byond://?src=\ref[src];facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color]\"><tr><td>C2</td></tr></table></font>"
 		dat += "Style: <a href='byond://?src=\ref[src];hair_middle=input'>[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.name]</a>"
-		dat += "<hr><b>Top Detail</b><br>"
+		dat += "<hr><b>Top Hair</b><br>"
 		dat += "<a href='byond://?src=\ref[src];detail=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color]\"><tr><td>C3</td></tr></table></font>"
 		dat += "Style: <a href='byond://?src=\ref[src];hair_top=input'>[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.name]</a>"
 
