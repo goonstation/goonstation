@@ -1,5 +1,36 @@
 
+(t)mon nov 02 26
+(u)EmeraldCrow
+(p)28197
+(e)🎨|C-Sprites
+(*)Adds the Miss Funny Business figurine. Go gambling for figurines today!
+(u)TealSeer
+(p)28218
+(e)🪲🖥️|C-Bug, A-Computers
+(+)Fixed certain ThinkDOS computers spawning without the help library
+(t)sun nov 01 26
+(u)ANNmagedon
+(p)28143
+(e)|
+(+)The captain now can roll a goal to keep their spare ID in their office.
+(t)sat oct 31 26
+(u)ZeWaka
+(p)27933
+(e)🚄🔄⚙💡|C-Performance, C-Rework, A-Internal, A-Station-Systems
+(*)Made some changes to how camera static works. Bug me if there's issues.
 (t)fri oct 30 26
+(u)ANNmagedon
+(p)28199
+(e)|
+(+)NanoTrasen & The Syndicate flags are now flammable.
+(u)TekoTheTeapot + ANNmagedon
+(p)28019
+(e)🎨|C-Sprites
+(*)The NT Repair Technician has received full funding and is now properly equipped to deal with emergencies.
+(u)ANNmagedon, RubiCubie & TekoTheTeapot
+(p)27901
+(e)🎨🌠📨|C-Sprites, A-Events, A-Logistics
+(*)Janitors can now find push brooms in most places that house mops, the push brooms move items on the floor to the direction you are looking at.
 (u)Cheekybrdy
 (p)27921
 (e)🌱|A-Hydroponics

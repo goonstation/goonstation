@@ -95,7 +95,7 @@
 
 	disposing()
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		..()
@@ -103,7 +103,7 @@
 	set_loc(atom/target)
 		..()
 		if(src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 		if(!isturf(src.loc))
 			return
@@ -111,7 +111,7 @@
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
 		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 			src.link = test_link
-			src.link.master = src
+			src.link.set_master(src, src.net_id)
 
 
 TYPEINFO(/obj/machinery/networked/storage)
@@ -183,7 +183,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			if(!tape && (setup_drive_size > 0) && setup_spawn_with_tape)
 				if(src.setup_drive_type)
@@ -1063,7 +1063,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
@@ -1410,7 +1410,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	proc/add_frequency(newFreq)
 		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "f[newFreq]", newFreq)
@@ -1743,7 +1743,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon() //Update the icon
 		return
@@ -2494,7 +2494,7 @@ TYPEINFO(/obj/machinery/networked/secdetector)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon()
 		return
@@ -2510,7 +2510,7 @@ TYPEINFO(/obj/machinery/networked/secdetector)
 			src.scan_beam.dispose()
 			src.scan_beam = null
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		..()
@@ -2946,7 +2946,7 @@ TYPEINFO(/obj/machinery/networked/secdetector)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon()
 		return
@@ -2963,7 +2963,7 @@ TYPEINFO(/obj/machinery/networked/secdetector)
 			src.beam = null
 
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		for (var/obj/item/I in src.telecrystals)
@@ -3301,7 +3301,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon()
 		return

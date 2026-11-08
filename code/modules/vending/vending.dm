@@ -181,7 +181,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			if(istype(src, /obj/machinery/vending/pizza)) //Pizza vendors need an exception so copies have inventory & don't start with money
 				src.credit = 0
 			else
-				src.product_list = new()
+				for (var/datum/data/vending_product/product in src.product_list)
+					product.product_amount = 0
 
 	/// Pick a random item with stock. Only includes hidden products if vendor is hacked.
 	proc/get_random_item()
@@ -3192,6 +3193,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/mop, 5)
+		product_list += new/datum/data/vending_product(/obj/item/broom, 5)
 		product_list += new/datum/data/vending_product(/obj/item/sponge, 4)
 		product_list += new/datum/data/vending_product(/obj/item/spraybottle/cleaner, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bucket, 4)

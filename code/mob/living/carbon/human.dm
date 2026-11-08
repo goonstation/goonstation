@@ -1247,9 +1247,8 @@
 	return 0
 
 /mob/living/carbon/human/restrained()
-	if (src.hasStatus("handcuffed"))
-		return 1
-	if (src.hasStatus("incorporeal"))
+	var/static/list/restraining_statuses = list("handcuffed", "incorporeal")
+	if (src.hasStatus(restraining_statuses))
 		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
@@ -2065,8 +2064,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		S.set_head(src.organHolder.head)
 		S.head_moved() // update tracking
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
@@ -2110,8 +2110,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	src.organHolder.create_organs()
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
@@ -2207,7 +2208,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 					O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 				boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-				src.handcuffs.material_trigger_when_attacked(src, src, 1)
+				src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 				src.handcuffs.destroy_handcuffs(src)
 				return
 			if (iswerewolf(src))
@@ -2217,7 +2218,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				else
 					src.visible_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</b>"))
 					boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
-					src.handcuffs.material_trigger_when_attacked(src, src, 1)
+					src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 					src.handcuffs.destroy_handcuffs(src)
 					return
 		if (src.is_hulk())
@@ -2225,14 +2226,14 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			src.handcuffs.destroy_handcuffs(src)
 		else if ( src.limbs && src.limbs.l_arm?.breaks_cuffs && src.limbs.r_arm?.breaks_cuffs)
 			for (var/mob/O in AIviewers(src))
 				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with [src.limbs.l_arm.kind_of_limb & LIMB_ROBOT ? "machine-like" : "unnatural"] strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			src.handcuffs.destroy_handcuffs(src)
 		else
 			src.last_resist = world.time + 100
@@ -2243,7 +2244,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
 			if (!src.canmove)
 				calcTime *= 1.5
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
 	return 0
 
@@ -2919,7 +2920,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/turf/T = get_turf(src)
 
 	if (T)
-		if (T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
+		if (space_movement && T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
 			. -= space_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))

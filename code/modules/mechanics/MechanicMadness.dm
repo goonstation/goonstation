@@ -563,7 +563,8 @@ TYPEINFO(/obj/item/mechanics)
 		if (!src.dont_disconnect_on_change)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		if(src && !QDELETED(src))
-			src.material_trigger_when_attacked(used_wrench, user, 1)
+			src.material_trigger_when_hit(used_wrench, user, MATERIAL::IMPACT::MELEE)
+			used_wrench.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 		return TRUE
 
 	attackby(obj/item/W, mob/user)
@@ -585,7 +586,7 @@ TYPEINFO(/obj/item/mechanics)
 					work_time *= 0.5
 				if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					work_time *= 2
-				if(user.traitHolder && (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer")))
+				if(user && HAS_ATOM_PROPERTY(user, PROP_MOB_FAST_BUILD))
 					work_time *= 0.5
 				// now, let's keep the result in reasonable values, even if you are untrained and should have no business working with this
 				work_time = clamp(work_time, 1 SECONDS, 10 SECONDS)

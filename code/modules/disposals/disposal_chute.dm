@@ -439,6 +439,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel
 				update()
 				. = TRUE
 
+	Click(location, control, params)
+		if(src.trunk?.cross_z && isobserver(usr))
+			usr.set_loc(get_turf(src.trunk))
+
 	// eject the contents of the disposal unit
 	proc/eject()
 		for(var/atom/movable/AM in src)

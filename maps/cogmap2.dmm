@@ -53240,11 +53240,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/arcade)
-"gvQ" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "gvW" = (
 /obj/filing_cabinet,
 /turf/simulated/floor/carpet{
@@ -129108,7 +129103,7 @@ qKM
 aaa
 bgM
 bhD
-gvQ
+bit
 bja
 bkk
 blQ

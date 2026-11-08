@@ -238,7 +238,7 @@
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
 
 		//Trigger material on attack.
-		proj_data?.coating?.triggerOnAttack(src, src.shooter, A)
+		proj_data?.coating?.triggerOnHit(src, A, src.shooter, MATERIAL::IMPACT::PROJECTILE)
 
 		if (istype(A,/turf))
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex

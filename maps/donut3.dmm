@@ -2054,6 +2054,13 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery/storage)
+"aCP" = (
+/obj/disposalpipe/segment/transport{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lobby)
 "aCT" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
@@ -2739,10 +2746,6 @@
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "aOm" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /obj/stool/chair/office/red{
 	dir = 1
 	},
@@ -4116,6 +4119,23 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/crew_quarters/arcade/dungeon)
+"bkh" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/black,
+/area/station/science/lobby)
 "bkm" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -5961,6 +5981,9 @@
 "bNI" = (
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
@@ -11490,6 +11513,7 @@
 "dyh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right,
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "dyz" = (
@@ -12039,6 +12063,17 @@
 /obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"dHQ" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lobby)
 "dIa" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -16352,6 +16387,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
+"faU" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/science/lobby)
 "faY" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/greenwhite/other,
@@ -19856,9 +19897,6 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "ggR" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	req_access = null
@@ -23748,6 +23786,10 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
+/obj/disposalpipe/trunk/transport{
+	dir = 1
+	},
+/obj/machinery/disposal/sci/test_chamber,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "hsh" = (
@@ -27498,6 +27540,12 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/hallway/primary/south)
+"iDJ" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/shuttlebay{
+	name = "test chamber plating"
+	},
+/area/station/science/testchamber)
 "iDK" = (
 /obj/table/auto,
 /obj/item/clothing/mask/gas{
@@ -32566,6 +32614,7 @@
 /obj/item/hand_labeler{
 	pixel_x = -7
 	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -47321,12 +47370,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"oLn" = (
-/obj/disposalpipe/segment{
-	dir = 8
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "oLv" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -47722,6 +47765,9 @@
 	message = "Test chamber delivery chute activated."
 	},
 /obj/decal/stripe_delivery,
+/obj/disposalpipe/trunk/transport{
+	dir = 8
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -66359,6 +66405,18 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
+"uEK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "test chamber plating"
+	},
+/area/station/science/testchamber)
 "uEU" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
@@ -68703,9 +68761,6 @@
 	cycle_id = "mining";
 	enter_id = "outer";
 	name = "Mining"
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
 	},
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
@@ -75525,29 +75580,6 @@
 /obj/item/device/camera_viewer/public,
 /turf/simulated/floor/black,
 /area/station/science/storage)
-"xlr" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/decal/stripe_delivery,
-/obj/mapping_helper/access/mining,
-/obj/mapping_helper/airlock/cycler/manual{
-	cycle_id = "mining";
-	enter_id = "inner";
-	name = "Mining"
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 8;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/black/grime,
-/area/station/mining/staff_room)
 "xlw" = (
 /obj/rack,
 /obj/item/reagent_containers/glass/bucket{
@@ -114134,7 +114166,7 @@ aZz
 aZz
 tDj
 aiS
-cOS
+dHQ
 hsg
 oPf
 kuM
@@ -114436,7 +114468,7 @@ aZz
 aZz
 rFN
 bTs
-hAg
+faU
 prl
 oPf
 kuM
@@ -114738,7 +114770,7 @@ cxe
 aZz
 aZz
 oBI
-hAg
+faU
 prl
 oPf
 kuM
@@ -115040,7 +115072,7 @@ fyr
 saU
 bgg
 olH
-hAg
+faU
 rla
 oPf
 hyr
@@ -115342,7 +115374,7 @@ fyr
 wkT
 str
 nhe
-hAg
+faU
 prl
 cpa
 hML
@@ -115644,7 +115676,7 @@ fyr
 lEp
 str
 vrX
-hAg
+faU
 prl
 cpa
 lYU
@@ -115940,13 +115972,13 @@ dEN
 tDS
 tuP
 fyr
-lOa
-fyr
-fyr
+uEK
+iDJ
+iDJ
 kfp
 dyh
-olH
-hAg
+bkh
+aCP
 ssP
 oPf
 oPf
@@ -127610,7 +127642,7 @@ vra
 vzA
 vzA
 vzA
-oLn
+vzA
 wtU
 mfs
 ssO
@@ -127957,7 +127989,7 @@ rdj
 aLS
 vvV
 mYB
-xlr
+eCe
 eCe
 mYB
 jPZ
