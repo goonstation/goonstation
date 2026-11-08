@@ -1312,7 +1312,7 @@
 #include "code\modules\cross_server\cross_server_messages\announce.dm"
 #include "code\modules\currents\currents.dm"
 #include "code\modules\currents\turbine.dm"
-#include "code\modules\customization\_customization_holder.dm"
+#include "code\modules\customization\_customization_slot.dm"
 #include "code\modules\customization\_customization_style.dm"
 #include "code\modules\customization\hair\_hair_parent.dm"
 #include "code\modules\customization\hair\facial.dm"
