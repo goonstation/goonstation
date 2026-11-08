@@ -31,6 +31,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	endurance = 0
 	genome = 20
 	nectarlevel = 10
+	assoc_reagents = list("juice_grape")
 	mutations = list(/datum/plantmutation/grapes/green, /datum/plantmutation/grapes/fruit)
 	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/seedless)
 
@@ -276,19 +277,18 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	endurance = 5
 	genome = 19
 	nectarlevel = 10
+	assoc_reagents = list("juice_pear")
 	commuts = list(/datum/plant_gene_strain/quality, /datum/plant_gene_strain/commutblocker)
 
 
-/*
 	mutations = list(/datum/plantmutation/pear/sickly)
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
 		..()
 		var/datum/plantgenes/DNA = S.plantgenes
 		if (!DNA) return
-		if(reagent == "urine")
-			if (prob(50))
+		if(reagent == "e.coli")
+			if (prob(25))
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/pear/sickly)
-*/
 
 /datum/plant/fruit/peach
 	name = "Peach"

@@ -304,7 +304,7 @@ ABSTRACT_TYPE(/obj/item)
 		..()
 		tooltip_rebuild = TRUE
 		if (istype(src.material))
-			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
+			burn_possible = src.material.getProperty(MATERIAL::PROPERTY::FLAMMABLE) > 1 ? TRUE : FALSE
 			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
 				burn_remains = BURN_REMAINS_MELT
 			else
@@ -1384,6 +1384,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			click_delay -= frenzy
 			sleep(3 SECONDS)
 			click_delay += frenzy
+
+	src.material_trigger_when_hit(target, user, MATERIAL::IMPACT::MELEE)
+	target.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 
 	src.material_on_attack_use(user, target)
 	for (var/atom/A in target)

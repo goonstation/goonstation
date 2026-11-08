@@ -3637,6 +3637,17 @@ datum
 			thirst_value = 1.5
 			taste = "nutritious"
 
+		fooddrink/juice_grape
+			name = "grape juice"
+			id = "juice_grape"
+			fluid_r = 93
+			fluid_g = 20
+			fluid_b = 81
+			description = "Heavily squashed and pureed grapes, probably not made by stomping anymore."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			taste = "like grapes"
+
 		fooddrink/juice_strawberry
 			name = "strawberry juice"
 			id = "juice_strawberry"
@@ -3735,6 +3746,17 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			taste = "tart"
+
+		fooddrink/juice_pear
+			name = "pear juice"
+			id = "juice_pear"
+			fluid_r = 253
+			fluid_g = 236
+			fluid_b = 0
+			description = "A pulpy juice extracted from pears."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			taste = "pulpy"
 
 		fooddrink/juice_peach
 			name = "peach juice"
