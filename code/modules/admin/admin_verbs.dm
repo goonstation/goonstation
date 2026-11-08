@@ -327,6 +327,8 @@ var/list/admin_verbs = list(
 		/client/proc/SetInfoOverlay,
 		/client/proc/SetInfoOverlayAlias,
 		/client/proc/show_mining_map,
+		/client/proc/enable_departmental_chat,
+		/client/proc/disable_departmental_chat,
 
 		),
 

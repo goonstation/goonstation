@@ -3100,6 +3100,26 @@ var/global/force_radio_maptext = FALSE
 	if (usr.client && hotspot_controller)
 		hotspot_controller.show_map(usr.client)
 
+/client/proc/enable_departmental_chat()
+	set name = "Lock Headsets to Department"
+	set desc = "Force and lock all headsets to their department."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	for_by_tcl(headset, /obj/item/device/radio/headset)
+		headset.lock()
+
+/client/proc/disable_departmental_chat()
+	set name = "Unlock and Reset Headsets"
+	set desc = "Sets all headsets to 145.9 and unlocks them."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	for_by_tcl(headset, /obj/item/device/radio/headset)
+		headset.unlock()
+
 #undef ARTIFACT_BULK_LIMIT
 #undef ARTIFACT_HARD_LIMIT
 #undef ARTIFACT_MAX_SPAWN_ATTEMPTS

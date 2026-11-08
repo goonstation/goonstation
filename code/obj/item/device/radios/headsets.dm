@@ -23,6 +23,10 @@
 	hardened = 0
 	locked_frequency = TRUE
 
+	New()
+		..()
+		START_TRACKING
+
 	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/device/radio_upgrade))
 			var/obj/item/device/radio_upgrade/R = O
@@ -85,6 +89,14 @@
 			src.secure_connections.Remove(sayToken)
 		src.set_secure_frequencies()
 
+	proc/unlock()
+		src.locked_frequency = FALSE
+		src.set_frequency(RADIO::FREQ::DEFAULT)
+
+	proc/lock()
+		src.locked_frequency = initial(src.locked_frequency)
+		src.set_frequency(initial(src.frequency))
+
 /obj/item/device/radio/headset/wizard
 	name = "wizard headset"
 	desc = "A headset reversed engineered by only the highest of archmages for use by wizards. Immune to EMPs."
@@ -107,7 +119,6 @@
 /obj/item/device/radio/headset/command/ai
 	name = "\improper AI headset"
 	desc = "A radio headset capable of communicating over additional, secure frequencies. This one seems designed for an AI."
-	frequency = RADIO::FREQ::INTERCOM::AI
 	secure_frequencies = list(
 		"h" = RADIO::FREQ::COMMAND,
 		"g" = RADIO::FREQ::SECURITY,
@@ -115,6 +126,7 @@
 		"r" = RADIO::FREQ::RESEARCH,
 		"m" = RADIO::FREQ::MEDICAL,
 		"c" = RADIO::FREQ::CIVILIAN,
+		"a" = RADIO::FREQ::INTERCOM::AI,
 		)
 	icon_override = "ai"
 	icon_tooltip = "Artificial Intelligence"
@@ -126,6 +138,7 @@
 	icon_override = "nt"
 	frequency = RADIO::FREQ::NANOTRASEN
 	secure_frequencies = list(
+		"n" = RADIO::FREQ::NANOTRASEN,
 		"h" = RADIO::FREQ::COMMAND,
 		)
 
@@ -136,6 +149,7 @@
 	icon_override = "ntboss"
 	frequency = RADIO::FREQ::NANOTRASEN
 	secure_frequencies = list(
+		"n" = RADIO::FREQ::NANOTRASEN,
 		"h" = RADIO::FREQ::COMMAND,
 		"g" = RADIO::FREQ::SECURITY,
 		"e" = RADIO::FREQ::ENGINEERING,
@@ -149,6 +163,7 @@
 	icon_tooltip = "NanoTrasen Security Consultant"
 	frequency = RADIO::FREQ::NANOTRASEN
 	secure_frequencies = list(
+		"n" = RADIO::FREQ::NANOTRASEN,
 		"h" = RADIO::FREQ::COMMAND,
 		"g" = RADIO::FREQ::SECURITY,
 		)
@@ -158,6 +173,7 @@
 	icon_tooltip = "NanoTrasen Special Operative"
 	frequency = RADIO::FREQ::NANOTRASEN
 	secure_frequencies = list(
+		"n" = RADIO::FREQ::NANOTRASEN,
 		"h" = RADIO::FREQ::COMMAND,
 		"g" = RADIO::FREQ::SECURITY,
 		)
@@ -168,6 +184,7 @@
 	icon_override = "nt_eng"
 	frequency = RADIO::FREQ::NANOTRASEN
 	secure_frequencies = list(
+		"n" = RADIO::FREQ::NANOTRASEN,
 		"h" = RADIO::FREQ::COMMAND,
 		"e" = RADIO::FREQ::ENGINEERING,
 		)
@@ -178,6 +195,7 @@
 	icon_override = "nt_med"
 	frequency = RADIO::FREQ::NANOTRASEN
 	secure_frequencies = list(
+		"n" = RADIO::FREQ::NANOTRASEN,
 		"h" = RADIO::FREQ::COMMAND,
 		"m" = RADIO::FREQ::MEDICAL,
 		)
@@ -189,7 +207,8 @@
 	icon_tooltip = "Inspector"
 	frequency = RADIO::FREQ::COMMAND
 	secure_frequencies = list(
-		"n" = RADIO::FREQ::NANOTRASEN
+		"n" = RADIO::FREQ::NANOTRASEN,
+		"h" = RADIO::FREQ::COMMAND,
 		)
 
 /obj/item/device/radio/headset/command/captain
@@ -198,6 +217,7 @@
 	icon_state = "captain headset"
 	frequency = RADIO::FREQ::COMMAND
 	secure_frequencies = list(
+		"h" = RADIO::FREQ::COMMAND,
 		"g" = RADIO::FREQ::SECURITY,
 		"e" = RADIO::FREQ::ENGINEERING,
 		"r" = RADIO::FREQ::RESEARCH,
@@ -216,6 +236,7 @@
 		"e" = RADIO::FREQ::ENGINEERING,
 		"r" = RADIO::FREQ::RESEARCH,
 		"m" = RADIO::FREQ::MEDICAL,
+		"c" = RADIO::FREQ::CIVILIAN,
 		)
 	icon_override = "rh"
 	icon_tooltip = "Radio Show Host"
@@ -244,6 +265,7 @@
 	frequency = RADIO::FREQ::SECURITY
 	secure_frequencies = list(
 		"h" = RADIO::FREQ::COMMAND,
+		"g" = RADIO::FREQ::SECURITY,
 		)
 	icon_override = "hos"
 	icon_tooltip = "Head of Security"
@@ -257,6 +279,7 @@
 		"e" = RADIO::FREQ::ENGINEERING,
 		"r" = RADIO::FREQ::RESEARCH,
 		"m" = RADIO::FREQ::MEDICAL,
+		"c" = RADIO::FREQ::CIVILIAN,
 		)
 	icon_override = "hop"
 	icon_tooltip = "Head of Personnel"
@@ -267,6 +290,7 @@
 	frequency = RADIO::FREQ::RESEARCH
 	secure_frequencies = list(
 		"h" = RADIO::FREQ::COMMAND,
+		"r" = RADIO::FREQ::RESEARCH,
 		"m" = RADIO::FREQ::MEDICAL,
 		)
 	icon_override = "rd"
@@ -279,6 +303,7 @@
 	secure_frequencies = list(
 		"h" = RADIO::FREQ::COMMAND,
 		"r" = RADIO::FREQ::RESEARCH,
+		"m" = RADIO::FREQ::MEDICAL,
 		)
 	icon_override = "md"
 	icon_tooltip = "Medical Director"
@@ -289,6 +314,7 @@
 	frequency = RADIO::FREQ::ENGINEERING
 	secure_frequencies = list(
 		"h" = RADIO::FREQ::COMMAND,
+		"e" = RADIO::FREQ::ENGINEERING,
 		)
 	icon_override = "ce"
 	icon_tooltip = "Chief Engineer"
@@ -298,6 +324,7 @@
 	desc = "Worn by security officers, this thing could cause real problems in the wrong ears."
 	icon_state = "sec headset"
 	frequency = RADIO::FREQ::SECURITY
+	secure_frequencies = list("g" = RADIO::FREQ::SECURITY)
 	icon_override = "sec"
 	icon_tooltip = "Security"
 	tooltip_flags = REBUILD_USER
@@ -314,6 +341,7 @@
 	icon_state = "sec headset" //I see no use for a special sprite for the det headset itself.
 	frequency = RADIO::FREQ::SECURITY
 	secure_frequencies = list(
+		"g" = RADIO::FREQ::SECURITY,
 		"t" = RADIO::FREQ::DETECTIVE,
 		)
 	icon_override = "det" //neat little magnifying glass sprite I made
@@ -324,6 +352,7 @@
 	desc = "They stopped spending extra money trying to make these heat-resistant a while ago."
 	icon_state = "engine headset"
 	frequency = RADIO::FREQ::ENGINEERING
+	secure_frequencies = list("e" = RADIO::FREQ::ENGINEERING)
 	icon_override = "eng"
 	icon_tooltip = "Engineer"
 
@@ -332,6 +361,7 @@
 	desc = "Nominally worn by the trained staff of the medbay, this headset can be counted on to either be utterly silent or to be squawking constantly at any given moment."
 	icon_state = "med headset"
 	frequency = RADIO::FREQ::MEDICAL
+	secure_frequencies = list("m" = RADIO::FREQ::MEDICAL)
 	icon_override = "med"
 	icon_tooltip = "Medical"
 
@@ -341,7 +371,7 @@
 	icon_state = "pharmacist headset"
 	wear_state = "med headset"
 	frequency = RADIO::FREQ::MEDICAL
-	secure_frequencies = list("r" = RADIO::FREQ::RESEARCH)
+	secure_frequencies = list("m" = RADIO::FREQ::MEDICAL, "r" = RADIO::FREQ::RESEARCH)
 	icon_override = "pharmacist"
 	icon_tooltip = "Pharmacist"
 
@@ -350,6 +380,7 @@
 	desc = "A science headset, for science. Whether directly or by proxy, these are frequently burned, exploded, corroded, dissolved, shot, and teleported, to name a few."
 	icon_state = "research headset"
 	frequency = RADIO::FREQ::RESEARCH
+	secure_frequencies = list("r" = RADIO::FREQ::RESEARCH)
 	icon_override = "sci"
 	icon_tooltip = "Scientist"
 
@@ -359,6 +390,7 @@
 	icon_state = "civ headset"
 	wear_state = "civ headset" //So the unique ones keep the civilian worn icon
 	frequency = RADIO::FREQ::CIVILIAN
+	secure_frequencies = list("c" = RADIO::FREQ::CIVILIAN)
 	icon_tooltip = "Civilian"
 
 /obj/item/device/radio/headset/civilian/chaplain
@@ -366,8 +398,7 @@
 	desc = "For communication with higher powers, the clown, or both." // Higher powers, aka Command.
 	icon_override = "chaplain"
 	icon_state = "chaplain headset"
-	frequency = RADIO::FREQ::CIVILIAN
-	secure_frequencies = list("m" = RADIO::FREQ::MEDICAL)
+	secure_frequencies = list("c" = RADIO::FREQ::CIVILIAN, "m" = RADIO::FREQ::MEDICAL)
 	icon_tooltip = "Chaplain"
 
 /obj/item/device/radio/headset/civilian/hydroponics
@@ -397,6 +428,7 @@
 	icon_state = "shipping headset"
 	frequency = RADIO::FREQ::ENGINEERING
 	secure_frequencies = list(
+	"e" = RADIO::FREQ::ENGINEERING,
 	"c" = RADIO::FREQ::CIVILIAN)
 	icon_override = "qm"
 	icon_tooltip = "Quartermaster"
@@ -406,6 +438,8 @@
 	desc = "Rumor has it that these grow naturally in space, typically alongside discarded breath masks or space suits drenched in human blood. Nature is beautiful."
 	icon_state = "shipping headset"
 	frequency = RADIO::FREQ::ENGINEERING
+	secure_frequencies = list(
+	"e" = RADIO::FREQ::ENGINEERING)
 	icon_override = "Min"
 	icon_tooltip = "Miner"
 
@@ -415,7 +449,8 @@
 	icon_state = "command headset"
 	frequency = RADIO::FREQ::CIVILIAN
 	secure_frequencies = list(
-	"h" = RADIO::FREQ::COMMAND)
+	"h" = RADIO::FREQ::COMMAND,
+	"c" = RADIO::FREQ::CIVILIAN)
 	icon_override = "mail"
 	icon_tooltip = "Mail Courier"
 
@@ -429,6 +464,7 @@ TYPEINFO(/obj/item/device/radio/headset/clown)
 	icon_override = "clown"
 	icon_tooltip = "Clown"
 	frequency = RADIO::FREQ::CIVILIAN
+	secure_frequencies = list("c" = RADIO::FREQ::CIVILIAN)
 
 /obj/item/device/radio/headset/clown/blue
 	name = "blue clown's headset"
@@ -472,6 +508,7 @@ TYPEINFO(/obj/item/device/radio/headset/clown)
 		"e" = RADIO::FREQ::ENGINEERING,
 		"r" = RADIO::FREQ::RESEARCH,
 		"m" = RADIO::FREQ::MEDICAL,
+		"c" = RADIO::FREQ::CIVILIAN,
 		)
 	icon_override = "hunter_ghost"
 	icon_tooltip = "Ghost Buster"
@@ -589,6 +626,7 @@ TYPEINFO(/obj/item/device/radio/headset/clown)
 	chat_class = RADIO::CSS::SYNDICATE
 	locked_frequency = TRUE
 	frequency = RADIO::FREQ::PIRATE
+	secure_frequencies = list("p" = RADIO::FREQ::PIRATE)
 	protected_radio = TRUE
 	icon_override = "pirate"
 	icon_tooltip = "Space Pirate"

@@ -284,6 +284,10 @@ TYPEINFO(/obj/item/device/radio)
 
 	src.secure_connections ||= list()
 
+	for (var/id in src.secure_connections)
+		qdel(src.secure_connections[id])
+	src.secure_connections.len = 0
+
 	for (var/sayToken in src.secure_frequencies)
 		var/frequency_id = src.secure_frequencies["[sayToken]"]
 		if (frequency_id)
