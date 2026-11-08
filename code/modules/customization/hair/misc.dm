@@ -1,5 +1,5 @@
 TYPEINFO(/datum/customization_style/hair/eyebrows)
-	style_type = CUSTOMIZATION::HAIR::EYEBROWS
+	style_type = CUSTOMIZATION::CATEGORY::HAIR_EYEBROWS
 ABSTRACT_TYPE(/datum/customization_style/hair/eyebrows)
 /datum/customization_style/hair/eyebrows
 	default_layer = MOB_HAIR_LAYER1
@@ -13,7 +13,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/eyebrows)
 	id  = "thufir"
 
 TYPEINFO(/datum/customization_style/hair/makeup)
-	style_type = CUSTOMIZATION::HAIR::MAKEUP
+	style_type = CUSTOMIZATION::CATEGORY::HAIR_MAKEUP
 ABSTRACT_TYPE(/datum/customization_style/hair/makeup)
 /datum/customization_style/hair/makeup
 	default_layer = MOB_HAIR_LAYER1
@@ -27,7 +27,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/makeup)
 	id = "lipstick"
 
 TYPEINFO(/datum/customization_style/hair/biological)
-	style_type = CUSTOMIZATION::HAIR::BIOLOGICAL
+	style_type = CUSTOMIZATION::CATEGORY::HAIR_BIOLOGICAL
 ABSTRACT_TYPE(/datum/customization_style/hair/biological)
 /datum/customization_style/hair/biological
 	default_layer = MOB_HAIR_LAYER1

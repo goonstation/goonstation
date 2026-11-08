@@ -65,7 +65,7 @@ ABSTRACT_TYPE(/datum/customization_style)
 /// Gets all the customization_styles which are available to a given client. Can be filtered by slot, type, and gender. Can exclude gimmick and
 /// non-random types.
 ///
-/// `style_filter` can accept individual slots in `CUSTOMIZATION::SLOT` or types in `CUSTOMIZATION::TYPE`, either individually or as a `/list`.
+/// `style_filter` can accept individual slots in `CUSTOMIZATION::SLOT` or types in `CUSTOMIZATION::CATEGORY`, either individually or as a `/list`.
 /proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, no_gimmick = FALSE, random_only = FALSE)
 	// Defining static vars with no value doesn't overwrite them with null if we call the proc multiple times
 	// Styles with no restriction

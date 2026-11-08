@@ -1,5 +1,5 @@
 TYPEINFO(/datum/customization_style/hair/short)
-	style_type = CUSTOMIZATION::HAIR::SHORT
+	style_type = CUSTOMIZATION::CATEGORY::HAIR_SHORT
 ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/afro
 	name = "Afro"
