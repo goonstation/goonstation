@@ -128,7 +128,7 @@ export const CharacterTab = () => {
           </LabeledList.Item>
           <LabeledList.Item label="Bottom Detail">
             <CustomDetail
-              id="middleBottom"
+              id="hairBottom"
               color={data.hairBottomColor}
               style={data.hairBottomStyle}
             />
