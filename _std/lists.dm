@@ -210,13 +210,13 @@
  * You should only pass integers in.
  */
 proc/weighted_pick(list/L)
-	var/total = 0
 	var/item
+#ifdef CHECK_MORE_RUNTIMES
 	for(item in L)
 		if(isnull(L[item]))
 			stack_trace("weighted_pick given null weight: [json_encode(L)]")
-		total += L[item]
-	total = rand() * total
+#endif
+	var/total = rand() * values_sum(L)
 	for(item in L)
 		total -= L[item]
 		if(total <= 0)

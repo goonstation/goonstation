@@ -99,7 +99,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 		return
 
 	// don't play if over the per-tick sound limit
-	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
+	var/play_id = "[round(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 

@@ -1,6 +1,7 @@
 /*
 triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+triggerOnHit(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/impact_type)
 triggerOnLife(var/mob/M, var/obj/item/I)
 triggerOnAdd(var/owner)
 triggerChem(var/atom/location, var/datum/reagent/chem, var/amount)
@@ -611,8 +612,8 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 /datum/materialProc/explosion/impact
 	desc_scan = "Explodes on kinetic impact"
-	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
-		if(meleeorthrow != 2)
+	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/impact_type)
+		if(HAS_FLAG(impact_type, MATERIAL::IMPACT::MELEE))
 			return
 		material_explode(owner)
 
@@ -816,8 +817,8 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				wall_owner.dismantle_wall(1)
 
 /datum/materialProc/cardboard_on_hit // MARK: add to ignorant children
-	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
-		if (meleeorthrow == 1) //if it was a melee attack
+	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/impact_type)
+		if (HAS_FLAG(impact_type, MATERIAL::IMPACT::MELEE))
 			if (issnippingtool(attackatom)||iscuttingtool(attackatom))
 				if (isExploitableObject(owner))
 					boutput(attacker, "Cutting [owner] into a sheet isn't possible.")
@@ -830,7 +831,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				return
 
 		var/crumple = FALSE
-		if (meleeorthrow == 1)
+		if (HAS_FLAG(impact_type, MATERIAL::IMPACT::MELEE))
 			if (isitem(attackatom))
 				var/obj/item/meleeitem = attackatom
 				if (prob(meleeitem.force*3))
@@ -854,7 +855,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				if (istype(owner, /turf/simulated/wall))
 					var/turf/simulated/wall/wall_owner = owner
 					owner.visible_message(SPAN_ALERT("[owner] shears apart under the force of [attackatom]! "),SPAN_ALERT("You hear a crumpling sound."))
-					logTheThing(LOG_STATION, attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackatom] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"][meleeorthrow == 1 ? ", this was a thrown item" : null]")
+					logTheThing(LOG_STATION, attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackatom] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"[HAS_FLAG(impact_type, MATERIAL::IMPACT::THROW) ? ", this was a thrown item" : null]]")
 					wall_owner.dismantle_wall(1, 0)
 
 				else if (istype(owner, /turf/simulated/floor))

@@ -2677,6 +2677,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 
 /obj/item/clothing/suit/jacket/trench
 	name = "trench coat"
+	desc = {"A classic double-breasted trench coat built from tough cotton gabardine and with leather-wrapped fittings. It retains the now-vestigial
+			military-style epaulettes and storm flap."}
 	icon = 'icons/obj/clothing/overcoats/item_suit_autumn.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_autumn.dmi'
 	icon_state = "trench_coat"

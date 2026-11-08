@@ -238,6 +238,16 @@
 			/obj/item/reagent_containers/emergency_injector/high_capacity/filgrastim,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/acetylsalicylic_acid)
 
+	engineer
+		slots = 6
+		name = "engineering grenade pouch"
+		desc = "A roomy pouch meant for engineering utility grenades."
+		icon_state = "ammopouch_ntsc_engineer"
+		spawn_contents = list(/obj/item/old_grenade/oxygen = 2,
+			/obj/item/chem_grenade/firefighting = 2,
+			/obj/item/chem_grenade/metalfoam = 2)
+
+
 /obj/item/storage/breach_pouch
 	name = "mining charge pouch"
 	desc = "A large pouch specially designed to hold all of your NaNoTraSen approved explosives."

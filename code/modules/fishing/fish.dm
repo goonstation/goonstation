@@ -494,6 +494,9 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/coelacanth)
 	category = FISH::CATEGORY::OCEAN
 	rarity = ITEM_RARITY_RARE
 
+	get_scent_color()
+		return "bright azure"
+
 TYPEINFO(/obj/item/reagent_containers/food/fish/mahimahi)
 	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/mahimahi
