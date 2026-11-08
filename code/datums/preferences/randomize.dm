@@ -198,10 +198,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::SLOT::HAIR, FEMALE, FALSE, TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION.group__hair_head, FEMALE, FALSE, TRUE))
 			hair_bottom.style = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::SLOT::HAIR, MALE, FALSE, TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION.group__hair_head, MALE, FALSE, TRUE))
 			hair_bottom.style = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
@@ -211,10 +211,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::SLOT::HAIR, MALE, FALSE, TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION.group__hair_head, MALE, FALSE, TRUE))
 			hair_bottom.style = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::SLOT::HAIR, FEMALE, FALSE, TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION.group__hair_head, FEMALE, FALSE, TRUE))
 			hair_bottom.style = new type_first
 
 	if (!has_second)
