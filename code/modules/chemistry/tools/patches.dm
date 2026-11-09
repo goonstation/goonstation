@@ -613,7 +613,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	mini
 		initial_volume = 50
 		initial_reagents = "synthflesh"
-		
+
 	high_capacity
 		initial_volume = 500
 
@@ -751,4 +751,5 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 	name = "synthflesh auto-mender refill cartridge"
 	initial_reagents = "synthflesh"
 	high_capacity
+		name = "large synthflesh auto-mender refill cartridge"
 		initial_volume = 500

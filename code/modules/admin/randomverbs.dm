@@ -690,9 +690,7 @@
 
 		else if (href_list["real_name"])
 			var/new_name = input(usr, "Please select a name:", "Polymorph Menu")  as null|text
-			//var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\")
-			for(var/c in bad_name_characters)
-				new_name = replacetext(new_name, c, "")
+			new_name = remove_bad_name_characters(new_name)
 
 			if(new_name)
 				//Shit guys can name a dude into the entire play of hamlet, if they want.
@@ -747,7 +745,7 @@
 				src.tf_holder.age = clamp(round(text2num(new_age)), minage, maxage)
 
 		else if (href_list["blType"])
-			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list("AB+-", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Zesty Ranch")
 
 			if (blTypeNew)
 				src.tf_holder.bloodType = blTypeNew
@@ -1574,6 +1572,9 @@
 	set desc = "We can't stop here!"
 	ADMIN_ONLY
 	SHOW_VERB_DESC
+
+	if(!tgui_confirm(usr, "Are you sure you would like to replace every segway with a rideable cat and spawn a bunch of cats?"))
+		return
 
 	var/catcounter = 0
 	for(var/obj/vehicle/segway/S in by_type[/obj/vehicle])

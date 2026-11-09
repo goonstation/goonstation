@@ -490,7 +490,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A meal of mostly plants. Good for healthy eating."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "salad"
-	required_utensils = FOOD::UTENSIL::SPOON
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 2
 	bites_left = 4
 	heal_amt = 2

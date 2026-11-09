@@ -348,6 +348,7 @@ TYPEINFO(/mob)
 		src.ghost.corpse = null
 
 	for(var/mob/dead/target_observer/TO in observers)
+		SEND_SIGNAL(src, COMSIG_MOB_OBSERVER_DETACHED, TO)
 		LAZYLISTREMOVE(observers, TO)
 		TO.ghostize()
 
@@ -455,10 +456,6 @@ TYPEINFO(/mob)
 		return
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
-	if(isclient(src.client) && isnull(src.client?.tg_layout))
-		var/tg_layout_enabled = winget(src.client, "menu.tg_layout", "is-checked") == "true"
-		// winget sleeps :{
-		src.client?.tg_layout = tg_layout_enabled
 	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
@@ -877,10 +874,28 @@ TYPEINFO(/mob)
 /mob/proc/apply_camera(client/C)
 	if (!C)
 		stack_trace("mob/apply_camera called without a client for mob [identify_object(src)], something likely went wrong during mind transfer.")
+	if (!src.eye && istype(src.loc, /obj/projectile) && C.eye == src.loc && !isnull(C.passenger_camera_glide_size) && \
+		C.passenger_camera_loc_pixel_x == src.loc_pixel_x && C.passenger_camera_loc_pixel_y == src.loc_pixel_y)
+		return
+	for (var/animation_index in 1 to C.passenger_camera_animation_count)
+		animate(C, flags = ANIMATION_END_NOW, tag = "passenger_camera_[animation_index]")
+	C.passenger_camera_animation_count = 0
+	if (!isnull(C.passenger_camera_glide_size))
+		C.glide_size = C.passenger_camera_glide_size
+		C.passenger_camera_glide_size = null
 	if (src.eye)
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
 		C.pixel_y = src.eye_pixel_y
+	else if (istype(src.loc, /obj/projectile))
+		var/obj/projectile/P = src.loc
+		C.passenger_camera_glide_size = C.glide_size
+		C.passenger_camera_loc_pixel_x = src.loc_pixel_x
+		C.passenger_camera_loc_pixel_y = src.loc_pixel_y
+		C.glide_size = ceil(vector_magnitude(world.maxx, world.maxy) * world.icon_size * max(C.fps / world.fps, 1))
+		C.eye = P
+		C.pixel_x = round(src.loc_pixel_x + P.next_wx, 1)
+		C.pixel_y = round(src.loc_pixel_y + P.next_wy, 1)
 	else
 		C.eye = src
 		C.pixel_x = src.loc_pixel_x
@@ -899,7 +914,11 @@ TYPEINFO(/mob)
 /mob/proc/update_cursor()
 	if (client)
 		if (src.targeting_ability)
-			src.set_cursor(cursors_selection[client.preferences.target_cursor])
+			if(!istype(src.targeting_ability, /datum/targetable))
+				src.set_cursor(cursors_selection[client.preferences.target_cursor])
+			else
+				var/datum/targetable/targetable_ability = src.targeting_ability
+				src.set_cursor(targetable_ability.get_ability_cursor())
 			return
 		if (src.client.admin_intent)
 			src.set_cursor('icons/cursors/admin.dmi')
@@ -960,14 +979,13 @@ TYPEINFO(/mob)
 			output += SPAN_ALERT("Sorry, could not retrieve your medal information.")
 			return
 
-		medals = medals["data"]
 		if (length(medals) == 0)
 			boutput(src, "<b>You don't have any medals.</b>")
 			return
 
 		output += "<b>Medals:</b>"
 		for (var/medal in medals)
-			output += "&emsp;[medal["medal"]["title"]]"
+			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
 		output += {"<br><a href="[goonhub_href("/players/[player.id]")]" target="_blank">Medal Details</a>"}
 		tgui_message(src, output.Join("<br>"), "Medals")
@@ -2532,28 +2550,31 @@ TYPEINFO(/mob)
 	jitteriness = min(400, jitteriness + amount)	// store what will be new value
 													// clamped to max 400
 	if (jitteriness > 100 && !is_jittery)
+		is_jittery = 1 // set before the SPAWN so a second call this tick doesn't start another loop
 		SPAWN(0)
 			jittery_process()
 
 
 // jittery process - shakes the mob's pixel offset randomly
-// will terminate automatically when dizziness gets <100
+// will terminate automatically when jitteriness gets <=100
 // jitteriness decrements automatically in the mob's Life() proc.
 /mob/proc/jittery_process()
 	is_jittery = 1
-	while(jitteriness > 100)
-//		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
-//		pixel_x = amplitude * sin(0.008 * jitteriness * world.time)
-//		pixel_y = amplitude * cos(0.008 * jitteriness * world.time)
-
+	while(jitteriness > 100 && !src.disposed)
 		var/amplitude = min(4, jitteriness / 100)
-		var/off_x = rand(-amplitude, amplitude)
-		var/off_y = rand(-amplitude/3, amplitude/3)
-
-		animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
-		animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
-		sleep(0.1 SECONDS)
-	//endwhile - reset the pixel offsets to zero
+		// a looping sequence of 4 random shakes with a short rest after each
+		for (var/i in 1 to 4)
+			var/off_x = rand(-amplitude, amplitude)
+			var/off_y = rand(-amplitude/3, amplitude/3)
+			if (i == 1)
+				animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, loop = -1, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL|ANIMATION_END_NOW, tag = "jittery")
+			else
+				animate(pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
+			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
+			animate(pixel_x = 0, pixel_y = 0, time = 0.5, flags = ANIMATION_RELATIVE) // rest
+		sleep(1 SECOND)
+	//endwhile - stop the shake, the relative offsets net to zero
+	animate(src, flags = ANIMATION_END_NOW, tag = "jittery")
 	is_jittery = 0
 
 /mob/onVarChanged(variable, oldval, newval)
@@ -2991,12 +3012,15 @@ TYPEINFO(/mob)
 			src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 			continue
 		if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
-			for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
-				var/datum/db_record/R = DB.find_record("id", src.datacore_id)
-				if (R)
-					R["name"] = newname
-					if (R["full_name"])
-						R["full_name"] = newname
+			var/datum/db_record/gen_record = global.data_core.general.find_record("id", src.datacore_id)
+			if (gen_record)
+				gen_record["name"] = newname
+				gen_record["full_name"] = newname
+
+			for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.medical))
+				var/datum/db_record/sub_record = DB.find_record("id", src.datacore_id)
+				if (sub_record)
+					sub_record["name"] = newname
 			for (var/obj/item/I in src.contents)
 				var/obj/item/card/id/ID = get_id_card(I)
 				if (!ID)

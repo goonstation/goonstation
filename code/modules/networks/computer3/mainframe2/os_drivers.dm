@@ -497,6 +497,10 @@
 				message_device("command=print", printFile)
 				return
 
+		else if (astype(printFile, /datum/computer/file/image)?.ourIcon)
+			message_device("command=print", printFile)
+			return
+
 		else if (istype(printFile, /datum/computer/file) && printFile.asText() != null)
 			var/datum/computer/file/oldPrintFile = printFile
 			printFile = new /datum/computer/file/record( )
@@ -2907,7 +2911,7 @@
 					if (!dd_hasprefix(toPrintPath, "/"))
 						toPrintPath = "/[toPrintPath]"
 
-					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"=toPrintPath))
+					var/datum/computer/file/toPrintFile = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"=toPrintPath))
 					if (istype(toPrintFile))
 						if (signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/lp-[printerName]"), toPrintFile) == DWAINE::ERR::SIG::SUCCESS)
 							message_user("ack")

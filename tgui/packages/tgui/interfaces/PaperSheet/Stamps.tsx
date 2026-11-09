@@ -9,9 +9,9 @@ import { sanitizeDefAllowTags, sanitizeText } from '../../sanitize';
 // Paper renders interactive <input> form fields
 const PAPER_ALLOWED_TAGS = [...sanitizeDefAllowTags, 'input'];
 // Paper needs inline `style` for color/font/width,
-// only forbid `class` and `background` for now.
+// only forbid `class`, `background` and `src` (e.g. `<input type="image">`).
 // We should fix this in the future.
-const PAPER_FORBID_ATTRS = ['class', 'background'];
+const PAPER_FORBID_ATTRS = ['class', 'background', 'src'];
 
 const WINDOW_TITLEBAR_HEIGHT = 30;
 
@@ -174,7 +174,7 @@ const pauseEvent = (e: MouseEvent) => {
 
 const setInputReadonly = (text, readonly) => {
   return readonly
-    ? text.replace(/<input\s[^d]/g, '<input disabled ')
+    ? text.replace(/<input\s(?!disabled)/g, '<input disabled ')
     : text.replace(/<input\sdisabled\s/g, '<input ');
 };
 

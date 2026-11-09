@@ -107,7 +107,11 @@ var/ZLOG_START_TIME
 #endif
 
 //Amount of 1 Second ticks to spend in the pregame lobby before roundstart. Has been 150 seconds for a couple years.
+#ifndef RP_MODE
+#define PREGAME_LOBBY_TICKS 180	// reverted to 180 on classic cause 2 slo
+#else
 #define PREGAME_LOBBY_TICKS 300	// raised from 180 to 300 by popular demand
+#endif
 
 //The value of mapvotes. A passive vote is one done through player preferences, an active vote is one where the player actively chooses a map
 #define MAPVOTE_PASSIVE_WEIGHT 1

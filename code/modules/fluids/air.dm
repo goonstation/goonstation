@@ -40,17 +40,21 @@
 		src.loc = newloc
 		src.loc:active_airborne_liquid = src //the dreaded :
 
-	done_init()
+	/// Applies the smoke to everything on its tile. `dose_mobs` is FALSE for a newly created cloud, so mobs breathe it after it spreads
+	done_init(dose_mobs = TRUE)
 		var/i = 0
 		for(var/atom/movable/A in range(0,src))
 			if (src.disposed) return
-			src.Crossed(A)
+			if (dose_mobs || !ismob(A))
+				src.Crossed(A)
 			i++
 			if (i > 40)
 				break
 
-	trigger_fluid_enter()
+	trigger_fluid_enter(dose_mobs = TRUE)
 		for(var/atom/A in src.loc)
+			if (!dose_mobs && ismob(A))
+				continue
 			if (src.group && !src.group.disposed && A.event_handler_flags & USE_FLUID_ENTER)
 				A.EnteredAirborneFluid(src, src.loc)
 		if(src.group && !src.group.disposed)
@@ -76,7 +80,9 @@
 			return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
-		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
+		src.group.update_amt_per_tile()
+		var/amt_per_tile = src.group.amt_per_tile
+		var/react_volume = amt_per_tile > 10 ? (amt_per_tile-10) / 3 + 10 : amt_per_tile
 		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
@@ -100,7 +106,9 @@
 			return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
-		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
+		src.group.update_amt_per_tile()
+		var/amt_per_tile = src.group.amt_per_tile
+		var/react_volume = amt_per_tile > 10 ? (amt_per_tile-10) / 3 + 10 : amt_per_tile
 		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full

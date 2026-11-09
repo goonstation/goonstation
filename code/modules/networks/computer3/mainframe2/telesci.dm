@@ -80,7 +80,15 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
+
+	was_deconstructed_to_frame(mob/user)
+		src.remove_portals()
+		. = ..()
+
+	disposing()
+		src.remove_portals()
+		. = ..()
 
 	ex_act()
 		return
@@ -380,12 +388,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 
 					if ("portal")
 						if (src.start_portal || src.end_portal)
-							if (start_portal)
-								qdel(start_portal)
-								start_portal = null
-							if (end_portal)
-								qdel(end_portal)
-								end_portal = null
+							src.remove_portals()
 
 							message_host("command=ack")
 							return
@@ -1001,6 +1004,14 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				new summon(src.loc)
 				return
 
+	proc/remove_portals()
+		if (start_portal)
+			qdel(start_portal)
+			start_portal = null
+		if (end_portal)
+			qdel(end_portal)
+			end_portal = null
+
 TYPEINFO(/obj/machinery/networked/teleconsole)
 	mats = 14
 
@@ -1040,7 +1051,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	disposing()
 		. = ..()

@@ -78,17 +78,16 @@ TYPEINFO(/obj/machinery/field_generator)
 	START_TRACKING
 	..()
 	SPAWN(0.6 SECONDS)
+		src.net_id = format_net_id("\ref[src]")
 		if(!src.link && (state == WELDED))
 			src.get_link()
-
-		src.net_id = format_net_id("\ref[src]")
 
 /obj/machinery/field_generator/disposing()
 	STOP_TRACKING
 	for(var/dir in cardinal)
 		src.cleanup(dir)
 	if (link)
-		link.master = null
+		link.set_master(null)
 		link = null
 	active = FALSE
 	. = ..()
@@ -201,13 +200,13 @@ TYPEINFO(/obj/machinery/field_generator)
 //Create a link with a data terminal on the same tile, if possible.
 /obj/machinery/field_generator/proc/get_link()
 	if(src.link)
-		src.link.master = null
+		src.link.set_master(null)
 		src.link = null
 	var/turf/T = get_turf(src)
 	var/obj/machinery/power/data_terminal/test_link = locate() in T
 	if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 		src.link = test_link
-		src.link.master = src
+		src.link.set_master(src, src.net_id)
 
 	return
 
@@ -295,7 +294,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	else if(state == WELDED)
 		state = WRENCHED
 		if(src.link) //Clear active link.
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 		boutput(user, "You cut the field generator free from the floor.")
 		desc = "Projects an energy field when active. It has been bolted to the floor."

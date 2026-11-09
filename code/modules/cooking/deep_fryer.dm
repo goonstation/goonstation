@@ -25,6 +25,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	var/max_wclass = W_CLASS_NORMAL
 	var/fed_ice = FALSE // hungy
 	var/cook_state
+	var/needs_basket = FALSE
 
 /obj/machinery/deep_fryer/New()
 	..()
@@ -97,6 +98,8 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if (W.w_class > src.max_wclass || W.storage || istype(W, /obj/item/plate))
 		boutput(user, SPAN_ALERT("There is no way that could fit!"))
 		return
+	if (fryitem <= W_CLASS_NORMAL)
+		needs_basket = TRUE
 
 	logTheThing(LOG_STATION, user, "puts the [log_object(W)] into the [log_object(src)] at [log_loc(src)].")
 	src.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
@@ -124,6 +127,10 @@ TYPEINFO(/obj/machinery/deep_fryer)
 /obj/machinery/deep_fryer/update_icon()
 	if (src.fryitem)
 		src.icon_state = "fryer1"
+		if (needs_basket == TRUE)
+			src.overlays += image(src.icon, "fryer_basket")
+		else
+			src.overlays.len = 0
 	else
 		src.icon_state = "fryer0"
 
@@ -139,6 +146,8 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		return
 
 	user.visible_message(SPAN_NOTICE("[user] removes [src.fryitem] from [src]!"), SPAN_NOTICE("You remove [src.fryitem] from [src]."))
+	needs_basket = FALSE
+	src.overlays.len = 0
 	src.eject_food()
 
 /obj/machinery/deep_fryer/process(mult)

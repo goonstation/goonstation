@@ -45,8 +45,8 @@
 	ignore_holder_lock = 1 //So we can still do things while our summons are coming
 	theme = "wraith"
 	show_tooltip = FALSE
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = null
+	border_icon = 'icons/mob/wraith_ui.dmi'
+	border_icon_state = null
 	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
 
 	New()
@@ -103,16 +103,13 @@
 			holder?.updateButtons()
 
 	onAttach(datum/abilityHolder/holder)
-		..()
 		if (istype(holder.owner, /mob/living/intangible/wraith/wraith_decay) || istype(holder.owner, /mob/living/critter/wraith/plaguerat))
-			border_state = "plague_frame"
+			src.border_icon_state = "plague_frame"
 		else if (istype(holder.owner, /mob/living/intangible/wraith/wraith_harbinger))
-			border_state = "harbinger_frame"
+			src.border_icon_state = "harbinger_frame"
 		else if (istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster) || istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
-			border_state = "trickster_frame"
-
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+			src.border_icon_state = "trickster_frame"
+		..()
 
 /datum/targetable/wraithAbility/help
 	name = "Toggle Help Mode"

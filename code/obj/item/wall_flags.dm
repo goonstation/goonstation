@@ -153,7 +153,20 @@
 	icon_state = "nanotrasen"
 	associated_flag = /obj/decal/poster/flag/nanotrasen
 	burn_possible = TRUE
+	burn_point = 220
+	burn_output = 900
 	needs_logging = FALSE
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		boutput(user, SPAN_NOTICE("The [E]'s red wiring rubs off on the [src], painting it sinister red!"))
+
+		src.icon_state = /obj/item/flag/syndicate::icon_state
+		src.name = /obj/item/flag/syndicate::name
+		src.desc = /obj/item/flag/syndicate::desc
+		src.associated_flag = /obj/item/flag/syndicate::associated_flag
+		src.contraband = /obj/item/flag/syndicate::contraband
+
 
 /obj/item/flag/syndicate
 	name = "syndicate flag"
@@ -164,6 +177,9 @@
 	associated_flag = /obj/decal/poster/flag/syndicate
 	burn_possible = TRUE
 	needs_logging = FALSE
+	burn_point = 220
+	burn_output = 900
+	contraband = 2
 
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
