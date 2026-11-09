@@ -4364,7 +4364,7 @@
 	icon_state = "line2"
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/outer/sw)
 "beX" = (
 /obj/cable{
@@ -31037,7 +31037,7 @@
 	pixel_y = 20
 	},
 /obj/item/clothing/suit/bedsheet/random,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/outer/sw)
 "hdM" = (
 /obj/decal/tile_edge/line/white{
@@ -76305,7 +76305,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/outer/sw)
 "rIt" = (
 /obj/cable{
@@ -96865,7 +96865,7 @@
 	icon_state = "line2"
 	},
 /obj/reagent_dispensers/cleanable/spiders,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/outer/sw)
 "wul" = (
 /obj/item/reagent_containers/food/snacks/plant/banana,
