@@ -55,6 +55,8 @@
 #include "terrainify.dm"
 
 /// regression tests
+#include "regression/opaque_atom_tracking.dm"
+#include "regression/opaque_lighting.dm"
 #include "regression/reagent_transfer.dm"
 #include "regression/say_message.dm"
 

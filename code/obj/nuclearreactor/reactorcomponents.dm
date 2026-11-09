@@ -155,33 +155,33 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			src.melt() //oh no
 
 	proc/get_melting_point()
-		var/melting_point = src.material?.getProperty("melting_point", VALUE_CURRENT)
+		var/melting_point = src.material?.getProperty(MATERIAL::PROPERTY::MELTING_POINT, VALUE_CURRENT)
 		if(melting_point == INFINITY || melting_point == 0)
 			melting_point = MELTING_POINT_DEFAULT
 		return melting_point
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
 		for(var/datum/neutron/N as anything in inNeutrons)
-			if(prob(src.material.getProperty("density")*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
+			if(prob(src.material.getProperty(MATERIAL::PROPERTY::DENSITY)*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
-				if(N.velocity <= 1 & prob(src.material.getProperty("n_radioactive")*10)) //neutron stimulated emission
-					src.material.adjustProperty("n_radioactive", -0.01)
-					src.material.setProperty("radioactive", src.material.getProperty("radioactive") + 0.005)
+				if(N.velocity <= 1 & prob(src.material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON)*10)) //neutron stimulated emission
+					src.material.adjustProperty(MATERIAL::PROPERTY::RADS_NEUTRON, -0.01)
+					src.material.setProperty(MATERIAL::PROPERTY::RADS, src.material.getProperty(MATERIAL::PROPERTY::RADS) + 0.005)
 					for(var/i in 1 to 5)
 						inNeutrons += new /datum/neutron(pick(alldirs), pick(2,3))
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 50
-				else if(N.velocity <= 1 & prob(src.material.getProperty("radioactive")*10)) //stimulated emission
-					src.material.adjustProperty("radioactive", -0.01)
-					src.material.setProperty("spent_fuel", src.material.getProperty("spent_fuel") + 0.005)
+				else if(N.velocity <= 1 & prob(src.material.getProperty(MATERIAL::PROPERTY::RADS)*10)) //stimulated emission
+					src.material.adjustProperty(MATERIAL::PROPERTY::RADS, -0.01)
+					src.material.setProperty(MATERIAL::PROPERTY::PLUTONIUM, src.material.getProperty(MATERIAL::PROPERTY::PLUTONIUM) + 0.005)
 					for(var/i in 1 to 5)
 						inNeutrons += new /datum/neutron(pick(alldirs), pick(1,2,3))
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 25
 				else
-					if(prob(src.material.getProperty("hard")*10)) //reflection is based on hardness
+					if(prob(src.material.getProperty(MATERIAL::PROPERTY::HARDNESS)*10)) //reflection is based on hardness
 						N.dir = turn(N.dir,pick(180,225,135)) //either complete 180 or  180+/-45
 					else if(is_control_rod) //control rods absorb neutrons
 						N.velocity = 0
@@ -192,17 +192,17 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 						qdel(N)
 					src.temperature += 1
 
-		if(prob(src.material.getProperty("n_radioactive")*10*src.neutron_cross_section)) //fast spontaneous emission
+		if(prob(src.material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON)*10*src.neutron_cross_section)) //fast spontaneous emission
 			for(var/i in 1 to 3)
 				inNeutrons += new /datum/neutron(pick(alldirs), 3) //neutron radiation gets you fast neutrons
-			src.material.adjustProperty("n_radioactive", -0.01)
-			src.material.setProperty("radioactive", src.material.getProperty("radioactive") + 0.005)
+			src.material.adjustProperty(MATERIAL::PROPERTY::RADS_NEUTRON, -0.01)
+			src.material.setProperty(MATERIAL::PROPERTY::RADS, src.material.getProperty(MATERIAL::PROPERTY::RADS) + 0.005)
 			src.temperature += 20
-		if(prob(src.material.getProperty("radioactive")*10*src.neutron_cross_section)) //spontaneous emission
+		if(prob(src.material.getProperty(MATERIAL::PROPERTY::RADS)*10*src.neutron_cross_section)) //spontaneous emission
 			for(var/i in 1 to 3)
 				inNeutrons += new /datum/neutron(pick(alldirs), pick(1,2,3))
-			src.material.adjustProperty("radioactive", -0.01)
-			src.material.setProperty("spent_fuel", src.material.getProperty("spent_fuel") + 0.005)
+			src.material.adjustProperty(MATERIAL::PROPERTY::RADS, -0.01)
+			src.material.setProperty(MATERIAL::PROPERTY::PLUTONIUM, src.material.getProperty(MATERIAL::PROPERTY::PLUTONIUM) + 0.005)
 			src.temperature += 10
 		return inNeutrons
 
@@ -219,7 +219,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 				gloves = H.gloves
 			else
 				gloves = null
-			if(!gloves || gloves.material?.getProperty("thermal") > 2)
+			if(!gloves || gloves.material?.getProperty(MATERIAL::PROPERTY::THERMAL_COND) > 2)
 				boutput(user, SPAN_ALERT("\The [src] burns your hand!"))
 				user.TakeDamageAccountArmor(user.hand ? "l_arm" : "r_arm", 0, min((src.temperature-T0C)/20, 50) * mult, 0, DAMAGE_BURN)
 
@@ -251,7 +251,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 	extra_info()
 		. = ..()
-		. += "Radioactivity: [max(src.material.getProperty("n_radioactive")*10,src.material.getProperty("radioactive")*10)]%"
+		. += "Radioactivity: [max(src.material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON)*10,src.material.getProperty(MATERIAL::PROPERTY::RADS)*10)]%"
 
 /obj/item/reactor_component/fuel_rod/glowsticks
 	name = "makeshift fuel rod"

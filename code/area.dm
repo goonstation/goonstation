@@ -758,6 +758,9 @@ ABSTRACT_TYPE(/area/shuttle)
 	#else
 	occlude_foreground_parallax_layers = FALSE
 	#endif
+	#ifdef MAP_OVERRIDE_DONUT3
+	filler_turf = "/turf/simulated/floor/plating/jen"
+	#endif
 
 /area/shuttle/escape/centcom
 	name = "Emergency Shuttle Centcom"

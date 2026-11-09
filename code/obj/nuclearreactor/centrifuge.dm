@@ -44,7 +44,7 @@
 				else
 					playsound(src, sound_grump, 40, TRUE)
 				waste.setMaterial(getMaterial(waste.default_material), FALSE, FALSE, TRUE, FALSE)
-				waste.material.setProperty("spent_fuel", extracted_fuel)
+				waste.material.setProperty(MATERIAL::PROPERTY::PLUTONIUM, extracted_fuel)
 				extracted_fuel = 0
 				doing_stuff = FALSE
 
@@ -54,13 +54,13 @@
 			boutput(user, "You can't put [W] in here, it doesn't fit!")
 			return
 
-		if (W.material && W.material.hasProperty("spent_fuel"))
+		if (W.material && W.material.hasProperty(MATERIAL::PROPERTY::PLUTONIUM))
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, TRUE)
 			W.set_loc(src)
 			user?.u_equip(W)
 			W.dropped(user)
-			fuel_to_extract += W.material.getProperty("spent_fuel")
+			fuel_to_extract += W.material.getProperty(MATERIAL::PROPERTY::PLUTONIUM)
 			doing_stuff = TRUE
 			qdel(W)
 		else

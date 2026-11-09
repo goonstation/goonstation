@@ -1,7 +1,4 @@
 /datum/record_database
-	/// The display name of this database.
-	var/name = null
-
 	/**
 	 *	A list of records index by their keys and values. Used for quick lookups. \
 	 *	Type structure: `/alist<key, /alist<value, /list/datum/db_record>>`
@@ -13,9 +10,8 @@
 	/// A list of all records contained within this database.
 	var/list/datum/db_record/records = null
 
-/datum/record_database/New(name, record_type, list/index_keys)
+/datum/record_database/New(list/index_keys, record_type)
 	. = ..()
-	src.name = name
 	src.record_type = record_type
 	src.records = list()
 
@@ -102,17 +98,6 @@
 		var/value = record[key]
 		var/list/datum/db_record/indexed_records = (src.indices[key][value] ||= list())
 		indexed_records += record
-
-/// Create a new record and add it to this database.
-/datum/record_database/proc/create_record(list/fields)
-	RETURN_TYPE(/datum/db_record)
-
-	var/datum/db_record/record = new()
-	for (var/key as anything in fields)
-		record[key] = fields[key]
-
-	src.add_record(record)
-	return record
 
 /// Notify this database that one of its records has had a value updated.
 /datum/record_database/proc/notify_field_change(datum/db_record/record, key, old_value, new_value)

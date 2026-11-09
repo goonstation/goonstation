@@ -45,7 +45,8 @@
 
 	var/stam_mod_items = 0
 	for (var/obj/item/C as anything in src.get_equipped_items())
-		stam_mod_items += C.getProperty("stammax")
+		if (C.properties)
+			stam_mod_items += C.getProperty("stammax")
 
 	return (val + stam_mod_items)
 
@@ -75,7 +76,8 @@
 
 	var/stam_mod_items = 0
 	for (var/obj/item/C as anything in src.get_equipped_items())
-		stam_mod_items += C.getProperty("stamcost")
+		if (C.properties)
+			stam_mod_items += C.getProperty("stamcost")
 
 	var/percReduction = 0
 	if(stam_mod_items)

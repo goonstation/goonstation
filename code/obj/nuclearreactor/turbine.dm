@@ -516,14 +516,14 @@
 	proc/SetTurbineBlade(var/obj/item/turbine_component/blade/NewBlade)
 		NewBlade.set_loc(src)
 		src.current_blade = NewBlade
-		src.turbine_mass = max(200, 200*src.current_blade.material.getProperty("density")) //5 = 1000
-		src.max_blade_health = max(1, 5 * src.current_blade.material.getProperty("hard"))
+		src.turbine_mass = max(200, 200*src.current_blade.material.getProperty(MATERIAL::PROPERTY::DENSITY)) //5 = 1000
+		src.max_blade_health = max(1, 5 * src.current_blade.material.getProperty(MATERIAL::PROPERTY::HARDNESS))
 		src.blade_health = src.max_blade_health
 
 	proc/SetStator(var/obj/item/turbine_component/stator/NewStator)
 		NewStator.set_loc(src)
 		src.current_stator = NewStator
-		src.power_multiplier = max(0.2, 0.2 * src.current_stator.material.getProperty("electrical"))
+		src.power_multiplier = max(0.2, 0.2 * src.current_stator.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
 
 	proc/UpdateHealthIndicators(prevHealth)
 		//handle particles

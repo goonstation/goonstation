@@ -68,6 +68,7 @@
 	var/field_counter = 1
 	///Some subtypes might want to hide the scrollbar
 	var/scrollbar = TRUE
+	var/paper_color // UI color without sprite change
 
 /obj/item/paper/New()
 	..()
@@ -185,6 +186,9 @@
 		ui.open()
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+	if(!user.sight_check(TRUE))
+		boutput(user, SPAN_ALERT("You can't read while unable to see."))
+		return UI_CLOSE
 	if(!user.literate)
 		boutput(user, SPAN_ALERT("You don't know how to read."))
 		return UI_CLOSE
@@ -259,7 +263,7 @@
 		"sizeY" = src.sizey,
 		"text" = src.info,
 		"max_length" = PAPER_MAX_LENGTH,
-		"paperColor" = src.color || "white",	// color might not be set
+		"paperColor" = src.paper_color || src.color || "white",	// color might not be set
 		"stamps" = src.stamps,
 		"stampable" = src.stampable,
 		"sealed" = src.sealed,
