@@ -46,12 +46,6 @@
 		rgb_list[3] + rand(-10, 10)
 	)
 
-proc/isfem(datum/customization_style/style)
-	return !!(initial(style.gender) == FEMALE)
-
-proc/ismasc(datum/customization_style/style)
-	return !!(initial(style.gender) == MALE)
-
 // this is weird but basically: a list of hairstyles and their appropriate detail styles, aka hair_details["80s"] would return the Hairmetal: Faded style
 // further on in the randomize_look() proc we'll see if we've got one of the styles in here and if so, we have a chance to add the detailing
 // if it's a list then we'll pick from the options in the list
