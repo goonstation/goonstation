@@ -673,26 +673,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/set_stack_amount(var/new_amount)
 	return src.change_stack_amount(new_amount - src.amount)
 
-#define CYBORG_STACK_CAPACITY 300
-#define GHOSTDRONE_STACK_CAPACITY 1000
-
-/// Maximum stack of items allowed at the items location (e.g. cyborgs, ghost drones inventory)
-/// If the item is not stackable (max_stack <=1) or its location doesn't have a custom stack capacity, returns max_stack
-/obj/item/proc/get_stack_capacity()
-	if (src.max_stack <= 1)
-		return src.max_stack
-	if (isrobot(src.loc))
-		return CYBORG_STACK_CAPACITY
-	if (isghostdrone(src.loc))
-		return GHOSTDRONE_STACK_CAPACITY
-	if (istype(src.loc, /obj/item/shipcomponent/mainweapon/constructor))
-		var/obj/item/shipcomponent/mainweapon/constructor/constructor = src.loc
-		return constructor.max_sheets
-	return src.max_stack
-
-#undef CYBORG_STACK_CAPACITY
-#undef GHOSTDRONE_STACK_CAPACITY
-
 /obj/item/proc/stack_item(obj/item/other)
 	var/obj/item/stacker
 	var/obj/item/stackee
@@ -709,7 +689,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (stacker == stackee || stacker.max_stack <= 1 || !stacker.check_valid_stack(stackee))
 		return 0
 
-	var/added = clamp(stackee.amount, 0, stacker.get_stack_capacity() - stacker.amount)
+	var/added = clamp(stackee.amount, 0, stacker.max_stack - stacker.amount)
 	if (!added)
 		return 0
 
@@ -759,7 +739,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..()
 	if (!QDELETED(src) && src.max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && src.check_valid_stack(O))
-		if (src.amount >= src.get_stack_capacity())
+		if (src.amount >= src.max_stack)
 			src.failed_stack(O, user)
 			return
 
@@ -780,7 +760,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 				sleep(0.5 DECI SECONDS)
 				added += stack_result
 				if (user.loc != staystill) break
-				if (src.amount >= src.get_stack_capacity())
+				if (src.amount >= src.max_stack)
 					src.failed_stack(O, user)
 					return
 
