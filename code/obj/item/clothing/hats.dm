@@ -300,6 +300,12 @@ proc/filter_trait_hats(var/type)
 	icon_state = "inspector"
 	item_state = "ins_hat"
 
+/obj/item/clothing/head/det_hat/tan
+	name = "Detective's hat"
+	desc = "Someone who wears this will look very funky."
+	icon_state = "detective-tan"
+	item_state = "detective-tan"
+
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
@@ -2299,11 +2305,3 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	item_state = "rabbithat"
 	seal_hair = TRUE
 
-/obj/item/clothing/head/det_hat_tan
-	name = "Detective's hat"
-	desc = "Someone who wears this will look very smart."
-	icon_state = "detective-tan"
-	item_state = "detective-tan"
-	setupProperties()
-		..()
-		setProperty("meleeprot_head", 3)

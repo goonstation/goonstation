@@ -2057,9 +2057,9 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 			/obj/item/clothing/suit/gimmick/guncoat/black,
 			/obj/item/clothing/suit/gimmick/guncoat/tan,
 			/obj/item/clothing/suit/gimmick/guncoat/dirty,
-			/obj/item/clothing/suit/Trenchcoat/brown,
-			/obj/item/clothing/suit/Trenchcoat/grey,
-			/obj/item/clothing/suit/Trenchcoat/green)
+			/obj/item/clothing/suit/trenchcoat,
+			/obj/item/clothing/suit/trenchcoat/grey,
+			/obj/item/clothing/suit/trenchcoat/green)
 	cost = PAY_TRADESMAN*5
 	containername = "Dusty Old Clothing Crate"
 	containertype = /obj/storage/crate/wooden

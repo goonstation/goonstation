@@ -426,9 +426,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard,
-	/obj/item/clothing/suit/det_Trenchcoat,
+	/obj/item/clothing/suit/det_trenchcoat,
 	/obj/item/clothing/gloves/brownleather,
-	/obj/item/clothing/head/det_hat_tan)
+	/obj/item/clothing/head/det_hat/tan)
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"

@@ -2420,11 +2420,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
 
-/obj/item/clothing/suit/det_Trenchcoat
+/obj/item/clothing/suit/det_trenchcoat
 	name = "Dusty Trench Coat"
 	desc = "Like the Good Ole' Times."
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	icon_state = "Tcoat-Tan_o"
 	item_state = "Tcoat-Tan_o"
@@ -2442,16 +2441,15 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		..()
 		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
-/obj/item/clothing/suit/Trenchcoat
+/obj/item/clothing/suit/trenchcoat
 	name = "Trench Coat"
 	desc = "A dusty Trench coat, it feels odly familiar."
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-	icon_state = "null"
-	item_state = "null"
+	icon_state = "Tcoat-Brown_o"
+	item_state = "Tcoat-Brown_o"
 	body_parts_covered = TORSO|LEGS|ARMS
-	coat_style = "null"
+	coat_style = "Tcoat-Brown"
 
 	setupProperties()
 		..()
@@ -2460,11 +2458,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	New()
 		..()
 		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
-
-	brown
-		icon_state = "Tcoat-Brown_o"
-		item_state = "Tcoat-Brown_o"
-		coat_style = "Tcoat-Brown"
 
 	grey
 		icon_state = "Tcoat-Grey_o"
