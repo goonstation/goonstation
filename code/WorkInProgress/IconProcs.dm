@@ -80,6 +80,18 @@ icon
 		// apply mask
 		Blend(M, ICON_ADD)
 
+	/// Stab randomly at the icon until we find a pixel, return its color
+	proc/RandomPixelColor()
+		var/color
+		var/frustration = 0
+		while (!color)
+			frustration ++
+			//exclude the edges because there's usually nothing there
+			color = src.GetPixel(rand(10,25), rand(10,25))
+			if (color)
+				return color
+			if (frustration > 20) //giv up
+				return null
 /*
 	HSV format is represented as "#hhhssvv" or "#hhhssvvaa"
 

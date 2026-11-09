@@ -952,7 +952,7 @@ datum
 		harmful/pacid // COGWERKS CHEM REVISION PROJECT.. Change this to Fluorosulfuric Acid
 			name = "fluorosulfuric acid"
 			id = "pacid"
-			description = "Fluorosulfuric acid is a an extremely corrosive super-acid."
+			description = "Fluorosulfuric acid is an extremely corrosive super-acid."
 			reagent_state = LIQUID
 			fluid_r = 80
 			fluid_g = 80
@@ -1281,7 +1281,7 @@ datum
 		harmful/sodium_thiopental // COGWERKS CHEM REVISION PROJECT. idk some sort of potent opiate or sedative. chloral hydrate? ketamine
 			name = "sodium thiopental"
 			id = "sodium_thiopental"
-			description = "An rapidly-acting barbituate tranquilizer."
+			description = "A rapidly-acting barbituate tranquilizer."
 			reagent_state = LIQUID
 			fluid_r = 100
 			fluid_g = 150

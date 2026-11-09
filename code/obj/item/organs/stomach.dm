@@ -184,6 +184,7 @@
 		src.icon_state = pick("plant_stomach", "plant_stomach_bloom")
 
 TYPEINFO(/obj/item/organ/stomach/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/stomach/cyber

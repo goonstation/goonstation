@@ -5,8 +5,8 @@
 	src.shell.message_user("Thank you for using DWAINE!", "clear")
 
 	if (src.shell.scriptprocess)
-		src.shell.signal_program(1, list("command" = DWAINE_COMMAND_TKILL, "target" = src.shell.scriptprocess))
+		src.shell.signal_program(1, list("command" = DWAINE::SYSCALL::TKILL, "target" = src.shell.scriptprocess))
 		src.shell.scriptprocess = 0
 
 	src.shell.signal_program(1, global.generic_exit_list)
-	return BUILTIN_BREAK
+	return DWAINE::ERR::SHELL::BUILTIN::BREAK

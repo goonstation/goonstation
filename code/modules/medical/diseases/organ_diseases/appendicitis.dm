@@ -47,7 +47,7 @@
 		if (2)
 			if (probmult(0.1))
 				H.show_text(pick_string("organ_disease_messages.txt", "feelbetter"), "blue")
-				H.resistances += src.type
+				H.add_ailment_resistance(src.type, src.type)
 				H.ailments -= src
 				return
 			if (probmult(30))

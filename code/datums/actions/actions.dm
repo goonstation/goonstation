@@ -146,7 +146,7 @@
 		if (end_message)
 			src.end_message = end_message
 
-		//generate a id
+		//generate an id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
 
@@ -219,7 +219,7 @@
 			icon = c_icon
 			icon_state = c_icon_state
 		else
-			icon = initial(otype.icon)
+			icon = get_initial_icon(otype)
 			icon_state = initial(otype.icon_state)
 
 	/// Return TRUE if both sheets are there and valid, else false
@@ -284,10 +284,8 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			duration = round(duration / 2)
 
 		owner.visible_message(SPAN_NOTICE("[owner] begins assembling \the [obj_name]!"))
 
@@ -472,7 +470,7 @@
 			src.end_message = end_message
 		if (interrupt_flags != null)
 			src.interrupt_flags = interrupt_flags
-		//generate a id
+		//generate an id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
 
@@ -1876,10 +1874,6 @@
 			src.unanchor = target.anchored
 		if (duration)
 			src.duration = duration
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1903,6 +1897,8 @@
 		else if(isscrewingtool(tool))
 			playsound(target, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] begins [unanchor ? "un" : ""]anchoring [target]."))
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onEnd()
 		..()

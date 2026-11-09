@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.name = "left hand"
 		HH.suffix = "-L"
@@ -128,7 +128,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/gun/kinetic/rifle
 		HH.name = "rifle"
 		HH.suffix = "-LR"
@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		. = ..()
 		chant_cooldown = rand(35, 135) // 10ths of seconds cooldown
 
-	Life(datum/controller/process/mobs/parent) // shamelessly stolen from the crunched cause adding this as a AI task was a nightmare
+	Life(datum/controller/process/mobs/parent) // shamelessly stolen from the crunched cause adding this as an AI task was a nightmare
 		if (..(parent))
 			return 1
 
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/sword
 			HH.name = "left hand"
 			HH.suffix = "-L"
@@ -202,7 +202,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"
@@ -236,7 +236,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/sword
 			HH.name = "left hand"
 			HH.suffix = "-L"
@@ -258,7 +258,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"
@@ -292,7 +292,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/sword
 			HH.name = "left hand"
 			HH.suffix = "-L"
@@ -314,7 +314,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"
@@ -336,6 +336,11 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		key2
 			human_to_copy = /mob/living/carbon/human/normal/cultist_imposter/key2
 			corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist_imposter/key2
+
+			gib() // cause humans can gib sometimes and this softlocks the azone
+				new /obj/item/cult_sigil(src.loc)
+				..()
+
 
 /mob/living/critter/human/cultist/leader
 	name = "Broken Leader"
@@ -361,7 +366,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/sword
 			HH.name = "left hand"
 			HH.suffix = "-L"
@@ -382,13 +387,17 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			human_to_copy = /mob/living/carbon/human/normal/cultist/leader/key1
 			corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/leader/key1
 
+			gib()
+				new /obj/item/cult_sigil_pt1(src.loc)
+				..()
+
 
 	pistol
 		ai_type = /datum/aiHolder/ranged
 		setup_hands()
 			..()
 			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"

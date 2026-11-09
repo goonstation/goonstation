@@ -701,7 +701,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	var/settingup = 1
 	var/image/tractor = null
 	f_active = 1
-	power_used = 80
+	power_used = 170
 	hud_state = "tractor_beam"
 	icon_state = "trac_beam"
 
@@ -1285,6 +1285,8 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	if (in_bump)
 		return
 	if (A == ship.pilot)
+		return
+	if (istype(A, /turf/simulated/shuttle) || istype(A, /turf/simulated/floor/shuttle) || istype(A, /turf/unsimulated/floor/shuttle))
 		return
 	walk(src, 0)
 	in_bump = 1

@@ -25,17 +25,17 @@ This project uses React. Take your time to read the guide:
 - [Component Reference](docs/component-reference.md) - UI building blocks
 - [Tgui Core](https://github.com/tgstation/tgui-core) - The component library for tgui.
 - [Using TGUI and Byond API for custom HTML popups](docs/tgui-for-custom-html-popups.md)
-- [Chat Embedded Components](docs/chat-embedded-components.md)
+- [Tgui Event Dispatch](packages/tgui/events/README.md) - how DM messages reach the store
 - [Writing Tests](docs/writing-tests.md)
 
 ## Pre-requisites
 
 You will need these programs to start developing in tgui:
 
-- [Node v**22**.11+](https://nodejs.org/en/download/)
+- [Node LTS v**24**.14+](https://nodejs.org/en/download/)
   - Using either the prebuilt installer or a package manager works.
   - If you're confused, click the green 'Windows Installer' button.
-  - **LTS v22** release is recommended instead of latest, as well as the x64 arch.
+  - **LTS** release is recommended instead of latest, as well as the x64 arch.
   - **DO NOT install Chocolatey if Node installer asks you to!**
 - [Yarn v4.9.2+](https://yarnpkg.com/getting-started/install) (optional)
   - Yarn is normally installed with corepack.
@@ -82,7 +82,7 @@ Run `bin/tgui.bat` with any of the options listed below.
   - `bin/tgui --dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
   - `bin/tgui --dev --no-tmp` - Don't use the tmp folder
 - `bin/tgui --lint` - Show problems with the code.
-- `bin/tgui --lint-fix` - Show (and auto-fix) problems with the code.
+- `bin/tgui --format` - Format code.
 - `bin/tgui --test` - Run unit and integration tests.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --bench` - Run benchmarks. *Windows Only*
@@ -143,8 +143,7 @@ logs and time spent on rendering. Use this information to optimize your
 code, and try to keep re-renders below 16ms.
 
 **Kitchen Sink.**
-Press `F12` or click the green bug to open the KitchenSink interface. This interface is a
-playground to test various tgui components.
+Press `F12` or click the green bug to open the KitchenSink interface - this lets you debug the data flow.
 
 **Layout Debugger.**
 Press `F11` to toggle the _layout debugger_. It will show outlines of
@@ -172,13 +171,16 @@ You can then <kbd>F12</kbd> to open the standard chrome dev tools.
 - `/packages/tgui/styles/layouts` - Layout-related styles.
 - `/packages/tgui/styles/themes` - Contains themes that you can use in tgui. Each theme must be registered in `/packages/tgui/index.ts` file.
 
+## Unit Tests
+To test tgui interfaces, we use [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+
 ## Component Reference
 
 See: [Component Reference](docs/component-reference.md).
 
 ## FontAwesome Icon
 
-For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v7/search?ip=classic&ic=free&o=r)
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/search?ip=classic&ic=free-collection)
 
 For additional font styles you can use, see the [FontAwesome Docs](https://fontawesome.com/v7/docs/web/style/style-cheatsheet#contentHeader)
 

@@ -35,6 +35,7 @@
 #include "rand.dm"
 #include "deletions.dm"
 #include "explosions.dm"
+#include "string_prefix_suffix.dm"
 #include "monkey_thunderdome.dm"
 #include "reagent_id_typos.dm"
 #include "record_database.dm"
@@ -52,6 +53,12 @@
 #include "mutation_combo_valid_ids.dm"
 #include "od_compile_bot.dm"
 #include "terrainify.dm"
+
+/// regression tests
+#include "regression/opaque_atom_tracking.dm"
+#include "regression/opaque_lighting.dm"
+#include "regression/reagent_transfer.dm"
+#include "regression/say_message.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

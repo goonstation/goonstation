@@ -11,7 +11,7 @@
 	"Cave wall" = /turf/unsimulated/wall/cave,  "Circuit floor: Blue" = /turf/unsimulated/floor/circuit, \
 	"Circuit floor: Red" = /turf/unsimulated/floor/circuit/red, "Circuit floor: Purple" = /turf/unsimulated/floor/circuit/purple, \
 	"Circuit floor: Vintage" = /turf/unsimulated/floor/circuit/vintage, "Circuit floor: Green" = /turf/unsimulated/floor/circuit/green, \
-	"Dirt" = /turf/unsimulated/aprilfools/dirt, "Grass" = /turf/unsimulated/aprilfools/grass, \
+	"Dirt" = /turf/unsimulated/floor/auto/dirt, "Grass" = /turf/unsimulated/floor/auto/grass, \
 	"Hive floor" = /turf/unsimulated/floor/setpieces/hivefloor, "Hive wall" = /turf/unsimulated/wall/auto/adventure/bee, \
 	"Ice" = /turf/unsimulated/floor/arctic/snow/ice, "Lava" = /turf/unsimulated/floor/lava, "Martian floor" = /turf/simulated/floor/martian, \
 	"Martian wall" = /turf/simulated/wall/auto/martian, "Normal floor" = /turf/simulated/floor, "Normal wall" = /turf/simulated/wall, \
@@ -42,7 +42,8 @@
 			for(var/turf/T in block(A, B))
 				var/turf/at = T
 				T.ReplaceWith(turftype, force=1)
-				at.set_dir(holder.dir)
+				if(src.holder.dir)
+					at.set_dir(holder.dir)
 				blink(at)
 				new /area/adventure(at)
 				at.RL_Reset()

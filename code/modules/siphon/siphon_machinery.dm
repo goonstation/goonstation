@@ -196,6 +196,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/y_torque = 0
 	var/shear = 0
 
+	///keep track of how much field stress was present in the last machine tick (used for power outage shortout)
+	var/last_cycle_stress = 0
+
 	///field dilation factor - for cyclical siphon targets. extends the "lifespan" before they cycle
 	var/field_dilation = 0
 
@@ -255,6 +258,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if (status & NOPOWER)
 			return
 		total_draw = 200
+
+		src.last_cycle_stress = src.shear + (src.field_dilation / 2)
+
 		var/doing_dilation = FALSE
 		//Handle any cyclical targets we've got, reharmonizing them if it's time to do so
 		for(var/datum/siphon_mineral/mineral in src.cyclical_targets)
@@ -280,9 +286,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				mineral.hm_cycle.last_shifted = TIME
 
 		if(src.mode == "low" && doing_dilation) //a continual draw is necessary to maintain field dilation
-			total_draw += min(800,0.2 * src.field_dilation) * src.resofactor
+			total_draw += min(800,0.2 * src.field_dilation) * src.get_drawmod()
 		if(src.mode == "active")
-			total_draw += 800 * src.resofactor
+			total_draw += 800 * src.get_drawmod()
 			src.extract_ticks += src.resofactor
 
 			///If no extraction occurs, high shear values can result in hazardous effects
@@ -328,36 +334,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					break
 
 			if(!extract_progressed)
-				switch(src.shear)
-					if(64 to 127)
-						var/chancefactor = round(shear/6)
-						if(prob(chancefactor))
-							var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
-							RSO.shear_overload()
-					if(128 to 256)
-						var/chancefactor = min(round(shear/8),33)
-						if(prob(chancefactor))
-							var/obj/uh_oh = new /obj/vortex(src.loc)
-							uh_oh.x += rand(-3,3)
-							uh_oh.y += rand(-3,3)
-						if(prob(chancefactor*3))
-							var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
-							if(prob(chancefactor))
-								RSO.shear_overload(TRUE)
-							else
-								RSO.shear_overload()
-					if(257 to INFINITY)
-						var/chancefactor = min(round(shear/5),100)
-						for(var/i = 0, i < 3, i++)
-							if(prob(chancefactor))
-								var/obj/uh_oh = new /obj/vortex(src.loc)
-								uh_oh.x += rand(-4,4)
-								uh_oh.y += rand(-4,4)
-						var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
-						if(prob(chancefactor))
-							RSO.shear_overload(TRUE)
-						else
-							RSO.shear_overload()
+				src.do_overload(src.shear)
+
 			else
 				SPAWN(0.1 SECONDS)
 					FLICK("drill-extract",src.drawlight)
@@ -372,9 +350,42 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		power_usage = total_draw
 		..()
 
-	proc/eats_spicy_goodness_dies_instantly(var/catastrophic = FALSE) //DEBUG DEBUG DEBUG
+	proc/eats_spicy_goodness_dies_instantly(var/catastrophic = FALSE) //debug proc to test overload response
 		for (var/obj/machinery/siphon/resonator/res in src.resonators)
 			res.shear_overload(catastrophic)
+
+	///If parameters are improperly met, any stress on the field will express violently
+	proc/do_overload(var/overload_strength)
+		switch(overload_strength)
+			if(64 to 127)
+				var/chancefactor = round(overload_strength/6)
+				if(prob(chancefactor))
+					var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
+					RSO.shear_overload()
+			if(128 to 256)
+				var/chancefactor = min(round(overload_strength/8),33)
+				if(prob(chancefactor))
+					var/obj/uh_oh = new /obj/vortex(src.loc)
+					uh_oh.x += rand(-3,3)
+					uh_oh.y += rand(-3,3)
+				if(prob(chancefactor*3))
+					var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
+					if(prob(chancefactor))
+						RSO.shear_overload(TRUE)
+					else
+						RSO.shear_overload()
+			if(257 to INFINITY)
+				var/chancefactor = min(round(overload_strength/5),100)
+				for(var/i = 0, i < 3, i++)
+					if(prob(chancefactor))
+						var/obj/uh_oh = new /obj/vortex(src.loc)
+						uh_oh.x += rand(-4,4)
+						uh_oh.y += rand(-4,4)
+				var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
+				if(prob(chancefactor))
+					RSO.shear_overload(TRUE)
+				else
+					RSO.shear_overload()
 
 	power_change()
 		if(powered())
@@ -615,8 +626,15 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	build_readouts()
 		src.calibrate_resonance()
+
+		var/pre_draw_estimate = ceil(src.get_drawmod() * 8)
+		var/end_digit = pre_draw_estimate % 10
+		var/main_digits = ceil((pre_draw_estimate - end_digit) / 10)
+		var/draw_estimate = "[main_digits].[end_digit] kW"
+
 		var/list/devdat = list()
 		devdat["Total Intensity"] = src.resofactor
+		devdat["Estimated Draw"] = draw_estimate
 		devdat["Lateral Resonance"] = src.x_torque
 		devdat["Vertical Resonance"] = src.y_torque
 		devdat["Shear Value"] = src.shear
@@ -625,6 +643,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			var/round_readout_B = src.field_dilation % 10
 			devdat["Field Dilation"] = "[round_readout].[round_readout_B]%"
 		return devdat
+
+	proc/get_drawmod()
+		return max(1,src.resofactor ** 1.55 - (2 * src.resofactor))
 
 	proc/clear_siphon_console()
 		var/datum/signal/reply = new
@@ -644,8 +665,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 #define RESONATOR_CABLE_REPAIR_COST 3
 
 /obj/machinery/siphon/resonator
-	name = "\improper Type-AX siphon resonator"
-	desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
+	name = "axial resonator"
+	desc = "Type-AX field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
 	icon = 'icons/obj/machines/neodrill_32x32.dmi'
 	icon_state = "res-closed"
 	density = 1
@@ -683,8 +704,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/obj/machinery/siphon/core/paired_core = null
 
 	//descriptions for wrenching
-	var/regular_desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
-	var/wrenched_desc = "Field-emitting device used to amplify and direct a harmonic siphon. It's been manually secured to the floor."
+	var/regular_desc = "Type-AX field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
+	var/wrenched_desc = "Type-AX field-emitting device used to amplify and direct a harmonic siphon. It's been manually secured to the floor."
 
 	New()
 		light = new /datum/light/point
@@ -776,10 +797,16 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			status |= NOPOWER
 			if(src.maglocked)
 				if(paired_core)
-					paired_core.resonators -= src
-					paired_core.calibrate_resonance()
-					src.paired_core = null
-				src.disengage_lock(rand(1,5))
+					var/host_instability = paired_core.last_cycle_stress
+					if(host_instability > 63 && prob(host_instability/8)) //less-than-gracefully disengage
+						src.shear_overload(prob(host_instability/8))
+					else //gracefully disengage
+						paired_core.resonators -= src
+						paired_core.calibrate_resonance()
+						src.paired_core = null
+						src.disengage_lock(rand(1,5))
+				else
+					src.disengage_lock(rand(1,5))
 
 	proc/shear_overload(var/catastrophic = FALSE)
 		status |= BROKEN
@@ -905,11 +932,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 //stabilizing resonator, provides purely reduction to shear based on lowest torque value
 /obj/machinery/siphon/resonator/stabilizer
-	name = "\improper Type-SM siphon resonator"
-	desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
+	name = "shear moderator"
+	desc = "Type-SM field-emitting device used to mitigate resonant shear in a harmonic siphon."
 	icon_state = "stab-closed"
-	regular_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
-	wrenched_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon. It's been manually secured to the floor."
+	regular_desc = "Type-SM field-emitting device used to mitigate resonant shear in a harmonic siphon."
+	wrenched_desc = "Type-SM field-emitting device used to mitigate resonant shear in a harmonic siphon. It's been manually secured to the floor."
 	max_intensity = 3
 	resclass = "stab"
 	netname = "RES_SM"
@@ -928,11 +955,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 //field dilation resonator, slows down cycle time and wreaks havoc on the lateral and vertical resonance
 /obj/machinery/siphon/resonator/field_dilation
-	name = "\improper Type-FQ siphon resonator"
-	desc = "A prototype field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
+	name = "field quantizer"
+	desc = "The prototype Type-FQ field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
 	icon_state = "fq-closed"
-	regular_desc = "A prototype field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
-	wrenched_desc = "A prototype field-emitting device used to delay resonant-field reharmonization. It's been manually secured to the floor."
+	regular_desc = "The prototype Type-FQ field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
+	wrenched_desc = "The prototype Type-FQ field-emitting device used to delay resonant-field reharmonization. It's been manually secured to the floor."
 	field_dilation = 6
 	max_intensity = 7
 	resclass = "fq"

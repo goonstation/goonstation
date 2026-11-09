@@ -1,6 +1,6 @@
 /obj/noticeboard
 	name = "notice board"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/noticeboard.dmi'
 	icon_state = "nboard00"
 	pixel_y = 32
 	desc = "A board for pinning important notices upon."

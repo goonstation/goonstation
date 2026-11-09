@@ -59,7 +59,7 @@ var/global/list/objects_using_dialogs
 		for(var/x in clients_operating)
 			C = x
 			if (C?.mob)
-				if (BOUNDS_DIST(C.mob, src) == 0)
+				if (in_interact_range(src, C.mob))
 					src.Attackhand(C.mob)
 				else
 					if (C.mob.mob_flags & USR_DIALOG_UPDATES_RANGE)
@@ -73,7 +73,7 @@ var/global/list/objects_using_dialogs
 		for(var/x in clients_operating)
 			C = x
 			if (C?.mob)
-				if (BOUNDS_DIST(C.mob, src) == 0)
+				if (in_interact_range(src, C.mob))
 					src.Attackhand(C.mob)
 				else
 					src.remove_dialog(C.mob)
@@ -83,7 +83,7 @@ var/global/list/objects_using_dialogs
 /obj/item/proc/updateSelfDialogFromTurf()	//It's weird, yes. only used for spy stickers as of now
 	if (length(clients_operating))
 		for(var/client/C in clients_operating)
-			if (C.mob && BOUNDS_DIST(C.mob, src) == 0)
+			if (C.mob && in_interact_range(src, C.mob))
 				src.AttackSelf(C.mob)
 
 		for_by_tcl(M, /mob/living/silicon/ai)

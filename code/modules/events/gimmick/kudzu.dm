@@ -28,8 +28,9 @@
 			boutput(user, "You plant the [src] on the [A].")
 			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
 			user.setStatus("kudzuwalk", INFINITE_STATUS)
+			global.get_master_kudzu_controller().grant_conversion()
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
-			message_ghosts("<b>Kudzu</b> has been planted at [log_loc(src.loc, ghostjump=TRUE)].")
+			GHOST.MESSAGE.send("<b>Kudzu</b> has been planted at [GHOST.MESSAGE.format_loc(src)].")
 			user.u_equip(src)
 			qdel(src)
 
@@ -127,6 +128,10 @@
 	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
+			if(istype(A, /obj/projectile))
+				var/obj/projectile/projectile = A
+				if(istype(projectile.proj_data, /datum/projectile/syringe/kudzu_thorn))
+					return 1
 			if (src.can_kudzu_walk(A) || istype(A, /obj/icecube/kudzu))
 				return 1
 			return 0
@@ -145,15 +150,14 @@
 		if (istype(T, /turf/space))
 			qdel(src)
 			return 1
-		else if (T)
+		..()
+		if (T)
 			T.temp_flags |= HAS_KUDZU
-
 			src.update_self()
 			if (src.run_life)
 				var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 				if (K)
 					K.kudzu += src
-		..()
 
 	set_loc(var/newloc as turf|mob|obj in world)
 		if (istype(newloc, /turf/space))
@@ -400,6 +404,7 @@
 		return
 
 /proc/get_master_kudzu_controller()
+	RETURN_TYPE(/datum/controller/process/kudzu)
 	for (var/datum/controller/process/kudzu/K in processScheduler.processes)
 		return K
 	return null

@@ -36,6 +36,8 @@
 			boutput(user, SPAN_ALERT("LOADING PREFAB."))
 			asset_loader.read_map(file2text(choice), landmark.x+1, landmark.y+1, landmark.z)
 			for(var/turf/T as anything in block(landmark.x+1, landmark.y+1, landmark.z, landmark.x+19, landmark.y+19, landmark.z))
+				astype(T, /turf/simulated)?.parent?.check_regroup()
+				air_master.groups_to_rebuild.Remove(astype(T, /turf/simulated)?.parent)
 				for(var/obj/O in T)
 					O.initialize(FALSE)
 					O.UpdateIcon()

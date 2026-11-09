@@ -53,7 +53,7 @@
 					return TRUE
 				logTheThing(LOG_COMBAT, user, "tries to feed [src] (owner's ckey [owner ? owner.ckey : null]) to [constructName(M)].")
 				return ..()
-		return FALSE
+		return EAT_CANCELLED
 
 	get_desc()
 		if (usr && (usr.traitHolder?.hasTrait("training_medical") || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH)))

@@ -33,8 +33,8 @@
 		var/datum/computer/folder/new_folder = new /datum/computer/folder()
 		new_folder.name = dir_name
 		new_folder.metadata["owner"] = src.read_user_field("name")
-		new_folder.metadata["permission"] = COMP_ALLACC & ~(COMP_WOTHER | COMP_DOTHER)
-		if (src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = path, "mkdir" = create_full), new_folder) != ESIG_SUCCESS)
+		new_folder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALLACCESS & ~(DWAINE::PERM::BIT::OTHER_WRITE | DWAINE::PERM::BIT::OTHER_EXECUTE)
+		if (src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = path, "mkdir" = create_full), new_folder) != DWAINE::ERR::SIG::SUCCESS)
 			new_folder.dispose()
 
 	mainframe_prog_exit

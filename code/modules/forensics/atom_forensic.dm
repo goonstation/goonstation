@@ -89,7 +89,7 @@
 /atom/proc/add_blood(atom/source, var/amount = 5)
 	var/b_uid = "--unidentified substance--"
 	var/b_type = "--unidentified substance--"
-	var/blood_color = "#FFFFFF"
+	var/blood_color = rgb(/datum/reagent/blood::fluid_r, /datum/reagent/blood::fluid_g, /datum/reagent/blood::fluid_b)
 	// Null is white so using the default color of red causes issues in cases of white blood
 
 	if (QDELETED(src) || QDELETED(source)) // Be safe

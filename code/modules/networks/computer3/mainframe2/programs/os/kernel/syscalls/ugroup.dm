@@ -1,16 +1,16 @@
 /datum/dwaine_syscall/ugroup
-	id = DWAINE_COMMAND_UGROUP
+	id = DWAINE::SYSCALL::UGROUP
 
 /datum/dwaine_syscall/ugroup/execute(sendid, list/data, datum/computer/file/file)
 	if (!sendid)
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	var/datum/computer/file/mainframe_program/caller_prog = src.kernel.master.processing[sendid]
 	if (!caller_prog || !isnum(data["group"]))
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	if (!caller_prog.useracc || !caller_prog.useracc.user_file)
-		return ESIG_NOUSR
+		return DWAINE::ERR::SIG::NOUSR
 
 	caller_prog.useracc.user_file.fields["group"] = clamp(0, data["group"], 255)
-	return ESIG_SUCCESS
+	return DWAINE::ERR::SIG::SUCCESS

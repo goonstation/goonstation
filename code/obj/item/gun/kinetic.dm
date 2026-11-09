@@ -72,7 +72,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
 			var/datum/projectile/ammo_type = src.ammo.ammo_type
-			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
+			if(ammo_type.coating)
+				. += "There are [src.ammo.amount_left] [ammo_type.coating.getName()]-coated [src.ammo.sname] bullets left!"
+			else
+				. += "There are [src.ammo.amount_left] bullets of [src.ammo.sname] left!"
 		else
 			. += "There are 0 bullets left!"
 		if (current_projectile)
@@ -119,7 +122,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(istype(b, /obj/item/ammo/bullets))
 			if(ON_COOLDOWN(src, "reload_spam", src.reload_cooldown))
 				return
-			switch (src.ammo.loadammo(b,src))
+			var/reload_type = src.ammo.loadammo(b,src)
+			switch (reload_type)
 				if(0)
 					user.show_text("You can't reload this gun.", "red")
 					return
@@ -143,7 +147,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					src.logme_temp(user, src, b)
 					return
 				if(AMMO_RELOAD_TYPE_SWAP)
-					switch (src.ammo.swap(b,src))
+					var/swap_type = src.ammo.swap(b,src)
+					switch (swap_type)
 						if(AMMO_SWAP_INCOMPATIBLE)
 							user.show_text("This ammo won't fit!", "red")
 							return
@@ -188,7 +193,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src.forensic_ID)
+							var/atom/casing = new src.current_projectile.casing(T, src)
+							if(src.ammo.ammo_type.coating)
+								casing.material_amt = src.ammo.ammo_type.coating_amount * GUN_KINETIC_MATERIAL_RATIO_CASING
+								casing.setMaterial(src.ammo.ammo_type.coating)
+							var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+							casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
+
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -204,7 +215,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src.forensic_ID)
+							var/atom/casing = new src.current_projectile.casing(T, src)
+							if(src.ammo.ammo_type.coating)
+								casing.material_amt = src.ammo.ammo_type.coating_amount * GUN_KINETIC_MATERIAL_RATIO_CASING
+								casing.setMaterial(src.ammo.ammo_type.coating)
+							var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+							casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -219,6 +235,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			user.inertia_dir = get_dir_accurate(target, user)
 			user.inertia_value = 1
 			step(user, user.inertia_dir) // Propel user in opposite direction
+
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		P.material?.triggerTemp(P, 500 KELVIN) // Gun barrels can get pretty hot
 
 	proc/eject_magazine(mob/user)
 		if (src.ammo.amount_left <= 0)
@@ -269,7 +289,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if(T)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
 				while (src.casings_to_eject > 0)
-					new src.current_projectile.casing(T, src.forensic_ID)
+					var/atom/casing = new src.current_projectile.casing(T, src)
+					if(src.ammo.ammo_type.coating)
+						casing.material_amt = src.ammo.ammo_type.coating_amount * GUN_KINETIC_MATERIAL_RATIO_CASING
+						casing.setMaterial(src.ammo.ammo_type.coating)
+
+					var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+					casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 					src.casings_to_eject--
 		return
 
@@ -284,6 +310,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the magazine cap, aborting.")
 			return 0
 		return 1
+
+	on_material_scan()
+		. = ..()
+		if(src.ammo?.ammo_type.coating)
+			return "Each bullet is coated in [src.ammo.ammo_type.coating_amount] unit\s of [src.ammo.ammo_type.coating]"
 
 ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/single_action
@@ -307,6 +338,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			return FALSE
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		. = ..()
+		hammer_cocked = FALSE
+		src.UpdateIcon()
+
+	shoot_point_blank(atom/target, mob/user, second_shot = 0)
 		. = ..()
 		hammer_cocked = FALSE
 		src.UpdateIcon()
@@ -382,6 +418,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
 	burn_possible = FALSE
+	tooltip_flags = REBUILD_USER
+	var/fired_by = null // The name of the gun that fired this casing, e.g. "SPES-12". If not null can be identified by anyone with Forensic Training
 
 	small
 		icon_state = "small"
@@ -446,7 +484,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		gray
 			icon_state = "shotgun_gray"
-			desc = "An gray shotgun shell."
+			desc = "A gray shotgun shell."
 
 		pipe
 			icon_state = "shotgun_pipe"
@@ -475,12 +513,20 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
-/obj/item/casing/New(loc, forensic_ID)
+/obj/item/casing/New(loc, obj/item/gun/firearm)
 	. = ..()
 	src.pixel_y += rand(-12,12)
 	src.pixel_x += rand(-12,12)
 	src.set_dir(pick(alldirs))
-	src.forensic_ID = forensic_ID
+	if(firearm)
+		//Only include the default name of the gun, some special names set randomly in new are confusing and labels shouldnt be readable
+		src.fired_by = initial(firearm.name)
+
+/obj/item/casing/get_desc(dist, mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if(src.fired_by && istype(H) && H.traitHolder.hasTrait("training_forensic"))
+		. += SPAN_NOTICE("<br>Your forensic intuition tells you it was fired by \an [src.fired_by].")
 
 //no caliber and ALL
 /obj/item/gun/kinetic/vgun
@@ -657,7 +703,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.22
 /obj/item/gun/kinetic/faith
 	name = "Faith"
-	desc = "'Cause ya gotta have Faith. A custom upgrade to the the Auklet .22 pocket pistol from Cormorant Precision Arms."
+	desc = "'Cause ya gotta have Faith. A custom upgrade to the Auklet .22 pocket pistol from Cormorant Precision Arms."
 	icon_state = "faith"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_22)
@@ -774,8 +820,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "\improper AKM Assault Rifle"
 	desc = "An old Cold War relic chambered in 7.62x39. Rusted, but not busted. Vast numbers were brought back into service for the Martian war."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
-	icon_state = "ak47"
-	item_state = "ak47"
+	icon_state = "akm"
+	item_state = "akm"
+	wear_state = "akm"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	contraband = 8
@@ -789,6 +836,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
+	has_empty_state = TRUE
 	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
@@ -900,6 +948,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/item/ammo/bullets/previous_ammo = ammo
+		. = ..()
+		if(!previous_ammo.ammo_type.is_same_ammo(b.ammo_type))
+			for(var/datum/projectile/bullet/proj in src.projectiles)
+				proj.coating = ammo.ammo_type.coating
+
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/auto))
@@ -1004,10 +1059,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	//warcrimes brought to you by bullets telling guns how to shoot!
 	attackby(obj/item/ammo/bullets/b, mob/user)
-		var/obj/previous_ammo = ammo
+		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_auto = current_projectile.fullauto_valid
-		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
+		. = ..()
+
+		// This gun has multiple modes, so apparently that means we have to go through this mess
+		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
 				if(mode_was_auto)
 					set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
@@ -1022,6 +1079,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				else
 					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/bullet_9mm/smg/auto)
+
+			// We created brand new ammo types for some reason, so if the ammo being inserted has a material then we have to reapply it (LorrMaster)
+			for(var/datum/projectile/bullet/proj in projectiles)
+				proj.coating = ammo.ammo_type.coating
 
 /obj/item/gun/kinetic/greasegun
 	name = "\improper Grease Gun"
@@ -1085,13 +1146,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	//copy pastes brought to you by bullets telling guns how to shoot!
 	attackby(obj/item/ammo/bullets/b, mob/user)
-		var/obj/previous_ammo = ammo
+		var/obj/item/ammo/bullets/previous_ammo = ammo
 		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
+		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type))  // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
 				set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
 			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm/smg))
 				set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
+			src.current_projectile.coating = ammo.ammo_type.coating // Apply the ammo's material to the newly created ammo type
 
 	proc/set_auto_delay(delay)
 		. = delay * 10
@@ -1287,7 +1349,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/makarov
 	name = "\improper PM Pistol"
-	desc = "An time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
+	desc = "A time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
 	icon_state = "makarov"
 	item_state = "makarov"
 	w_class = W_CLASS_SMALL
@@ -1332,6 +1394,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/veritate)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/veritate/burst)
 		..()
+
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/item/ammo/bullets/previous_ammo = ammo
+		. = ..()
+		if(!previous_ammo.ammo_type.is_same_ammo(b.ammo_type))
+			for(var/datum/projectile/bullet/proj in src.projectiles)
+				proj.coating = ammo.ammo_type.coating
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1694,7 +1763,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	click_sound = null
 
 	tranq
-		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine/single
+		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/thio/single
 
 	New()
 		ammo = new default_magazine
@@ -1758,6 +1827,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_REVOLVER_45)
 	spread_angle = 1
 	max_ammo_capacity = 7
+	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/c_45
 	recoil_strength = 11
 
@@ -1876,6 +1946,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		return 1
 
 	engineer
+		name = "SPES-6"
 		ammobag_magazines = list(/obj/item/ammo/bullets/a12/weak, /obj/item/ammo/bullets/a12)
 		New()
 			..()
@@ -2568,7 +2639,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	attackby(obj/item/b, mob/user)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
 			if(src.ammo.amount_left > 0)
-				boutput(user, SPAN_ALERT("The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!"))
+				boutput(user, SPAN_ALERT("The [src.name] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src.name]!"))
 				return
 			else
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)
@@ -3009,6 +3080,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 2
 	recoil_strength = 8
 
+	HELP_MESSAGE_OVERRIDE("Can be held with two hands to reduce recoil and improve accuracy.")
+
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
@@ -3126,10 +3199,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
-		var/obj/previous_ammo = ammo
+		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))  // was previous mode burst fire?
-		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
+		. = ..()
+
+		// This gun has multiple modes, so apparently that means we have to go through this mess
+		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
 				if(mode_was_burst) // we were in burst shot mode
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
@@ -3144,6 +3219,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				else // we were in single shot mode
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
+
+			// We created brand new ammo types for some reason, so if the ammo being inserted has a material then we have to reapply it (LorrMaster)
+			for(var/datum/projectile/bullet/proj in projectiles)
+				proj.coating = ammo.ammo_type.coating
 
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
@@ -3189,10 +3268,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
-		var/obj/previous_ammo = ammo
+		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))  // was previous mode burst fire?
-		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
+		. = ..()
+
+		// This gun has multiple modes, so apparently that means we have to go through this mess
+		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
 				if(mode_was_burst) // we were in burst shot mode
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
@@ -3214,6 +3295,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				else // we were in single shot mode
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
+
+			// We created brand new ammo types for some reason, so if the ammo being inserted has a material then we have to reapply it (LorrMaster)
+			for(var/datum/projectile/bullet/proj in projectiles)
+				proj.coating = ammo.ammo_type.coating
 
 	attack_self(mob/user)
 		..()	//burst shot has a slight spread.
@@ -3270,6 +3355,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/lmg/auto)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS)
 		..()
+
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/item/ammo/bullets/previous_ammo = ammo
+		. = ..()
+		if(!previous_ammo.ammo_type.is_same_ammo(b.ammo_type))
+			for(var/datum/projectile/bullet/proj in src.projectiles)
+				proj.coating = ammo.ammo_type.coating
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -3410,12 +3502,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	attackby(obj/item/b, mob/user)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
 			if((src.ammo.amount_left > 0 && !istype(current_projectile, /datum/projectile/bullet/grenade_shell)) || src.ammo.amount_left >= src.max_ammo_capacity)
-				boutput(user, SPAN_ALERT("The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!"))
+				boutput(user, SPAN_ALERT("The [src.name] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src.name]!"))
 				return
 			else
 				var/datum/projectile/bullet/grenade_shell/custom_shell = src.current_projectile
 				if(src.ammo.amount_left > 0 && istype(custom_shell) && custom_shell.get_nade().type != b.type)
-					boutput(user, SPAN_ALERT("The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!"))
+					boutput(user, SPAN_ALERT("The [src.name] has a different kind of grenade in the conversion chamber, and refuses to mix and match!"))
 					return
 				else
 					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)
@@ -3539,7 +3631,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 	recoil_strength = 10
 	recoil_max = 60
-	default_magazine = /obj/item/ammo/bullets/abg/two
+	default_magazine = /obj/item/ammo/bullets/abg/punchy/two
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
 
@@ -3549,7 +3641,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else if (prob(1))
 			desc = "Actually the Fulmar 1881 can't be called a true coach gun if it's sawn off, that would by definition make it a sawn-off. Meh, semantics."
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/abg)
+		set_current_projectile(new/datum/projectile/bullet/abg/punchy)
 		..()
 
 	birdshot

@@ -774,7 +774,7 @@
 	})
 "cj" = (
 /obj/disposalpipe/segment/vertical,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -1534,7 +1534,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/bent/west,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -2416,7 +2416,7 @@
 "gY" = (
 /obj/table/syndicate/auto,
 /obj/machinery/light/small/floor/frostedred,
-/obj/item/paper/postcard/mushroom{
+/obj/item/paper/image/postcard/mushroom{
 	name = "Space Station 12 postcard";
 	desc = "A tourism postcard advertising NanoTrasen's Space Station 12. The one that got blown up."
 	},
@@ -4628,11 +4628,11 @@
 	})
 "mJ" = (
 /obj/table/wood/auto/desk,
-/obj/item/paper/businesscard/mabinogi{
+/obj/item/paper/image/businesscard/mabinogi{
 	pixel_y = 7
 	},
-/obj/item/paper/businesscard/mabinogi,
-/obj/item/paper/businesscard/mabinogi{
+/obj/item/paper/image/businesscard/mabinogi,
+/obj/item/paper/image/businesscard/mabinogi{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor/twotone/black,
@@ -6162,7 +6162,7 @@
 "qA" = (
 /obj/table/wood/auto/desk,
 /obj/random_item_spawner/desk_stuff/some,
-/obj/item/paper/businesscard/cans,
+/obj/item/paper/image/businesscard/cans,
 /obj/machinery/light/incandescent/warm{
 	dir = 8;
 	pixel_x = -10
@@ -8329,7 +8329,7 @@
 	pixel_x = 10
 	},
 /obj/map/light/screen,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -8614,7 +8614,7 @@
 	})
 "wE" = (
 /obj/disposalpipe/segment/bent/west,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -11507,7 +11507,7 @@
 "Eu" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -13267,7 +13267,7 @@
 	})
 "IF" = (
 /obj/table/wood/auto,
-/obj/item/paper/businesscard/skulls,
+/obj/item/paper/image/businesscard/skulls,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -13544,14 +13544,6 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
-"Jn" = (
-/turf/unsimulated/grimycarpet,
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
 "Jo" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -13625,7 +13617,7 @@
 	})
 "Jv" = (
 /obj/stool/bench,
-/obj/item/paper/businesscard/banjo,
+/obj/item/paper/image/businesscard/banjo,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -16154,7 +16146,7 @@
 	})
 "Qf" = (
 /obj/disposalpipe/segment/horizontal,
-/turf/unsimulated/grimycarpet,
+/turf/unsimulated/floor/carpet/grime,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -22386,8 +22378,8 @@ Nc
 cj
 cj
 eq
-Jn
-Jn
+ul
+ul
 MV
 Qd
 Qd

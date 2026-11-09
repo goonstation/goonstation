@@ -231,6 +231,7 @@
 		reagents.add_reagent("water",10000)
 
 TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 8
 
 /obj/reagent_dispensers/watertank/fountain
@@ -889,6 +890,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	item_state = "flask"
 	initial_volume = 500
 	w_class = W_CLASS_BULKY
+	default_material = "plastic"
 	incompatible_with_chem_dispensers = 1
 	can_chug = 0
 

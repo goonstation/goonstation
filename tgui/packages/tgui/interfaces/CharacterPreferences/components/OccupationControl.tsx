@@ -117,7 +117,7 @@ export function OccupationControlContents(
   props: OccupationControlContentsProps,
 ) {
   const { occupationName } = props;
-  return occupationName === 'Clown' ? (
+  return occupationName.match('Clown') ? (
     <Box
       overflow="hidden"
       style={{

@@ -18,6 +18,8 @@ var/global/list/datum/zlevel/zlevels = null
 	var/z
 	/// gforce applied to all non-space tiles on this zlevel
 	var/gforce = 1
+	/// name displayed when someone ingame wants to know which z-level they are
+	var/display_name = "Unknown"
 
 	New(path, z)
 		..()
@@ -62,3 +64,27 @@ proc/init_zlevel_datums()
 	if (length(global.zlevels) >= Z_LEVEL_MINING)
 		global.set_zlevel_gforce(Z_LEVEL_MINING, GFORCE_EARTH_GRAVITY, FALSE)
 	#endif
+
+	// display_name-setting... god, i feel like i commit crimes here
+	for(var/datum/zlevel/manipulated_zlevel in global.zlevels)
+		var/name_to_set = "Unknown"
+		switch(manipulated_zlevel.z)
+			if (Z_LEVEL_STATION)
+				name_to_set = "[capitalize(station_or_ship())]"
+			if (Z_LEVEL_ADVENTURE)
+				name_to_set = "Restricted"
+			if (Z_LEVEL_DEBRIS)
+				#ifdef UNDERWATER_MAP
+				name_to_set = "Deep Trench"
+				#else
+				name_to_set = "Debris Field"
+				#endif
+			if (Z_LEVEL_MINING)
+				#ifdef UNDERWATER_MAP
+				name_to_set =  "Trench"
+				#else
+				name_to_set =  "Asteroid Field"
+				#endif
+			else
+				continue
+		manipulated_zlevel.display_name = name_to_set

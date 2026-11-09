@@ -5,7 +5,7 @@
 /mob/proc/checkContextActions(atom/target)
 	. = list()
 
-	if (isobj(target) && (isghostcritter(src) && target:object_flags & NO_GHOSTCRITTER))
+	if (isobj(target) && (isghostcritter(src) && target:object_flags & NO_GHOSTCRITTER && !(isghostdrone(src) && target:object_flags & GHOSTDRONE_ALLOWED)))
 		return
 
 	if(length(target?.contextActions))

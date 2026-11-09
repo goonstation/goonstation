@@ -918,7 +918,7 @@
 			logTheThing(LOG_DIARY, usr, "Set [constructTarget(target_client,"diary")]'s Antag tokens to [token_amt].")
 			success_msg = SPAN_INTERNAL("[key_name(user)] set [key_name(target_client)]'s Antag tokens to [token_amt].")
 		message_admins(success_msg)
-		system.reply("Antag tokens for [target_client] successfully [(token_amt <= 0) ? "cleared" : "set to " + token_amt]")
+		system.reply("Antag tokens for [target_client] successfully [(token_amt <= 0) ? "cleared" : "set to " + token_amt]", user)
 
 /datum/spacebee_extension_command/flavor_text
 	name = "flavortext"

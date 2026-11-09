@@ -34,6 +34,10 @@
 			if (src.is_npc)
 				ai_init()
 
+	disposing()
+		. = ..()
+
+
 /mob/living/carbon/human/npc/mutantrace
 	var/spawn_mutantrace
 

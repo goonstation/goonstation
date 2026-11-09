@@ -31,7 +31,7 @@
 			direct_parent = direct_parent_path
 		var/stable = !initial(atom_type.pass_unstable)
 
-		// Fail if this type is the first descendant of a unstable lineage to claim to be stable.
+		// Fail if this type is the first descendant of an unstable lineage to claim to be stable.
 		if(stable && direct_parent && initial(direct_parent.pass_unstable))
 			var/unstable_parent = predecessor_path_in_list(type, unstable_types)
 			if(unstable_parent)

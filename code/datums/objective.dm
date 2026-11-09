@@ -673,13 +673,18 @@ ABSTRACT_TYPE(/datum/objective/madness)
 /datum/objective/specialist/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
 	medal_name = "Manhattan Project"
+	var/static/detonation_successful = FALSE //Set to TRUE by any nuke that plays the station destruction cinematic
+
+	New(text, datum/mind/owner, datum/antagonist/antag_role)
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	check_completion()
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/N = ticker.mode
-			if (N && istype(N) && (N.finished == -1 || N.finished == -2))
-				return 1
-		return 0
+		return src.detonation_successful
 
 /datum/objective/specialist/absorb
 	medal_name = "Many names, many faces"
@@ -1045,7 +1050,7 @@ ABSTRACT_TYPE(/datum/objective/madness)
 		if(target_count > 1)
 			explanation_text = "Steal [target_count] [target_name] and have it anywhere on you or the Magpie at the end of the shift."
 		else
-			explanation_text = "Steal the [target_name] and have it anywhere on you or the Magpie you at the end of the shift."
+			explanation_text = "Steal the [target_name] and have it anywhere on you or the Magpie at the end of the shift."
 		return target_equipment
 
 	check_completion()

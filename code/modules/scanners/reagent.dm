@@ -100,6 +100,7 @@ TYPEINFO(/obj/item/device/reagentscanner)
 	throw_range = 10
 	m_amt = 200
 	var/scan_results = null
+	var/last_scan_timestamp = null
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	tooltip_flags = REBUILD_DIST
 
@@ -114,6 +115,7 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		SPAN_NOTICE("You scan [A] with [src]!"))
 
 		src.scan_results = scan_reagents(A, visible = TRUE)
+		src.last_scan_timestamp = time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")
 		tooltip_rebuild = TRUE
 
 		if (!isnull(A.reagents))
@@ -138,9 +140,20 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		if (isnull(src.scan_results))
 			boutput(user, SPAN_NOTICE("No previous scan results located."))
 			return
-		boutput(user, SPAN_NOTICE("Previous scan's results:<br>[src.scan_results]"))
+		src.print_report(user)
 
 	get_desc(dist)
 		if (dist < 3)
 			if (!isnull(src.scan_results))
 				. += "<br>[SPAN_NOTICE("Previous scan's results:<br>[src.scan_results]")]"
+
+	proc/print_report(mob/user)
+		if (!src.scan_results)
+			boutput(user, SPAN_ALERT("\The [src] has nothing to print — scan something first!"))
+			return
+		if (!ON_COOLDOWN(src, "print_receipt", 4 SECONDS))
+			var/obj/item/paper/P = new /obj/item/paper/thermal(user.loc)
+			P.name = "reagent scan report"
+			P.info = src.scan_results + "<br>--------------------------------<br>Taken At: [src.last_scan_timestamp]"
+			user.put_in_hand_or_eject(P)
+			playsound(src, 'sound/machines/printer_thermal.ogg', 25, TRUE)

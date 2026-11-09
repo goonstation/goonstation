@@ -108,6 +108,14 @@
 			busted = 0
 		return */
 
+/obj/machinery/vehicle/miniputt/unfueled
+	New()
+		. = ..()
+		qdel(src.fueltank)
+		src.fueltank = null
+		myhud.update_systems()
+		myhud.update_states()
+
 ////////armed civ putt
 
 /obj/machinery/vehicle/miniputt/pilot
@@ -772,12 +780,12 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 	onMaterialChanged()
 		if (src.material)
-			src.speedmod /= (1 / (1 - (src.material.getProperty("electrical") - 5) / 15))
+			src.speedmod /= (1 / (1 - (src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) - 5) / 15))
 		..()
 		if(istype(src.material))
-			src.maxhealth = max(75, src.material.getProperty("density") * 40)
+			src.maxhealth = max(75, src.material.getProperty(MATERIAL::PROPERTY::DENSITY) * 40)
 			src.health = maxhealth
-			src.speedmod *= (1 / 1 - (src.material.getProperty("electrical") - 5) / 15)
+			src.speedmod *= (1 / 1 - (src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) - 5) / 15)
 		return
 
 	attackby(obj/item/W, mob/living/user)
@@ -1442,7 +1450,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 				steps_moved++
 				if(prob((steps_moved-7) * 4 * (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT ? (1 - SHUTTLE_PERCENT_FROM_STATION) : 1)) && !succeeding) // failure becomes more likely as the shuttle gets farther
 					fail()
-				if (prob((steps_moved-7) * 6 * SHUTTLE_PERCENT_FROM_STATION))
+				if (prob((steps_moved-7) * 8 * SHUTTLE_PERCENT_FROM_STATION))
 					succeed()
 				sleep(0.4 SECONDS)
 	#undef SHUTTLE_PERCENT_FROM_STATION

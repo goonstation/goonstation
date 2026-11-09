@@ -233,6 +233,14 @@
 		if (prob(5))
 			src.personalized_stink = stinkString()
 
+	OnAdd()
+		. = ..()
+		holder.owner?.UpdateParticles(new/particles/stink_lines, "stink_lines_apocrine", KEEP_APART | RESET_TRANSFORM)
+
+	OnRemove()
+		holder.owner?.ClearSpecificParticles("stink_lines_apocrine")
+		. = ..()
+
 	OnLife(var/mult)
 		if(..()) return
 		if (owner.reagents.has_reagent("menthol"))

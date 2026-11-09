@@ -2,6 +2,7 @@
 #define STATUS_STRONG 2
 
 TYPEINFO(/obj/table)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
 	/// Determines what types this table will smooth with
 	var/smooth_list = null
 TYPEINFO_NEW(/obj/table)
@@ -20,8 +21,7 @@ TYPEINFO_NEW(/obj/table)
 	layer = OBJ_LAYER-0.1
 	provides_grip = TRUE
 	mat_changename = 1
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	var/parts_type = /obj/item/furniture_parts/table
 	default_material = null
 	uses_default_material_appearance = FALSE
@@ -64,6 +64,9 @@ TYPEINFO_NEW(/obj/table)
 		for (var/obj/O in loc)
 			if (isitem(O))
 				bonus += 4
+			if (istype(O, /obj/machinery/conveyor))
+				var/obj/machinery/conveyor/conveyor = O
+				conveyor.tableify(src)
 			if (istype(O, /obj/table) && O != src)
 				return
 			if (istype(O, /obj/rack))
@@ -153,7 +156,7 @@ TYPEINFO_NEW(/obj/table)
 			victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src]!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
-		src.material_trigger_when_attacked(victim, user, 1)
+		src.material_trigger_when_hit(victim, user, MATERIAL::IMPACT::MELEE)
 
 
 	/// Slam a dude on the table (gently, with great care)
@@ -202,7 +205,16 @@ TYPEINFO_NEW(/obj/table)
 			return
 		for(var/atom/movable/AM as anything in src.storage?.get_contents())
 			AM.set_loc(OL)
-		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
+
+		var/other_table = FALSE
+		for (var/obj/O in OL)
+			if (istype(O, /obj/table) || istype(O, /obj/rack))
+				other_table = TRUE
+			else if (istype(O, /obj/machinery/conveyor))
+				var/obj/machinery/conveyor/conveyor = O
+				conveyor.untableify()
+
+		if (!other_table)
 			var/area/Ar = OL.loc
 			for (var/obj/item/I in OL)
 				Ar.sims_score -= 4
@@ -243,7 +255,7 @@ TYPEINFO_NEW(/obj/table)
 			qdel(W)
 			return
 
-		else if (istype(W,/obj/item/sheet/wood))
+		else if (istype(W,/obj/item/sheet) && (W.material?.getMaterialFlags() & MATERIAL_WOOD))
 			if (istype(src, /obj/table/reinforced/bar)) //why must you be so confusing
 				return ..()
 			if (status != STATUS_STRONG || !istype(src, /obj/table/reinforced/auto))
@@ -310,7 +322,7 @@ TYPEINFO_NEW(/obj/table)
 						H.limbs.r_arm.sever()
 
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				src.material_trigger_when_attacked(user, user, 1)
+				src.material_trigger_when_hit(user, user, MATERIAL::IMPACT::MELEE)
 				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
@@ -483,6 +495,19 @@ TYPEINFO_NEW(/obj/table/wood/round)
 
 	auto
 		auto = 1
+
+TYPEINFO(/obj/table/wood/regal)
+TYPEINFO_NEW(/obj/table/wood/regal)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/wood/regal/auto)
+/obj/table/wood/regal
+	name = "fancy wooden table"
+	desc = "A table made from solid oak and polished to within an inch of its life."
+	icon = 'icons/obj/furniture/table_wood_regal.dmi'
+	parts_type = /obj/item/furniture_parts/table/wood/regal
+
+/obj/table/wood/regal/auto
+	auto = TRUE
 
 TYPEINFO(/obj/table/regal)
 TYPEINFO_NEW(/obj/table/regal)
@@ -1181,7 +1206,7 @@ TYPEINFO(/obj/table/glass)
 		victim.changeStatus("knockdown", 4 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src]!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
-		src.material_trigger_when_attacked(victim, user, 1)
+		src.material_trigger_when_hit(victim, user, MATERIAL::IMPACT::MELEE)
 		if ((prob(src.reinforced ? 60 : 80)) || (user.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
 			src.smash()
 			random_brute_damage(victim, rand(20,40),1)
@@ -1344,10 +1369,6 @@ TYPEINFO(/obj/table/glass)
 			interaction = interact
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner) && interaction != TABLE_LOCKPICK)
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1396,6 +1417,8 @@ TYPEINFO(/obj/table/glass)
 			if (TABLE_LOCKPICK)
 				verbing = "picking the lock on"
 				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
+		if (interaction != TABLE_LOCKPICK && owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 		owner.visible_message(SPAN_NOTICE("[owner] begins [verbing] [the_table]."))
 
 	onEnd()

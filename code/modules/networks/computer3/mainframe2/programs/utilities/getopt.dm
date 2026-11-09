@@ -135,9 +135,9 @@
 	return list(options, unaffected)
 
 /datum/computer/file/mainframe_program/utility/getopt/proc/message_reply_and_user(message)
-	var/list/data = list("command" = DWAINE_COMMAND_REPLY, "data" = message, "sender_tag" = "getopt")
+	var/list/data = list("command" = DWAINE::SYSCALL::REPLY, "data" = message, "sender_tag" = "getopt")
 	if (src.useracc)
 		data["term"] = src.useracc.user_id
 
-	if (src.signal_program(src.parent_task.progid, data) != ESIG_USR4)
+	if (src.signal_program(src.parent_task.progid, data) != DWAINE::ERR::SIG::USR4)
 		src.message_user(message)

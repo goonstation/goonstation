@@ -61,6 +61,8 @@
 var/global/datum/debugFileOutput/debugFileOutput = new()
 
 /client/Topic(href, href_list)
+	if (!usr || isnull(usr.client) || usr.client != src)
+		return
 	..()
 
 	if (href_list["action"] && href_list["action"] == "debugFileOutput" && href_list["file"] && href_list["message"])

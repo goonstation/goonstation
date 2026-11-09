@@ -380,7 +380,7 @@
 /obj/item/reagent_containers/food/snacks/candy/candy_apple,
 /obj/item/reagent_containers/food/snacks/condiment/ketchup,
 /obj/item/reagent_containers/food/snacks/condiment/ketchup,
-/obj/item/shaker/ketchup,
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup,
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
 "bu" = (
@@ -896,8 +896,8 @@
 	},
 /area/prefab/slimy_honk)
 "Mr" = (
-/obj/item/shaker/ketchup,
-/obj/item/shaker/ketchup,
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup,
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup,
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)

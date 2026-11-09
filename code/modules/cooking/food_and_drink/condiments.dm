@@ -1,5 +1,5 @@
-#define MAX_SHAKER_SHAKES 15
 // Condiments
+// for salt shakers / condiment bottles, see `applicator.dm`
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 /obj/item/reagent_containers/food/snacks/condiment
@@ -122,7 +122,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	name = "custard"
 	desc = "A perennial favourite of clowns."
 	icon_state = "custard"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 2
 	heal_amt = 3
 
@@ -169,134 +169,105 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 		..()
 		reagents.add_reagent("cholesterol", 20)
 
-/obj/item/shaker // todo: rewrite shakers to not be horrible hacky nonsense - haine
-	name = "shaker"
-	desc = "A little bottle for shaking things onto other things."
-	icon = 'icons/obj/foodNdrink/food.dmi'
-	icon_state = "shaker"
-	c_flags = ONBELT
-	w_class = W_CLASS_SMALL
-	g_amt = 10
-	var/stuff = null
-	var/stuff_name = null
-	var/shakes = 0
-	var/myVerb = "shake"
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment/jam)
+/obj/item/reagent_containers/food/snacks/condiment/jam
+	initial_reagents = list("sugar" = 50)//Contains zero percent juice
+	tasty=1
 
-	New()
-		. = ..()
-		var/datum/reagent/current_reagent = reagents_cache[src.stuff]
-		src.stuff_name = current_reagent.name
+/obj/item/reagent_containers/food/snacks/condiment/jam/cherryjam
+	name = "cherry jam"
+	desc = "The favored condiment of truth-telling founding fathers."
+	icon_state = "cherry-jam"
+	food_color = "#8D1422"
+	initial_reagents = list("sugar"=25,"juice_cherry"=25)
 
-	afterattack(atom/A, mob/user as mob)
-		if (src.shakes >= MAX_SHAKER_SHAKES)
-			user.show_text("[src] is empty!", "red")
-			return
-		if (istype(A, /obj/item/reagent_containers/food))
-			A.reagents.add_reagent("[src.stuff]", 2)
-			src.shakes ++
-			user.show_text("You put some [src.stuff_name] onto [A].")
-		else if (istype(A, /obj/item/reagent_containers/glass/beaker))
-			A.reagents.add_reagent("[src.stuff]", 5)
-			src.shakes += 5
-			user.show_text("You [src.myVerb] some [src.stuff_name] into [A]")
-		else
-			return ..()
+/obj/item/reagent_containers/food/snacks/condiment/jam/grapejam
+	name = "grape jam"
+	desc = "Now with extra purple!"
+	icon_state = "grape-jam"
+	food_color = "#5A1D8A"
+	initial_reagents = list("sugar"=25,"juice_grape"=25)
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (src.shakes >= MAX_SHAKER_SHAKES)
-			user.show_text("[src] is empty!", "red")
-			return
-		if (ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES))
-				H.tri_message(user, SPAN_ALERT("<b>[user]</b> uselessly [myVerb]s some [src.stuff_name] onto [H]'s headgear!"),\
-					SPAN_ALERT("[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff_name] onto your headgear! Okay then."),\
-					SPAN_ALERT("You uselessly [myVerb] some [src.stuff_name] onto [user == H ? "your" : "[H]'s"] headgear![user == H ? " Okay then." : null]"))
-				src.shakes ++
-				return
-			else
-				switch (src.stuff)
-					if ("salt")
-						logTheThing(LOG_COMBAT, user, "uses [src] on [constructTarget(H, "combat")] at [log_loc(user)].")
-						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s something into [H]'s eyes!"),\
-							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK THAT STINGS!</B>"),\
-							SPAN_ALERT("You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK THAT STINGS!</B>" : null]"))
-						random_brute_damage(user, 1)
-						H.change_eye_blurry(rand(10, 16))
-						H.take_eye_damage(rand(12, 16))
-						src.shakes ++
-						return
-					if ("pepper")
-						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s something onto [H]'s nose!"),\
-							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some pepper onto your nose! <B>Why?!</B>"),\
-							SPAN_ALERT("You [myVerb] some pepper onto [user == H ? "your" : "[H]'s"] nose![user == H ? " <B>Why?!</B>" : null]"))
-						H.emote("sneeze")
-						src.shakes ++
-						for (var/i = 1, i <= 30, i++)
-							SPAWN(50*i)
-								if (H && prob(20)) //Wire: Fix for Cannot execute null.emote().
-									H.emote("sneeze")
-						return
-					else
-						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s some [src.stuff_name] at [H]'s head!"),\
-							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some [src.stuff_name] at your head! Fuck!"),\
-							SPAN_ALERT("You [myVerb] some [src.stuff_name] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]"))
-						src.shakes ++
-						return
-		else if (istype(target, /mob/living/critter/small_animal/slug) && src.stuff == "salt")
-			target.visible_message(SPAN_ALERT("<b>[user]</b> [myVerb]s some salt onto [target] and it shrivels up!"),\
-			SPAN_ALERT("<b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b>"))
-			target.TakeDamage(null, 15, 15)
-			src.shakes ++
-			return
+/obj/item/reagent_containers/food/snacks/condiment/jam/strawberryjam
+	name = "strawberry jam"
+	desc = "Now with 50% less straw."
+	icon_state = "strawberry-jam"
+	food_color = "#8D1422"
+	initial_reagents = list("sugar"=25,"juice_strawberry"=25)
 
-		else
-			return ..()
+/obj/item/reagent_containers/food/snacks/condiment/jam/applejam
+	name = "apple jam"
+	desc = "Sweet and crisp, with a hint of tartness."
+	icon_state = "apple-jam"
+	food_color = "#D3CB21"
+	initial_reagents = list("sugar"=25,"juice_apple"=25)
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/))
-			if (W.reagents.has_reagent("[src.stuff]") && W.reagents.get_reagent_amount("[src.stuff]") >= src.shakes)
-				user.show_text("You refill [src].", "blue")
-				W.reagents.remove_reagent("[src.stuff]", src.shakes)
-				src.shakes = 0
-				return
-			else
-				user.show_text("There isn't enough [src.stuff_name] in here to refill [src]!", "red")
-				return
-		else
-			return ..()
+/obj/item/reagent_containers/food/snacks/condiment/jam/blueberryjam
+	name = "blueberry jam"
+	desc = "Dark and smooth, with a nostalgic aroma."
+	icon_state = "blueberry-jam"
+	food_color = "#3021C8"
+	initial_reagents = list("sugar"=25,"juice_blueberry"=25)
 
-	salt
-		name = "salt shaker"
-		desc = "A little bottle for shaking things onto other things. It has some salt in it."
-		icon_state = "shaker-salt"
-		stuff = "salt"
+/obj/item/reagent_containers/food/snacks/condiment/jam/pearjam
+	name = "pear jam"
+	desc = "No relation to any grunge bands."
+	icon_state = "pear-jam"
+	food_color = "#D3CB21"
+	initial_reagents = list("sugar"=25,"juice_pear"=25)
 
-	pepper
-		name = "pepper shaker"
-		desc = "A little bottle for shaking things onto other things. It has some pepper in it."
-		icon_state = "shaker-pepper"
-		stuff = "pepper"
+/obj/item/reagent_containers/food/snacks/condiment/jam/peachjam
+	name = "peach jam"
+	desc = "Peachy and jammy."
+	icon_state = "peach-jam"
+	food_color = "#D37610"
+	initial_reagents = list("sugar"=25,"juice_peach"=25)
 
-	ketchup
-		name = "ketchup bottle"
-		desc = "A little bottle for putting condiments on stuff. It has some ketchup in it."
-		icon_state = "bottle-ketchup"
-		stuff = "ketchup"
-		myVerb = "squirt"
+/obj/item/reagent_containers/food/snacks/condiment/jam/orangejam
+	name = "orange jam"
+	desc = "Zesty and juicy."
+	icon_state = "orange-jam"
+	food_color = "#D37610"
+	initial_reagents = list("sugar"=25,"juice_orange"=25)
 
-	mustard
-		name = "mustard bottle"
-		desc = "A little bottle for putting condiments on stuff. It has some mustard in it."
-		icon_state = "bottle-mustard"
-		stuff = "mustard"
-		myVerb = "squirt"
+/obj/item/reagent_containers/food/snacks/condiment/jam/raspberryjam
+	name = "raspberry jam"
+	desc = "Tangy and sweet with a floral aroma."
+	icon_state = "raspberry-jam"
+	food_color = "#A30325"
+	initial_reagents = list("sugar"=25,"juice_raspberry"=25)
 
-	barbecue
-		name = "barbecue sauce bottle"
-		desc = "A little bottle for putting condiments on stuff. It has some barbecue sauce in it."
-		icon_state = "bottle-barbecue"
-		stuff = "barbecue_sauce"
-		myVerb = "squirt"
+/obj/item/reagent_containers/food/snacks/condiment/jam/signaljam
+	name = "signal jam"
+	desc = "May contain trace amounts of noise."
+	icon_state = "signal-jam"
+	food_color = "#359702"
+	initial_reagents = list("sugar"=25,"silicon"=20,"copper"=5)
 
-#undef MAX_SHAKER_SHAKES
+	afterattack(atom/target, mob/user, flag)
+		if (istype(target, /obj/item/device/radio/headset/))
+			user.visible_message(SPAN_NOTICE("[user] spreads the jam on the headset, getting it all sticky. Gross."), SPAN_NOTICE("You spread the jam on the headset, getting it all sticky. Gross."))
+			playsound(src, 'sound/impact_sounds/slimy_hit_3.ogg', 60, TRUE)
+			qdel (src)
+		else return
+
+/obj/item/reagent_containers/food/snacks/condiment/jam/mintjam
+	name = "mint jam"
+	desc = "Tastes a little like toothpaste."
+	icon_state = "mint-jam"
+	food_color = "#308F5D"
+	initial_reagents = list("sugar"=25,"mint"=25)
+
+/obj/item/reagent_containers/food/snacks/condiment/jam/spacejam
+	name = "space jam"
+	desc = "Widely regarded as a slam dunk."
+	icon_state = "space-jam"
+	food_color = "#1E173D"
+	initial_reagents = list("sugar"=25,"luminol"=25)
+
+/obj/item/reagent_containers/food/snacks/condiment/jam/paperjam
+	name = "paper jam"
+	desc = "Nemesis of printers everywhere."
+	icon_state = "paper-jam"
+	food_color = "#FFFFFF"
+	initial_reagents = list("sugar"=25,"paper"=25)

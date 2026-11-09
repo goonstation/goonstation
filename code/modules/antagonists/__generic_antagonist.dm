@@ -2,7 +2,7 @@
 	popup_name_override = "traitorgeneric"
 	succinct_end_of_round_antagonist_entry = TRUE
 	display_name = "generic antagonist"
-	var/grouped_name
+	var/grouped_name = "Generic Antagonists"
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, id, display_name)
 		if (!src.id)
@@ -58,8 +58,12 @@
 
 		. = ..()
 
-
 /datum/antagonist/generic/syndicate_agent/commander
 	id = ROLE_SYNDICATE_COMMANDER
 	antagonist_icon = "syndcomm"
 	display_name = "syndicate commander"
+
+/datum/antagonist/generic/syndicate_agent/monkey
+	id = ROLE_SYNDICATE_MONKEY
+	display_name = "syndicate monkey agent"
+	popup_name_override = "traitormonkey"

@@ -70,7 +70,7 @@
 /turf/simulated/floor/concrete,
 /area/noGenerate)
 "o" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/noGenerate)
 "p" = (
 /obj/decal/tile_edge/line/orange{
@@ -143,6 +143,12 @@
 "D" = (
 /obj/machinery/drainage,
 /obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"E" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/concrete,
 /area/noGenerate)
 "F" = (
@@ -417,7 +423,7 @@ F
 (8,1,1) = {"
 F
 o
-A
+E
 A
 V
 J

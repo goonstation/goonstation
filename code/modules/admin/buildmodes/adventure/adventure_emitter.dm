@@ -17,8 +17,9 @@
 		L.light.set_color(r,g,b)
 		L.light.set_brightness(l)
 		L.on()
-		L.set_dir(holder.dir)
-		L.onVarChanged("dir", SOUTH, L.dir)
+		if(src.holder.dir)
+			L.set_dir(holder.dir)
+			L.onVarChanged("dir", SOUTH, L.dir)
 		blink(L.loc)
 		L.setup_light()
 

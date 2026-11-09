@@ -4,6 +4,7 @@
 var/global/station_tether_gforce = 0
 
 TYPEINFO(/obj/machinery/gravity_tether/station)
+	analyser_flags = ANALYSER_BLACKLIST
 	mats = list("metal" = 50,
 				"crystal_dense" = 50,
 				"metal_superdense" = 40,
@@ -23,7 +24,6 @@ TYPEINFO(/obj/machinery/gravity_tether/station)
 	passive_wattage_per_g_quantum = 75 WATTS
 	uses_area_power = TRUE
 	locked = TRUE
-	mechanics_interaction = MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE
 
 /obj/machinery/gravity_tether/station/New()
 	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."
@@ -88,7 +88,11 @@ TYPEINFO(/obj/machinery/gravity_tether/station)
 
 /obj/machinery/gravity_tether/station/begin_gravity_change(new_intensity)
 	. = ..()
-	if (src.do_announcement && !global.check_for_radio_jammers(src)) // TODO: Make this a real packet to the announcement computer
+	if (global.check_for_radio_jammers(src))
+		return
+	if (global.current_state < GAME_STATE_PLAYING)
+		return
+	if (src.do_announcement) // TODO: Make this a real packet to the announcement computer
 		command_alert("The [station_or_ship()]-wide gravity tether will begin shifting to [new_intensity/100]G in [time_to_text(src.change_begin_time-TIME)].", "Gravity Change Warning", alert_origin = ALERT_STATION)
 	else // reset for next person
 		src.do_announcement = TRUE

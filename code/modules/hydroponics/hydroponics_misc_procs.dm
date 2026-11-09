@@ -243,8 +243,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 	var/generation = 0
 
 	if(P.cantscan)
-		boutput(user, SPAN_ALERT("<B>ERROR:</B> Genetic structure not recognized. Cannot scan."))
-		return
+		return SPAN_ALERT("<B>ERROR:</B> Genetic structure not recognized. Cannot scan.")
 
 	if(istype(scanned, /obj/machinery/plantpot))
 		var/obj/machinery/plantpot/PP = scanned
@@ -319,8 +318,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		if(gene_strains.len)
 			message += "[MUT ? "" : "<br>"]<font color='red'><b>Gene strains detected[show_gene_strain ? ": " + gene_strains.Join(", ") : ", advanced analysis required."]</b></font>"
 
-	boutput(user, message)
-	return
+	return message
 
 proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/machinery/plantpot/PP, var/frequencymult = 1, var/obj/item/seed/S = null)
 	// The check to see if a new mutation will be generated. The criteria check for whether
@@ -367,7 +365,7 @@ proc/HYPCheckCommut(var/datum/plantgenes/DNA,var/searchtype)
 proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequencymult = 1)
 	// This is the proc for checking if a new random gene strain will appear in the plant.
 	if(!P || !DNA) return
-	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
+	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer) || HYPCheckCommut(DNA,/datum/plant_gene_strain/commutblocker))
 		return
 	if(length(P.commuts) > 0)
 		var/datum/plant_gene_strain/MUT = null
@@ -388,7 +386,7 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequency
 			//now, if the gene strain needs to do anything, we do it now
 			MUT.on_addition(DNA)
 
-proc/HYPaddCommut(var/datum/plantgenes/DNA, var/commut)
+proc/HYPaddCommut(var/datum/plantgenes/DNA, var/commut, var/always_add = FALSE) //always_add overrides the effects of commutblocker
 	// And this one is for forcibly adding specific strains.
 	if(!DNA || !commut) return
 	if(!ispath(commut)) return
@@ -399,13 +397,13 @@ proc/HYPaddCommut(var/datum/plantgenes/DNA, var/commut)
 	var/datum/plant_gene_strain/added_commut = HY_get_strain_from_path(commut)
 	// create a new list here (i.e. do not use +=) so as to not affect related seeds/plants
 	if(added_commut)
-		if(DNA.commuts)
-			DNA.commuts = DNA.commuts + added_commut
-		else
-			DNA.commuts = list(added_commut)
-		//now, if the gene strain needs to do anything, we do it now
-		added_commut.on_addition(DNA)
-
+		if (always_add || !HYPCheckCommut(DNA,/datum/plant_gene_strain/commutblocker))
+			if(DNA.commuts)
+				DNA.commuts = DNA.commuts + added_commut
+			else
+				DNA.commuts = list(added_commut)
+			//now, if the gene strain needs to do anything, we do it now
+			added_commut.on_addition(DNA)
 
 proc/HYPremoveCommut(var/datum/plantgenes/DNA, var/commut)
 	// And this one is for forcibly removing specific strains.
@@ -417,8 +415,6 @@ proc/HYPremoveCommut(var/datum/plantgenes/DNA, var/commut)
 	if(removed_commut)
 		DNA.commuts = DNA.commuts - removed_commut
 		removed_commut.on_removal(DNA)
-
-
 
 proc/HYPmutateDNA(var/datum/plantgenes/DNA,var/severity = 1)
 	// This proc jumbles up the variables in a plant's genes. It's fundamental to breeding.
@@ -463,9 +459,7 @@ proc/HYPstat_rounding(var/input_number)
 	return trunc(input_number) + (prob(fract(input_number) * 100) * sign(input_number))
 
 // Quick proc for phytoscopic glasses
-proc/HYPphytoscopic_scan(var/mob/user, var/atom/target, var/do_return = FALSE)
+proc/HYPphytoscopic_scan(var/mob/user, var/atom/target)
 	var/show_gene_strain = GET_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) >= PHYTOVISION_UPGRADED ? TRUE : FALSE
 	if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) || show_gene_strain)
-		if(do_return)
-			return scan_plant(target, user, FALSE, show_gene_strain)
-		boutput(user, scan_plant(target, user, FALSE, show_gene_strain))
+		return scan_plant(target, user, FALSE, show_gene_strain)

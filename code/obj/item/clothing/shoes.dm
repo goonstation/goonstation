@@ -196,6 +196,7 @@
 	icon_state = "pink"
 
 TYPEINFO(/obj/item/clothing/shoes/magnetic)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 4,
 			"conductive" = 8,
 			"fabric" = 3,
@@ -266,7 +267,7 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		return TRUE
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.
@@ -285,6 +286,7 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 		delProperty("chemprot")
 
 TYPEINFO(/obj/item/clothing/shoes/industrial)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 15,
 				"conductive_high" = 10,
 				"energy_high" = 10)
@@ -356,6 +358,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	step_priority = 999
 	var/list/crayons = list() // stonepillar's crayon project
 	var/max_crayons = 5
+	var/crayonwalk_chance = 10
 
 	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pen/crayon))
@@ -408,6 +411,12 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			return
 		return ..()
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.max_crayons == initial(src.max_crayons))
+			src.max_crayons = INFINITY
+			src.crayonwalk_chance = 50
+			boutput(user, SPAN_NOTICE("Somehow you open up a crayon pocket dimension in [src]"))
+
 	autumn
 		name = "autumn clown shoes"
 		desc = "Wouldn't want to leaf these behind."
@@ -453,6 +462,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
 TYPEINFO(/obj/item/clothing/shoes/moon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 2
 
 /obj/item/clothing/shoes/moon
@@ -476,6 +486,8 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	icon_state = "cowboy"
 	compatible_species = list("human", "cow")
 
+TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
@@ -483,7 +495,6 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999
-	is_syndicate = 1
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -550,6 +561,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "chef's clogs"
 	desc = "Sturdy shoes that minimize injury from falling objects or knives."
 	icon_state = "chef"
+	default_material = "wood"
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
@@ -565,7 +577,6 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	protective_temperature = 1250
 	step_sound = "step_military"
 	step_priority = STEP_PRIORITY_LOW
-	step_lots = 1
 	kick_bonus = 2
 
 	setupProperties()
@@ -615,6 +626,13 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 		else
 			. = "Looks like some big shoes to fill!"
 		. = ..()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(src.step_sound != "clownstep")
+			src.step_lots = 1
+			src.step_sound = "clownstep"
+			src.step_priority = /obj/item/clothing/shoes/clown_shoes::step_priority
+			boutput(user, SPAN_NOTICE("You scramble the speakers installed in [src]"))
 
 /obj/item/clothing/shoes/swat/heavy/clown
 	name = "heavy clown boots"
@@ -791,16 +809,16 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.hasProperty("thermal"))
-				protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
-				setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
-				setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+			if(src.material.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+				protective_temperature = (100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) ** 1.65
+				setProperty("coldprot", round((100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 0.1))
+				setProperty("heatprot", round((100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 0.1))
 			else
 				protective_temperature = 0
 				setProperty("coldprot", 0)
 				setProperty("heatprot", 0)
-			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
-				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 1500)
+			if(src.material.hasProperty(MATERIAL::PROPERTY::HARDNESS) && src.material.hasProperty(MATERIAL::PROPERTY::DENSITY))
+				kick_bonus = round((src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) * src.material.getProperty(MATERIAL::PROPERTY::DENSITY)) / 1500)
 			else
 				kick_bonus = 0
 		return
@@ -926,3 +944,26 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	setupProperties()
 		..()
 		setProperty("vault_speed", vault_speed_bonus)
+
+/obj/item/clothing/shoes/derby
+	name = "derby shoes"
+	desc = "Open-laced leather shoes with a slight heel and made with real artificial leather."
+	icon_state = "derby"
+
+/obj/item/clothing/shoes/stiletto_boots
+	name = "stiletto boots"
+	desc = "Not to be wielded like the daggers which their name comes from."
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	icon_state = "stiletto_boots"
+	step_sound = "footstep"
+	step_priority = STEP_PRIORITY_LOW
+
+	force = 3
+	throwforce = 7
+	throw_speed = 2
+	throw_range = 4
+	stamina_damage = 10
+	stamina_cost = 15
+	stamina_crit_chance = 30
+	hit_type = DAMAGE_STAB
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'

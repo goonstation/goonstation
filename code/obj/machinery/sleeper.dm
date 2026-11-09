@@ -281,13 +281,13 @@ TYPEINFO(/obj/machinery/sleeper)
 		..()
 		src.UpdateIcon()
 		SPAWN(0.6 SECONDS)
+			src.net_id = format_net_id("\ref[src]")
 			if (src && !src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if (test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
-			src.net_id = format_net_id("\ref[src]")
+					src.link.set_master(src, src.net_id)
 
 	disposing()
 		if(occupant)
@@ -706,7 +706,11 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	examine()
 		. = ..()
-		. += "Home turf: [get_area(src.homeloc)]."
+		var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+		var/area/A = get_area(src.homeloc)
+		if (istype(A, /area/station))
+			area_string = A.name
+		. += "Home turf: [area_string]."
 
 	// Could be useful (Convair880).
 	mouse_drop(over_object, src_location, over_location)
@@ -746,8 +750,15 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		return
 	if (!occupant)
 		return
+	var/home_string = "Off-[global.station_or_ship()] Location"
+	if (!src.homeloc) // ???
+		home_string = "N/A"
+	else
+		var/area/home_area = get_area(src.homeloc)
+		if (istype(home_area, /area/station))
+			home_string = home_area.name
 
-	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
+	var/PDAalert = "[src.name] has returned to [home_string] with a "
 	var/alertgroup = MGA_MEDCRIT
 	if (isdead(occupant))
 		PDAalert += "deceased body - please process the occupant as soon as possible."

@@ -154,8 +154,8 @@
 		. = ..()
 		if(ismob(owner))
 			if(src.power > 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src, 40)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src, 40)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src)
 
 	heal
 		id = "resist_electric_heal"
@@ -205,6 +205,15 @@
 	msgLose = "You feel like you could use a stiff drink."
 	degrade_to = "drunk"
 	icon_state  = "alc_res"
+
+	OnAdd()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src, 100)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src)
+		. = ..()
+
 
 /datum/bioEffect/toxres
 	name = "Toxic Resistance"
@@ -353,7 +362,7 @@
 			roundedmult += round(roundedmultremainder)
 			roundedmultremainder = roundedmultremainder % 1
 		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
-			if (rand(1, regrow_prob) <= power)
+			if (regrow_prob && rand(1, regrow_prob) <= power)
 				if (ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if (H.limbs)
@@ -708,56 +717,6 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 
-/datum/bioEffect/xray
-	name = "X-Ray Vision"
-	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
-	id = "xray"
-	effectType = EFFECT_TYPE_POWER
-	probability = 33
-	blockCount = 3
-	blockGaps = 5
-	reclaim_mats = 40
-	msgGain = "You suddenly seem to be able to see through everything."
-	msgLose = "Your vision fades back to normal."
-	lockProb = 40
-	lockedGaps = 1
-	lockedDiff = 3
-	lockedChars = list("G","C","A","T")
-	lockedTries = 8
-	stability_loss = 20
-	degrade_to = "bad_eyesight"
-	icon_state  = "eye"
-	effect_group = "vision"
-
-	OnAdd()
-		. = ..()
-		if(ismob(owner))
-			if(power == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-	onPowerChange(oldval, newval)
-		. = ..()
-		if(ismob(owner))
-			if(oldval == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-			if(newval == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-	OnRemove()
-		. = ..()
-		if(ismob(owner))
-			if(power == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
 /datum/bioEffect/nightvision
 	name = "Night Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see in the dark."
@@ -1099,12 +1058,12 @@
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 		else
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 
 	OnRemove()
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 		. = ..()
 
 // hair_override gene
@@ -1171,6 +1130,8 @@
 		var/turf/T = get_turf(src.owner)
 		if (!istype(T) || src.owner.traction == TRACTION_NONE)
 			return
+		if (!src.owner.hasStatus("undertable") && (locate(/obj/table) in T)) // skittering is for getting under tables, not across them
+			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return
 		src.owner.visible_message(SPAN_ALERT("[src.owner] skitters away!"))
@@ -1227,6 +1188,8 @@
 	VAR_PRIVATE/burp_counter = 0
 	///Stored to keep UpdateOverlays calls to a minimum
 	VAR_PRIVATE/eye_state = -1
+	//Doesn't drain, doesn't generate electricity, just does the weird plasma effects
+	var/passive = FALSE
 
 	OnLife(mult)
 		. = ..()
@@ -1243,8 +1206,11 @@
 		if (prob(20))
 			return
 		ON_COOLDOWN(src.owner, "plasma_electricity", 7 SECONDS)
-		src.material -= 5
+		if (!src.passive || src.material > 20)
+			src.material -= 5
 		src.update_eyes()
+		if (src.passive)
+			return
 		var/obj/item/found_item = null
 		if (prob(15)) //most of the time we try to ground into an item, sometimes it misses
 			boutput(src.owner, SPAN_ALERT("Electricty arcs wildly from your fingers!"))
@@ -1309,7 +1275,7 @@
 			return
 		var/new_eye_state
 		switch (src.material)
-			if (1 to 20)
+			if (1 to 15)
 				new_eye_state = 1
 			if (15 to INFINITY)
 				new_eye_state = 2
@@ -1330,7 +1296,7 @@
 		if (src.eye_state >= 2 && prob(10))
 			src.owner.AddComponent(\
 				/datum/component/hallucination/random_image_override,\
-				timeout = 20,\
+				timeout = 15,\
 				image_list = list(\
 					image('icons/turf/floors.dmi', "void")\
 				),\
@@ -1347,3 +1313,12 @@
 		src.owner.ClearSpecificOverlays("plasma_eyes")
 		src.owner.remove_color_matrix(COLOR_MATRIX_PLASMA_MADNESS_LABEL, 1 SECOND)
 		. = ..()
+
+/datum/bioEffect/plasma_metabolism/passive
+	id = "plasma_metabolism_passive"
+	passive = TRUE
+	effect_group = null
+
+	New(for_global_list)
+		. = ..()
+		src.material = 16

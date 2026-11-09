@@ -25,6 +25,10 @@
 		os_call(var/list/call_list, var/datum/computer/file/terminal_program/caller_prog, var/datum/computer/file/file)
 			return (!master || master.status & (NOPOWER|BROKEN) || !caller_prog || !call_list)
 
+		/// Perform any OS-specific first time setup on the filesystem
+		proc/setup_disk(obj/item/disk/data/fixed_disk/hd)
+			return
+
 	termapp //Small applications for the "termos" computer3s.
 		name = "blank terminal app"
 		extension = "TAPP"
@@ -286,21 +290,15 @@
 						else
 							return null
 
-					if ("fd0")
-						if (master.diskette)
-							current = master.diskette.root
-						else
-							return null
-
 					else
-						if (cmptext(copytext(., 1, 3), "sd"))
+						if (cmptext(copytext(., 1, 3), "fd"))
 							. = text2num_safe(copytext(., 3))
 							if (!isnum(.))
 								return null
 
 							.++
 							for (var/obj/item/disk/data/drive in master.contents)
-								if (drive == master.hd || drive == master.diskette)
+								if (drive == master.hd)
 									continue
 
 								if (--. < 1)
@@ -362,21 +360,15 @@
 						else
 							return null
 
-					if ("fd0")
-						if (master.diskette)
-							current = master.diskette.root
-						else
-							return null
-
 					else
-						if (cmptext(copytext(., 1, 3), "sd"))
+						if (cmptext(copytext(., 1, 3), "fd"))
 							. = text2num_safe(copytext(., 3))
 							if (!isnum(.))
 								return null
 
 							.++
 							for (var/obj/item/disk/data/drive in master.contents)
-								if (drive == master.hd || drive == master.diskette)
+								if (drive == master.hd)
 									continue
 
 								if (--. < 1)

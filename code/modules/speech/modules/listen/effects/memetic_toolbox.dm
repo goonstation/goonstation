@@ -11,4 +11,4 @@
 		if (!M || (M == message.speaker))
 			continue
 
-		boutput(M, "<i><b><font color=blue face=Tempus Sans ITC>[message.content]</font></b></i>")
+		boutput(M, "<i><b><font color=blue face=Tempus Sans ITC>[message.get_content()]</font></b></i>")

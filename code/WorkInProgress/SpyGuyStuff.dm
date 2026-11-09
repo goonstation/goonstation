@@ -806,7 +806,7 @@ proc/Create_Tommyname()
 	var/turf/T = turf_type
 	src.name = initial(T.name)
 	src.desc = initial(T.desc)
-	src.icon = initial(T.icon)
+	src.icon = get_initial_icon(T)
 	src.icon_state = initial(T.icon_state)
 	src.set_density(initial(T.density))
 	src.set_opacity(initial(T.opacity))
@@ -861,9 +861,12 @@ proc/Create_Tommyname()
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
 
-	HELP_MESSAGE_OVERRIDE({"Use the garrot wire in hand to hold it with two hands, then place yourself behind your target.
-							Click them with the wire to attempt to grab them.
-							While a target is being strangled, use the wire in hand to inflict more damage and bleed in addition to the suffocation."})
+	HELP_MESSAGE_OVERRIDE({"\
+		The fibre wire may be used in-hand to stretch it between two hands. A readied fibre wire may be \
+		used to garrote a target from behind; this will immediately place them into a deadly chokehold \
+		and will prevent their gasps and screams from being heard through walls.
+	"})
+
 
 	New()
 		..()
@@ -985,6 +988,7 @@ proc/Create_Tommyname()
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
 	irresistible = 1
+	muffle_affecting = TRUE
 
 	check()
 		if(!assailant || !affecting)

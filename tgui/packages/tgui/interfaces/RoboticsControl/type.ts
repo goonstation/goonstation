@@ -1,8 +1,9 @@
 import type { BooleanLike } from 'tgui-core/react';
-
 export interface RoboticsControlData {
   user_is_ai: BooleanLike;
   user_is_cyborg: BooleanLike;
+  can_killswitch: BooleanLike;
+  can_lockdown: BooleanLike;
   ais: AIData[];
   cyborgs: CyborgData[];
   ghostdrones: GhostdroneData[];
@@ -13,6 +14,9 @@ export interface AIData {
   mob_ref: string;
   status: Status;
   killswitch_time: number | null;
+  cell_charge: number | null;
+  cell_maxcharge: number | null;
+  brain_status: string;
 }
 
 export interface CyborgData {
@@ -21,7 +25,7 @@ export interface CyborgData {
   status: Status;
   cell_charge: number | null;
   cell_maxcharge: number | null;
-  missing_brain: BooleanLike;
+  brain_status: string;
   module: string | null;
   lock_time: number | null;
   killswitch_time: number | null;

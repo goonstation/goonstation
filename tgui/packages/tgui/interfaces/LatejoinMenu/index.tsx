@@ -166,7 +166,7 @@ const JobContents = (props: JobData) => {
 };
 
 function getJobContentsProps(job_name: string) {
-  if (job_name === 'Clown') {
+  if (job_name.match('Clown')) {
     return {
       grow: true,
       overflow: 'hidden',

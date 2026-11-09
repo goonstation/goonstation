@@ -106,7 +106,7 @@
 /obj/lootbox
 	name = "Lootcase"
 	desc = "What wondrous items await you? Who knowwwwsss"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "attachecase"
 	var/used = 0
 	anchored = UNANCHORED

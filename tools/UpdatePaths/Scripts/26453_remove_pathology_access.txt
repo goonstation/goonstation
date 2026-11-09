@@ -1,0 +1,1 @@
+/obj/mapping_helper/access/pathology : /obj/mapping_helper/access/medical{@OLD}

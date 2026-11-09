@@ -3,7 +3,7 @@
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
 
 TYPEINFO(/obj/machinery/ghost_catcher)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/ghost_catcher
 	name = "ghost catcher"
@@ -123,7 +123,7 @@ var/global/list/available_ghostdrones = list()
 var/global/list/ghostdrone_candidates = list()
 
 TYPEINFO(/obj/machinery/ghostdrone_factory)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/ghostdrone_factory
 	name = "drone factory"
@@ -324,7 +324,7 @@ TYPEINFO(/obj/machinery/ghostdrone_factory)
 	factory_section = 3
 
 TYPEINFO(/obj/item/ghostdrone_assembly)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/ghostdrone_assembly
 	name = "drone assembly"
@@ -343,7 +343,7 @@ TYPEINFO(/obj/item/ghostdrone_assembly)
 		..()
 
 TYPEINFO(/obj/machinery/ghostdrone_conveyor_sensor)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/ghostdrone_conveyor_sensor
 	name = "conveyor sensor"

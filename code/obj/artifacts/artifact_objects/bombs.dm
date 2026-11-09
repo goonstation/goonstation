@@ -59,7 +59,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (doAlert)
 			var/area/A = get_area(O)
 			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected", alert_origin = ALERT_ANOMALY)
-		message_ghosts("<b>An artifact [src.type_name]</b> has just been triggered in [log_loc(T, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("<b>An artifact [src.type_name]</b> has just been triggered at [GHOST.MESSAGE.format_loc(T)].")
 		O.add_simple_light("artbomb", lightColor)
 		animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = src.explode_delay + 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time = src.explode_delay + 10 SECONDS, transform = matrix() * animationScale)
@@ -92,7 +92,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			SPAWN(10 SECONDS)
 				if (!O.disposed && src.activated)
 					blewUp = 1
-					message_ghosts("<b>An artifact [src.type_name]</b> has just detonated in [log_loc(T, ghostjump=TRUE)].")
+					GHOST.MESSAGE.send("<b>An artifact [src.type_name]</b> has just detonated at [GHOST.MESSAGE.format_loc(T)].")
 					deploy_payload(O)
 
 	effect_deactivate(obj/O)
@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 	post_setup()
 		. = ..()
-		payload_type = rand(0,3)
+		payload_type = rand(1,3)// replace the 1 with 0 to enable foam bombs
 		var/payload_type_name = "unknown"
 		switch (payload_type)
 			if (CHEMBOMB_FOAMY)
@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if ("martian")
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","styptic_powder","salbutamol","anti_rad","silver_sulfadiazine","synaptizine",
-				"omnizine","synthflesh","saline","salicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine","solipsizine",
+				"omnizine","synthflesh","saline","salicylic_acid","acetylsalicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine","solipsizine",
 				"perfluorodecalin","ipecac","mutadone","insulin","epinephrine","cyanide","ketamine","toxin","neurotoxin","neurodepressant","mutagen",
 				"fake_initropidril","toxic_slurry","space_fungus","blood","vomit","gvomit","meat_slurry","grease","butter","spaceglue", "ants")
 			if ("eldritch")

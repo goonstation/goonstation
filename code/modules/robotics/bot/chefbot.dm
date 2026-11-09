@@ -1,4 +1,3 @@
-#define CHEFBOT_MOVE_SPEED 8
 TYPEINFO(/obj/machinery/bot/chefbot)
 	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_CHEF)
 
@@ -15,6 +14,7 @@ TYPEINFO(/obj/machinery/bot/chefbot)
 	no_camera = 1
 	/// Doesn't feel right to have this guy *constantly* flipping its lid like a methed up graytider
 	dynamic_processing = 0
+	bot_move_delay = BOT::SPEED::CHEFBOT
 
 /obj/machinery/bot/chefbot/process()
 	. = ..()
@@ -30,7 +30,7 @@ TYPEINFO(/obj/machinery/bot/chefbot)
 				ON_COOLDOWN(src, "chefbot_yelling", pick(40 SECONDS, 60 SECONDS))
 			yell()
 	if(!ON_COOLDOWN(src, "chefbot_wander", pick(2 SECONDS, 5 SECONDS)))
-		src.navigate_to(get_step_rand(src))
+		src.navigate_to(get_step_rand(src), src.bot_move_delay)
 
 /obj/machinery/bot/chefbot/proc/drama()
 	playsound(src,'sound/effects/dramatic.ogg', vol = 100)
@@ -83,7 +83,7 @@ TYPEINFO(/obj/machinery/bot/chefbot)
 						dork = M
 		if (thechef)
 			point(food_to_judge)
-			src.navigate_to(food_to_judge, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 15) // Shit food can't hide!
+			src.navigate_to(food_to_judge, src.bot_move_delay / (1+src.emagged), 1, 15) // Shit food can't hide!
 			src.say(pick_string("chefbot.txt", "found_food"))
 			sleep(1 SECOND)
 			drama()
@@ -162,7 +162,7 @@ TYPEINFO(/obj/machinery/bot/chefbot)
 							src.say("YOU DON'T LEAVE YOUR FUCKING FOOD UNATTENDED ON THE FUCKING STOVE. LOOK AT THIS. IT'S ON FIRE! IT'S GOING TO BE FUCKING BURNT!")
 						else if (somefucker.get_burn_damage() < 50)
 							src.say("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS SO FUCKING RAW IT'S STILL [pick("BEATING ASSISTANTS TO DEATH", "FARTING ON DEAD BODIES", "TRYING TO FEED ME FLOOR PILLS")]!")
-							src.navigate_to(somefucker, CHEFBOT_MOVE_SPEED / 2, 1, 15)
+							src.navigate_to(somefucker, src.bot_move_delay / 2, 1, 15)
 							sleep(4 SECOND)
 							src.say("TURN THE HEAT UP! I WANT TO HEAR IT SIZZLE!", "NO UNDERCOOKED MEAT IN MY KITCHEN!", "I HAVE TO DO THIS SHIT MYSELF! PATHETIC!", "DO I HAVE TO DO EVERYTHING HERE?")
 							src.visible_message(SPAN_ALERT("[src] flares up in anger!"))
@@ -198,7 +198,7 @@ TYPEINFO(/obj/machinery/bot/chefbot)
 					drama()
 					sleep (3 SECONDS)
 					if (stuff_to_fling)
-						src.navigate_to(stuff_to_fling, CHEFBOT_MOVE_SPEED / 2, 1, 15)
+						src.navigate_to(stuff_to_fling, src.bot_move_delay / 2, 1, 15)
 						src.say(pick_string("chefbot.txt", "adjust_cutlery"))
 						sleep (3 SECONDS)
 						if ((stuff_to_fling) && (stuff_to_fling in range(1, src)))

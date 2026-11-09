@@ -177,13 +177,15 @@ ABSTRACT_TYPE(/datum/plantmutation)
 
 // Pear Mutations
 
-/* This is cool and definitely does not belong in the trash, and should probably be legitimately attainable.
+
 /datum/plantmutation/pear/sickly
 	name = "Sickly Pear"
+	name_prefix = "Sickly "
 	crop = /obj/item/reagent_containers/food/snacks/plant/pear/sickly
-	assoc_reagents = list("too much")
-
-*/
+	iconmod = "PearSick"
+	assoc_reagents = list("mucus")
+	ENrange = list(null,10)
+	chance = 5
 
 // Melon Mutations
 
@@ -573,7 +575,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	special_proc_override = TRUE
 
 	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
-		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert)
+		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert) // Allowing this to be blocked by commutblocker, because it'd be funny/practical.
 		return
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)

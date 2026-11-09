@@ -40,7 +40,7 @@
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 		/obj/item/sponge, // To clean up drawings
 		/obj/item/pen/omni, // Fancy
-		/obj/item/pen/crayon/random/robot,
+		/obj/item/pen/crayon/robot,
 		/obj/item/pen/crayon/rainbow,
 		/obj/item/hand_labeler,
 		/obj/item/coin_bot,
@@ -84,6 +84,7 @@
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
 		/obj/item/spraybottle/cleaner/robot,
 		/obj/item/sponge,
+		/obj/item/broom,
 		/obj/item/mop,
 		/obj/item/lamp_manufacturer,
 		/obj/item/saw/cyborg,
@@ -105,6 +106,7 @@
 		/obj/item/device/camera_viewer/public,
 		/obj/item/pen/omni,
 		/obj/item/paper_bin/robot,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 	)
 
 // engineer. mechanic.
@@ -202,7 +204,7 @@
 		/obj/item/rcd,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
-		/obj/item/room_planner,
+		/obj/item/room_planner/cyborg,
 		/obj/item/room_marker,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
@@ -213,7 +215,7 @@
 		/obj/item/weldingtool,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
-		/obj/item/room_planner,
+		/obj/item/room_planner/cyborg,
 		/obj/item/room_marker,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/rcd,

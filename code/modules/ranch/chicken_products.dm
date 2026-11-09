@@ -110,6 +110,11 @@
 		egg_props_path = /datum/chicken_egg_props/sea
 	dream
 		egg_props_path = /datum/chicken_egg_props/dream
+
+		br // Cause apparently people don't like accidentally taking naps in firefights
+			New()
+				desc += "The soothing purple sheen makes you feel sleepy."
+				..()
 	snow
 		egg_props_path = /datum/chicken_egg_props/snow
 	popsicle
@@ -611,10 +616,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 		var/mob/M = owner
 		if(istype(M))
 			boutput(M, SPAN_ALERT("<B>You feel as if you are one with everything.</B>"))
-			if(M.bioHolder.HasEffect("xray"))
-				already_had_xray = TRUE
-			else
-				M.bioHolder.AddEffect("xray")
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION, src)
 
 	onUpdate(var/timePassed)
 		. = ..()
@@ -625,8 +627,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 	onRemove()
 		. = ..()
 		var/mob/M = owner
-		if (M?.bioHolder && !already_had_xray)
-			M.bioHolder.RemoveEffect("xray")
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION, src)
 
 /datum/statusEffect/chicken_power/lesser
 	id = "c_power_lesser"
@@ -801,22 +802,23 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 	visible = 1
 	var/already_had_aquabreath = 0
 
-	onAdd(var/optional=null)
+	onAdd(optional)
 		. = ..()
-		var/mob/living/L = owner
-		if(istype(L))
-			if(L.lifeprocesses[/datum/lifeprocess/aquatic_breathing])
-				already_had_aquabreath = 1
-			else
-				L.add_lifeprocess(/datum/lifeprocess/aquatic_breathing,5,5)
+		if (!isliving(src.owner))
+			return
+
+		if (src.owner.GetComponent(/datum/component/aquatic_breathing))
+			src.already_had_aquabreath = TRUE
+		else
+			src.owner.AddComponent(/datum/component/aquatic_breathing, 5, 5)
 
 
 	onRemove()
 		. = ..()
-		var/mob/living/L = owner
-		if(istype(L))
-			if(!already_had_aquabreath)
-				L.remove_lifeprocess(/datum/lifeprocess/aquatic_breathing)
+		if (!isliving(src.owner) || src.already_had_aquabreath)
+			return
+
+		src.owner.RemoveComponentsOfType(/datum/component/aquatic_breathing)
 
 /datum/statusEffect/supersleep
 	id = "supersleep"

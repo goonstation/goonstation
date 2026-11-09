@@ -202,7 +202,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	var/mob/living/carbon/human/H = victim
 	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
-	message_ghosts("<b>[H]</b> has been shoved into a cyborg conversion chamber at [log_loc(src, ghostjump = TRUE)]!")
+	GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(H)] has been shoved into a cyborg conversion chamber at [GHOST.MESSAGE.format_loc(src)]!")
 
 	H.remove_pulling()
 	H.set_loc(src)
@@ -226,7 +226,16 @@ TYPEINFO(/obj/machinery/recharge_station)
 		return
 	if (src.status & (BROKEN | NOPOWER))
 		return
-	if (isitem(AM) && can_act(user))
+	if (!can_act(user))
+		// allow no-power/cell silicons to drag themselves into docking stations
+		if (!(user == AM)) // bail if not themselves
+			return
+		if (!(isrobot(user) || ishivebot(user))) // only allow cyborg or hivebot
+			return
+		if (is_incapacitated(user, ignore_no_power=TRUE)) // only allow if able to act ignoring power
+			return
+
+	if (isitem(AM))
 		src.Attackby(AM, user)
 		return
 
@@ -439,12 +448,13 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.add_fingerprint(usr)
 	src.UpdateIcon()
 
+TYPEINFO(/obj/machinery/recharge_station/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/machinery/recharge_station/syndicate
 	conversion_chamber = 1
-	is_syndicate = 1
 	anchored = UNANCHORED
 	p_class = 1.5
-	SYNDICATE_STEALTH_DESCRIPTION("It is full of sharp instruments designed to tear open human flesh.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("It is full of sharp instruments designed to tear open human flesh.")
 
 /obj/machinery/recharge_station/syndicate/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
@@ -996,6 +1006,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if(clothingRef)
 				var/obj/item/clothing/cloth = locate(clothingRef) in src.clothes
 				if (istype(cloth, /obj/item/clothing))
+					if (!cloth.can_equip(R))
+						boutput(user, SPAN_ALERT("[cloth] can't be fitted onto [R]."))
+						return
 					if (istype(cloth, /obj/item/clothing/under))
 						if (R.clothes["under"] != null)
 							var/obj/old = R.clothes["under"]

@@ -17,12 +17,15 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 
 	// caliber list: update as needed
 	// 0.22 pistol / zipgun
+	// 0.223 - assault rifle
 	// 0.308 - rifles
+	// 0.355 - pistol (9mm)
 	// 0.357 - revolver
 	// 0.38 - detective
 	// 0.40 - blowgun darts
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
+	// 1.05  - 4 gauge
 	// 1.57 - grenade shell, 40mm
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 	ie_type = "K"
@@ -565,6 +568,28 @@ toxic - poisons
 	impact_image_state = null // stun bullets shouldn't actually enter walls should they?
 	ricochets = FALSE
 
+/datum/projectile/bullet/revolver_38/stun_ricochet
+
+	name = "ricochet stun bullet"
+	damage = 0
+	stun = 10
+	dissipation_delay = 7 //two more ticks before falloff begins
+	damage_type = D_ENERGY
+	ie_type = "T"
+	hit_type = null
+	impact_image_state = null
+	ricochets = FALSE // seems counter intuitive but prevents interference with our other bounces, so im told
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(!ismob(hit))
+			shot_volume = 0
+			shoot_reflected_bounce(proj, hit, 4, PROJ_NO_HEADON_BOUNCE)
+			shot_volume = 100
+
+
+	get_power(obj/projectile/P, atom/A)
+		return 10 + P.reflectcount * 12
+
 //0.393
 /datum/projectile/bullet/foamdart
 	name = "foam dart"
@@ -586,17 +611,18 @@ toxic - poisons
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
 		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
-		drop_as_ammo(get_turf(T))
+		drop_as_ammo(get_turf(T), P)
 		qdel(P) // we dropped, don't keep going
 
 	on_max_range_die(obj/projectile/P)
 		..()
-		drop_as_ammo(get_turf(P))
+		drop_as_ammo(get_turf(P), P)
 
-	proc/drop_as_ammo(turf/T)
+	proc/drop_as_ammo(turf/T, obj/projectile/P)
 		if(T)
-			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts (T)
+			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts(T)
 			ammo_dropped.amount_left = 1
+			ammo_dropped.forensic_holder = P.forensic_holder
 			ammo_dropped.UpdateIcon()
 			ammo_dropped.pixel_x += rand(-12,12)
 			ammo_dropped.pixel_y += rand(-12,12)
@@ -627,6 +653,7 @@ toxic - poisons
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	no_hit_message = 1
 	casing = null
+	coating_amount = 0.2
 	reagent_payload = "curare"
 	implanted = /obj/item/implant/projectile/body_visible/blowdart
 	has_impact_particles = FALSE
@@ -637,8 +664,8 @@ toxic - poisons
 	ls_bee
 		reagent_payload = "lsd_bee"
 
-	ketamine
-		reagent_payload = "ketamine"
+	thio
+		reagent_payload = "sodium_thiopental"
 
 //0.41
 /datum/projectile/bullet/derringer
@@ -1117,6 +1144,12 @@ toxic - poisons
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 
+/datum/projectile/bullet/abg/punchy
+	damage = 20
+	stun = 30
+	//it's heavy right, so um it's lower down?
+	hit_ground_chance = 100
+
 /datum/projectile/bullet/potatoslug		//Improvised slug
 	name = "potato"
 	icon_state = "potatoslug"
@@ -1244,6 +1277,7 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	impact_image_state = "bullethole"
 	casing = /obj/item/casing/shotgun/orange
+	coating_amount = 0.2
 
 	on_hit(atom/hit)
 		new /obj/effects/explosion/fiery(get_turf(hit))
@@ -1367,6 +1401,7 @@ toxic - poisons
 
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/cannon
+	coating_amount = 0.5
 	pierces = 4
 	shot_sound_extrarange = 1
 
@@ -1644,6 +1679,7 @@ datum/projectile/bullet/autocannon
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
+	coating_amount = 0.2
 
 	explosive
 		name = "40mm HEDP round"
@@ -1676,6 +1712,7 @@ datum/projectile/bullet/autocannon
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
+	coating_amount = 0.2
 	implanted = null
 
 	var/list/smokeLocs = list()
@@ -1720,6 +1757,7 @@ datum/projectile/bullet/autocannon
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
+	coating_amount = 0.2
 	hit_type = DAMAGE_BLUNT
 	hit_mob_sound = 'sound/misc/splash_1.ogg'
 	hit_object_sound = 'sound/misc/splash_1.ogg'
@@ -1745,6 +1783,7 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
+	coating_amount = 0.2
 	ie_type = null
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
@@ -1781,6 +1820,7 @@ datum/projectile/bullet/autocannon
 	hit_mob_sound = 'sound/impact_sounds/Energy_Hit_3.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
+	coating_amount = 0.2
 	ie_type = null
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
@@ -1804,6 +1844,7 @@ datum/projectile/bullet/autocannon
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
+	coating_amount = 0.2
 	implanted = null
 
 	var/has_grenade = 0
@@ -1830,11 +1871,15 @@ datum/projectile/bullet/autocannon
 					src.CHEM = W
 					src.damage = CHEM.launcher_damage
 					src.has_grenade = 1
+					src.coating = CHEM.material
+					src.coating_amount = CHEM.material_amt
 					return 1
 				else if (istype(W, /obj/item/old_grenade))
 					src.OLD = W
 					src.damage = OLD.launcher_damage
 					src.has_grenade = 1
+					src.coating = OLD.material
+					src.coating_amount = OLD.material_amt
 					return 1
 				else
 					return 0
@@ -1850,12 +1895,16 @@ datum/projectile/bullet/autocannon
 					src.CHEM.set_loc(T)
 				src.CHEM = null
 				src.has_grenade = 0
+				src.coating = null
+				src.coating_amount = initial(src.coating_amount)
 				return 1
 			else if (src.OLD != null)
 				if (T)
 					src.OLD.set_loc(T)
 				src.OLD = null
 				src.has_grenade = 0
+				src.coating = null
+				src.coating_amount = initial(src.coating_amount)
 				return 1
 			else //how did this happen?
 				return 0
@@ -1916,6 +1965,7 @@ datum/projectile/bullet/autocannon
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
+	coating_amount = 0.2
 	implanted = null
 	has_impact_particles = FALSE
 
@@ -1943,6 +1993,7 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	damage = 40
 	dissipation_delay = 30
+	coating_amount = 1
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
@@ -1957,6 +2008,7 @@ datum/projectile/bullet/autocannon
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
+					hit.forensic_holder.copy_to(implanted.forensic_holder)
 					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
@@ -2053,6 +2105,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
 	shot_number = 1
+	coating_amount = 1
 	cost = 1
 	damage = 15
 	icon_state = "mininuke"
@@ -2071,6 +2124,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
+					hit.forensic_holder.copy_to(implanted.forensic_holder)
 					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
@@ -2158,6 +2212,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	hit_type = DAMAGE_BLUNT
 	damage = 5
 	dissipation_delay = 30
+	coating_amount = 1
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
@@ -2176,7 +2231,8 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 						S.shrink()
 						new /obj/effects/magicspark(S.loc)
 			else
-				new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
+				var/duration = S.radius_largest * 10 SECONDS
+				new /obj/whitehole(S.loc, 0 SECONDS, duration)
 				qdel(S)
 		else
 			new /obj/effects/rendersparks(hit.loc)
@@ -2198,6 +2254,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	hit_type = DAMAGE_BLUNT
 	damage = 120
 	dissipation_delay = 30
+	coating_amount = 1
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
@@ -2294,6 +2351,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	stun = 200
 	dissipation_delay = 300
 	dissipation_rate = 5
+	coating_amount = 1
 	cost = 1
 	shot_sound = 'sound/effects/explosion_new2.ogg'
 	shot_volume = 90
@@ -2370,6 +2428,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	sname = "Get In"
 	shot_sound = 'sound/weapons/ribbit.ogg' //heh
 	casing = null
+	coating_amount = 1
 	impact_image_state = null
 
 	New()

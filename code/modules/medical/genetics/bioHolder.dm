@@ -33,6 +33,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/datum/forensic_id/default_fingerprints = null
 
+	/// Has the owner of this bioholder been a victim of a curse?
+	var/cursed = FALSE
+
 	///If true, bioeffects won't actually be applied to the owner (used for when we want to store a separate bioholder, ie changelings)
 	var/inactive = FALSE
 
@@ -41,8 +44,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		Uid = CreateUid()
 		bioUids[Uid] = null
 
-		var/fprint_id = build_id_separate(build_id_norepeat(FORENSIC_CHARS_FINGERPRINTS, 16), 4)
-		src.default_fingerprints = register_id(fprint_id)
+		src.build_fingerprints()
 
 		mobAppearance = new/datum/appearanceHolder()
 
@@ -59,9 +61,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return ..()
 
 	proc/build_fingerprints()
-		var/id_text = build_id_norepeat(FORENSIC_CHARS_FINGERPRINTS, 16)
-		id_text = build_id_separate(id_text, 4)
-		src.default_fingerprints = register_id(id_text)
+		src.default_fingerprints = register_id(build_id_unique(/proc/build_id_fingerprint, list(FORENSIC_CHARS_FINGERPRINTS)))
 
 	disposing()
 		for(var/D in effects)
@@ -343,6 +343,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return newUid
 
 	proc/CopyOther(var/datum/bioHolder/toCopy, var/copyAppearance = 1, var/copyPool = 1, var/copyEffectBlocks = 0, var/copyActiveEffects = 1)
+		src.cursed = toCopy.cursed
 		//Copies the settings of another given holder. Used for syringes, the dna spread virus and such things.
 		if(copyAppearance)
 			mobAppearance.CopyOther(toCopy.mobAppearance)

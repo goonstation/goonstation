@@ -3,7 +3,7 @@
 	name = "Respiratory Failure"
 	scantype = "Medical Emergency"
 	max_stages = 3
-	spread = "The patient's respiratory is starting to fail"
+	spread = "The patient's respiratory system is starting to fail"
 	cure_flags = CURE_CUSTOM
 	cure_desc = "Oxygen-healing drugs or surgery"
 	recureprob = 10
@@ -57,7 +57,7 @@
 		if (2)
 			if (probmult(0.1))
 				boutput(H, SPAN_NOTICE("You feel better."))
-				H.resistances += src.type
+				H.add_ailment_resistance(src.type, src.type)
 				H.ailments -= src
 				return
 			if (probmult(8)) H.emote(pick("pale", "groan"))

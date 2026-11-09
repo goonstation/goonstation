@@ -13,7 +13,7 @@
 	if (!trigger || ON_COOLDOWN(O, "speech_act_cd", 2 SECONDS))
 		return
 
-	var/result = trigger.speech_act(message.original_content)
+	var/result = trigger.speech_act(message.get_original_content_parsable())
 	switch (result)
 		if (null)
 			return

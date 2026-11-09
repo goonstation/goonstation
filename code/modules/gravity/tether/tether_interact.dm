@@ -76,10 +76,7 @@
 
 /obj/machinery/gravity_tether/attackby(obj/item/I, mob/user)
 	user.lastattacked = get_weakref(src)
-	var/is_handy = FALSE
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		is_handy = H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer")
+	var/is_handy = user && HAS_ATOM_PROPERTY(user, PROP_MOB_FAST_BUILD)
 	if (ispryingtool(I))
 		src.add_fingerprint(user)
 		switch (src.door_state)

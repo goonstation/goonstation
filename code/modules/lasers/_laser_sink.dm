@@ -1,31 +1,13 @@
 ABSTRACT_TYPE(/obj/laser_sink)
-///The abstract concept of a thing that does stuff when hit by a laser
-/obj/laser_sink //might end up being a component or something
-	var/obj/linked_laser/in_laser = null
-///When a laser hits this sink, return TRUE on successful connection
-/obj/laser_sink/proc/incident(obj/linked_laser/laser)
-	return TRUE
+///The abstract concept of a thing that does stuff when hit by a laser.
+///Subtypes should register handlers for COMSIG_LASER_CONNECTED, COMSIG_LASER_DISCONNECTED, and COMSIG_LASER_TRAVERSE
+///in their New() to implement type-specific behavior.
+///
+/// You don't HAVE to use this subtype, but it's a common one from the original implementation and changing it makes no sense.
+/obj/laser_sink
+	///Convenient reference to the laser_sink component added in New()
+	var/datum/component/laser_sink/laser_sink_comp = null
 
-///"that's not a word" - 🤓
-///When a laser stops hitting this sink
-/obj/laser_sink/proc/exident(obj/linked_laser/laser)
-	src.in_laser = null
-
-///Another stub, should call traverse on all emitted laser segments with the proc passed through
-/obj/laser_sink/proc/traverse(datum/callback/callback)
-	return
-
-/obj/laser_sink/Move()
-	var/old_loc = src.loc
+/obj/laser_sink/New()
 	..()
-	if (old_loc != src.loc)
-		src.exident(src.in_laser)
-
-/obj/laser_sink/set_loc(loc)
-	if (loc != src.loc)
-		src.exident(src.in_laser)
-	..()
-
-/obj/laser_sink/disposing()
-	src.exident(src.in_laser)
-	..()
+	laser_sink_comp = AddComponent(/datum/component/laser_sink)

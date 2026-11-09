@@ -383,6 +383,8 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		if (icon && owner)
+			if (istext(src.icon))
+				src.icon = file(src.icon)
 			if(icon_state)
 				icon_image = image(icon, border, icon_state, 10)
 			else
@@ -462,7 +464,7 @@ var/datum/action_controller/actions
 			src.end_message = end_message
 		if (interrupt_flags != null)
 			src.interrupt_flags = interrupt_flags
-		//generate a id
+		//generate an id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
 
@@ -555,7 +557,7 @@ var/datum/action_controller/actions
 			src.end_message = end_message
 		if (interrupt_flags != null)
 			src.interrupt_flags = interrupt_flags
-		//generate a id
+		//generate an id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
 

@@ -1,5 +1,6 @@
 ADMIN_INTERACT_PROCS(/obj/submachine/ice_cream_dispenser, proc/add_flavor)
 TYPEINFO(/obj/submachine/ice_cream_dispenser)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 18
 
 /obj/submachine/ice_cream_dispenser
@@ -186,6 +187,7 @@ var/list/oven_recipes = list()
 
 
 TYPEINFO(/obj/submachine/chef_oven)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 18
 
 /obj/submachine/chef_oven
@@ -313,8 +315,10 @@ TYPEINFO(/obj/submachine/chef_oven)
 
 		var/atom/item_path = possible.get_mascot(src.contents)
 		if (ispath(item_path))
-			src.output_icon = icon2base64(getFlatIcon(image(initial(item_path.icon), initial(item_path.icon_state))), "chef_oven-\ref[src]")
+			src.output_icon = icon2base64(getFlatIcon(image(get_initial_icon(item_path), initial(item_path.icon_state))), "chef_oven-\ref[src]")
 			src.output_name = initial(item_path.name)
+			if (islist(possible.output) && (item_path in possible.output) && possible.output[item_path] > 1)
+				src.output_name += " x[possible.output[item_path]]"
 
 		var/datum/recipe_instructions/cooking/oven/instructions = possible.get_recipe_instructions(RECIPE_ID_OVEN)
 		if (!instructions)
@@ -400,6 +404,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/recipe/burger/cheeseborger(src)
 			src.recipes += new /datum/recipe/burger/roburger(src)
 			src.recipes += new /datum/recipe/swede_mball(src)
+			src.recipes += new /datum/recipe/donkpocket/honk(src)
 			src.recipes += new /datum/recipe/donkpocket(src)
 			src.recipes += new /datum/recipe/donkpocket2(src)
 			src.recipes += new /datum/recipe/cornbread4(src)
@@ -528,6 +533,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/recipe/katsu_curry(src)
 			src.recipes += new /datum/recipe/gyudon(src)
 			src.recipes += new /datum/recipe/pigblanket(src)
+			src.recipes += new /datum/recipe/fruit_salad(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/recipe/pizza_custom(src)
 			src.recipes += new /datum/recipe/cake_custom_item(src)
@@ -554,6 +560,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/recipe/rice_bowl(src)
 			src.recipes += new /datum/recipe/flan(src)
 			src.recipes += new /datum/recipe/yuck(src)
+			src.recipes += new /datum/recipe/bowl_of_dulce_de_leche(src)
 
 			// store the list for later
 			oven_recipes = src.recipes
@@ -774,6 +781,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
 TYPEINFO(/obj/submachine/foodprocessor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 18
 
 /obj/submachine/foodprocessor

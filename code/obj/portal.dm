@@ -26,6 +26,7 @@
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.shoes?.magnetic)
+			boutput(H, SPAN_ALERT("Your magnetic boots anchor you to the ground, preventing you from teleporting!"))
 			return
 	SPAWN(0)
 		src.teleport(M)
@@ -87,10 +88,9 @@
 				if (prob(failchance)) //oh dear a problem, put em in deep space
 					src.icon_state = "portal1"
 					do_teleport(M, destination, 15)
-					var/part_splinched = splinch(M, 75)
-					if (part_splinched)
-						do_teleport(part_splinched, destination, 8)
-						M.visible_message(SPAN_ALERT("<b>[M]</b> splinches themselves and their [part_splinched] falls off!"))
+					var/part_displaced = organdisplacement(M, 75)
+					if (part_displaced)
+						do_teleport(part_displaced, destination, 8)
 					M.throw_at(destination, 8, 2)
 
 					return
@@ -120,6 +120,9 @@
 	Bumped(mob/M as mob|obj)
 		//spatial interdictor: when something would enter a wormhole, it doesn't
 		if (M.hasStatus("spatial_protection"))
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if(IX.notify_interdictor(M))
+					break
 			icon = 'icons/effects/effects.dmi'
 			icon_state = "sparks_attack"
 			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)

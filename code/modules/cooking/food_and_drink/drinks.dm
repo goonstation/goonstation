@@ -179,7 +179,7 @@
 	desc = "I wonder if this is still fresh?"
 	icon_state = "water"
 	item_state = "water"
-	initial_volume = 25
+	initial_volume = 75
 	initial_reagents = "water"
 
 /obj/item/reagent_containers/food/drinks/mate
@@ -249,44 +249,66 @@
 /obj/item/reagent_containers/food/drinks/fruitmilk
 	name = "Creaca's Fruit Milk "
 	desc = "Milk and 'fruit' of undetermined origin; finally, together at last."
-	icon_state = "fruitmilk"
+	icon_state = "fruitmilk-pineapple"
+	item_state = "fruitmilk"
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("milk"=20)
+	New()
+		. = ..()
+
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = 'icons/obj/foodNdrink/drinks.dmi', \
+			reagent_overlay_icon_state = "fruitmilk", \
+			reagent_overlay_states = 5, \
+			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+		)
 
 	New()
 		switch(rand(1,10))
 			if (1)
 				src.name += "Synthetic Tropical Dawn flavor"
+				icon_state = "fruitmilk-pineapple"
 				src.initial_reagents["juice_pineapple"] = 30
 			if (2)
 				src.name += "Changing Cherry Red flavor"
+				icon_state = "fruitmilk-cherry"
 				src.initial_reagents["juice_cherry"] = 30
 			if (3)
 				src.name += "Curdled Lemon Twist flavor"
+				icon_state = "fruitmilk-lemon"
 				src.initial_reagents["juice_lemon"] = 30
 			if (4)
 				src.name += "Earth Dreamer Lime flavor"
+				icon_state = "fruitmilk-lime"
 				src.initial_reagents["juice_lime"] = 30
 			if (5)
 				src.name += "Odyssey Orange flavor"
+				icon_state = "fruitmilk-orange"
 				src.initial_reagents["juice_orange"] = 30
 			if (6)
 				src.name += "Strawberry and Cream flavor"
+				icon_state = "fruitmilk-strawberry"
 				src.initial_reagents["juice_strawberry"] = 30
 			if (7)
 				src.name += "Seasonal Peach Blossom flavor"
+				icon_state = "fruitmilk-peach"
 				src.initial_reagents["juice_peach"] = 30
 			if (8)
 				src.name += "Surprise Mystery flavor"
+				icon_state = "fruitmilk-mystery"
 				src.initial_reagents["juice_pickle"] = 20
 				src.initial_reagents["neurodepressant"] = 5
 				src.initial_reagents["msg"] = 5
 			if (9)
 				src.name += "Little Soups flavor"
+				icon_state = "fruitmilk-tomato"
 				src.initial_reagents["juice_tomato"] = 30
 			if (10)
 				src.name += "Artificial Autumn flavor"
+				icon_state = "fruitmilk-autumn"
 				src.initial_reagents["juice_pumpkin"] = 30
 
 		..()
@@ -334,6 +356,8 @@
 		if (src.is_sealed)
 			is_sealed = 0
 			src.set_open_container(TRUE)
+			src.desc += " Its seal has been opened."
+			tooltip_rebuild = TRUE
 			can_chug = 1
 			splash_all_contents = TRUE
 			incompatible_with_chem_dispensers = FALSE
@@ -343,15 +367,32 @@
 				src.reagents.reaction(user)
 				src.reagents.clear_reagents()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
+				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediately sprayed with its contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
 			else
 				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
 			if (zone == "head")
-				user.visible_message("<span class='alert'><b>[user] crushes \the [src] against their forehead!! [pick("Bro!", "Epic!", "Damn!", "Gnarly!", "Sick!",\
-				"Crazy!", "Nice!", "Hot!", "What a monster!", "How sick is that?", "That's slick as shit, bro!")]", "You crush the can against your forehead! You feel super cool.")
+				if (ishuman(user))
+					var/missing_head = FALSE
+					var/mob/living/carbon/human/H = user
+					if (!H.organHolder.head)
+						missing_head = TRUE
+					else if (isskeleton(H))
+						var/datum/mutantrace/skeleton/skeleton = H.mutantrace
+						if (isnull(skeleton.head_tracker))
+							missing_head = TRUE
+					if (missing_head)
+						src.set_loc(get_turf(H))
+						H.u_equip(src)
+						var/target = get_steps(H, turn(H.dir, 180), 3)
+						src.throw_at(target, 7, 1)
+						H.visible_message(SPAN_ALERT("[user] attempts to crush the can on [his_or_her(H)] head... <b>but it isn't there!</b>"))
+						return
+
+				user.visible_message(SPAN_ALERT("<b>[user] crushes \the [src] against [his_or_her(user)] forehead!! [pick("Epic!", "Damn!", "Gnarly!", "Sick!",\
+				"Crazy!", "Nice!", "Hot!", "What a monster!", "How sick is that?", "That's slick as shit!")]"), "You crush the can against your forehead! You feel super cool.")
 				drop_this_shit = 1
 			else
 				user.visible_message("[user] crushes \the [src][pick(" one-handed!", ".", ".", ".")] [pick("Lame.", "Eh.", "Meh.", "Whatevs.", "Weirdo.")]", "You crush the can!")

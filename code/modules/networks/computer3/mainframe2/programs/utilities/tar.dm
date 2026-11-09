@@ -7,7 +7,8 @@
 	VAR_PRIVATE/tmp/opt_create = null
 	/// The filepath of the archive to be created, read, or extracted. Mutually exclusive with `opt_temporary`.
 	VAR_PRIVATE/tmp/opt_file = null
-	/// When extracting from an archive, whether `tar` should skip over already existing filepaths or overwrite them with archive contents.
+	/// When extracting from an archive, whether `tar` should skip over already existing files or overwrite them with archive contents.
+	/// Does not apply to folders.
 	VAR_PRIVATE/tmp/opt_skip = null
 	/// Whether `tar` should list the contents of an archive. Mutually exclusive with `opt_create` and `opt_extract`.
 	VAR_PRIVATE/tmp/opt_list = null
@@ -19,6 +20,8 @@
 	VAR_PRIVATE/tmp/opt_verbose = null
 	/// Whether `tar` should extract the contents of an existing archive. Mutually exclusive with `opt_create` and `opt_list`.
 	VAR_PRIVATE/tmp/opt_extract = null
+	/// The current archive being created, used to prevent storing an archive inside itself.
+	VAR_PRIVATE/tmp/datum/computer/file/archive/current_archive = null
 
 /datum/computer/file/mainframe_program/utility/tar/initialize(initparams)
 	if (..())
@@ -31,7 +34,7 @@
 		return
 
 	src.opt_data = null
-	if (src.signal_program(1, list("command" = DWAINE_COMMAND_TSPAWN, "passusr" = TRUE, "path" = "/bin/getopt", "args" = "cf:klqtvx [initparams]")) == ESIG_NOTARGET)
+	if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/getopt", "args" = "cf:klqtvx [initparams]")) == DWAINE::ERR::SIG::NOTARGET)
 		src.message_user("getopt: command not found.")
 		mainframe_prog_exit
 		return
@@ -93,7 +96,7 @@
 
 	// List the contents of an archive file.
 	if (src.opt_list)
-		var/datum/computer/file/archive/archive = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = archive_path))
+		var/datum/computer/file/archive/archive = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = archive_path))
 		if (!istype(archive))
 			src.message_user("tar: Cannot locate archive [src.opt_file]")
 			mainframe_prog_exit
@@ -104,7 +107,7 @@
 
 	// Extract the contents of an archive file.
 	else if (src.opt_extract)
-		var/datum/computer/file/archive/archive = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = archive_path))
+		var/datum/computer/file/archive/archive = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = archive_path))
 		if (!istype(archive))
 			src.message_user("tar: Cannot locate archive [src.opt_file]")
 			mainframe_prog_exit
@@ -116,8 +119,8 @@
 		else
 			target_path = current
 
-		if (!istype(src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = target_path)), /datum/computer/folder))
-			src.message_user("tar: cannot read target directory [target_path]")
+		if (!istype(src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = target_path)), /datum/computer/folder))
+			src.message_user("tar: Cannot read target directory [target_path]")
 			mainframe_prog_exit
 			return
 
@@ -134,9 +137,35 @@
 			mainframe_prog_exit
 			return
 
-		var/datum/computer/file/archive/archive = new()
+		var/datum/computer/file/archive/archive = new /datum/computer/file/archive()
+		// we have to get the destination (or its existing parent folder) here to ensure holder is set properly
+		// otherwise folders in the archive will fail to copy/extract
+		var/list/separated_filepath = splittext(archive_path, "/")
+		var/path_length = length(separated_filepath)
+		archive.name = separated_filepath[path_length]
+		separated_filepath.Cut(path_length)
+		var/new_path = jointext(separated_filepath, "/") || "/"
+		var/datum/computer/folder/output_parent = src.signal_program(1, list("command" = DWAINE::SYSCALL::PGET, "path" = new_path))
+		switch(output_parent)
+			if (DWAINE::ERR::SIG::NOFILE) // no part of the given directory exists
+				src.message_user("tar: Cannot find directory [separated_filepath[1]]")
+				mainframe_prog_exit
+				return
+			if (DWAINE::ERR::SIG::NOTARGET)
+				src.message_user("tar: Invalid output path [archive_path]")
+				mainframe_prog_exit
+				return
+			if (DWAINE::ERR::SIG::GENERIC)
+				src.message_user("tar: Error while finding output directory [new_path]")
+				mainframe_prog_exit
+				return
+		// if we're still here, we must have a destination, or at least a parent dir for it
+		archive.holder = output_parent.holder
+		// set current_archive so deep_copy can check it
+		src.current_archive = archive
+
 		for (var/path as anything in unaffected)
-			var/datum/computer/C = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = ABSOLUTE_PATH(path, current)))
+			var/datum/computer/C = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = ABSOLUTE_PATH(path, current)))
 			if (!istype(C))
 				src.message_user("tar: File [path] does not exist.")
 				mainframe_prog_exit
@@ -148,21 +177,14 @@
 				mainframe_prog_exit
 				return
 
-			archive.add_file(copy)
+			src.current_archive.add_file(copy)
 
-		var/list/separated_filepath = splittext(archive_path, "/")
-		var/path_length = length(separated_filepath)
-		archive.name = separated_filepath[path_length]
-		separated_filepath.Cut(path_length)
-
-		var/new_path = jointext(separated_filepath, "/") || "/"
-
-		switch (src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = new_path, "mkdir" = TRUE, "replace" = TRUE), archive))
-			if (ESIG_NOWRITE)
+		switch (src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = new_path, "mkdir" = TRUE, "replace" = TRUE), src.current_archive))
+			if (DWAINE::ERR::SIG::NOWRITE)
 				src.message_user("tar: Cannot write destination [src.opt_file]")
-			if (ESIG_NOTARGET)
+			if (DWAINE::ERR::SIG::NOTARGET)
 				src.message_user("tar: Error creating path to archive.")
-			if (ESIG_GENERIC)
+			if (DWAINE::ERR::SIG::GENERIC)
 				src.message_user("tar: Error while creating archive.")
 
 		if (src.opt_temporary)
@@ -172,27 +194,32 @@
 
 /datum/computer/file/mainframe_program/utility/tar/receive_progsignal(sendid, list/data, datum/computer/file/file)
 	if (..())
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	switch (data["command"])
-		if (DWAINE_COMMAND_REPLY)
+		if (DWAINE::SYSCALL::REPLY)
 			if (data["sender_tag"] == "getopt")
 				src.opt_data = data["data"]
-				return ESIG_USR4
+				return DWAINE::ERR::SIG::USR4
 			else
-				return ESIG_GENERIC
+				return DWAINE::ERR::SIG::GENERIC
 
-		if (DWAINE_COMMAND_MSG_TERM)
+		if (DWAINE::SYSCALL::MSG_TERM)
 			src.message_user(data["data"])
 
 		else
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
-	return ESIG_SUCCESS
+	return DWAINE::ERR::SIG::SUCCESS
 
 /datum/computer/file/mainframe_program/utility/tar/message_user(msg, render, file)
 	if (src.opt_quiet)
 		return
+
+	. = ..()
+
+/datum/computer/file/mainframe_program/utility/tar/disposing()
+	src.current_archive = null // just in case
 
 	. = ..()
 
@@ -203,11 +230,11 @@
 	src.message_user("[name] -l -f ARCHIVE")
 
 /datum/computer/file/mainframe_program/utility/tar/proc/message_reply_and_user(message)
-	var/list/data = list("command" = DWAINE_COMMAND_REPLY, "data" = message, "sender_tag" = "tar")
+	var/list/data = list("command" = DWAINE::SYSCALL::REPLY, "data" = message, "sender_tag" = "tar")
 	if (src.useracc)
 		data["term"] = src.useracc.user_id
 
-	if (src.signal_program(src.parent_task.progid, data) != ESIG_USR4)
+	if (src.signal_program(src.parent_task.progid, data) != DWAINE::ERR::SIG::USR4)
 		src.message_user(message)
 
 /datum/computer/file/mainframe_program/utility/tar/proc/temp_file_name()
@@ -235,36 +262,32 @@
 		src.message_user("tar: Stack overflow.")
 		return
 
-	var/datum/computer/T = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = "[target_path][to_extract.name]"))
+	var/datum/computer/T = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = "[target_path][to_extract.name]"))
 	if (src.opt_verbose)
 		src.message_reply_and_user("[current_path][to_extract.name]")
 
 	if (istype(to_extract, /datum/computer/folder))
-		if (!istype(T))
-			if (src.signal_program(1, list("command" = DWAINE_COMMAND_TSPAWN, "passusr" = TRUE, "path" = "/bin/mkdir", "args" = "[target_path][to_extract.name]")) == ESIG_NOTARGET)
-				src.message_user("mkdir: command not found.")
+		if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/mkdir", "args" = "[target_path][to_extract.name]")) == DWAINE::ERR::SIG::NOTARGET)
+			src.message_user("mkdir: command not found.")
 
-			if (!istype(src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = "[target_path][to_extract.name]")), /datum/computer/folder))
-				src.message_user("tar: Failed to create directory [to_extract.name]")
+		if (!istype(src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = "[target_path][to_extract.name]")), /datum/computer/folder))
+			src.message_user("tar: Failed to create directory [to_extract.name]")
 
-			var/datum/computer/folder/folder = to_extract
-			for (var/datum/computer/C as anything in folder.contents)
-				src.recursive_extract(C, "[target_path][to_extract.name]/", "[current_path][to_extract.name]/", depth + 1)
-
-		else if (src.opt_skip)
-			src.message_user("tar: [target_path][to_extract.name] already exists, skipping.")
-		else
-			src.message_user("tar: [target_path][to_extract.name] already exists, cannot overwrite folder - skipping.")
+		var/datum/computer/folder/folder = to_extract
+		for (var/datum/computer/C as anything in folder.contents)
+			src.recursive_extract(C, "[target_path][to_extract.name]/", "[current_path][to_extract.name]/", depth + 1)
 
 	else if (istype(to_extract, /datum/computer/file))
 		if (!istype(T) || !src.opt_skip)
-			var/outcome = src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = "[target_path]", "mkdir" = TRUE, "replace" = TRUE), to_extract)
+			// if we don't copy the file, deleting the archive will delete the copied files
+			// and if it's extracted multiple times, deleting any of the copies will delete all of them, plus the one on the archive
+			var/outcome = src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = "[target_path]", "mkdir" = TRUE, "replace" = TRUE), to_extract.copy_file())
 			switch (outcome)
-				if (ESIG_NOWRITE)
+				if (DWAINE::ERR::SIG::NOWRITE)
 					src.message_user("tar: [target_path][to_extract.name]: permission denied.")
-				if (ESIG_GENERIC)
+				if (DWAINE::ERR::SIG::GENERIC)
 					src.message_user("tar: Error extracting [target_path][to_extract.name]")
-				if (ESIG_NOTARGET)
+				if (DWAINE::ERR::SIG::NOTARGET)
 					src.message_user("tar: Bad path: [target_path] for file [to_extract.name]")
 
 		else
@@ -278,15 +301,25 @@
 		src.message_user("tar: Stack overflow.")
 		return
 
-	if (istype(to_copy, /datum/computer/file/archive))
+	// at time of writing, the archive is not actually on the filesystem during its creation
+	// and so cannot be stored in itself. but better safe than sorry,
+	// since maybe tar will be able to add files to an archive someday
+	if (to_copy == src.current_archive)
 		src.message_user("tar: Cannot handle file [current_path][to_copy]")
+		return
+
+	// Avoid copying files we don't have permission for.
+	// This can happen if you copy / (ALLACCESS) which contains /proc (NONE).
+	if (!src.check_read_permission(to_copy, src.useracc))
 		return
 
 	if (istype(to_copy, /datum/computer/folder))
 		var/datum/computer/folder/folder_to_copy = to_copy
+		// we can't just use copy_file for folders because we have to check read perms and filetype
 		var/datum/computer/folder/folder_copy = new()
 
 		folder_copy.name = folder_to_copy.name
+		folder_copy.holder = src.current_archive.holder
 		for (var/datum/computer/C as anything in folder_to_copy.contents)
 			var/datum/computer/copy = src.deep_copy(C, "[current_path][to_copy.name]/", depth + 1)
 			if (istype(copy))

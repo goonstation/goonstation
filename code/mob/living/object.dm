@@ -130,6 +130,11 @@
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object")
 		..()
 
+	Entered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if (OldLoc?.loc == src) // if you enter the object from inside of it, pop out. for stuff like living closets eating people
+			AM.set_loc(src.loc)
+
 	Exited(var/atom/movable/AM, var/atom/newloc)
 		if (AM == src.possessed_thing && newloc != src)
 			src.death(FALSE) //uh oh

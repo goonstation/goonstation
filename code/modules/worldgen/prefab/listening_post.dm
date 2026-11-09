@@ -87,6 +87,9 @@ TYPEINFO(/datum/mapPrefab/listening_post)
 	stored_as_subtypes = TRUE
 /// Map Prefabs for runtime listening post loading
 /datum/mapPrefab/listening_post
+	prefabSizeX = 32
+	prefabSizeY = 32
+	required_distance_from_mapedge = 1
 
 /datum/mapPrefab/listening_post/standard
 	prefabPath = "assets/maps/listening_post/listeningpost_standard.dmm"
@@ -128,7 +131,12 @@ proc/load_listening_post()
 		..()
 
 	proc/apply()
-		var/datum/mapPrefab/listening_post/listening_post = new map_settings.listening_post_prefab
+		var/datum/mapPrefab/listening_post/listening_post
+		if(islist(map_settings.listening_post_prefab))
+			var/picked_prefab = pick(map_settings.listening_post_prefab)
+			listening_post = new picked_prefab
+		else
+			listening_post = new map_settings.listening_post_prefab
 		listening_post.applyTo(src.loc)
 		logTheThing(LOG_DEBUG, null, "loaded listening post [listening_post.prefabPath]")
 		qdel(src)
@@ -179,6 +187,7 @@ proc/load_listening_post()
 /area/listeningpost/barracks
 	name = "Listening Post Barracks"
 	icon_state = "pink"
+	requires_power = FALSE
 
 /area/listeningpost/break_room
 	name = "Listening Post Break Room"

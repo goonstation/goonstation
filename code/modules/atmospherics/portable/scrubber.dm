@@ -11,6 +11,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 	var/on = FALSE
 	var/inlet_flow = 100 // percentage
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
+	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED
 	volume = 1000
 	desc = "A device which filters out harmful air from an area."
 	p_class = 1.5

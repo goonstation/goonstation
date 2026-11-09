@@ -61,10 +61,9 @@ TYPEINFO(/obj/machinery/optable)
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.hasStatus("resting") || isunconscious(M) ||  M.traitHolder.hasTrait("training_medical"))
-			src.victim = M
-			icon_state = "table2-active"
-			return 1
+		src.victim = M
+		icon_state = "table2-active"
+		return 1
 	if (src.victim)
 		src.victim = null
 		src.computer?.victim = null

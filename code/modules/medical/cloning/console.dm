@@ -239,6 +239,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 		tgui_process?.update_uis(src)
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
+	logTheThing(LOG_COMBAT, usr, "attempted to scan [subject] in [src].")
 	if ((isnull(subject)) || (!ishuman(subject)))
 		show_message("Error: Unable to locate valid genetic data.", "warning")
 		return
@@ -320,6 +321,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 		clone_file["mind"] = subjMind
 
 	show_message("Subject successfully scanned.", "success")
+	logTheThing(LOG_COMBAT, usr, "successfully scanned [subject] in [src].")
 	playsound(src.loc, sound_ping, 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
 
@@ -533,7 +535,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
-		.["meatLevels"] += P.meat_level
+		.["meatLevels"] += round(100 * (P.meat_level / MAXIMUM_MEAT_LEVEL))
 		.["podSpeed"] += P.is_speedy
 		.["podEfficient"] += P.is_efficient
 		.["cloneHack"] += P.clonehack

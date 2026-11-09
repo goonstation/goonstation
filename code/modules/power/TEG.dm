@@ -303,7 +303,7 @@
 		if( src.reagents.has_reagent("love") && src.generator.grump > 20 && prob(5)  )
 			src.reagents.remove_reagent("love", 1)
 			src.generator.grump -= 100
-			src.audible_message(SPAN_ALERT("A oddly distinctive sound of contentment can be heard from [src]. How wonderful!"))
+			src.audible_message(SPAN_ALERT("An oddly distinctive sound of contentment can be heard from [src]. How wonderful!"))
 
 		if( src.reagents.has_reagent("spaceglue"))
 			src.reagents.remove_reagent("spaceglue", 1)
@@ -943,6 +943,19 @@ datum/pump_ui/circulator_ui
 		return (efficiency_scale * 0.01)
 
 	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/bible)) // god bless this spess
+			if(ON_COOLDOWN(src, "bless_teg", 3 SECONDS)) return
+			else if (!istype(src.active_form, /datum/teg_transformation/vampire) && user.traitHolder?.hasTrait("training_chaplain"))
+				playsound(src.loc, 'sound/impact_sounds/generic_punch_5.ogg', 50, 1)
+				if(src.grump && prob(80) && get_chaplain_faith(user) > FAITH_TEG_BLESS)
+					playsound(user.loc, 'sound/effects/faithbiblewhack.ogg', 50, 1)
+					user.visible_message(SPAN_ALERT("<B>[user] blesses [src]!</B>"))
+					src.grump -= rand(10, 50)
+					modify_chaplain_faith(user, -FAITH_TEG_BLESS)
+				else
+					playsound(src.loc, pick(sounds_enginegrump), 70, 0)
+					user.visible_message(SPAN_ALERT("<B>[src] makes an awful noise!</B>"))
+			return
 		// Weld > Crowbar > Rods > Weld
 		switch(semiconductor_state)
 			if(TEG_SEMI_STATE_INSTALLED)
@@ -1453,12 +1466,12 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			..()
 		else
 			var/electrical_conductivity = 50
-			if(src.material.hasProperty("electrical"))
-				electrical_conductivity = src.material.getProperty("electrical") * 10
+			if(src.material.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+				electrical_conductivity = src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) * 10
 
 			var/thermal_conductivity = 50
-			if(src.material.hasProperty("thermal"))
-				thermal_conductivity =  src.material.getProperty("thermal") * 10
+			if(src.material.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+				thermal_conductivity =  src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND) * 10
 
 			/*    2σ / κ = zT    - Offset 				Result 	*/
 			/*  2*75 / 25 = 6    - 2 = 4  		 	 Great! 	*/

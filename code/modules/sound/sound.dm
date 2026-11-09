@@ -1,39 +1,3 @@
-#define TOO_QUIET 0.9 //experimentally found to be 0.6 - raised due to lag, I don't care if it's super quiet because there's already shitloads of other sounds playing
-#define SPACE_ATTEN_MIN 0.5
-#define EARLY_RETURN_IF_QUIET(v) if (v < TOO_QUIET) return
-#define EARLY_CONTINUE_IF_QUIET(v) if (v < TOO_QUIET) continue
-
-#define SOURCE_ATTEN(A) do {\
-	if (A <= SPACE_ATTEN_MIN){\
-		vol *= SPACE_ATTEN_MIN;\
-		extrarange = clamp(-MAX_SOUND_RANGE + MAX_SPACED_RANGE + extrarange, -32,-20);\
-		spaced_source = 1;\
-	}\
-	else{\
-		vol *= A\
-	}\
-} while(FALSE)
-
-#define LISTENER_ATTEN(A) do {\
-	if (A <= SPACE_ATTEN_MIN){\
-		if (!spaced_source && dist >= MAX_SPACED_RANGE){\
-			ourvolume = 0;\
-		}\
-		else{\
-			spaced_env = 1;\
-			ourvolume = clamp(ourvolume + 95, 25,200);\
-		}\
-	}\
-	else{\
-		ourvolume *= A\
-	}\
-} while(FALSE)
-
-#define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
-#define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
-
-#define SOUNDIN_ID (istype(soundin, /sound) ? soundin:file : (islist(soundin) ? ref(soundin) : soundin))
-
 /// returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
 	var/attenuate = 1
@@ -61,7 +25,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -69,7 +33,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 /// Returns a list of friendly names for available sound channels
 /client/proc/getVolumeNames()
-	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM", "Instruments")
+	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM", "Instruments", "Farts")
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
@@ -77,7 +41,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.", "Music from in-game instruments.")
+	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and other emotes.", "Mentor PM notification sound.", "Music from in-game instruments.", "Farts. Only farts.")
 
 /// Get the friendly description for a specific sound channel.
 /client/proc/getVolumeChannelDescription(channel)
@@ -104,14 +68,14 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
-	src.player?.cloudSaves.putData("audio_volume", json_encode(volumes))
+	src.player?.cloudSaves.putDataSoon("audio_volume", json_encode(volumes))
 
 	var/list/playing = src.SoundQuery()
 	if( channel == VOLUME_CHANNEL_MASTER )
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] * volume * volumes[ vol[2] ]
+			s.volume = vol[1] * volume * getRealVolume(vol[2])
 			src << s
 		src.chatOutput.adjustVolumeRaw( volume * getRealVolume(VOLUME_CHANNEL_ADMIN) )
 	else
@@ -135,7 +99,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 		return
 
 	// don't play if over the per-tick sound limit
-	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
+	var/play_id = "[round(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
@@ -830,6 +794,7 @@ proc/narrator_mode_sound_file(sound_file)
 		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
 		"monkey" = sound('sound/misc/talk/monkey.ogg'),	"monkey!" = sound ('sound/misc/talk/monkey_exclaim.ogg'),"monkey?" = sound('sound/misc/talk/monkey_ask.ogg'), \
+		"amphibian" = sound('sound/misc/talk/amphibian.ogg'),	"amphibian!" = sound ('sound/misc/talk/amphibian_exclaim.ogg'),"amphibian?" = sound('sound/misc/talk/amphibian_ask.ogg'), \
 		"cyborg" = sound('sound/misc/talk/cyborg.ogg'),	"cyborg!" = sound('sound/misc/talk/cyborg_exclaim.ogg'),"cyborg?" = sound('sound/misc/talk/cyborg_ask.ogg'), \
 		"cyborg_distorted" = sound('sound/misc/talk/cyborg_distorted.ogg'),	"cyborg_distorted!" = sound('sound/misc/talk/cyborg_exclaim_distorted.ogg'),"cyborg_distorted?" = sound('sound/misc/talk/cyborg_ask_distorted.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\

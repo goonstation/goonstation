@@ -26,6 +26,7 @@
 
 	disposing()
 		particleMaster.active_particles -= src
+		particleMaster.particle_pool -= src
 		..()
 
 // --------------------------------------------------------------------------------------------------------------------------------------
@@ -37,6 +38,12 @@ var/datum/particleMaster/particleMaster = new
 	var/list/particleTypes = null
 	var/list/particleSystems = null
 	var/list/active_particles = list()
+	/// Expired particles kept for reuse, for steady emitters like sparkles
+	var/list/obj/particle/particle_pool = list()
+	/// How many expired particles to keep around
+	var/max_pooled_particles = 150
+	/// Appearance of a freshly created particle, restored on reuse
+	var/particle_appearance = null
 	var/allowed_particles_per_tick = 7
 
 	New()
@@ -122,11 +129,10 @@ var/datum/particleMaster/particleMaster = new
 
 
 		var/time = world.time
-		for (var/obj/particle/P in src.active_particles)
+		for (var/obj/particle/P as anything in src.active_particles)
 			if (P.death < time)
 				src.active_particles -= P
-				P.dispose() // skip the tiny qdel overhead
-				P = null
+				src.recycle_particle(P)
 
 	//Spawns specified particle. If type can be recycled, do that - else create new. After time is over, move particle to recycling to avoid del and new calls.
 	proc/SpawnParticle(var/atom/location, var/particleTypeName, var/particleTime, var/particleColor, var/atom/target, var/particleSprite) //This should be the only thing you access from the outside.
@@ -140,18 +146,39 @@ var/datum/particleMaster/particleMaster = new
 			if (particleSprite)
 				p.override_state = particleSprite
 			if (target)
-				p.target = get_turf(target)
+				p.target = target
 			pType.Apply(p)
 
 			return p
 		else
 			return 0
 
-	proc/new_particle(var/lifetime)
-		var/obj/particle/P = new /obj/particle
+	proc/new_particle(lifetime)
+		var/obj/particle/P
+		var/pooled = length(src.particle_pool)
+		if (pooled)
+			P = src.particle_pool[pooled]
+			src.particle_pool.len--
+		else
+			P = new /obj/particle
+			src.particle_appearance ||= P.appearance
 		P.death = world.time + lifetime
 		src.active_particles += P
 		return P
+
+	/// Takes an expired particle off the map and resets it.
+	/// Reset the appearance (incl. overlays), plus others
+	proc/recycle_particle(obj/particle/P)
+		if (length(src.particle_pool) >= src.max_pooled_particles)
+			P.dispose() // skip the tiny qdel overhead
+			return
+		P.vis_locs = null
+		animate(P)
+		P.appearance = src.particle_appearance
+		P.overlay_refs = null // AddOverlays() bookkeeping
+		P.target = null
+		P.override_state = null
+		src.particle_pool += P
 
 // --------------------------------------------------------------------------------------------------------------------------------------
 // These datums are used by the particle master datum to apply the various effects to the base particle object before use.
@@ -1553,3 +1580,39 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null, var/glasses_color)
 		..(location, "glasses_sparkle", 9.9, glasses_color)
 		SpawnParticle()
+
+/datum/particleType/shredded
+	name = "shredded"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "2x2square"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+
+	Apply(obj/particle/par)
+		if (!..())
+			return
+		par.pixel_x = rand(-8,8)
+		animate(par, time = 0.5 SECOND, pixel_x = rand(-16, 16), pixel_y = rand(16, 32))
+		animate(delay = rand(2,3), flags = ANIMATION_PARALLEL, time = 1 SECOND, pixel_y = -16)
+
+/datum/particleSystem/shredded
+	var/icon/shredding
+	New(atom/location, particleTypeName, particleTime, particleColor, atom/target, particleSprite)
+		src.shredding = getFlatIcon(target)
+		..(location, "shredded", 10, null, target)
+
+	SpawnParticle()
+		var/obj/particle/par = ..()
+		if (src.shredding)
+			par.color = src.shredding.RandomPixelColor()
+
+	Run() //this is kind of particle system abuse but I need more consistent particle spawns than waiting for the loop to come back around
+		set waitfor = FALSE
+		if (..())
+			for(var/i=0, i<40, i++)
+				sleep(1)
+				SpawnParticle()
+			Die()
+

@@ -91,6 +91,9 @@
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] skullbot"
 
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(B.forensic_holder)
 			user.show_text("You add [W] to [src]. That's neat.", "blue")
 			qdel(W)
 			qdel(src)
@@ -272,7 +275,7 @@
 /obj/item/skull/macho // Macho man.
 	name = "golden skull"
 	desc = "Is this thing solid gold, or just gold-plated? Yeesh."
-	icon_state = "skull_macho"
+	icon_state = "skull_machoman"
 	value = 7
 	default_material = "gold"
 

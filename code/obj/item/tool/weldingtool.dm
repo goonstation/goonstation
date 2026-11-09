@@ -138,7 +138,7 @@
 				location.hotspot_expose(700, 50, 1)
 			if (istype(O, /turf))
 				var/turf/target_turf = O
-				target_turf.hotspot_expose(700, 50, 1)
+				target_turf.hotspot_expose(4000, 50, 1)
 			if (O && !ismob(O) && O.reagents)
 				boutput(user, SPAN_NOTICE("You heat \the [O.name]."))
 				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
@@ -342,3 +342,8 @@
 /obj/item/weldingtool/high_cap
 	name = "high-capacity weldingtool"
 	fuel_capacity = 100
+
+/obj/item/weldingtool/high_cap/blue
+	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart. This one boasts an extended capacity and a stylish blue handle."
+	icon_state = "weldingtool-off-blue"
+	icon_state_variant_suffix = "-blue"

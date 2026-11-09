@@ -25,6 +25,7 @@
  */
 /proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0, autofocus = TRUE, allowIllegal = FALSE,
 		start_with_search = "auto", capitalize = TRUE, theme = null, banned_chars = null)
+	UNIT_TEST_TGUI_RESPONSE
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -63,6 +64,7 @@
  */
 /proc/tgui_input_list_async(mob/user, message, title = "Select", list/items, default, datum/callback/callback, timeout = 60 SECONDS, autofocus = TRUE,
 		allowIllegal = FALSE, start_with_search = "auto", capitalize = TRUE, theme = null, banned_chars = null)
+	UNIT_TEST_TGUI_RESPONSE_ASYNC(callback)
 	if (!user)
 		user = usr
 	if(!length(items))

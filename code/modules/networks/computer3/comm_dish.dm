@@ -7,6 +7,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 	icon_state = "def_radar"
 	anchored = ANCHORED
 	density = 1
+	provides_grip = TRUE
 	var/list/messagetitle = list()
 	var/list/messagetext = list()
 	var/list/terminals = list() //list of netIDs of connected terminals.
@@ -27,7 +28,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
@@ -35,7 +36,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 	disposing()
 		STOP_TRACKING
 		if (link)
-			link.master = null
+			link.set_master(null)
 		link = null
 		..()
 

@@ -653,6 +653,12 @@
 		return
 */
 
+	setup_disk(obj/item/disk/data/fixed_disk/hd)
+		var/datum/computer/folder/logs_folder = new()
+		logs_folder.name = "logs"
+		hd.root.add_file(logs_folder)
+		logs_folder.add_file(new /datum/computer/file/record/c3help(hd))
+
 	proc
 		//Log this text in the ~system log~ as well as printing it.
 		print_error_text(text)
@@ -768,13 +774,11 @@
 			var/drive_num = 0
 			if(src.master.hd)
 				drives["hd0"] = src.master.hd
-			if(src.master.diskette)
-				drives["fd0"] = src.master.diskette
 
 			for(var/obj/item/disk/data/drive in src.master.contents)
-				if(drive == src.master.hd || drive == src.master.diskette)
+				if(drive == src.master.hd)
 					continue
-				drives["sd[drive_num]"] = drive
+				drives["fd[drive_num]"] = drive
 				drive_num++
 
 			return drives

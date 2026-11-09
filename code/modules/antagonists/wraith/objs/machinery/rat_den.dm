@@ -10,9 +10,12 @@
 	var/max_critters = 5
 	var/next_spawn_check = 10 SECONDS
 	var/process_range = 2
+	var/type_to_spawn = /mob/living/critter/small_animal/mouse/mad
 
-	New()
+	New(loc, type_to_spawn, max_critters)
 		..()
+		if (type_to_spawn) src.type_to_spawn = type_to_spawn
+		if (max_critters) src.max_critters = max_critters
 		next_spawn_check = TIME + (10 SECONDS)
 		return
 
@@ -33,9 +36,10 @@
 			if (src.next_spawn_check < TIME)
 				next_spawn_check = TIME + rand(20 SECONDS, 25 SECONDS)
 				if (linked_critters < max_critters)
-					var/mob/living/critter/small_animal/mouse/mad/rat_den/M = new /mob/living/critter/small_animal/mouse/mad/rat_den(src.loc)
+					if (!ispath(type_to_spawn, /mob)) return
+					var/mob/M = new type_to_spawn(src.loc)
 					LAZYLISTADDUNIQUE(M.faction, FACTION_WRAITH)
-					M.linked_den = src
+					RegisterSignal(M, COMSIG_MOB_DEATH, PROC_REF(linked_critter_death))
 					linked_critters ++
 
 		//Plague rats in range heal up slowly
@@ -46,3 +50,6 @@
 					var/datum/healthHolder/hh = P.healthlist[damage_type]
 					hh.HealDamage(6)
 				boutput(P, "The proximity of the rat den fills you with renewed malevolence.")
+
+	proc/linked_critter_death()
+		linked_critters--

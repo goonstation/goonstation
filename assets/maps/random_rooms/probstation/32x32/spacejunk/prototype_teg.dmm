@@ -1,0 +1,2027 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"aH" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = 11
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"aY" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Combustion Chamber Meter";
+	tag = "Hot Loop Combustion Chamber Meter"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"bb" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"bg" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"bw" = (
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"bE" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"ca" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/lattice,
+/turf/space,
+/area/station/engine/proto)
+"ct" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/obj/lattice,
+/turf/space,
+/area/station/engine/proto)
+"dB" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "5-10"
+	},
+/turf/space,
+/area/station/engine/proto_gangway)
+"dS" = (
+/obj/cable,
+/obj/machinery/power/generatorTemp,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"ef" = (
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	dir = 4;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"eB" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "8-9"
+	},
+/obj/cable{
+	icon_state = "8-10"
+	},
+/turf/space,
+/area/station/engine/proto_gangway)
+"eD" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/proto_gangway)
+"eE" = (
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Inlet Meter";
+	tag = "Hot Loop Inlet Meter"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"gc" = (
+/turf/space,
+/area/station/engine/proto)
+"gi" = (
+/obj/cable{
+	icon_state = "8-10"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"gq" = (
+/obj/machinery/atmospherics/binary/circulatorTemp,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"gI" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4;
+	frequency = 1225;
+	id = "Cold Loop Gas Supply 1";
+	target_pressure = 1000
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"hi" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/turf/space,
+/area/station/engine/proto)
+"hn" = (
+/obj/item/space_thing,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"hp" = (
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Outlet Meter";
+	tag = "Hot Loop Outlet Meter"
+	},
+/turf/space,
+/area/station/engine/proto)
+"hK" = (
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
+	},
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
+/turf/space,
+/area/station/engine/proto)
+"id" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"iz" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/space,
+/area/station/engine/proto)
+"iI" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"jm" = (
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	dir = 8;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"jL" = (
+/obj/lattice,
+/obj/machinery/atmospherics/trinary/mixer{
+	dir = 8;
+	frequency = 1225;
+	id_tag = "engine_combust";
+	master_id = "engine_combust_control";
+	name = "Gas Mixer (Combustion Chamber)";
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/space,
+/area/station/engine/proto)
+"ki" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"ky" = (
+/turf/space,
+/area/space)
+"kD" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"kU" = (
+/obj/lattice,
+/obj/machinery/atmospherics/unary/portables_connector,
+/turf/space,
+/area/station/engine/proto)
+"lu" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"lw" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/space,
+/area/station/engine/proto)
+"me" = (
+/obj/lattice,
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4;
+	frequency = 1225;
+	id = "Cold Loop Gas Supply 2";
+	target_pressure = 1000
+	},
+/turf/space,
+/area/station/engine/proto)
+"mw" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/lattice,
+/turf/space,
+/area/station/engine/proto)
+"nd" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"nh" = (
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	dir = 8;
+	transfer_rate = 1000
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"nn" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/turf/space,
+/area/station/engine/proto)
+"nI" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	level = 2
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"nK" = (
+/obj/lattice,
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	target_pressure = 1e+031
+	},
+/obj/cable{
+	icon_state = "4-10"
+	},
+/turf/space,
+/area/station/engine/proto)
+"ob" = (
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"oE" = (
+/obj/lattice,
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 8;
+	frequency = 1225;
+	id = "Hot Loop Gas Supply 2";
+	target_pressure = 1000
+	},
+/turf/space,
+/area/station/engine/proto)
+"oJ" = (
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/power/stats_meter{
+	name = "Cold Loop Inlet Meter";
+	tag = "Cold Loop Inlet Meter"
+	},
+/turf/space,
+/area/station/engine/proto)
+"oN" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"pA" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/cable{
+	icon_state = "4-5";
+	tag = null
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"qF" = (
+/obj/machinery/activation_button/ignition_switch{
+	dir = 4;
+	id = "combustion_ignition";
+	pixel_x = -22
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"ra" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"si" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"sm" = (
+/obj/machinery/atmospherics/unary/portables_connector,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"sq" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/obj/lattice,
+/obj/machinery/sparker{
+	id = "combustion_ignition";
+	layer = 7;
+	name = "Mounted Igniter";
+	pixel_x = 24
+	},
+/turf/space,
+/area/station/engine/proto)
+"sy" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"sI" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/turf/space,
+/area/station/engine/proto)
+"tK" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"uE" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"uN" = (
+/obj/lattice,
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	dir = 4;
+	transfer_rate = 1000
+	},
+/turf/space,
+/area/station/engine/proto)
+"uQ" = (
+/obj/lattice,
+/turf/space,
+/area/space)
+"vo" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/obj/machinery/meter{
+	pixel_y = -9;
+	pixel_x = -10
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"wg" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"wi" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"wn" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"xh" = (
+/obj/lattice,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/turf/space,
+/area/station/engine/proto)
+"ya" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/proto_gangway)
+"yM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"zX" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"Ai" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 2
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"AL" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/lattice,
+/obj/machinery/networked/test_apparatus/gas_sensor{
+	setup_tag = "ENGINE"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/space,
+/area/station/engine/proto)
+"Bb" = (
+/obj/lattice,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
+/turf/space,
+/area/station/engine/proto)
+"Bf" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/proto)
+"Bp" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"BO" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"Co" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1;
+	level = 2
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"CN" = (
+/obj/machinery/power/smes{
+	charge = 1e+006;
+	chargelevel = 15000;
+	output = 10000
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"Dq" = (
+/obj/lattice,
+/obj/machinery/atmospherics/binary/valve{
+	dir = 1
+	},
+/obj/machinery/door_control{
+	id = "combustion";
+	name = "Combustion Chamber Vent";
+	pixel_x = -24
+	},
+/turf/space,
+/area/station/engine/proto)
+"DO" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"DT" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/proto)
+"DX" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/lattice,
+/turf/space,
+/area/station/engine/proto)
+"Fq" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/proto)
+"Fr" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"FF" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"FQ" = (
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/space,
+/area/station/engine/proto)
+"Gc" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/engine/proto)
+"Gu" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/obj/machinery/sparker{
+	id = "combustion_ignition";
+	layer = 7;
+	name = "Mounted Igniter";
+	pixel_x = 24
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"GH" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/obj/lattice,
+/turf/space,
+/area/station/engine/proto)
+"Hn" = (
+/obj/lattice,
+/obj/lattice,
+/turf/space,
+/area/space)
+"HJ" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"IC" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/turf/space,
+/area/station/engine/proto)
+"IG" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/space,
+/area/station/engine/proto_gangway)
+"Jp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"JR" = (
+/obj/lattice,
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/space,
+/area/station/engine/proto)
+"KO" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 8
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/proto)
+"Ly" = (
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"LD" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/engine/proto)
+"MC" = (
+/obj/machinery/power/stats_meter{
+	name = "Cold Loop Outlet Meter";
+	tag = "Cold Loop Outlet Meter"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"MP" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "combustion";
+	name = "Combustion Chamber Vent"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"Nk" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/broken,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"No" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"NS" = (
+/obj/lattice,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
+	},
+/turf/space,
+/area/station/engine/proto)
+"NT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"Or" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"Pp" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"PW" = (
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/space,
+/area/station/engine/proto)
+"Qe" = (
+/obj/lattice,
+/turf/space,
+/area/station/engine/proto_gangway)
+"QD" = (
+/obj/machinery/computer/atmosphere/mixercontrol{
+	dir = 4;
+	frequency = 1225;
+	id = "engine_combust_control";
+	mixerid = "engine_combust";
+	name = "Gas Mixer Control (Combustion Chamber)"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"QZ" = (
+/obj/lattice,
+/obj/mesh/grille/steel,
+/turf/space,
+/area/station/engine/proto)
+"RP" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"SA" = (
+/obj/machinery/atmospherics/binary/circulatorTemp/right,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"SF" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"SS" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/space,
+/area/station/engine/proto)
+"Te" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/proto)
+"Tl" = (
+/obj/lattice,
+/turf/space,
+/area/station/engine/proto)
+"TN" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/proto)
+"TO" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/proto)
+"Ud" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"Uh" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/turf/space,
+/area/station/engine/proto)
+"Un" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 8;
+	frequency = 1225;
+	id = "Hot Loop Gas Supply 1";
+	target_pressure = 1000
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"Uq" = (
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"Ur" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
+"UJ" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"UO" = (
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"UV" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"Vp" = (
+/obj/lattice,
+/obj/cable,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/space,
+/area/station/engine/proto)
+"VD" = (
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"VU" = (
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"Wm" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/turf/space,
+/area/station/engine/proto)
+"Wz" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/proto)
+"WA" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"WQ" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"WU" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"XC" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
+"Yr" = (
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
+/turf/space,
+/area/station/engine/proto)
+"Yw" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
+"Ze" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/proto)
+
+(1,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}
+(2,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}
+(3,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}
+(4,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}
+(5,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}
+(6,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+Tl
+Tl
+gc
+gc
+gc
+gc
+gc
+gc
+gc
+gc
+ky
+ky
+ky
+ky
+ky
+"}
+(7,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+UV
+Ur
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+Fq
+Fq
+Fq
+MP
+MP
+MP
+MP
+Bf
+Fq
+Fq
+ky
+ky
+ky
+ky
+ky
+"}
+(8,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+uQ
+ky
+ky
+uQ
+uQ
+ky
+ky
+Fq
+ki
+TO
+ct
+DX
+ki
+TO
+ki
+TO
+Bf
+ky
+ky
+ky
+ky
+ky
+"}
+(9,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+WA
+UV
+UV
+Ur
+ky
+ky
+ky
+Bf
+Fr
+kD
+bb
+Or
+bb
+Or
+mw
+wg
+Fq
+ky
+ky
+ky
+ky
+ky
+"}
+(10,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+Bf
+ca
+nI
+tK
+iI
+AL
+id
+Co
+TO
+Fq
+ky
+ky
+ky
+ky
+ky
+"}
+(11,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+WA
+Uq
+uQ
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+Fq
+ca
+GH
+sq
+nd
+wi
+kD
+Gu
+Fr
+Bf
+ky
+ky
+ky
+ky
+ky
+"}
+(12,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+uQ
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+Bf
+KO
+Fq
+Bf
+oN
+si
+WQ
+Bf
+Ze
+Bf
+Ur
+ky
+ky
+ky
+ky
+"}
+(13,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+UV
+ky
+ky
+ya
+Bf
+aY
+sm
+Dq
+jL
+Jp
+bw
+qF
+nh
+Bf
+Ur
+ky
+ky
+ky
+ky
+"}
+(14,1,1) = {"
+ky
+ky
+ky
+uQ
+uQ
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+UV
+uQ
+ky
+ky
+eD
+HJ
+JR
+kU
+SF
+Yr
+Jp
+Tl
+bw
+JR
+WQ
+uQ
+ky
+ky
+ky
+ky
+"}
+(15,1,1) = {"
+ky
+ky
+ky
+uQ
+WA
+ky
+ky
+ky
+ky
+ky
+WA
+uQ
+ky
+ky
+ya
+ya
+ya
+Jp
+ef
+bw
+bw
+bw
+QD
+FF
+XC
+WU
+WQ
+Ur
+ky
+ky
+ky
+ky
+"}
+(16,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+Qe
+Ly
+Ly
+Qe
+Ly
+Qe
+CN
+RP
+uE
+zX
+hK
+eE
+gq
+nK
+hp
+Ai
+NS
+ra
+WQ
+uQ
+ky
+ky
+ky
+ky
+"}
+(17,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+Ly
+Ly
+Qe
+VD
+uE
+Bp
+yM
+pA
+dB
+DO
+NT
+No
+dS
+Vp
+wn
+wn
+wn
+Nk
+Bf
+ky
+ky
+ky
+ky
+ky
+"}
+(18,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+Ly
+Yw
+VU
+Ly
+Ly
+Ly
+eB
+gi
+IG
+bg
+vo
+oJ
+SA
+MC
+oE
+Un
+gI
+me
+WQ
+ky
+ky
+ky
+ky
+ky
+"}
+(19,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+uQ
+ky
+ky
+ky
+uQ
+Hn
+uQ
+WA
+WA
+eD
+Qe
+ya
+jm
+UO
+DO
+SF
+aH
+Pp
+xh
+bE
+Ai
+QZ
+ky
+ky
+ky
+ky
+ky
+"}
+(20,1,1) = {"
+ky
+ky
+uQ
+Ur
+ky
+uQ
+uQ
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+eD
+eD
+ya
+nh
+iz
+Ud
+FQ
+ob
+UJ
+UJ
+Ai
+wn
+WQ
+ky
+ky
+uQ
+ky
+ky
+"}
+(21,1,1) = {"
+ky
+ky
+ky
+uQ
+ky
+ky
+uQ
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+Qe
+sy
+PW
+lw
+lu
+bw
+BO
+BO
+Bb
+uN
+Fq
+ky
+uQ
+UV
+ky
+ky
+"}
+(22,1,1) = {"
+ky
+ky
+ky
+uQ
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+UV
+ky
+Tl
+TN
+Fq
+Bf
+WQ
+am
+am
+Bf
+Wz
+Fq
+ky
+UV
+ky
+ky
+ky
+"}
+(23,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+hn
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+UV
+uQ
+ky
+Te
+IC
+hi
+sI
+hi
+sI
+hi
+sI
+IC
+Te
+ky
+ky
+ky
+ky
+ky
+"}
+(24,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+UV
+ky
+ky
+Te
+IC
+Uh
+Wm
+nn
+Wm
+nn
+Wm
+SS
+Te
+ky
+ky
+ky
+ky
+ky
+"}
+(25,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+WA
+uQ
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+ky
+ky
+Te
+IC
+hi
+nn
+Wm
+nn
+Wm
+nn
+sI
+Te
+ky
+ky
+ky
+ky
+ky
+"}
+(26,1,1) = {"
+ky
+ky
+ky
+ky
+uQ
+WA
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+uQ
+uQ
+ky
+ky
+Te
+Uh
+SS
+Uh
+SS
+Uh
+SS
+Uh
+SS
+Te
+ky
+ky
+ky
+ky
+ky
+"}
+(27,1,1) = {"
+ky
+ky
+ky
+ky
+WA
+uQ
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+Gc
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+LD
+ky
+ky
+ky
+ky
+ky
+"}
+(28,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}
+(29,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}
+(30,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}
+(31,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}
+(32,1,1) = {"
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+ky
+"}

@@ -25,7 +25,7 @@ if grep -P 'step_[xy]' assets/maps/**/*.dmm maps/**/*.dmm;	then
     st=1
 fi;
 
-if grep -P '^\/area(?!\/dmm_suite\/clear_area)' assets/maps/random_rooms/**/*.dmm; then
+if grep -R --exclude-dir=probstation -P '^\/area(?!\/dmm_suite\/clear_area)' assets/maps/random_rooms/; then
     echo "ERROR: random room uses non '/area/dmm_suite/clear' area"
     st=1
 fi;
@@ -45,6 +45,11 @@ fi;
 
 if grep -P 'plane\s*=\s*[0-9]+|plane\s*=\s*[A-Z_]+\s*[+\-*]\s*' */**/*.dm;	then
     echo "ERROR: don't directly set plane to a number, please use a define."
+    st=1
+fi;
+
+if grep -P '^(?!.*UNLINT).*\.opacity\s*=(?!=)' code/**/*.dm _std/**/*.dm;	then
+    echo "ERROR: don't assign .opacity directly, call set_opacity(), or set_opacity_no_lighting() when rewriting a region."
     st=1
 fi;
 

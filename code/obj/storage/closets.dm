@@ -5,6 +5,7 @@ TYPEINFO(/obj/storage/closet)
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
+	icon = 'icons/obj/storage/locker.dmi'
 	object_flags = NO_GHOSTCRITTER
 	soundproofing = SOUNDPROOFING_STORAGE
 	can_flip_bust = 1
@@ -14,6 +15,7 @@ TYPEINFO(/obj/storage/closet)
 	volume = 70
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	///Will this locker auto-close when someone is flung into it
 	var/auto_close = TRUE
 
@@ -154,6 +156,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 /obj/storage/closet/coffin
 	name = "coffin"
 	desc = "A burial receptacle for the dearly departed."
+	icon = 'icons/obj/storage/coffin.dmi'
 	icon_state = "coffin"
 	icon_closed = "coffin"
 	icon_opened = "coffin-open"
@@ -346,7 +349,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			B9.pixel_y = 0
 			B9.pixel_x = 6
 
-			var/obj/item/folder/B10 = new /obj/item/canvas(src)
+			var/obj/item/canvas/B10 = new /obj/item/canvas(src)
 			B10.pixel_y = 0	// everything else does it i guess
 			B10.pixel_x = 0
 
@@ -418,6 +421,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 
 		src.dump_contents()
 		src.open = 1
+		src.gas_impermeable = FALSE
 		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
@@ -434,6 +438,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			return 0
 
 		src.open = 0
+		src.gas_impermeable = TRUE
 
 		for (var/obj/O in get_turf(src))
 			if (src.is_acceptable_content(O))
@@ -584,7 +589,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 
 /obj/storage/closet/radiation
 	name = "radiation supplies closet"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_closed = "radiation"
 	icon_state = "radiation"
 	icon_opened = "radiation-open"
@@ -594,15 +599,17 @@ TYPEINFO(/obj/storage/closet/coffin)
 					/obj/item/storage/pill_bottle/antirad = 1,
 					/obj/item/clothing/glasses/toggleable/meson = 1,
 					/obj/item/reagent_containers/emergency_injector/anti_rad = 1)
+	radiation_protection = 20
 
 /obj/storage/closet/medicalclothes
 	name = "medical clothing locker"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_closed = "red-medical"
 	icon_state = "red-medical"
 	icon_opened = "open-white"
 	desc = "A handy medical locker for storing your doctoring apparel."
 	spawn_contents = list(/obj/item/clothing/head/nursehat = 2,
+					/obj/item/clothing/head/nursehat/blue = 2,
 					/obj/item/clothing/head/traditionalnursehat = 2,
 					/obj/item/clothing/suit/nursedress = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,
@@ -612,7 +619,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"
 	desc = "This thing looks ransacked."
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_state = "dented_c"
 	icon_closed = "dented_c"
 	icon_opened = "dented_c-open"
@@ -626,7 +633,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 
 /obj/storage/closet/mauxite
 	desc = "This thing looks pretty robust!"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_state = "closed$$mauxite"
 	default_material = "mauxite"
 	uses_default_material_appearance = TRUE

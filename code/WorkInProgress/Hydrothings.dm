@@ -334,7 +334,7 @@
 
 /obj/fakeobject/bustedpod
 	name = "Busted Escape Pod"
-	desc = "A escape pod for escaping. It seems to be busted."
+	desc = "An escape pod for escaping. It seems to be busted."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "escape"
 	density = 1
@@ -1319,7 +1319,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	the_item.remove_item_ability(the_mob, src.type)
 	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
-	logTheThing(LOG_COMBAT, M, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
+	logTheThing(LOG_COMBAT, M, "<b>triggers an owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	M.visible_message(SPAN_ALERT("[M] flies through the ceiling!"))
 	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
@@ -1333,7 +1333,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	siren.repeat = 1
 	siren.channel = 5
 	world << siren
-	command_alert("A massive influx of Owl Quarks has been detected in [get_area(M)]. A Owl Slam is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
+	command_alert("A massive influx of Owl Quarks has been detected in [get_area(M)]. An Owl Slam is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
 	for(var/mob/N in mobs)
 		SPAWN(0)
 			shake_camera(N, 120, 24)
@@ -1358,7 +1358,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	siren.status = SOUND_UPDATE
 	siren.channel = 5
 	world << siren
-	M.visible_message(SPAN_ALERT("[M] successfully executes a Owl Slam!"))
+	M.visible_message(SPAN_ALERT("[M] successfully executes an Owl Slam!"))
 	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam")
 	explosion_new(M, get_turf(M), 1, 75)
 	for(var/mob/living/carbon/human/M1 in range(5, M))

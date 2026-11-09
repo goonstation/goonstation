@@ -601,10 +601,14 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Player Cap"
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
-	player_capa = !( player_capa )
-	if (player_capa)
+	if (!player_capa)
+		var/picked_cap = tgui_input_number(usr, "How many players (admins not included) should be allowed in?", "Select Player Cap", global.player_cap, 200, 0)
+		if(!isnull(picked_cap))
+			global.player_cap = picked_cap
+		player_capa = TRUE
 		boutput(world, "<B>The global player cap has been enabled at [player_cap] players.</B>")
 	else
+		player_capa = FALSE
 		boutput(world, "<B>The global player cap has been disabled.</B>")
 	logTheThing(LOG_ADMIN, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].")
 	logTheThing(LOG_DIARY, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].", "admin")
@@ -849,27 +853,21 @@ client/proc/toggle_ghost_respawns()
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
 
-	var/priorbreathing = manualbreathing
-	var/breathing = alert("Manual breathing mode?","Toggle","On","Off")
-	if(breathing == "On")
-		manualbreathing = 1
-		if(priorbreathing != manualbreathing) boutput(world, "<B>You must now breathe manually using the *inhale and *exhale emotes!</B>")
-	else
-		manualbreathing = 0
-		if(priorbreathing != manualbreathing) boutput(world, "<B>You no longer need to breathe manually!</B>")
+	switch (alert("Manual breathing mode?", "Toggle", "On", "Off"))
+		if ("On")
+			global.toggle_manual_breathing(TRUE)
+		if ("Off")
+			global.toggle_manual_breathing(FALSE)
 
-	var/priorblinking = manualblinking
-	var/blinking = alert("Manual blinking mode?","Toggle","On","Off")
-	if(blinking == "On")
-		manualblinking = 1
-		if(priorblinking != manualblinking) boutput(world, "<B>You must now blink manually using the *closeeyes and *openeyes emotes!</B>")
-	else
-		manualblinking = 0
-		if(priorblinking != manualblinking) boutput(world, "<B>You no longer need to blink manually!</B>")
+	switch (alert("Manual blinking mode?", "Toggle", "On", "Off"))
+		if ("On")
+			global.toggle_manual_blinking(TRUE)
+		if ("Off")
+			global.toggle_manual_blinking(FALSE)
 
-	logTheThing(LOG_ADMIN, usr, "turned manual breathing [manualbreathing ? "on" : "off"] and manual blinking [manualblinking ? "on" : "off"].")
-	logTheThing(LOG_DIARY, usr, "turned manual breathing [manualbreathing ? "on" : "off"] and manual blinking [manualblinking ? "on" : "off"].", "admin")
-	message_admins("[key_name(usr)] turned manual breathing [manualbreathing ? "on" : "off"] and manual blinking [manualblinking ? "on" : "off"].")
+	logTheThing(LOG_ADMIN, usr, "turned manual breathing [global.manual_breathing ? "on" : "off"] and manual blinking [global.manual_blinking ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "turned manual breathing [global.manual_breathing ? "on" : "off"] and manual blinking [global.manual_blinking ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] turned manual breathing [global.manual_breathing ? "on" : "off"] and manual blinking [global.manual_blinking ? "on" : "off"].")
 
 /datum/admins/proc/togglespeechpopups()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)

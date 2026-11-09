@@ -48,6 +48,8 @@
 			donor.take_toxin_damage(2*mult, 1)
 
 	disposing()
+		if (src.donor) // force-replaced organs get deleted without on_removal()
+			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_METABOLIC_RATE, src)
 		if (holder)
 			if (holder.left_kidney == src)
 				holder.left_kidney = null
@@ -90,6 +92,7 @@
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
 TYPEINFO(/obj/item/organ/kidney/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/kidney/cyber

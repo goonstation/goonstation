@@ -5,10 +5,11 @@
  * @license ISC
  */
 
-import { classes } from 'common/react';
+import { BooleanLike } from 'common/react';
 import {
   Box,
   Button,
+  Collapsible,
   Divider,
   Image,
   LabeledList,
@@ -18,7 +19,7 @@ import {
   Tabs,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 // Also used by AccessPro
@@ -37,13 +38,7 @@ export const DeptBox = (props) => {
     target_accesses,
   } = props;
   return (
-    <Section
-      title={name}
-      className={classes([
-        'IDComputer__DeptBox',
-        colour && `IDComputer__DeptBox_color_${colour}`,
-      ])}
-    >
+    <Collapsible title={name} open color={colour || 'grey'}>
       {jobs &&
         jobs.map((job, index) => {
           return (
@@ -97,12 +92,12 @@ export const DeptBox = (props) => {
             </Button>
           );
         })}
-    </Section>
+    </Collapsible>
   );
 };
 
 interface IDComputerData {
-  mode: string;
+  authenticated: BooleanLike;
   manifest: string;
   target_name: string;
   target_owner: string;
@@ -140,8 +135,9 @@ interface CardIcon {
 
 export const IDComputer = () => {
   const { act, data } = useBackend<IDComputerData>();
+  const [viewing_tab, setTab] = useSharedState('viewtab', 'access');
   const {
-    mode,
+    authenticated,
     manifest,
     target_name,
     target_owner,
@@ -157,25 +153,56 @@ export const IDComputer = () => {
   } = data;
 
   return (
-    <Window width={620} height={780}>
+    <Window width={620} height={700}>
       <Window.Content scrollable>
-        <Section>
+        <Section fill>
           <Tabs>
             <Tabs.Tab
-              selected={mode !== 'manifest'}
-              onClick={() => act('mode', { mode: 0 })}
+              selected={viewing_tab === 'card_custom'}
+              onClick={() => setTab('card_custom')}
             >
-              ID Modification
+              ID Customization
             </Tabs.Tab>
             <Tabs.Tab
-              selected={mode === 'manifest'}
-              onClick={() => act('mode', { mode: 1 })}
+              selected={viewing_tab === 'access'}
+              onClick={() => setTab('access')}
+            >
+              Access Assignment
+            </Tabs.Tab>
+            <Tabs.Tab
+              selected={viewing_tab === 'jobs'}
+              onClick={() => setTab('jobs')}
+            >
+              Role Assignment
+            </Tabs.Tab>
+            <Tabs.Tab
+              selected={viewing_tab === 'manifest'}
+              onClick={() => setTab('manifest')}
             >
               Crew Manifest
             </Tabs.Tab>
           </Tabs>
-
-          {mode === 'manifest' && (
+          <LabeledList>
+            <LabeledList.Item label="Confirm identity">
+              <Button
+                onClick={() => act('scan')}
+                icon="eject"
+                preserveWhitespace
+              >
+                {scan_name || 'Insert card'}
+              </Button>
+            </LabeledList.Item>
+            <LabeledList.Item label="Target">
+              <Button
+                onClick={() => act('modify')}
+                icon="eject"
+                preserveWhitespace
+              >
+                {target_name || 'Insert card or implant'}
+              </Button>
+            </LabeledList.Item>
+          </LabeledList>
+          {viewing_tab === 'manifest' && (
             <>
               <h1>Crew Manifest:</h1>
               <em>
@@ -188,153 +215,139 @@ export const IDComputer = () => {
             </>
           )}
 
-          {mode !== 'manifest' && (
+          {viewing_tab !== 'manifest' && (
             <>
-              <LabeledList>
-                <LabeledList.Item label="Confirm identity">
-                  <Button
-                    onClick={() => act('scan')}
-                    icon="eject"
-                    preserveWhitespace
-                  >
-                    {scan_name || 'Insert card'}
-                  </Button>
-                </LabeledList.Item>
-                <LabeledList.Item label="Target">
-                  <Button
-                    onClick={() => act('modify')}
-                    icon="eject"
-                    preserveWhitespace
-                  >
-                    {target_name || 'Insert card or implant'}
-                  </Button>
-                </LabeledList.Item>
-              </LabeledList>
-
-              {mode === 'authenticated' && (
+              {!!authenticated && target_name && (
                 <>
-                  <hr />
-
-                  <Stack>
-                    <Stack.Item grow={2}>
-                      <LabeledList>
-                        <LabeledList.Item label="Registered">
-                          <Button onClick={() => act('reg')} preserveWhitespace>
-                            {(target_owner && target_owner.trim()) || '(blank)'}
-                          </Button>
-                        </LabeledList.Item>
-                        <LabeledList.Item label="Assignment">
+                  {viewing_tab === 'card_custom' && (
+                    <Section>
+                      <Stack>
+                        <Stack.Item grow={2}>
+                          <LabeledList>
+                            <LabeledList.Item label="Registered">
+                              <Button
+                                onClick={() => act('reg')}
+                                preserveWhitespace
+                              >
+                                {(target_owner && target_owner.trim()) ||
+                                  '(blank)'}
+                              </Button>
+                            </LabeledList.Item>
+                            <LabeledList.Item label="Assignment">
+                              <Button
+                                onClick={() =>
+                                  act('assign', { assign: 'Custom Assignment' })
+                                }
+                                preserveWhitespace
+                              >
+                                {(target_rank && target_rank.trim()) ||
+                                  'Unassigned'}
+                              </Button>
+                              <Button
+                                icon="id-card"
+                                color="green"
+                                tooltip="Set Access to Assignment"
+                                onClick={() =>
+                                  act('assign', { assign: target_rank })
+                                }
+                              />
+                            </LabeledList.Item>
+                          </LabeledList>
+                        </Stack.Item>
+                        <Stack.Item>
+                          <Divider vertical />
+                        </Stack.Item>
+                        <Stack.Item grow={1}>
+                          <LabeledList>
+                            <LabeledList.Item label="Pronouns">
+                              <Button
+                                onClick={() =>
+                                  act('pronouns', { pronouns: 'next' })
+                                }
+                              >
+                                {pronouns || 'None'}
+                              </Button>
+                              {pronouns && (
+                                <Button
+                                  onClick={() =>
+                                    act('pronouns', { pronouns: 'remove' })
+                                  }
+                                  icon="trash"
+                                  tooltip="Remove"
+                                />
+                              )}
+                            </LabeledList.Item>
+                            <LabeledList.Item label="PIN">
+                              <Button onClick={() => act('pin')}>****</Button>
+                            </LabeledList.Item>
+                          </LabeledList>
+                        </Stack.Item>
+                      </Stack>
+                      <Section title="Custom Card Look">
+                        {icons.map((icon) => (
                           <Button
-                            onClick={() =>
-                              act('assign', { assign: 'Custom Assignment' })
-                            }
-                            preserveWhitespace
+                            key={icon.style}
+                            onClick={() => act('style', { style: icon.style })}
+                            selected={icon.card_look === target_card_look}
                           >
-                            {(target_rank && target_rank.trim()) ||
-                              'Unassigned'}
-                          </Button>
-                          <Button
-                            icon="id-card"
-                            color="green"
-                            tooltip="Set Access to Assignment"
-                            onClick={() =>
-                              act('assign', { assign: target_rank })
-                            }
-                          />
-                        </LabeledList.Item>
-                      </LabeledList>
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Divider vertical />
-                    </Stack.Item>
-                    <Stack.Item grow={1}>
-                      <LabeledList>
-                        <LabeledList.Item label="Pronouns">
-                          <Button
-                            onClick={() =>
-                              act('pronouns', { pronouns: 'next' })
-                            }
-                          >
-                            {pronouns || 'None'}
-                          </Button>
-                          {pronouns && (
-                            <Button
-                              onClick={() =>
-                                act('pronouns', { pronouns: 'remove' })
-                              }
-                              icon="trash"
-                              tooltip="Remove"
+                            <Image
+                              verticalAlign="middle"
+                              my="0.2rem"
+                              mr="0.5rem"
+                              height="24px"
+                              width="24px"
+                              src={`data:image/png;base64,${icon.icon}`}
                             />
-                          )}
-                        </LabeledList.Item>
-                        <LabeledList.Item label="PIN">
-                          <Button onClick={() => act('pin')}>****</Button>
-                        </LabeledList.Item>
-                      </LabeledList>
-                    </Stack.Item>
-                  </Stack>
-
+                            {icon.name}
+                          </Button>
+                        ))}
+                      </Section>
+                    </Section>
+                  )}
                   {/* Jobs organised into sections */}
-                  <Section title="Standard Job Assignment">
-                    {standard_jobs.map(
-                      (jobGrouping) =>
-                        jobGrouping.jobs && (
-                          <DeptBox
-                            key={jobGrouping.name}
-                            name={jobGrouping.name}
-                            colour={jobGrouping.color}
-                            current_job={target_rank}
-                            jobs={jobGrouping.jobs}
-                            style={jobGrouping.style}
-                          />
-                        ),
-                    )}
+                  {viewing_tab === 'jobs' && (
+                    <Section>
+                      {standard_jobs.map(
+                        (jobGrouping) =>
+                          jobGrouping.jobs && (
+                            <DeptBox
+                              key={jobGrouping.name}
+                              name={jobGrouping.name}
+                              colour={jobGrouping.color}
+                              current_job={target_rank}
+                              jobs={jobGrouping.jobs}
+                              style={jobGrouping.style}
+                            />
+                          ),
+                      )}
 
-                    <DeptBox
-                      name="Custom"
-                      current_job={target_rank}
-                      jobs={custom_names}
-                      isCustomRank
-                    />
-                  </Section>
-
-                  <Section title="Specific Area Access">
-                    {accesses_by_area.map(
-                      (area) =>
-                        area.accesses.length > 0 && (
-                          <DeptBox
-                            key={area.name}
-                            name={area.name}
-                            colour={area.color}
-                            accesses={area.accesses}
-                            target_accesses={target_accesses}
-                          />
-                        ),
-                    )}
-                  </Section>
-
-                  <Section title="Custom Card Look">
-                    {icons.map((icon) => (
-                      <Button
-                        key={icon.style}
-                        onClick={() => act('style', { style: icon.style })}
-                        selected={icon.card_look === target_card_look}
-                      >
-                        <Image
-                          verticalAlign="middle"
-                          my="0.2rem"
-                          mr="0.5rem"
-                          height="24px"
-                          width="24px"
-                          src={`data:image/png;base64,${icon.icon}`}
-                        />
-                        {icon.name}
-                      </Button>
-                    ))}
-                  </Section>
+                      <DeptBox
+                        name="Custom"
+                        current_job={target_rank}
+                        jobs={custom_names}
+                        isCustomRank
+                      />
+                    </Section>
+                  )}
+                  {viewing_tab === 'access' && (
+                    <Section>
+                      {accesses_by_area.map(
+                        (area) =>
+                          area.accesses.length > 0 && (
+                            <DeptBox
+                              key={area.name}
+                              name={area.name}
+                              colour={area.color}
+                              accesses={area.accesses}
+                              target_accesses={target_accesses}
+                            />
+                          ),
+                      )}
+                    </Section>
+                  )}
                 </>
               )}
-              {mode === 'unauthenticated' && scan_name && target_name && (
+              {!authenticated && scan_name && target_name && (
                 <NoticeBox mt="0.5rem" danger>
                   Identity <em>{scan_name}</em> unauthorized to perform ID
                   modifications.

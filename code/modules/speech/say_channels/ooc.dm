@@ -8,5 +8,5 @@
 	suppress_speech_bubble = TRUE
 
 /datum/say_channel/ooc/log_message(datum/say_message/message)
-	logTheThing(LOG_OOC, message.speaker, "[uppertext(src.channel_id)]: [message.content] [log_loc(message.speaker)]")
-	phrase_log.log_phrase("ooc", message.content)
+	logTheThing(LOG_OOC, message.speaker, "[uppertext(src.channel_id)]: [message.get_original_content()] [log_loc(message.speaker)]")
+	phrase_log.log_phrase("ooc", message.get_content())

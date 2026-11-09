@@ -92,6 +92,7 @@
 	var/whitelistEnabled = 0
 	var/baseWhitelistEnabled = 0 //! The config value of whitelistEnabled (actual value might be modified mid-round)
 	var/roundsLeftWithoutWhitelist = -1 //! How many rounds are left without the whitelist being enabled
+	var/mentors_bypass_whitelist = FALSE
 	var/whitelist_path = "config/whitelist.txt"
 
 	//Which server can ghosts join by clicking on an on-screen link
@@ -337,6 +338,9 @@
 
 			if ("whitelist_path")
 				config.whitelist_path = trimtext(value)
+
+			if ("mentors_bypass_whitelist")
+				config.mentors_bypass_whitelist = TRUE
 
 			if ("server_buddy_id")
 				config.server_buddy_id = trimtext(value)

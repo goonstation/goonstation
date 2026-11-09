@@ -637,6 +637,8 @@
 	var/miss_prob = 80
 	var/stam_damage_mult = 1
 	var/harm_intent_delay = COMBAT_CLICK_DELAY
+	var/crushing = FALSE
+	var/bleed = 0
 
 	attack_hand(atom/target, var/mob/user, var/reach)
 		if (ismob(target))
@@ -666,11 +668,15 @@
 		if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
 
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
+			if(src.crushing)
+				msgs.damage_type = DAMAGE_CRUSH
 			user.attack_effects(target, user.zone_sel?.selecting)
 			msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] bites [target]!</b>")
 			msgs.played_sound = src.sound_attack
 			msgs.flush(0)
 			user.HealDamage("All", 2, 0)
+			if(src.bleed)
+				take_bleeding_damage(target, null, bleed, DAMAGE_CUT, bleed-5, get_turf(target))
 		else
 			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
 		user.lastattacked = get_weakref(target)
@@ -778,6 +784,26 @@
 /datum/limb/mouth/small/possum
 	dam_low = 0
 	dam_high = 0
+
+/datum/limb/mouth/hippo
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_2.ogg'
+	dam_low = 14
+	dam_high = 28
+	can_beat_up_robots = TRUE
+	miss_prob = 90
+	crushing = TRUE
+	bleed = 20
+
+	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+		. = ..()
+	harm(mob/target, var/mob/user)
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+		..()
 
 /datum/limb/item
 	can_pickup_item = FALSE
@@ -1049,6 +1075,7 @@
 	var/log_name = "brullbar limbs"
 	var/quality = 0.7
 	var/king = FALSE
+	can_beat_up_robots = TRUE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -1136,7 +1163,7 @@
 	log_name = "severed werewolf limb"
 	quality = 1
 
-/// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
+/// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears. Go there to make use of this.
 /datum/limb/hot //because
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -1150,17 +1177,13 @@
 			return
 
 		if (isitem(target))
-			var/obj/item/I = target
-			if(I.anchored)
-				return 0
-			var/obj/decal/cleanable/molten_item/I2 = make_cleanable(/obj/decal/cleanable/molten_item,I.loc)
-			user.visible_message(SPAN_ALERT("The [I] melts in [user]'s clutch"), SPAN_ALERT("The [I] melts in your clutch!"))
-			qdel(target)
-			I2.desc = "Looks like this was \an [I], melted by someone who was too much."
-			for(var/mob/M in AIviewers(5, target))
-				boutput(M, SPAN_ALERT("\The [I] melts."))
-			qdel(I)
-			return
+			if(prob(15) && user.bodytemperature >= T0C + 37)
+				user.get_burn_damage(20)
+				user.changeBodyTemp(-15 KELVIN, T0C + 30)
+				var/turf/TT = target.loc
+				TT.hotspot_expose(T0C + 5000, 125)
+				user.visible_message(SPAN_ALERT("[user] messes up with thier [src] and superheats the [target] "), SPAN_ALERT("You mess up and superheat [target]!"))
+				playsound(user, 'sound/impact_sounds/burn_sizzle.ogg', 100, 1)
 
 		..()
 		return
@@ -1169,6 +1192,13 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (prob(15))
+			user.get_burn_damage(20)
+			user.changeBodyTemp(30 KELVIN)
+			var/turf/TT = target.loc
+			TT.hotspot_expose(T0C + 5000, 125)
+			if(isliving(target))
+				var/mob/living/T = target
+				T.set_burning(5 SECONDS)
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 			user.visible_message(SPAN_COMBAT("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
@@ -1196,8 +1226,6 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		if (no_logs != 1)
-			logTheThing(LOG_COMBAT, user, "melts [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 3, 1, 0, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
@@ -1207,7 +1235,7 @@
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = get_weakref(target)
-
+		..()
 
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
@@ -1995,3 +2023,121 @@
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
+
+/datum/limb/gorilla // gorilla arms. they are not removable from gorillas (for now)
+	can_beat_up_robots = TRUE //it's a gorilla
+
+	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
+		if (!holder)
+			return
+
+		if (!istype(user))
+			target.Attackhand(user, params, location, control)
+			return
+
+		if (isobj(target))
+			switch (user.smash_through(target, list("window", "table", "grille", "blob")))
+				if (TRUE)
+					user.lastattacked = get_weakref(target)
+					return
+				if (FALSE)
+					if (isitem(target))
+						if (prob(45))
+							user.show_message(SPAN_ALERT("You fumble [target] with your gorilla hands!"))
+							return
+
+
+		if (ismob(target))
+			user.lastattacked = get_weakref(target)
+			if (issilicon(target))
+				special_attack_silicon(target, user)
+				return
+
+
+		. = ..()
+
+	grab(mob/target, var/mob/living/user)
+		if (!holder)
+			return
+
+		if (!istype(user) || !ismob(target))
+			target.Attackhand(user)
+			return
+
+		if(check_target_immunity( target ))
+			return 0
+
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+
+		user.grab_other(target, 1) // Use standard grab proc.
+
+		// gorillas always grab aggressively like shamblers
+		var/obj/item/grab/GD = user.equipped()
+		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
+			target.changeStatus("stunned", 2 SECONDS)
+			GD.state = GRAB_STRONG
+			APPLY_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE, GD)
+			target.update_canmove()
+			GD.UpdateIcon()
+			user.visible_message(SPAN_ALERT("[user] grabs hold of [target] aggressively!"))
+
+		return
+
+	harm(mob/target, var/mob/living/user)
+		if (!holder)
+			return
+
+		if (!istype(user) || !ismob(target))
+			target.Attackhand(user)
+			return
+		if(check_target_immunity( target ))
+			return 0
+		if (target.melee_attack_test(user) != 1)
+			return
+
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+
+		var/send_flying = 0 // 1: a little bit | 2: across the room
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, can_punch = 0, can_kick = 0)
+
+		if (!msgs || !istype(msgs))
+			return
+
+		if (target.canmove && !target.anchored && !target.lying)
+			if (prob(40))
+				if (prob(60))
+					target.stuttering += 2
+					send_flying = 1
+				else
+					target.stuttering += 3
+					send_flying = 2
+			else
+				target.stuttering += 1
+		else
+			target.stuttering += 1
+
+		if (send_flying == 2)
+			msgs.base_attack_message = SPAN_COMBAT("<b>[user] delivers a savage blow, sending [target] flying!</b>")
+		else
+			msgs.base_attack_message = SPAN_COMBAT("<b>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] gorilla fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+
+		msgs.played_sound = pick(sounds_punch)
+		msgs.damage = rand(6, 18)
+		msgs.damage_type = DAMAGE_BLUNT
+
+		if (send_flying == 2)
+			msgs.after_effects += /proc/wrestler_backfist
+		else if (send_flying == 1)
+			msgs.after_effects += /proc/wrestler_knockdown
+
+		logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] with gorilla arms for [msgs.damage] damage at [log_loc(user)].")
+		user.attack_effects(target, user.zone_sel?.selecting)
+		msgs.flush(SUPPRESS_LOGS)
+
+		user.lastattacked = get_weakref(target)
+		return

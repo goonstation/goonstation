@@ -8,6 +8,9 @@ proc/check_for_radio_jammers(atom/source, datum/signal/signal)
 		if(istype(A, /obj/item/radiojammer))
 			var/obj/item/radiojammer/jammer = A
 			range = jammer.range
+		if(istype(A, /obj/anomaly/pale))
+			var/obj/anomaly/pale/anom = A
+			range = anom.anomaly_strength
 		if (IN_RANGE(source, A, range))
 			SEND_SIGNAL(A, COMSIG_SIGNAL_JAMMED, signal)
 			return TRUE
@@ -83,6 +86,7 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_BOT_CONTROL 1447
 #define FREQ_AIRLOCK_CONTROL 1449 // seems to be unused nowadays?
 #define FREQ_GPS 1453
+#define FREQ_TELESCI 1479
 #define FREQ_RUCK 1467
 #define FREQ_AINLEY_BUDDY 1917
 #define FREQ_BUDDY 1219

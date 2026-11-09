@@ -41,7 +41,7 @@
 
 // -------- Centcom
 TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/pyro/command/centcom
 	req_access = list(access_centcom)
@@ -59,7 +59,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
 
 // -------- Syndicate Command
 TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/pyro/command/syndicate
 	req_access = list(access_syndicate_commander)
@@ -186,7 +186,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	operation_time = 10
 
 TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/pyro/reinforced
 	name = "reinforced external airlock"
@@ -213,9 +213,13 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	explosion_resistance = 999999
 	anchored = ANCHORED_ALWAYS //haha fuk u
 
-	//When the listening post is active, will be unreinforced and syndicate access
-	listeningpost
-		req_access = list(access_impossible)
+//When the listening post is active, will be unreinforced and syndicate access
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost
+	req_access = list(access_impossible)
+
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner
+	opacity = 0
+	id = "listening_post_inner"
 
 /obj/machinery/door/airlock/pyro/reinforced/arrivals
 	icon_state = "arrivals_closed"
@@ -235,7 +239,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	visible = 0
 
 TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/pyro/glass/reinforced
 	name = "reinforced glass airlock"

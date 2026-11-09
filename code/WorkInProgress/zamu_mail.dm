@@ -48,9 +48,8 @@
 		var/atom/movable/prize = src.open(M)
 		logTheThing(LOG_STATION, M, "opened their [src] and got \a [prize] ([src.spawn_type]).")
 		game_stats.Increment("mail_opened")
-		// 100 credits + 10 more for every successful delivery after the first,
-		// capping at 1000 per letter delivered
-		shippingmarket.mail_delivery_payout += 90 + 10 * min(91, game_stats.GetStat("mail_opened"))
+		// 50 credits + 10 more for every successful delivery after the first, capped at 500 per letter delivered
+		shippingmarket.mail_delivery_payout += 50 + 10 * min(45, game_stats.GetStat("mail_opened"))
 
 		return
 
@@ -75,7 +74,7 @@
 
 	attackby(obj/item/I, mob/user)
 		// You know, like a letter opener. It opens letters.
-		if ((istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/dagger)) && src.target_dna)
+		if ((istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/dagger) || istype(I, /obj/item/knife)) && src.target_dna)
 			actions.start(new /datum/action/bar/icon/mail_lockpick(src, I, 5 SECONDS), user)
 			return
 		..()
@@ -87,7 +86,11 @@
 			if(ismob(hit_atom))
 				var/mob/M = hit_atom
 				if(ishuman(M))
-					if((prob(50) && M.bioHolder.HasEffect("clumsy")))
+					var/mob/living/carbon/human/H = M
+					if(H.restrained())
+						src.visible_message(SPAN_COMBAT("[H] gets beaned with the [src.name]."))
+						logTheThing(LOG_COMBAT, H, "is struck by [src]")
+					else if((prob(50) && M.bioHolder.HasEffect("clumsy")))
 						src.visible_message(SPAN_COMBAT("[M] gets beaned with \the [src.name]."))
 						M.changeStatus("stunned", 2 SECONDS)
 						JOB_XP(M, "Clown", 1)
@@ -227,9 +230,9 @@
 
 		// these are all things we will want later
 		crew[M] = list(
-			name = manifest_record.get_field("name"),
-			job = manifest_record.get_field("rank"),
-			dna = manifest_record.get_field("dna"),
+			name = manifest_record["name"],
+			job = manifest_record["rank"],
+			dna = manifest_record["dna"],
 			)
 
 	// nobody here
@@ -582,6 +585,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/spraybottle/cleaner = 6,
 		/obj/item/caution = 5,
 		/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
+		/obj/item/broom = 5,
 		/obj/item/mop = 5,
 		/obj/item/reagent_containers/glass/bucket = 5,
 		/obj/item/reagent_containers/glass/bucket/red = 1,

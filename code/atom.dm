@@ -38,6 +38,7 @@ TYPEINFO(/atom)
 
 	/// Should points thrown at this take into account the click pixel value
 	var/pixel_point = FALSE
+	var/tmp/avoid_animating = FALSE //! Animating this atom will probably break an existing animation. Try to skip them if possible.
 
 	var/interesting = ""
 	/// Atom provides grip to neighboring tiles in zero-G
@@ -91,11 +92,25 @@ TYPEINFO(/atom)
 	var/impact_icon_state = null
 
 	New(turf/newLoc)
+		// Secret artwork is loaded on demand, rather than included in the compiled RSC.
+		src.load_runtime_icon()
 		. = ..()
-		// Lets stop having 5 implementations of this that all do it differently
-		if (!src.material && default_material)
-			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-			src.setMaterial(mat)
+		// Movables apply their mats at the tail of /atom/movable/New() instead
+		// (Material setup can change opacity)
+		if (!ismovable(src))
+			src.apply_default_material()
+
+	/// Lets stop having 5 implementations of this that all do it differently
+	proc/apply_default_material()
+		if (!src.material && src.default_material)
+			src.setMaterial(getMaterial(src.default_material))
+
+	/// May be called before parent New() when a subtype initializes its appearance first.
+	proc/load_runtime_icon()
+		if (!src.icon && !initial(src.icon))
+			var/typeinfo/atom/icon_metadata = src.get_typeinfo()
+			if (icon_metadata.icon)
+				src.icon = file(icon_metadata.icon)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
@@ -375,10 +390,14 @@ TYPEINFO(/atom)
 	return
 
 /atom/proc/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_FLUID_ENTERED, F)
+	. = 0
 
 /atom/proc/ExitedFluid(obj/fluid/F as obj)
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_FLUID_EXITED, F)
+	. = 0
 
 /atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, atom/old_loc)
 	.=0
@@ -472,15 +491,37 @@ TYPEINFO(/atom)
 	master = null
 	..()
 
+
+
 TYPEINFO(/atom/movable)
 	/// A key-value list of match property or material IDs and an amount required to construct the item
 	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
+	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+	var/analyser_flags = ANALYSER_ALLOWED | ANALYSER_FAILFEEDBACK
+
+	/// If defined, you will override device analyzer scans to yield this typepath (instead of the default, which is just the object's type itself)
+	/// WARNING: If you override, the system uses analyser_flags from the override, not the original
+	var/manufactured_type = null
 
 	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
 	/// if an object type can be built somewhere, before instantiating the object itself.
 	proc/can_build(turf/T, direction)
 		return TRUE
+
+
+
+//Wow why are these TYPEINFOs here? Because parent_type:: depends on file load order :))))
+TYPEINFO(/obj/item/device)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_DEVICE
+TYPEINFO(/obj/machinery)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_MACHINERY
+TYPEINFO(/obj/item/storage)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
+TYPEINFO(/obj/item/disk)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = 8
+
 
 /atom/movable
 	layer = OBJ_LAYER
@@ -511,28 +552,15 @@ TYPEINFO(/atom/movable)
 	/// whether it uses p_class regardless of pull_slowing.
 	var/always_slow_pull = FALSE
 
-	// Enables mobs and objs to be mechscannable
-	/// Can this only be scanned with a syndicate mech scanner?
-	var/is_syndicate = FALSE
-	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
-	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
-	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
-	var/mechanics_type_override = null
 
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
-	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	if (typeinfo.mats && !(src.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED))
-		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
 		return
 	if (isturf(src.loc))
-		var/turf/T = src.loc
-		if(src.opacity)
-			T.opaque_atom_count++
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
@@ -547,6 +575,15 @@ TYPEINFO(/atom/movable)
 			for(var/atom/A in src.loc)
 				if(A != src)
 					A.Crossed(src)
+	// Clear, then set_opacity() so lights are stripped without us and reapplied with us
+	// hopefully no longer necessary one day with new initalize
+	if (initial(src.opacity) && src.opacity && global.RL_Started && isturf(src.loc))
+		var/turf/T = src.loc
+		UNLINT(src.opacity = FALSE)
+		T.recount_opaque_atoms()
+		src.set_opacity(TRUE)
+	// After relighting, so material opacity changes start from consistent lighting
+	src.apply_default_material()
 
 
 /atom/movable/disposing()
@@ -646,8 +683,7 @@ TYPEINFO(/atom/movable)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
-			for (var/atom/movable/M as anything in attached_objs)
-				M.set_loc(src.loc)
+			src.move_attached_objs()
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
@@ -688,6 +724,12 @@ TYPEINFO(/atom/movable)
 	*/
 /atom/movable/proc/OnMove(source = null)
 
+/// Moves attached objects with this atom, keeping their glide_size in sync.
+/atom/movable/proc/move_attached_objs()
+	for (var/atom/movable/M as anything in src.attached_objs)
+		M.glide_size = src.glide_size
+		M.set_loc(src.loc)
+
 /// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without rewriting all the conditions.
 /atom/movable/proc/pull(mob/user)
 	if (!(user))
@@ -709,7 +751,7 @@ TYPEINFO(/atom/movable)
 	if (isghostcritter(user))
 		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(user,SPAN_ALERT("<b>[src] is too heavy for you pull in your half-spectral state!</b>"))
+			boutput(user, SPAN_ALERT("<b>[src] is too heavy for you to pull in your half-spectral state!</b>"))
 			return 1
 
 	if (iscarbon(user) || issilicon(user))
@@ -878,7 +920,8 @@ TYPEINFO(/atom/movable)
 	if (!W || !user || src.storage?.storage_item_attack_by(W, user) || W.should_suppress_attack(src, user, params))
 		return
 	W.material_on_attack_use(user, src)
-	src.material_trigger_when_attacked(W, user, 1)
+	src.material_trigger_when_hit(W, user, MATERIAL::IMPACT::MELEE)
+	W.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 	if (silent)
 		return
 	var/hits = src
@@ -1012,6 +1055,11 @@ TYPEINFO(/atom/movable)
 	if(QDELETED(src) && !isnull(newloc))
 		CRASH("Tried to call set_loc on disposed movable [identify_object(src)] to non-null location: [identify_object(newloc)]")
 
+#ifdef CHECK_MORE_RUNTIMES
+	if (HAS_ATOM_PROPERTY(src, PROP_MOVABLE_DO_NOT_SET_LOC))
+		CRASH("Tried to call set_loc on movable with PROP_MOVABLE_DO_NOT_SET_LOC set.")
+#endif
+
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
 		return src
@@ -1060,11 +1108,11 @@ TYPEINFO(/atom/movable)
 
 	if(isturf(newloc))
 		if(src.pass_unstable || src.density)
-			for(var/turf/covered_turf as anything in src.locs)
+			for(var/turf/covered_turf in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
 		if (src.provides_grip)
-			for(var/turf/covered_turf as anything in src.locs)
+			for(var/turf/covered_turf in src.locs)
 				covered_turf.grip_atom_count += 1
 		for(var/atom/A in newloc)
 			if(A != src)
@@ -1075,8 +1123,7 @@ TYPEINFO(/atom/movable)
 		new_area.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && length(attached_objs))
-		for (var/atom/movable/M in src.attached_objs)
-			M.set_loc(src.loc)
+		src.move_attached_objs()
 	else
 		last_turf = null
 
@@ -1105,18 +1152,55 @@ TYPEINFO(/atom/movable)
 		loc.passability_cache = null
 		SEND_SIGNAL(loc, COMSIG_TURF_CONTENTS_SET_DENSITY, old_density, src)
 
+/**
+ * Recomputes how many opaque movables are on this turf.
+ *
+ * Two separate events: Entered/Exited, and set_opacity
+ * An increment needs each of those to know whether the other already accounted for the atom,
+ * and during New() the order is not fixed, since a subtype decides where it calls ..()
+ *
+ * In theory this shouldn't be neded anymore, but we don't have guards against it besides regression tests.
+ * It'll also only fire for like opaque smoke stepping off a turf.
+ *
+ * TODO: We can remove this entirely once we have a proper Initalize()
+ */
+/turf/proc/recount_opaque_atoms()
+	var/count = 0
+	for (var/atom/movable/AM as anything in src)
+		if (AM.opacity)
+			count++
+	if (count == src.opaque_atom_count)
+		return
+
+	var/was_blocking = src.opacity || src.opaque_atom_count
+	src.opaque_atom_count = count
+	if (!was_blocking != !(src.opacity || count))
+		src.on_set_opacity()
+
+/**
+ * Sets our opacity without `set_opacity()` lighting rebuild.
+ * For code that rewrites a whole region in one pass and handles lighting itself.
+ */
+/turf/proc/set_opacity_no_lighting(new_opacity)
+	if (src.opacity == new_opacity)
+		return
+	UNLINT(src.opacity = new_opacity)
+	src.on_set_opacity()
+
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if (newopacity == src.opacity)
 		return // Why even bother
 
+	// zewaka todo: a turf's loc is its area, so turfs never relight here
+	// fixing it needs explosions to pause relights and rebuild once
 	var/on_turf = isturf(src.loc)
 
 	var/oldopacity = src.opacity
 
 	if(!on_turf)
-		src.opacity = newopacity
+		UNLINT(src.opacity = newopacity)
 		SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 		return
 
@@ -1137,9 +1221,9 @@ TYPEINFO(/atom/movable)
 			if (light.enabled)
 				affected |= light.strip(++RL_Generation)
 
-		if (src != our_turf)
-			our_turf.opaque_atom_count += newopacity ? 1 : -1
-		src.opacity = newopacity
+		UNLINT(src.opacity = newopacity)
+		if (src != our_turf) // /turf/set_opacity notifies for ==
+			our_turf.recount_opaque_atoms()
 
 		for (var/datum/light/light as anything in lights)
 			if (light.enabled)
@@ -1148,8 +1232,9 @@ TYPEINFO(/atom/movable)
 			for (var/turf/T as anything in affected)
 				RL_UPDATE_LIGHT(T)
 	else
-		our_turf.opaque_atom_count += newopacity ? 1 : -1
-		src.opacity = newopacity
+		UNLINT(src.opacity = newopacity)
+		if (src != our_turf)
+			our_turf.recount_opaque_atoms()
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 
@@ -1329,7 +1414,7 @@ TYPEINFO(/atom/movable)
 	. = ..()
 	switch(variable)
 		if("opacity")
-			src.opacity = oldval
+			UNLINT(src.opacity = oldval)
 			src.set_opacity(newval)
 		if("density")
 			src.density = oldval

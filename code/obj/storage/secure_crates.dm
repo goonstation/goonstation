@@ -1,6 +1,7 @@
 /obj/storage/secure/crate
 	desc = "A secure crate."
 	name = "Secure crate"
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "securecrate"
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
@@ -48,6 +49,9 @@
 		icon_closed = "sec_contraband"
 		icon_state = "sec_contraband"
 
+		owlery
+			req_access = list(access_owlerysec)
+
 	armory
 		name = "secure weapons crate"
 		req_access = list(access_armory)
@@ -74,6 +78,7 @@
 			name = "pod weapons crate"
 			spawn_contents = list(/obj/item/shipcomponent/mainweapon/disruptor_light = 2,\
 			/obj/item/shipcomponent/mainweapon/laser = 2,\
+			/obj/item/shipcomponent/mainweapon/stasis = 2,\
 			/obj/item/storage/box/missile_launcher)
 
 /obj/storage/secure/crate/plasma
@@ -247,3 +252,21 @@
 		name = "Lab Monkey Crate"
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
+
+/obj/storage/secure/crate/research
+	name = "research crate"
+	desc = "A secure research crate."
+	icon_state = "lootsci"
+	icon_opened = "lootsciopen"
+	icon_closed = "lootsci"
+	icon_greenlight = "lootcratelocklight"
+	icon_redlight = "lootcratelocklight"
+
+	update_icon()
+		. = ..()
+		var/image/light_image = image(src.icon, src.icon_redlight)
+		if(src.locked)
+			light_image.color = "#cc0000"
+		else
+			light_image.color = "#00ff00"
+		src.UpdateOverlays(light_image, "light")

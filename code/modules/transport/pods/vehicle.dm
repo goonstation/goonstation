@@ -4,6 +4,7 @@
 	icon_state = "podfire"
 	density = 1
 	flags = USEDELAY
+	gas_impermeable = TRUE
 	anchored = ANCHORED
 	provides_grip = TRUE
 	status = REQ_PHYSICAL_ACCESS
@@ -137,8 +138,18 @@
 			actions.start(action_bar, user)
 			return
 
+		if (istype(W, /obj/item/device/key))
+			user.visible_message(SPAN_ALERT("<B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B>"), null,SPAN_ALERT("You hear a metallic scraping sound!"))
+			if(!keyed) src.name = "scratched-up [src.name]"
+			src.keyed++
+			src.add_fingerprint(user)
+			return
+
 		if (istype(W, /obj/item/ammo/bullets))
 			if (W.disposed)
+				return
+			if (src.locked)
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
 				return
 			var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
 			if(!main_weapon)
@@ -171,20 +182,19 @@
 				qdel(ammo)
 				return
 
-		if (istype(W, /obj/item/device/key))
-			user.visible_message(SPAN_ALERT("<B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B>"), null,SPAN_ALERT("You hear a metallic scraping sound!"))
-			if(!keyed) src.name = "scratched-up [src.name]"
-			src.keyed++
-			src.add_fingerprint(user)
-			return
-
 		if (istype(W, /obj/item/sheet))
+			if (src.locked)
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+				return
 			var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
 			if (istype(main_weapon,/obj/item/shipcomponent/mainweapon/constructor))
 				main_weapon.Attackby(W,user)
 				return
 
 		if (istype(W, /obj/item/tank/plasma))
+			if (src.locked)
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+				return
 			if(src.fueltank || !src.atmostank)
 				src.open_parts_panel(user)
 			else
@@ -237,6 +247,9 @@
 	/// Remove the part from the ship and drop it. Returns the part.
 	proc/eject_part(var/mob/user, var/slot, var/give_message = TRUE)
 		RETURN_TYPE(/obj/item/shipcomponent)
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+			return null
 		var/obj/item/shipcomponent/part = src.get_part(slot)
 		if(!part)
 			return null
@@ -271,6 +284,9 @@
 		if(!slot)
 			boutput(usr, "Report dev error! Slot not found.")
 			return FALSE
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+			return FALSE
 		if(src.get_part(slot))
 			if(eject)
 				src.eject_part(user, slot)
@@ -280,6 +296,8 @@
 		if(user) //This mean it's going on during the game!
 			user.drop_item(part)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
+			if (slot == POD_PART_MAIN_WEAPON)
+				logTheThing(LOG_VEHICLE, user, "Installed weapon [part] into pod [src].")
 		part.set_loc(src)
 		src.installed_parts[slot] = part
 		part.ship = src
@@ -834,7 +852,7 @@
 					if(damage_overlays != 2)
 						particleMaster.SpawnSystem(new /datum/particleSystem/areaSmoke("#CCCCCC", 50, src))
 						damage_overlays = 2
-						fire_overlay = image('icons/effects/64x64.dmi', "pod_fire")
+						fire_overlay = image('icons/effects/64x64.dmi', "pod_fire", layer = ABOVE_OBJ_LAYER)
 						src.UpdateOverlays(fire_overlay, "fire")
 						for(var/mob/living/carbon/human/M in src)
 							M.update_burning(35)
@@ -843,7 +861,7 @@
 				if(25 to 50)
 					if(damage_overlays < 1)
 						damage_overlays = 1
-						damage_overlay = image('icons/effects/64x64.dmi', "pod_damage")
+						damage_overlay = image('icons/effects/64x64.dmi', "pod_damage", layer = ABOVE_OBJ_LAYER)
 						src.UpdateOverlays(damage_overlay, "damage")
 				if(50 to INFINITY)
 					if (damage_overlays)
@@ -1169,7 +1187,7 @@
 
 		if (was_seen_boarding && V.pilot == owner && ishuman(owner) && owner.hasStatus("drunk"))
 			var/mob/living/carbon/human/H = owner
-			H.apply_automated_arrest("DUI.", "Drove while inebriated.", requires_camera_seen = FALSE)
+			H.apply_automated_arrest("Driving under the influence.", requires_camera_seen = FALSE)
 
 /datum/action/bar/icon/eject_pod
 	duration = 50
@@ -1928,10 +1946,10 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 				pilot?.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
-					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
-						if(prob(40))
-							SPAWN(rand(0,5))
-								H.bioHolder.AddEffect(effect)
+					if(prob(40))
+						var/limb = pick(list("l_arm","r_arm","l_leg","r_leg"))
+						SPAWN(rand(0,5))
+							H.sever_limb(limb)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"
 				while(src)

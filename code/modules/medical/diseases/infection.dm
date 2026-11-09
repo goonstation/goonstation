@@ -14,14 +14,14 @@
 		if(1)
 			if(probmult(0.1))
 				boutput(affected_mob, SPAN_NOTICE("You feel better."))
-				affected_mob.resistances += src.type
+				affected_mob.add_ailment_resistance(src.type, src.type)
 				affected_mob.ailments -= src
 				return
 			if(prob(4)) affected_mob.emote("shiver")
 		if(2)
 			if(probmult(0.1))
 				boutput(affected_mob, SPAN_NOTICE("You feel better."))
-				affected_mob.resistances += src.type
+				affected_mob.add_ailment_resistance(src.type, src.type)
 				affected_mob.ailments -= src
 				return
 			if(probmult(5))
@@ -33,7 +33,7 @@
 		if(3)
 			if(probmult(0.1))
 				boutput(affected_mob, SPAN_NOTICE("You feel better."))
-				affected_mob.resistances += src.type
+				affected_mob.add_ailment_resistance(src.type, src.type)
 				affected_mob.ailments -= src
 				return
 			if(probmult(7))

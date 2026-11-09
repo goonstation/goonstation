@@ -522,9 +522,7 @@
 							if (critters_left[name])
 								stat(null, "- [critters_left[name]] [name][critters_left[name] > 1 ? "s" : null]")
 					else if (current_level < 100)
-						var/sum = 0
-						for (var/name in critters_left)
-							sum += critters_left[name]
+						var/sum = values_sum(critters_left)
 						stat(null, "- [sum] critter[sum > 1 ? "" : null]")
 					else
 						stat(null, "No information")
@@ -553,11 +551,8 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name
 			src.cam.network = cam_network
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 
 /obj/observable/gauntlet
 	name = "V-Space - Gauntlet Arena"

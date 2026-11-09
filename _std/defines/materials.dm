@@ -18,6 +18,8 @@
 #define MATERIAL_RUBBER 32
 /// Wood, or wood-like
 #define MATERIAL_WOOD 64
+/// Rock, slag
+#define MATERIAL_ROCK 128
 
 /// Global static list of rarity color associations
 var/global/static/list/RARITY_COLOR = list("#9d9d9d", "#ffffff", "#1eff00", "#0070dd", "#a335ee", "#ff8000", "#ff0000")
@@ -37,6 +39,8 @@ var/global/static/list/RARITY_COLOR = list("#9d9d9d", "#ffffff", "#1eff00", "#00
 #define TRIGGERS_ON_REMOVE "triggersOnRemove"
 #define TRIGGERS_ON_HIT "triggersOnHit"
 #define TRIGGERS_ON_BLOBHIT "triggersOnBlobHit"
+#define TRIGGERS_ON_MIX "triggersOnMix"
+#define TRIGGERS_ON_IMAGE "triggersOnImage"
 
 
 /// This contains the names of the trigger lists on materials. Required for copying materials. Remember to keep this updated if you add new triggers.
@@ -56,4 +60,6 @@ var/global/list/triggerVars = list(
 	TRIGGERS_ON_REMOVE,
 	TRIGGERS_ON_HIT,
 	TRIGGERS_ON_BLOBHIT,
+	TRIGGERS_ON_MIX,
+	TRIGGERS_ON_IMAGE,
 )

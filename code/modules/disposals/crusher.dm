@@ -1,4 +1,5 @@
 TYPEINFO(/obj/machinery/crusher)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 20
 
 ABSTRACT_TYPE(/obj/machinery/crusher)
@@ -11,7 +12,6 @@ ABSTRACT_TYPE(/obj/machinery/crusher)
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
 	anchored = ANCHORED_ALWAYS
-	is_syndicate = 1
 	power_usage = 500
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
 	event_handler_flags = USE_FLUID_ENTER
@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/obj/machinery/crusher)
 		src.Crossed(AM)
 
 TYPEINFO(/obj/machinery/crusher/instant)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/machinery/crusher/instant
 /obj/machinery/crusher/instant/start_crushing(atom/movable/AM)
 	src.finish_crushing(AM)
@@ -218,9 +218,8 @@ TYPEINFO(/obj/machinery/crusher/instant)
 		walk(target, 0)
 		target.changeStatus("stunned", 5 SECONDS)
 		var/mob/M = target
-		if(ismob(M))
-			if(M.key || M.client) // so it doesn't message for npcs (hopefully)
-				message_ghosts("<b>[M]</b> is being crushed at [log_loc(M, ghostjump=TRUE)].")
+		if(ismob(M) && (M.key || M.client)) // so it doesn't message for npcs (hopefully)
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(M)] is being crushed at [GHOST.MESSAGE.format_loc(M)].")
 
 	onUpdate()
 		. = ..()

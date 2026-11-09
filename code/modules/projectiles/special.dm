@@ -802,26 +802,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	smashes_glasses = FALSE
 
 	no_hit_message = 1
-	var/obj/effect/eye_glider
 	var/turf/starting_turf
 
 	on_launch(obj/projectile/P)
 		. = ..()
 		src.starting_turf = get_turf(P)
-		src.eye_glider = new(get_turf(P))
-		src.eye_glider.flags |= UNCRUSHABLE
-		src.eye_glider.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
-		src.eye_glider.anchored = ANCHORED_ALWAYS
 		APPLY_ATOM_PROPERTY(P, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(P, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
-		for (var/mob/M in P.contents)
-			if(M.client)
-				M.client.eye = src.eye_glider
 
 	tick(obj/projectile/P)
 		..()
-		src.eye_glider.set_loc(get_turf(P))
 		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
 			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as targeted destination was disposed.")
 			P.die()
@@ -840,18 +831,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				P.die()
 
 	on_end(obj/projectile/P)
+		var/turf/dumpturf = get_turf(P)
+		var/area/dumparea = get_area(dumpturf)
 		for (var/atom/movable/AM in P.contents)
-			AM.set_loc(get_turf(P))
-		qdel(src.eye_glider)
-		src.eye_glider = null
+			AM.set_loc(dumpturf)
+			SEND_SIGNAL(dumparea, COMSIG_AREA_INDIRECT_ENTRY, AM, "mechcomp")
 		..()
 
 	on_exited(obj/projectile/P, atom/movable/AM)
 		AM.delStatus("teleporting")
-		if (istype(AM, /mob))
-			var/mob/M = AM
-			if (M.client)
-				M.client.eye = M
 
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"
@@ -1252,7 +1240,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if (!src.use_type_icon)
 			return
 		var/atom/thing = src.typetospawn
-		src.icon = initial(thing.icon)
+		src.icon = get_initial_icon(thing)
 		src.icon_state = initial(thing.icon_state)
 
 	on_hit(atom/hit, direction, obj/projectile/O)
@@ -1353,7 +1341,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_range = 30
 	cost = 0
 	shot_sound = 'sound/weapons/rocket.ogg'
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "attachecase"
 	typetospawn = /obj/lootbox
 	var/explosion_power = 15
@@ -1406,13 +1394,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		var/datum/reagents/copied = new/datum/reagents(amt_to_emit)
 		copied = chemR.copy_to(copied, amt_to_emit/chemR.total_volume, copy_temperature = 1)
-
-		if(!T.reagents) // first get the turf
-			T.create_reagents(100)
-		copied.copy_to(T.reagents, 1, copy_temperature = 1)
+		//now we create a temporary chemistry holder so we don't need to inject chems into turfs but still can handle delayed reactions
+		T.AddComponent(/datum/component/temp_reagent_holder, copied)
 		copied.reaction(T, TOUCH, 0, src.can_spawn_fluid)
 		if(special_data["IS_LIT"]) // Heat if needed
-			T.reagents?.set_reagent_temp(special_data["burn_temp"], TRUE)
+			copied.set_reagent_temp(special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue

@@ -15,89 +15,6 @@ var/datum/magpie_manager/magpie_man = new
 			src.magpie = locate("M4GP13")
 		#endif
 
-
-/obj/salvager_cryotron
-	name = "industrial cryogenic sleep unit"
-	desc = "The terminus of an aging underfloor cryogenic storage complex."
-	anchored = ANCHORED
-	density = 1
-	icon = 'icons/obj/large/32x64.dmi'
-
-	icon_state = "cryo_close"
-	event_handler_flags = IMMUNE_SINGULARITY
-	var/list/folks_to_spawn = list()
-	var/busy = FALSE
-	var/obj/npc/trader/salvager/magpie
-#ifdef RP_MODE
-	var/starting_currency = 1800
-#else
-	var/starting_currency = 2500
-#endif
-
-	New()
-		..()
-		START_TRACKING
-		processing_items += src
-		UpdateParticles(new /particles/cryo_mist, "mist")
-
-	proc/process()
-		if(!busy)
-			spawn_next_person()
-		if(TIME - busy > 20 SECONDS)
-			busy = FALSE
-
-	//Return 1 if there is another person to spawn afterward
-	proc/spawn_next_person()
-		busy = TIME
-		SPAWN(0)
-			var/welcomed = FALSE
-			var/particles/E = src.GetParticles("mist")
-			if(length(contents))
-				icon_state = "cryo_open"
-				E.spawning = 0.2
-				// Dispense in wall?  Throw... down?
-				var/atom/movable/AM = pick(contents)
-
-				if(ismob(AM) || iscritter(AM))
-					//Sweet Smoke Effects
-					sleep(1.5 SECONDS)
-					AM.set_loc(get_turf(src))
-					E.spawning = 0.3
-					sleep(0.5 SECONDS)
-					step(AM,SOUTH)
-
-					// Welcome Them!
-					if(!magpie)
-						magpie = locate() in orange(5,src)
-					var/fun_word = pick("scrap", "material", "shineys", "baubles", "items of value", "electronics", "trinkets")
-					var/speak_name = AM.name
-					if(ismob(AM))
-						var/mob/M = AM
-						speak_name = M.real_name
-						var/currency_mod = 0
-						if(world.time > 5 MINUTES)
-							currency_mod = (world.time / (1 MINUTE)) * 95
-
-						magpie.barter_customers[magpie.barter_lookup(M)] = starting_currency + currency_mod + rand(5,50)
-					magpie.say("Welcome [speak_name], please bring me back some [fun_word]!")
-
-					welcomed = TRUE
-				else
-					// Throw them their gear!
-					sleep(0.5 SECONDS)
-					AM.set_loc(get_turf(src))
-					AM.throw_at(get_offset_target_turf(src.loc, 0, -5), rand(2,5), 1)
-
-				//Close Door...
-				sleep(0.5 SECONDS)
-				E.spawning = 0
-				icon_state = "cryo_close"
-			if(welcomed)
-				sleep(5 SECONDS)
-				busy = FALSE
-			else
-				busy = FALSE
-
 /particles/cryo_mist
 	width = 100    // 500 x 500 image to cover a moderately sized map
 	height = 100
@@ -152,8 +69,6 @@ var/datum/magpie_manager/magpie_man = new
 
 // MAGPIE Equipment
 /obj/machinery/vehicle/miniputt/armed/salvager
-	desc = "A repeatedly rebuilt and refitted pod.  Looks like it has seen some things."
-	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 
 	health = 250
@@ -167,6 +82,9 @@ var/datum/magpie_manager/magpie_man = new
 		myhud.update_systems()
 		myhud.update_states()
 
+/obj/machinery/vehicle/miniputt/armed/salvager/tinted
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
+
 /datum/manufacture/pod/armor_light/salvager
 	name = "Salvager Pod Armor"
 	item_requirements = list("metal_dense" = 30,
@@ -174,15 +92,17 @@ var/datum/magpie_manager/magpie_man = new
 	item_outputs = list(/obj/item/podarmor/salvager)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /obj/item/podarmor/salvager
 	name = "Salvager Pod Armor"
 	desc = "Exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager,
-						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub )
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager/tinted,
+						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub/tinted,
+						 "/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager/tinted,
+						 "/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub/tinted )
 
 /datum/manufacture/communications/salvager
 	name = "Salvager Communication Array"
@@ -190,7 +110,7 @@ var/datum/magpie_manager/magpie_man = new
 	item_outputs = list(/obj/item/shipcomponent/communications/salvager)
 	time = 12 SECONDS
 	create = 1
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /obj/item/shipcomponent/communications/salvager
 	name = "Salvager Communication Array"
@@ -379,15 +299,15 @@ var/datum/magpie_manager/magpie_man = new
 	maxhealth = 150
 	acid_damage_multiplier = 0.5
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
-	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 
 	New()
 		..()
-		name = "salvager minisub"
 		src.install_part(null, new /obj/item/shipcomponent/mainweapon/taser(src), POD_PART_MAIN_WEAPON)
 		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
 		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/bioscan(src), POD_PART_LOCK)
 
+/obj/machinery/vehicle/tank/minisub/salvsub/tinted
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 
 
 /obj/machinery/manufacturer/hangar/magpie
@@ -623,7 +543,7 @@ TYPEINFO(/obj/npc/trader/salvager)
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
 	currency = "Salvage Points"
-	speech_verb_say = "beeps"
+	speech_verb_say = "states"
 	use_speech_bubble = TRUE
 	voice_sound_override = 'sound/misc/talk/bottalk_1.ogg'
 
@@ -638,29 +558,29 @@ TYPEINFO(/obj/npc/trader/salvager)
 		for(var/buy_type in (concrete_typesof(/datum/commodity/magpie/buy) - concrete_typesof(/datum/commodity/magpie/buy/random_buy)))
 			src.goods_buy += new buy_type(src)
 
-		greeting= {"[src.name]'s light flash, and he states, \"Greetings, welcome to my shop. Please select from my available equipment.\""}
+		greeting= {"Greetings, welcome to my shop. Please select from my available equipment."}
 
-		sell_dialogue = "[src.name] states, \"There are several individuals in my database that are looking to procure goods."
+		sell_dialogue = "There are several individuals in my database that are looking to procure goods."
 
-		buy_dialogue = "[src.name] states,\"Please select what you would like to buy\"."
+		buy_dialogue = "Please select what you would like to buy."
 
-		successful_sale_dialogue = list("[src.name] states, \"Thank you for the business organic.\"",
-			"[src.name], \"I am adding you to the Good Customer Database.\"")
+		successful_sale_dialogue = list("Thank you for the business organic.",
+			"[src.name], I am adding you to the Good Customer Database.")
 
-		failed_sale_dialogue = list("[src.name] states, \"<ERROR> Item not in purchase database.\"",
-			"[src.name] states, \"I'm sorry I currently have no interest in that item, perhaps you should try another trader.\"",
-			"[src.name] starts making a loud and irritating noise. [src.name] states, \"Fatal Exception Error: Cannot locate item\"",
-			"[src.name] states, \"Invalid Input\"")
+		failed_sale_dialogue = list("<ERROR> Item not in purchase database.",
+			"I'm sorry I currently have no interest in that item, perhaps you should try another trader.",
+			"Fatal Exception Error: Cannot locate item.",
+			"Invalid Input.")
 
-		successful_purchase_dialogue = list("[src.name] states, \"Thank you for your business\".",
-			"[src.name] states, \"Looking forward to future transactions\".")
+		successful_purchase_dialogue = list("Thank you for your business.",
+			"Looking forward to future transactions.")
 
-		failed_purchase_dialogue = list("[src.name] states, \"I am sorry, but you currenty do not have enough funds to purchase this.\"",
-			"[src.name] states, \"Funds not found.\"")
+		failed_purchase_dialogue = list("I am sorry, but you currenty do not have enough funds to purchase this.",
+			"Funds not found.")
 
-		pickupdialogue = "[src.name] states, \"Thank you for your business. Please come again\"."
+		pickupdialogue = "Thank you for your business. Please come again."
 
-		pickupdialoguefailure = "[src.name] states, \"I'm sorry, but you don't have anything to pick up\"."
+		pickupdialoguefailure = "I'm sorry, but you don't have anything to pick up."
 
 	sold_item(datum/commodity/C, obj/S, amount, mob/user as mob)
 		. = ..()
@@ -766,16 +686,16 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy)
 				else if(O.material.getID() in list("char"))
 					. *= 0.2
 
-				if(O.material.getProperty("reflective") >= 7)
+				if(O.material.getProperty(MATERIAL::PROPERTY::REFLECT) >= 7)
 					. *= 1.3
-				if(O.material.getProperty("radioactive") >= 5)
+				if(O.material.getProperty(MATERIAL::PROPERTY::RADS) >= 5)
 					. *= 1.3
 
-				if(O.material.getProperty("density") >= 5)
+				if(O.material.getProperty(MATERIAL::PROPERTY::DENSITY) >= 5)
 					. *= 1.2
-				if(O.material.getProperty("hard") >= 5)
+				if(O.material.getProperty(MATERIAL::PROPERTY::HARDNESS) >= 5)
 					. *= 1.2
-				if(O.material.getProperty("electrical") >= 5)
+				if(O.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) >= 5)
 					. *= 1.2
 
 	sheet
@@ -1120,8 +1040,8 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		comname = "Power Sink and Storage"
 		comtype = /obj/item/device/powersink/salvager
 		desc = "A device that can be used to drain power and sell it back to the M4GP13."
-		price = 1000
-		amount = 4
+		price = 5000
+		amount = 3
 
 	crank
 		comname = "Crank (5x pills)"
@@ -1176,7 +1096,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/special/sell/arms)
 /datum/commodity/magpie/special/sell/arms
 	pistol
 		comname = "9mm pistol"
-		desc = "A rare semi-automatic 9mm pistol that was collected from an military vessel."
+		desc = "A rare semi-automatic 9mm pistol that was collected from a military vessel."
 		comtype = /obj/item/gun/kinetic/pistol
 		price = 1650
 		amount = 4

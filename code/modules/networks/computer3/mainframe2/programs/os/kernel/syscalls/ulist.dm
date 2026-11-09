@@ -1,5 +1,5 @@
 /datum/dwaine_syscall/ulist
-	id = DWAINE_COMMAND_ULIST
+	id = DWAINE::SYSCALL::ULIST
 
 /datum/dwaine_syscall/ulist/execute(sendid, list/data, datum/computer/file/file)
 	var/list/user_list = list()
@@ -22,6 +22,6 @@
 		user_list[uid] = "[logtime] [groupnum] [user.user_file.fields["name"]]"
 
 	if (!length(user_list))
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	return user_list

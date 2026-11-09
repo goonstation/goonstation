@@ -169,6 +169,7 @@ globules of this sludge can be harvested from the plant however - with proper pr
 <p><b>Damage Resistance</b>: Harmful things like toxins and physical trauma from chainsaws are less damaging to plants with this gene strain.</p>
 <p><b>Vulnerability</b>: Plants with this strain are more easily damaged by toxins or physical trauma.</p>
 <p><b>Stabilizer</b>: This strain prevents plants from randomly mutating or from mutating via reagent exposure.</p>
+<p><b>Gene Inhibitor</b>: This strain prevents plants from gaining unusual genes when mutating or through seed infusions.</p>
 <p><b>Mutagenic</b>: Plants with the Mutagenic strain are more likely to randomly mutate.</p>
 <p><b>Anti-Mutagenic</b>: Plants with this strain are less likely to randomly mutate.</p>
 <p><b>Advanced Photosynthesis</b>: Providing additional light to plants with this strain triggers quicker maturation.</p>

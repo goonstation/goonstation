@@ -2,6 +2,7 @@
 var/sword_summoned_before = FALSE
 
 TYPEINFO(/obj/item/makeshift_signaller_frame)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/makeshift_signaller_frame
@@ -44,7 +45,7 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 			desc = "A remote signaller frame with a handmade circuit board port slotted loosely into it, connected with wires."
 			tooltip_rebuild = TRUE
 			return
-		else if (istype(W,/obj/item/circuitboard/secure_data) && build_stage == 2)	//Step 3 of construction: Circuit Board.
+		else if (istype(W,/obj/item/circuitboard) && build_stage == 2)	//Step 3 of construction: Circuit Board.
 			qdel(W)
 			build_stage = 3
 			user.show_message(SPAN_NOTICE("You put the circuit board in the port!"), 1)
@@ -64,6 +65,7 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 		return
 
 TYPEINFO(/obj/item/makeshift_syndicate_signaller)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 4
 
 /obj/item/makeshift_syndicate_signaller
@@ -79,7 +81,6 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 	var/metadata = 0
 	var/was_emagged = FALSE
 	var/is_exploding = FALSE
-	is_syndicate = 1
 	desc = "This device has a menacing aura around it. It requires 8 nodes of metadata to properly send and encrypt it's signal."
 	contraband = 5
 

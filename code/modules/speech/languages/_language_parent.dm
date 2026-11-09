@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/language)
 /**
  *	Language datums are responsible for modifying say message datums depending on whether they have been understood by the listener.
  *	The listen module tree of the listener determines whether a message has been understood, then passes it to the respective proc

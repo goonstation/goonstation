@@ -74,6 +74,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /obj/machinery/plantpot/New()
 	..()
+	START_TRACKING
 	src.plantgenes = new /datum/plantgenes(src)
 	src.create_reagents(src.tanksize)
 	// The plantpot can store 400 reagents in total, we want a bit more than the max water
@@ -96,11 +97,13 @@ TYPEINFO(/obj/machinery/plantpot)
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", PROC_REF(mechcompScanPlant))
 
-/obj/machinery/plantpot/get_desc(dist, mob/user)
+/obj/machinery/plantpot/examine(mob/user)
 	. = ..()
-	if (dist >= 5)
+	if (GET_DIST(src, user) >= 5)
 		return
-	HYPphytoscopic_scan(user, src)
+	var/scan = HYPphytoscopic_scan(user, src)
+	if (scan)
+		. += scan
 
 /obj/machinery/plantpot/proc/post_alert(var/list/alert_data)
 	if(src.status & (NOPOWER|BROKEN)) return
@@ -742,19 +745,29 @@ TYPEINFO(/obj/machinery/plantpot)
 // Procs specific to the plantpot start here.
 
 /obj/machinery/plantpot/proc/update_water_icon()
-	var/datum/color/average
-	src.water_sprite = image('icons/obj/hydroponics/machines_hydroponics.dmi',"wat-[src.total_volume]")
-	src.water_sprite.layer = 3
-	src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
+	if (!src.water_sprite)
+		src.water_sprite = image('icons/obj/hydroponics/machines_hydroponics.dmi',"wat-[src.total_volume]")
+		src.water_sprite.layer = 3
+	else
+		src.water_sprite.icon_state = "wat-[src.total_volume]"
 	if(src.reagents.total_volume)
-		average = src.reagents.get_average_color()
+		var/datum/color/average = src.reagents.get_average_color()
 		src.water_sprite.color = average.to_rgba()
+	else
+		src.water_sprite.color = null
+	src.update_water_meter_image()
 
 	src.AddOverlays(src.water_sprite, "water_fluid")
 	src.AddOverlays(src.water_meter, "water_meter")
 
+/obj/machinery/plantpot/proc/update_water_meter_image()
+	if (!src.water_meter)
+		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
+	else
+		src.water_meter.icon_state = "ind-wat-[src.water_level]"
+
 /obj/machinery/plantpot/update_icon() //plant icon stuffs
-	src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
+	src.update_water_meter_image()
 	src.AddOverlays(water_meter, "water_meter")
 	if(!src.current)
 		src.vis_contents -= src.plant_sprite
@@ -835,6 +848,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.name = "dead " + src.name
 
 /obj/machinery/plantpot/disposing()
+	STOP_TRACKING
 	qdel(src.current_tick)
 	src.current_tick = null
 	. = ..()
@@ -901,7 +915,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		DNA.endurance += HYPstat_rounding(src.current_tick.endurance_bonus * src.current_tick.tick_multiplier)
 	// Now we modify chems in the tray
 	if (src.reagents)
-		src.reagents?.remove_any_except(src.current_tick.water_consumption * src.current_tick.tick_multiplier * src.drink_mult, "nectar")
+		src.reagents?.consume_any(src.current_tick.water_consumption * src.current_tick.tick_multiplier * src.drink_mult, 0.1, "nectar")
 		// This is where drink_rate does its thing. It will remove a bit of all reagents to meet
 		// it's quota, except nectar because that's supposed to stay in the plant pot.
 		// We give off nectar and should check our nectar levels
@@ -1577,7 +1591,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	..()
 
 TYPEINFO(/obj/machinery/plantpot/bareplant)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/plantpot/bareplant
 	name = "arable soil"

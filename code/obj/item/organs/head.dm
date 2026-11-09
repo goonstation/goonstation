@@ -216,6 +216,11 @@
 		else
 			src.head_image_nose = null
 
+		// Lightens eyes if appearance flag is active
+		if (src.head_appearance_flags & LIGHT_EYES)
+			src.head_image_eyes_L.color = light_colors(src.head_image_eyes_L.color)
+			src.head_image_eyes_R.color = light_colors(src.head_image_eyes_R.color)
+
 		// Remove their hair first
 		src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 		src.head_image_cust_two = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
@@ -616,7 +621,6 @@
 				if(HEAD_ROACH)
 					src.organ_name = "roach head"
 					src.desc = "Not the biggest bug you'll seen today, nor the last."
-					src.setMaterial(getMaterial("chitin"))
 
 				if(HEAD_FROG)
 					src.organ_name = "frog head"

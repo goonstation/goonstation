@@ -380,7 +380,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	altclown
 		name = "Alternate Clown Outfit"
 		cost = 200
-		icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
+		icon = 'icons/obj/clothing/jumpsuits/item_js_clown.dmi'
 		icon_state = "pinkclown"
 
 		Create(var/mob/living/M)
@@ -388,8 +388,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				var/mob/living/carbon/human/H = M
 				if (H.mind && H.mind.assigned_role == "Clown")
 					var/type = pick("purple","pink","yellow")
-					H.w_uniform.icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
-					H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
+					H.w_uniform.icon = 'icons/obj/clothing/jumpsuits/item_js_clown.dmi'
+					H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_clown.dmi'
 					H.w_uniform.icon_state = "[type]clown"
 					H.w_uniform.item_state = "[type]clown"
 					H.w_uniform.name = "[type] clown suit"

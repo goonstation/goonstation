@@ -40,14 +40,14 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/claw
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth			// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
@@ -129,7 +129,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/energy/resonator			// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "retinal beam"						// designation of the hand - purely for show
 		HH.limb_name = "eye"					// name for the dummy holder

@@ -1,12 +1,7 @@
 ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 /datum/targetable/critter/plague_rat
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+	border_icon = 'icons/mob/wraith_ui.dmi'
+	border_icon_state = "plague_frame"
 
 /datum/targetable/critter/plague_rat/eat_filth
 	name = "Eat filth"
@@ -167,29 +162,24 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 	icon_state = "ratden"
 	cooldown = 120 SECONDS
 	targeted = 0
+	var/datum/weakref/linked_den
+	var/type_to_spawn = /mob/living/critter/small_animal/mouse/mad
+	var/max_critters = 5
 
 	cast(atom/target)
 		if (..())
-			return TRUE
-		if (istype(holder.owner, /mob/living/critter/wraith/plaguerat) && !istype(get_turf(holder.owner), /turf/space))
-			var/mob/living/critter/wraith/plaguerat/P = holder.owner
-			if (P.linked_den == null)
-				var/obj/machinery/wraith/rat_den/W = new /obj/machinery/wraith/rat_den(P.loc)
-				P.linked_den = W
-				boutput (P, SPAN_NOTICE("You spawn a rat den"))
-			else if (!P.linked_den.loc)
-				var/obj/machinery/wraith/rat_den/W = new /obj/machinery/wraith/rat_den(P.loc)
-				P.linked_den = W
-				boutput (P, SPAN_NOTICE("You spawn a new rat den"))
-			else
-				qdel(P.linked_den)
-				P.linked_den = null
-				boutput (P, SPAN_NOTICE("You had an old rat den, it is now destroyed."))
-				var/obj/machinery/wraith/rat_den/W = new /obj/machinery/wraith/rat_den(P.loc)
-				P.linked_den = W
-				boutput (P, SPAN_NOTICE("You spawn a new rat den"))
-			return 0
-		return TRUE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (istype(get_turf(holder.owner), /turf/space))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
+		var/datum/deref = linked_den?.deref()
+		if (deref)
+			qdel(deref)
+			boutput (holder.owner, SPAN_NOTICE("You had an old rat den, it is now destroyed."))
+		var/obj/machinery/wraith/rat_den/W = new /obj/machinery/wraith/rat_den(holder.owner.loc, type_to_spawn, max_critters)
+		linked_den = get_weakref(W)
+		boutput (holder.owner, SPAN_NOTICE("You spawn a new rat den"))
+		return CAST_ATTEMPT_SUCCESS
 
 /datum/targetable/critter/slam/rat
 	icon = 'icons/mob/critter_ui.dmi'

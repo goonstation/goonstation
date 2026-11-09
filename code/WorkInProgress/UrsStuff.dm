@@ -161,11 +161,11 @@
 		//BR variants
 		void
 			name = "nebulous carton"
-			desc = "A egg carton with purple eggs, a label mentions squeezing and vulnerability."
+			desc = "An egg carton with purple eggs, a label mentions squeezing and vulnerability."
 			contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple
 		wizard
 			name = "magical carton"
-			desc = "A oddly mystical egg carton, there is a wizard using a spell on the top."
+			desc = "An oddly mystical egg carton, there is a wizard using a spell on the top."
 			contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard
 		snow
 			name = "cold carton"

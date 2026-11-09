@@ -85,7 +85,7 @@
 			var/obj/machinery/power/data_terminal/test_link = locate() in get_turf(src)
 			if (test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 				src.link = test_link
-				src.link.master = src
+				src.link.set_master(src, src.net_id)
 
 		if (!src.hd && (src.setup_drive_size > 0))
 			if (src.setup_drive_type)
@@ -464,14 +464,14 @@
 				continue
 
 			src.runfolder = F
-			src.runfolder.metadata["permission"] = COMP_HIDDEN
+			src.runfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 			break
 
 		// If a runfolder can't be found, attempt to create a new one.
 		if (!src.runfolder)
 			src.runfolder = new /datum/computer/folder()
 			src.runfolder.name = "proc"
-			src.runfolder.metadata["permission"] = COMP_HIDDEN
+			src.runfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 
 			if (!src.hd.root.add_file(src.runfolder))
 				src.runfolder.dispose()
@@ -544,12 +544,7 @@
 	if (!program || (program == src.os))
 		return FALSE
 
-	var/processing_length = length(src.processing)
-	if (src.processing[processing_length] == program)
-		src.processing -= program
-	else if (program.progid && (program.progid <= processing_length))
-		src.processing[program.progid] = null
-
+	src.processing[program.progid] = null
 	program.initialized = FALSE
 	program.unloaded()
 
@@ -567,11 +562,11 @@
  */
 /obj/machinery/networked/mainframe/proc/relay_progsignal(datum/computer/file/mainframe_program/caller_prog, progid, list/data, datum/computer/file/file)
 	if ((progid < 1) || (progid > length(src.processing)) || !caller_prog)
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	var/datum/computer/file/mainframe_program/P = src.processing[progid]
 	if (!istype(P))
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	return P.receive_progsignal(caller_prog.progid, data, file)
 
@@ -584,12 +579,12 @@
 
 		src.reconnect_device(device_id)
 
-	return ESIG_SUCCESS
+	return DWAINE::ERR::SIG::SUCCESS
 
 /// Disconnect and issue a reconnect request to a specific device.
 /obj/machinery/networked/mainframe/proc/reconnect_device(device_id)
 	if (!device_id)
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	device_id = lowertext(device_id)
 
@@ -600,7 +595,7 @@
 		conn.dispose()
 
 	src.post_status(device_id, "command", "term_connect", "device", src.device_tag)
-	return ESIG_SUCCESS
+	return DWAINE::ERR::SIG::SUCCESS
 
 /// Unload all mainframe programs and reboot the mainframe.
 /obj/machinery/networked/mainframe/proc/reboot_mainframe()

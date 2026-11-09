@@ -60,7 +60,7 @@
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 5 SECONDS))
-					if(src.bioHolder?.HasEffect("mute"))
+					if(src.bioHolder?.HasEffect("mute") || src.muffled_by_grab())
 						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
 						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
 						"opens [his_or_her(src)] mouth to produce a resounding lack of noise","flails desperately","")]..."
@@ -141,15 +141,15 @@
 
 
 						if (iscluwne(src))
-							playsound(src, 'sound/voice/farts/poo.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo.ogg', 50, TRUE, channel=VOLUME_CHANNEL_FARTS)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
-							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_FARTS)
 						else if (src.getStatusDuration("food_deep_fart"))
-							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_FARTS)
 						else
-							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
@@ -181,7 +181,7 @@
 									var/mob/M = V.cursed_dude
 									if (!M || !M.lying)
 										continue
-									playsound(M, src.sound_fart, 20, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+									playsound(M, src.sound_fart, 20, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 									switch(rand(1, 7))
 										if (1) M.visible_message(SPAN_EMOTE("<b>[M]</b> suddenly radiates an unwelcoming odor."))
 										if (2) M.visible_message(SPAN_EMOTE("<b>[M]</b> is visited by ethereal incontinence."))
@@ -291,7 +291,7 @@
 						src.stamina_stun()
 						fartcount++
 						if(fartcount == 69 || fartcount == 420)
-							var/obj/item/paper/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
+							var/obj/item/paper/image/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
 							src.put_in_hand_or_drop(F)
 							src.visible_message("<b>[src]</B> farts out a... wait is this viral marketing?")
 #if defined(MAP_OVERRIDE_POD_WARS)
@@ -564,63 +564,8 @@
 
 	//april fools start
 
-			if ("inhale")
-				if (!manualbreathing)
-					src.show_text("You are already breathing!")
-					return
-
-				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
-				if (B)
-					if (B.breathstate)
-						src.show_text("You just breathed in, try breathing out next dummy!")
-						return
-					B.breathtimer = 0
-					B.breathstate = 1
-
-				src.show_text("You breathe in.")
-
-			if ("exhale")
-				if (!manualbreathing)
-					src.show_text("You are already breathing!")
-					return
-
-				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
-				if (B)
-					if (!B.breathstate)
-						src.show_text("You just breathed out, try breathing in next silly!")
-						return
-					B.breathstate = 0
-
-				src.show_text("You breathe out.")
-
-			if ("closeeyes")
-				if (!manualblinking)
-					src.show_text("Why would you want to do that?")
-					return
-
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
-				if (S)
-					if (S.blinkstate)
-						src.show_text("You just closed your eyes, try opening them now dumbo!")
-						return
-					S.blinkstate = 1
-					S.blinktimer = 0
-
-				src.show_text("You close your eyes.")
-
-			if ("openeyes")
-				if (!manualblinking)
-					src.show_text("Your eyes are already open!")
-					return
-
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
-				if (S)
-					if (!S.blinkstate)
-						src.show_text("Your eyes are already open, try closing them next moron!")
-						return
-					S.blinkstate = 0
-
-				src.show_text("You open your eyes.")
+			if ("inhale", "exhale", "closeeyes", "openeyes")
+				; // Handled by signals.
 
 	//april fools end
 
@@ -650,29 +595,12 @@
 				else
 					src.show_text("You just don't feel kawaii enough to uguu right now!", "red")
 					return
-
 			if ("juggle")
-				if (!src.restrained())
-					if (src.emote_check(voluntary, 25))
+				if (src.can_juggle && src.emote_check(voluntary, 25))
+					if(!src.juggle_emote())
 						m_type = 1
-						if (src.traitHolder?.hasTrait("training_clown") || src.traitHolder?.hasTrait("training_mime") || src.can_juggle)
-							var/obj/item/thing = src.equipped()
-							if (!thing)
-								if (src.l_hand)
-									thing = src.l_hand
-								else if (src.r_hand)
-									thing = src.r_hand
-							if (thing && !thing.cant_drop)
-								if (src.juggling())
-									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
-										src.drop_juggle()
-									else
-										src.add_juggle(thing)
-								else
-									src.add_juggle(thing)
-							else
-								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
-								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
+						message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+						maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 			if ("twirl", "spin")
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
@@ -891,14 +819,20 @@
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
+						var/sound_volume_mult = 1
+						var/sound_flags = 0
+						if (src.muffled_by_grab())
+							sound_volume_mult = 0.5
+							sound_flags = SOUND_DO_LOS
+
 						if (src.find_ailment_by_type(/datum/ailment/malady/flatline))
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender == MALE ? MALE : FEMALE]_gasp_[pick(1,3)].ogg"
-							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+							playsound(src, dying_gasp_sfx, 40 * sound_volume_mult, FALSE, 0, src.get_age_pitch(), flags = sound_flags)
 						else if (src.health <= 0)
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender == MALE ? MALE : FEMALE]_gasp_[pick(4,5)].ogg"
-							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+							playsound(src, dying_gasp_sfx, 40 * sound_volume_mult, FALSE, 0, src.get_age_pitch(), flags = sound_flags)
 						else
-							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
+							playsound(src, src.sound_gasp, 15 * sound_volume_mult, 0, 0, src.get_age_pitch(), flags = sound_flags)
 
 			if ("laugh","chuckle","giggle","chortle","guffaw","cackle")
 				if (!muzzled)
@@ -1460,6 +1394,13 @@
 									return
 
 						if (M)
+							if(ishuman(M))
+								var/mob/living/carbon/human/dork = M
+								if(istype(dork.wear_mask, /obj/item/clothing/mask/cigarette))
+									var/obj/item/clothing/cig = dork.wear_mask //saving this as a variable because [dork.wear_mask] in the visible_message doesn't return anything, even though it's called BEFORE the item is removed. weird stuff!
+									SPAWN(0) //SPAWN so this only outputs after the initial emote text
+									dork.visible_message(SPAN_ALERT("[cig] is knocked out of [dork]'s mouth!"))
+									cig.throw_worn_item(get_edge_cheap(dork.loc, turn(get_dir(src, dork), src.hand == LEFT_HAND ? -90 : 90)), 3, 2)
 							message = "<b>[src]</b> slaps [M] across the face! Ouch!"
 							maptext_out = "<I>slaps [M] across the face!</I>"
 						else
@@ -1617,12 +1558,17 @@
 							SEND_SIGNAL(src, COMSIG_MOB_FAKE_DEATH)
 							#endif
 
+						var/muffled = src.muffled_by_grab()
+
 						// Active if XMAS or manually toggled.
-						if (deathConfettiActive)
-							src.deathConfetti()
+						if (global.deathConfettiActive)
+							src.deathConfetti(muffled)
 
 						message = SPAN_REGULAR("<b>[src]</b> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
-						playsound(src, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
+						if (muffled)
+							playsound(src, "sound/voice/death_[pick(1,2)].ogg", 20, 0, 0, src.get_age_pitch(), flags = SOUND_DO_LOS)
+						else
+							playsound(src, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
 
 			if ("johnny")
@@ -2231,7 +2177,7 @@
 				var/obj/item/I = get_id_card(src.wear_id)
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if(can_dab(src))
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
@@ -2358,6 +2304,8 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
+	if(iscluwne(src))
+		gas.farts *= 1.1
 	if(src.bioHolder?.HasEffect("radioactive_farts"))
 		gas.radgas = 2
 	gas.temperature = T20C
@@ -2383,11 +2331,14 @@
 	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART | PIXEL_SCALE
+	var/image/blank = image(null, src)
+	blank.render_source = src.render_target
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 	src.update_canmove()
 	src.set_dir(SOUTH)
 	src.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
+	world << blank
 	world << torso
 	world << right_arm
 	world << left_arm
@@ -2403,6 +2354,7 @@
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
+		qdel(blank)
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)

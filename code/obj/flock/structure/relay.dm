@@ -41,7 +41,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	var/shuttle_departure_delayed = FALSE
 
 /obj/flock_structure/relay/New()
-	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	src.AddElement(/datum/element/ghost_observable)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 9)
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
@@ -83,7 +83,6 @@ TYPEINFO(/obj/flock_structure/relay)
 		turfs_to_convert["[dist]"] |= T
 
 /obj/flock_structure/relay/disposing()
-	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] is destroyed at [log_loc(src)].")
@@ -198,10 +197,10 @@ TYPEINFO(/obj/flock_structure/relay)
 			wearer.show_text("A final scream of horrific static bursts from your radio, destroying it!", "red")
 			wearer.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
 		radio.bricked = TRUE
-		radio.frequency = rand(R_FREQ_MINIMUM, 10000)
+		radio.frequency = rand(RADIO::FREQ::MINIMUM, 10000)
 		radio.secure_frequencies = list()
 		radio.set_secure_frequencies()
-		no_more_radios = TRUE
+		RADIO.no_more_radio()
 
 /obj/flock_structure/relay/takeDamage(var/damageType, var/amount)
 	..()

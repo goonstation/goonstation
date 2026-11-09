@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/linked_laser)
 /obj/linked_laser
 	icon = 'icons/obj/lasers/ptl_beam.dmi'
 	icon_state = "ptl_beam"
@@ -15,19 +16,23 @@
 	var/turf/current_turf = null
 	///Are we at the very end of the beam, and so watching to see if the next turf becomes free
 	var/is_endpoint = FALSE
-	///A laser sink we're pointing into (null on most beams)
-	var/obj/laser_sink/sink = null
+	///A laser sink component we're pointing into (null on most beams)
+	var/datum/component/laser_sink/sink = null
 	///Relative laser power, modified by splitters etc.
 	var/power = 1
+	var/relative_power = 1
+	///The original atom that emitted this beam
+	var/atom/emitter = null
 
 /obj/linked_laser/ex_act(severity)
 	return
 
-/obj/linked_laser/New(loc, dir)
+/obj/linked_laser/New(loc, dir, atom/initial_emitter)
 	..()
 	src.length = length
 	src.dir = dir
 	src.current_turf = get_turf(src)
+	src.emitter = initial_emitter
 	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, PROC_REF(current_turf_replaced))
 	RegisterSignal(current_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, PROC_REF(current_turf_density_change))
 
@@ -44,10 +49,8 @@
 		blocked = TRUE
 	else
 		for (var/obj/object in next_turf)
-			if (istype(object, /obj/laser_sink))
-				var/obj/laser_sink/sink = object
-				if (sink.incident(src))
-					src.sink = sink
+			SEND_SIGNAL(object, COMSIG_LASER_INCIDENT, src)
+			// laser_sink component's on_laser_incident handler sets src.sink and tracks in_lasers if accepted
 			if (src.is_blocking(object))
 				blocked = TRUE
 				break
@@ -64,10 +67,18 @@
 
 ///Returns a new segment with all its properties copied over (override on child types)
 /obj/linked_laser/proc/copy_laser(turf/T, dir)
-	var/obj/linked_laser/new_laser = new src.type(T, dir)
+	var/obj/linked_laser/new_laser = new src.type(T, dir, src.emitter)
 	new_laser.length = src.length + 1
 	new_laser.power = src.power
 	return new_laser
+
+/// Each laser MUST override this
+/obj/linked_laser/proc/get_source_power()
+	return 0
+
+/// Calculates the proprotional power from the source emitter's total power and this segment's relative portion.
+/obj/linked_laser/proc/proportional_power()
+	return src.get_source_power() * src.relative_power
 
 ///Set up a new laser on the next turf
 /obj/linked_laser/proc/extend()
@@ -80,9 +91,9 @@
 /obj/linked_laser/proc/become_endpoint()
 	src.is_endpoint = TRUE
 	var/turf/next_turf = get_next_turf()
-	RegisterSignal(next_turf, COMSIG_TURF_REPLACED, PROC_REF(next_turf_replaced))
-	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, PROC_REF(next_turf_updated))
-	RegisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, PROC_REF(next_turf_updated))
+	RegisterSignal(next_turf, COMSIG_TURF_REPLACED, PROC_REF(next_turf_replaced), override = TRUE)
+	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, PROC_REF(next_turf_updated), override = TRUE)
+	RegisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, PROC_REF(next_turf_updated), override = TRUE)
 
 ///Called when we extend a new laser object and are therefore no longer an endpoint
 /obj/linked_laser/proc/release_endpoint()
@@ -99,7 +110,10 @@
 	SPAWN(0)
 		qdel(src.next)
 		src.next = null
-	src.sink?.exident(src)
+		src.previous = null
+		src.emitter = null
+	if (src.sink)
+		SEND_SIGNAL(src.sink.parent, COMSIG_LASER_EXIDENT, src)
 	src.sink = null
 	if (!QDELETED(src.previous))
 		src.previous.become_endpoint()
@@ -124,13 +138,12 @@
 ///NB: the parent is allowed to qdel src here, so child types should handle being qdeled in Crossed
 /obj/linked_laser/Crossed(atom/movable/A)
 	..()
-	if (istype(A, /obj/laser_sink) && src.previous)
+	if (src.previous)
 		var/turf/T = get_turf(src)
 		//we need this to happen after the crossing atom has finished moving otherwise mirrors will delete their own laser obj
 		SPAWN(0)
 			if (!QDELETED(src.previous) && get_turf(A) == T) //check that the sink hasn't moved during our SPAWN
-				src.previous.sink = A
-				src.previous.sink.incident(src.previous)
+				SEND_SIGNAL(A, COMSIG_LASER_INCIDENT, src.previous)
 	if (src.is_blocking(A))
 		qdel(src)
 
@@ -181,7 +194,8 @@
 		return
 	var/turf/next_turf = get_next_turf()
 	if (turf_check(next_turf))
-		src.sink?.exident(src)
+		if (src.sink)
+			SEND_SIGNAL(src.sink.parent, COMSIG_LASER_EXIDENT, src)
 		//in case this is a sink, we need to wait for it to have finished moving before trying to incident on it again
 		//I know SPAWN(0) is cringe but do you really want to see the control logic I'd have to rig up to do this properly?
 		SPAWN(0)

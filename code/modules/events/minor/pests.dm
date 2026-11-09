@@ -32,8 +32,8 @@
 						occupied = TRUE
 
 			if (occupied)
-				logTheThing(LOG_DEBUG, null, "Minor pest event couldn't find a unoccupied LANDMARK_PESTSTART, spawning somewhere with people instead.")
-				message_admins("Minor pest event couldn't find a unoccupied LANDMARK_PESTSTART, spawning somewhere with people instead.")
+				logTheThing(LOG_DEBUG, null, "Minor pest event couldn't find an unoccupied LANDMARK_PESTSTART, spawning somewhere with people instead.")
+				message_admins("Minor pest event couldn't find an unoccupied LANDMARK_PESTSTART, spawning somewhere with people instead.")
 				pestlandmark = firstpestlandmark // goes back to the first option if none are available
 
 		var/masterspawnamount = rand(4,12)

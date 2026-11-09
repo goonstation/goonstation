@@ -59,7 +59,11 @@
 	attackby(obj/b, mob/user)
 		if(istype(b, /obj/item/gun/kinetic) && b:allowReverseReload)
 			b.Attackby(src, user)
-		else if(b.type == src.type)
+			return
+		if(!istype(b, /obj/item/ammo/bullets))
+			return ..()
+		var/obj/item/ammo/bullets/bullets = b
+		if(bullets.ammo_type.is_same_ammo(src.ammo_type))
 			var/obj/item/ammo/bullets/A = b
 			if(A.amount_left<1)
 				user.show_text("There's no ammo left in [A.name].", "red")
@@ -160,6 +164,15 @@
 			return 1
 
 	proc/loadammo(var/obj/item/ammo/bullets/A, var/obj/item/gun/kinetic/K)
+		/* So bullet reloading is pretty convoluted
+			- From what I can tell, loadammo() gets called first in order to figure out the type of reload.
+			- Most returned cases are just for displaying different kinds of messages.
+			- If the ammo is being swapped, swap() gets called to make the change
+			- THEN swap() may call loadammo() AGAIN to complete the reload.
+			- Maybe it is doing this in case the ammo doesn't fit in a single container?
+			- In short: I recommend nuking the entire reload system. (LorrMaster)
+		*/
+
 		// Also see attackby() in kinetic.dm.
 		if (!A || !K)
 			return 0 // Error message.
@@ -183,21 +196,24 @@
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
 		if (A.amount_left < 1)
-			return AMMO_RELOAD_SOURCE_EMPTY // Magazine's empty.
+			return AMMO_RELOAD_SOURCE_EMPTY // Trying to reload with an empty magazine
+		var/datum/projectile/K_type = K.ammo.ammo_type
 		if (K.ammo.amount_left >= K.max_ammo_capacity)
-			if (K.ammo.ammo_type.type != A.ammo_type.type)
-				return AMMO_RELOAD_TYPE_SWAP // Call swap().
-			return AMMO_RELOAD_ALREADY_FULL // Gun's full.
-		if (K.ammo.amount_left > 0 && K.ammo.ammo_type.type != A.ammo_type.type)
-			return AMMO_RELOAD_TYPE_SWAP // Call swap().
-
+			// The gun is already full
+			if (!K_type.is_same_ammo(A.ammo_type))
+				return AMMO_RELOAD_TYPE_SWAP // Gun is full but the ammo types are different. Call swap().
+			return AMMO_RELOAD_ALREADY_FULL
+		if (K.ammo.amount_left > 0 && (!K_type.is_same_ammo(A.ammo_type)))
+			return AMMO_RELOAD_TYPE_SWAP //  Gun is not empty. Ammo types are different. Call swap().
 		else
+			// (LorrMaster) If you are at this point in the code, then that means...
+			// A) The gun is empty and a different type of ammo is being inserted
+			// B) The gun may or may not have ammo, but the ammo being inserted is the same as before
 
-			// The gun may have been fired; eject casings if so (Convair880).
-			K.ejectcasings()
+			K.ejectcasings() // The gun may have been fired; eject casings if so (Convair880).
 
 			// Required for swap() to work properly (Convair880).
-			if (K.ammo.type != A.type || A.force_new_current_projectile)
+			if (!K.ammo.ammo_type.is_same_ammo(A.ammo_type) || A.force_new_current_projectile)
 				var/obj/item/ammo/bullets/ammoGun = new A.type
 				ammoGun.amount_left = K.ammo.amount_left
 				ammoGun.ammo_type = K.ammo.ammo_type
@@ -261,8 +277,31 @@
 	proc/after_unload(mob/user)
 		return
 
+	/// Remove ammo from this container and place it into a new container. Ammo is identical in each.
+	/// Returns the new container that the ammo was moved to, or null if there was no need to move anything
+	proc/split(var/split_amount)
+		RETURN_TYPE(/obj/item/ammo/bullets)
+		if(split_amount >= src.amount_left || split_amount <= 0)
+			return null
+		var/obj/item/ammo/bullets/ammoDrop = new src.type
+		ammoDrop.amount_left = split_amount
+		src.amount_left -= split_amount
+		ammoDrop.name = src.name
+		ammoDrop.icon = src.icon
+		ammoDrop.icon_state = src.icon_state
+		ammoDrop.ammo_type = new src.ammo_type.type // Creating a new ammo type in case you want to edit something.
+		ammoDrop.ammo_type.coating = src.ammo_type.coating
+		ammoDrop.delete_on_reload = src.delete_on_reload
+		src.UpdateIcon()
+		ammoDrop.UpdateIcon()
+		return ammoDrop
+
 	get_desc()
-		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
+		if(src.amount_left == 0)
+			return . += "There are no bullets left!"
+		if(ammo_type.coating)
+			return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left] [ammo_type.coating.getName()]-coated bullet\s left!"
+		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left] bullet\s left!"
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		. = ..()
@@ -280,6 +319,11 @@
 					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
 					if(src.delete_on_reload && src.amount_left <= 0) //I don't like repeating code, but this is needed to catch if it empties on the second firing
 						qdel(src)
+
+	on_material_scan()
+		. = ..()
+		if(src.ammo_type.coating)
+			return "Each bullet is coated in [src.ammo_type.coating_amount] unit\s of [src.ammo_type.coating]"
 
 
 //no caliber:
@@ -305,12 +349,12 @@
 	icon_empty = "custom-0"
 
 	onMaterialChanged()
-		ammo_type.material = src.material
+		ammo_type.coating = src.material
 
 		if(src.material)
-			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
+			ammo_type.power = round(material.getProperty(MATERIAL::PROPERTY::DENSITY) * 2 + material.getProperty(MATERIAL::PROPERTY::HARDNESS))
 			ammo_type.generate_inverse_stats()
-			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
+			ammo_type.dissipation_delay = round(material.getProperty(MATERIAL::PROPERTY::DENSITY) / 2)
 
 			if((src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_PIERCING
@@ -708,6 +752,18 @@
 	icon_short = "38S"
 	icon_empty = "speedloader_empty"
 
+/obj/item/ammo/bullets/a38/stun_ricochet
+	sname = ".38 Spc Stun Ricochet"
+	name = ".38 Stun Ricochet speedloader"
+	desc = "A speedloader of .38 special ricocheting stun bullets."
+	icon_state = "38RS-7"
+	amount_left = 7
+	max_amount = 7
+	ammo_type = new/datum/projectile/bullet/revolver_38/stun_ricochet
+	icon_dynamic = 1
+	icon_short = "38RS"
+	icon_empty = "speedloader_empty"
+
 //0.393
 /obj/item/ammo/bullets/foamdarts
 	sname = "foam darts"
@@ -752,10 +808,10 @@
 		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
 		color = "yellow"
 
-	ketamine
+	thio
 		name = "sleep blowdarts"
-		desc = "These darts are loaded with a heavy dose of horse-tranquilizer."
-		ammo_type = new/datum/projectile/bullet/blow_dart/ketamine
+		desc = "These darts are loaded with a heavy dose of fast-acting tranquilizer."
+		ammo_type = new/datum/projectile/bullet/blow_dart/thio
 		color = "#00c5e7"
 
 		single //I hate this
@@ -974,7 +1030,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
-/obj/item/ammo/bullets/abg/two //spawns in the break action
+/obj/item/ammo/bullets/abg/punchy
+	sname = "10ga heavy rubber slug"
+	name = "10ga heavy rubber slugs"
+	desc = "A box of big, heavy rubber slugs. These ones really pack a punch."
+	icon_state = "bg-punchy"
+	icon_empty = "bg-punchy-0"
+	amount_left = 6
+	max_amount = 6
+	//big shells, don't fit in auto-shotties
+	ammo_cat = AMMO_SHOTGUN_PIPE
+	ammo_type = new/datum/projectile/bullet/abg/punchy
+
+/obj/item/ammo/bullets/abg/punchy/two //spawns in the break action
 	amount_left = 2
 	max_amount = 2
 

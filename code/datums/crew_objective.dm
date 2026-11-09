@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/objective/crew/captain)
 	explanation_text = "Don't lose your hat!"
 	// medal_name = "Hatris"
 	check_completion()
-		if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/caphat || owner.current.check_contents_for(/obj/item/clothing/head/fancy/captain)))
+		if(owner.current && (owner.current.check_contents_for(/obj/item/clothing/head/caphat) || owner.current.check_contents_for(/obj/item/clothing/head/fancy/captain)))
 			return 1
 		else
 			return 0
@@ -92,6 +92,36 @@ ABSTRACT_TYPE(/datum/objective/crew/captain)
 			return 1
 		else
 			return 0
+
+/datum/objective/crew/captain/authdisk
+	explanation_text = "Don't lose the Authentication Disk!"
+
+	check_completion()
+		if(owner.current && owner.current.check_contents_for(/obj/item/disk/data/floppy/read_only/authentication))
+			return 1
+		else
+			return 0
+
+/datum/objective/crew/captain/spare
+	explanation_text = "Ensure your captain-level spare ID is in your office when the shuttle arrives at central command."
+	var/static/is_spare_in_office = null
+
+	check_completion(c)
+		if(isnull(src.is_spare_in_office))
+			src.is_spare_in_office = FALSE
+
+			var/list/valid_areas = list(/area/station/crew_quarters/captain,
+										/area/station/bridge/execrestroom,
+										/area/station/bridge/captain,
+										/area/station/captain)
+
+			// Does not make sure its the original spare (and not some whitehole thing), but cap faking their spare to please centcom is funny.
+			for(var/obj/item/card/id/gold/captains_spare/nerd_card in by_type[/obj/item/card/id/gold/captains_spare])
+				if(istypes(get_area(nerd_card), valid_areas))
+					src.is_spare_in_office = TRUE
+					break
+
+		return src.is_spare_in_office
 
 ABSTRACT_TYPE(/datum/objective/crew/headofsecurity)
 /datum/objective/crew/headofsecurity/hat
@@ -152,14 +182,14 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 					break
 			return check_result
 /datum/objective/crew/chiefengineer/ptl
-	explanation_text = "Earn at least a million credits via the PTL."
+	explanation_text = "Earn at least one hundred thousand credits via the PTL."
 	medal_name = "1.21 Jiggawatts"
 	var/static/check_result = null
 	check_completion()
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
-				if(P.lifetime_earnings >= 1 MEGA)
+				if(P.lifetime_earnings >= 100 KILO)
 					check_result = TRUE
 		return check_result
 
@@ -231,13 +261,13 @@ ABSTRACT_TYPE(/datum/objective/crew/securityassistant)
 
 ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 /datum/objective/crew/quartermaster/profit
-	explanation_text = "End the round with a budget of over 50,000 credits."
+	explanation_text = "End the round with a Supply budget of over 100,000 credits."
 	medal_name = "Tax Haven"
 	var/static/check_result = null
 	check_completion()
 		if(isnull(check_result))
 			check_result = FALSE
-			if(wagesystem.shipping_budget > 50000)
+			if(wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] > 100000)
 				check_result = TRUE
 		return check_result
 
@@ -870,6 +900,16 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
 				geneoptions |= GB.offered_genes
 			check_result = length(geneoptions) >= 5
+		return check_result
+
+/datum/objective/crew/geneticist/budget
+	explanation_text = "End the round with the Medical budget over 30,000 credits."
+	var/static/check_result = null
+	check_completion()
+		if(isnull(check_result))
+			check_result = FALSE
+			if (wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] >= 30000)
+				check_result = TRUE
 		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/roboticist)

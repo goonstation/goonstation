@@ -68,6 +68,10 @@
 	codewords -= tempword
 
 	tempword = pick(codewords)
+	netpass_login = "[rand(1111,9999)] [tempword]-[rand(111,999)]"
+	codewords -= tempword
+
+	tempword = pick(codewords)
 	netpass_syndicate = "[rand(111,999)]DET[tempword]=[rand(1111,9999)]"
 	codewords -= tempword
 

@@ -86,6 +86,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	icon_state = "wing-destroyed"
 	name = "razor-sharp shrapnel"
 	desc = "Looks incredibly sharp. It'll probably tear your hand to shreds if you try touching it."
+	density = 0 // The icon's offset will effectively create an invisible wall otherwise.
 
 ///////////
 // ANTENNA
@@ -189,6 +190,7 @@ TYPEINFO(/obj/npc/trader/flock)
 
 	src.goods_sell += new/datum/commodity/flock/tech/table(src)
 	src.goods_sell += new/datum/commodity/flock/tech/chair(src)
+	src.goods_sell += new/datum/commodity/flock/tech/stamp(src)
 	src.goods_sell += new/datum/commodity/flock/tech/gnesis(src)
 	src.goods_sell += new/datum/commodity/flock/tech/gnesisglass(src)
 	src.goods_sell += new/datum/commodity/flock/tech/flocknugget(src)

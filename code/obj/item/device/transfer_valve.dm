@@ -67,7 +67,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.attach_tank(user)
 		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/prox_sensor))
 			if(attached_device)
-				boutput(user, SPAN_ALERT("There is already an device attached to the valve, remove it first!"))
+				boutput(user, SPAN_ALERT("There is already a device attached to the valve, remove it first!"))
 				return
 
 			attached_device = item
@@ -211,7 +211,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				logTheThing(LOG_BOMBING, usr, "[openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
 				if (src.tank_one && src.tank_two)
 					message_admins("[key_name(usr)] [openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
-					message_ghosts("<b>A tank transfer valve</b> has been [openorclose] at [log_loc(bombturf, ghostjump=TRUE)].")
+					GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] has been [openorclose] at [GHOST.MESSAGE.format_loc(src)].")
 				toggle_valve()
 			if ("remove_device")
 				src.attached_device.set_loc(get_turf(src))

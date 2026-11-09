@@ -39,13 +39,13 @@ TYPEINFO(/area/station/shield_zone)
 		..()
 		src.UpdateIcon()
 		SPAWN(0.6 SECONDS)
+			src.net_id = generate_net_id(src)
 			if (!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if (test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
-			src.net_id = generate_net_id(src)
+					src.link.set_master(src, src.net_id)
 
 	update_icon()
 
@@ -225,10 +225,12 @@ TYPEINFO(/area/station/shield_zone)
 	name = "shield control computer"
 	icon_state = "engine"
 	base_icon_state = "engine"
-	setup_drive_size = 48
-
-	setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-	//setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64
+	setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive,
+			/obj/item/peripheral/network/powernet_card)
+	///obj/item/peripheral/network/radio/locked/pda
 	setup_starting_program = /datum/computer/file/terminal_program/shield_control
 
 /obj/machinery/computer3/generic/shield_control/console_upper

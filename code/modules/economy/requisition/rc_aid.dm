@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/req_contract/aid/wrecked
 	//name = "Breach Recovery"
-	payout = PAY_TRADESMAN*10*2
+	payout = PAY::TRADESMAN*10*2
 	var/list/namevary = list("Breach Recovery","Breach Response","Integrity Failure","Crisis Response","Disaster Assistance","Disaster Response")
 	var/list/desc_placejob = list("research","mining","security","cargo transfer")
 	var/list/desc_placetype = list("vessel","ship","station","outpost")
@@ -45,51 +45,51 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 /datum/rc_entry/item/spacesuit
 	name = "space suit"
 	typepath = /obj/item/clothing/suit/space
-	feemod = PAY_IMPORTANT*2
+	feemod = PAY::IMPORTANT*2
 
 /datum/rc_entry/item/spacehelmet
 	name = "space helmet"
 	typepath = /obj/item/clothing/head/helmet/space
-	feemod = PAY_IMPORTANT
+	feemod = PAY::IMPORTANT
 
 /datum/rc_entry/stack/steelsheet
 	name = "NT-spec steel sheet"
 	commodity = /datum/commodity/sheet
 	typepath = /obj/item/sheet
 	mat_id = "steel"
-	feemod = PAY_TRADESMAN/2
+	feemod = PAY::TRADESMAN/2
 
 ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 /datum/rc_entry/item/basictool/crowbar
 	name = "crowbar"
 	typepath = /obj/item/crowbar
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/basictool/screwdriver
 	name = "screwdriver"
 	typepath = /obj/item/screwdriver
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/basictool/wirecutters
 	name = "wirecutters"
 	typepath = /obj/item/wirecutters
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/basictool/wrench
 	name = "wrench"
 	typepath = /obj/item/wrench
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/basictool/welder
 	name = "welding tool"
 	typepath = /obj/item/weldingtool
-	feemod = PAY_TRADESMAN*2
+	feemod = PAY::TRADESMAN*2
 
 
 
 /datum/req_contract/aid/triage
 	//name = "Medical Aid"
-	payout = PAY_DOCTORATE*10*2
+	payout = PAY::DOCTORATE*10*2
 	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition","Vital Support")
 	var/list/desc_helpsite = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
 	var/list/desc_tense = list("to assist with","after heavy load due to","to restock after")
@@ -139,7 +139,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/surgical
-	feemod = PAY_DOCTORATE
+	feemod = PAY::DOCTORATE
 
 	scalpel
 		name = "scalpel"
@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	stapler
 		name = "staple gun"
-		feemod = PAY_DOCTORATE*2
+		feemod = PAY::DOCTORATE*2
 		typepath = /obj/item/staple_gun
 
 /datum/rc_entry/reagent/brutepatch
@@ -171,43 +171,43 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 	container_name = "Patches"
 	name = "styptic powder"
 	chem_ids = "styptic_powder"
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY::DOCTORATE/10
 
 /datum/rc_entry/reagent/burnpatch
 	contained_in = /obj/item/reagent_containers/patch
 	container_name = "Patches"
 	name = "silver sulfadiazine"
 	chem_ids = "silver_sulfadiazine"
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY::DOCTORATE/10
 
 /datum/rc_entry/item/lgloves
 	name = "latex glove pair"
-	feemod = PAY_DOCTORATE
+	feemod = PAY::DOCTORATE
 	typepath = /obj/item/clothing/gloves/latex
 
 /datum/rc_entry/item/hypospray
 	name = "hypospray"
-	feemod = PAY_DOCTORATE*2
+	feemod = PAY::DOCTORATE*2
 	typepath = /obj/item/reagent_containers/hypospray
 
 /datum/rc_entry/item/med_analyzer
 	name = "health analyzer"
-	feemod = PAY_DOCTORATE*2
+	feemod = PAY::DOCTORATE*2
 	typepath = /obj/item/device/analyzer/healthanalyzer
 
 /datum/rc_entry/item/penlight
 	name = "pen light"
-	feemod = PAY_DOCTORATE
+	feemod = PAY::DOCTORATE
 	typepath = /obj/item/device/light/flashlight/penlight
 
 /datum/rc_entry/item/stethoscope
 	name = "stethoscope"
-	feemod = PAY_DOCTORATE
+	feemod = PAY::DOCTORATE
 	typepath = /obj/item/medicaldiagnosis/stethoscope
 
 /datum/req_contract/aid/geeksquad
 	//name = "Computer Failure"
-	payout = PAY_DOCTORATE*10*2
+	payout = PAY::DOCTORATE*10*2
 	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown","Crucial Repair")
 	var/list/desc_wherebork = list("research","mining","security","cargo transfer","communications","deep-space survey")
 	var/list/desc_whobork = list("vessel","ship","station","outpost")
@@ -264,40 +264,40 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/mainboard
 	name = "computer mainboard"
 	typepath = /obj/item/motherboard
-	feemod = PAY_EXECUTIVE
+	feemod = PAY::EXECUTIVE
 
 /datum/rc_entry/item/cardscan
 	name = "ID scanner module"
 	typepath = /obj/item/peripheral/card_scanner
 	exactpath = TRUE
-	feemod = PAY_EXECUTIVE
+	feemod = PAY::EXECUTIVE
 
 /datum/rc_entry/item/netcard
 	name = "wired network card"
 	typepath = /obj/item/peripheral/network/powernet_card
 	exactpath = TRUE
-	feemod = PAY_EXECUTIVE
+	feemod = PAY::EXECUTIVE
 
 /datum/rc_entry/item/interfaceboard
 	name = "AI interface board"
 	typepath = /obj/item/ai_interface
-	feemod = PAY_EMBEZZLED
+	feemod = PAY::EMBEZZLED
 
 /datum/rc_entry/item/multitool
 	name = "multitool"
 	typepath = /obj/item/device/multitool
-	feemod = PAY_TRADESMAN*4
+	feemod = PAY::TRADESMAN*4
 
 /datum/rc_entry/stack/cable
 	name = "lengths of electrical cabling"
 	typepath = /obj/item/cable_coil
-	feemod = PAY_TRADESMAN/4
+	feemod = PAY::TRADESMAN/4
 
 
 
 /datum/req_contract/aid/supplyshort
 	//name = "Supply Chain Failure"
-	payout = PAY_TRADESMAN*10*2
+	payout = PAY::TRADESMAN*10*2
 	var/list/namevary = list("Urgent Restock","Supply Crisis","Supply Chain Failure","Short Stock","Emergency Resupply")
 	var/list/desc_placejob = list("research","mining","hydroponics","civilian","Nanotrasen")
 	var/list/desc_place = list("vessel","station","outpost","colony")
@@ -346,12 +346,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/stack/char
 	name = "char ore"
 	commodity = /datum/commodity/ore/char
-	feemod = PAY_TRADESMAN/4 //on top of market char price
+	feemod = PAY::TRADESMAN/4 //on top of market char price
 
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
 	chem_ids = "fuel"
-	feemod = PAY_UNTRAINED/10
+	feemod = PAY::UNTRAINED/10
 
 /datum/rc_entry/reagent/coffee
 	name = "coffee"
@@ -362,4 +362,4 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 		"expresso",
 		"energydrink"
 	)
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY::DOCTORATE/10

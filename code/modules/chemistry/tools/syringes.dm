@@ -21,6 +21,8 @@
 	var/image/image_inj_dr
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
+	default_material = "plastic"
+	material_amt = 0.2
 
 	New()
 		..()

@@ -1,0 +1,484 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/chapel_office,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"b" = (
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"d" = (
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"e" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/machinery/light/lamp/green{
+	dir = 4;
+	pixel_x = -8
+	},
+/obj/item/device/light/candle{
+	pixel_x = 6;
+	pixel_y = 16
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"f" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"g" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"h" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/chapel/office)
+"i" = (
+/obj/machinery/crema_switch{
+	id = "crematorium";
+	pixel_x = 24;
+	dir = 4;
+	pixel_y = 0
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"j" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"k" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = -11;
+	pixel_y = 2
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/bottle/holywater{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/machinery/phone,
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"l" = (
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"m" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/chapel_office,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"n" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"o" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/medical/crematorium)
+"p" = (
+/obj/table/wood/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/card_box/tarot{
+	pixel_y = 3
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"r" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"s" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"t" = (
+/obj/machinery/vending/chapel{
+	dir = 4;
+	pixel_x = -7
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/black,
+/area/station/chapel/office)
+"u" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/chapel/office)
+"v" = (
+/obj/table/auto,
+/obj/item/clothing/mask/surgical,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/stamp,
+/obj/item/body_bag,
+/obj/item/body_bag,
+/obj/item/body_bag,
+/obj/item/spraybottle/cleaner,
+/obj/item/reagent_containers/emergency_injector/spaceacillin,
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"w" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"x" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"y" = (
+/obj/stool,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"z" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"A" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/chapel/office)
+"B" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/syringe,
+/obj/decal/poster/wallsign/iso/prohibited/food{
+	pixel_x = 15
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"C" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"D" = (
+/obj/machinery/printing_press,
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/office)
+"E" = (
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/stool/bed,
+/obj/landmark/start/job/chaplain,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/blind_switch/directional/south,
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"F" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/bible{
+	pixel_x = -16
+	},
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/pen/fancy,
+/obj/item/screwdriver{
+	pixel_x = 12;
+	pixel_y = 5
+	},
+/obj/item/stamp/chap{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"G" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"I" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"J" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"K" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/medical/crematorium)
+"M" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"N" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"O" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/office)
+"P" = (
+/obj/machinery/door/airlock/pyro/medical/morgue{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/chapel_office,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"Q" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical/morgue{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/crematorium,
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"T" = (
+/obj/item/instrument/large/piano{
+	dir = 1;
+	name = "old piano"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"U" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"W" = (
+/obj/stool,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
+"X" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/medical/crematorium)
+"Y" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"Z" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+
+(1,1,1) = {"
+o
+o
+o
+o
+Q
+o
+o
+o
+o
+"}
+(2,1,1) = {"
+o
+B
+v
+b
+Y
+J
+U
+s
+o
+"}
+(3,1,1) = {"
+o
+I
+n
+d
+M
+d
+d
+d
+o
+"}
+(4,1,1) = {"
+A
+A
+A
+z
+g
+Z
+i
+j
+o
+"}
+(5,1,1) = {"
+G
+w
+A
+o
+o
+P
+o
+X
+K
+"}
+(6,1,1) = {"
+A
+W
+A
+D
+t
+C
+k
+e
+A
+"}
+(7,1,1) = {"
+A
+p
+A
+O
+l
+r
+T
+F
+A
+"}
+(8,1,1) = {"
+A
+y
+a
+N
+f
+x
+l
+E
+A
+"}
+(9,1,1) = {"
+A
+A
+A
+A
+m
+u
+h
+A
+A
+"}

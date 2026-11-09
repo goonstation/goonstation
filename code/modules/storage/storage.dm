@@ -147,6 +147,9 @@
 		boutput(user, SPAN_ALERT("You can't put [W] into itself!"))
 		return
 
+	if (src.linked_item.GetComponent(/datum/component/glued)) //stop glued backpacks eating batons
+		return
+
 	// locked storage check
 	if (istype(W, /obj/item/storage/secure))
 		var/obj/item/storage/secure/S = W
@@ -189,6 +192,11 @@
 			//Lets not give players the ability to fucking explode at will eh
 			return FALSE
 		checkloc = checkloc.loc
+
+	// item is still inside another storage, move it out properly
+	if (W.stored)
+		W.stored.transfer_stored_item(W, src.linked_item, TRUE, user)
+		return
 
 	// add item to storage
 	src.add_contents(W, user, visible)

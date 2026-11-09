@@ -100,6 +100,7 @@ TYPEINFO(/mob/living/silicon/ai)
 	icon_state = "ai"
 	anchored = ANCHORED
 	density = 1
+	default_material = "steel"
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
@@ -135,7 +136,7 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/bought_hat = FALSE
 	var/last_announcement = -INFINITY
 	var/announcement_cooldown = 1200
-	var/dismantle_stage = 0
+	var/dismantle_stage = SILICON::AI::DISMANTLE_STAGE::LOCKED
 	var/datum/light/light
 	//var/death_timer = 100
 	var/power_mode = 0
@@ -154,6 +155,7 @@ TYPEINFO(/mob/living/silicon/ai)
 
 	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
+	var/datum/material/material_face = null
 	var/list/custom_emotions = null
 	///Maximum number of viewports we can have open, unlimited vision was a bit silly
 	var/viewport_limit = 2
@@ -237,6 +239,7 @@ or don't if it uses a custom topopen overlay
 	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
 
+ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 /mob/living/silicon/ai/proc/give_feet()
 	animate(src, pixel_y = 14, time = 5, easing = SINE_EASING)
 	has_feet = 1
@@ -271,17 +274,17 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/get_help_message(dist, mob/user)
 	switch(src.dismantle_stage)
-		if(0)
+		if(SILICON::AI::DISMANTLE_STAGE::LOCKED)
 			. = "You can swipe an <b>ID card</b> to unlock the cover."
-		if(1)
+		if(SILICON::AI::DISMANTLE_STAGE::UNLOCKED)
 			. = "You can use a <b>crowbar</b> to pry open the cover, or swipe an <b>ID card</b> to lock it."
-		if(2)
+		if(SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			. = "You can use a <b>wrench</b> to undo the CPU bolts, <b>cable coil</b> to repair damage, or a <b>crowbar</b> to close the cover."
-		if(3)
+		if(SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE)
 			. = "You can use a <b>wrench</b> to tighten the CPU bolts, or an <b>empty hand</b> to remove the CPU unit."
-		if(4)
+		if(SILICON::AI::DISMANTLE_STAGE::BRAINLESS)
 			. = "You can insert a <b>brain</b> to activate the AI."
-	if(src.dismantle_stage < 4 && isdead(src))
+	if(src.dismantle_stage < SILICON::AI::DISMANTLE_STAGE::BRAINLESS && isdead(src))
 		. += " You can use an <b>empty hand</b> to reboot the AI."
 	. += " You can also use a <b>screwdriver</b> to [src.anchored ? "unscrew" : "screw down"] the floor bolts."
 
@@ -382,7 +385,7 @@ or don't if it uses a custom topopen overlay
 		src.radio2.name = "AI Intercom Monitor"
 		src.radio2.icon_tooltip = "Artificial Intelligence"
 		src.radio2.device_color = "#7F7FE2"
-		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
+		src.radio2.set_frequency(RADIO::FREQ::INTERCOM::AI)
 		src.radio2.toggle_microphone(FALSE)
 		src.radio2.toggle_speaker(FALSE)
 		src.radio3.name = "Secure Channels Monitor"
@@ -395,6 +398,7 @@ or don't if it uses a custom topopen overlay
 		if (src.brain && src.key)
 			src.brain.name = "neural net processor"
 			src.brain.owner = src.mind
+		src.setup_verbs()
 
 	SPAWN(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
@@ -418,10 +422,41 @@ or don't if it uses a custom topopen overlay
 		src.camera.c_tag = src.real_name
 		src.camera.network = CAMERA_NETWORK_ROBOTS
 
-//Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
-/mob/living/silicon/ai/proc/get_message_mob()
-	RETURN_TYPE(/mob)
+/mob/living/silicon/ai/setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+	if(mat1.getID() == "mauxite" && src.coreSkin == "default")
+		src.setSkin("mauxite")
+	if(src.coreSkin == "mauxite")
+		src.default_material = "mauxite"
+	. = ..()
 
+/mob/living/silicon/ai/proc/setup_verbs()
+	src.verbs |= /mob/living/silicon/ai/proc/ai_call_shuttle
+	src.verbs |= /mob/living/silicon/ai/proc/reset_apcs
+	src.verbs |= /mob/living/silicon/ai/proc/de_electrify_verb
+	src.verbs |= /mob/living/silicon/ai/proc/unbolt_all_airlocks
+	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_track
+	src.verbs |= /mob/living/silicon/ai/proc/ai_alerts
+	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_list
+	src.verbs |= /mob/living/silicon/ai/proc/ai_customize_options_menu
+	src.verbs |= /mob/living/silicon/ai/proc/ai_interact_laws
+	src.verbs |= /mob/living/silicon/ai/proc/ai_show_laws_all
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_all
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_standard
+	src.verbs |= /mob/living/silicon/ai/proc/ai_set_fake_laws
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_fake_laws
+	src.verbs |= /mob/living/silicon/ai/proc/ai_show_fake_laws
+	src.verbs |= /mob/living/silicon/ai/verb/deploy_to
+	src.verbs |= /mob/living/silicon/ai/proc/ai_view_crew_manifest
+	src.verbs |= /mob/living/silicon/ai/proc/toggle_alerts_verb
+	src.verbs |= /mob/living/silicon/ai/verb/access_internal_radio
+	src.verbs |= /mob/living/silicon/ai/verb/access_internal_pda
+	src.verbs |= /mob/living/silicon/ai/proc/ai_station_announcement
+	src.verbs |= /mob/living/silicon/ai/proc/view_messageLog
+	src.verbs |= /mob/living/silicon/ai/verb/rename_self
+	src.verbs |= /mob/living/silicon/ai/verb/go_offline
+
+//Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
+/mob/living/silicon/ai/get_message_mob()
 	if (deployed_to_eyecam)
 		return src.eyecam
 	return src
@@ -463,7 +498,7 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
-		if(src.dismantle_stage<2)
+		if(src.dismantle_stage < SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
 			return
 
@@ -492,24 +527,24 @@ or don't if it uses a custom topopen overlay
 		src.update_terminal()
 
 	else if (ispryingtool(W))
-		if (src.dismantle_stage == 1)
+		if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::UNLOCKED)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> opens [src.name]'s chassis cover."))
 			src.locking = 0
-			src.dismantle_stage = 2
-		else if (src.dismantle_stage == 2)
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::COVER_OPEN
+		else if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> closes [src.name]'s chassis cover."))
-			src.dismantle_stage = 1
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::UNLOCKED
 		else ..()
 
 	else if (iswrenchingtool(W))
-		if (src.dismantle_stage == 2)
+		if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins undoing [src.name]'s CPU bolts."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
 				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
-		else if (src.dismantle_stage == 3)
+		else if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins affixing [src.name]'s CPU bolts."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
@@ -524,7 +559,7 @@ or don't if it uses a custom topopen overlay
 				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s chassis."))
 		else boutput(user, SPAN_ALERT("There's no structural damage on [src.name] to mend."))
 
-	else if(istype(W, /obj/item/cable_coil) && dismantle_stage >= 2)
+	else if(istype(W, /obj/item/cable_coil) && dismantle_stage >= SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 		var/obj/item/cable_coil/coil = W
 		src.add_fingerprint(user)
 		if(src.fireloss)
@@ -535,19 +570,20 @@ or don't if it uses a custom topopen overlay
 		else boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 
 	else if (istype(get_id_card(W), /obj/item/card/id))
-		if (src.dismantle_stage >= 2)
+		if (src.dismantle_stage >= SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			boutput(user, SPAN_ALERT("You must close the cover to swipe an ID card."))
 		else
 			if(src.allowed(user))
-				if (src.dismantle_stage == 1)
-					src.dismantle_stage = 0
+				if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::UNLOCKED)
+					src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::LOCKED
 				else
-					src.dismantle_stage = 1
+					src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::UNLOCKED
+				src.hud.update_lock()
 				src.locking = 0
 				user.visible_message(SPAN_ALERT("<b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock."))
 			else boutput(user, SPAN_ALERT("Access denied."))
 
-	else if (istype(W, /obj/item/organ/brain/) && src.dismantle_stage == 4)
+	else if (istype(W, /obj/item/organ/brain/) && src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::BRAINLESS)
 		if (src.brain)
 			boutput(user, SPAN_ALERT("There's already a brain in there!"))
 		else
@@ -568,7 +604,7 @@ or don't if it uses a custom topopen overlay
 					src.make_syndicate("brain added by [user]")
 			W.set_loc(src)
 			src.brain = W
-			src.dismantle_stage = 3
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE
 			if (!src.emagged && !src.syndicate) // The antagonist proc does that too.
 				src.show_text("<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 				src.show_text("<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
@@ -576,29 +612,6 @@ or don't if it uses a custom topopen overlay
 				src.show_text("To use something, simply click it.")
 				src.show_text("Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
 				src.show_laws()
-				src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-				src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-				src.verbs += /mob/living/silicon/ai/proc/reset_apcs
-				src.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
-				src.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
-				src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-				src.verbs += /mob/living/silicon/ai/proc/ai_alerts
-				src.verbs += /mob/living/silicon/ai/proc/ai_camera_list
-				src.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-				src.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
-				src.verbs += /mob/living/silicon/ai/verb/deploy_to
-				src.verbs += /mob/living/silicon/ai/proc/ai_view_crew_manifest
-				src.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
-				src.verbs += /mob/living/silicon/ai/verb/access_internal_radio
-				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
-				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
-				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
-				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
-				src.verbs += /mob/living/silicon/ai/verb/rename_self
-				src.verbs += /mob/living/silicon/ai/verb/go_offline
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -609,7 +622,7 @@ or don't if it uses a custom topopen overlay
 		if (src.moustache_mode == 0)
 			src.moustache_mode = 1
 			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
-		else if (src.dismantle_stage == 4 || isdead(src))
+		else if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::BRAINLESS || isdead(src))
 			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
 		return
 	else if(istype(W,/obj/item/ai_plating_kit))
@@ -652,7 +665,7 @@ or don't if it uses a custom topopen overlay
 		C.apply_keybind("robot_tg")
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user, var/fling = FALSE)
-	src.dismantle_stage = 4
+	src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::BRAINLESS
 	if (user)
 		src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU unit!"))
 		logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
@@ -721,19 +734,19 @@ or don't if it uses a custom topopen overlay
 /// for dismantle action bar
 /mob/living/silicon/ai/proc/toggle_CPU_bolts(mob/user)
 	switch(src.dismantle_stage)
-		if(2)
+		if(SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
-			src.dismantle_stage = 3
-		if(3)
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE
+		if(SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
-			src.dismantle_stage = 2
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::COVER_OPEN
 
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
 
-	if (src.dismantle_stage == 3)
+	if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::CPU_BOLTS_LOOSE)
 		actions += "Remove CPU Unit"
-	if (src.dismantle_stage < 4 && isdead(src))
+	if (src.dismantle_stage < SILICON::AI::DISMANTLE_STAGE::BRAINLESS && isdead(src))
 		actions += "Restart AI"
 
 	if (length(actions) > 1)
@@ -901,28 +914,6 @@ or don't if it uses a custom topopen overlay
 		if ((O.icon_state == "flaming"))
 			src.fireloss += 40
 		health_update_queue |= src
-	return
-
-/mob/living/silicon/ai/show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
-	var/who
-
-	if (everyone)
-		who = world
-	else if (relay_laws_for_shell && ismob(relay_laws_for_shell))
-		who = relay_laws_for_shell
-		boutput(who, "<b>Obey these laws:</b>")
-	else
-		who = src
-		boutput(who, "<b>Obey these laws:</b>")
-
-	if (relay_laws_for_shell != src.eyecam && src.deployed_to_eyecam)
-		who = src.eyecam
-		boutput(who, "<b>Obey these laws:</b>")
-
-	if(src.law_rack_connection)
-		src.law_rack_connection.show_laws(who)
-	else
-		boutput(src,"You have no laws!")
 	return
 
 /mob/living/silicon/ai/triggerAlarm(var/class, area/alarm_area, var/list/camera_list, var/alarmsource)
@@ -1247,9 +1238,9 @@ or don't if it uses a custom topopen overlay
 
 				//FLICK("ai-flip", src)
 				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris")
-					AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
+					set_face("[faceEmotion]-flip", "actual_face")
 					SPAWN(0.5 SECONDS)
-						AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
+						set_face(faceEmotion, "actual_face")
 
 
 				for (var/mob/living/M in view(1, null))
@@ -1506,9 +1497,9 @@ or don't if it uses a custom topopen overlay
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
 		if(test_link && (!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master) || test_link.master == src))// if somehow we forgot our link but the terminal didnt
 			if(src.link && src.link?.master == src)
-				src.link?.master = null // if we had a previous link, we're just getting rid of it, just in case
+				src.link?.set_master(null) // if we had a previous link, we're just getting rid of it, just in case
 			src.link = test_link
-			src.link.master = src
+			src.link.set_master(src, src.net_id)
 	else
 		for(var/target in src.terminals) // otherwise they'll still be sorta connected
 			src.terminals.Remove(target)
@@ -1518,7 +1509,7 @@ or don't if it uses a custom topopen overlay
 			SPAWN(0.4 SECONDS)
 				src.post_status(target, "command","term_disconnect")
 		SPAWN(2 SECONDS) //so our messages send before the data terminal connection closes
-			src.link?.master = null
+			src.link?.set_master(null)
 			src.link = null
 
 
@@ -1575,13 +1566,6 @@ or don't if it uses a custom topopen overlay
 		target = src.eyecam
 	tgui_message(target, "<b>Crew Manifest:</b><hr>[get_manifest()]", "Crew Manifest")
 
-
-/mob/living/silicon/ai/proc/show_laws_verb()
-	set category = "AI Commands"
-	set name = "Show Laws"
-
-	src.show_laws(0)
-
 /mob/living/silicon/ai/proc/view_messageLog()
 	set name = "View Message Log"
 	set desc = "View all messages sent by terminal connections."
@@ -1634,115 +1618,43 @@ or don't if it uses a custom topopen overlay
 		src.announcearrival = 1
 		boutput(src, "Now announcing new arrivals to the station.")
 */
-#define AI_LAW_STATE_DELAY 1 SECOND
+
+/mob/living/silicon/ai/proc/ai_interact_laws()
+	set category = "AI Commands"
+	set name = "Laws"
+
+	src.interact_laws()
+	return
+
+/mob/living/silicon/ai/proc/ai_show_laws_all()
+	set category = "AI Commands"
+	set name = "View Real Laws (Current)"
+	src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::VIEW)
+
+/mob/living/silicon/ai/proc/ai_state_laws_all()
+	set category = "AI Commands"
+	set name = "State Real Laws (Current)"
+	src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::STATE)
+
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
-	set name = "State Standard Laws"
-
-	if (GET_COOLDOWN(src, "state_laws"))
-		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	var/list/say_targets = list()
-
-	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-		var/prefix_choice = prefix_module.get_prefix_choices()
-		if(!length(prefix_choice))
-			continue
-		say_targets += prefix_choice
-
-	say_targets += "Local"
-
-	var/choice
-	if (length(say_targets) == 1)
-		choice = say_targets[1]
-	else
-		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State Standard Laws", say_targets)
-
-	if (!choice)
-		return
-
-	var/prefix = ""
-	if (choice != "Local")
-		prefix = say_targets[choice]
-
-	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
-	sleep(AI_LAW_STATE_DELAY)
-	src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
-	sleep(AI_LAW_STATE_DELAY)
-	src.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
-	sleep(AI_LAW_STATE_DELAY)
-	src.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
-
+	set name = "State Asimov Laws (Default)"
+	src.interact_laws(SILICON::LAWS::SET::ASIMOV, SILICON::LAWS::ACTION::STATE)
 
 /mob/living/silicon/ai/proc/ai_set_fake_laws()
 	set category = "AI Commands"
-	set name = "Set Fake Laws"
-	src.set_fake_laws()
+	set name = "Edit Fake Laws"
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::EDIT)
 
 /mob/living/silicon/ai/proc/ai_state_fake_laws()
 	set category = "AI Commands"
 	set name = "State Fake Laws"
-	src.state_fake_laws()
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::STATE)
 
 /mob/living/silicon/ai/proc/ai_show_fake_laws()
 	set category = "AI Commands"
-	set name = "Show Fake Laws"
-	src.show_fake_laws()
-
-/mob/living/silicon/ai/proc/ai_state_laws_all()
-	set category = "AI Commands"
-	set name = "State All Laws"
-
-	if (GET_COOLDOWN(src, "state_laws"))
-		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	if(!src.law_rack_connection)
-		boutput(src.get_message_mob(), "You have no laws!")
-		return
-
-	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
-		return
-
-	var/list/say_targets = list()
-
-	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-		var/prefix_choice = prefix_module.get_prefix_choices()
-		if(!length(prefix_choice))
-			continue
-		say_targets += prefix_choice
-
-	say_targets += "Local"
-
-	var/choice
-	if (length(say_targets) == 1)
-		choice = say_targets[1]
-	else
-		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State All Laws", say_targets)
-
-	if (!choice)
-		return
-
-	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
-		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	var/prefix = ""
-	if (choice != "Local")
-		prefix = say_targets[choice]
-
-	logTheThing(LOG_SAY, usr, "states all their current laws.")
-	var/laws = src.law_rack_connection.format_for_irc()
-	for (var/number in laws)
-		src.say("[prefix] [number]. [laws[number]]")
-		sleep(AI_LAW_STATE_DELAY)
-
-#undef AI_LAW_STATE_DELAY
+	set name = "View Fake Laws"
+	src.interact_laws(SILICON::LAWS::SET::FAKE, SILICON::LAWS::ACTION::VIEW)
 
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
@@ -1792,30 +1704,34 @@ or don't if it uses a custom topopen overlay
 	src.mind.transfer_to(target_shell)
 	src.deployed_shell.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EARS_AI)
 	target_shell.gender = src.gender
+	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	target_shell.set_always_monospaced(do_monospaced = decorator.inverted, user = src)
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"
 	set name = "Toggle Cover Lock"
 
-	if (src.dismantle_stage >= 2)
-		boutput(src, SPAN_ALERT("You can't lock your cover when it's open!"))
+	if (src.dismantle_stage >= SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
+		boutput(src.get_message_mob(), SPAN_ALERT("You can't lock your cover when it's open!"))
 	else
 		if (src.locking)
-			boutput(src, SPAN_ALERT("Your cover is currently locking, please be patient."))
-		else if (src.dismantle_stage == 1)
+			boutput(src.get_message_mob(), SPAN_ALERT("Your cover is currently locking, please be patient."))
+		else if (src.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::UNLOCKED)
 			src.locking = 1
-			boutput(src, SPAN_ALERT("Locking cover..."))
+			boutput(src.get_message_mob(), SPAN_ALERT("Locking cover..."))
 			SPAWN(12 SECONDS)
 				if (!src.locking)
-					boutput(src, SPAN_ALERT("The lock was interrupted before it could finish!"))
+					boutput(src.get_message_mob(), SPAN_ALERT("The lock was interrupted before it could finish!"))
 				else
-					src.dismantle_stage = 0
+					src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::LOCKED
 					src.locking = 0
-					boutput(src, SPAN_ALERT("You lock your cover lock."))
+					src.hud.update_lock()
+					boutput(src.get_message_mob(), SPAN_ALERT("You lock your cover lock."))
 
 		else
-			src.dismantle_stage = 1
-			boutput(src, SPAN_ALERT("You unlock your cover lock."))
+			src.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::UNLOCKED
+			src.hud.update_lock()
+			boutput(src.get_message_mob(), SPAN_ALERT("You unlock your cover lock."))
 
 /mob/living/silicon/ai/proc/eye_view()
 	if (isdead(src))
@@ -1848,6 +1764,7 @@ or don't if it uses a custom topopen overlay
 		if (src.deployed_to_eyecam)
 			src.eyecam.ensure_speech_tree().migrate_speech_tree(src, src, FALSE)
 			src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
+			src.eyecam.delStatus("ai_intercom_override")
 
 		else if (src.deployed_shell)
 			src.deployed_shell.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_EARS_AI)
@@ -1870,40 +1787,71 @@ or don't if it uses a custom topopen overlay
 				user.name = user.real_name
 		return
 
-/mob/living/silicon/ai/proc/ai_statuschange()
+/mob/living/silicon/ai/proc/ai_customize_options_menu()
+	set name = "Customization Options"
 	set category = "AI Commands"
-	set name = "AI status"
 
+	var/u_roll = pick("color", "colour") // hehe
+	var/list/status_options = list("Display emotion", "Background [u_roll]", "Status Display message", "Toggle monospace", "Change name", "Go offline")
+	var/mob/message_mob = src.get_message_mob()
+
+	if (!message_mob.client || isdead(src))
+		return
+
+	var/chosen_option = tgui_input_list(message_mob, "Select an option to customize.", "Customization Options", status_options)
+
+	switch(chosen_option)
+		if ("Display emotion")
+			src.ai_change_emotion()
+
+		// paying for our crimes
+		if ("Background color")
+			src.ai_colorchange()
+		if ("Background colour")
+			src.ai_colorchange()
+
+		if ("Status Display message")
+			src.ai_change_message()
+
+		if ("Toggle monospace")
+			src.toggle_monospace_mode()
+
+		if ("Change name")
+			src.rename_self()
+
+		if ("Go offline")
+			src.go_offline()
+
+/mob/living/silicon/ai/proc/ai_change_message()
 	if (isdead(src))
-		boutput(usr, "You cannot change your emotional status because you are dead!")
+		boutput(usr, "You cannot change your message status because you are dead!")
 		return
-	var/list/L = custom_emotions || ai_emotions	//In case an AI uses the reward, use a local list instead
-
-	var/newEmotion = tgui_input_list(src.get_message_mob(), "Select a status!", "AI Status", sortList(L, /proc/cmp_text_asc))
-	var/newMessage = scrubbed_input(usr, "Enter a message for your status displays!", "AI Message", src.status_message)
-	if (!newEmotion && !newMessage)
-		return
-	if(!(newEmotion in L)) //Ffff
-		return
-
-	if (newEmotion)
-		src.faceEmotion = L[newEmotion]
-		update_appearance()
+	var/mob/message_mob = src.get_message_mob()
+	var/newMessage = tgui_input_text(message_mob, "Enter a message for your status displays!", "AI Message", src.status_message)
 	if (newMessage)
 		src.status_message = newMessage
 
-/mob/living/silicon/ai/proc/ai_colorchange()
-	set category = "AI Commands"
-	set name = "AI Color" //It's "colour", though :( "color" sounds like some kinda ass-themed He-Man villain
+/mob/living/silicon/ai/proc/ai_change_emotion()
+	if (isdead(src))
+		boutput(usr, "You cannot change your emotional status because you are dead!")
+		return
+	var/mob/message_mob = src.get_message_mob()
+	var/list/available_emotions = src.custom_emotions || global.ai_emotions	//In case an AI uses the reward, use a local list instead
+	var/chosen_emotion = tgui_input_list(message_mob, "Select a status!", "AI Status", sortList(available_emotions, /proc/cmp_text_asc))
+	if(!(chosen_emotion in available_emotions)) //Ffff
+		return
+	src.faceEmotion = available_emotions[chosen_emotion]
+	src.update_appearance()
 
+/mob/living/silicon/ai/proc/ai_colorchange() //It's "colour", though :( "color" sounds like some kinda ass-themed He-Man villain
+	var/u_roll = list("color", "colour")
 	if(isdead(src))
-		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your colour, because you are dead!"))
+		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your [u_roll], because you are dead!"))
 		return
 
-	var/fColor = input("Pick color:","Color", faceColor) as null|color
+	var/fColour = input("Pick [u_roll]:","[u_roll]", faceColor) as null|color
 
-	set_color(fColor)
-
+	set_color(fColour)
 
 /mob/living/silicon/ai/proc/set_color(var/color)
 	DEBUG_MESSAGE("Setting colour on [src] to [color]")
@@ -2059,10 +2007,6 @@ or don't if it uses a custom topopen overlay
 	ai_minimap_ui.ui_interact(message_mob)
 
 /mob/living/silicon/ai/verb/rename_self()
-	set category = "AI Commands"
-	set name = "Change Designation"
-	set desc = "Change your name."
-
 	var/mob/message_mob = src.get_message_mob()
 	if (!message_mob.client || isdead(src))
 		return
@@ -2088,12 +2032,20 @@ or don't if it uses a custom topopen overlay
 
 // CALCULATIONS
 
-/mob/living/silicon/ai/proc/set_face(var/emotion)
+/mob/living/silicon/ai/proc/set_face(var/emotion, var/key, var/apply_glass_material = FALSE)
+	if(!emotion)
+		UpdateOverlays(null, key)
+		return
+	var/image/img_face = SafeGetOverlayImage(key, 'icons/mob/ai.dmi', emotion, src.layer+0.2)
+	img_face.appearance_flags = KEEP_APART | RESET_ALPHA | RESET_COLOR
+	if(src.material_face && apply_glass_material)
+		img_face.apply_material_appearance(src.material_face)
+	AddOverlays(img_face, key)
 	return
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 	if (!C)
-		src.set_eye(null)
+		SEND_SIGNAL(src, COMSIG_MOB_CANCEL_CAMERA)
 		return 0
 	if (isdead(src) || !(C.network in src.camera_networks) || get_z(C) != Z_LEVEL_STATION)
 		return 0
@@ -2110,7 +2062,6 @@ or don't if it uses a custom topopen overlay
 	if (!src.deployed_to_eyecam)
 		src.eye_view()
 	src.eyecam.set_loc(get_turf(C))
-	src.eyecam.update_statics()
 	//src:current = C
 	//src.set_eye(C)
 	return 1
@@ -2229,40 +2180,50 @@ or don't if it uses a custom topopen overlay
 		if (src.cell && src.cell.charge < 100)
 			src.icon_state = coreSkin // I think just removing all icon_state updates should be fine but ai code is so
 		else // convoluted that I'm terrified of breaking some super specific thing by doing that
-			AddOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_bsod"), "temp_face")
+			src.set_face("ai_bsod", "temp_face")
 
 
 	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("unconscious"))
 		clearFaceOverlays(1)
-		AddOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_stun-screen"), "temp_face")
-
+		src.set_face("ai_stun-screen", "temp_face")
 	else
+		src.set_face(null, "temp_face") // we wanna get rid of the temporary BSOD/stun face overlays
 		src.icon_state = coreSkin
-		UpdateOverlays(null, "temp_face") // we wanna get rid of the temporary BSOD/stun face overlays
 
-		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai_white", src.layer)
+		var/image/I
+		if(src.material_face?.getTexture())
+			// The default screen has a normal screen appearance to it. We want the screen to look like the material texture instead.
+			I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai_white_clear", src.layer)
+			var/icon/icon_tex = GetTexturedIcon(I.icon, src.material_face.getTexture())
+			if(!isnull(icon_tex))
+				var/icon/icon_blend = icon(I.icon)
+				icon_blend.Blend(icon_tex, ICON_OVERLAY)
+				I.icon = icon_blend
+		else
+			I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai_white", src.layer)
+		I.appearance_flags = KEEP_APART | RESET_ALPHA | RESET_COLOR
 		I.color = faceColor
 		UpdateOverlays(I, "faceplate")
 
 		if (faceEmotion != "ai_tetris")
-			AddOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai_face-glow", src.layer+0.1), "face_glow")
+			src.set_face("ai_face-glow", "face_glow")
 		else
 			UpdateOverlays(null, "face_glow")
 
-		AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
+		src.set_face(faceEmotion, "actual_face", TRUE)
 
 		if (src.power_mode == 1) // e.g get_image("batterymode-dwaine") which is the icon_state we want if coreSkin is "dwaine"
-			src.AddOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_bat-[coreSkin]"), "power-status")
+			src.set_face("lights_bat-[coreSkin]", "power-status", TRUE)
 		else
-			src.AddOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_apc-[coreSkin]"), "power-status")
+			src.set_face("lights_apc-[coreSkin]", "power-status", TRUE)
 
 		if (src.moustache_mode == 1)
-			src.AddOverlays(SafeGetOverlayImage("moustache", 'icons/mob/ai.dmi', "moustache", src.layer+0.3), "moustache")
+			src.set_face("moustache", "moustache")
 		else
 			src.UpdateOverlays(null, "moustache")
 
 // ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
-	if (src.dismantle_stage > 1)
+	if (src.dismantle_stage >= SILICON::AI::DISMANTLE_STAGE::COVER_OPEN)
 		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock"|| coreSkin == "pumpkin")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
 		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
@@ -2369,32 +2330,25 @@ or don't if it uses a custom topopen overlay
 	src.open_nearest_door_silicon()
 	return
 
-//just use this proc to make click-track checking easier (I would use this in the below proc that builds a list, but i think the proc call overhead is not worth it)
+//just use this proc to make click-track checking easier
 proc/is_mob_trackable_by_AI(var/mob/M)
-	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
-		return 0
-	if (istype(M, /mob/new_player))
-		return 0
-	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
-		return 0
-	if(M.z != 1 && M.z != usr.z)
-		return 0
-	if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
-		return 0
-	if(M.invisibility) //cloaked
-		return 0
+	if(get_z(M) != Z_LEVEL_STATION)
+		return FALSE
 	if (M == usr)
-		return 0
-
-	var/good_camera = 0 //Can't track a person out of range of a functioning camera
-	for(var/obj/machinery/camera/C in range(M))
-		if ( C?.camera_status )
-			good_camera = 1
-			break
-	if(!good_camera)
-		return 0
-
-	return 1
+		return FALSE
+	if (istype(M, /mob/new_player))
+		return FALSE
+	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
+		return FALSE
+	if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
+		return FALSE
+	if(M.invisibility) //cloaked
+		return FALSE
+	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
+		return FALSE
+	if(!seen_by_camera(M))
+		return FALSE
+	return TRUE
 
 proc/get_mobs_trackable_by_AI()
 	. = list()
@@ -2402,24 +2356,8 @@ proc/get_mobs_trackable_by_AI()
 	var/list/namecounts = list()
 	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
-	for (var/mob/M in mobs)
-		if (istype(M, /mob/new_player))
-			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
-		if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
-			continue
-		if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
-			continue
-		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
-			continue
-		if(M.z != 1 && M.z != usr.z)
-			continue
-		if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
-			continue
-		if(M.invisibility) //cloaked
-			continue
-		if (M == usr)
-			continue
-		if(!seen_by_camera(M))
+	for (var/mob/living/M in mobs)
+		if(!is_mob_trackable_by_AI(M))
 			continue
 
 		var/name = M.name
@@ -2501,6 +2439,10 @@ proc/get_mobs_trackable_by_AI()
 		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
+	if(check_for_radio_jammers(src))
+		src.show_text("Your mainframe's communications array is currently being jammed!", "red")
+		return
+
 	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_COMMAND)
 
 	last_announcement = world.time
@@ -2573,6 +2515,7 @@ proc/get_mobs_trackable_by_AI()
 	if (src.mind)
 		src.mind.register_death()
 		src.mind.get_player()?.dnr = TRUE
+	respawn_controller.subscribeNewRespawnee(src.ckey)
 	var/mob/dead/observer/ghost = src.ghostize()
 	ghost.corpse = null //no coming back
 
@@ -2589,6 +2532,23 @@ proc/get_mobs_trackable_by_AI()
 	src.name = "AI"
 	src.UpdateName()
 
+///Returns a list of all camera coverage emitters currently in use by this AI (eye + viewports)
+/mob/living/silicon/ai/proc/currently_using_cameras()
+	var/list/emitters = list()
+	//if we're logged in *somewhere* then viewports count
+	if (src.client || src.eyecam.client || src.deployed_shell?.client)
+		for (var/turf/T as anything in src.eyecam.get_viewport_turfs())
+			for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
+				emitters |= emitter
+	if (src.eyecam.client)
+		for (var/turf/T in view(src.eyecam.client.view, get_turf(src.eyecam)))
+			for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
+				emitters |= emitter
+	return emitters
+
+/mob/living/silicon/ai/on_close_viewport(datum/viewport/vp)
+	src.eyecam?.on_close_viewport(vp)
+
 /*-----Core-Creation---------------------------------------*/
 
 /obj/ai_core_frame
@@ -2596,6 +2556,7 @@ proc/get_mobs_trackable_by_AI()
 	desc = "A frame for an AI core."
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "frame"
+	default_material = "steel"
 	var/build_step = 0
 	var/obj/item/cell/cell = null
 	var/has_radios = 0
@@ -2604,6 +2565,7 @@ proc/get_mobs_trackable_by_AI()
 	var/image/image_coverlay = null
 	var/image/image_working = null
 	var/skinToApply = "default" // set this in a map editor or something to properly change the skin!
+	var/datum/material/material_face = null
 
 // Overlay layering, from topmost layer to bottommost (radio, cell, and interface are the same layer)
 	var/image/image_glass_overlay = null
@@ -2618,6 +2580,7 @@ proc/get_mobs_trackable_by_AI()
 	New()
 		. = ..()
 		image_glass_overlay = image(icon, "frame_glass", OBJ_LAYER+0.6)
+		image_glass_overlay.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
 		image_wire_overlay = image(icon, "frame_wires", OBJ_LAYER+0.5)
 		image_top_overlay = image(icon, "frame_top", OBJ_LAYER+0.4)
 		// +0.3 is reserved for the core overlay; we can't define it here since we dunno what kind of core might be made!
@@ -2640,23 +2603,33 @@ proc/get_mobs_trackable_by_AI()
 		if(Obj == src.cell)
 			src.cell = null
 
+/obj/ai_core_frame/setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+	if(mat1.getID() == "mauxite" && src.skinToApply == "default")
+		src.skinToApply = "mauxite"
+		src.UpdateOverlays(image(src.icon, src.skinToApply, OBJ_LAYER+0.3), "core")
+	if(src.skinToApply == "mauxite")
+		src.default_material = "mauxite"
+	. = ..()
+
+
 /obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (W.material.getMaterialFlags() & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)
 				var/obj/item/sheet/M = W
-				if (M.change_stack_amount(-3))
+				var/plating_cost = 10 // Number of sheets needed to plate the AI core
+				if (M.amount >= plating_cost)
 					src.build_step++
-					if (istype(W, /obj/item/sheet/mauxite))
-						skinToApply = "mauxite"
+					src.setMaterial(W.material)
 					boutput(user, "You add plating to [src]!")
 					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 					src.UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
 					src.UpdateOverlays(src.image_background_overlay, "background")
 					src.UpdateOverlays(src.image_top_overlay, "top")
+					M.change_stack_amount(-plating_cost)
 					return
 				else
-					boutput(user, "You need at least three metal sheets to add plating to [src].")
+					boutput(user, "You need at least [get_english_num(plating_cost)] metal sheets to add plating to [src].")
 					return
 			else
 				boutput(user, "\The [src] already has plating!")
@@ -2666,12 +2639,16 @@ proc/get_mobs_trackable_by_AI()
 			if (src.build_step >= 2)
 				if (!src.has_glass)
 					var/obj/item/sheet/G = W
-					if (G.change_stack_amount(-1))
+					if (G.amount >= 1)
 						src.build_step++
+						if(G.material.getID() != "glass")
+							src.material_face = G.material
+							src.image_glass_overlay.apply_material_appearance(src.material_face)
 						boutput(user, "You add glass to [src]!")
 						playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 						src.has_glass = 1
 						src.UpdateOverlays(src.image_glass_overlay, "glass")
+						G.change_stack_amount(-1)
 						return
 					else
 						boutput(user, "You need at least one glass sheet to add plating! How are you even seeing this message?! How do you have a glass sheet that has no glass sheets in it?!?!")
@@ -2732,6 +2709,7 @@ proc/get_mobs_trackable_by_AI()
 		if (src.build_step >= 2)
 			if (src.has_radios < 3)
 				src.build_step++
+				W.forensic_holder.copy_to(src.forensic_holder)
 				boutput(user, "You add \the [W] to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_radios++
@@ -2750,6 +2728,7 @@ proc/get_mobs_trackable_by_AI()
 		if (src.build_step >= 2)
 			if (!src.has_interface)
 				src.build_step++
+				W.forensic_holder.copy_to(src.forensic_holder)
 				boutput(user, "You add \the [W] to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_interface = 1
@@ -2768,13 +2747,16 @@ proc/get_mobs_trackable_by_AI()
 			src.build_step++
 			boutput(user, "You activate the AI core!  Beep bop!")
 			var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(get_turf(src), TRUE, skinToApply) // second parameter causes the core to spawn without a brain
+			A.forensic_holder = src.forensic_holder
+			A.material_face = src.material_face
+			A.setMaterial(src.material, src.material_applied_appearance)
 			if (A.cell && src.cell)
 				qdel(A.cell)
 				A.cell = src.cell
 				src.cell.set_loc(A)
 				src.cell = null
 			A.anchored = UNANCHORED
-			A.dismantle_stage = 4
+			A.dismantle_stage = SILICON::AI::DISMANTLE_STAGE::BRAINLESS
 			A.update_appearance()
 			qdel(src)
 			return
@@ -2868,3 +2850,82 @@ proc/get_mobs_trackable_by_AI()
 			src.ai.brain.take_damage(20, 20)
 			src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
 			src.ai.eject_brain()
+
+/datum/statusEffect/ai_intercom_override
+	id = "ai_intercom_override"
+	visible = FALSE
+	/// How far the owner can be from the intercom before the effect is removed.
+	var/max_distance_from_intercom = 5
+	/// Intercom presently being overriden
+	var/obj/item/device/radio/intercom/intercom
+	var/intercom_original_frequency
+	var/intercom_original_microphone
+	var/intercom_original_speaker
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	onAdd(var/obj/item/device/radio/intercom/intercom)
+		. = ..()
+		if(!istype(intercom))
+			src.remove_self()
+			return
+		if(GET_DIST(src.owner, intercom) > src.max_distance_from_intercom)
+			boutput(src.owner, SPAN_ALERT("You are too far away from that intercom!"))
+			src.remove_self()
+			return
+		src.intercom = intercom
+		src.intercom_original_frequency = src.intercom.frequency
+		src.intercom_original_microphone = src.intercom.microphone_enabled
+		src.intercom_original_speaker = src.intercom.speaker_enabled
+		RegisterSignal(src.owner, COMSIG_MOB_DEATH, PROC_REF(remove_self))
+		src.start_intercom_override()
+
+	proc/start_intercom_override()
+		if(QDELETED(src.intercom))
+			return
+		src.intercom.locked_frequency = TRUE // lockdown; saves us from clickspam
+		var/mob/living/silicon/ai/mainframe = src.owner
+		if(isAIeye(src.owner))
+			var/mob/living/intangible/aieye/eye = src.owner
+			mainframe = eye.mainframe
+		src.intercom.set_frequency(mainframe.radio2.frequency)
+		src.intercom.toggle_microphone(TRUE)
+		src.intercom.toggle_speaker(TRUE)
+
+		var/message_params = list(
+			"say_sound" = 'sound/misc/talk/bottalk_3.ogg',
+			"maptext_css_values" = list("color" = "#CC3FCC"),
+			"relay_flags" = SAY_RELAY_RADIO,
+		)
+		src.intercom.say("AI override engaged!", message_params = message_params)
+		src.intercom.show_speech_bubble(image('icons/mob/mob.dmi', "ai"))
+
+		if(src.intercom.icon_state != "intercom")
+			return
+		var/image/screen_image = image(src.intercom.icon, "intercom-screen_override")
+		src.intercom.UpdateOverlays(screen_image, "screen_override")
+
+
+	proc/stop_intercom_override()
+		if(QDELETED(src.intercom))
+			return
+		src.intercom.locked_frequency = FALSE // safe as long as we can't control locked frequencies in the first place
+		src.intercom.set_frequency(src.intercom_original_frequency)
+		src.intercom.toggle_microphone(src.intercom_original_microphone)
+		src.intercom.toggle_speaker(src.intercom_original_speaker)
+		src.intercom.UpdateOverlays(null, "screen_override")
+
+	onUpdate(timePassed)
+		if(QDELETED(src.intercom))
+			return
+		if(GET_DIST(src.owner, src.intercom) > src.max_distance_from_intercom)
+			boutput(src.owner, SPAN_ALERT("Intercom override range exceeded!"))
+			src.remove_self()
+
+	onRemove()
+		src.stop_intercom_override()
+		src.intercom = null
+		. = ..()

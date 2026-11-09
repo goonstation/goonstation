@@ -590,7 +590,6 @@ TYPEINFO(/obj/machinery/door_control)
 		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				M.req_access = null
-				M.req_access_txt = null
 
 	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
@@ -666,6 +665,9 @@ TYPEINFO(/obj/machinery/door_control)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
+	if(issilicon(user) || isrobocritter(user)) //syndie borgs/gunbots have door access when post is online, but cannot use the scanner
+		src.say("No biometric profile detected.")
+		return
 	if (istrainedsyndie(user))
 		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
 		var/first_unlock_text
@@ -1184,14 +1186,18 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 		if(id)
-			pass = "[id]-[rand(1,50)]"
-			name = "Access Code: [pass]"
+			src.id_setup()
+
 		light = new /datum/light/point //They were kinda dark okay
 		light.attach(src)
 		light.set_brightness(0.6)
 		light.set_height(1.25)
 		light.set_color(0.9, 0.5, 0.5)
 		light.enable()
+
+	proc/id_setup()
+		src.pass = "[src.id]_[rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)]"
+		src.name = "Access Code: [src.pass]"
 
 	Click(var/location,var/control,var/params)
 		if(GET_DIST(usr, src) > 16)

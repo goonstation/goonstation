@@ -13,10 +13,13 @@ import { AnnouncementCompData } from './type';
 
 export const AnnouncementComputer = (_props: unknown) => {
   const { data } = useBackend<AnnouncementCompData>();
-  const { announces_arrivals, theme } = data;
+  const { announces_arrivals, can_change_anonymous, theme } = data;
+  let height = 215;
+  if (announces_arrivals) height += 110;
+  if (can_change_anonymous) height += 20;
 
   return (
-    <Window theme={theme} width={400} height={announces_arrivals ? 326 : 215}>
+    <Window theme={theme} width={400} height={height}>
       <Window.Content textAlign="center">
         <ManualAnnouncement />
         {!!announces_arrivals && <AutomaticAnnouncement />}

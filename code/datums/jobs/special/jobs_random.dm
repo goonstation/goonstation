@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Random"
 	job_category = JOB_RANDOM
 	request_limit = 2
-	request_cost = PAY_IMPORTANT*4
+	request_cost = PAY::IMPORTANT*4
 	email_group = MGD_CIVILIAN
 
 	New()
@@ -14,8 +14,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/radioshowhost
 	name = "Radio Show Host"
-	wages = PAY_TRADESMAN
-	request_cost = PAY_DOCTORATE * 4
+	wages = PAY::TRADESMAN
+	request_cost = PAY::DOCTORATE * 4
 	access_string = "Radio Show Host"
 #ifdef MAP_OVERRIDE_OSHAN
 	special_spawn_location = null
@@ -44,8 +44,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/souschef
 	name = "Sous-Chef"
-	request_cost = PAY_DOCTORATE * 4
-	wages = PAY_UNTRAINED
+	request_cost = PAY::DOCTORATE * 4
+	wages = PAY::UNTRAINED
 	trait_list = list("training_chef")
 	access_string = "Sous-Chef"
 	requires_supervisor_job = "Chef"
@@ -54,13 +54,13 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_foot = list(/obj/item/clothing/shoes/chef)
 	slot_head = list(/obj/item/clothing/head/souschefhat)
 	slot_suit = list(/obj/item/clothing/suit/apron)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/catering)
 	wiki_link = "https://wiki.ss13.co/Chef"
 	email_group = MGD_CIVILIAN
 
 /datum/job/special/random/hall_monitor
 	name = "Hall Monitor"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Hall Monitor"
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	badge = /obj/item/clothing/suit/security_badge/paper
@@ -71,11 +71,11 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_head = list(/obj/item/clothing/head/basecap/red)
 	slot_poc1 = list(/obj/item/pen/pencil)
 	slot_poc2 = list(/obj/item/device/radio/hall_monitor)
-	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust)
+	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust,/obj/item/reagent_containers/applicator/stick/glue)
 
 /datum/job/special/random/hollywood
 	name = "Hollywood Actor"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/suit/purple)
 	special_spawn_location = LANDMARK_ACTOR_SPAWN
@@ -83,7 +83,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/medical_specialist
 	name = "Medical Specialist"
 	ui_colour = /datum/job/medical::ui_colour
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_medical", "training_partysurgeon")
 	access_string = "Medical Specialist"
 	slot_card = /obj/item/card/id/medical
@@ -121,10 +121,10 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/vip
 	name = "VIP"
-	wages = PAY_EXECUTIVE
+	wages = PAY::EXECUTIVE
 	access_string = "VIP"
 	ui_colour = TGUI_COLOUR_RED
-	request_cost = PAY_EMBEZZLED * 4 // they're on the take
+	request_cost = PAY::EMBEZZLED * 4 // they're on the take
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
@@ -146,24 +146,24 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/inspector
 	name = "Inspector"
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	ui_colour = /datum/job/special/nt::ui_colour
-	request_cost = PAY_EXECUTIVE * 4
+	request_cost = PAY::EXECUTIVE * 4
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nanotrasen
-	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/ntofficial)
-	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
-	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_belt = list(/obj/item/device/pda2/nt)
+	slot_jump = list(/obj/item/clothing/under/misc/lawyer/inspector) // weird path, but it's so they can still slam tables
+	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/command/inspector)
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_suit = list(/obj/item/clothing/suit/armor/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_lhan = list(/obj/item/storage/briefcase)
-	slot_rhan = list(/obj/item/device/ticket_writer)
+	slot_lhan = list(/obj/item/storage/briefcase/nanotrasen)
+	slot_poc1 = list(/obj/item/device/ticket_writer/nanotrasen)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Inspector"
 	email_group = MGD_COMMAND
@@ -176,9 +176,10 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (!M)
 			return
 
-		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
+		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase/nanotrasen)
 		if (B && istype(B))
 			B.storage.add_contents(new /obj/item/instrument/whistle(B))
+			B.storage.add_contents(new /obj/item/stamp/inspector(B))
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
@@ -186,7 +187,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/diplomat
 	name = "Diplomat"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Diplomat"
 	request_limit = 0 // you don't request them, they come to you
 	slot_lhan = list(/obj/item/storage/briefcase)
@@ -195,6 +196,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	alt_names = list("Diplomat", "Ambassador")
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	change_name_on_spawn = TRUE
+	wiki_link = "https://wiki.ss13.co/Diplomat"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -206,7 +208,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
 									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
 									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
-									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/frog/abzunian::name = /datum/mutantrace/frog/abzunian,
 									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
 									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 
@@ -222,7 +224,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/testsubject
 	name = "Test Subject"
-	wages = PAY_DUMBCLOWN
+	wages = PAY::DUMBCLOWN
 	slot_jump = list(/obj/item/clothing/under/shorts)
 	slot_mask = list(/obj/item/clothing/mask/monkey_translator)
 	change_name_on_spawn = TRUE
@@ -232,7 +234,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/union
 	name = "Union Rep"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -248,11 +250,13 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (B && istype(B))
 			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
+		M.traitHolder?.addTrait("unionized")
+
 		return
 
 /datum/job/special/random/salesman
 	name = "Salesman"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	slot_suit = list(/obj/item/clothing/suit/merchant)
 	slot_jump = list(/obj/item/clothing/under/gimmick/merchant)
 	slot_head = list(/obj/item/clothing/head/merchant_hat)
@@ -268,7 +272,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 			return
 
 		if(prob(33))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
+			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/frog/abzunian)
 			M.set_mutantrace(morph)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
@@ -280,7 +284,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/coach
 	name = "Coach"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	slot_jump = list(/obj/item/clothing/under/jersey)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest/macho)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
@@ -292,7 +296,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/journalist
 	name = "Journalist"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	slot_jump = list(/obj/item/clothing/under/suit/red)
 	slot_head = list(/obj/item/clothing/head/fedora)
 	slot_lhan = list(/obj/item/storage/briefcase)
@@ -318,7 +322,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/beekeeper
 	name = "Apiculturist"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Apiculturist"
 	slot_jump = list(/obj/item/clothing/under/rank/beekeeper)
 	slot_suit = list(/obj/item/clothing/suit/hazard/beekeeper)
@@ -329,7 +333,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_belt = list(/obj/item/device/pda2/botanist)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	items_in_backpack = list(/obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/reagent_containers/food/snacks/beefood, /obj/item/reagent_containers/food/snacks/beefood)
 	alt_names = list("Apiculturist", "Apiarist")
 	email_group = MGD_CIVILIAN
@@ -353,13 +357,13 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/angler
 	name = "Angler"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Rancher"
 	slot_jump = list(/obj/item/clothing/under/rank/angler)
 	slot_head = list(/obj/item/clothing/head/black)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes/waders)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	items_in_backpack = list(/obj/item/fishing_rod/basic)
 	email_group = MGD_CIVILIAN
 
@@ -367,7 +371,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/psychiatrist
 	name = "Psychiatrist"
 	ui_colour = /datum/job/medical::ui_colour
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	request_limit = 1 // limited workspace
 	trait_list = list("training_therapy")
 	access_string = "Psychiatrist"
@@ -386,7 +390,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/artist
 	name = "Artist"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/misc/casualjeansblue)
 	slot_head = list(/obj/item/clothing/head/mime_beret)
@@ -394,12 +398,12 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_poc1 = list(/obj/item/currency/spacecash/twenty)
 	slot_poc2 = list(/obj/item/pen/pencil)
 	slot_lhan = list(/obj/item/storage/toolbox/artistic)
-	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
+	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random,/obj/item/reagent_containers/applicator/stick/glue)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/foodcritic
 	name = "Food Critic"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/shirt_pants_br)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
@@ -410,7 +414,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/pestcontrol
 	name = "Pest Control Specialist"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/gimmick/safari)
 	slot_head = list(/obj/item/clothing/head/safari)
@@ -427,7 +431,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	#else
 	name = "Pod Mechanic"
 	#endif
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_engineer")
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
@@ -443,7 +447,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/phonemerchant
 	name = "Phone Merchant"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/gimmick/merchant)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
@@ -456,7 +460,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 #ifndef RP_MODE
 /datum/job/special/random/influencer
 	name = "Influencer"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	change_name_on_spawn = TRUE
 	slot_foot = list(/obj/item/clothing/shoes/dress_shoes)
 	slot_jump = list(/obj/item/clothing/under/misc/casualjeanspurp)
@@ -472,7 +476,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/computeroperator
 	name = "Computer Operator"
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	access_string = "Computer Operator"
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/misc/casualjeanswb = 1, \
@@ -480,10 +484,33 @@ ABSTRACT_TYPE(/datum/job/special/random)
 					/obj/item/clothing/under/misc/casualjeansblue = 1, \
 					/obj/item/clothing/under/misc/casualjeanskhaki = 1)
 	slot_suit = list(/obj/item/clothing/suit/hoodie/random)
-	slot_belt = list(/obj/item/device/pda2/computeroperator)
+	slot_belt = list(/obj/item/storage/belt/utility/it)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_eyes = list(/obj/item/clothing/glasses/packetvision)
-	items_in_backpack = list(/obj/item/luggable_computer/techpersonal)
+	slot_poc1 = list(/obj/item/paper/packets)
+	slot_poc2 = list(/obj/item/device/pda2/computeroperator)
+	items_in_backpack = list(/obj/item/luggable_computer/techpersonal,
+							/obj/item/storage/box/diskbox/programs,
+							/obj/item/cable_coil)
 	alt_names = list("Cybersecurity Expert", \
 					"IT Specialist", \
 					"Network Technician")
+
+/datum/job/special/random/atmospheric_technician
+	name = "Atmospheric Technician"
+	ui_colour = /datum/job/engineering::ui_colour
+	slot_card = /datum/job/engineering::slot_card
+	wages = PAY::TRADESMAN
+	access_string = "Atmospheric Technician"
+	slot_back = list(/obj/item/storage/backpack/engineering)
+	slot_belt = list(/obj/item/storage/belt/utility/atmos)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/atmos/starts_off)
+	slot_jump = list(/obj/item/clothing/under/misc/atmospheric_technician)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_poc1 = list(/obj/item/device/pda2/atmos)
+	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	items_in_backpack = list(/obj/item/clothing/mask/gas/emergency, /obj/item/rcd_ammo/big)
+	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
+	email_group = MGD_ENGINEER
+	alt_names = list("Atmospheric Technician", "Atmospherish Technician")

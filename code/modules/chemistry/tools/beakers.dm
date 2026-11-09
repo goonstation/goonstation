@@ -183,6 +183,10 @@
 	initial_volume = 500
 	shatter_immune = TRUE
 
+// ORGONEIC CHAMISTREY FOR MUSTY JEANS
+/obj/item/reagent_containers/glass/beaker/extractor_tank/thick
+	initial_volume = 1000
+
 /* ================================================= */
 /* -------------------- Flasks -------------------- */
 /* ================================================= */

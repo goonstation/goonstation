@@ -87,16 +87,22 @@
 				src.name = "triage tag - unrevivable"
 				src.desc = "Patient is deceased and cannot be cloned."
 				src.icon_state = "unrevivable"
+			if (TRIAGE_CLONED)
+				src.name = "triage tag - cloned"
+				src.desc = "Patient is deceased, but has been cloned and can safely be disposed of."
+				src.icon_state = "cloned"
 		src.tooltip_rebuild = TRUE
 
 /obj/item/triage_tagger
 	name = "triage tag box"
+	desc = "Ostensibly used to sort patients by treatment priority for quick and efficient processing. The tragedy of Sisyphus."
 	flags = SUPPRESSATTACK
 	icon = 'icons/obj/items/triage.dmi'
 	icon_state = "box_minor"
 	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 0
+	HELP_MESSAGE_OVERRIDE("Click on someone with the box to apply a tag to them; use in-hand to change the type of tag that will be used. The box has infinite tags and will never run out.")
 
 	contextLayout = new /datum/contextLayout/experimentalcircle
 
@@ -109,45 +115,47 @@
 		for(var/actionType in childrentypesof(/datum/contextAction/triage_tag))
 			src.contexts += new actionType()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
-	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
+	afterattack(atom/A, mob/user, reach, params)
 		var/obj/item/sticker/postit/triage/tag
 		if (istype(A, /obj/item/sticker/postit/triage))
 			tag = A
-		else if (!istype(A, /mob))
+		else if (!ismob(A))
 			return
-		else
-			var/mob/M = A
-			for (var/obj/item/sticker/postit/triage/content in M.vis_contents)
-				tag = content
-				break
-			if (!tag)
-				tag = new /obj/item/sticker/postit/triage()
-				tag.afterattack(A, user, reach, params)
+		var/mob/M = A
+		for (var/obj/item/sticker/postit/triage/content in M.vis_contents)
+			tag = content
+			break
+		if (!tag)
+			tag = new /obj/item/sticker/postit/triage()
+			tag.afterattack(A, user, reach, params)
 		tag.set_level(src.triage_level)
 		return TRUE
 
+	examine()
+		. = ..()
+		if (src.triage_level == TRIAGE_REMOVE)
+			. += "It is set to remove existing triage tags."
+			return
+		var/tag_info = "unknown"
+		switch (src.triage_level)
+			if (TRIAGE_MINOR)
+				tag_info = "minor injuries"
+			if (TRIAGE_DELAYED)
+				tag_info = "non-life-threatening injuries"
+			if (TRIAGE_IMMEDIATE)
+				tag_info = "life-threatening injuries"
+			if (TRIAGE_DECEASED)
+				tag_info = "that the patient is deceased or is expected to die even with medical assistance"
+			if (TRIAGE_UNREVIVABLE)
+				tag_info = "that the patient is deceased and cannot be cloned"
+			if (TRIAGE_CLONED)
+				tag_info = "that the patient is deceased, but has been cloned and can safely be disposed of"
+		. += "It is set to dispense \"[capitalize(src.triage_level)]\" tags, indicating [tag_info]."
+
 	proc/set_level(level)
 		src.triage_level = level
-		switch(level)
-			if (TRIAGE_REMOVE)
-				src.desc = "Removing triage tags."
-				src.icon_state = "box_remove"
-			if (TRIAGE_MINOR)
-				src.desc = "Patient has minor injuries."
-				src.icon_state = "box_minor"
-			if (TRIAGE_DELAYED)
-				src.desc = "Patient has non-life-threatening injuries."
-				src.icon_state = "box_delayed"
-			if (TRIAGE_IMMEDIATE)
-				src.desc = "Patient has life-threatening injuries."
-				src.icon_state = "box_immediate"
-			if (TRIAGE_DECEASED)
-				src.desc = "Patient is deceased or is expected to die even with medical assistance."
-				src.icon_state = "box_deceased"
-			if (TRIAGE_UNREVIVABLE)
-				src.desc = "Patient is deceased and cannot be cloned."
-				src.icon_state = "box_unrevivable"
+		src.icon_state = "box_[level]"
 		src.tooltip_rebuild = TRUE

@@ -441,6 +441,12 @@
 					return
 				if (donor.mob_flags & SHOULD_HAVE_A_TAIL) // Only become clumsy if you should have a tail and are not a shapeshifting alien
 					donor.bioHolder?.AddEffect("clumsy", 0, 0, 0, 1)
+			if ("heart")
+				if (!isvampire(src.donor))
+					src.donor.bleeding = 0
+					src.donor.bleeding_internal = 0
+					if (prob(50))
+						src.donor.organHolder?.damage_organs(tox=1 * mult, organs=src.donor.organHolder?.organ_list)
 			//Missing lungs is handled in it's own proc right now. I'll probably move it here eventually, but that's how I did it originally before I thought of a thing for handling missing organs in the organholder and I'm not rewriting such a tedious thing now.
 
 
@@ -542,11 +548,6 @@
 				src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN(2 SECONDS)
-				if (src.brain && src.donor)
-					src.brain.name = "[src.donor.real_name]’s [initial(src.brain.name)]"
-					if (src.donor.mind)
-						src.brain.setOwner(src.donor.mind)
 
 		if (!src.left_eye)
 			if (prob(2) || all_synth)
@@ -556,6 +557,10 @@
 			if (src.head)
 				src.head.left_eye = left_eye
 			organ_list["left_eye"] = left_eye
+			SPAWN(2 SECONDS)
+				if (src.left_eye && src.donor)
+					src.left_eye.name = "[src.donor.real_name]’s [initial(src.left_eye.name)]"
+
 		if (!src.right_eye)
 			if (prob(2) || all_synth)
 				src.right_eye = new /obj/item/organ/eye/synth(src.donor, src)
@@ -564,6 +569,9 @@
 			if (src.head)
 				src.head.right_eye = right_eye
 			organ_list["right_eye"] = right_eye
+			SPAWN(2 SECONDS)
+				if (src.right_eye && src.donor)
+					src.right_eye.name = "[src.donor.real_name]’s [initial(src.right_eye.name)]"
 
 		if (!src.chest)
 			src.chest = new /obj/item/organ/chest(src.donor, src)
@@ -1162,7 +1170,7 @@
 				src.brain = newBrain
 				src.head.brain = newBrain
 
-				// if the head has an skeleton, and we're not taking it, eject the skeleton out of the head
+				// if the head has a skeleton, and we're not taking it, eject the skeleton out of the head
 				if (src.head.head_type == HEAD_SKELETON)
 					var/mob/living/carbon/human/H = src.head.linked_human
 					if (H && (!isskeleton(src.donor) && H != src.donor))
@@ -1501,6 +1509,32 @@
 			var/obj/item/organ/O = src.organ_list[organ_slot]
 			if(istype(O))
 				O.unbreakme()
+
+	/// Get TGUI ui_data for all organs
+	proc/ui_organs_data()
+		var/list/organ_data = list()
+		if (isvampire(src.donor))
+			return organ_data
+
+		var/list/organs_to_check = list("heart", "left_eye", "right_eye", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+		if(src.tail || src.donor.mob_flags & SHOULD_HAVE_A_TAIL)
+			organs_to_check += "tail"
+
+		for (var/organ_name in organs_to_check)
+			var/obj/item/organ/O = src.get_organ(organ_name)
+			var/list/this_organ_data = list(list(
+				"organ" = organ_name,
+			))
+			if (!istype(O))
+				this_organ_data += list(list(
+					"special" = "missing",
+				))
+			else
+				this_organ_data += list(O.ui_organ_data())
+			organ_data += list(this_organ_data)
+
+		return organ_data
+
 
 /*=================================*/
 /*---------- Human Procs ----------*/

@@ -393,14 +393,14 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 		var/obj/item/parts/l_leg = src.owner.limbs.l_leg
 		var/obj/item/parts/r_leg = src.owner.limbs.r_leg
 		// this sucks
-		l_leg.sever()
+		l_leg.sever(null, FALSE)
 		l_leg.set_loc(src.owner)
 		var/obj/item/parts/human_parts/arm/left/item/l_item_arm = new(src.owner, l_leg)
 		l_leg.cant_drop = TRUE
 		src.owner.limbs.l_arm = l_item_arm
 		l_item_arm.holder = src.owner
 
-		r_leg.sever()
+		r_leg.sever(null, FALSE)
 		r_leg.set_loc(src.owner)
 		var/obj/item/parts/human_parts/arm/right/item/r_item_arm = new(src.owner, r_leg)
 		r_leg.cant_drop = TRUE
@@ -513,7 +513,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	var/datum/cloner_defect_holder/defect_holder = H.cloner_defects
 	if(!length(defect_holder.active_cloner_defects))
 		medrec["cl_def"] = "None"
-		medrec["cl_def_d"] = MEDREC_CLONE_DEFECT_DEFAULT
+		medrec["cl_def_d"] = "No cloner defects have been recorded."
 		return
 
 	var/list/defect_names = list()

@@ -21,7 +21,7 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
-	material_amt = 0.3
+	material_amt = MATERIAL::AMOUNT::SHEET * 3
 	uses_default_material_appearance = FALSE
 	uses_default_material_name = FALSE
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
@@ -125,9 +125,6 @@
 
 		..()
 
-	add_fingerprint(mob/living/M as mob, hidden_only = TRUE)
-		. = ..()
-
 	New(loc, datum/organHolder/nholder)
 		..()
 		if (istype(nholder) && nholder.donor)
@@ -140,10 +137,8 @@
 				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
 				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]’s [initial(src.name)]"
 			else if (src.donor.name)
 				src.donor_name = src.donor.name
-				src.name = "[src.donor_name]’s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 			src.blood_DNA = src.donor_DNA
 			src.blood_type = src.donor.bioHolder?.bloodType
@@ -234,10 +229,10 @@
 			var/image/I = H.prodoc_icons["robotic_organs"]
 			I.icon_state = "organs-cyber"
 
-		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP
+		// Cure the organ failure disease if this organ is healthy enough not to cause it
 		if (src.donor)
-			if (!src.broken  && failure_disease)
-				src.donor.cure_disease(failure_disease)
+			if (!src.broken && failure_disease && src.get_damage() < src.fail_damage)
+				src.donor.cure_disease_by_path(failure_disease)
 
 		if (!broken && islist(src.organ_abilities) && length(src.organ_abilities))
 			var/datum/abilityHolder/organ/A = M.get_ability_holder(/datum/abilityHolder/organ)
@@ -256,7 +251,7 @@
 		//all robotic organs have a stamina buff we must remove
 		if (src.donor)
 			if (failure_disease)
-				src.donor.cure_disease(failure_disease)
+				src.donor.cure_disease_by_path(failure_disease)
 
 			if (src.robotic)
 				src.donor.robotic_organs--
@@ -493,3 +488,17 @@
 
 			.+= length(surgery_contexts)
 
+	/// Get TGUI ui_data list for this organ's health
+	proc/ui_organ_data()
+		var/special = ""
+		if (src.robotic)
+			special = "Cybernetic"
+		if (src.synthetic)
+			special = "Synthetic"
+		if (src.unusual)
+			special = "Unusual"
+		return list(
+			"health" = src.get_damage(),
+			"max_health" = src.max_damage,
+			"special" = special
+		)

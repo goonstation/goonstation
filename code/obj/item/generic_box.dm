@@ -87,6 +87,7 @@
 	anchovy
 		name = "can of anchovies"
 		icon_state = "anch"
+		icon_closed = "anch"
 		icon_open = "anch-open"
 		icon_empty = "anch-open"
 		contained_item = /obj/item/reagent_containers/food/fish/anchovy

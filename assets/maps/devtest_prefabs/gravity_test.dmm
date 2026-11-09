@@ -29,7 +29,7 @@
 /turf/simulated/floor/shuttle/yellow,
 /area/station/devzone/gravity_gforce_blindness)
 "G" = (
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/station/devzone/gravity_gforce_high)
 "P" = (
 /turf/simulated/floor/blue/checker,

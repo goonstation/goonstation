@@ -117,10 +117,11 @@
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////no
+TYPEINFO(/obj/item/electronics/frame)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/electronics/frame
 	name = "frame"
 	icon_state = "frame"
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	var/store_type = null
 	var/secured = 0
 	var/viewstat = 0
@@ -131,6 +132,7 @@
 
 	flatpack
 		icon_state = "dbox_alt"
+		desc = "Hand-held machinery deployer with a big button on the back."
 		HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 
 		attack_self(mob/user)
@@ -329,6 +331,7 @@
 		AM.set_loc(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 0)
+		SEND_SIGNAL(AM, COMSIG_BUILD_FROM_FRAME, user, FALSE)
 		AM.forensic_holder = src.forensic_holder
 
 		// if we have a material, give it to the object if the object doesn't have one
@@ -338,6 +341,7 @@
 		AM = new store_type(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 1)
+		SEND_SIGNAL(AM, COMSIG_BUILD_FROM_FRAME, user, TRUE)
 		AM.forensic_holder = src.forensic_holder
 
 		if (src.material && !AM.material)
@@ -363,6 +367,7 @@
 	name = "soldering iron"
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "solderingiron"
+	item_state = "soldering"
 	force = 10
 	hit_type = DAMAGE_BURN
 	throwforce = 5
@@ -380,6 +385,8 @@
 		..()
 
 ////////////////////////////////////////////////////////////////no
+TYPEINFO(/obj/machinery/rkit)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/machinery/rkit
 	name = "ruckingenur kit"
 	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
@@ -387,9 +394,10 @@
 	icon_state = "rkit"
 	anchored = ANCHORED
 	density = 1
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
+
 	//var/datum/electronics/electronics_items/link = null
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
+	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED
 
 	var/processing = 0
 	var/net_id = null
@@ -403,10 +411,14 @@
 	var/boot_time = null
 	var/data_initialized = FALSE
 
+	var/static/datum/forensic_display/forensic_pattern_disp = new("Recently Printed: @F")
+	var/datum/forensic_id/forensic_pattern
+
 /obj/machinery/rkit/New()
 	. = ..()
 	known_rucks = new
 	ruck_controls = new
+	src.forensic_pattern = register_id("RUCK-[build_id_unique(/proc/build_id_pattern, list("L###"))]")
 	MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	if(isnull(mechanic_controls)) mechanic_controls = ruck_controls //For objective tracking and admin
@@ -444,6 +456,10 @@
 		send_sync()
 	else
 		if (src.net_id == host_ruck) send_sync(1)
+
+/obj/machinery/rkit/on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		scan.add_text("Printing Pattern: [src.forensic_pattern.id]")
 
 /obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
 	//If dispose is true we use "DROP" which won't be saved as the host
@@ -763,7 +779,9 @@
 				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
 				SPAWN(2.5 SECONDS)
 					if (src)
-						new /obj/item/paper/manufacturer_blueprint(src.loc, M)
+						var/obj/item/paper/manufacturer_blueprint/blueprint = new(src.loc, M)
+						var/datum/forensic_data/basic/pattern_data = new(src.forensic_pattern, src.forensic_pattern_disp)
+						blueprint.add_evidence(pattern_data)
 				. = TRUE
 		if("lock")
 			if (!src.allowed(usr))

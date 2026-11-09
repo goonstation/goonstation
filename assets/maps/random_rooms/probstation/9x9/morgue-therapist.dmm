@@ -1,0 +1,506 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/item/clothing/mask/surgical,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/device/detective_scanner,
+/obj/item/clothing/under/suit/mortician,
+/obj/item/stamp,
+/obj/item/clothing/gloves/latex,
+/obj/item/spraybottle/cleaner,
+/obj/item/reagent_containers/emergency_injector/spaceacillin,
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"b" = (
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/morgue)
+"c" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"d" = (
+/obj/machinery/sink/slim{
+	pixel_y = 12
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"e" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"f" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/station/medical/medbay/psychiatrist)
+"g" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/alarm/directional/west,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"h" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/junction/right/south,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"i" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"j" = (
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"k" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/station/medical/medbay/psychiatrist)
+"l" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/psychiatrist)
+"m" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"n" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/machinery/light/incandescent/cool/very,
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"o" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"p" = (
+/obj/landmark/start/job/medical_trainee,
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"q" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"r" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"s" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/morgue)
+"t" = (
+/obj/table/auto,
+/obj/item/paper_bin,
+/obj/item/pen/marker/red,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/pen/marker/blue,
+/obj/item/body_bag,
+/obj/item/body_bag,
+/obj/item/body_bag,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"u" = (
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/eye,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"v" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/psychiatrist)
+"w" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"x" = (
+/obj/machinery/door/airlock/pyro/medical/morgue,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/morgue,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"y" = (
+/obj/stool/chair/office/blue{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/south,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/psychiatrist)
+"z" = (
+/obj/machinery/door/airlock/pyro/medical/morgue{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/morgue,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"A" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"B" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/psychiatrist)
+"C" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"D" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/psychiatrist)
+"E" = (
+/obj/blind_switch/directional/south{
+	pixel_x = -8
+	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/black,
+/area/station/medical/medbay/psychiatrist)
+"F" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_x = -8
+	},
+/obj/item/clipboard{
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_y = 7
+	},
+/obj/item/pen/fancy{
+	pixel_y = 2
+	},
+/obj/item/storage/firstaid/mental,
+/obj/item/device/radio/intercom/medical{
+	dir = 4;
+	pixel_x = -21
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black,
+/area/station/medical/medbay/psychiatrist)
+"G" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
+/area/station/medical/medbay/psychiatrist)
+"H" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/morgue)
+"I" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"J" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"K" = (
+/obj/table/auto,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/scalpel,
+/obj/item/hand_labeler{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/syringe,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"M" = (
+/obj/item/device/radio/intercom/medical,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"N" = (
+/obj/table/wood/auto,
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/storage/pill_bottle/mannitol{
+	pixel_x = -12;
+	pixel_y = 9
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/psychiatrist)
+"O" = (
+/turf/simulated/floor/black,
+/area/station/medical/medbay/psychiatrist)
+"P" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/disposalpipe/trunk,
+/obj/machinery/disposal/small/east,
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/station/medical/medbay/psychiatrist)
+"Q" = (
+/obj/machinery/door/airlock/pyro/medical/morgue{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/morgue,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
+"R" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/station/medical/medbay/psychiatrist)
+"S" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/psychiatrist)
+"T" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"U" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/psychiatrist)
+"W" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/psychiatrist)
+"X" = (
+/obj/stool/chair/couch{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/station/medical/medbay/psychiatrist)
+"Y" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+
+(1,1,1) = {"
+b
+b
+b
+b
+z
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+Y
+C
+i
+A
+g
+C
+i
+b
+"}
+(3,1,1) = {"
+b
+J
+q
+q
+o
+q
+r
+j
+b
+"}
+(4,1,1) = {"
+b
+t
+w
+p
+h
+c
+I
+T
+b
+"}
+(5,1,1) = {"
+H
+s
+b
+b
+Q
+b
+M
+e
+x
+"}
+(6,1,1) = {"
+U
+R
+P
+F
+E
+b
+m
+u
+b
+"}
+(7,1,1) = {"
+D
+X
+k
+N
+y
+b
+d
+a
+b
+"}
+(8,1,1) = {"
+D
+f
+G
+O
+l
+b
+n
+K
+b
+"}
+(9,1,1) = {"
+S
+W
+W
+v
+B
+b
+b
+b
+b
+"}

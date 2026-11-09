@@ -502,7 +502,8 @@
 		ret += 20
 
 	for (var/obj/item/C as anything in src.get_equipped_items())
-		ret += C.getProperty("block")
+		if (C.properties)
+			ret += C.getProperty("block")
 
 	return ret
 
@@ -1147,7 +1148,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = 0
 	//drunkards get a 2/5 chance of bonus damage
-	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
+	var/alc_amt = src.reagents.get_reagent_amount("ethanol")
+	//no permanent boost for the alc immune
+	if (!isalcoholresistant(src))
+		alc_amt += GET_ATOM_PROPERTY(src, PROP_MOB_ALCOHOL_RESIST)
+	if (src.reagents && (alc_amt >= 100) && prob(40))
 		. += rand(3,5)
 		msgs.show_message_self(SPAN_ALERT("You drunkenly throw a brutal punch!"))
 	//wrestlers have a 2/3 chance of a big hit
@@ -1210,7 +1215,11 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I, var/mob/attacker)
-	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && !I)
+	var/alc_amt = src.reagents.get_reagent_amount("ethanol")
+	//no permanent boost for the alc immune
+	if (!isalcoholresistant(src))
+		alc_amt += GET_ATOM_PROPERTY(src, PROP_MOB_ALCOHOL_RESIST)
+	if (alc_amt >= 100 && prob(40) && !I)
 		return SPAN_ALERT("You drunkenly shrug off the blow!")
 	return null
 

@@ -146,7 +146,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "cyan_bolt"
 	damage = 0
-	cost = 100
+	cost = 50
 	dissipation_rate = 2
 	dissipation_delay = 8
 	shot_sound = 'sound/weapons/laser_e.ogg'
@@ -164,6 +164,8 @@
 		impact_image_effect(ie_type, hit)
 		return
 
+TYPEINFO(/obj/item/swords/sord)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/swords/sord
 	name = "gross sord"
 	desc = "oh no"
@@ -177,7 +179,6 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	is_syndicate = TRUE
 	contraband = 10 // absolutely illegal
 	w_class = W_CLASS_NORMAL
 	hitsound = 'sound/voice/farts/fart7.ogg'
@@ -216,7 +217,7 @@
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "Greyhold Mercenary Operative"
-			C.name = "[C.registered]’s ID Card ([C.assignment])"
+			C.update_name()
 
 		update_clothing()
 
@@ -242,7 +243,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.name = "left hand"
 		HH.suffix = "-L"
@@ -266,7 +267,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/gun/kinetic/draco
 		HH.name = "rifle"
 		HH.suffix = "-LR"
@@ -556,7 +557,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		message_ghosts("A <b>weblaying spider egg</b> has been placed at [log_loc(T, ghostjump = TRUE)].")
+		GHOST.MESSAGE.send("A <b>weblaying spider egg</b> has been placed at [GHOST.MESSAGE.format_loc(T)].")
 		message_admins("Sending weblaying spider offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || length(candidates) <= 0)
@@ -577,7 +578,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			usr.playsound_local(usr.loc, 'sound/misc/splash_1.ogg', 50)
 			var/mob/living/critter/spider/weblaying/baby/B = lucky_dude.current
 			B.make_critter(/mob/living/critter/spider/weblaying/baby, spawnturf)
-			message_ghosts("A <b>baby weblaying spider</b> has been born at [log_loc(B, ghostjump = TRUE)].")
+			GHOST.MESSAGE.send("A <b>baby weblaying spider</b> has been born at [GHOST.MESSAGE.format_loc(B)].")
 			boutput(W, SPAN_NOTICE("The egg you planted at [spawnturf] has hatched into a new spider!"))
 
 ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
@@ -671,6 +672,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
 // auto injector refiller, move to different file at some point. or dont, im not your/my own boss
 
 TYPEINFO(/obj/item/reagent_containers/injector_filler)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list(metal = 10,
 				crystal = 10,
 				conductive_high = 10)
@@ -694,8 +696,7 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 	New()
 		..()
 		if (src.safe && islist(chem_whitelist) && length(chem_whitelist))
-			src.whitelist = chem_whitelist
-			src.whitelist += src.additional_whitelist
+			src.whitelist = chem_whitelist + src.additional_whitelist
 
 	update_icon()
 		if (src.reagents.total_volume)
@@ -835,3 +836,21 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 					my_mob.visible_message(SPAN_ALERT("<b>[myitem] lands at [my_mob]'s feet!</b>"))
 				i=100
 			sleep(0.1 SECONDS)
+
+/obj/item/property_setter/overpowered
+	name = "reinforcing hyperfabric"
+	desc = "A piece of fabric that bends the fabric of spacetime, that, when installed in armor, provides a plethora of reinforcing properties. It shimmers faintly."
+	color = "#c4b639"
+	prefix_to_set = "hyper reinforced"
+
+	New()
+		. = ..()
+		properties_to_set = list(new /datum/property_setter_property(incrementative = 1, cap = 8, property_name = "meleeprot", property_value = 8),
+		new /datum/property_setter_property(incrementative = 1, cap = 5, property_name = "rangedprot", property_value = 5),
+		new /datum/property_setter_property(incrementative = 1, cap = 100, property_name = "coldprot", property_value = 100),
+		new /datum/property_setter_property(incrementative = 1, cap = 100, property_name = "heatprot", property_value = 100),
+		new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "movespeed", property_value = -0.3, inverse = 1),
+		new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "space_movespeed", property_value = -0.3, inverse = 1),
+		new /datum/property_setter_property(incrementative = 1, cap = 80, property_name = "radprot", property_value = 60),
+		new /datum/property_setter_property(incrementative = 1, cap = 60, property_name = "exploprot", property_value = 30),
+		new /datum/property_setter_property(incrementative = 1, cap = 100, property_name = "deflection", property_value = 30))

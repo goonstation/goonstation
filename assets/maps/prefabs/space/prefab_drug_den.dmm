@@ -878,7 +878,7 @@
 /area/prefab/drug_den)
 "UZ" = (
 /obj/stool/bench/red,
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/prefab/drug_den/party)
 "VU" = (

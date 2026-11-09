@@ -5,21 +5,28 @@
  * @license ISC
  */
 
-import { useBackend } from '../backend';
+import { atom, useAtomValue } from 'jotai';
+import { useCallback } from 'react';
+
+import { configAtom } from '../events/store';
 import manifest from './cdn-manifest.json';
 
-interface CDNData {
-  cdn: string;
-}
+/** Keep CDN updates scoped to asset URLs. */
+const cdnAtom = atom((get) => get(configAtom).cdn);
 
-export const resource = (file: string): string => {
-  const { data } = useBackend<CDNData>();
-  const { cdn } = data;
-  if (cdn) {
-    if (manifest[file]) file = manifest[file];
-    return `${cdn}/${file}`;
-  } else {
+/** Pure. Depends on nothing but its arguments. */
+function resolve(file: string, cdn: string): string {
+  if (!cdn) {
     const parts = file.split('/');
     return parts[parts.length - 1];
   }
-};
+
+  return `${cdn}/${manifest[file] || file}`;
+}
+
+/** Resolves assets against the current CDN base. */
+export function useResource(): (file: string) => string {
+  const cdn = useAtomValue(cdnAtom);
+
+  return useCallback((file: string) => resolve(file, cdn), [cdn]);
+}

@@ -24,6 +24,7 @@
 		fdel(TRACY_ENABLE_PATH)
 #endif
 	if (should_init_tracy)
+		logTheThing(LOG_DEBUG, null, "Tracy enabled: [global.tracy_init_reason]")
 		prof_init()
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
@@ -55,6 +56,9 @@
 	world.log << ""
 #endif
 	enable_auxtools_debugger()
+
+	global.initialise_namespaces()
+
 	Z_LOG_DEBUG("Preload", "  radio")
 	radio_controller = new /datum/controller/radio()
 

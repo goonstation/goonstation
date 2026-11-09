@@ -36,7 +36,7 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
-	var/mode = RCD_MODE_FLOORSWALLS
+	var/mode = RCD_MODE::FLOORSWALLS
 	var/broken = 0 //Fully broken, that is.
 
 	New()

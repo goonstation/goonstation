@@ -5,7 +5,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 1
-	cooldown = 2 SECONDS
+	cooldown = 0
 	min_req_dist = 20
 
 	cast(atom/target)
