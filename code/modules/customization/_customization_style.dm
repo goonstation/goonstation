@@ -29,8 +29,11 @@ var/global/list/locked_styles = list()
 	for (var/datum/customization_style/style_type as anything in style_catalog)
 		if (random_only && !style_type::allow_random)
 			continue
-		if (gender && style_type::gender && (style_type::gender != gender))
-			continue
+
+		if (gender && style_type::gender)
+			// Explicit case for NEUTER, just in case.
+			if ((gender != style_type::gender) && (gender != NEUTER))
+				continue
 
 		var/typeinfo/datum/customization_style/style_typeinfo = get_type_typeinfo(style_type)
 
