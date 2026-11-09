@@ -5,11 +5,7 @@ var/global/list/non_setup_styles = list()
 /// `/datum/customization_style` types which have special unlock requirements.
 var/global/list/locked_styles = list()
 
-/// Returns a list of `/datum/customization_style`s filtered by slot, category, and gender. Can exclude gimmick and non-random types. If a client `C`
-/// is provided, this will also return any `/datum/customization_style`s that the client fulfills the unlock conditions for.
-///
-/// `style_filter` can accept individual slots in `CUSTOMIZATION::SLOT` or types in `CUSTOMIZATION::CATEGORY`, either individually or as a `/list`.
-/proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, allow_pref_blacklist = TRUE, random_only = FALSE)
+/proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, pref_blacklist = TRUE, random_only = FALSE)
 	var/list/output = list()
 	var/list/style_catalog = list()
 
@@ -20,7 +16,7 @@ var/global/list/locked_styles = list()
 
 	style_catalog += global.always_available_styles
 
-	if (allow_pref_blacklist)
+	if (pref_blacklist)
 		style_catalog += global.non_setup_styles
 
 	if (isclient(C))
@@ -90,24 +86,24 @@ var/global/list/locked_styles = list()
 
 	return cmp_numeric_asc(CUSTOMIZATION.sort_order.Find(typeinfo_a.style_category), CUSTOMIZATION.sort_order.Find(typeinfo_b.style_category))
 
-/proc/select_custom_style(mob/living/carbon/human/user, style_filter = CUSTOMIZATION::SLOT::HAIR, allow_pref_blacklist = TRUE)
+/proc/select_custom_style(mob/living/carbon/human/user, style_filter = CUSTOMIZATION::SLOT::HAIR, pref_blacklist = TRUE)
 	var/list/datum/customization_style/options = list()
-	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(user.client, style_filter, allow_pref_blacklist = allow_pref_blacklist))
+	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(user.client, style_filter, pref_blacklist = pref_blacklist))
 		options[initial(style_type.name)] = style_type
 	var/new_style = tgui_input_list(user, "Please select style", "Style", options)
 	var/selected_type = options[new_style]
 	if (selected_type)
 		return new selected_type
 
-/proc/find_style_by_name(var/target_name, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, allow_pref_blacklist = TRUE)
-	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, allow_pref_blacklist = allow_pref_blacklist))
+/proc/find_style_by_name(var/target_name, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, pref_blacklist = TRUE)
+	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, pref_blacklist = pref_blacklist))
 		if (cmptext(initial(style_type.name), target_name))
 			return new style_type
 	stack_trace("Couldn't find a customization_style with the name \"[target_name]\".")
 	return new /datum/customization_style/none
 
-/proc/find_style_by_id(var/target_id, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, allow_pref_blacklist = TRUE)
-	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, allow_pref_blacklist = allow_pref_blacklist))
+/proc/find_style_by_id(var/target_id, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, pref_blacklist = TRUE)
+	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, pref_blacklist = pref_blacklist))
 		if (initial(style_type.id) == target_id)
 			return new style_type
 	stack_trace("Couldn't find a customization_style with the id \"[target_id]\".")

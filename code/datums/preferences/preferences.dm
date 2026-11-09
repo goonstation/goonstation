@@ -892,7 +892,7 @@ var/list/removed_jobs = list(
 
 				switch (params["id"])
 					if ("hairBottom", "hairMiddle", "hairTop")
-						style_list = get_available_custom_style_types(usr.client, CUSTOMIZATION::SLOT::HAIR, allow_pref_blacklist=FALSE)
+						style_list = get_available_custom_style_types(usr.client, CUSTOMIZATION::SLOT::HAIR, pref_blacklist=FALSE)
 					if ("underwear")
 						style_list = underwear_styles
 
