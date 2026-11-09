@@ -1,4 +1,14 @@
 
+(t)mon nov 09 26
+(u)Colossusqw, Lord_Earthfire & Pirate-Rob
+(p)26036
+(e)🆕🎨⚖⏰🔨🍝|C-Feature, C-Sprites, C-Balance, A-Status-Effects, A-Player-Actions, A-Catering
+(*)Limbs can be stunned, disabling them for a small period of time. See the minor changelog for more information. Sprites by Colossusqw and Pirate-Rob
+(+)Limb stuns prevent usage of an arm or leg as though they were missing, with effects like dropping items or movement slowdown
+(+)Things that mitigate missing limbs like canes work also work on numb limbs
+(+)Glass shards apply leg stuns instead of knockdowns
+(+)Touching wires or electrified doors can stun the arm that touched the corresponding object
+(+)Explosions can stun limbs instead of severing them
 (t)sun nov 08 26
 (u)Mr. Moriarty
 (p)28236
