@@ -1440,7 +1440,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		var/dat = src.return_text_header()
-		dat += "<BR><B>Current Requests:</B> <a href='byond://?src=\ref[src];refresh=1'>Refresh Requests</a><BR>"
+		dat += "<BR><B>Current Requests:</B> <a href='byond://?src=\ref[src];update=1'>Refresh Requests</a><BR>"
 		if (src.temp)
 			dat += "<br>[src.temp]"
 
@@ -1452,7 +1452,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		if(..() || !chem_requests || !request)
 			return
 
-		if (href_list["refresh"])
+		if (href_list["update"])
 			refresh()
 
 		if (href_list["deny"])
