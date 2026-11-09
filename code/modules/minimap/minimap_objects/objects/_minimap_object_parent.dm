@@ -43,6 +43,7 @@
 		src.mouse_opacity = 2
 
 /obj/minimap/proc/get_turf_at_screen_coords(screen_x,screen_y)
-	var/x = round((screen_x - src.map.minimap_render.pixel_x) / (src.map.zoom_coefficient * src.map.map_scale))
-	var/y = round((screen_y - src.map.minimap_render.pixel_y) / (src.map.zoom_coefficient * src.map.map_scale))
+	var/screen_scale = src.map.zoom_coefficient * src.map.map_scale
+	var/x = round((screen_x - src.map.minimap_render.pixel_x) / screen_scale) + 1
+	var/y = round((screen_y - src.map.minimap_render.pixel_y) / screen_scale) + 1
 	return locate(x, y, map.z_level)

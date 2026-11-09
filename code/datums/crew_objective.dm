@@ -102,6 +102,27 @@ ABSTRACT_TYPE(/datum/objective/crew/captain)
 		else
 			return 0
 
+/datum/objective/crew/captain/spare
+	explanation_text = "Ensure your captain-level spare ID is in your office when the shuttle arrives at central command."
+	var/static/is_spare_in_office = null
+
+	check_completion(c)
+		if(isnull(src.is_spare_in_office))
+			src.is_spare_in_office = FALSE
+
+			var/list/valid_areas = list(/area/station/crew_quarters/captain,
+										/area/station/bridge/execrestroom,
+										/area/station/bridge/captain,
+										/area/station/captain)
+
+			// Does not make sure its the original spare (and not some whitehole thing), but cap faking their spare to please centcom is funny.
+			for(var/obj/item/card/id/gold/captains_spare/nerd_card in by_type[/obj/item/card/id/gold/captains_spare])
+				if(istypes(get_area(nerd_card), valid_areas))
+					src.is_spare_in_office = TRUE
+					break
+
+		return src.is_spare_in_office
+
 ABSTRACT_TYPE(/datum/objective/crew/headofsecurity)
 /datum/objective/crew/headofsecurity/hat
 	explanation_text = "Don't lose your hat/beret!"
@@ -161,14 +182,14 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 					break
 			return check_result
 /datum/objective/crew/chiefengineer/ptl
-	explanation_text = "Earn at least a million credits via the PTL."
+	explanation_text = "Earn at least one hundred thousand credits via the PTL."
 	medal_name = "1.21 Jiggawatts"
 	var/static/check_result = null
 	check_completion()
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
-				if(P.lifetime_earnings >= 1 MEGA)
+				if(P.lifetime_earnings >= 100 KILO)
 					check_result = TRUE
 		return check_result
 

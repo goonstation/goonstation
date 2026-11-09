@@ -3766,7 +3766,7 @@
 	})
 "pp" = (
 /obj/reagent_dispensers/cleanable/ants,
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -4093,7 +4093,7 @@
 	id = "XG6_easthall";
 	name = "east hall lockdown"
 	},
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -4680,7 +4680,7 @@
 	})
 "ta" = (
 /obj/sec_tape,
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -7756,7 +7756,7 @@
 	name = "west hall lockdown"
 	},
 /obj/mapping_helper/airlock/bolter,
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -11869,7 +11869,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "WH" = (
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})

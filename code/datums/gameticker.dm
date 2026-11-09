@@ -283,6 +283,22 @@ var/global/game_force_started = FALSE
 				mind.current.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 #endif
 
+#ifdef ROCK_DOWN_TO_ELECTRIC_AVENUE
+	SPAWN (1 SECOND)
+		for (var/obj/machinery/power/apc/C in machine_registry[MACHINES_POWER])
+			if (C.cell && C.z == Z_LEVEL_STATION)
+				C.cell.charge = C.cell.maxcharge
+		for (var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
+			if (S.z != Z_LEVEL_STATION)
+				continue
+			S.capacity = INFINITY
+			S.charge = INFINITY
+			S.output = 200000
+			S.online = TRUE
+			S.UpdateIcon()
+			S.power_change()
+#endif
+
 #ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 	Z_LOG_DEBUG("Game Start", "Animating client colors to normal")
 	for (var/client/C in animateclients)

@@ -33,8 +33,6 @@
 	var/mob/living/silicon/ghostdrone/master
 	var/icon/icon_hud = 'icons/mob/hud_drone.dmi'
 
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
-
 	var/atom/movable/screen/hud
 
 
@@ -381,41 +379,7 @@
 						pos_y++
 
 		update_status_effects()
-			for(var/atom/movable/screen/statusEffect/G in src.objects)
-				remove_screen(G)
-
-			for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
-				if(!master.statusEffects || !(S in master.statusEffects))
-					qdel(statusUiElements[S])
-					src.statusUiElements.Remove(S)
-					qdel(S)
-
-			var/spacing = 0.6
-			var/pos_x = spacing - 0.2 - 1
-
-			if(master.statusEffects)
-				for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
-					if(!S.visible) continue
-					if((S in statusUiElements) && statusUiElements[S])
-						var/atom/movable/screen/statusEffect/U = statusUiElements[S]
-						U.icon = icon_hud
-						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH+0.3"
-						U.update_value()
-						add_screen(U)
-						pos_x -= spacing
-					else
-						if(S.visible)
-							var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
-							U.init(master,S)
-							U.icon = icon_hud
-							statusUiElements.Add(S)
-							statusUiElements[S] = U
-							U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH+0.3"
-							U.update_value()
-							add_screen(U)
-							pos_x -= spacing
-							animate_buff_in(U)
-			return
+			src.sync_status_effects(src.master, src.icon_hud, "NORTH+0.3", -0.6)
 
 /mob/living/silicon/ghostdrone
 	updateStatusUi()

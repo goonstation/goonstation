@@ -67,6 +67,9 @@
 			F["[i]_items_in_belt"] >> converter.items_in_belt
 			if(isnull(converter.items_in_belt))
 				converter.items_in_belt = list()
+			F["[i]_items_in_mob"] >> converter.items_in_mob
+			if(isnull(converter.items_in_mob))
+				converter.items_in_mob = list()
 			F["[i]_announce_on_join"] >> converter.world_announce_priority //Backup to keep old job saves the same
 			F["[i]_world_announce_priority"] >> converter.world_announce_priority
 			F["[i]_add_to_manifest"] >> converter.add_to_manifest

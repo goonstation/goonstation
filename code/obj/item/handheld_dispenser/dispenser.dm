@@ -418,7 +418,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/pipe)
 	quad_manifold
 		name = "Quadway manifold"
 		path = /obj/machinery/atmospherics/pipe/quadway/overfloor
-		cost = 4 //quad
+		cost = 3 //quad
 		icon_state = "4way"
 		desc = "A four way manifold."
 
@@ -428,7 +428,6 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/pipe)
 	heat_pipe
 		name = "Heat exchanging pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/heat_exchanging
-		cost = 3
 		icon_state = "heatpipe"
 		desc = "A heat exchanging pipe. Conducts heat very well to and from its surroundings."
 
@@ -442,7 +441,6 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/pipe)
 	bent_heat_pipe
 		name = "Bent Heat exchanging pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/heat_exchanging
-		cost = 3
 		icon_state = "heatpipebent"
 		bent = TRUE
 		desc = "A heat exchanging pipe. Conducts heat very well to and from its surroundings."
@@ -473,7 +471,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/pipe)
 
 ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine)
 /datum/pipe_recipe/atmos/machine
-	cost = 4
+	cost = 3
 
 ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/unary)
 /datum/pipe_recipe/atmos/machine/unary
@@ -556,6 +554,16 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/binary)
 		path = /obj/machinery/atmospherics/binary/heat_exchanger
 		icon_state = "heatexchanger"
 		desc = "Not to be confused with the Heat exchanging pipe, this exchanges heat between pipes without mixing."
+	thermostatic_gate
+		name = "Thermostatic Gate"
+		path = /obj/machinery/atmospherics/binary/thermostatic_gate
+		icon_state = "thermostatic"
+		desc = "Based on the blue side, opens at the opening temperature and closes at the closing temperature. When open, tries to equalise the sides"
+	pressure_relief_gate
+		name = "Pressure Relief Gate"
+		path = /obj/machinery/atmospherics/binary/pressure_gate
+		icon_state = "pressurerelief"
+		desc = "Based on the red side, opens at the opening pressure and closes at the closing pressure. When open, tries to equalise the sides"
 
 ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/trinary)
 /datum/pipe_recipe/atmos/machine/trinary
@@ -664,7 +672,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine)
 /datum/pipe_recipe/fluid/machine
-	cost = 4
+	cost = 3
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 /datum/pipe_recipe/fluid/machine/unary

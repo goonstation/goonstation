@@ -34,7 +34,7 @@
 	var/securable = 0
 	var/list/scoot_sounds = null
 	var/parts_type = /obj/item/furniture_parts/stool
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 	New()
 		START_TRACKING
@@ -339,7 +339,7 @@ TYPEINFO(/obj/stool/wooden)
 	var/security = 0
 	var/obj/item/clothing/suit/bedsheet/sheet = null
 	parts_type = /obj/item/furniture_parts/bed
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	brig
 		name = "brig cell bed"
@@ -586,11 +586,15 @@ TYPEINFO(/obj/stool/chair)
 	var/buckle_move_delay = 6 // this should have been a var somepotato WHY WASN'T IT A VAR
 	var/obj/item/clothing/head/butt/has_butt = null // time for mature humour
 	var/image/butt_img
+	/// Armrest drawn over whoever sits in the chair, when facing east or west
+	var/image/arm_image = null
+	var/arm_icon_state = null
+	var/arm_layer = FLY_LAYER+1
 	securable = 1
 	anchored = ANCHORED
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 	moveable
 		anchored = UNANCHORED
@@ -960,7 +964,7 @@ TYPEINFO(/obj/item/chair/folded)
 	stamina_damage = 45
 	stamina_cost = 21
 	stamina_crit_chance = 10
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
 	can_arcplate = FALSE
@@ -1001,6 +1005,18 @@ TYPEINFO(/obj/item/chair/folded)
 	..()
 	src.stamina_crit_chance = oldcrit
 
+/obj/stool/chair/setMaterialAppearance(datum/material/mat1)
+	. = ..()
+	if (src.arm_image)
+		src.update_arm_image(mat1)
+
+/// Rebuilds the arm icon
+/obj/stool/chair/proc/update_arm_image(datum/material/mat)
+	src.arm_image = image(src.icon, src.arm_icon_state)
+	src.arm_image.layer = src.arm_layer
+	if (mat)
+		src.arm_image.apply_material_appearance(mat)
+
 /* ====================================================== */
 /* -------------------- Comfy Chairs -------------------- */
 /* ====================================================== */
@@ -1013,8 +1029,7 @@ TYPEINFO(/obj/item/chair/folded)
 	foldable = 0
 	deconstructable = 1
 //	var/atom/movable/overlay/overl = null
-	var/image/arm_image = null
-	var/arm_icon_state = "arm"
+	arm_icon_state = "arm"
 	parts_type = /obj/item/furniture_parts/comfy_chair
 
 	New()
@@ -1049,15 +1064,8 @@ TYPEINFO(/obj/item/chair/folded)
 		else
 			src.layer = OBJ_LAYER
 			if ((src.dir == WEST || src.dir == EAST) && !src.arm_image)
-				src.arm_image = image(src.icon, src.arm_icon_state)
-				src.arm_image.layer = FLY_LAYER+1
-				if(src.material && src.material_applied_appearance)
-					src.arm_image.apply_material_appearance(src.material)
+				src.update_arm_image(src.material_applied_appearance ? src.material : null)
 				src.UpdateOverlays(src.arm_image, "arm")
-
-	setMaterialAppearance(datum/material/mat1)
-		. = ..()
-		src.arm_image?.apply_material_appearance(mat1)
 
 	blue
 		name = "comfy blue chair"
@@ -1108,6 +1116,16 @@ TYPEINFO(/obj/item/chair/folded)
 	anchored= UNANCHORED
 	deconstructable = 1
 	parts_type = /obj/item/furniture_parts/sleekchair
+
+/obj/stool/chair/comfy/wood_regal
+	name = "fancy wooden chair"
+	desc = "Much more comfortable than the average chair, and much more expensive."
+	icon_state = "wooden_regalchair"
+	arm_icon_state = "wooden_regalchair-arm"
+	comfort_value = 7
+	anchored= UNANCHORED
+	deconstructable = TRUE
+	parts_type = /obj/item/furniture_parts/wood_regalchair
 
 /* ======================================================== */
 /* -------------------- Shuttle Chairs -------------------- */
@@ -1164,9 +1182,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 			src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 
 	update_icon()
-
-		ENSURE_IMAGE(src.arm_image, src.icon, src.arm_icon_state)
-		src.arm_image.layer = FLY_LAYER+1
+		if (!src.arm_image)
+			src.update_arm_image(src.material_applied_appearance ? src.material : null)
 		src.UpdateOverlays(src.arm_image, "arm")
 
 	proc/fall_over(var/turf/T)
@@ -1283,8 +1300,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	deconstructable = TRUE
 	securable = 0
 	parts_type = /obj/item/furniture_parts/bench/pew
-	var/image/arm_image = null
-	var/arm_icon_state = null
+	arm_layer = MOB_LAYER_BASE+1
 
 	New()
 		..()
@@ -1323,8 +1339,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		else
 			src.layer = initial(src.layer)
 			if ((src.dir == WEST || src.dir == EAST) && src.arm_icon_state && !src.arm_image)
-				src.arm_image = image(src.icon, src.arm_icon_state)
-				src.arm_image.layer = MOB_LAYER_BASE+1
+				src.update_arm_image(src.material_applied_appearance ? src.material : null)
 				src.UpdateOverlays(src.arm_image, "arm")
 
 	left

@@ -835,6 +835,12 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 		icon_state = "lawyerR"
 		item_state = "lawyerR"
 
+/obj/item/clothing/under/misc/lawyer/inspector
+	name = "inspector suit"
+	desc = "A very inspectable piece of clothing."
+	icon_state = "ntinspector"
+	item_state = "ntinspector"
+
 /obj/item/clothing/under/misc/lawyer/red/demonic
 	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
@@ -2264,3 +2270,52 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/sundress)
 		name = "black poet shirt"
 		icon_state = "poetshirt-black"
 		item_state = "poetshirt-black"
+
+// Seasonal autumn clothing
+/obj/item/clothing/under/misc/belted_skirt
+	name = "belted skirt"
+	desc = "A blouse and pencil skirt combo sinched at the waist with a belt."
+	icon = 'icons/obj/clothing/jumpsuits/item_js_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_autumn.dmi'
+	icon_state = "belted_skirt"
+	item_state = "belted_skirt"
+
+/obj/item/clothing/under/misc/oxford_bags
+	name = "oxford bags"
+	desc = "A stiff-collared pintucked shirt with high-waisted, wide-legged trousers held up with suspenders; braces if you're Space Commonwealth."
+	icon = 'icons/obj/clothing/jumpsuits/item_js_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_autumn.dmi'
+	icon_state = "oxford_bags"
+	item_state = "oxford_bags"
+
+/obj/item/clothing/under/misc/peasant_dress
+	name = "peasant dress"
+	desc = "Backbreaking manual labor has never looked so chic!"
+	icon = 'icons/obj/clothing/jumpsuits/item_js_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_autumn.dmi'
+	icon_state = "peasant_dress"
+	item_state = "peasant_dress"
+
+/obj/item/clothing/under/misc/plaid_skirt
+	name = "plaid skirt"
+	desc = "A sweater tucked into a plaid, A-line midi skirt."
+	icon = 'icons/obj/clothing/jumpsuits/item_js_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_autumn.dmi'
+	icon_state = "plaid_skirt"
+	item_state = "plaid_skirt"
+
+/obj/item/clothing/under/misc/plaid_trousers
+	name = "plaid trousers"
+	desc = "A dress shirt tucked into plaid, tapered trousers."
+	icon = 'icons/obj/clothing/jumpsuits/item_js_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_autumn.dmi'
+	icon_state = "plaid_trousers"
+	item_state = "plaid_trousers"
+
+/obj/item/clothing/under/misc/sweater_jeans
+	name = "sweater and jeans"
+	desc = "A sweater combined with denim blue jeans."
+	icon = 'icons/obj/clothing/jumpsuits/item_js_autumn.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_autumn.dmi'
+	icon_state = "sweater_jeans"
+	item_state = "sweater_jeans"

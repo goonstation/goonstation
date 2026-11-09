@@ -57,7 +57,7 @@
 		H.equip_if_possible(new /obj/item/staff(H), SLOT_R_HAND)
 
 		if (!src.vr)
-			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_L_HAND)
+			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_IN_BACKPACK)
 
 		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src, src.vr)
 		SB.wizard_key = src.owner.key
@@ -138,14 +138,14 @@
 				var/datum/targetable/spell/S = purchased_spell.assoc_spell
 				purchases += list(
 					list(
-						"iconBase64" = "[icon2base64(icon(initial(S.icon), initial(S.icon_state), frame = SPELL_ANIMATION_FRAME, dir = 0))]",
+						"iconBase64" = "[icon2base64(icon(get_initial_icon(S), initial(S.icon_state), frame = SPELL_ANIMATION_FRAME, dir = 0))]",
 						"name" = "[purchased_spell.name]",
 					)
 				)
 			else // If there's no assoc_spell (i.e. for Soulguard) the icon state is stored in a different spot
 				purchases += list(
 					list(
-						"iconBase64" = "[icon2base64(icon(initial(purchased_spell.icon), initial(purchased_spell.icon_state), frame = 1, dir = 0))]",
+						"iconBase64" = "[icon2base64(icon(get_initial_icon(purchased_spell), initial(purchased_spell.icon_state), frame = 1, dir = 0))]",
 						"name" = "[purchased_spell.name]"
 					)
 				)

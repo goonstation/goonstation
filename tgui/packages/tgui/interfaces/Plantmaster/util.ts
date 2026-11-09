@@ -1,6 +1,6 @@
 import type { BooleanLike } from 'tgui-core/react';
 
-import { sendAct } from '../../backend';
+import type { sendAct } from '../../events/act';
 import type { Sort, SortProps } from './type';
 
 export function getSortFromData(

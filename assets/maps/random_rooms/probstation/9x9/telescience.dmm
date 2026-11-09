@@ -1,0 +1,710 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aV" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"bS" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
+"ct" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
+"eN" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/west,
+/obj/machinery/phone/wall{
+	pixel_x = 22
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/teleporter)
+"go" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/item/device/radio/intercom/science{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"ib" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter";
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"iP" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter";
+	dir = 4
+	},
+/obj/cable,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"jb" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/teleporter)
+"jE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/science/teleporter/foyer)
+"kt" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
+"lb" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"mG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"qf" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
+"rv" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
+"ss" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/telepad,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"tp" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/tank/air,
+/obj/item/clothing/mask/breath,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/purplewhite{
+	dir = 10
+	},
+/area/station/science/teleporter)
+"uf" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/tank/air,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
+"uu" = (
+/obj/machinery/firealarm/directional/east,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"uN" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "tele";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"vu" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/station/science/teleporter/foyer)
+"wa" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/obj/mapping_helper/access/telesci,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
+"wu" = (
+/obj/stool/chair/office/purple{
+	dir = 4
+	},
+/obj/landmark/start/job/research_trainee,
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
+"wv" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/teleporter)
+"xe" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
+"xn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/station/science/teleporter/foyer)
+"yn" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/junction/left/west,
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/station/science/teleporter/foyer)
+"yH" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/teleporter)
+"zC" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"Bn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/purple/corner{
+	dir = 1
+	},
+/area/station/science/teleporter/foyer)
+"Cb" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/science/teleporter)
+"Cr" = (
+/obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"Db" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/light/incandescent/cool,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/science/teleporter/foyer)
+"Eo" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/teleporter)
+"EL" = (
+/obj/machinery/door_control{
+	id = "telepub";
+	name = "Teleporter Public Blast Door Control";
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/obj/machinery/door_control{
+	id = "tele";
+	name = "Teleporter Blast Door Control";
+	pixel_x = -6;
+	pixel_y = -24
+	},
+/obj/machinery/networked/teleconsole{
+	dir = 8
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
+"EQ" = (
+/obj/cable,
+/obj/machinery/light_switch/directional/east,
+/obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor,
+/area/station/science/teleporter/foyer)
+"Fd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/science/teleporter/foyer)
+"GV" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"Hz" = (
+/obj/item/device/radio/intercom/science,
+/turf/simulated/floor/purplewhite/corner{
+	dir = 4
+	},
+/area/station/science/teleporter)
+"HB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "tele";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"HX" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/poddoor/pyro{
+	id = "tele";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/mapping_helper/access/telesci,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"IZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"JN" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/station/science/teleporter/foyer)
+"Kf" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"Kr" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/obj/mapping_helper/access/telesci,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
+"KM" = (
+/obj/machinery/light_switch/directional/north,
+/obj/storage/closet/port_a_sci,
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
+"Mf" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/teleporter)
+"Pd" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter";
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"PR" = (
+/obj/item/device/camera_viewer/telesci{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/storage/box/trackimp_kit{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/clothing/head/helmet/camera/telesci{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/table/reinforced/chemistry/auto,
+/obj/item/device/gps{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/device/gps{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/device/gps{
+	pixel_x = 6
+	},
+/obj/item/device/gps{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/purplewhite/corner,
+/area/station/science/teleporter)
+"RB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter";
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"SG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter";
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"Tp" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor,
+/area/station/science/teleporter/foyer)
+"TB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/science/teleporter/foyer)
+"Vx" = (
+/obj/machinery/computer/telescope{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/teleporter)
+"Wz" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
+"WB" = (
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/science/teleporter/foyer)
+"Xf" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"Xq" = (
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/science/teleporter/foyer)
+"XN" = (
+/obj/storage/crate/adventure,
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
+"Yx" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
+"YD" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
+
+(1,1,1) = {"
+jb
+jb
+jb
+jb
+yH
+SG
+ib
+iP
+jb
+"}
+(2,1,1) = {"
+jb
+uf
+XN
+tp
+HB
+zC
+mG
+GV
+Yx
+"}
+(3,1,1) = {"
+jb
+KM
+YD
+bS
+HX
+IZ
+ss
+Cr
+Xf
+"}
+(4,1,1) = {"
+jb
+PR
+qf
+wu
+uN
+go
+Kf
+uu
+lb
+"}
+(5,1,1) = {"
+Kr
+bS
+xe
+EL
+jb
+RB
+aV
+Pd
+Mf
+"}
+(6,1,1) = {"
+jb
+Hz
+rv
+Wz
+wa
+xn
+vu
+yn
+TB
+"}
+(7,1,1) = {"
+jb
+kt
+ct
+Eo
+Cb
+WB
+Fd
+Db
+TB
+"}
+(8,1,1) = {"
+jb
+Vx
+eN
+wv
+JN
+Bn
+Tp
+EQ
+Xq
+"}
+(9,1,1) = {"
+jb
+jb
+jb
+jb
+jE
+TB
+TB
+Xq
+Xq
+"}

@@ -1,13 +1,13 @@
 /datum/dwaine_syscall/tlist
-	id = DWAINE_COMMAND_TLIST
+	id = DWAINE::SYSCALL::TLIST
 
 /datum/dwaine_syscall/tlist/execute(sendid, list/data, datum/computer/file/file)
 	if (!sendid)
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	var/datum/computer/file/mainframe_program/caller_prog = src.kernel.master.processing[sendid]
 	if (!caller_prog)
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	var/list/datum/computer/file/mainframe_program/progs = list()
 	progs.len = length(src.kernel.master.processing)

@@ -25,7 +25,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = -10
 	},
 /turf/simulated/floor/bluewhite/corner{
@@ -178,7 +178,7 @@
 /area/station/devzone/no_default_light)
 "fX" = (
 /obj/disposalpipe/segment,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -251,10 +251,8 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/devzone/no_default_light)
 "iY" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "telescience";
-	name = "mail junction (telescience)"
-	},
+/obj/mapping_helper/mailtag/research/telescience,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
@@ -427,7 +425,7 @@
 /area/station/devzone/no_default_light)
 "nJ" = (
 /obj/storage/secure/closet/command/medical_director,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/north,
 /area/station/devzone/no_default_light)
 "oc" = (
@@ -592,7 +590,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = -10
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 12
 	},
 /turf/simulated/floor/black,

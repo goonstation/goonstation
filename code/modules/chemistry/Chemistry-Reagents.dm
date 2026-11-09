@@ -159,7 +159,8 @@ datum
 							did_not_react = 0
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.mutantrace?.aquaphobic && istype(src, /datum/reagent/water))
+						var/is_sealed = H.is_sealed()
+						if (H.mutantrace?.aquaphobic && istype(src, /datum/reagent/water) && !is_sealed)
 							animate_shake(H)
 							if (prob(50))
 								H.emote("scream")
@@ -174,7 +175,7 @@ datum
 							var/hygiene_distance_from_cap = hygiene_cap - hygiene
 							var/hygiene_change = min(volume * hygiene_restore * (1 - (H.get_chem_protection() / 100)), max(hygiene_distance_from_cap, 0))
 
-							if (H.mutantrace.aquaphobic)
+							if (H.mutantrace.aquaphobic && !is_sealed)
 								if (istype(src, /datum/reagent/oil))
 									hygiene_restore = 3
 								else if (istype(src, /datum/reagent/water))

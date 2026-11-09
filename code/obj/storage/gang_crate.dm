@@ -111,13 +111,9 @@
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
 
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-		..()
-
 	New()
 		..()
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 		src.light = image('icons/obj/storage/locker.dmi',"gangcratefulllight")
 		src.name = pick(list("Legitimate Business Crate", "Legal Supply Crate", "Digestive Biscuit Supply Crate", "Innocuous Goods Crate", "Inconspicuous Crate"))
 		if (locked)
@@ -1097,7 +1093,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium)
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			var/obj/item/tool/omnitool/syndietool = spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.75,rot=90)
-			syndietool.change_mode(OMNI_MODE_PULSING, null, /obj/item/device/multitool)
+			syndietool.change_mode_id(OMNITOOL::MODE_MULTITOOL, null)
 
 	cigar
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -1226,7 +1222,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/short_tall)
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			var/obj/item/tool/omnitool/syndietool = spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.75)
-			syndietool.change_mode(OMNI_MODE_PULSING, null, /obj/item/device/multitool)
+			syndietool.change_mode_id(OMNITOOL::MODE_MULTITOOL, null)
 	autos
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)

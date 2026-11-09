@@ -67,6 +67,9 @@ var/list/admin_verbs = list(
 		/client/proc/enableDrunkMode,
 		/client/proc/forceDrunkMode,
 
+#ifdef MAP_OVERRIDE_MENHIR
+		/client/proc/cmd_admin_vislayer,
+#endif
 		/client/proc/cmd_unshame_cube,
 		/client/proc/cmd_shame_cube,
 		/client/proc/removeSelf,
@@ -148,6 +151,8 @@ var/list/admin_verbs = list(
 		/client/proc/jtt,
 		/client/proc/jumptocoord,
 		/client/proc/jtc,
+		/client/proc/jump_to_z,
+		/client/proc/jtz,
 		/client/proc/admin_follow_mobject,
 		/client/proc/main_loop_context,
 		/client/proc/main_loop_tick_detail,
@@ -308,6 +313,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
 		/client/proc/spawn_custom_transmutation,
+		/client/proc/expell_object_from_mail_chutes,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
 		/client/proc/cmd_move_lobby,
@@ -501,7 +507,6 @@ var/list/admin_verbs = list(
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
 		/client/proc/persistent_lag,
-		/client/proc/dbg_disposal_system,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -1349,8 +1354,7 @@ var/list/fun_images = list()
 
 	var/confirm6 = automated ? "Yes" : tgui_alert(src.mob, "Disable drop shadowing?", "Dropshadows?", list("Yes", "No"))
 	if (confirm6 == "Yes")
-		winset(src, "menu.set_shadow", "is-checked=false")
-		src.apply_depth_filter()
+		src.apply_depth_filter(FALSE, src.preferences.client_settings[CLIENT_SETTING_DISTORTION])
 
 	var/confirm7 = automated ? "Yes" : tgui_alert(src.mob, "Reset client color matrix to identity matrix?", "Reset Color Matrix?", list("Yes", "No"))
 	if (confirm7 == "Yes")
@@ -1821,7 +1825,8 @@ proc/alert_all_ghosts(atom/target, message)
 						O.set_loc(target)
 					else if (istype(M, /mob/dead/target_observer))
 						var/mob/dead/target_observer/TO = M
-						TO.ghostjump(target.x, target.y, target.z)
+						var/mob/dead/observer/O = TO.to_ghost()
+						O.set_loc(target)
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts()
@@ -2206,6 +2211,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.cmd_emag_target(A)
 		if ("Pixel Offset")
 			new /datum/pixel_offset(A, C.mob)
+		if ("Debug Appearance")
+			C.cmd_debug_appearance(A)
 		if ("Set Material")
 			C.cmd_set_material(A)
 		if ("Activate Artifact")
@@ -2272,12 +2279,7 @@ proc/alert_all_ghosts(atom/target, message)
 	var/dur = input(usr, "Input duration (in seconds)", "lightsout duration", 0) as null|num
 
 	if(dur)
-		var i = 0
-		for_by_tcl(apc, /obj/machinery/power/apc)
-			if(apc.z == 1)
-				if((i++ % 5) == 0)
-					sleep(1 SECOND)
-				apc.setStatus("lightsout", dur SECONDS)
+		ADMIN.lights_out(dur SECONDS)
 
 /client/proc/flock_cheat()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

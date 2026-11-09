@@ -7,7 +7,7 @@ TYPEINFO(/obj/bookshelf)
 	icon_state = "bookshelf_small"
 	anchored = ANCHORED
 	density = 1
-	material_amt = 0.5
+	material_amt = MATERIAL::AMOUNT::SHEET * 5
 	var/capacity = 30 //how many books can it hold?
 	var/list/obj/item/paper/bookshelf_contents = list() //ordered list of books
 
@@ -191,3 +191,4 @@ TYPEINFO(/obj/item/furniture_parts/bookshelf)
 	icon_state = "bookshelf_parts"
 	furniture_type = /obj/bookshelf
 	furniture_name = "bookshelf"
+	default_material = "wood"

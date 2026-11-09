@@ -28,6 +28,8 @@ TYPEINFO(/mob/dead/target_observer)
 		//If our target is a mob we should also clean ourselves up and leave their observer list without a null in it.
 		var/mob/living/M = src.target
 		if(istype(M))
+			if (src in M.observers)
+				SEND_SIGNAL(M, COMSIG_MOB_OBSERVER_DETACHED, src)
 			LAZYLISTREMOVE(M.observers, src)
 			src.UnregisterSignal(M, list(COMSIG_TGUI_WINDOW_OPEN))
 
@@ -101,6 +103,8 @@ TYPEINFO(/mob/dead/target_observer)
 				for (var/datum/hud/hud in M.huds)
 					src.detach_hud(hud)
 
+				if (src in M.observers)
+					SEND_SIGNAL(M, COMSIG_MOB_OBSERVER_DETACHED, src)
 				LAZYLISTREMOVE(M.observers, src)
 
 		if(!target) //Uh oh, something went wrong here. Act natural and return the user to a regular ghost.
@@ -116,6 +120,7 @@ TYPEINFO(/mob/dead/target_observer)
 		var/mob/living/M = target
 		if (istype(M))
 			LAZYLISTADD(M.observers, src)
+			SEND_SIGNAL(M, COMSIG_MOB_OBSERVER_ATTACHED, src)
 			if(src.client)
 				M.updateOverlaysClient(src.client)
 			for (var/datum/hud/hud in M.huds)
@@ -127,6 +132,21 @@ TYPEINFO(/mob/dead/target_observer)
 			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, VERB_REF(stop_observing))
 
 		src.target.ensure_listen_tree().add_message_importing_tree(src.ensure_listen_tree())
+
+	proc/to_ghost()
+		RETURN_TYPE(/mob/dead/observer)
+
+		if (isnull(src.ghost))
+			src.ghost = new(src.corpse)
+
+			if (!src.corpse)
+				src.ghost.name = src.name
+				src.ghost.real_name = src.real_name
+
+		. = src.ghost
+
+		if (!QDELETED(src))
+			qdel(src)
 
 	click(atom/target, params, location, control)
 		if(!isnull(target) && (target.flags & TGUI_INTERACTIVE))
@@ -186,26 +206,3 @@ TYPEINFO(/mob/dead/target_observer/slasher_ghost)
 			O.update_item_abilities()
 			return O
 		return null
-
-
-/mob/dead/target_observer/verb/ghostjump(x as num, y as num, z as num)
-	set name = ".ghostjump"
-	set hidden = TRUE
-
-	if(src.type != /mob/dead/target_observer)
-		return // ugh, bad inheritance :whelm:
-
-	var/turf/T = locate(x, y, z)
-	if (!can_ghost_be_here(src, T))
-		return
-
-	if(isnull(src.ghost))
-		src.ghost = new(src.corpse)
-
-		if (!src.corpse)
-			src.ghost.name = src.name
-			src.ghost.real_name = src.real_name
-
-	var/mob/dead/observer/ghost = src.ghost
-	qdel(src)
-	ghost.set_loc(T)

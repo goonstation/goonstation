@@ -313,10 +313,17 @@ proc/load_intraround_jars()
 			src.form_fields = pickled.form_fields?.Copy()
 			src.field_counter = pickled.field_counter
 
-			for(var/i in 1 to 3)
-				if(prob(60))
-					var/list/stain_info = list(list("stamp-stain-[i].png", rand(0, sizex || 400), rand(0, sizey || 500), rand(360)))
-					LAZYLISTADD(src.stamps, stain_info)
+			if(prob(60))
+				var/list/stain_info = list(list("[resource("images/tgui/stamp_icons/stamp-stain-1.png")]", rand(0, sizex || 400), rand(0, sizey || 500), rand(360)))
+				LAZYLISTADD(src.stamps, stain_info)
+
+			if(prob(60))
+				var/list/stain_info = list(list("[resource("images/tgui/stamp_icons/stamp-stain-2.png")]", rand(0, sizex || 400), rand(0, sizey || 500), rand(360)))
+				LAZYLISTADD(src.stamps, stain_info)
+
+			if(prob(60))
+				var/list/stain_info = list(list("[resource("images/tgui/stamp_icons/stamp-stain-3.png")]", rand(0, sizex || 400), rand(0, sizey || 500), rand(360)))
+				LAZYLISTADD(src.stamps, stain_info)
 
 	attack_self(mob/user)
 		// show both the text and take a bite! consuming both information and food at the same time!
@@ -334,6 +341,9 @@ proc/load_intraround_jars()
 			ui.open()
 
 	ui_status(mob/user, datum/ui_state/state)
+		if(!user.sight_check(TRUE))
+			boutput(user, SPAN_ALERT("You can't read while unable to see."))
+			return UI_CLOSE
 		if(!user.literate)
 			boutput(user, SPAN_ALERT("You don't know how to read."))
 			return UI_CLOSE

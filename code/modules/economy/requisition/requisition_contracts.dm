@@ -516,7 +516,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 		for(var/obj/item/item_box/IB in contents_index)
 			LAGCHECK(LAG_LOW)
 			contents_index -= IB
-			if(IB.item_amount < 1) return //no empty or infinite box evals
+			if(IB.item_amount < 1) continue //no empty or infinite box evals
 			contents_index += IB.contents //evaluate real items through conventional means
 			var/illusory_contents = IB.item_amount - length(IB.contents) //how many nonexistent items we have to iterate over
 			var/box_satisfies = FALSE

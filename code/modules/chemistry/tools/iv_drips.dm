@@ -222,6 +222,11 @@
 	mode = IV_INJECT
 	initial_reagents = "saline"
 
+/obj/item/reagent_containers/iv_drip/blood/ling
+	desc = "A bag filled with some odd, synthetic blood...? Why is it moving!?"
+	mode = IV_INJECT
+	initial_reagents = "bloodc"
+
 /* ================================================== */
 /* -------------------- IV Stand -------------------- */
 /* ================================================== */

@@ -176,6 +176,38 @@
 	icon_closed = "biohazardcrate"
 	weld_image_offset_Y = -2
 
+/obj/storage/crate/freezer/organs
+	name = "Freezer - Spare Parts"
+
+	make_my_stuff()
+		if(..())
+			var/i = 0
+			var/limit = rand(5,7)
+			while(i < limit)
+				i++
+				switch(rand(1,9))
+					if(1)
+						new /obj/item/organ/appendix(src)
+					if(2)
+						new /obj/item/organ/heart(src)
+					if(3)
+						new /obj/item/organ/intestines(src)
+					if(4)
+						var/kidney_type = pick(/obj/item/organ/kidney/left, /obj/item/organ/kidney/right)
+						new kidney_type(src)
+					if(5)
+						new /obj/item/organ/liver(src)
+					if(6)
+						new /obj/item/organ/stomach(src)
+					if(7)
+						new /obj/item/organ/spleen(src)
+					if(8)
+						new /obj/item/organ/pancreas(src)
+					if(9)
+						var/eye_type = pick(/obj/item/organ/eye/left, /obj/item/organ/eye/right)
+						new eye_type(src)
+			return TRUE
+
 /obj/storage/crate/freezer/milk
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \
 	/obj/item/gun/russianrevolver)
@@ -445,6 +477,7 @@
 	desc = "A wooden crate."
 	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "woodencrate1"
+	default_material = "wood"
 	New()
 		var/n = rand(1,9)
 		switch(n)
@@ -582,7 +615,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/pinpointer/disk,
 		/obj/item/cloaking_device,
 		/obj/item/card/emag,
-		/obj/item/lightbreaker,
+		/obj/item/sound_tape/lightbreaker,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 

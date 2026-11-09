@@ -56,6 +56,16 @@
 	job = list(ALL_CLOWNS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/clownspider_implant
+	name = "Clownspider Implant"
+	items = list(/obj/item/implanter/clownspider)
+	cost = 2
+	desc = "Strike me down and I shall become funnier than you could possibly imagine. Whoever is implanted with this will explode into a bunch of clownspiders on death and be considered friendly to clownspiders. CAUTION: Spider bites may result in contraction of known disease \"Clowning Around\"."
+	vr_allowed = FALSE
+	job = list(ALL_CLOWNS)
+	can_buy = UPLINK_TRAITOR
+	max_buy = 3
+
 /datum/syndicate_buylist/traitor/chambomb
 	name = "Chameleon Bomb Case"
 	items = list(/obj/item/storage/box/chameleonbomb)
@@ -184,6 +194,16 @@
 			return
 		..()
 
+/datum/syndicate_buylist/traitor/wasp_implanter
+	name = "Wasp Implanter"
+	items = list(/obj/item/implanter/wasp)
+	cost = 2
+	desc = "Enemies being a buzzkill? This implant will release a swarm of angry wasps upon your death, and make them really feel the sting! More implants mean more wasps. If a target is implanted, wasps will be friendly to them as if they are a botanist or apiculturalist."
+	vr_allowed = FALSE
+	job = list("Botanist", "Apiculturist")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+	max_buy = 3
+
 /datum/syndicate_buylist/traitor/fakegrenade
 	name = "Fake Cleaner Grenades"
 	items = list(/obj/item/storage/box/f_grenade_kit)
@@ -298,15 +318,6 @@
 	desc = "A box filled with seven random poison bottles."
 	job = list(ALL_DOCTORS, ALL_RESEARCH, "Bartender", ALL_CHEFS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/chemicompiler
-	name = "Chemicompiler"
-	items = list(/obj/item/device/chemicompiler)
-	cost = 5
-	not_in_crates = TRUE
-	desc = "A handheld version of the Chemicompiler machine in Chemistry."
-	job = list(ALL_RESEARCH, "Pharmacist")
-	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/robosuit
 	name = "Syndicate Robot Frame"

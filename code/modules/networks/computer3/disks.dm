@@ -32,6 +32,7 @@
 // - Ainley
 // - Meat Derelict 'Derelict Station'
 
+//Wide floppies
 //Base memcard
 //Base tape reel (HEH)
 
@@ -50,6 +51,8 @@
 	var/file_amount = 32
 	var/file_used = 0
 	var/title = "Data Disk"
+	var/disk_color = "#bdbdbd"
+	var/random_color = 1
 
 	HELP_MESSAGE_OVERRIDE({"Use in-hand to toggle the write protect tab.
 		Zap with a <b>multitool</b> to wipe the disk."})
@@ -75,7 +78,7 @@
 		D.title = src.title
 		D.file_amount = src.file_amount
 		if (src.root)
-			D.root = src.root.copy_folder()
+			D.root = src.root.copy_file()
 			D.root.holder = D
 
 		return D
@@ -90,6 +93,8 @@
 			src.root = new /datum/computer/folder
 			src.root.holder = src
 			src.root.name = "root"
+			src.name_suffixes = list()
+			src.UpdateName()
 		else
 			user.visible_message(SPAN_ALERT("<b>[user] is zapped as the multitool sparks off [src]'s write-protect tab! The [src.name] seems unphased.</b>"))
 			elecflash(user,0, power=2, exclude_center = 0)
@@ -108,12 +113,8 @@
 			user.visible_message(SPAN_ALERT("<b>[user] begins to wipe [src]!</b>"))
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null, null)
 
-/obj/item/disk/data/floppy
-	var/random_color = 1
-	var/disk_color = "#bdbdbd"
-
 ///The name this disk should show up as in UIs
-/obj/item/disk/data/floppy/proc/disk_name()
+/obj/item/disk/data/proc/disk_name()
 	var/name = length(src.name_suffixes) ? src.name_suffixes[1] : src.name
 	var/regex/kill_brackets = regex(@"[\(\)]", "g")
 	name = kill_brackets.Replace(name, "")
@@ -251,7 +252,7 @@
 
 	New()
 		. = ..()
-		src.root.add_file( new /datum/computer/file/terminal_program/medical_records(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/medtrak(src))
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/security_progs
@@ -261,7 +262,7 @@
 
 	New()
 		. = ..()
-		src.root.add_file( new /datum/computer/file/terminal_program/secure_records(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/secmate(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
 		src.read_only = 1
 
@@ -272,7 +273,7 @@
 
 	New()
 		. = ..()
-		src.root.add_file( new /datum/computer/file/terminal_program/bank_records(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/bankboss(src))
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/research_progs
@@ -433,6 +434,43 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	meat_derelict
 		name = "galactic coordinate disk - 'Derelict Station'"
 		target_name = "Derelict Station"
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Wide 5.25" style floppies
+
+/obj/item/disk/data/wide_floppy
+	icon = 'icons/obj/items/disks.dmi'
+	icon_state = "big-red"
+
+/obj/item/disk/data/wide_floppy/New()
+	. = ..()
+	if(src.random_color)
+		var/my_random_color = rand(0,7)
+		switch(my_random_color)
+			if(0)
+				src.icon_state = "big-red"
+				src.disk_color = "#f04c59"
+			if(1)
+				src.icon_state = "big-yellow"
+				src.disk_color = "#D0D510"
+			if(2)
+				src.icon_state = "big-blue"
+				src.disk_color = "#5166ee"
+			if(3)
+				src.icon_state = "big-green"
+				src.disk_color = "#07a507"
+			if(4)
+				src.icon_state = "big-brown"
+				src.disk_color = "#524030"
+			if(5)
+				src.icon_state = "big-purple"
+				src.disk_color = "#6f228d"
+			if(6)
+				src.icon_state = "big-pink"
+				src.disk_color = "#c168c4"
+			if(7)
+				src.icon_state = "big-cyan"
+				src.disk_color = "#1ba89c"
 
 //////////////////////////////////////////////////////////////////////////////////////
 ///Misc Disks

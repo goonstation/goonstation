@@ -520,7 +520,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/light/small/warm,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/wood/five,
 /area/prefab{
 	requires_power = 1;
@@ -608,7 +608,7 @@
 /turf/simulated/floor/auto/snow/rough,
 /area/space)
 "lX" = (
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/prefab{
 	requires_power = 1;
@@ -704,7 +704,7 @@
 	icon_state = "green"
 	})
 "pg" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/wood/five,
 /area/prefab{
 	requires_power = 1;
@@ -1356,7 +1356,7 @@
 	name = "Cafe et Couette"
 	})
 "Bc" = (
-/obj/blind_switch/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/wood/five,
 /area/prefab{
 	requires_power = 1;
@@ -1680,7 +1680,7 @@
 "IN" = (
 /obj/table/auto,
 /obj/machinery/light/lamp/black,
-/obj/blind_switch/south,
+/obj/blind_switch/directional/south,
 /obj/item/kitchen/utensil/knife{
 	pixel_x = -7
 	},

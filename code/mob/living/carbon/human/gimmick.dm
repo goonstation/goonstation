@@ -445,7 +445,6 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return
 		else
 			boutput(src, "<span class='bold notice'>Shitty Bill will try to respawn in roughly 3 minutes.</span>")
-			src.become_ghost()
 #ifdef TWITCH_BOT_ALLOWED
 			src = null
 

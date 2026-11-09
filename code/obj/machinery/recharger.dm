@@ -27,7 +27,7 @@ TYPEINFO(/obj/machinery/recharger)
 /// Typical powercell recharger
 /obj/machinery/recharger
 	anchored = ANCHORED
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/recharger.dmi'
 	icon_state = "recharger0"
 	name = "recharger"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_MULTITOOL

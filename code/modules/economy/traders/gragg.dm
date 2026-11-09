@@ -30,7 +30,9 @@
 			/datum/commodity/trader/gragg/artifact
 		),
 		TRADER_RARITY_UNCOMMON = list(),
-		TRADER_RARITY_RARE = list()
+		TRADER_RARITY_RARE = list(
+			/datum/commodity/trader/gragg/fossil
+		)
 	)
 
 	dialogue_greet = list("HELLO. WANT BUY TASTY ROCKS. TRADE?",
@@ -118,6 +120,17 @@
 	alt_type_chance = 5
 	possible_names = list("SELLING WEIRD THING I DUG UP. DONT KNOW WHAT IS.",
 	"ODD LITTLE THING. DUG IT UP. NO IDEA. CAN BUY IF WANT.")
+
+/datum/commodity/trader/gragg/fossil
+	comname = "Rock With Picture"
+	comtype = /obj/item/fossil/stone
+	amount = 1
+	price_boundary = list(PAY::IMPORTANT*2, PAY::IMPORTANT*3)
+	possible_alt_types = list(/obj/item/fossil/cobryl, /obj/item/fossil/molitz)
+	alt_type_chance = 5
+	possible_names = list("SELLING ROCK WITH WEIRD PICTURE. DON'T KNOW WHO DREW IT.",
+	"SELLING ROCK WITH IMPRINT ON IT. ARTIST UNKNOWN.",
+	"TOLD ONE ROCK DRAWING CAN BUY MANY ROCKS WITH NO DRAWING. BUY IF AGREE.")
 
 // Gragg wants these things
 

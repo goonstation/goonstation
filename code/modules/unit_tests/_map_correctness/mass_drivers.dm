@@ -20,7 +20,7 @@
 				distance = GET_DIST(mass_driver, new_end)
 				break
 
-		. += "[src.format_position(mass_driver)] only reaches [end] at ([end.x], [end.y]) - consider a range of [distance] to reach [new_end] ([new_end?.x], [new_end?.y])"
+		. += "[CI.format_position(mass_driver)] only reaches [end] at ([end.x], [end.y]) - consider a range of [distance] to reach [new_end] ([new_end?.x], [new_end?.y])"
 
 /// Returns TRUE if the passed atom is a valid end point for a mass driver.
 /datum/map_correctness_check/mass_drivers/proc/is_valid_end(atom/end)

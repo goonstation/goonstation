@@ -31,6 +31,7 @@
 		theme = null,
 		cant_interact = 0
 )
+	UNIT_TEST_TGUI_RESPONSE
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -56,6 +57,11 @@
 	if (alert)
 		. = alert.choice
 		qdel(alert)
+
+// |GOONSTATION-ADD| TGUI confirmation window proc to simplify alerts to confirm actions
+/proc/tgui_confirm(mob/user, message)
+	var/input = tgui_alert(user, message, "Confirm Action",list("Yes", "No"))
+	return (input == "Yes")
 
 /**
  * # tgui_modal

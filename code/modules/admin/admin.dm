@@ -1932,7 +1932,7 @@ var/global/noir = 0
 			if (!M?.mind)
 				return
 			var/list/antag_options = list()
-			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - (concrete_typesof(/datum/antagonist/subordinate) + concrete_typesof(/datum/antagonist/generic))
+			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - concrete_typesof(/datum/antagonist/subordinate)
 			for (var/V as anything in eligible_antagonist_types)
 				var/datum/antagonist/A = V
 				if (!M.mind.get_antagonist(initial(A.id)))
@@ -2036,7 +2036,7 @@ var/global/noir = 0
 				return
 			var/datum/antagonist/antag = locate(href_list["target_antagonist"])
 			var/mob/M = locate(href_list["targetmob"])
-			if (!antag || !M?.mind)
+			if (!istype(antag) || !M?.mind)
 				return
 			if (tgui_alert(usr, "Remove the [antag.display_name] antagonist from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
 				return
@@ -3380,8 +3380,7 @@ var/global/noir = 0
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
-						//random_events.ui_interact(src.owner.mob)
-						random_events.event_config()
+						random_events.ui_interact(src.owner.mob)
 					if("motives")
 						simsController.showControls(usr)
 					if("regionallocator")
@@ -3616,12 +3615,6 @@ var/global/noir = 0
 				src.showPlayerCompIDs(ckey)
 			else
 				usr.client.cmd_admin_show_player_compids()
-
-		if ("lightweight_doors")
-			if (src.level < LEVEL_PA)
-				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
-
-			usr.client.lightweight_doors()
 
 		if ("lightweight_mobs")
 			if (src.level < LEVEL_PA)
@@ -4082,14 +4075,14 @@ var/global/noir = 0
 /proc/get_matches(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
 	var/list/types
 	if(use_concrete_types)
-		types = concrete_typesof(base)
+		types = only_admin_spawnable ? filtered_concrete_typesof(base, /proc/filter_admin_spawnable) : concrete_typesof(base)
 	else
 		types = childrentypesof(base)
 
 	var/list/matches = new()
 
 	for(var/path in types)
-		if(only_admin_spawnable)
+		if(only_admin_spawnable && !use_concrete_types) // concrete types came back pre-filtered
 			if(!filter_admin_spawnable(path))
 				continue
 		if(findtext("[path]$", object))

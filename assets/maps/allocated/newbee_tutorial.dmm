@@ -259,7 +259,7 @@
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "iZ" = (
-/turf/unsimulated/floor/orange/side{
+/turf/unsimulated/floor/lightyellow/side{
 	dir = 6
 	},
 /area/tutorial/newbee/room_4)
@@ -336,7 +336,7 @@
 /area/tutorial/newbee/room_8)
 "mS" = (
 /obj/landmark/newbee/disarm_person,
-/turf/unsimulated/floor/orange/side{
+/turf/unsimulated/floor/lightyellow/side{
 	dir = 5
 	},
 /area/tutorial/newbee/room_4)
@@ -570,7 +570,7 @@
 	},
 /area/tutorial/newbee/room_6)
 "uL" = (
-/turf/unsimulated/floor/orange/side{
+/turf/unsimulated/floor/lightyellow/side{
 	dir = 10
 	},
 /area/tutorial/newbee/room_4)
@@ -761,7 +761,7 @@
 /area/tutorial/newbee/room_6)
 "Cs" = (
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/orange/side{
+/turf/unsimulated/floor/lightyellow/side{
 	dir = 9
 	},
 /area/tutorial/newbee/room_4)

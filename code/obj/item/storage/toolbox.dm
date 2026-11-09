@@ -43,6 +43,9 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tile) && !length(src.storage.get_contents()) && !isrobot(user)) // we are making a floorbot!
 			var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(B.forensic_holder)
 
 			user.put_in_hand_or_drop(B)
 			W.change_stack_amount(-1)

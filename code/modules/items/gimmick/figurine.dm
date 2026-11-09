@@ -974,11 +974,6 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "andrewpieter"
 		ckey = "carton171"
 
-	jebsvs
-		name = "\improper Snart Blast"
-		icon_state = "snartblast"
-		ckey = "jebsvs"
-
 	lazy_shyguy
 		name = "\improper Bjeurn Seuz"
 		icon_state = "bjeurnseuz"
@@ -1148,7 +1143,18 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Ruud Keydens"
 		icon_state = "ruudkeydens"
 		ckey = "idestroykibble"
-
+	erikkainn
+		name = "\improper Edwardo Gonzalez"
+		icon_state = "edwardogonzalez"
+		ckey = "erikkainn"
+	vithesilly
+		name = "\improper Vi FizZahrd"
+		icon_state = "vifizzahrd"
+		ckey = "vithesilly"
+	whele
+		name = "\improper Miss Funny Business"
+		icon_state = "missfunnybusiness"
+		ckey = "whele"
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."

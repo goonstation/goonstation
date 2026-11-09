@@ -158,12 +158,13 @@
 					return
 
 			var/misstep_angle = 0
-			if (src.traitHolder && prob(5) && src.traitHolder.hasTrait("leftfeet"))
-				misstep_angle += 45
-			if (prob(DISORIENT_MISSTEP_CHANCE) && src.getStatusDuration("disorient"))
-				misstep_angle += 45
-			if (prob(src.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
-				misstep_angle += randfloat(0,src.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
+			if (!isintangible(src)) // no body, nothing to stumble with
+				if (src.traitHolder && prob(5) && src.traitHolder.hasTrait("leftfeet"))
+					misstep_angle += 45
+				if (prob(DISORIENT_MISSTEP_CHANCE) && src.getStatusDuration("disorient"))
+					misstep_angle += 45
+				if (prob(src.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
+					misstep_angle += randfloat(0,src.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
 
 			if(misstep_angle)
 				misstep_angle = min(misstep_angle,90)

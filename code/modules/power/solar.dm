@@ -42,6 +42,8 @@ TYPEINFO(/obj/machinery/power/tracker)
 		id = "small_backup3"
 	small_backup4
 		id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		id = "diner"
 	silverglass
@@ -130,6 +132,8 @@ TYPEINFO(/obj/machinery/power/solar)
 		id = "small_backup3"
 	small_backup4
 		id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		id = "diner"
 	silverglass
@@ -285,6 +289,8 @@ TYPEINFO(/obj/machinery/power/solar)
 		solar_id = "small_backup3"
 	small_backup4
 		solar_id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		solar_id = "diner"
 	silverglass
@@ -302,7 +308,7 @@ TYPEINFO(/obj/machinery/power/solar)
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
 		if (!test_link) test_link = new /obj/machinery/power/data_terminal(T)
 		if(!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-			test_link.master = src
+			test_link.set_master(src)
 		set_panels(cdir) // this finds all the solars
 
 /obj/machinery/computer/solar_control/disposing() // it would probably be best if we unlink all our panels

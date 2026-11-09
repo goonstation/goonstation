@@ -106,6 +106,7 @@
 				return SPAN_ALERT("Messaging must be enabled to communicate with engineering kit.")
 
 			var/mob/user = usr
+			A.ensure_analyzable_component()
 			var/datum/computer/file/electronics_scan/theScan = new
 			var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user, DEVICE_ANALYZER_ALLOWED_TAGS, list(), theScan)
 
@@ -167,16 +168,6 @@
 		scan_atom(atom/A as mob|obj|turf|area)
 			if(..())
 				return
-
-			if(!A.material)
-				. = "No significant material found in \the [A]."
-				return
-
-			. = "<u>[capitalize(A.material.getName())]</u><br>[A.material.getDesc()]<br><br>"
-			if (length(A.material.getMaterialProperties()))
-				for(var/datum/material_property/mat in A.material.getMaterialProperties())
-					var/value = A.material.getProperty(mat.id)
-					. += "• [mat.getAdjective(A.material)] ([value])<br>"
-			else
-				. += "The material is completely unremarkable."
+			var/datum/matsci_scan/scan = new(A, usr)
+			return scan.report
 

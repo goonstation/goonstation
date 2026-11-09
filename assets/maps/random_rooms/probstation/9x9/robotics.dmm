@@ -1,0 +1,608 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/obj/landmark/start/job/roboticist,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"b" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/machinery/portable_reclaimer,
+/obj/submachine/cargopad/robotics,
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"c" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"d" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/computer/robotics/lab{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"e" = (
+/obj/iv_stand,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
+"g" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/robotics,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"h" = (
+/obj/machinery/camera/directional/south,
+/obj/table/auto,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -11;
+	pixel_y = 7
+	},
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/device/multitool{
+	pixel_x = -16;
+	pixel_y = -2
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"i" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"j" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/recharge_station,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"k" = (
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
+/obj/storage/secure/closet/medical/anesthetic{
+	pixel_x = 7
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
+"l" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/robotics,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"m" = (
+/obj/machinery/computer3/generic/med_data{
+	dir = 1
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"n" = (
+/obj/machinery/drainage,
+/obj/machinery/optable{
+	id = "robotics"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
+"o" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/mapping_helper/access/robotics,
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"p" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"r" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/mapping_helper/access/robotics,
+/obj/machinery/phone,
+/obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"s" = (
+/obj/storage/crate/robotics_supplies_borg,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"t" = (
+/obj/landmark/start/job/cyborg,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"u" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/mapping_helper/access/robotics,
+/obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"v" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/manufacturer/robotics,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/circuit,
+/area/station/medical/robotics)
+"w" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/machinery/computer/robot_module_rewriter{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"x" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"y" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/stool/chair/office{
+	dir = 1
+	},
+/obj/landmark/start/job/roboticist,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
+"z" = (
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"A" = (
+/obj/blind_switch/directional/west{
+	pixel_y = -3
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = 9
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
+"B" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"D" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/mapping_helper/access/robotics,
+/obj/machinery/cashreg,
+/obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"E" = (
+/obj/table/auto,
+/obj/item/robot_module{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/item/robot_module{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/robot_module{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/robot_module{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"F" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/landmark/start/job/cyborg,
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"G" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"H" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/landmark/start/job/cyborg,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"I" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"J" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/manufacturer/robotics,
+/obj/item/device/radio/intercom/medical,
+/turf/simulated/floor/circuit,
+/area/station/medical/robotics)
+"K" = (
+/obj/machinery/camera/directional/east,
+/obj/surgery_tray,
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
+"L" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"M" = (
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/robotics)
+"N" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/obj/landmark/start/job/roboticist,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"O" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/mapping_helper/access/robotics,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"P" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"Q" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = 4
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"R" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/landmark/start/job/cyborg,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"S" = (
+/obj/machinery/light/incandescent/netural,
+/obj/table/auto,
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/weldingtool{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"T" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/mapping_helper/access/robotics,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"U" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"V" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"W" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"Y" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/medical/robotics)
+"Z" = (
+/obj/machinery/recharge_station,
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+
+(1,1,1) = {"
+M
+M
+M
+M
+l
+D
+u
+r
+M
+"}
+(2,1,1) = {"
+M
+n
+y
+A
+x
+W
+N
+m
+M
+"}
+(3,1,1) = {"
+M
+k
+K
+e
+R
+i
+t
+S
+M
+"}
+(4,1,1) = {"
+M
+M
+M
+M
+J
+U
+t
+h
+M
+"}
+(5,1,1) = {"
+T
+Y
+z
+M
+b
+V
+I
+P
+O
+"}
+(6,1,1) = {"
+M
+p
+s
+M
+v
+U
+H
+j
+M
+"}
+(7,1,1) = {"
+M
+c
+F
+o
+L
+a
+H
+Z
+M
+"}
+(8,1,1) = {"
+M
+B
+G
+M
+Q
+d
+w
+E
+M
+"}
+(9,1,1) = {"
+M
+M
+M
+M
+g
+M
+M
+M
+M
+"}

@@ -118,7 +118,7 @@
 
 			var/area/AR = get_area(src)
 			var/turf/T = get_turf(src)
-			var/area_check = istype(AR, /area/station) && !istype(AR, /area/station/solar) && !istype(AR, /area/station/engine/singcore)
+			var/area_check = istype(AR, /area/station) && !istype(AR, /area/station/solar) && !istype(AR, /area/station/engine/core/singularity/external)
 			var/turf_check = istype(T, /turf/simulated/floor) && !T.density
 			if (istype(AR, /area/pod_wars))
 				AR = TRUE

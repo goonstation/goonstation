@@ -255,17 +255,24 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 					M.handcuffs.drop_handcuffs(M)
 
 				//Might as well set their security record to "released"
-				var/nameToCheck = M.name
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
-					// this makes it so that if your face is unobstructed and your id is wrong, i.e. you show up as John Smith (as Someone Else)
-					// it will take into account your actual name (John Smith) and still work, instead of searching for a "John Smith (as Someone Else)" in the records
-					// unless your face is obstructed, then it works normally by taking your visible name, with intended or unintended results
-					nameToCheck = H.face_visible() ? H.real_name : H.name
-					var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
-					if(!isnull(R) && ((R["criminal"] == ARREST_STATE_INCARCERATED) || (R["criminal"] == ARREST_STATE_ARREST) || (R["criminal"] == ARREST_STATE_DETAIN)))
-						R["criminal"] = ARREST_STATE_RELEASED
-						H.update_arrest_icon()
+					var/name_to_check = H.face_visible() ? H.real_name : H.name
+
+					var/datum/db_record/personnel/security/R = global.data_core.security.find_record("name", name_to_check)
+					if (R)
+						var/criminal_status = R["criminal"]
+						var/set_status = (criminal_status == SECURITY::ARREST::STATE::INCARCERATED) || (criminal_status == SECURITY::ARREST::STATE::DETAIN)
+
+						for (var/datum/db_record/citation/arrest/arrest as anything in global.data_core.get_open_arrests(name_to_check))
+							arrest.close("FLOORFLUSHER", "N/A", "Warrant closed via floor flusher.")
+							set_status = TRUE
+
+						if (set_status)
+							R["criminal"] = SECURITY::ARREST::STATE::RELEASED
+
+			if (global.instant_pipe_network)
+				src.process()
 
 	// timed process
 	// charge the gas reservoir and perform flush if ready
@@ -304,7 +311,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		flushing = 1
 
-		closeup()
+		if (!global.instant_pipe_network)
+			closeup()
+
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 		H.mail_tag = src.mail_tag // apply mail_tag
@@ -313,9 +322,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		ZERO_GASES(air_contents)
 
-		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
-		sleep(0.5 SECONDS) // wait for animation to finish
+		if (!global.instant_pipe_network)
+			sleep(1 SECOND)
+			playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
+			sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement

@@ -12,7 +12,7 @@
 
 	setup()
 		if(isnull(src.spawn_type))
-			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+			return "[CI.format_position(src)] has no type."
 		var/mob/living/M = new spawn_type(src.loc)
 		M.unobservable = TRUE //make it not show up in the observer list
 		if (src.container_type)
@@ -30,7 +30,7 @@
 
 	setup()
 		if(isnull(src.spawn_type))
-			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+			return "[CI.format_position(src)] has no type."
 		var/mob/living/M = new spawn_type(src.loc)
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
@@ -102,12 +102,12 @@
 
 	setup()
 		if (isnull(src.spawn_type))
-			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+			return "[CI.format_position(src)] has no type."
 
 		src.corpse = new spawn_type(src.loc)
 
 		if (!istype(src.corpse))
-			CRASH("Human corpse spawner [src] at [src.x] [src.y] [src.z] had non-human type.")
+			return "[CI.format_position(src)] has non-human type."
 
 		if (src.corpse.l_hand)
 			qdel(src.corpse.l_hand)

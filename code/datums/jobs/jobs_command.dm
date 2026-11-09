@@ -47,8 +47,10 @@ ABSTRACT_TYPE(/datum/job/command)
 		. = ..()
 		//already a disk? No disk for u
 		if (length(by_type[/obj/item/disk/data/floppy/read_only/authentication]) > 1)
-			logTheThing(LOG_DEBUG, M, "would have spawned with the authentication disk, but one already existed!")
+			logTheThing(LOG_DEBUG, M, "would have spawned with the authentication disk, but one already existed! Giving them a pinpointer instead.")
 			M.l_store.safe_delete()
+
+			M.equip_new_if_possible(/obj/item/pinpointer/disk, SLOT_L_STORE)
 
 	derelict
 		//name = "NT-SO Commander"
@@ -86,6 +88,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/hop)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
+	slot_suit = list(/obj/item/clothing/suit/hopjacket)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
 	slot_poc1 = list(/obj/item/pocketwatch)

@@ -36,12 +36,8 @@
 	New()
 		..()
 		processing_items.Add(src)
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 		BLOCK_SETUP(BLOCK_TANK)
-
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)

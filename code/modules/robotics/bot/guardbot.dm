@@ -21,7 +21,7 @@
 	var/max_dist = 100
 	var/max_seen = 1000
 
-	New(var/newmaster, max_dist=100)
+	New(newmaster, max_dist=100)
 		..()
 		if(istype(newmaster, /obj/machinery/bot/guardbot))
 			src.master = newmaster
@@ -34,7 +34,7 @@
 		src.master = null
 		..()
 
-	proc/master_move(var/atom/the_target as obj|mob,var/adjacent=0)
+	proc/master_move(atom/the_target as obj|mob, adjacent=0)
 		if(!master)
 			return 1
 		if(!isturf(master.loc))
@@ -59,18 +59,23 @@
 			if (!master)
 				return
 
-			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
-			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
-			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, max_seen=src.max_seen, \
-				simulated_only=issimulatedturf(master.loc) && issimulatedturf(target_turf), \
-				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
-			if (!master)
-				return
-
-			master.path = thePath
-			if(adjacent && master.path && length(master.path)) //Make sure to check it isn't null!!
-				master.path.len-- //Only go UP to the target, not the same tile.
+			var/path_key = "[ref(get_turf(master))] [ref(target_turf)]"
+			var/searched = master.failed_path_key != path_key || !GET_COOLDOWN(master, "failed_path")
+			master.path = null
+			if(searched)
+				// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
+				// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
+				master.path = get_path_to(src.master, target_turf, max_distance=src.max_dist, max_seen=src.max_seen, \
+					simulated_only=issimulatedturf(master.loc) && issimulatedturf(target_turf), \
+					id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
+				if (!master)
+					return
+				if(adjacent && length(master.path))
+					master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && length(master.path) >= 21))
+				if(searched && the_target)
+					master.failed_path_key = path_key
+					OVERRIDE_COOLDOWN(master, "failed_path", 5 SECONDS)
 				master.task?.task_input("path_error")
 
 				master.moving = 0
@@ -109,6 +114,9 @@
 	on = 1
 	var/idle = 0 //Sleeping on the job??
 	locked = 1 //Behavior Controls and Tool lock
+	bot_move_delay = BOT::SPEED::GUARDBOT_SLOW
+	var/move_delay_max = BOT::SPEED::GUARDBOT_SLOW
+	var/move_delay_min = BOT::SPEED::GUARDBOT_FAST
 
 	/// The skin icon state that this robuddy should use.
 	var/skin_icon_state
@@ -227,6 +235,12 @@
 		if (model_task)
 			model_task.dispose()
 		..()
+
+	//! Takes a value between 1 and 0. One is move at full speed, zero is move at minimum speed.
+	proc/get_move_delay(var/move_rate)
+		move_rate = clamp(move_rate, 0, 1)
+		var/move_delay = ((src.move_delay_min - src.move_delay_max) * move_rate) + src.move_delay_max
+		return move_delay
 
 	ranger
 #ifndef HALLOWEEN
@@ -623,17 +637,15 @@
 		if (prints.owner_prints && !loose)
 			var/search = lowertext(prints.owner_prints)
 			for (var/datum/db_record/R as anything in data_core.general.records)
-				if (search == lowertext(R["fingerprint_right"]))
+				if (search == lowertext(R["fprint_r"]))
 					law_prints = R["name"]
 					break
-				else if (search == lowertext(R["fingerprint_left"]))
+				else if (search == lowertext(R["fprint_l"]))
 					law_prints = R["name"]
 					break
 				else if (lowertext(R["rank"]))
 					law_prints = R["name"]
 					break
-			if (!law_prints)	// If we didn't get anything
-				law_prints = "[pick(NT)]"	// I dunno just pick someone
 		var/dothevoice = "[src] puts on their best impression of [law_prints ? law_prints : "a big mean security person"]."
 		var/saytheline = "I am the law."
 		if (loose)
@@ -1203,7 +1215,13 @@
 			else
 				var/random_direction = get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5))
 				shoot_projectile_ST_pixel_spread(src, thing2shoot, random_direction)
+			return 1
 
+		SPAWN(0)
+			ShootTheGunBurst(target)
+		return 1
+
+	proc/ShootTheGunBurst(var/target as mob|turf)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
 			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon))
@@ -1880,7 +1898,7 @@
 
 		return
 
-	navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0,var/clear_frustration=1, max_dist=100)
+	navigate_to(atom/the_target, var/move_delay = BOT::SPEED::GUARDBOT_SLOW, var/adjacent=0, var/clear_frustration=1, max_dist=100)
 		if(src.moving)
 			return 1
 		src.moving = 1
@@ -1892,7 +1910,7 @@
 		src.mover = new /datum/guardbot_mover(src)
 		src.mover.max_dist = max_dist
 
-		src.mover.delay = clamp(move_delay, 2, 5)
+		src.mover.delay = clamp(move_delay, src.move_delay_min, src.move_delay_max)
 		src.mover.master_move(the_target,adjacent)
 
 		return 0
@@ -2432,7 +2450,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					src.next_target()
 
 				if(!master.moving)
-					master.navigate_to(src.target)
+					master.navigate_to(src.target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW))
 			else
 				if(!master.last_comm || (world.time >= master.last_comm + 100) )
 					master.post_status(null,"data","[master.cell.charge]","address_tag","recharge")
@@ -2538,7 +2556,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							if (nav_delay > 0)
 								nav_delay--
 								return
-							master.navigate_to(src.bar_beacon_turf)
+							master.navigate_to(src.bar_beacon_turf, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW))
 							nav_delay = 5
 
 					else
@@ -2572,7 +2590,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if(!master.moving)
-							master.navigate_to(src.target, 2.5, max_dist=14)
+							master.navigate_to(src.target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=14)
 
 					return
 
@@ -2792,7 +2810,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							if (master.mover)
 								qdel(master.mover)
 							master.moving = 0
-							master.navigate_to(hug_target,ARREST_DELAY, max_dist=15)
+							master.navigate_to(hug_target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=15)
 							return
 
 
@@ -2845,7 +2863,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (master.mover)
 							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(arrest_target,ARREST_DELAY, 0, 0, max_dist=30)
+						master.navigate_to(arrest_target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), 0, 0, max_dist=30)
 						//master.current_movepath = "HEH" //Stop any current movement.
 
 		task_input(input)
@@ -3090,7 +3108,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target, max_dist=80)
+						master.navigate_to(target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=80)
 					return
 				else
 					find_nearest_beacon()
@@ -3106,7 +3124,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if(master.task != src) return
 					awaiting_beacon = 0
 					if(nearest_beacon && !master.moving)
-						master.navigate_to(nearest_beacon_loc, max_dist=30)
+						master.navigate_to(nearest_beacon_loc, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=30)
 					else
 						patrol_delay = 8
 						target = null
@@ -3211,7 +3229,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (master.mover)
 							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(hug_target,ARREST_DELAY, max_dist=15)
+						master.navigate_to(hug_target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=15)
 						return
 
 				else
@@ -3316,7 +3334,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					master.frustration++
 					if (master.mover)
 						qdel(master.mover)
-					master.navigate_to(protected,2,1,1, max_dist=15)
+					master.navigate_to(protected,master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_FULL),1,1, max_dist=15)
 					return
 				else
 
@@ -3332,7 +3350,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
-						master.navigate_to(protected,2,1,1, max_dist=15)
+						master.navigate_to(protected,master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_FULL),1,1, max_dist=15)
 
 			return
 
@@ -3580,6 +3598,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 		var/tmp/turf/current_beacon_loc = null
 		var/tmp/awaiting_beacon = 0
 		var/tmp/current_tour_text = null
+		var/tmp/speaking_tour_text = FALSE // we're speaking, so don't interject
 		var/tmp/tour_delay = 0
 		var/tmp/neat_things = 0		//Bitfield to mark neat things seen on a tour.
 		var/tmp/recent_nav_attempts = 0
@@ -3634,7 +3653,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						state = STATE_FINDING_BEACON
 						return
 
-					if(prob(tip_prob) && !src.distracted && !GET_COOLDOWN(src.master, "tip"))
+					if(prob(tip_prob) && !src.distracted && !src.speaking_tour_text && !GET_COOLDOWN(src.master, "tip"))
 						master.say(get_random_tip())
 						ON_COOLDOWN(src.master, "tip", 10 SECONDS)
 
@@ -3647,7 +3666,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc, max_dist=60)
+							master.navigate_to(current_beacon_loc, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=60)
 						else
 							state = STATE_AT_BEACON
 					return
@@ -3657,7 +3676,6 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						return	//I realize this doesn't check if they're dead.  Buddies can't always tell, ok!! Maybe if people had helpful power lights too
 
 					speak_with_pause(current_tour_text, yield_to_neat=TRUE)
-					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 					if (next_beacon_id)
 						state = STATE_FINDING_BEACON
@@ -3699,6 +3717,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			var/proc_delay = master.base_tick_spacing*(2**(master.processing_tier-1))
 
 			SPAWN(0) // do not delay doWork
+				src.speaking_tour_text = TRUE
 				//Delay for active destraction
 				while(yield_to_neat && distracted)
 					awaiting_beacon++
@@ -3730,7 +3749,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 								speak_with_maptext(copytext(html_encode(tour_line), 1, MAX_MESSAGE_LEN), TRUE)
 								sleep(5 SECONDS)
 					else
-						speak_with_maptext(copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN), TRUE)
+						speak_with_maptext(copytext(html_encode(text), 1, MAX_MESSAGE_LEN), TRUE)
+				src.speaking_tour_text = FALSE
+				if (src.master)
+					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 
 #define MAPTEXT_SLICE_SIZE 100 // Reduce maptext slice size to avoid 4 rows
@@ -4323,7 +4345,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 		return
 
@@ -4685,7 +4707,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		src.current?.wakeup()
 		current = null
 		if (link)
-			link.master = null
+			link.set_master(null)
 			link = null
 
 		..()
@@ -5033,6 +5055,17 @@ TYPEINFO(/obj/machinery/bot/guardbot/old)
 		..()
 		src.hat.name = "Earle's ship captain hat"
 
+/obj/machinery/bot/guardbot/old/tourguide/menhir
+	name = "Moss"
+	desc = "A PR-4 Robuddy. It looks kinda new, are these still in production? This one has a little name tag on the front labeled 'Moss'."
+	access_lookup = "Staff Assistant"
+	beacon_freq = FREQ_TOUR_NAVBEACON
+	HatToWear = /obj/item/clothing/head/sunhat
+
+	New()
+		..()
+		src.hat.name = "Moss's sunhat"
+
 /obj/machinery/computer/hug_console
 	name = "Hug Console"
 	desc = "A hug console? It has a small opening on the top."
@@ -5054,7 +5087,7 @@ TYPEINFO(/obj/machinery/bot/guardbot/old)
 				var/datum/computer/file/guardbot_task/security/single_use/tohug = new
 				tohug.hug_target = user
 				buddy.add_task(tohug, 1, 0)
-				buddy.navigate_to(get_turf(user))
+				buddy.navigate_to(get_turf(user), buddy.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW))
 
 /obj/item/token/hug_token
 	name = "Hug Token"

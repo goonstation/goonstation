@@ -101,14 +101,14 @@ All other chickens in this file are non-secret. Please be respectful.
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "claw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "beak"					// name for the dummy holder
@@ -525,6 +525,7 @@ All other chickens in this file are non-secret. Please be respectful.
 	favorite_flag = "honk"
 	negative_happiness = TRUE
 	base_evolution_type = /datum/ranch/evolution/chicken/feed_threshold/honk
+	can_juggle = TRUE
 
 	New()
 		. = ..()
@@ -1335,21 +1336,19 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	var/out_of_water_debuff = 2
 	var/in_water_buff = 2
-	var/datum/lifeprocess/aquatic_breathing/aquabreath_process = null
 
 	restore_life_processes()
 		. = ..()
-		aquabreath_process = add_lifeprocess(/datum/lifeprocess/aquatic_breathing,src.in_water_buff,src.out_of_water_debuff)
+		src.AddComponent(/datum/component/aquatic_breathing, src.in_water_buff, src.out_of_water_debuff, CALLBACK(src, PROC_REF(move_callback)))
 
 	reduce_lifeprocess_on_death()
+		src.RemoveComponentsOfType(/datum/component/aquatic_breathing)
 		. = ..()
-		remove_lifeprocess(/datum/lifeprocess/aquatic_breathing)
 
-	Move(NewLoc, direct)
-		. = ..()
-		if(src.aquabreath_process.water_need && prob(20 * src.aquabreath_process.water_need))
+	proc/move_callback(datum/component/aquatic_breathing/C)
+		if (C.water_need && prob(20 * C.water_need))
 			hit_twitch(src)
-			src.visible_message("<b>[src]</b> [pick("flops around desperately","gasps","shudders")].")
+			src.visible_message("<b>[src]</b> [pick("flops around desperately", "gasps", "shudders")].")
 
 	grow_up()
 		..()
@@ -1898,6 +1897,7 @@ All other chickens in this file are non-secret. Please be respectful.
 	favorite_flag = "nicotine"
 	attack_ability_type = /datum/targetable/critter/mime_cage
 	happy_pet_message = "looks happy."
+	can_juggle = TRUE
 
 	grow_up()
 		..()

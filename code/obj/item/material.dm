@@ -25,8 +25,9 @@
 
 	New()
 		..()
-		src.pixel_x = rand(0 - wiggle, wiggle)
-		src.pixel_y = rand(0 - wiggle, wiggle)
+		if(wiggle)
+			src.pixel_x = rand(0 - wiggle, wiggle)
+			src.pixel_y = rand(0 - wiggle, wiggle)
 		setup_material()
 		if(src.material?.getName())
 			initial_material_name = src.material.getName()
@@ -298,7 +299,6 @@
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
 	icon = 'icons/obj/items/materials/molitz.dmi'
-	icon_state = "ore$$molitz_b"
 	material_name = "Molitz Beta"
 	default_material = "molitz_b"
 	crystal = 1
@@ -734,7 +734,7 @@
 	stamina_crit_chance = 35
 	burn_possible = FALSE
 	event_handler_flags = USE_FLUID_ENTER
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	material_name = "Glass"
 	default_material = "glass"
 	mat_changename = TRUE
@@ -792,7 +792,7 @@
 			return
 		if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
 			return
-		if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
+		if(!H.shoes || (src.material && src.material.hasProperty(MATERIAL::PROPERTY::HARDNESS) && src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) >= 7))
 			boutput(H, SPAN_ALERT("<B>You step on [src]! Ouch!</B>"))
 			step_on(H)
 

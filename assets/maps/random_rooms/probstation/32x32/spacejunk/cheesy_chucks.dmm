@@ -1,0 +1,1930 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ax" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/solar_control/diner{
+	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/pod_wars/spacejunk/restaurant)
+"bh" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/sandwich/cheese,
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"bK" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"cO" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/corner{
+	dir = 4
+	},
+/area/pod_wars/spacejunk/restaurant)
+"db" = (
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant)
+"do" = (
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant)
+"dJ" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant)
+"fm" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"fB" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"ga" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/pod_wars/spacejunk/restaurant)
+"gg" = (
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"gY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant)
+"ha" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"hi" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"hv" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/pod_wars/spacejunk/restaurant)
+"iu" = (
+/obj/machinery/light/small/floor/netural,
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"iL" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"jP" = (
+/obj/submachine/chef_oven{
+	dir = 8
+	},
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"lE" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/sandwich/cheese,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"lG" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"lS" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant)
+"mE" = (
+/obj/machinery/vending/pizza,
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/pod_wars/spacejunk/restaurant)
+"om" = (
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"oq" = (
+/obj/stool/bench/red,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/pod_wars/spacejunk/restaurant)
+"oH" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/pod_wars/spacejunk/restaurant)
+"pe" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"pn" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant)
+"qa" = (
+/turf/simulated/floor/yellow/corner{
+	dir = 8
+	},
+/area/pod_wars/spacejunk/restaurant)
+"ru" = (
+/obj/machinery/power/tracker/diner,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"rF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant)
+"sI" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"sZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"tg" = (
+/obj/machinery/light/small/floor/netural,
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"tk" = (
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/pod_wars/spacejunk/restaurant)
+"un" = (
+/obj/submachine/ice_cream_dispenser,
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"uu" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"va" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"vw" = (
+/obj/machinery/power/solar/diner,
+/obj/cable,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"vx" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"vP" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"wn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/corner,
+/area/pod_wars/spacejunk/restaurant)
+"xN" = (
+/obj/machinery/light/small/floor/netural,
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"yP" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_old = null;
+	icon_state = "norn-R-3"
+	},
+/area/pod_wars/spacejunk/restaurant)
+"zr" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/pod_wars/spacejunk/restaurant)
+"zO" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"Af" = (
+/obj/mesh/catwalk{
+	dir = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"AE" = (
+/obj/machinery/sink/slim{
+	pixel_y = 18
+	},
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"AL" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"Br" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow/corner{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant)
+"Bx" = (
+/obj/submachine/foodprocessor{
+	dir = 4
+	},
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"BL" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/item/currency/spacecash/tourist,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/pod_wars/spacejunk/restaurant)
+"BO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant)
+"BT" = (
+/obj/machinery/light/incandescent/netural,
+/obj/table/auto,
+/obj/machinery/mixer,
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"CA" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"Dh" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"Dz" = (
+/turf/simulated/wall/auto/asteroid/pod_wars,
+/area/space)
+"DB" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant)
+"DP" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/yellow/side,
+/area/pod_wars/spacejunk/restaurant)
+"DU" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 600
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/pod_wars/spacejunk/restaurant)
+"EC" = (
+/obj/machinery/light/small/floor/netural,
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"EW" = (
+/obj/mesh/catwalk,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"EX" = (
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/pod_wars/spacejunk/restaurant)
+"Fl" = (
+/obj/item/storage/box/record/clown_collection,
+/obj/item/currency/spacecash/tourist,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/restaurant)
+"Gh" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/pod_wars/spacejunk/restaurant)
+"Gr" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/toastcheese,
+/obj/item/reagent_containers/food/snacks/toastcheese,
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"GA" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"Hb" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"Ig" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant)
+"Is" = (
+/turf/simulated/floor/yellow/side,
+/area/pod_wars/spacejunk/restaurant)
+"IL" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/spacejunk/restaurant)
+"Jf" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant)
+"JI" = (
+/turf/space,
+/area/space)
+"JN" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant)
+"KD" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"KM" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"KQ" = (
+/obj/machinery/light/incandescent/netural,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"Li" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"Lp" = (
+/obj/machinery/light/incandescent/netural,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"LN" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"Mv" = (
+/obj/machinery/vending/kitchen,
+/obj/item_dispenser/bandage,
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"MB" = (
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/pod_wars/spacejunk/restaurant)
+"MV" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/pod_wars/spacejunk/restaurant)
+"NT" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant)
+"NY" = (
+/obj/machinery/power/solar/diner,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"Oq" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"Ow" = (
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/pod_wars/spacejunk/restaurant)
+"Pp" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"PG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant)
+"PI" = (
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/pod_wars/spacejunk/restaurant)
+"QC" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"Rv" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"Rw" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant/solars)
+"Rx" = (
+/obj/machinery/deep_fryer,
+/obj/item/reagent_containers/food/snacks/sandwich/cheese,
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"Ry" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/restaurant)
+"RB" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant)
+"RJ" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/airless/plating,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"RQ" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/storage/box/ic_cones,
+/obj/item/storage/box/ic_cones,
+/obj/item/storage/box/ic_cones,
+/obj/item/storage/box/ic_cones,
+/turf/simulated/floor/yellow,
+/area/pod_wars/spacejunk/restaurant)
+"RZ" = (
+/turf/simulated/floor/yellow/corner,
+/area/pod_wars/spacejunk/restaurant)
+"Uu" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/smes{
+	charge = 1e+006;
+	chargelevel = 10000;
+	output = 5000
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/pod_wars/spacejunk/restaurant)
+"Vk" = (
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/pod_wars/spacejunk/restaurant)
+"Vs" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/pod_wars/spacejunk/restaurant)
+"VF" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/pod_wars/spacejunk/restaurant)
+"VU" = (
+/turf/simulated/floor/yellow/corner{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant)
+"WC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/pod_wars/spacejunk/restaurant/landingpads)
+"Yh" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/restaurant)
+"Yn" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 600
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/pod_wars/spacejunk/restaurant)
+"ZL" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/yellow/side,
+/area/pod_wars/spacejunk/restaurant)
+
+(1,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(2,1,1) = {"
+JI
+JI
+JI
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(3,1,1) = {"
+JI
+JI
+Dz
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(4,1,1) = {"
+JI
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+iu
+Hb
+Hb
+EW
+gg
+gg
+EW
+Hb
+Hb
+EC
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(5,1,1) = {"
+JI
+Dz
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+ha
+Hb
+Hb
+Hb
+zO
+zO
+Hb
+Hb
+Hb
+Pp
+JI
+JI
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(6,1,1) = {"
+JI
+JI
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+bK
+bK
+JI
+JI
+JI
+JI
+JI
+JI
+Dz
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+"}
+(7,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+RJ
+bK
+bK
+RJ
+JI
+JI
+JI
+JI
+Dz
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(8,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+vP
+KD
+KD
+vP
+JI
+JI
+JI
+Dz
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(9,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+vP
+KQ
+WC
+vP
+JI
+JI
+JI
+Dz
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(10,1,1) = {"
+JI
+JI
+JI
+NY
+LN
+vw
+JI
+NY
+Rv
+vw
+JI
+JI
+JI
+JI
+IL
+Ig
+Ig
+IL
+IL
+JI
+JI
+JI
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(11,1,1) = {"
+JI
+JI
+JI
+NY
+QC
+vw
+JI
+NY
+Oq
+vw
+JI
+IL
+IL
+IL
+IL
+MB
+PI
+mE
+Ry
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(12,1,1) = {"
+JI
+JI
+JI
+NY
+QC
+vw
+JI
+NY
+Oq
+vw
+JI
+Ry
+DU
+PI
+ax
+VU
+do
+ZL
+Ry
+JI
+JI
+JI
+JI
+JI
+JI
+AL
+EC
+JI
+JI
+JI
+JI
+JI
+"}
+(13,1,1) = {"
+JI
+JI
+JI
+NY
+QC
+vw
+JI
+NY
+Oq
+vw
+JI
+Ry
+Yn
+Gh
+cO
+do
+do
+Is
+Ry
+JI
+JI
+JI
+JI
+JI
+JI
+KM
+KM
+JI
+JI
+JI
+JI
+JI
+"}
+(14,1,1) = {"
+JI
+JI
+JI
+JI
+fm
+JI
+JI
+JI
+fm
+JI
+JI
+IL
+IL
+IL
+Yh
+do
+VF
+Is
+Ry
+JI
+JI
+JI
+JI
+JI
+JI
+KM
+KM
+JI
+JI
+JI
+JI
+JI
+"}
+(15,1,1) = {"
+JI
+ru
+Rw
+Rw
+CA
+iL
+iL
+iL
+pe
+iL
+iL
+pn
+lS
+pn
+JN
+do
+Gr
+Is
+IL
+IL
+IL
+vP
+vP
+RJ
+JI
+KM
+Li
+JI
+JI
+JI
+JI
+JI
+"}
+(16,1,1) = {"
+JI
+JI
+JI
+NY
+Oq
+vw
+JI
+NY
+Oq
+vw
+JI
+IL
+IL
+IL
+BO
+do
+Vs
+qa
+oH
+EX
+DB
+uu
+sI
+fB
+fB
+zO
+GA
+JI
+JI
+JI
+JI
+JI
+"}
+(17,1,1) = {"
+JI
+JI
+JI
+NY
+Oq
+vw
+JI
+NY
+Oq
+vw
+JI
+Ry
+Uu
+ga
+Br
+Jf
+NT
+wn
+Gh
+zr
+pn
+va
+sI
+fB
+fB
+zO
+GA
+JI
+JI
+JI
+JI
+JI
+"}
+(18,1,1) = {"
+JI
+JI
+JI
+NY
+lG
+vw
+JI
+NY
+lG
+vw
+JI
+Ry
+rF
+do
+BL
+gY
+do
+Is
+IL
+IL
+IL
+vP
+vP
+RJ
+JI
+KM
+Li
+JI
+JI
+JI
+JI
+JI
+"}
+(19,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+Ry
+PG
+NT
+lE
+dJ
+VF
+qa
+oH
+hv
+Ry
+JI
+JI
+JI
+JI
+KM
+KM
+JI
+JI
+JI
+JI
+JI
+"}
+(20,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+iu
+Dh
+JI
+JI
+JI
+JI
+IL
+RB
+do
+Vs
+do
+vx
+do
+do
+vx
+Ry
+JI
+JI
+JI
+JI
+KM
+KM
+JI
+JI
+JI
+JI
+JI
+"}
+(21,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+KM
+KM
+JI
+JI
+JI
+JI
+IL
+db
+do
+do
+do
+Vs
+do
+do
+DP
+Ry
+JI
+JI
+JI
+JI
+ha
+xN
+JI
+JI
+JI
+JI
+JI
+"}
+(22,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+KM
+KM
+JI
+RJ
+vP
+vP
+IL
+db
+RZ
+tk
+oq
+oq
+tk
+tk
+MV
+Ry
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(23,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+Af
+zO
+fB
+fB
+sI
+Lp
+DB
+db
+Is
+IL
+vx
+bh
+hi
+IL
+IL
+IL
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(24,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+Af
+zO
+fB
+fB
+sI
+sZ
+DB
+Vk
+Ow
+IL
+Rx
+om
+om
+Bx
+un
+Ry
+JI
+JI
+JI
+JI
+Dz
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(25,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+Li
+KM
+JI
+RJ
+vP
+vP
+IL
+IL
+yP
+IL
+AE
+om
+om
+om
+om
+Ry
+JI
+JI
+JI
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+"}
+(26,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+KM
+KM
+JI
+JI
+JI
+JI
+JI
+IL
+Fl
+IL
+Mv
+BT
+om
+jP
+RQ
+Ry
+JI
+JI
+JI
+JI
+Dz
+Dz
+Dz
+Dz
+JI
+JI
+JI
+"}
+(27,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+KM
+KM
+JI
+JI
+JI
+JI
+JI
+IL
+IL
+IL
+Ry
+Ry
+Ry
+Ry
+Ry
+IL
+JI
+JI
+JI
+Dz
+Dz
+Dz
+Dz
+Dz
+JI
+JI
+JI
+"}
+(28,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+tg
+Pp
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+Dz
+Dz
+Dz
+Dz
+Dz
+JI
+JI
+JI
+"}
+(29,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+Dz
+Dz
+Dz
+JI
+JI
+JI
+JI
+JI
+"}
+(30,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(31,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}
+(32,1,1) = {"
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+JI
+"}

@@ -12,3 +12,6 @@
 
 // charms
 #define FAITH_CHARM_CREATION 300
+
+//teg bless
+#define FAITH_TEG_BLESS 500

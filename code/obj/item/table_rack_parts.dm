@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 /obj/item/furniture_parts/table
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a table."
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	afterattack(atom/target, mob/user)
 		if (isturf(target) && target == get_turf(user))
@@ -137,6 +137,12 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 	desc = "A collection of parts that can be used to make a round wooden table."
 	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	furniture_type = /obj/table/wood/round/auto
+
+/obj/item/furniture_parts/table/wood/regal
+	name = "fancy wooden table parts"
+	desc = "A collection of parts that can be used to make a fancy wooden table."
+	icon = 'icons/obj/furniture/table_wood_regal.dmi'
+	furniture_type = /obj/table/wood/regal/auto
 
 /obj/item/furniture_parts/table/wood/desk
 	name = "desk parts"
@@ -296,7 +302,7 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 /* ------- Single Table Parts ------- */
 
@@ -502,7 +508,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		icon_state = "ichair_parts"
 		furniture_type = /obj/stool/chair/dining/industrial
 		furniture_name = "industrial chair"
-		material_amt = 0.1
+		material_amt = MATERIAL::AMOUNT::SHEET
 
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"
@@ -594,6 +600,16 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	furniture_type = /obj/stool/chair/comfy/throne_gold
 	furniture_name = "golden throne"
 
+/obj/item/furniture_parts/wood_regalchair
+	name = "fancy wooden chair parts"
+	desc = "A collection of parts that can be used to make a fancy wooden chair."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "wooden_regalchair_parts"
+	stamina_damage = 15
+	stamina_cost = 15
+	furniture_type = /obj/stool/chair/comfy/wood_regal
+	furniture_name = "fancy wooden chair"
+
 /obj/item/furniture_parts/sleekchair
 	name = "comfy sleek chair parts"
 	desc = "A collection of parts that can be used to make a sleek and stylish chair."
@@ -649,10 +665,6 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		src.target_turf = target_turf
 		if (duration)
 			src.duration = duration
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -688,6 +700,8 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		owner.visible_message(SPAN_NOTICE("[owner] begins constructing \a [furniture_name]!"))
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onResume(datum/action/bar/icon/furniture_build/attempted) //guaranteed since we only resume with the same type
 		..()
@@ -719,10 +733,6 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 			icon_state = the_tool.icon_state
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -737,6 +747,8 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		..()
 		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] begins disassembling [the_furniture]."))
+		if (src.owner && HAS_ATOM_PROPERTY(src.owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onEnd()
 		..()

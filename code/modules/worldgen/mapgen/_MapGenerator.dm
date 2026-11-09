@@ -14,6 +14,8 @@ proc/initialize_biomes()
 	var/wall_turf_type
 	var/clear_turf_type
 	var/lag_check_count
+	/// Whether station cargo launches need their configured range to cross this terrain.
+	var/requires_full_cargo_launch_range = FALSE
 
 ///This proc will be ran by areas on world/proc/init(), and provides the areas turfs as argument to allow for generation.
 /datum/map_generator/proc/generate_terrain(var/list/turfs, var/reuse_seed, var/flags)

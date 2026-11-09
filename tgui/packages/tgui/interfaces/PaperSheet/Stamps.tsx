@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Box } from 'tgui-core/components';
+import { Box, Image } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 
 import { resolveAsset } from '../../assets';
@@ -9,9 +9,9 @@ import { sanitizeDefAllowTags, sanitizeText } from '../../sanitize';
 // Paper renders interactive <input> form fields
 const PAPER_ALLOWED_TAGS = [...sanitizeDefAllowTags, 'input'];
 // Paper needs inline `style` for color/font/width,
-// only forbid `class` and `background` for now.
+// only forbid `class`, `background` and `src` (e.g. `<input type="image">`).
 // We should fix this in the future.
-const PAPER_FORBID_ATTRS = ['class', 'background'];
+const PAPER_FORBID_ATTRS = ['class', 'background', 'src'];
 
 const WINDOW_TITLEBAR_HEIGHT = 30;
 
@@ -26,6 +26,7 @@ export const PaperSheetStamper: React.FC<PaperSheetStamperProps> = ({
   stampClass,
   stamps,
 }) => {
+  const { act } = useBackend();
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
   const [rotate, setRotate] = useState(0);
@@ -88,7 +89,6 @@ export const PaperSheetStamper: React.FC<PaperSheetStamperProps> = ({
     if (e.pageY <= WINDOW_TITLEBAR_HEIGHT) {
       return;
     }
-    const { act } = useBackend();
     const stampObj = {
       x,
       y,
@@ -135,14 +135,15 @@ interface StampProps {
 }
 
 const Stamp: React.FC<StampProps> = (props) => {
-  const stampTransform = {
+  const stampTransform: React.CSSProperties = {
     left: props.image.x + 'px',
     top: props.image.y + 'px',
     transform: 'rotate(' + props.image.rotate + 'deg)',
     opacity: props.opacity || 1.0,
   };
+
   return props.image.sprite.match('stamp-.*') ? (
-    <img
+    <Image
       id={props.activeStamp ? 'stamp' : undefined}
       style={stampTransform}
       className="paper__stamp"
@@ -173,7 +174,7 @@ const pauseEvent = (e: MouseEvent) => {
 
 const setInputReadonly = (text, readonly) => {
   return readonly
-    ? text.replace(/<input\s[^d]/g, '<input disabled ')
+    ? text.replace(/<input\s(?!disabled)/g, '<input disabled ')
     : text.replace(/<input\sdisabled\s/g, '<input ');
 };
 

@@ -84,6 +84,7 @@
 		src.machines = global.processing_machines
 
 		for (var/i in 1 to PROCESSING_MAX_IN_USE)
+			var/now = TIME
 			for(var/obj/machinery/machine as anything in src.machines[i][(src.ticker % (1<<(i-1)))+1])
 				if(!machine) continue
 				if(istype(machine.loc, /obj/item/electronics/frame)) continue /* machine.z == 4 && !Z4_ACTIVE || */
@@ -92,12 +93,12 @@
 				#endif
 				var/pr_base_spacing = machine.base_tick_spacing*(1 << (machine.processing_tier-1))	// The ideal time a machine in any given tier should take
 				#define pr_max_spacing machine.cap_base_tick_spacing*(1 << (machine.processing_tier-1))	// The most time we're willing to give it
-				#define pr_mult clamp(TIME - machine.last_process, pr_base_spacing, pr_max_spacing) / pr_base_spacing	// (time it took between processes) / (time it should've taken) = (do certain things this much more)
+				#define pr_mult clamp(now - machine.last_process, pr_base_spacing, pr_max_spacing) / pr_base_spacing	// (time it took between processes) / (time it should've taken) = (do certain things this much more)
 				SET_LAST_TASK("general machines", machine)
 				machine.ProcessMachine(pr_mult)	// Passes the mult as an arg of process(), so it can be accessible by ~any~ machine! Even Guardbots!
 				#undef pr_max_spacing
 				#undef pr_mult
-				machine.last_process = TIME	// set the last time the machine processed to now, so we can compare it next loop
+				machine.last_process = now	// set the last time the machine processed to now, so we can compare it next loop
 				#ifdef MACHINE_PROCESSING_DEBUG
 				register_machine_time(machine, world.time - t)
 				#endif

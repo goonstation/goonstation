@@ -128,7 +128,7 @@
 				var/obj/item_type = initial(redeemed_entry.items[1])
 				redeemed_items += list(
 					list(
-						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"iconBase64" = "[icon2base64(icon(get_initial_icon(item_type), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
 						"name" = "[initial(redeemed_entry.name)]",
 					)
 				)

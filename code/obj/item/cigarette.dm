@@ -705,6 +705,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
 	item_state = "cigarbox"
+	default_material = "wood"
 	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/cigcount = 5

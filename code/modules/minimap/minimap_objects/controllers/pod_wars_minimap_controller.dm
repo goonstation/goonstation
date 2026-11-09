@@ -69,3 +69,15 @@ ABSTRACT_TYPE(/obj/machinery/computer/pod_wars_minimap_controller)
 
 /obj/machinery/computer/pod_wars_minimap_controller/neutral
 	team_num = TEAM_NEUTRAL
+
+/obj/machinery/computer/pod_wars_minimap_controller/station
+	name = "station map controller"
+
+/obj/machinery/computer/pod_wars_minimap_controller/station/connect_to_minimap()
+	var/obj/minimap/map_computer/station/minimap
+	for_by_tcl(map, /obj/minimap/map_computer/station)
+		minimap = map
+
+	if (minimap)
+		src.minimap_controller = new(minimap)
+		src.minimap_ui = new(src, "station_minimap", src.minimap_controller, "Station Map Controller", "ntos")

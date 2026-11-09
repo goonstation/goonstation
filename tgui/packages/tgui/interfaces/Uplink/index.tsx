@@ -18,7 +18,7 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
-import { capitalizeAll, pluralize } from 'tgui-core/string';
+import { capitalizeAll, decodeHtmlEntities, pluralize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -34,6 +34,7 @@ export const Uplink = () => {
   const [categoryFilters, setCategoryFilters] = useState<
     Record<string, boolean>
   >({});
+  const [showSyndInt, setShowSyndInt] = useState(false);
   const clearFilters = () => {
     setSearchQuery('');
     setCategoryFilters({});
@@ -43,6 +44,7 @@ export const Uplink = () => {
     Object.values(categoryFilters).every((filter) => !filter);
 
   const { item_entries, currency_amount, currency_name, vr } = data;
+  const syndIntRecords = data.synd_int_records;
   const isVr = !!vr;
   const lowerSearchQuery = searchQuery.toLocaleLowerCase();
 
@@ -129,8 +131,11 @@ export const Uplink = () => {
                 <Tabs vertical>
                   <Tabs.Tab
                     align="right"
-                    selected={allFiltersApplied}
-                    onClick={() => setCategoryFilters({})}
+                    selected={allFiltersApplied && !showSyndInt}
+                    onClick={() => {
+                      setShowSyndInt(false);
+                      setCategoryFilters({});
+                    }}
                   >
                     All
                   </Tabs.Tab>
@@ -138,14 +143,27 @@ export const Uplink = () => {
                     <Tabs.Tab
                       key={itemCategory}
                       align="right"
-                      selected={!!categoryFilters[itemCategory]}
-                      onClick={() =>
-                        setCategoryFilters({ [itemCategory]: true })
-                      }
+                      selected={!showSyndInt && !!categoryFilters[itemCategory]}
+                      onClick={() => {
+                        setShowSyndInt(false);
+                        setCategoryFilters({ [itemCategory]: true });
+                      }}
                     >
                       {itemCategory}
                     </Tabs.Tab>
                   ))}
+                  {syndIntRecords && (
+                    <Tabs.Tab
+                      align="right"
+                      selected={showSyndInt}
+                      onClick={() => {
+                        setShowSyndInt(true);
+                        act('refresh_synd_int');
+                      }}
+                    >
+                      Syndicate Intelligence
+                    </Tabs.Tab>
+                  )}
                 </Tabs>
               </Section>
             </Stack.Item>
@@ -153,22 +171,44 @@ export const Uplink = () => {
         </Flex.Item>
         <Flex.Item>
           <Window.Content scrollable ml={SIDEBAR_WIDTH}>
-            <Stack vertical>
-              {filteredItems.length === 0 ? (
-                <PlaceholderItem onClearClick={clearFilters} />
-              ) : (
-                filteredItems.map((item) => (
-                  <ItemEntry
-                    key={item.name}
-                    item={item}
-                    isVr={isVr}
-                    currency_amount={currency_amount}
-                    currency_name={currency_name}
-                    purchased={data.purchased_items[item.type] ?? 0}
-                  />
-                ))
-              )}
-            </Stack>
+            {showSyndInt && syndIntRecords ? (
+              <Stack vertical>
+                {syndIntRecords.length === 0 ? (
+                  <Stack.Item>
+                    <Section title="Syndicate Intelligence">
+                      No intelligence available.
+                    </Section>
+                  </Stack.Item>
+                ) : (
+                  syndIntRecords.map((record) => (
+                    <Stack.Item key={`${record.name}-${record.rank}`}>
+                      <Section title={`${record.name} - ${record.rank}`}>
+                        <Box preserveWhitespace>
+                          {decodeHtmlEntities(record.syndint)}
+                        </Box>
+                      </Section>
+                    </Stack.Item>
+                  ))
+                )}
+              </Stack>
+            ) : (
+              <Stack vertical>
+                {filteredItems.length === 0 ? (
+                  <PlaceholderItem onClearClick={clearFilters} />
+                ) : (
+                  filteredItems.map((item) => (
+                    <ItemEntry
+                      key={item.name}
+                      item={item}
+                      isVr={isVr}
+                      currency_amount={currency_amount}
+                      currency_name={currency_name}
+                      purchased={data.purchased_items[item.type] ?? 0}
+                    />
+                  ))
+                )}
+              </Stack>
+            )}
           </Window.Content>
         </Flex.Item>
       </Flex>

@@ -9,6 +9,10 @@
 	if (ismob(message.speaker))
 		var/mob/mob_speaker = message.speaker
 		mind_ref = "\ref[mob_speaker.mind]"
+		if (ismobcritter(mob_speaker))
+			var/mob/living/critter/critter = mob_speaker
+			if (critter.original_name)
+				message.speaker_to_display = critter.original_name
 
 	message.format_speaker_prefix = {"\
 		<span class='game hivesay'>\

@@ -23,7 +23,6 @@ vi.mock('../../backend', () => ({
     },
     act: vi.fn(),
   }),
-  sendAct: vi.fn(),
 }));
 
 describe('Radio', () => {

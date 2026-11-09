@@ -95,7 +95,7 @@
 
 	disposing()
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		..()
@@ -103,7 +103,7 @@
 	set_loc(atom/target)
 		..()
 		if(src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 		if(!isturf(src.loc))
 			return
@@ -111,7 +111,7 @@
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
 		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 			src.link = test_link
-			src.link.master = src
+			src.link.set_master(src, src.net_id)
 
 
 TYPEINFO(/obj/machinery/networked/storage)
@@ -183,7 +183,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			if(!tape && (setup_drive_size > 0) && setup_spawn_with_tape)
 				if(src.setup_drive_type)
@@ -1063,7 +1063,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
@@ -1150,7 +1150,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 			src.time--
 			post_display_status(src.time)
 			if(src.time <= 0)
-				outpost_destroyed = 1
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
@@ -1325,7 +1324,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		var/turf/T = get_turf(src)
 		if(T)
 			admessage += "<b> ([T.x],[T.y],[T.z])</b>"
-		message_ghosts("Network Nuclear Charge armed. [log_loc(T, ghostjump=TRUE)]")
+		GHOST.MESSAGE.send("<b>Networked nuclear charge</b> armed at [GHOST.MESSAGE.format_loc(src)].")
 		message_admins(admessage)
 		//World announcement.
 		if (src.z == Z_LEVEL_STATION)
@@ -1339,7 +1338,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		src.timing = 0
 		src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
 		src.icon_state = "net_nuke0"
-		message_ghosts("<b>Network Nuclear Charge DISARMED.")
+		GHOST.MESSAGE.send("<b>Networked nuclear charge</b> DISARMED at [GHOST.MESSAGE.format_loc(src)].")
 		//World announcement.
 		if (src.z == Z_LEVEL_STATION)
 			command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
@@ -1350,7 +1349,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		post_display_status(-1)
 
 	proc/detonate()
-		message_ghosts("<b> Network Nuclear Charge blew the FUCK UP! [log_loc(src, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("<b>Networked nuclear charge</b> DETONATES at [GHOST.MESSAGE.format_loc(src)].")
 		playsound_global(world, 'sound/effects/kaboom.ogg', 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
@@ -1411,7 +1410,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	proc/add_frequency(newFreq)
 		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "f[newFreq]", newFreq)
@@ -1720,6 +1719,10 @@ TYPEINFO(/obj/machinery/networked/printer)
 	var/blinking = 0 //Is our indicator light blinking?
 	var/sheets_remaining = 15 //How many blank sheets of paper do we have left?
 
+	var/static/datum/forensic_display/forensic_pattern_disp = new("Recently Printed: @F")
+	var/forensic_pattern_prefix = "PRINTER"
+	var/datum/forensic_id/forensic_pattern
+
 #define MAX_SHEETS 20
 #define SETUP_JAM_IGNITION 6 //How jammed do we have to be before we break down?
 #define MAX_PRINTBUFFER_SIZE 10
@@ -1730,6 +1733,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
 			src.print_id = "GENERIC"
+		src.forensic_pattern = register_id("[src.forensic_pattern_prefix]-[build_id_unique(/proc/build_id_pattern, list("L###"))]")
 
 		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
@@ -1739,7 +1743,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon() //Update the icon
 		return
@@ -1799,6 +1803,14 @@ TYPEINFO(/obj/machinery/networked/printer)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
+			return
+
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/jam/paperjam)) //Jam the printer with jam!
+			src.jam()
+			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
+			user.visible_message(SPAN_NOTICE("[user] jams the printer with the jam."), SPAN_NOTICE("You jam the printer with the jam."))
+			src.updateUsrDialog()
+			qdel(W)
 			return
 
 		else
@@ -1985,7 +1997,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 						var/buffer_add = null
 						if (istype(signal.data_file, /datum/computer/file/image)) // pic-a-ture
-							buffer_add = signal.data_file:data
+							buffer_add = signal.data_file
 							if (!buffer_add)
 								src.post_status(target,"command","term_message","data","command=status&status=badfile")
 								return
@@ -2034,6 +2046,10 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		return
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		scan.add_text("Printing Pattern: [src.forensic_pattern.id]")
+
 	proc
 		print()
 			if(status & (NOPOWER|BROKEN))
@@ -2074,15 +2090,14 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 				if (istype(print_text, /datum/computer/file/image)) // trying to print a photo! :I
 					var/datum/computer/file/image/IMG = print_text
-					/*var/obj/item/photo/P = */new/obj/item/photo(src.loc, IMG.ourImage, IMG.ourIcon, IMG.img_name, IMG.img_desc)
-					/*P.fullImage = IMG.ourImage ? IMG.ourImage : image(IMG.ourIcon)
-					P.fullIcon = IMG.ourIcon
-					P.name = IMG.img_name
-					P.desc = IMG.img_desc*/
+					var/obj/item/photo/P = new(src.loc, IMG.ourImage, IMG.ourIcon, IMG.img_name, IMG.img_desc)
+					var/datum/forensic_data/basic/pattern_data = new(src.forensic_pattern, src.forensic_pattern_disp)
+					P.add_evidence(pattern_data)
 				else
 					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(src.loc)
-
+					var/datum/forensic_data/basic/pattern_data = new(src.forensic_pattern, src.forensic_pattern_disp)
+					P.add_evidence(pattern_data)
 
 					var/titlepoint = findtext(print_text, "&title;",1 , 72)
 					if (titlepoint)
@@ -2435,12 +2450,15 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		return output
 
+TYPEINFO(/obj/machinery/networked/secdetector)
+	mats = 12
 
 //IR tripwire/threat analyzer.
 /obj/machinery/networked/secdetector
 	name = "IR Detector"
 	desc = "An infrared tripwire and video camera coupled with a sophisticated threat-analysis system."
 	icon_state = "secdetector0"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	device_tag = "PNET_IR_DETECT"
 
 	var/detector_id = null
@@ -2476,7 +2494,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon()
 		return
@@ -2492,7 +2510,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			src.scan_beam.dispose()
 			src.scan_beam = null
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		..()
@@ -2577,7 +2595,9 @@ TYPEINFO(/obj/machinery/networked/printer)
 		if (active_time > 0)
 			active_time--
 			if (!active_time)
-				//src.state = src.online
+				qdel(src.scan_beam)
+				src.scan_beam = null
+				src.state = src.online
 				src.UpdateIcon(src.online)
 
 		switch (src.state)
@@ -2926,7 +2946,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon()
 		return
@@ -2943,7 +2963,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			src.beam = null
 
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		for (var/obj/item/I in src.telecrystals)
@@ -3281,7 +3301,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 			src.UpdateIcon()
 		return
@@ -4056,6 +4076,11 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					src.electrify_contents()
 					message_host("command=ack")
 					src.UpdateIcon()
+					SPAWN(5 SECONDS)
+						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
+						playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
+						active = 0
+						src.UpdateIcon()
 				else
 					message_host("command=nack")
 

@@ -132,11 +132,6 @@
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/makeup_image = image('icons/mob/human.dmi') // yeah this is just getting stupider
 
-	var/list/juggling = list()
-	var/can_juggle = 0
-	///A dummy object that juggled objects go in the vis_contents of, so they can be scaled visually without affecting their actual scale
-	var/obj/dummy/juggle_dummy = null
-
 	// preloaded sounds moved up to /mob/living
 
 	var/list/sound_list_scream = null
@@ -564,8 +559,6 @@
 	QDEL_NULL(src.cloner_defects)
 	QDEL_NULL(src.inventory)
 
-	src.juggle_dummy = null
-
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -620,8 +613,6 @@
 	src.jitteriness = 0
 
 	src.update_health_monitor_icon()
-
-	src.drop_juggle()
 
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
@@ -688,12 +679,7 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
-			var/turf/where = get_turf(src)
-			var/where_text = "Unknown (?, ?, ?)"
-			if (where)
-				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
-
-			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] has died at [GHOST.MESSAGE.format_loc(src)].")
 #ifdef DATALOGGER
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
@@ -1040,8 +1026,6 @@
 
 		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
-		src.next_click = world.time + src.combat_click_delay
-
 /mob/living/carbon/human/click(atom/target, list/params)
 	if (src.client)
 		if (src.client.experimental_intents)
@@ -1269,9 +1253,8 @@
 	return 0
 
 /mob/living/carbon/human/restrained()
-	if (src.hasStatus("handcuffed"))
-		return 1
-	if (src.hasStatus("incorporeal"))
+	var/static/list/restraining_statuses = list("handcuffed", "incorporeal")
+	if (src.hasStatus(restraining_statuses))
 		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
@@ -1575,17 +1558,17 @@
 		return FALSE
 
 /**
-Attempts to put an item in the hand of a mob, if not possible then stow it, then by default delete the item.
+Attempts to put an item in the hand of a mob, if not possible then stow it, then by default drop the item at the mob's feet.
 
  * @param I The item to put in the hand.
 
  * @param hand The hand to put the item in.
 
- * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE, the item is dropped at the current location.
+ * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE (by default), the item is dropped at the current location.
 
  * @return TRUE if the item was successfully put in hand or stowed, FALSE otherwise.
 **/
-/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = TRUE)
+/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = FALSE)
 	if (!src.put_in_hand(I, hand))
 		if(!src.stow_in_available(I, delete_item))
 			return FALSE
@@ -1941,15 +1924,15 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 	return TRUE
 
 /**
-Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will delete items that cannot be placed by default.
+Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will drop items that cannot be placed at the mob's feet by default.
 
  * @param I The item to stow.
 
- * @param delete_item If TRUE, the item will be deleted if it cannot be stowed. If FALSE, the item is dropped at the current location.
+ * @param delete_item If TRUE, the item will be deleted if it cannot be stowed, for items being replaced by another. If FALSE (by default), the item is dropped at the current location.
 
  * @return TRUE if the item was stowed, FALSE if it was not.
 **/
-/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = TRUE)
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = FALSE)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return TRUE
 	if (src.autoequip_slot(I, SLOT_IN_BELT))
@@ -2024,7 +2007,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 			usr.visible_message(SPAN_ALERT("[usr] finishes [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [H]. That was [pick("gross","horrific","disturbing","weird","horrible","funny","strange","odd","creepy","bloody","gory","shameful","awkward","unusual")]!"))
 
-			if (prob(10) && !H.mutantrace)
+			if (prob(10) && !istype(H.mutantrace,/datum/mutantrace/ithillid))
 				usr.reagents.add_reagent("prions", 10)
 				SPAWN(rand(20,50)) boutput(usr, SPAN_ALERT("You don't feel so good."))
 
@@ -2089,8 +2072,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		S.set_head(src.organHolder.head)
 		S.head_moved() // update tracking
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
@@ -2134,8 +2118,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	src.organHolder.create_organs()
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
@@ -2231,7 +2216,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 					O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 				boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-				src.handcuffs.material_trigger_when_attacked(src, src, 1)
+				src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 				src.handcuffs.destroy_handcuffs(src)
 				return
 			if (iswerewolf(src))
@@ -2241,7 +2226,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				else
 					src.visible_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</b>"))
 					boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
-					src.handcuffs.material_trigger_when_attacked(src, src, 1)
+					src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 					src.handcuffs.destroy_handcuffs(src)
 					return
 		if (src.is_hulk())
@@ -2249,25 +2234,25 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			src.handcuffs.destroy_handcuffs(src)
 		else if ( src.limbs && src.limbs.l_arm?.breaks_cuffs && src.limbs.r_arm?.breaks_cuffs)
 			for (var/mob/O in AIviewers(src))
 				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with [src.limbs.l_arm.kind_of_limb & LIMB_ROBOT ? "machine-like" : "unnatural"] strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			src.handcuffs.destroy_handcuffs(src)
 		else
 			src.last_resist = world.time + 100
 			var/calcTime
 			if (src.handcuffs.material)
-				calcTime = clamp((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density"))*5 SECONDS, 20 SECONDS, 50 SECONDS)
+				calcTime = clamp((src.handcuffs.material.getProperty(MATERIAL::PROPERTY::HARDNESS) + src.handcuffs.material.getProperty(MATERIAL::PROPERTY::DENSITY))*5 SECONDS, 20 SECONDS, 50 SECONDS)
 			else
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
 			if (!src.canmove)
 				calcTime *= 1.5
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
 	return 0
 
@@ -2600,110 +2585,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.tackle(AM)
 	..()
 
-/mob/living/carbon/human/proc/juggling()
-	if (islist(src.juggling) && length(src.juggling))
-		return TRUE
-	return FALSE
-
-/mob/living/carbon/human/proc/drop_juggle()
-	set waitfor = FALSE // remove if you want to see 3,500 SHOULD_NOT_SLEEP errors because anything that ever causes a person to die can't sleep anymore
-
-	if (!src.juggling())
-		return
-	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything [he_or_she(src)] [were_or_was(src)] juggling!"))
-	for (var/atom/movable/A in src.juggling)
-		src.remove_juggle(A)
-		if(istype(A, /obj/item/device/light)) //i hate this
-			var/obj/item/device/light/L = A
-			L.light?.attach(L)
-		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
-			var/obj/item/gun/gun = A
-			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
-		else if (prob(40)) //bombs might land funny
-			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade))
-				var/obj/item/explosive = A
-				explosive.AttackSelf(src)
-			else if (istype(A, /obj/item/device/transfer_valve))
-				var/obj/item/device/transfer_valve/ttv = A
-				ttv.toggle_valve()
-				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
-				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
-			else if (istype(A, /obj/item/assembly))
-				var/obj/item/assembly/dropped_assembly = A
-				if(!dropped_assembly.secured)
-					// You're not evading death that easily, clown
-					dropped_assembly.secured = TRUE
-					dropped_assembly.add_fingerprint(src)
-					dropped_assembly.UpdateIcon()
-					dropped_assembly.last_armer = src
-				dropped_assembly.AttackSelf(src)
-		A.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
-		if (prob(25))
-			A.throw_at(get_step(src, pick(alldirs)), 1, 1)
-	src.drop_from_slot(src.r_hand)
-	src.drop_from_slot(src.l_hand)
-	src.update_body()
-	logTheThing(LOG_STATION, src, "drops the items they were juggling")
-
-/mob/living/carbon/human/proc/remove_juggle(atom/movable/thing)
-	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
-	thing.layer = initial(thing.layer)
-	src.juggle_dummy.vis_contents -= thing
-	animate_spin(thing, parallel = FALSE, looping = 0)
-	thing.pixel_x = initial(thing.pixel_x)
-	thing.pixel_y = initial(thing.pixel_y)
-	thing.layer = initial(thing.layer)
-	src.juggling -= thing
-
-/mob/living/carbon/human/proc/add_juggle(atom/movable/thing)
-	if (!thing || src.stat)
-		return
-	if (istype(thing, /obj/item/grab))
-		return
-	src.u_equip(thing)
-	if (thing.loc != src)
-		thing.set_loc(src)
-	if (src.juggling())
-		var/items = ""
-		var/count = 0
-		for (var/atom/movable/juggled in src.juggling)
-			count++
-			if (length(src.juggling) > 1 && count == src.juggling.len)
-				items += " and [juggled]"
-			else
-				items += ", [juggled]"
-		items = copytext(items, 3)
-		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)] [were_or_was(src)] already juggling!")
-	else
-		src.visible_message("<b>[src]</b> starts juggling [thing]!")
-	src.juggling += thing
-	if(isnull(src.juggle_dummy))
-		src.juggle_dummy = new(null)
-		src.juggle_dummy.name = null
-		src.juggle_dummy.mouse_opacity = FALSE
-		src.juggle_dummy.Scale(2/3, 2/3)
-		src.juggle_dummy.layer = src.layer + 0.1
-		src.juggle_dummy.appearance_flags |= RESET_COLOR | RESET_ALPHA
-		src.vis_contents += src.juggle_dummy
-	src.juggle_dummy.vis_contents += thing
-	thing.layer = src.layer + 0.1
-	animate_juggle(thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_juggle)) //there are so many ways juggled things can be stolen I'm just doing this
-	JOB_XP(src, "Clown", 1)
-	if (isitem(thing))
-		var/obj/item/i = thing
-		i.on_spin_emote(src)
-	src.update_body()
-	logTheThing(LOG_STATION, src, "starts juggling [thing].")
-
-/mob/living/carbon/human/relaymove(mob/user, direction, delay, running)
-	if ((user in src.juggling) && !ON_COOLDOWN(user, "resist_juggle", 1 SECOND))
-		boutput(user, SPAN_ALERT("You attempt to wriggle free from the unending juggling."))
-		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-		if (prob(15))
-			src.remove_juggle(user)
-			user.set_loc(src.loc)
-
 /mob/living/carbon/human/return_air(direct = FALSE)
 	if (!direct)
 		return src.loc?.return_air()
@@ -2742,20 +2623,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	else // updates are called by the mutantrace datum. lets not call it a million times
 		src.update_body()
 		src.update_clothing()
-
-/mob/living/carbon/human/verb/change_hud_style()
-	set name = "Change HUD Style"
-	set desc = "Selects what style HUD you would like to use."
-	set category = "Commands"
-
-	if (!src.hud) // uh?
-		return src.show_text("<b>Somehow you have no HUD! Please alert a coder!</b>", "red")
-
-	var/selection = tgui_input_list(usr, "What style HUD style would you like?", "Selection", hud_style_selection)
-	if (!selection)
-		return
-
-	src.force_hud_style(selection)
 
 /mob/living/carbon/human/proc/force_hud_style(var/selection)
 	if (!selection)
@@ -3036,14 +2903,13 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		return FALSE
 
 /mob/living/carbon/human/empty_hands()
+	..()
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
 	src.hand = 1
 	drop_item()
 	src.hand = h
-	if (src.juggling())
-		src.drop_juggle()
 
 /mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)
 	.= delay
@@ -3069,7 +2935,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/turf/T = get_turf(src)
 
 	if (T)
-		if (T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
+		if (space_movement && T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
 			. -= space_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
@@ -3084,18 +2950,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
-
-	if(isobj(AM) && src.juggling())
-		if (prob(40))
-			src.visible_message(SPAN_ALERT("<b>[src]<b> gets hit in the face by [AM]!"))
-			src.TakeDamageAccountArmor("head", AM.throwforce, 0)
-		else
-			if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
-				src.drop_juggle()
-			else
-				SPAWN(0) //wait for the throw to have fully ended (yes I know this is bad, feel free to fix it if you can figure out how to make throws end early)
-					src.add_juggle(AM)
-		return
 
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
 		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
@@ -3322,32 +3176,25 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		if (-INFINITY to 0)
 			src.health_mon.icon_state = "0"
 
-/mob/living/carbon/human/proc/apply_automated_arrest(var/reason, var/details, var/major_crime = FALSE, var/requires_camera_seen = TRUE, var/use_visible_name = TRUE)
-	if(!seen_by_camera(src) && requires_camera_seen)
+/mob/living/carbon/human/proc/apply_automated_arrest(reason, requires_camera_seen = TRUE, use_visible_name = TRUE)
+	if (requires_camera_seen && !global.seen_by_camera(src))
 		return
+
 	var/target_name = src.name
-	if(!use_visible_name)
+	if (!use_visible_name || src.face_visible())
 		target_name = src.real_name
-	else if(src.face_visible())
-		target_name = src.real_name
-	var/crime_field = "mi_crim"
-	if(major_crime)
-		crime_field = "ma_crim"
 
-	var/datum/db_record/sec_record = data_core.security.find_record("name", target_name)
-	if(!sec_record)
+	var/datum/db_record/personnel/security/record = global.data_core.security.find_record("name", target_name)
+	if (!record || (record["criminal"] == SECURITY::ARREST::STATE::ARREST))
 		return
-	if(sec_record["criminal"] == ARREST_STATE_ARREST)
-		return
-	sec_record["criminal"] = ARREST_STATE_ARREST
-	sec_record[crime_field] = reason
-	if(details)
-		sec_record["[crime_field]_d"] = details
 
-	for (var/mob/living/carbon/human/H in mobs) //Anyone could be pretending to be the target, all of them need updating
-		if (H.real_name == target_name || H.name == target_name)
-			H.update_arrest_icon()
-	return
+	var/datum/db_record/citation/arrest/arrest = new(
+		target = target_name,
+		issuer = "MAINFRAME",
+		issuer_job = "N/A",
+		reason = reason,
+	)
+	global.data_core.arrests.add_record(arrest)
 
 /mob/living/carbon/human/proc/update_arrest_icon()
 	if (!src.arrestIcon)
@@ -3358,19 +3205,19 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/datum/db_record/record = data_core.security.find_record("name", visibleName)
 	if(record)
 		var/criminal = record["criminal"]
-		if(criminal == ARREST_STATE_ARREST || criminal == ARREST_STATE_DETAIN || criminal == ARREST_STATE_SUSPECT || criminal == ARREST_STATE_PAROLE || criminal == ARREST_STATE_INCARCERATED || criminal == ARREST_STATE_RELEASED || \
-				criminal == ARREST_STATE_CLOWN)
+		if(criminal == SECURITY::ARREST::STATE::ARREST || criminal == SECURITY::ARREST::STATE::DETAIN || criminal == SECURITY::ARREST::STATE::SUSPECT || criminal == SECURITY::ARREST::STATE::PAROLE || criminal ==SECURITY::ARREST::STATE::INCARCERATED || criminal == SECURITY::ARREST::STATE::RELEASED || \
+				criminal == SECURITY::ARREST::STATE::CLOWN)
 			arrestState = criminal
-	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
+	if (arrestState != SECURITY::ARREST::STATE::ARREST) // Contraband overrides non-arrest statuses, now check for contraband
 		var/obj/item/implant/counterrev/implant = locate() in src.implant
 		if (implant?.online)
 			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
 			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
-				arrestState = ARREST_STATE_REVHEAD
+				arrestState = SECURITY::ARREST::STATE::REVHEAD
 			else if (M?.mind?.get_antagonist(ROLE_REVOLUTIONARY))
-				arrestState = ARREST_STATE_LOYAL_IN_PROGRESS
+				arrestState = SECURITY::ARREST::STATE::LOYAL_IN_PROGRESS
 			else
-				arrestState = ARREST_STATE_LOYAL
+				arrestState = SECURITY::ARREST::STATE::LOYAL
 		else
 			var/obj/item/card/id/myID = 0
 			//mbc : its faster to check if the item in either hand has a registered owner than doing istype on equipped()
@@ -3387,7 +3234,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				has_contraband_permit = (access_contrabandpermit in myID.access)
 				has_carry_permit = (access_carrypermit in myID.access)
 			if ((!has_contraband_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS) > 0))
-				arrestState = ARREST_STATE_CONTRABAND
+				arrestState = SECURITY::ARREST::STATE::CONTRABAND
 	src.arrestIcon.icon_state = arrestState
 
 /mob/living/carbon/human/get_genetic_traits()
@@ -3467,7 +3314,7 @@ mob/living/carbon/human/has_genetics()
 			if (istype(I, /obj/item/implant/projectile))
 				wound_count++
 		if(wound_count)
-			scan.add_text("Gunshot wounds: [wound_count] fragments detected")
+			scan.add_text("Gunshot wounds: [wound_count] fragments detected") // Seems to double-count for some reason?
 
 /mob/living/carbon/human/proc/get_fingerprint(var/ignore_gloves = FALSE, force_hand = -1)
 	RETURN_TYPE(/datum/forensic_data/fingerprint)

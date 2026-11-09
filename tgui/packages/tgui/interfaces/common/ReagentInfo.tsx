@@ -62,6 +62,7 @@ export interface Reagent {
   colorG: number;
   colorB: number;
   state?: MatterState;
+  overdose?: number;
 }
 
 export const NoContainer: ReagentContainer = {
@@ -283,6 +284,11 @@ export const ReagentList = React.memo(
                     color={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
                   />
                   {`( ${reagent.volume}u ) ${reagent.name}`}
+                  {reagent.overdose
+                    ? reagent.volume > reagent.overdose && (
+                        <span style={{ color: 'red' }}> - Overdose!</span>
+                      )
+                    : null}
                 </Flex.Item>
                 {renderButtons && (
                   <Flex.Item nowrap>{renderButtons(reagent)}</Flex.Item>

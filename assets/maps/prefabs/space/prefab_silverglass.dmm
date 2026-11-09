@@ -353,7 +353,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "kq" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/green/corner{
 	dir = 1
 	},
@@ -991,7 +991,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/storage/tape_drive,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/airless/darkblue,
 /area/prefab/silverglass/research)
 "Jx" = (
@@ -1170,7 +1170,7 @@
 	},
 /area/prefab/silverglass/research)
 "QN" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/prefab/silverglass/eats)
 "QU" = (
@@ -1503,7 +1503,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/stairs/wide/other,
 /area/prefab/silverglass/bay)
 "ZG" = (

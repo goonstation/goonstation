@@ -1,30 +1,33 @@
 declare const Byond, window;
 
-import { useBackend } from '../../../backend';
-import { useActions, useStates } from '.';
-import { BoardgameData } from './types';
+import { BoardInfoType, TileSizeType, UserDataType } from './types';
 
-export const adjustSizes = () => {
-  adjustTileSizeType();
+export const adjustSizes = (
+  boardInfo: BoardInfoType | undefined,
+  tileSize: TileSizeType,
+  setTileSizeType: (size: TileSizeType) => void,
+) => {
+  adjustTileSizeType(boardInfo, tileSize, setTileSizeType);
   adjustWindowSize();
 };
 
-const adjustTileSizeType = () => {
-  const { data } = useBackend<BoardgameData>();
-  const { setTileSizeType, tileSize } = useStates();
-
+const adjustTileSizeType = (
+  boardInfo: BoardInfoType | undefined,
+  tileSize: TileSizeType,
+  setTileSizeType: (size: TileSizeType) => void,
+) => {
   const board = document.getElementsByClassName('boardgame__board-inner')[0];
   let tileWidth: number = 0;
   let tileHeight: number = 0;
 
-  if (board) {
+  if (board && boardInfo) {
     const boardRect = board.getBoundingClientRect();
 
     const boardWidth = boardRect.width - 40; // Full width of the board
     const boardHeight = boardRect.height - 40; // Full height of the board
 
-    tileWidth = boardWidth / data.boardInfo.width; // Width of a single tile
-    tileHeight = boardHeight / data.boardInfo.height; // Height of a single tile
+    tileWidth = boardWidth / boardInfo.width; // Width of a single tile
+    tileHeight = boardHeight / boardInfo.height; // Height of a single tile
   }
 
   // Compare old tile size to new tile size
@@ -43,26 +46,27 @@ const adjustWindowSize = () => {
   });
 };
 
-export const handleEvents = () => {
-  const { act, data } = useBackend<BoardgameData>();
-  const { paletteClear, pieceDeselect } = useActions(act);
-
+export const handleEvents = (
+  currentUser: UserDataType | undefined,
+  paletteClear: (ckey: string) => void,
+  pieceDeselect: (ckey: string) => void,
+) => {
   document.body.oncontextmenu = (e) => {
     e.preventDefault();
     if (e.button === 2) {
-      if (data.currentUser?.palette) {
-        paletteClear(data.currentUser.ckey);
+      if (currentUser?.palette) {
+        paletteClear(currentUser.ckey);
       }
-      if (data.currentUser?.selected) {
-        pieceDeselect(data.currentUser.ckey);
+      if (currentUser?.selected) {
+        pieceDeselect(currentUser.ckey);
       }
     }
     return false;
   };
 
   document.body.onmouseleave = () => {
-    if (data.currentUser?.palette) {
-      paletteClear(data.currentUser.ckey);
+    if (currentUser?.palette) {
+      paletteClear(currentUser.ckey);
     }
   };
 };

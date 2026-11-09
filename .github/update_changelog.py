@@ -47,6 +47,7 @@ labels_to_emoji = {
 	'a-security': '👮',
 	'a-silicons': '🤖',
 	'a-station-systems': '💡',
+	'a-computers': '🖥️',
 	'a-status-effects': '⏰',
 	'a-tooling': '🔧',
 	'a-traits': '💪',

@@ -20,4 +20,4 @@ ABSTRACT_TYPE(/datum/dwaine_shell_script_operator)
 
 /// Execute this shell script operator.
 /datum/dwaine_shell_script_operator/proc/execute(list/token_stream)
-	return SCRIPT_SUCCESS
+	return DWAINE::ERR::SHELL::SCRIPT::SUCCESS
