@@ -26,6 +26,8 @@
 	New()
 		..()
 		START_TRACKING
+		if (!RADIO.department_only)
+			src.unlock()
 
 	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/device/radio_upgrade))
