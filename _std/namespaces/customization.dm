@@ -2,13 +2,13 @@
 /// Namespace for `/datum/customization_slot` and `/datum/customization_style`.
 CREATE_NAMESPACE(CUSTOMIZATION)
 
+/// `/datum/customization_slot` slots. Exclusively used for hair at the moment.
+CREATE_NAMESPACE(CUSTOMIZATION, SLOT)
+
 /// `/datum/customization_slot` layers. E.g. bottom, middle, top hair layers.
 CREATE_NAMESPACE(CUSTOMIZATION, LAYER)
 
-/// `/datum/customization_slot` slots. E.g. hair, underwear.
-CREATE_NAMESPACE(CUSTOMIZATION, SLOT)
-
-/// Customization style categories. E.g. short, long hair.
+/// `/datum/customization_style` categories. E.g. short, long hair.
 CREATE_NAMESPACE(CUSTOMIZATION, CATEGORY)
 
 //------------ Hair ------------//
@@ -20,7 +20,7 @@ ADD_TO_NAMESPACE(CUSTOMIZATION, LAYER)(var/const/HAIR_BOTTOM = "layer_hair-botto
 ADD_TO_NAMESPACE(CUSTOMIZATION, LAYER)(var/const/HAIR_MIDDLE = "layer_hair-middle")
 ADD_TO_NAMESPACE(CUSTOMIZATION, LAYER)(var/const/HAIR_TOP = "layer_hair-top")
 
-// Hair types.
+// Hair categories.
 ADD_TO_NAMESPACE(CUSTOMIZATION, CATEGORY)(var/const/HAIR_SHORT = "cat_hair-short")
 ADD_TO_NAMESPACE(CUSTOMIZATION, CATEGORY)(var/const/HAIR_LONG = "cat_hair-long")
 ADD_TO_NAMESPACE(CUSTOMIZATION, CATEGORY)(var/const/HAIR_HAIRUP = "cat_hair-hairup")
@@ -32,8 +32,7 @@ ADD_TO_NAMESPACE(CUSTOMIZATION, CATEGORY)(var/const/HAIR_EYEBROWS = "cat_hair-ey
 ADD_TO_NAMESPACE(CUSTOMIZATION, CATEGORY)(var/const/HAIR_MAKEUP = "cat_hair-makeup")
 ADD_TO_NAMESPACE(CUSTOMIZATION, CATEGORY)(var/const/HAIR_BIOLOGICAL = "cat_hair-biological")
 
-//------------ Customization style groups ------------//
-/// Head hair types. Can be cut with scissors.
+/// Head hair categories. Can be cut with scissors.
 ADD_TO_NAMESPACE(CUSTOMIZATION)(var/list/group__hair_head = list(
 	CUSTOMIZATION::CATEGORY::HAIR_SHORT,
 	CUSTOMIZATION::CATEGORY::HAIR_LONG,
@@ -41,14 +40,14 @@ ADD_TO_NAMESPACE(CUSTOMIZATION)(var/list/group__hair_head = list(
 	CUSTOMIZATION::CATEGORY::HAIR_GIMMICK,
 ))
 
-/// Facial hair types.
+/// Facial hair categories.
 ADD_TO_NAMESPACE(CUSTOMIZATION)(var/list/group__hair_facial = list(
 	CUSTOMIZATION::CATEGORY::HAIR_MOUSTACHE,
 	CUSTOMIZATION::CATEGORY::HAIR_BEARD,
 	CUSTOMIZATION::CATEGORY::HAIR_SIDEBURNS,
 ))
 
-/// Facial hair types + eyebrows. Can be cut with a razor.
+/// Facial hair categories + eyebrows. Can be cut with a razor.
 ADD_TO_NAMESPACE(CUSTOMIZATION)(var/list/group__hair_razor = list(
 	CUSTOMIZATION::CATEGORY::HAIR_MOUSTACHE,
 	CUSTOMIZATION::CATEGORY::HAIR_BEARD,
@@ -57,7 +56,7 @@ ADD_TO_NAMESPACE(CUSTOMIZATION)(var/list/group__hair_razor = list(
 ))
 
 //------------ Helpers ------------//
-/// Sort order for hair types. Always mirror with any new `/datum/customization_style` types.
+/// Sort order for categories within the `CUSTOMIZATION::CATEGORY` namespace, based on list index. Always mirror with any new categories.
 ADD_TO_NAMESPACE(CUSTOMIZATION)(var/list/sort_order = list(
 	CUSTOMIZATION::CATEGORY::HAIR_SHORT,
 	CUSTOMIZATION::CATEGORY::HAIR_LONG,
