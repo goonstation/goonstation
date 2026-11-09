@@ -1,3 +1,12 @@
+/**
+  * # N.B.
+  * The current system for locked styles must instantiate a `/datum/customization_style` to determine eligibility for the unlock. This is an ideal
+  *	candidate for offloading to the GoonHub API or something so that `/datum/customization_style` only serves static data. As this feature remains
+  * completely un-used on the public codebase, the necessary changes could be left on the backburner or we could even fully deprecate style unlock
+  * support. Would need to confirm on Secret.
+  * - @DisturbHerb
+**/
+
 /// `/datum/customization_style` types which are available in character preferences.
 var/global/list/always_available_styles = list()
 /// `/datum/customization_style` types which are not available in character preferences but are otherwise obtainable without special requirements.
@@ -5,12 +14,43 @@ var/global/list/non_setup_styles = list()
 /// `/datum/customization_style` types which have special unlock requirements.
 var/global/list/locked_styles = list()
 
+/// Generates the lists of `/datum/customization_style` types for future recall.
+/proc/build_customization_style_caches()
+	. = TRUE
+
+	var/list/always_available_buffer = list()
+	var/list/non_setup_buffer = list()
+	var/list/locked_buffer = list()
+
+	for (var/datum/customization_style/style_type as anything in concrete_typesof(/datum/customization_style))
+		if (style_type::req_unlock)
+			locked_buffer += style_type
+			continue
+		if (!style_type::allow_prefs)
+			non_setup_buffer += style_type
+			continue
+		always_available_buffer += style_type
+
+	if (!length(always_available_buffer) && !length(non_setup_buffer) && !length(locked_buffer))
+		return FALSE
+
+	global.always_available_styles = always_available_buffer
+	global.non_setup_styles = non_setup_buffer
+	global.locked_styles = locked_buffer
+
+/// For sorting `/datum/customization_style`s when displayed as a list.
+/proc/cmp_customization_style(datum/customization_style/a, datum/customization_style/b)
+	var/typeinfo/datum/customization_style/typeinfo_a = get_type_typeinfo(a)
+	var/typeinfo/datum/customization_style/typeinfo_b = get_type_typeinfo(b)
+
+	return cmp_numeric_asc(CUSTOMIZATION.sort_order.Find(typeinfo_a.style_category), CUSTOMIZATION.sort_order.Find(typeinfo_b.style_category))
+
 /**
   * # /proc/get_available_custom_style_types()
   * Returns a list of `/datum/customization_style`s filtered by slot, category, and gender. Can exclude gimmick and non-random types.
   *
   * ## Arguments
-  * * `client/C`: 		Optional, will return any `customization_style`s that the client fulfills the unlock conditions for.
+  * * `C`: 				Optional, will return any `customization_style`s that the client fulfills the unlock conditions for.
   * * `style_filter`: 	Optional, accepts `CUSTOMIZATION::SLOT` and/or `CUSTOMIZATION::CATEGORY` individually and as a list. Will filter out any
   * 					`customization_style` which fails an equality check (inclusive OR).
   * * `gender`:			Optional, accepts native BYOND gender constants but in practice only `MALE` and `FEMALE` are ever defined on a style. Will
@@ -19,7 +59,7 @@ var/global/list/locked_styles = list()
   * * `random_only`:	If `TRUE`, filter out any `customization_style` that is blacklisted from random character appearances.
   * * `bypass_lock`:	If `TRUE`, add all styles with special unlock requirements to the catalog even if `C`, when defined, fails to meet the
   * 					requirements.
-*/
+**/
 /proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, pref_blacklist = TRUE, random_only = FALSE, bypass_lock = FALSE)
 	var/list/output = list()
 	var/list/style_catalog = list()
@@ -75,55 +115,60 @@ var/global/list/locked_styles = list()
 	output = length(output) ? sortListCopy(output, /proc/cmp_customization_style) : output
 	. = output
 
-/// Generates the lists of `/datum/customization_style` types for future recall.
-/proc/build_customization_style_caches()
-	. = TRUE
-
-	var/list/always_available_buffer = list()
-	var/list/non_setup_buffer = list()
-	var/list/locked_buffer = list()
-
-	for (var/datum/customization_style/style_type as anything in concrete_typesof(/datum/customization_style))
-		if (style_type::req_unlock)
-			locked_buffer += style_type
-			continue
-		if (!style_type::allow_prefs)
-			non_setup_buffer += style_type
-			continue
-		always_available_buffer += style_type
-
-	if (!length(always_available_buffer) && !length(non_setup_buffer) && !length(locked_buffer))
-		return FALSE
-
-	global.always_available_styles = always_available_buffer
-	global.non_setup_styles = non_setup_buffer
-	global.locked_styles = locked_buffer
-
-/// For sorting `/datum/customization_style`s when displayed as a list.
-/proc/cmp_customization_style(datum/customization_style/a, datum/customization_style/b)
-	var/typeinfo/datum/customization_style/typeinfo_a = get_type_typeinfo(a)
-	var/typeinfo/datum/customization_style/typeinfo_b = get_type_typeinfo(b)
-
-	return cmp_numeric_asc(CUSTOMIZATION.sort_order.Find(typeinfo_a.style_category), CUSTOMIZATION.sort_order.Find(typeinfo_b.style_category))
-
-/proc/select_custom_style(mob/living/carbon/human/user, style_filter = CUSTOMIZATION::SLOT::HAIR, pref_blacklist = TRUE)
+/**
+  * # /proc/select_custom_style()
+  * Shows `user` a modal of `/datum/customization_style`s they can pick.
+  *
+  * ## Arguments
+  * * `user`: 			Required, the target to show the modal to. Also used to determine eligibility for `customization_style`s with unlock
+  *						requirements.
+  * * `style_filter`: 	Optional, accepts `CUSTOMIZATION::SLOT` and/or `CUSTOMIZATION::CATEGORY` individually and as a list. Will filter out any
+  * 					`customization_style` which fails an equality check (inclusive OR).
+  * * `pref_blacklist`:	If `FALSE`, filter out any `customization_style` that is blacklisted from character preferences.
+  * * `bypass_lock`:	If `TRUE`, add all styles with special unlock requirements to the catalog even if `user` fails to meet the requirements.
+**/
+/proc/select_custom_style(mob/living/carbon/human/user, style_filter = CUSTOMIZATION::SLOT::HAIR, pref_blacklist = TRUE, bypass_lock = FALSE)
 	var/list/datum/customization_style/options = list()
-	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(user.client, style_filter, pref_blacklist = pref_blacklist))
+	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(user.client, style_filter, pref_blacklist = pref_blacklist, bypass_lock = bypass_lock))
 		options[initial(style_type.name)] = style_type
 	var/new_style = tgui_input_list(user, "Please select style", "Style", options)
 	var/selected_type = options[new_style]
 	if (selected_type)
 		return new selected_type
 
-/proc/find_style_by_name(var/target_name, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, pref_blacklist = TRUE)
-	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, pref_blacklist = pref_blacklist))
+/**
+  * # /proc/find_style_by_name()
+  * Returns a `/datum/customization_style` with `name` matching the input `target_name`.
+  *
+  * ## Arguments
+  * * `target_name`:	The `/datum/customization_style` `name` to match. Strict equality.
+  * * `C`: 				Optional, will return any `customization_style`s that the client fulfills the unlock conditions for.
+  * * `style_filter`: 	Optional, accepts `CUSTOMIZATION::SLOT` and/or `CUSTOMIZATION::CATEGORY` individually and as a list. Will filter out any
+  * 					`customization_style` which fails an equality check (inclusive OR).
+  * * `pref_blacklist`:	If `FALSE`, filter out any `customization_style` that is blacklisted from character preferences.
+  * * `bypass_lock`:	If `TRUE`, add all styles with special unlock requirements to the catalog even if `user` fails to meet the requirements.
+**/
+/proc/find_style_by_name(var/target_name, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, pref_blacklist = TRUE, bypass_lock = FALSE)
+	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, pref_blacklist = pref_blacklist, bypass_lock = bypass_lock))
 		if (cmptext(initial(style_type.name), target_name))
 			return new style_type
 	stack_trace("Couldn't find a customization_style with the name \"[target_name]\".")
 	return new /datum/customization_style/none
 
-/proc/find_style_by_id(var/target_id, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, pref_blacklist = TRUE)
-	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, pref_blacklist = pref_blacklist))
+/**
+  * # /proc/find_style_by_id()
+  * Returns a `/datum/customization_style` with `id` matching the input `target_id`.
+  *
+  * ## Arguments
+  * * `target_id`:	The `/datum/customization_style` `id` to match. Strict equality.
+  * * `C`: 				Optional, will return any `customization_style`s that the client fulfills the unlock conditions for.
+  * * `style_filter`: 	Optional, accepts `CUSTOMIZATION::SLOT` and/or `CUSTOMIZATION::CATEGORY` individually and as a list. Will filter out any
+  * 					`customization_style` which fails an equality check (inclusive OR).
+  * * `pref_blacklist`:	If `FALSE`, filter out any `customization_style` that is blacklisted from character preferences.
+  * * `bypass_lock`:	If `TRUE`, add all styles with special unlock requirements to the catalog even if `user` fails to meet the requirements.
+**/
+/proc/find_style_by_id(var/target_id, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, pref_blacklist = TRUE, bypass_lock = FALSE)
+	for (var/datum/customization_style/style_type as anything in get_available_custom_style_types(C, style_filter, pref_blacklist = pref_blacklist, bypass_lock = bypass_lock))
 		if (initial(style_type.id) == target_id)
 			return new style_type
 	stack_trace("Couldn't find a customization_style with the id \"[target_id]\".")
@@ -139,7 +184,7 @@ TYPEINFO(/datum/customization_style)
 	var/style_category = null
 
 /// /datum/customization_style
-/// Used in customizing physical appearance in character preferences, genetics, barber interactions, etc.
+/// Static data used in customizing physical appearance in character preferences, genetics, barber interactions, etc.
 ABSTRACT_TYPE(/datum/customization_style)
 /datum/customization_style
 	/// Display name.
