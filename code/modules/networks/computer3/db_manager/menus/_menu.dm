@@ -1,6 +1,8 @@
 /datum/db_manager_menu
 	/// The database manager program that this menu belongs to.
 	var/datum/computer/file/terminal_program/db_manager/parent = null
+	/// Whether this menu gets added to the user journey list.
+	var/add_to_user_journey = TRUE
 	/// Whether this menu is currently accepting commands.
 	var/accept_commands = TRUE
 

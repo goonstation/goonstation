@@ -472,6 +472,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
+	make_reagents()
+		..()
+		src.reagents.add_reagent("juice_grape", 10)
+
 /obj/item/reagent_containers/food/snacks/plant/grape/green
 	name = "grapes"
 	desc = "Not the purple ones."
@@ -530,7 +534,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		src.reagents.add_reagent("juice_grapefruit",10)
+		src.reagents.add_reagent("juice_cherry",10)
 
 /obj/item/reagent_containers/food/snacks/plant/melon
 	name = "melon"
