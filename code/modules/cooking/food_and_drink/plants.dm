@@ -530,7 +530,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		src.reagents.add_reagent("juice_grapefruit",10)
+		src.reagents.add_reagent("juice_cherry",10)
 
 /obj/item/reagent_containers/food/snacks/plant/melon
 	name = "melon"
