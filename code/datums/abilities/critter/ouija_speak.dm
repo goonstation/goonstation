@@ -74,11 +74,11 @@
 		icon_state = "song_speak"
 		sayflag = SAYFLAG_LOUD_SINGING
 		spooky = TRUE
-		var/border_icon = 'icons/mob/wraith_ui.dmi'
-		var/border_state = "trickster_frame"
+		border_icon = 'icons/mob/wraith_ui.dmi'
+		border_icon_state = "trickster_frame"
 
 		onAttach(datum/abilityHolder/holder)
 			..()
 			var/atom/movable/screen/ability/topBar/B = src.object
-			B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+			B.UpdateOverlays(image(border_icon, border_icon_state), "mob_type")
 

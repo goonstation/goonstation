@@ -158,6 +158,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 	maxDuration = null
 	unique = 1
 	var/counter = 0
+	// TODO: Visual effect on owner?
 
 	onUpdate(timePassed)
 		counter += timePassed
@@ -167,6 +168,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 			if (length(juggler.juggling))
 				var/atom/movable/juggled = pick(juggler.juggling)
 				throw_thing(juggler, juggled)
+			// TODO: autocancel when nothing juggled?
 		. = ..(timePassed)
 
 	proc/throw_thing(var/mob/living/juggler, var/atom/movable/picked_thing)

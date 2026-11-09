@@ -1,14 +1,14 @@
 /datum/targetable/critter/demon_doll
 	name = "???"
 	desc = "You shouldn't be seeing this."
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "trickster_frame"
+	border_icon = 'icons/mob/wraith_ui.dmi'
+	border_icon_state = "trickster_frame"
 
 	onAttach(datum/abilityHolder/holder)
 		..()
 
 		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+		B.UpdateOverlays(image(border_icon, border_icon_state), "mob_type")
 
 /datum/targetable/critter/demon_doll/devious_song
 	name = "Devious Song"
@@ -50,6 +50,7 @@
 		poof.color = "#670086"
 		poof.setup(src.holder.owner.loc)
 		new chosen_trap(T, src.holder.owner, src.holder.owner)
+		// TODO: playsound()?
 		src.traps_laid++
 
 /datum/targetable/critter/demon_doll/shrieking_song
@@ -78,20 +79,25 @@
 	targeted = 1
 	target_anything = 1
 
+	// TODO: What if this pulled a target towards you, but juggled only if it hits you like juggling an object tossed at you?
+
 	cast(atom/target)
+		if (!ismovable(target))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/obj/juggled_obj
 		if (isobj(target))
 			juggled_obj = target
-			if (juggled_obj.anchored || juggled_obj == src.holder.owner || juggled_obj.anchored == ANCHORED_ALWAYS)
+			if (juggled_obj.anchored > UNANCHORED || juggled_obj == src.holder.owner)
 				boutput(src.holder.owner, SPAN_ALERT("The void won't grant you enough strength for that."))
-				return
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		. = ..()
-		var/mob/living/juggler = src.holder.owner
-		var/mob/living/victim
+
 		if (ismob(target))
-			victim = target
+			var/mob/living/victim = target
 			if (victim.juggling)
-				victim.drop_juggle()
+				victim.drop_juggle() // no juggleception :(
+
+		var/mob/living/juggler = src.holder.owner
 		juggler.playsound_local(juggler.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 40, 0)
 		juggler.add_juggle(target)
 
@@ -115,6 +121,7 @@
 			src.icon_state = "song_gravity_on"
 			src.active = TRUE
 			src.holder.owner.setStatus("gravity_song")
+			// TODO: playsound()?
 
 /datum/targetable/critter/demon_doll/bouncy_song
 	name = "Bouncy Song"
@@ -155,6 +162,8 @@
 	shot_sound = null
 	var/max_bounces = 4
 	var/broke_lamp = FALSE
+
+	// TODO: Musical note particle trail
 
 	on_launch(obj/projectile/P)
 		..()
@@ -225,16 +234,3 @@
 		var/chosen_trap = pick(concrete_typesof(/obj/machinery/wraith/runetrap/))
 		var/obj/machinery/wraith/runetrap/trap = new chosen_trap(hit.loc, arming_time = 1 SECONDS)
 		trap.free_trap = TRUE
-
-
-
-
-
-
-
-
-
-
-
-
-
