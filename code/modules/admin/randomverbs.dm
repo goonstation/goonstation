@@ -3107,6 +3107,7 @@ var/global/force_radio_maptext = FALSE
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
+	RADIO.department_only = TRUE
 	for_by_tcl(headset, /obj/item/device/radio/headset)
 		headset.lock()
 
@@ -3117,6 +3118,7 @@ var/global/force_radio_maptext = FALSE
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
+	RADIO.department_only = FALSE
 	for_by_tcl(headset, /obj/item/device/radio/headset)
 		headset.unlock()
 
