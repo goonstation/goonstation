@@ -16359,7 +16359,7 @@
 /area/station/hallway/primary/south)
 "dOu" = (
 /turf/space,
-/area/shuttle/merchant_shuttle/left_station/cogmap2)
+/area/shuttle/merchant_shuttle/left_station/decarabia)
 "dOA" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/brig{
@@ -76948,7 +76948,7 @@
 /area/station/medical/crematorium)
 "rON" = (
 /turf/space,
-/area/shuttle/merchant_shuttle/right_station/cogmap)
+/area/shuttle/merchant_shuttle/right_station/decarabia)
 "rOR" = (
 /obj/cable{
 	icon_state = "1-2"

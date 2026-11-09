@@ -752,14 +752,13 @@ ABSTRACT_TYPE(/area/shuttle)
 	#ifdef UNDERWATER_MAP
 	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	occlude_foreground_parallax_layers = FALSE
+	// Donut3 and Decarabia have "indoor" escape shuttles
 	#elif defined(MAP_OVERRIDE_DONUT3) || defined(MAP_OVERRIDE_DECARABIA)
 	ambient_light_source = AMBIENT_LIGHT_SRC_INVLD
 	occlude_foreground_parallax_layers = TRUE
+	filler_turf = "/turf/simulated/floor/plating/jen"
 	#else
 	occlude_foreground_parallax_layers = FALSE
-	#endif
-	#ifdef MAP_OVERRIDE_DONUT3
-	filler_turf = "/turf/simulated/floor/plating/jen"
 	#endif
 
 /area/shuttle/escape/centcom
@@ -903,6 +902,7 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 
 /area/shuttle/merchant_shuttle/diner_station
 	name = "Station Merchant Shuttle Dock Gamma"
+	icon_state = "shuttle_merch_d"
 #if defined(MAP_OVERRIDE_NADIR) // Nadir diner shuttle is in the trench
 	sound_group = "trench"
 	force_fullbright = 0
@@ -918,20 +918,12 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 /area/shuttle/merchant_shuttle/left_station
 	name = "Station Merchant Shuttle Dock Alpha"
 	icon_state = "shuttle2"
-	#ifdef MAP_OVERRIDE_DECARABIA
-	loc_string = "north-west"
-	#else
 	loc_string = "left"
-	#endif
 
 /area/shuttle/merchant_shuttle/right_station
 	name = "Station Merchant Shuttle Dock Beta"
 	icon_state = "shuttle2"
-	#ifdef MAP_OVERRIDE_DECARABIA
-	loc_string = "south"
-	#else
 	loc_string = "right"
-	#endif
 
 /area/shuttle/spacebus
 	name = "Space Bus"

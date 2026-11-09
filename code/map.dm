@@ -1192,6 +1192,8 @@ var/global/list/mapNames = list(
 		loc_string = "north"
 	sealab
 		icon_state = "shuttle_merch_l-sealab"
+	decarabia
+		loc_string = "north-west"
 
 /area/shuttle/merchant_shuttle/right_centcom
 	icon_state = "shuttle_merch_r"
@@ -1229,6 +1231,9 @@ var/global/list/mapNames = list(
 		loc_string = "south"
 	sealab
 		icon_state = "shuttle_merch_r-sealab"
+
+	decarabia
+		loc_string = "south"
 
 /proc/dir2nautical(var/req_dir, var/fore_dir = NORTH, var/side = 0)
 	if (!isnum(req_dir) || !isnum(fore_dir))
