@@ -22,6 +22,17 @@
 		if ((H.real_name == target_name) || (H.name == target_name))
 			H.update_arrest_icon()
 
+/datum/record_field/choice/criminal/input_load(datum/db_manager_menu/field_input/menu)
+	if (!length(global.data_core.get_open_arrests(src.parent["name"])))
+		return ..()
+
+	var/text = "Criminal status field cannot be altered while subject has open arrest warrants. Warrants may be accessed and closed from the citations list."
+	text += "<br><b>Options:</b>"
+	text += "<br>(1) Issue another arrest warrant."
+	text += "<br>(2) View citations."
+	text += "<br>(0) Back."
+	menu.parent.print_text(text)
+
 /datum/record_field/choice/criminal/input_text(datum/db_manager_menu/field_input/menu, text)
 	var/command = global.text2num_safe(menu.parent.parse_string(text)[1])
 	var/index_number = round(max(command, 0))
@@ -30,7 +41,12 @@
 
 	var/target_name = src.parent["name"]
 	if (length(global.data_core.get_open_arrests(target_name)))
-		menu.parent.print_text("<b>Error:</b> Cannot alter criminal status while subject has open arrest warrants.")
+		switch (index_number)
+			if (1)
+				menu.parent.switch_menu_to("issue_arrest", target_name)
+			if (2)
+				menu.parent.switch_menu_to("field_input", menu.record, "citations")
+
 		return
 
 	if (index_number > length(src.choices))

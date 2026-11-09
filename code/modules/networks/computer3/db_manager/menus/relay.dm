@@ -1,4 +1,5 @@
 /datum/db_manager_menu/relay
+	add_to_user_journey = FALSE
 	VAR_PRIVATE/datum/db_record_group/record_group = null
 	VAR_PRIVATE/menu_id = null
 
@@ -12,5 +13,4 @@
 	. = ..()
 
 /datum/db_manager_menu/relay/load()
-	src.parent.current_record_group = src.record_group
-	src.parent.switch_menu_to(src.menu_id)
+	src.parent.switch_record_group(src.record_group, src.menu_id)
