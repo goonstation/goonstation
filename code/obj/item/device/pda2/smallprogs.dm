@@ -1449,11 +1449,15 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	Topic(href, href_list)
 		var/req_id = href_list["id"]
 		var/datum/chem_request/request = chem_requests[req_id]
-		if(..() || !chem_requests || !request)
+
+		if(..())
 			return
 
 		if (href_list["update"])
 			refresh()
+
+		if(!chem_requests || !request)
+			return
 
 		if (href_list["deny"])
 			if (request)
