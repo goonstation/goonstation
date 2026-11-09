@@ -3209,6 +3209,25 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		STOP_TRACKING_CAT(TR_CAT_BUGS)
 		..()
 
+	setup_overlays()
+		fur_color = src.client?.preferences.AH.customizations["hair_bottom"].color
+		eye_color = src.client?.preferences.AH.e_color
+
+		var/image/overlay = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color1")
+		overlay.color = fur_color
+		src.UpdateOverlays(overlay, "hair")
+
+		var/image/overlay_eyes = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color2")
+		overlay_eyes.color = eye_color
+		src.UpdateOverlays(overlay_eyes, "eyes")
+
+	death()
+		if (fur_color)
+			var/image/overlay = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color1")
+			overlay.color = fur_color
+			src.UpdateOverlays(overlay, "hair")
+		..()
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
