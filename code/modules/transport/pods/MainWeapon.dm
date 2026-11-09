@@ -733,6 +733,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(user) user.u_equip(S)
 			I.set_loc(src)
 			src.steel_sheets = S
+			src.steel_sheets.max_stack = src.max_sheets
 		else
 			sheets_before = src.steel_sheets.amount
 			src.steel_sheets.stack_item(S)
@@ -1131,7 +1132,8 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	New()
 		. = ..()
 		src.steel_sheets = new /obj/item/sheet/steel(src)
-		src.steel_sheets.set_stack_amount(200)
+		src.steel_sheets.max_stack = src.max_sheets
+		src.steel_sheets.set_stack_amount(src.max_sheets)
 
 #undef EFIF_MODE_DRILL
 #undef EFIF_MODE_FLOORS
