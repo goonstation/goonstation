@@ -5,7 +5,22 @@ var/global/list/non_setup_styles = list()
 /// `/datum/customization_style` types which have special unlock requirements.
 var/global/list/locked_styles = list()
 
-/proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, pref_blacklist = TRUE, random_only = FALSE)
+/**
+  * # /proc/get_available_custom_style_types()
+  * Returns a list of `/datum/customization_style`s filtered by slot, category, and gender. Can exclude gimmick and non-random types.
+  *
+  * ## Arguments
+  * * `client/C`: 		Optional, will return any `customization_style`s that the client fulfills the unlock conditions for.
+  * * `style_filter`: 	Optional, accepts `CUSTOMIZATION::SLOT` and/or `CUSTOMIZATION::CATEGORY` individually and as a list. Will filter out any
+  * 					`customization_style` which fails an equality check (inclusive OR).
+  * * `gender`:			Optional, accepts native BYOND gender constants but in practice only `MALE` and `FEMALE` are ever defined on a style. Will
+  *						filter out any `customization_style` with a `gender` var mismatch. Usecase limited to character appearance randomization.
+  * * `pref_blacklist`:	If `FALSE`, filter out any `customization_style` that is blacklisted from character preferences.
+  * * `random_only`:	If `TRUE`, filter out any `customization_style` that is blacklisted from random character appearances.
+  * * `bypass_lock`:	If `TRUE`, add all styles with special unlock requirements to the catalog even if `C`, when defined, fails to meet the
+  * 					requirements.
+*/
+/proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, pref_blacklist = TRUE, random_only = FALSE, bypass_lock = TRUE)
 	var/list/output = list()
 	var/list/style_catalog = list()
 
@@ -19,7 +34,9 @@ var/global/list/locked_styles = list()
 	if (pref_blacklist)
 		style_catalog += global.non_setup_styles
 
-	if (isclient(C))
+	if (bypass_lock)
+		style_catalog += global.locked_styles
+	else if (isclient(C))
 		for (var/locked_style_type in global.locked_styles)
 			var/datum/customization_style/locked_style_instance = get_singleton(locked_style_type)
 			if (!locked_style_instance.check_available(C))
