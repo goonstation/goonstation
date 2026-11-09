@@ -20,7 +20,7 @@ var/global/list/locked_styles = list()
   * * `bypass_lock`:	If `TRUE`, add all styles with special unlock requirements to the catalog even if `C`, when defined, fails to meet the
   * 					requirements.
 */
-/proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, pref_blacklist = TRUE, random_only = FALSE, bypass_lock = TRUE)
+/proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, pref_blacklist = TRUE, random_only = FALSE, bypass_lock = FALSE)
 	var/list/output = list()
 	var/list/style_catalog = list()
 
