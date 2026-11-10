@@ -76,6 +76,10 @@ var/datum/event_controller/random_events
 			var/datum/random_event/RE = new X
 			antag_spawn_events += RE
 
+		#ifdef RP_MODE // no random antags for RP!!!
+		major_events -= antag_spawn_events
+		#endif
+
 		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn)-concrete_typesof(/datum/random_event/major/player_spawn/antag))
 			var/datum/random_event/RE = new X
 			player_spawn_events += RE
