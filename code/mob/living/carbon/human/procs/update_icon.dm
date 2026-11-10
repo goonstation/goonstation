@@ -307,12 +307,16 @@
 		if (wear_state in typeinfo?.clothing_icon_states["back"]) //checks if they are a mutantrace with special back sprites and then replaces them if they do
 			src.back.wear_image.icon = typeinfo.clothing_icons["back"]
 			no_offset = TRUE
-			src.back.wear_image.pixel_x = initial(src.back.wear_image.pixel_x)
-			src.back.wear_image.pixel_y = initial(src.back.wear_image.pixel_y)
+		else if (istype(src.back, /obj/item/clothing/suit) && (wear_state in typeinfo?.clothing_icon_states["overcoats"])) // Some overcoats also fit on the back slot. Please stop applying the body offset.
+			src.back.wear_image.icon = typeinfo.clothing_icons["overcoats"]
+			no_offset = TRUE
 		else
 			src.back.wear_image.icon = src.back.wear_image_icon
 		src.back.wear_image.icon_state = wear_state
-		if (!no_offset)
+		if (no_offset)
+			src.back.wear_image.pixel_x = initial(src.back.wear_image.pixel_x)
+			src.back.wear_image.pixel_y = initial(src.back.wear_image.pixel_y)
+		else
 			src.back.wear_image.pixel_x = 0
 			src.back.wear_image.pixel_y = body_offset
 		src.back.wear_image.layer = src.back.wear_layer

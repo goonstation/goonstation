@@ -582,7 +582,7 @@
 			handimage.icon_state = state
 
 			handimage.pixel_y = H.mutantrace.hand_offset + 6
-
+			SEND_SIGNAL(I, COMSIG_ITEM_SET_AS_LIMB, src)
 			if (H)
 				//H.update_clothing()
 				H.update_body()
@@ -714,7 +714,7 @@
 				state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
 
 			handimage.pixel_y = H.mutantrace.hand_offset + 6
-
+			SEND_SIGNAL(I, COMSIG_ITEM_SET_AS_LIMB, src)
 			if (H)
 				H.update_clothing()
 				H.update_body()
@@ -826,14 +826,14 @@
 
 /obj/item/parts/human_parts/arm/left/hot
 	name = "left hot arm"
-	icon_state = "arm_left"
+	icon_state = "arm_left_hot"
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
 	limb_type = /datum/limb/hot
-	handlistPart = "hand_left"
+	handlistPart = "l_arm_hot"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)
@@ -845,14 +845,14 @@
 
 /obj/item/parts/human_parts/arm/right/hot
 	name = "right hot arm"
-	icon_state = "arm_right"
+	icon_state = "arm_right_hot"
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
 	limb_type = /datum/limb/hot
-	handlistPart = "hand_right"
+	handlistPart = "r_arm_hot"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)

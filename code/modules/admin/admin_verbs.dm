@@ -151,6 +151,8 @@ var/list/admin_verbs = list(
 		/client/proc/jtt,
 		/client/proc/jumptocoord,
 		/client/proc/jtc,
+		/client/proc/jump_to_z,
+		/client/proc/jtz,
 		/client/proc/admin_follow_mobject,
 		/client/proc/main_loop_context,
 		/client/proc/main_loop_tick_detail,

@@ -141,8 +141,8 @@ var/global/datum/controller/processScheduler/processScheduler
 	next_queue_time = INFINITY
 
 	for (var/datum/controller/process/p as anything in processes)
-		// Don't double-queue, don't queue running processes
-		if (p.running || p.queued || !p.idle)
+		// Don't double-queue, don't queue running or disabled processes
+		if (p.running || p.queued || !p.idle || p.disabled)
 			continue
 
 		// If world.timeofday has rolled over, then we need to adjust.
@@ -152,9 +152,8 @@ var/global/datum/controller/processScheduler/processScheduler
 			last_start[p] = started
 
 		// If the process should be running by now, go ahead and queue it.
-		// A disabled process past due holds next_queue_time in the past, so re-enabling it is noticed next tick
 		var/due = started + p.schedule_interval + p.schedule_jitter
-		if (now > due && !p.disabled)
+		if (now > due)
 			setQueuedProcessState(p)
 		else if (due < next_queue_time)
 			next_queue_time = due

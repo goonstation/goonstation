@@ -1932,7 +1932,7 @@ var/global/noir = 0
 			if (!M?.mind)
 				return
 			var/list/antag_options = list()
-			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - (concrete_typesof(/datum/antagonist/subordinate) + concrete_typesof(/datum/antagonist/generic))
+			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - concrete_typesof(/datum/antagonist/subordinate)
 			for (var/V as anything in eligible_antagonist_types)
 				var/datum/antagonist/A = V
 				if (!M.mind.get_antagonist(initial(A.id)))
@@ -3615,12 +3615,6 @@ var/global/noir = 0
 				src.showPlayerCompIDs(ckey)
 			else
 				usr.client.cmd_admin_show_player_compids()
-
-		if ("lightweight_doors")
-			if (src.level < LEVEL_PA)
-				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
-
-			usr.client.lightweight_doors()
 
 		if ("lightweight_mobs")
 			if (src.level < LEVEL_PA)

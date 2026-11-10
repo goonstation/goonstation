@@ -1627,10 +1627,11 @@ var/list/removed_jobs = list(
 				//
 		//works for now, maybe move this to something on game mode to decide proper jobs... -kyle
 #if defined(MAP_OVERRIDE_POD_WARS)
-		if (!find_job_in_controller_by_string(job,0,TRUE))
+		var/datum/job/temp_job = find_job_in_controller_by_string(job, 0, TRUE)
 #else
-		if (!find_job_in_controller_by_string(job,1,TRUE))
+		var/datum/job/temp_job = find_job_in_controller_by_string(job, 1, TRUE)
 #endif
+		if (!temp_job)
 			boutput(user, SPAN_ALERT("<b>The game could not find that job in the internal list of jobs.</b>"))
 			switch (occ)
 				if (1) src.job_favorite = null
@@ -1648,7 +1649,7 @@ var/list/removed_jobs = list(
 				src.jobs_unwanted += job
 			return
 
-		if (jobban_isbanned(user, job))
+		if (jobban_isbanned(user, job, temp_job))
 			boutput(user, SPAN_ALERT("<b>You are banned from this job and may not select it.</b>"))
 			if (occ != 4)
 				switch (occ)
@@ -1658,12 +1659,6 @@ var/list/removed_jobs = list(
 				src.jobs_unwanted += job
 			return
 
-//pod wars only special jobs
-#if defined(MAP_OVERRIDE_POD_WARS)
-		var/datum/job/temp_job = find_job_in_controller_by_string(job,0)
-#else
-		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
-#endif
 		if (user.client && !temp_job.has_rounds_needed(user.client.player))
 			var/played_rounds = user.client.player.get_rounds_participated()
 			var/needed_rounds = temp_job.rounds_needed_to_play
@@ -1683,14 +1678,13 @@ var/list/removed_jobs = list(
 			return
 
 		var/picker = "Low Priority"
-		var/datum/job/J = find_job_in_controller_by_string(job)
 		switch (level)
 			if (1) picker = "Favorite"
 			if (2) picker = "Medium Priority"
 			if (3) picker = "Low Priority"
 			if (4) picker = "Unwanted"
 
-		if (J.cant_allocate_unwanted && picker == "Unwanted")
+		if (temp_job.cant_allocate_unwanted && picker == "Unwanted")
 			boutput(user, SPAN_ALERT("<b>[job] cannot be set to Unwanted.</b>"))
 			return
 

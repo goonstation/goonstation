@@ -809,16 +809,16 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.hasProperty("thermal"))
-				protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
-				setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
-				setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+			if(src.material.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+				protective_temperature = (100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) ** 1.65
+				setProperty("coldprot", round((100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 0.1))
+				setProperty("heatprot", round((100 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 0.1))
 			else
 				protective_temperature = 0
 				setProperty("coldprot", 0)
 				setProperty("heatprot", 0)
-			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
-				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 1500)
+			if(src.material.hasProperty(MATERIAL::PROPERTY::HARDNESS) && src.material.hasProperty(MATERIAL::PROPERTY::DENSITY))
+				kick_bonus = round((src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) * src.material.getProperty(MATERIAL::PROPERTY::DENSITY)) / 1500)
 			else
 				kick_bonus = 0
 		return
@@ -944,3 +944,26 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 	setupProperties()
 		..()
 		setProperty("vault_speed", vault_speed_bonus)
+
+/obj/item/clothing/shoes/derby
+	name = "derby shoes"
+	desc = "Open-laced leather shoes with a slight heel and made with real artificial leather."
+	icon_state = "derby"
+
+/obj/item/clothing/shoes/stiletto_boots
+	name = "stiletto boots"
+	desc = "Not to be wielded like the daggers which their name comes from."
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	icon_state = "stiletto_boots"
+	step_sound = "footstep"
+	step_priority = STEP_PRIORITY_LOW
+
+	force = 3
+	throwforce = 7
+	throw_speed = 2
+	throw_range = 4
+	stamina_damage = 10
+	stamina_cost = 15
+	stamina_crit_chance = 30
+	hit_type = DAMAGE_STAB
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'

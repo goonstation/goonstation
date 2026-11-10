@@ -2,7 +2,7 @@
 	permit_null_default = TRUE
 	VAR_PROTECTED/object_type = null
 
-/datum/record_field/object/New(name, value, object_type)
+/datum/record_field/object/New(parent, name, value, object_type)
 	if (ispath(object_type))
 		src.object_type = object_type
 
