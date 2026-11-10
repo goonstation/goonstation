@@ -1,5 +1,9 @@
 
 (t)mon nov 09 26
+(u)LorrMaster
+(p)27961
+(e)🆕🧱📨|C-Feature, A-Materials, A-Logistics
+(*)Added Sobb, a new blob cargo trader.
 (u)Colossusqw, Lord_Earthfire & Pirate-Rob
 (p)26036
 (e)🆕🎨⚖⏰🔨🍝|C-Feature, C-Sprites, C-Balance, A-Status-Effects, A-Player-Actions, A-Catering
