@@ -1540,7 +1540,7 @@ TYPEINFO(/mob/living)
 			if (T)
 				T.hotspot_expose(5000,125)
 				explosion(origin, T, -1,-1,1,2)
-			if (prob(20))
+			if (prob(clamp(round(shock_damage/100), 1, 20))) // start at 1% chance, scales to 20% with wattage
 				boutput(src, SPAN_ALERT("<b>[origin] vaporizes you with a lethal arc of electricity!</b>"))
 				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
