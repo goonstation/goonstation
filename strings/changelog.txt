@@ -1,5 +1,9 @@
 
 (t)tue nov 10 26
+(u)JORJ949
+(p)28158
+(e)🎨⚖🧑‍✈️📨|C-Sprites, C-Balance, A-Command, A-Logistics
+(+)The crate replacement Auth Disks are shipped in when it enters cryo are now locked to bridge access and have received a unique sprite. Empty versions are also printable at hacked cargo fabricators.
 (u)ANNmagedon
 (p)28208
 (e)🗺|A-Mapping
