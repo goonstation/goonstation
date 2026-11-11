@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	weight = 0.2
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
-	arm_layer = MOB_HAND_LAYER1
+	arm_layer = MOB_HAND_LAYER1 // Too bulky for jumpsuits but fit most coats reasonably, so layer between the two
 	hand_layer = MOB_HAND_LAYER2
 
 	attackby(obj/item/W, mob/user)
@@ -213,7 +213,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	weight = 0.4
 	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
-	arm_layer = MOB_HAND_LAYER1
+	arm_layer = MOB_HAND_LAYER1 // Too bulky for jumpsuits but fit most coats reasonably, so layer between the two
 	hand_layer = MOB_HAND_LAYER2
 
 /obj/item/parts/robot_parts/arm/left/light
@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	weight = 0.2
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
-	arm_layer = MOB_HAND_LAYER1
+	arm_layer = MOB_HAND_LAYER1 // Too bulky for jumpsuits but fit most coats reasonably, so layer between the two
 	hand_layer = MOB_HAND_LAYER2
 
 	attackby(obj/item/W, mob/user)
@@ -275,7 +275,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	weight = 0.4
 	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
-	arm_layer = MOB_HAND_LAYER1
+	arm_layer = MOB_HAND_LAYER1 // Too bulky for jumpsuits but fit most coats reasonably, so layer between the two
 	hand_layer = MOB_HAND_LAYER2
 
 /obj/item/parts/robot_parts/arm/right/light
@@ -326,7 +326,7 @@ proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
 	weight = 0.4
 	handlistPart = "armR-sturdy"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_right
-	arm_layer = MOB_OVER_TOP_LAYER
+	arm_layer = MOB_OVER_TOP_LAYER // Huge ancient parts won't fit any clothing so layer over all clothing
 	hand_layer = MOB_OVER_TOP_LAYER
 
 	stonecutter
@@ -368,7 +368,7 @@ proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
 	weight = 0.4
 	handlistPart = "armL-sturdy"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_left
-	arm_layer = MOB_OVER_TOP_LAYER
+	arm_layer = MOB_OVER_TOP_LAYER // Huge ancient parts won't fit any clothing so layer over all clothing
 	hand_layer = MOB_OVER_TOP_LAYER
 
 	stonecutter
