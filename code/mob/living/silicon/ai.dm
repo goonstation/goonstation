@@ -133,6 +133,8 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/termMute = FALSE
 	var/canvox = 1
 	var/can_announce = 1
+	var/can_track = FALSE //! AI is allowed to use camera tracking
+	var/can_call_shuttle = FALSE //! AI is allowed to call the shuttle directly
 	var/bought_hat = FALSE
 	var/last_announcement = -INFINITY
 	var/announcement_cooldown = 1200
@@ -158,7 +160,7 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/datum/material/material_face = null
 	var/list/custom_emotions = null
 	///Maximum number of viewports we can have open, unlimited vision was a bit silly
-	var/viewport_limit = 2
+	var/viewport_limit = 0
 	/// The icon_state for the outside non-screen bit of the core. icon_state is set to this in update_appearance() (which is called by New)
 	var/coreSkin = "default"
 /* To add a new skin:
@@ -359,18 +361,12 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	if(eyecam)
 		eyecam.abilityHolder = abilityHolder
 
-	if(law_rack_connection)
-		holoHolder.text_expansion = law_rack_connection.holo_expansions.Copy()
-
-		for(var/ability_type in law_rack_connection.ai_abilities)
-			abilityHolder.addAbility(ability_type)
-
 	src.hologramContextActions = list()
 	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
 		var/datum/contextAction/ai_hologram/action = new actionType(src)
 		hologramContextActions += action
 
-
+	src.update_programs()
 
 
 	SPAWN(0)
@@ -2548,6 +2544,72 @@ proc/get_mobs_trackable_by_AI()
 
 /mob/living/silicon/ai/on_close_viewport(datum/viewport/vp)
 	src.eyecam?.on_close_viewport(vp)
+
+/mob/living/silicon/ai/proc/update_programs()
+	var/list/new_skills = list()
+	var/list/new_holograms = list()
+	var/list/new_abilities = list()
+
+	for_by_tcl(program_rack, /obj/machinery/disk_rack/ai)
+		new_abilities |= program_rack.ai_abilities
+		new_holograms |= program_rack.hologram_libraries
+		new_skills |= program_rack.ai_skills
+
+	var/update_hud = FALSE
+
+	if (src.can_track)
+		if(!new_skills.Find(SILICON::AI::SKILL::TRACKING))
+			update_hud = TRUE
+			src.can_track = FALSE
+			src.tracker.cease_track()
+	else
+		if(new_skills.Find(SILICON::AI::SKILL::TRACKING))
+			update_hud = TRUE
+			src.can_track = TRUE
+
+	if (src.can_call_shuttle)
+		if (!new_skills.Find(SILICON::AI::SKILL::SHUTTLE))
+			src.can_call_shuttle = FALSE
+	else
+		if (new_skills.Find(SILICON::AI::SKILL::SHUTTLE))
+			src.can_call_shuttle = TRUE
+
+	if (src.viewport_limit > 0)
+		if (!new_skills.Find(SILICON::AI::SKILL::VIEWPORT))
+			update_hud = TRUE
+			for (var/datum/viewport/vp as anything in src.eyecam.open_viewports)
+				src.on_close_viewport(vp)
+				qdel(vp)
+			src.viewport_limit = 0
+	else
+		if (new_skills.Find(SILICON::AI::SKILL::VIEWPORT))
+			update_hud = TRUE
+			src.viewport_limit = SILICON::AI::MAX_VIEWPORTS
+
+	if (length(src.holoHolder.text_expansion))
+		if(length(new_holograms) == 0)
+			update_hud = TRUE
+			src.holoHolder.text_expansion = new_holograms
+	else
+		if(length(new_holograms))
+			update_hud = TRUE
+			src.holoHolder.text_expansion = new_holograms
+
+	var/ability_type
+	var/datum/abilityHolder/silicon/ai/aiAH = src.get_ability_holder(/datum/abilityHolder/silicon/ai)
+	var/list/current_abilities = list()
+	for(var/datum/ability in aiAH.abilities)
+		current_abilities |= ability.type
+	var/list/abilities_to_remove = current_abilities - new_abilities
+	for(ability_type in abilities_to_remove)
+		if (ispath(ability_type, /datum/targetable/ai/program))
+			aiAH.removeAbility(ability_type)
+	var/list/abilities_to_add = new_abilities - current_abilities
+	for(ability_type in abilities_to_add)
+		aiAH.addAbility(ability_type)
+
+	if (update_hud)
+		src.hud.update_skills()
 
 /*-----Core-Creation---------------------------------------*/
 

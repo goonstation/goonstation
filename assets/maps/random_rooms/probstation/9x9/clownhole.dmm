@@ -17,7 +17,7 @@
 /area/station/crew_quarters/clown)
 "e" = (
 /obj/table/neon/auto,
-/obj/item/aiModule/hologram_expansion/clown{
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
 	pixel_x = -1;
 	pixel_y = 10
 	},

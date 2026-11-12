@@ -51,12 +51,20 @@
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
 
+		if (!length(src.holoHolder.text_expansion))
+			boutput(src.get_message_mob(), SPAN_ALERT("You don't have any hologram emitter programs installed!"))
+			return
+
 		var/turf/T = get_turf(src.eyecam)
 		src.show_hologram_context(T)
 
 	proc/create_hologram_at_turf(turf/T, holo_type)
 		if (!deployed_to_eyecam)
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
+			return
+
+		if (!length(src.holoHolder.text_expansion))
+			boutput(src.get_message_mob(), SPAN_ALERT("You don't have any hologram emitter programs installed!"))
 			return
 
 		if(get_z(src) != Z_LEVEL_STATION)
@@ -74,7 +82,9 @@
 			var/list/holo_sentences = list()
 			var/list/holo_actions = list()
 			var/list/holo_nouns = list()
-			holo_sentences += strings("hologram.txt", "sentences")
+			if (!length(src.holoHolder.text_expansion))
+				boutput(src.get_message_mob(), SPAN_ALERT("You have no installed text libraries!"))
+				return
 			if(src.holoHolder.text_expansion)
 				for(var/te in src.holoHolder.text_expansion)
 					holo_sentences += strings("hologram.txt", "sentences_[te]")
@@ -85,7 +95,6 @@
 
 			switch(text)
 				if("Remember to ...", "Employees must ...")
-					holo_actions += strings("hologram.txt", "verbs")
 					if(src.holoHolder.text_expansion)
 						for(var/te in src.holoHolder.text_expansion)
 							holo_actions += strings("hologram.txt", "verbs_[te]")
@@ -93,7 +102,6 @@
 					var/selection = tgui_input_list(usr, "Select a word:", text, holo_actions, allowIllegal=TRUE)
 					text = replacetext(text, "...", selection)
 				else
-					holo_nouns += strings("hologram.txt", "nouns")
 					if(src.holoHolder.text_expansion)
 						for(var/te in src.holoHolder.text_expansion)
 							holo_nouns += strings("hologram.txt", "nouns_[te]")

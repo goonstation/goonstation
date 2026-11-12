@@ -33,6 +33,7 @@
 /area/station/science/bot_storage)
 "e" = (
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "f" = (

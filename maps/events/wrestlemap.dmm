@@ -9176,10 +9176,10 @@
 "edg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
@@ -15928,6 +15928,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "hig" = (
@@ -16983,6 +16986,7 @@
 /area/station/mining/cargo_staff_room)
 "hGN" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "hGP" = (
@@ -32393,6 +32397,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/garden/owlery)
+"ouY" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
 "ovt" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/carpet/grime,
@@ -32950,7 +32961,14 @@
 "oNd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
@@ -34155,9 +34173,6 @@
 /obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /obj/item/luggable_computer,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/turretid{
 	pixel_y = -24
 	},
@@ -42651,9 +42666,7 @@
 	})
 "tpP" = (
 /obj/machinery/power/apc/autoname_south,
-/obj/cable{
-	icon_state = "0-8"
-	},
+/obj/cable,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "tpS" = (
@@ -42948,9 +42961,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/firealarm/directional/south,
-/obj/cable{
-	icon_state = "4-8"
-	},
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "txK" = (
@@ -48524,12 +48535,6 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/device/gps,
 /obj/item/disk/data/floppy/read_only/communications,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/item/circuitboard/robotics,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
@@ -110651,7 +110656,7 @@ iAO
 wfe
 wfe
 wfe
-hGN
+ouY
 oNd
 hGN
 wfe

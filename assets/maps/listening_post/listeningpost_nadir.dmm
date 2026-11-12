@@ -823,7 +823,7 @@
 	pixel_x = 6;
 	pixel_y = 7
 	},
-/obj/item/aiModule/hologram_expansion/syndicate{
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/syndicate{
 	pixel_x = 5;
 	pixel_y = -4
 	},

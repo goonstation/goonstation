@@ -38730,14 +38730,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/radio,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "gRr" = (
@@ -58228,7 +58227,7 @@
 	pixel_x = 10;
 	pixel_y = 5
 	},
-/obj/item/aiModule/hologram_expansion/clown{
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
 	pixel_x = -4;
 	pixel_y = -1
 	},

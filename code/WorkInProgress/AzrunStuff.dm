@@ -426,40 +426,19 @@
 
 	active_stage = clamp(active_stage, 1, length(gimmick_events))
 
-/obj/item/aiModule/ability_expansion/taser
-	name = "CLF:Taser Expansion Module"
-	desc = "A camera lense focus module.  This module allows for the AI controlled camera produce a taser like effect."
-	lawText = "CLF:Taser EXPANSION MODULE"
-	highlight_color = rgb(255, 251, 0, 255)
-	ai_abilities = list(/datum/targetable/ai/module/camera_gun/taser)
-
-/obj/item/aiModule/ability_expansion/laser
-	name = "CLF:Laser Expansion Module"
-	desc = "A camera lense focus module.  This module allows for the AI controlled camera produce a laser like effect."
-	lawText = "CLF:Laser EXPANSION MODULE"
-	highlight_color = rgb(255, 0, 0, 255)
-	ai_abilities = list(/datum/targetable/ai/module/camera_gun/laser)
-
-/obj/item/aiModule/ability_expansion/mfoam_launcher
-	name = "Metal Foam Expansion Module"
-	desc = "Chemical release module.  This module allows for the AI controlled camera to launch metal foam payloads."
-	lawText = "MFoam EXPANSION MODULE"
-	highlight_color = rgb(71, 92, 85, 255)
-	ai_abilities = list(/datum/targetable/ai/module/chems/metal_foam)
-
-/obj/item/aiModule/ability_expansion/friend_turret
-	name = "Turret Expansion Module"
-	desc = "A turret expansion module.  This module allows for control of turret."
-	lawText = "TURRET EXPANSION MODULE"
-	highlight_color = rgb(255, 255, 255, 255)
-	ai_abilities = list(/datum/targetable/ai/module/turret/deploy, /datum/targetable/ai/module/turret/target, /datum/targetable/ai/module/turret/swap_bullets)
+/datum/targetable/ai/program/turret
 	var/obj/machinery/turret/friend/turret
 
-	New()
-		..()
-		turret = new(src)
+	New(datum/abilityHolder/holder)
+		. = ..()
+		src.turret = get_singleton(/obj/machinery/turret/friend/lots_of_bullets)
+		if (src.turret.z > 0)
+			return
+		// only move it from nullspace
+		if (isAI(src.holder.owner))
+			src.turret.loc = src.holder.owner
 
-/datum/targetable/ai/module/turret/deploy
+/datum/targetable/ai/program/turret/deploy
 	name = "Deploy Turret"
 	desc = "Conviently place a turret for fun and compliance."
 	icon_state = "turret_deploy"
@@ -475,70 +454,69 @@
 		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
 		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 
-		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
-		if(!expansion)
+		if(!src.turret)
 			return 1
 
 		if (!floorturf.intact)
 			boutput(holder.owner, "The floor is not intact here.  LAME!!!")
 			return 1
 
-		if(!checkTurfPassable(floorturf) && get_turf(target) != get_turf(expansion.turret))
+		if(!checkTurfPassable(floorturf) && get_turf(target) != get_turf(src.turret))
 			boutput(holder.owner, "Something is blocking a turret here.  LAME!!!")
 			return 1
 
-		if(expansion.turret.loc != expansion)
-			var/turf/oldLoc = get_turf(expansion.turret)
-			expansion.turret.popDown()
+		if(src.turret.loc != src.holder.owner)
+			var/turf/oldLoc = get_turf(src.turret)
+			src.turret.popDown()
 			if (oldLoc.intact)
 				animate_slide(oldLoc, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 
 				sleep(0.4 SECONDS)
 
-				if(expansion.turret)
-					expansion.turret.layer = MOB_LAYER
-					expansion.turret.plane = PLANE_DEFAULT
+				if(src.turret)
+					src.turret.layer = MOB_LAYER
+					src.turret.plane = PLANE_DEFAULT
 
-					expansion.turret.set_density(0)
-					expansion.turret.cover.set_density(0)
-					expansion.turret.layer = BETWEEN_FLOORS_LAYER
-					expansion.turret.plane = PLANE_FLOOR
-					expansion.turret.cover.set_density(0)
-					expansion.turret.cover.layer = BETWEEN_FLOORS_LAYER
-					expansion.turret.cover.plane = PLANE_FLOOR
+					src.turret.set_density(0)
+					src.turret.cover.set_density(0)
+					src.turret.layer = BETWEEN_FLOORS_LAYER
+					src.turret.plane = PLANE_FLOOR
+					src.turret.cover.set_density(0)
+					src.turret.cover.layer = BETWEEN_FLOORS_LAYER
+					src.turret.cover.plane = PLANE_FLOOR
 
 				if(oldLoc?.intact)
 					animate_slide(oldLoc, 0, 0, 4)
 			sleep(1.0 SECONDS)
-			expansion.turret.set_loc(expansion)
-			expansion.turret.cover.set_loc(expansion)
+			src.turret.set_loc(src.holder.owner)
+			src.turret.cover.set_loc(src.holder.owner)
 
-		if(get_turf(target) == get_turf(expansion.turret))
-			expansion.turret.target = null
+		if(get_turf(target) == get_turf(src.turret))
+			src.turret.target = null
 			icon_state = "turret_deploy"
 			return
 
-		expansion.turret.set_loc(floorturf)
-		expansion.turret.cover.set_loc(floorturf)
+		src.turret.set_loc(floorturf)
+		src.turret.cover.set_loc(floorturf)
 		icon_state = "turret_undeploy"
 		if (floorturf.intact)
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			sleep(0.4 SECONDS)
-			expansion.turret.set_density(1)
-			expansion.turret.cover.set_density(1)
-			expansion.turret.layer = OBJ_LAYER
-			expansion.turret.plane = PLANE_DEFAULT
-			expansion.turret.cover.layer = OBJ_LAYER
-			expansion.turret.cover.plane = PLANE_DEFAULT
+			src.turret.set_density(1)
+			src.turret.cover.set_density(1)
+			src.turret.layer = OBJ_LAYER
+			src.turret.plane = PLANE_DEFAULT
+			src.turret.cover.layer = OBJ_LAYER
+			src.turret.cover.plane = PLANE_DEFAULT
 
 		if(floorturf?.intact)
 			animate_slide(floorturf, 0, 0, 4)
 
-		if(expansion.turret.target)
-			if(GET_DIST(expansion.turret, expansion.turret.target) > 10)
-				expansion.turret.target = null
+		if(src.turret.target)
+			if(GET_DIST(src.turret, src.turret.target) > 10)
+				src.turret.target = null
 
-/datum/targetable/ai/module/turret/target
+/datum/targetable/ai/program/turret/target
 	name = "Assign Target"
 	desc = "Assign a target for the turret"
 	icon_state = "target"
@@ -549,23 +527,23 @@
 		if (..())
 			return 1
 
-		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
-		if(!expansion)
+		if(!src.turret)
 			return 1
 
 		var/mob/M = target
 
-		if(target == expansion.turret.target)
-			expansion.turret.target = null
+		if(target == src.turret.target)
+			src.turret.target = null
 			boutput(holder.owner, "Clearing active turret target.")
 		else if(!isdead(M) && (iscarbon(M) || !ismobcritter(M)))
-			expansion.turret.target = M
+			src.turret.target = M
 			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
 
 			boutput(holder.owner, "Deployable turret now targeting: [M.name].")
 		else
 			boutput(holder.owner, "Invalid target selected.")
-/datum/targetable/ai/module/turret/swap_bullets
+
+/datum/targetable/ai/program/turret/swap_bullets
 	name = "Change Lethality"
 	desc = "Lethal to Non-Lethal and Non-Lethal to Lethal!"
 	icon_state = "stun_turret"
@@ -573,13 +551,17 @@
 
 	cast(atom/target)
 		. = ..()
-		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
-		expansion.turret.lasers = !expansion.turret.lasers
-		var/mode = expansion.turret.lasers ? "LETHAL" : "STUN"
+
+		if (!src.turret)
+			return 1
+
+		src.turret.lasers = !src.turret.lasers
+		var/mode = src.turret.lasers ? "LETHAL" : "STUN"
 		logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] set deployable turret to [mode].")
 		boutput(holder.owner, "Turret now set to [mode].")
-		icon_state = expansion.turret.lasers ? "lethal_turret" : "stun_turret"
-		expansion.turret.power_change()
+		icon_state = src.turret.lasers ? "lethal_turret" : "stun_turret"
+		src.turret.power_change()
+
 /obj/machinery/turret/friend
 	var/mob/target
 
@@ -595,17 +577,10 @@
 	..()
 	return
 
-/obj/item/aiModule/ability_expansion/assisted_guidance
-	name = "GPS Expansion Module"
-	desc = "A prototype GPS path module.  This module provides for the direct crew members."
-	lawText = "GPS EXPANSION MODULE"
-	highlight_color = rgb(110, 110, 110, 255)
-	ai_abilities = list(/datum/targetable/ai/module/gps_select)
-
 /datum/abilityHolder/silicon/ai
 	var/mob/assisted_target = null
 
-/datum/targetable/ai/module/gps_select
+/datum/targetable/ai/program/gps_select
 	name = "Assisted Guidance"
 	desc = "Provide a target a GPS path to a target location. Herd the cats."
 	targeted = TRUE

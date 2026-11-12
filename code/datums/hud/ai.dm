@@ -108,6 +108,7 @@
 			update_charge()
 			update_tracking()
 			update_lock()
+			update_skills()
 
 		update_lock()
 			lock.invisibility = master.dismantle_stage == SILICON::AI::DISMANTLE_STAGE::LOCKED ? INVIS_ALWAYS : INVIS_NONE
@@ -140,6 +141,21 @@
 				tracking.icon_state = "track"
 				tracking.maptext = ""
 
+		update_skills()
+			if (length(src.master.holoHolder.text_expansion))
+				src.hologram.underlays = list("button")
+			else
+				src.hologram.underlays = list("button_disabled")
+
+			if (master.viewport_limit > 0)
+				src.viewport.underlays = list("button")
+			else
+				src.viewport.underlays = list("button_disabled")
+
+			if (master.can_track)
+				src.tracking.underlays = list("button")
+			else
+				src.tracking.underlays = list("button_disabled")
 
 	relay_click(id, mob/user, list/params)
 		switch (id)
@@ -163,7 +179,9 @@
 				master.eyecam.access_area_apc()
 
 			if ("tracking")
-				if (master.tracker.tracking)
+				if (!master.can_track)
+					master.tracker.cease_track()
+				else if (master.tracker.tracking)
 					// stop
 					master.tracker.cease_track()
 				else

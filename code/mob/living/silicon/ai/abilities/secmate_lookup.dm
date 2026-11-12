@@ -1,4 +1,4 @@
-/datum/targetable/ai/module/sec_huds
+/datum/targetable/ai/program/sec_huds
 	name = "Security Lookup Scan"
 	desc = "Check someone's security records."
 	targeted = TRUE
@@ -24,19 +24,23 @@
 		if (..())
 			return 1
 
-		var/obj/item/aiModule/ability_expansion/security_vision/expansion = src.get_law_module()
-		var/obj/machinery/computer3/generic/secure_data/sec_comp = expansion.sec_comp
-		sec_comp.Attackhand(src.holder.owner)
+		if (istype(src.holder.owner, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/AI = src.holder.owner
 
-		// Issuing commands to a computer this way is a little cursed, but then again so is putting a computer inside an AI module.
-		if (sec_comp.active_program.authenticated)
-			sec_comp.unload_program(sec_comp.active_program)
-		else
-			sec_comp.active_program.input_text("login")
+			var/datum/db_record/GR = data_core.general.find_record("name", target.name)
+			var/datum/db_record/SR = data_core.security.find_record("name", target.name)
+			if (!SR)
+				return SPAN_ALERT("ERROR: NO RECORD FOUND")
 
-		sleep(1)
-		sec_comp.active_program.input_text("SecMate")
-		sleep(1)
-		sec_comp.active_program.input_text("2")
-		sleep(1)
-		sec_comp.active_program.input_text(target.name)
+			//Find security records program
+			var/list/programs = null
+			for (var/obj/item/disk/data/mod in AI.internal_pda.contents)
+				programs += mod.root.contents.Copy()
+			var/datum/computer/file/pda_program/records/security/record_prog = locate(/datum/computer/file/pda_program/records/security) in programs
+			if (!record_prog)
+				return SPAN_ALERT("ERROR: NO SECURITY RECORD FILE")
+			AI.internal_pda.run_program(record_prog)
+			record_prog.active1 = GR
+			record_prog.active2 = SR
+			record_prog.mode = 1
+			AI.internal_pda.AttackSelf(usr)

@@ -564,12 +564,12 @@
 	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/ai_laser
-	name = "AI Camera Laser Module"
-	items = list(/obj/item/aiModule/ability_expansion/laser)
+	name = "AI Camera Laser Program"
+	items = list(/obj/item/disk/data/floppy/read_only/ai_program/laser)
 	cost = 6
 	vr_allowed = FALSE
 	not_in_crates = TRUE
-	desc = "An AI module that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
+	desc = "An AI program that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
 	job = list(ALL_COMMAND)
 	can_buy = UPLINK_TRAITOR
 

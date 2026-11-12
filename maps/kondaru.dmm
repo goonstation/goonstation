@@ -41903,6 +41903,7 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "mZL" = (
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -42209,7 +42210,7 @@
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/aiModule/hologram_expansion/clown{
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
 	pixel_y = 7
 	},
 /turf/simulated/floor/carpet/arcade,

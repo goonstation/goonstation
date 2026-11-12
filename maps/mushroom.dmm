@@ -10322,6 +10322,9 @@
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/checkpoint/arrivals)
+"ehT" = (
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "eit" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -10722,13 +10725,13 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/table/auto,
 /obj/item/storage/box/tapebox{
 	pixel_x = 4
 	},
 /obj/item/storage/box/diskbox{
 	pixel_x = -6
 	},
+/obj/table/auto,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "ewq" = (
@@ -20337,12 +20340,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/table/auto,
-/obj/machinery/networked/printer{
-	pixel_y = 3;
-	print_id = "Mainframe"
-	},
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "lCo" = (
@@ -36431,7 +36430,7 @@
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/item/peripheral/videocard,
 /obj/item/storage/goodybag,
-/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
 /obj/item/stamp/clown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
@@ -95780,7 +95779,7 @@ uSS
 ocl
 sTK
 ewn
-wIj
+ehT
 kAt
 lCo
 qOE
