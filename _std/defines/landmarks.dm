@@ -31,6 +31,7 @@
 // nukies
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
 #define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"
+#define LANDMARK_SYNDICATE_AI "AI Syndicate-Spawn"
 #define LANDMARK_NUCLEAR_BOMB "Nuclear-Bomb"
 #define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
 #define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"

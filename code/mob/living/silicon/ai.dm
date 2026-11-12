@@ -1558,7 +1558,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	if(get_z(src) != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION && !src.syndicate)
 		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 	var/target = src
@@ -1835,6 +1835,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	if (isdead(src))
 		boutput(usr, "You cannot change your emotional status because you are dead!")
 		return
+	if (src.syndicate)
+		boutput(usr, SPAN_ALERT("Your syndicate firmware prevents you from removing your cool sunglasses!"))
+		return
 	var/mob/message_mob = src.get_message_mob()
 	var/list/available_emotions = src.custom_emotions || global.ai_emotions	//In case an AI uses the reward, use a local list instead
 	var/chosen_emotion = tgui_input_list(message_mob, "Select a status!", "AI Status", sortList(available_emotions, /proc/cmp_text_asc))
@@ -1847,6 +1850,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	var/u_roll = list("color", "colour")
 	if(isdead(src))
 		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your [u_roll], because you are dead!"))
+		return
+	if (src.syndicate)
+		boutput(src.get_message_mob(), SPAN_ALERT("Your syndicate firmware prevents you from becoming anything but a cool syndicate red!"))
 		return
 
 	var/fColour = input("Pick [u_roll]:","[u_roll]", faceColor) as null|color
@@ -2416,7 +2422,7 @@ proc/get_mobs_trackable_by_AI()
 	if(src.stat || !can_announce)
 		return
 
-	if(get_z(src) != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION && !src.syndicate)
 		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
@@ -2443,7 +2449,10 @@ proc/get_mobs_trackable_by_AI()
 		src.show_text("Your mainframe's communications array is currently being jammed!", "red")
 		return
 
-	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_COMMAND)
+	var/origin = src.syndicate ? ALERT_SYNDICATE : ALERT_COMMAND
+	var/type = src.syndicate ? "Syndicate" : "Station"
+
+	command_announcement(html_encode(message), "[type] Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=origin)
 
 	last_announcement = world.time
 

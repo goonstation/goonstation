@@ -85,7 +85,7 @@
 			boutput(usr, SPAN_ALERT("Access Denied."))
 			return TRUE
 		switch (action)
-			if ("start_ai_killswitch")
+			if ("start_ai_killswitch" || ai_player.syndicate)
 				if (!src.can_killswitch)
 					return
 				if (isAI(usr))
@@ -217,6 +217,8 @@
 	for_by_tcl(A, /mob/living/silicon/ai)
 		var/datum/statusEffect/killswitch/killswitch_ai_status = A.hasStatus("killswitch_ai")
 		var/brain_status = BRAIN_STATUS_MISSING
+		if(A.syndicate)
+			continue
 		if (A.brain)
 			if (A.deployed_shell)
 				if (A.deployed_shell.client)
