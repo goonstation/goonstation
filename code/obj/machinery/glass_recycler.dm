@@ -34,7 +34,7 @@
 			src.product_img = img_check
 		else
 			var/atom/dummy_atom = path
-			var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state))
+			var/icon/dummy_icon = icon(get_initial_icon(dummy_atom), initial(dummy_atom.icon_state))
 			src.product_img = icon2base64(dummy_icon)
 			product_base64_cache[path] = src.product_img
 
@@ -56,10 +56,13 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	event_handler_flags = NO_MOUSEDROP_QOL
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
+	var/static/datum/forensic_display/forensic_pattern_disp = new("Recently Fabricated: @F")
+	var/datum/forensic_id/forensic_pattern
 
 	New()
 		..()
 		src.get_products()
+		src.forensic_pattern = register_id("GLASS-[build_id_unique(/proc/build_id_pattern, list("L###"))]")
 		UnsubscribeProcess()
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -142,6 +145,10 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			boutput(user, SPAN_ALERT("You cannot put [W] into [src]!"))
 			return FALSE
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		scan.add_text("Fabrication Pattern: [src.forensic_pattern.id]")
+
 	proc/get_products()
 		product_list += new /datum/glass_product("beaker", /obj/item/reagent_containers/glass/beaker, 1)
 		product_list += new /datum/glass_product("largebeaker", /obj/item/reagent_containers/glass/beaker/large, 2)
@@ -183,6 +190,9 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 		var/obj/item/G = new target_product.product_path(get_turf(src))
 		src.glass_amt -= target_product.product_cost
+
+		var/datum/forensic_data/basic/pattern_data = new(src.forensic_pattern, src.forensic_pattern_disp)
+		G.add_evidence(pattern_data)
 
 		src.visible_message(SPAN_NOTICE("[src] manufactures \a [G]!"))
 		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
@@ -229,6 +239,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 /obj/machinery/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
 	name = "chemistry glass recycler"
+	icon_state = "synthesizer_chem"
 	glass_amt = 15
 
 	get_products()
@@ -244,6 +255,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 /obj/machinery/glass_recycler/bar //the bar should not have to scroll through all this chemmy crap to get to the glasses and pitchers they use
 	name = "kitchen glass recycler"
+	icon_state = "synthesizer_kitchen"
 	glass_amt = 20
 
 	get_products()

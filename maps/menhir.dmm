@@ -1023,6 +1023,12 @@
 "aBi" = (
 /turf/simulated/floor/purple,
 /area/station/hallway/primary/southwest)
+"aBl" = (
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/auto/glassblock/indigo,
+/area/station/crew_quarters/pool)
 "aBy" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -10745,6 +10751,9 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fDY" = (
@@ -13076,6 +13085,13 @@
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
+"gOw" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/phone/unlisted,
+/turf/simulated/floor/specialroom/bar/edge{
+	dir = 8
+	},
+/area/station/crew_quarters/cafeteria)
 "gOA" = (
 /obj/machinery/plantpot,
 /obj/landmark/pest,
@@ -14998,6 +15014,9 @@
 	},
 /obj/machinery/plantpot{
 	anchored = 1
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -16975,6 +16994,9 @@
 "iHJ" = (
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -22704,8 +22726,10 @@
 	},
 /area/station/crew_quarters/market)
 "lBP" = (
-/obj/machinery/camera/directional/north,
 /obj/machinery/vending/kitchen,
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "lCr" = (
@@ -28091,15 +28115,12 @@
 /area/station/crew_quarters/fitness)
 "omG" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/hydroponicsguide{
-	pixel_y = 2;
-	pixel_x = -4
-	},
 /obj/item/hand_labeler{
 	pixel_y = -1;
 	pixel_x = 12
 	},
 /obj/machinery/light,
+/obj/machinery/phone,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -30608,12 +30629,6 @@
 	},
 /turf/simulated/floor/shuttle/menhir_arm,
 /area/station/hallway/primary/southeast)
-"pAm" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/shuttle/menhir_arm,
-/area/station/hallway/primary/southwest)
 "pAs" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/table/reinforced/industrial/auto,
@@ -38741,6 +38756,9 @@
 	pixel_x = 0;
 	pixel_y = 24
 	},
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tzv" = (
@@ -39014,12 +39032,6 @@
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
-"tJb" = (
-/obj/disposalpipe/segment/transport{
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/shuttle/menhir_arm,
-/area/station/hallway/primary/central)
 "tJA" = (
 /obj/storage/closet/coffin/wood,
 /obj/machinery/light/small{
@@ -39654,9 +39666,6 @@
 	},
 /obj/machinery/cashreg,
 /obj/mapping_helper/access/cargo,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/caution,
 /area/station/quartermaster/office)
@@ -40300,13 +40309,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/psychiatrist)
-"urd" = (
-/obj/mesh/catwalk,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/southeast)
 "urh" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -40763,9 +40765,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quartersC)
 "uDB" = (
@@ -93073,7 +93072,7 @@ ept
 swZ
 wTQ
 lZH
-tJb
+blY
 fNn
 aJd
 lhN
@@ -93099,7 +93098,7 @@ lhN
 lhN
 jVK
 xFh
-pAm
+xFh
 iCx
 bOZ
 aBi
@@ -94875,7 +94874,7 @@ kJk
 kEz
 sjn
 xro
-lRR
+gOw
 lhk
 iec
 oBU
@@ -96017,7 +96016,7 @@ sEf
 sEf
 sEf
 fUa
-kdl
+aBl
 oGt
 kdl
 gdb
@@ -99444,7 +99443,7 @@ aSL
 aSL
 aSL
 cCb
-urd
+cCb
 gnO
 jgi
 aID

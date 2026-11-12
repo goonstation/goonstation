@@ -22,7 +22,7 @@
 	desc = "A spotlight, probably shining on something important.";
 	name = "Spotlight"
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/dmm_suite/clear_area)
 "r" = (
 /obj/decal/tile_edge/stripe/extra_big{

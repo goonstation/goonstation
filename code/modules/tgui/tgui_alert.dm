@@ -31,6 +31,7 @@
 		theme = null,
 		cant_interact = 0
 )
+	UNIT_TEST_TGUI_RESPONSE
 	if (!user)
 		user = usr
 	if (!istype(user))

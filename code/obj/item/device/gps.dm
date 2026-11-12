@@ -111,14 +111,15 @@ TYPEINFO(/obj/item/device/gps)
 				src.send_distress_signal(src.distress)
 				return TRUE
 			if ("change_identifier")
-				var/t = strip_html(tgui_input_text(usr, "Enter new GPS identification name (must be 4 characters)", src.identifier))
+				var/t = tgui_input_text(usr, "Enter new GPS identification name (must be 4 characters)", src.identifier)
+				if (isnull(t))
+					return
+				t = strip_html(t)
 				if(length(t) > 4)
 					boutput(usr, SPAN_ALERT("Input too long."))
 					return
 				if(length(t) < 4)
 					boutput(usr, SPAN_ALERT("Input too short."))
-					return
-				if(!t)
 					return
 				src.identifier = t
 				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")

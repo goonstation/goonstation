@@ -19,6 +19,8 @@
 	var/fatally_errored = FALSE
 	var/message_queue
 	var/list/sent_assets // |GOONSTATION-CHANGE| Initialize list in New instead
+	/// Last icon map revision sent to this browser window.
+	var/icon_ref_map_revision = 0
 	// Vars passed to initialize proc (and saved for later)
 	var/initial_strict_mode
 	var/initial_fancy
@@ -369,7 +371,7 @@
 /datum/tgui_window/proc/send_asset(datum/asset/asset)
 	if(!client || !asset)
 		return
-	sent_assets += list(asset)
+	sent_assets |= list(asset)
 	. = asset.deliver(client)
 	// |GOONSTATION-CHANGE| We have not implemented separate spritesheet assets yet
 	/*
@@ -378,6 +380,9 @@
 		send_message("asset/stylesheet", spritesheet.css_filename())
 	*/
 	send_message("asset/mappings", asset.get_associated_urls())
+	if (istype(asset, /datum/asset/json/icon_ref_map))
+		var/datum/asset/json/icon_ref_map/icon_map = asset
+		src.icon_ref_map_revision = icon_map.revision
 
 
 /**

@@ -65,7 +65,7 @@
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50)
 			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
 			P.marker = marker
-			message_ghosts("<b>[P]</b>, a poltergeist, has manifested at [log_loc(P, ghostjump = TRUE)].")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(P)], a poltergeist, has manifested at [GHOST.MESSAGE.format_loc(P)].")
 			boutput(W, SPAN_NOTICE("The poltergeist you called has entered this realm. Its name is <b>[P]</b>."))
 		W.spawn_marker = null
 

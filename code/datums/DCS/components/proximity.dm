@@ -64,6 +64,8 @@ TYPEINFO(/datum/component/proximity)
 
 /// Sets whether or not we are detecting.
 /datum/component/proximity/proc/set_detection(state)
+	if (!state == !src.enabled)
+		return
 	src.enabled = state
 	if(src.enabled)
 		var/atom/A = src.parent
