@@ -24,23 +24,30 @@
 		if (..())
 			return 1
 
-		if (istype(src.holder.owner, /mob/living/silicon/ai))
-			var/mob/living/silicon/ai/AI = src.holder.owner
+		// TODO: Could add this ability to SecHUD eye, detect a PDA on user?
+		if (!isAI(src.holder.owner))
+			return 1
 
-			var/datum/db_record/GR = data_core.general.find_record("name", target.name)
-			var/datum/db_record/SR = data_core.security.find_record("name", target.name)
-			if (!SR)
-				return SPAN_ALERT("ERROR: NO RECORD FOUND")
+		var/mob/living/silicon/ai/AI = src.holder.owner
 
-			//Find security records program
-			var/list/programs = null
-			for (var/obj/item/disk/data/mod in AI.internal_pda.contents)
-				programs += mod.root.contents.Copy()
-			var/datum/computer/file/pda_program/records/security/record_prog = locate(/datum/computer/file/pda_program/records/security) in programs
-			if (!record_prog)
-				return SPAN_ALERT("ERROR: NO SECURITY RECORD FILE")
-			AI.internal_pda.run_program(record_prog)
-			record_prog.active1 = GR
-			record_prog.active2 = SR
-			record_prog.mode = 1
-			AI.internal_pda.AttackSelf(usr)
+		if (isAIeye(src.holder.owner))
+			var/mob/living/intangible/aieye/eye = src.holder.owner
+			AI = eye.mainframe
+
+		var/datum/db_record/GR = data_core.general.find_record("name", target.name)
+		var/datum/db_record/SR = data_core.security.find_record("name", target.name)
+		if (!SR)
+			return SPAN_ALERT("ERROR: NO RECORD FOUND")
+
+		//Find security records program
+		var/list/programs = null
+		for (var/obj/item/disk/data/mod in AI.internal_pda.contents)
+			programs += mod.root.contents.Copy()
+		var/datum/computer/file/pda_program/records/security/record_prog = locate(/datum/computer/file/pda_program/records/security) in programs
+		if (!record_prog)
+			return SPAN_ALERT("ERROR: NO SECURITY RECORD FILE")
+		AI.internal_pda.run_program(record_prog)
+		record_prog.active1 = GR
+		record_prog.active2 = SR
+		record_prog.mode = 1
+		AI.internal_pda.AttackSelf(usr)

@@ -428,10 +428,12 @@
 
 /datum/targetable/ai/program/turret
 	var/obj/machinery/turret/friend/turret
+	var/turret_typestring = "/obj/machinery/turret/friend"
 
 	New(datum/abilityHolder/holder)
 		. = ..()
-		src.turret = get_singleton(/obj/machinery/turret/friend/lots_of_bullets)
+
+		src.turret = get_singleton(text2path(src.turret_typestring))
 		if (src.turret.z > 0)
 			return
 		// only move it from nullspace
