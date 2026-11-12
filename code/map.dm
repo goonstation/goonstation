@@ -25,6 +25,7 @@ var/global/list/mapNames = list(
 #endif
 
 	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
+	"Decarabia" =			list("id" = "DECARABIA",	"settings" = "decarabia",		"playerPickable" = TRUE,	"MinPlayersAllowed" = 50),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Clarion" =				list("id" = "CLARION",		"settings" = "clarion",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
@@ -452,6 +453,60 @@ var/global/list/mapNames = list(
 		/area/station/turret_protected/ai_upload_foyer,
 		/area/station/turret_protected/ai_upload,
 		/area/station/turret_protected/ai,
+	)
+
+/datum/map_settings/decarabia
+	name = "DECARABIA"
+	goonhub_map = "/maps/decarabia"
+	airlock_style = "pyro"
+	walls = /turf/simulated/wall/auto/walp
+	rwalls = /turf/simulated/wall/auto/reinforced/walp
+
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/decarabia/bg,
+		/atom/movable/screen/parallax_render_source/decarabia/clouds,
+		/atom/movable/screen/parallax_render_source/decarabia/clouds2,
+		)
+
+	escape_dir = WEST
+
+	windows = /obj/window/auto/walp
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced/walp
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal/walp
+	windows_rcrystal = /obj/window/auto/crystal/reinforced/walp
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	listening_post_prefab = /datum/mapPrefab/listening_post/decarabia
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/cargobay),
+		"the aviary" = list(/area/station/garden/aviary),
+		"the arcade, by the central bar" = list(/area/station/crew_quarters/arcade),
+		"the recreation center" = list(/area/station/crewquarters/reccenter),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the bridge" = list(/area/station/bridge),
+		"the stock exchange" = list(/area/station/crew_quarters/stockex),
+		"the crew lounge" = list(/area/station/crew_quarters/quarters_south),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the main station pod bay" = list(/area/station/hangar/main))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+		/datum/job/civilian/chef = 2,
+		/datum/job/medical/geneticist = 3,
+		/datum/job/medical/roboticist = 3,
+		/datum/job/civilian/bartender = 2,
+		/datum/job/civilian/clown = 2,
+		/datum/job/civilian/janitor = 4,
 	)
 
 /datum/map_settings/donut3
@@ -1137,6 +1192,8 @@ var/global/list/mapNames = list(
 		loc_string = "north"
 	sealab
 		icon_state = "shuttle_merch_l-sealab"
+	decarabia
+		loc_string = "north-west"
 
 /area/shuttle/merchant_shuttle/right_centcom
 	icon_state = "shuttle_merch_r"
@@ -1174,6 +1231,9 @@ var/global/list/mapNames = list(
 		loc_string = "south"
 	sealab
 		icon_state = "shuttle_merch_r-sealab"
+
+	decarabia
+		loc_string = "south"
 
 /proc/dir2nautical(var/req_dir, var/fore_dir = NORTH, var/side = 0)
 	if (!isnum(req_dir) || !isnum(fore_dir))

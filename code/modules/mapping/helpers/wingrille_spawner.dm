@@ -100,6 +100,12 @@
 	icon_state = "wingrille_f"
 #endif
 
+	walp
+		name = "walp autowindow grille spawner"
+		win_path = /obj/window/auto/walp
+		icon = 'icons/obj/window_walp.dmi'
+		icon_state = "wingrille"
+
 // Plasmaglass window
 /obj/mapping_helper/wingrille_spawn/auto/crystal
 	name = "crystal autowindow grille spawner"
@@ -110,6 +116,11 @@
 #else
 	icon_state = "p-wingrille_f"
 #endif
+
+	walp
+		win_path = /obj/window/auto/crystal/walp
+		icon = 'icons/obj/window_walp.dmi'
+		icon_state = "p-wingrille"
 
 // Uqill glass, bohrum reinforced window
 /obj/mapping_helper/wingrille_spawn/auto/hardened
@@ -134,6 +145,11 @@
 	icon_state = "r-wingrille_f"
 #endif
 
+	walp
+		win_path = /obj/window/auto/reinforced/walp
+		icon = 'icons/obj/window_walp.dmi'
+		icon_state = "r-wingrille"
+
 // Reinforced Plasmaglass window
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal
 	name = "reinforced crystal autowindow grille spawner"
@@ -143,6 +159,11 @@
 #else
 	icon_state = "pr-wingrille_f"
 #endif
+
+	walp
+		win_path = /obj/window/auto/crystal/reinforced/walp
+		icon = 'icons/obj/window_walp.dmi'
+		icon_state = "pr-wingrille"
 
 //Tuff windows with increased explosion resistance
 
