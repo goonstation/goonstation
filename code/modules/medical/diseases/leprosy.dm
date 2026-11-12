@@ -29,7 +29,7 @@
 				var/obj/item/parts/limb = M.limbs.vars[limb_name]
 				if (istype(limb))
 					if (limb.remove_stage < 2)
-						limb.remove_stage = 2
+						limb.remove_stage = LIMB_REMOVE_STAGE_LOOSE
 						M.show_message(SPAN_ALERT("Your [limb] comes loose!"))
 						SPAWN(rand(15,20) SECONDS)
 							if(limb.remove_stage == 2)

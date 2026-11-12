@@ -3140,7 +3140,7 @@ var/global/noir = 0
 										if (!sawarm) return
 
 										sawarm.holder = M
-										sawarm.remove_stage = 0
+										sawarm.remove_stage = LIMB_REMOVE_STAGE_SECURE
 										sawarm:set_item(new /obj/item/saw/elimbinator())
 
 

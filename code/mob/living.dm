@@ -53,6 +53,7 @@ TYPEINFO(/mob/living)
 
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
+	var/datum/surgeryHolder/living/surgeryHolder = null
 
 	/// all applied patches (ex. medical patches)
 	var/list/applied_patches = list()
