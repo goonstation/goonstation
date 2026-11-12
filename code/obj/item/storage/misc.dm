@@ -116,7 +116,7 @@
 
 /obj/item/storage/box/misctools //used in CE locker
 	name = "miscellaneous tools"
-	desc = "A box full of tools, but distinctly seperate from a toolbox."
+	desc = "A box full of tools, but distinctly separate from a toolbox."
 	icon_state = "box"
 	spawn_contents = list(
 		/obj/item/electronics/scanner,
