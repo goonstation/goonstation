@@ -85,14 +85,14 @@
 			boutput(usr, SPAN_ALERT("Access Denied."))
 			return TRUE
 		switch (action)
-			if ("start_ai_killswitch" || ai_player.syndicate)
+			if ("start_ai_killswitch")
 				if (!src.can_killswitch)
 					return
 				if (isAI(usr))
 					boutput(usr, SPAN_ALERT("AI units are unable to access killswitch functionality."))
 					return
 				var/mob/living/silicon/ai/ai_player = locate(params["mob_ref"])
-				if (QDELETED(ai_player))
+				if (QDELETED(ai_player) || ai_player.syndicate)
 					return
 				message_admins(SPAN_ALERT("[key_name(usr)] has activated the AI self destruct on [key_name(ai_player)]."))
 				logTheThing(LOG_COMBAT, usr, "has activated the AI killswitch process on [constructTarget(ai_player,"combat")]")

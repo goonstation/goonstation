@@ -39,6 +39,10 @@
 	#ifdef SKIP_CAMERA_COVERAGE
 	return TRUE
 	#else
+	if(get_z(atom) != Z_LEVEL_STATION && isnukeopai(usr))
+		if(istypes(get_area(atom), list(/area/syndicate_station, /area/listeningpost)))
+			return TRUE
+		return FALSE
 	var/turf/T = atom
 	if(!istype(T))
 		T = get_turf(atom)

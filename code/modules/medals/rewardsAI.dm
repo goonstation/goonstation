@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/achievementReward/aicase)
 				var/mob/living/intangible/aieye/AE = activator
 				A = AE.mainframe
 			if(A.syndicate)
-				boutput(C, SPAN_ALERT("Your syndicate firmware prevents you from being anything but a cool syndicate red."))
+				boutput(activator, SPAN_ALERT("Your syndicate firmware prevents you from being anything but a cool syndicate red."))
 				return FALSE
 			A.coreSkin = aiskin
 			A.update_appearance()

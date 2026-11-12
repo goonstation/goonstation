@@ -193,6 +193,7 @@
 		if(!tracking || !owner || ( ( (last_track + delay) > world.timeofday ) && (world.timeofday > last_track) ) )
 			return
 
+		usr = src.owner.eyecam // So the trackable and camera checks can know if the owner's a syndie AI
 
 		var/failedToTrack = 0
 		if (!is_mob_trackable_by_AI(tracking))
