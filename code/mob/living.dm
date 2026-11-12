@@ -480,7 +480,7 @@ TYPEINFO(/mob/living)
 		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 		return
 
-	if (src.restrained())
+	if (src.restrained() && !(target.flags & ALLOW_CUFFED_CLICKS))
 		if (src.hasStatus("handcuffed"))
 			boutput(src, SPAN_ALERT("You are handcuffed! Use Resist to attempt removal."))
 		return
