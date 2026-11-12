@@ -59,6 +59,15 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		singleuse
 			fablimit = 1
 
+	program_rack
+		name = "Command ManuDrive: Artifiical Intelligence Program Rack Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture AI program disk racks."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/mechanics/programRack)
+
+		singleuse
+			fablimit = 1
+
 	gravity_tether
 		name = "Command ManuDrive: Station Gravity Tether Blueprint"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture a station gravity tether."
