@@ -78,7 +78,14 @@
 		get_image_group(ROLE_REVOLUTIONARY).remove_mind(src.owner)
 
 	assign_objectives()
-		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear, src)
+		if (istype(ticker.mode, /datum/game_mode/nuclear))
+			ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear, src)
 
 	relocate()
-		src.owner.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_AI))
+		var/target_turf = pick_landmark(LANDMARK_SYNDICATE_AI)
+		if(!target_turf)
+			target_turf = pick_landmark(LANDMARK_SYNDICATE)
+		if(!target_turf && length(job_start_locations["AI"]))
+			target_turf = pick(job_start_locations["AI"])
+		if(target_turf)
+			src.owner.current.set_loc(target_turf)
