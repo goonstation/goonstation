@@ -1889,7 +1889,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/bank_progs, 2, cost=src.pay ? PAY::TRADESMAN : 0, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/communications, 2, cost=src.pay ? PAY::TRADESMAN : 0, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd96, 2, cost=src.pay ? PAY::TRADESMAN*2 : 0, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/ai_program/flash, 1, cost=src.pay ? PAY::TRADESMAN*4 : 0, hidden=1)
 
 /obj/machinery/vending/floppy/free
 	pay = 0

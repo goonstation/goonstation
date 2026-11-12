@@ -347,7 +347,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	HELP_MESSAGE_OVERRIDE({"Use on an armed nuclear bomb to alter the time remaining until detonation.
 	Use on an armory authorization computer to issue an emergency authorization or unauthorization.
 	Use on an escape shuttle launch computer to alter the time until departure.
-	Slot in the AI Program Rack to enable the AI to emit taser shots via camera."})
+	Slot in the AI Program Rack to enable the AI to call for the shuttle without a console."})
 
 	New()
 		. = ..()
@@ -365,7 +365,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
-			src.root.add_file( new /datum/computer/file/ai_program/ability/camera_taser(src))
+			src.root.add_file( new /datum/computer/file/ai_program/skill/call_shuttle(src))
 			src.read_only = 1
 
 	disposing()
