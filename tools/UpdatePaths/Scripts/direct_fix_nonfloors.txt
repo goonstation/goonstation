@@ -1,0 +1,9 @@
+/turf/simulated/grass : /turf/simulated/floor/grass{@OLD}
+/turf/simulated/aprilfools/grass : /turf/simulated/floor/grass{@OLD}
+/turf/simulated/aprilfools/dirt : /turf/simulated/floor/dirt{@OLD}
+/turf/simulated/aprilfools/brick_wall : /turf/simulated/wall/auto/reinforced/brick_wall{@OLD}
+/turf/unsimulated/aprilfools/grass : /turf/unsimulated/floor/grass{@OLD}
+/turf/unsimulated/aprilfools/dirt : /turf/unsimulated/floor/dirt{@OLD}
+/turf/simulated/grimycarpet : /turf/simulated/floor/carpet/grime{@OLD}
+/turf/simulated/bar : /turf/simulated/floor/specialroom/bar{@OLD}
+/turf/unsimulated/grimycarpet : /turf/unsimulated/floor/carpet/grime{@OLD}

@@ -65,7 +65,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			var/datum/game_mode/nuclear/gamemode = ticker.mode
 			if(gamemode.the_bomb == src)
 				gamemode.the_bomb = null
-				STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		qdel(wirepanel)
 		..()
 
@@ -239,7 +238,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 					user.client.play_music_radio(src.record.song, html_encode(src.record.name))
 
 		logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
-		message_ghosts("<b>[src]</b> has been armed at [log_loc(src.loc, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src)] has been armed at [GHOST.MESSAGE.format_loc(src)].")
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		ENSURE_TYPE(gamemode)
 		gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED
@@ -431,7 +430,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			logTheThing(LOG_GAMEMODE, null, "[src][mode_bomb] was destroyed at [log_loc(src)].")
 			message_admins("<b>[src][mode_bomb]</b> was destroyed at [log_loc(src)].")
-			message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)]!")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] was destroyed at [GHOST.MESSAGE.format_loc(src)].")
 			qdel(src)
 
 	proc/explode()

@@ -2,7 +2,7 @@
 	VAR_PROTECTED/lower = null
 	VAR_PROTECTED/upper = null
 
-/datum/record_field/number/New(name, value, lower, upper)
+/datum/record_field/number/New(parent, name, value, lower, upper)
 	if (isnum(lower))
 		src.lower = lower
 	if (isnum(upper))

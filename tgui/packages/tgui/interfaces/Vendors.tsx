@@ -3,10 +3,12 @@ import {
   Collapsible,
   Divider,
   Flex,
+  Icon,
   Image,
   LabeledList,
   Section,
   Stack,
+  Tooltip,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -22,6 +24,7 @@ interface ProductData {
   infinite: BooleanLike;
   name: string;
   ref: string;
+  restock: BooleanLike;
 }
 
 interface VendorsData {
@@ -167,7 +170,8 @@ export const Vendors = () => {
               {!busy && (
                 <ProductList showCount showImage showOutput>
                   {productList.map((product) => {
-                    const { amount, cost, img, infinite, name, ref } = product;
+                    const { amount, cost, img, infinite, name, ref, restock } =
+                      product;
                     const costString = getCostString(product);
                     const extraCellsSlot =
                       playerBuilt && wiresOpen && unlocked ? (
@@ -216,7 +220,12 @@ export const Vendors = () => {
                         image={img}
                         count={infinite ? undefined : amount}
                       >
-                        {name}
+                        {name}{' '}
+                        {!restock && (
+                          <Tooltip content="Limited amount. Will not restock.">
+                            <Icon name="clock" />
+                          </Tooltip>
+                        )}
                       </ProductList.Item>
                     );
                   })}

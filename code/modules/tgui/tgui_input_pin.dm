@@ -21,6 +21,7 @@
  * * theme - The TGUI theme used for the window.
  */
 /proc/tgui_input_pin(mob/user, message, title = "PIN Input", default, max_value = null, min_value = null, timeout = 0, theme = null)
+	UNIT_TEST_TGUI_RESPONSE
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -65,6 +66,7 @@
  * * theme - The TGUI theme used for the window.
  */
 /proc/tgui_input_pin_async(mob/user, message, title = "PIN Input", default, max_value = null, min_value = null, datum/callback/callback, timeout = 60 SECONDS, theme = null)
+	UNIT_TEST_TGUI_RESPONSE_ASYNC(callback)
 	if (!user)
 		user = usr
 	if (!istype(user))

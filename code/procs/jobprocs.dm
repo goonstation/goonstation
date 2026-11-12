@@ -505,6 +505,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 					if (!A.status && A.announces_arrivals)
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
 							return
+						else if (JOB.change_name_on_spawn) // Announced later after they've chosen their name so they dont get announced twice
+							return
 						else
 							A.announce_arrival(src)
 
@@ -764,6 +766,8 @@ Equip items from body traits.
 				equipped = 1
 			else if (!src.r_store && src.equip_if_possible(I, SLOT_R_STORE))
 				equipped = 1
+			else if (!src.head && src.equip_if_possible(I, SLOT_HEAD))
+				equipped = 1
 			else if (!src.l_hand && src.equip_if_possible(I, SLOT_L_HAND))
 				equipped = 1
 			else if (!src.r_hand && src.equip_if_possible(I, SLOT_R_HAND))
@@ -809,7 +813,7 @@ Equip items from body traits.
 
 		C.registered = realName
 		C.assignment = JOB.name
-		C.name = "[C.registered]’s ID Card ([C.assignment])"
+		C.update_name()
 		C.access = JOB.access.Copy()
 		C.pronouns = src.get_pronouns()
 

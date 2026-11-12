@@ -165,14 +165,14 @@
 		name = "[visrMat]-visored [helmMat] helmet"
 
 		// Setup the clothing stats based on material properties
-		var/prot = max(0, (5 - visrMat.getProperty("thermal")) * 5)
+		var/prot = max(0, (5 - visrMat.getProperty(MATERIAL::PROPERTY::THERMAL_COND)) * 5)
 		setProperty("coldprot", 10+prot)
 		setProperty("heatprot", 2+round(prot/2))
 		// All crystals (assuming default chem value) will give 20 chemprot, same as normal helm
-		prot =  clamp(((visrMat.getProperty("chemical") - 4) * 10), 0, 35)
+		prot =  clamp(((visrMat.getProperty(MATERIAL::PROPERTY::CHEM_RESIST) - 4) * 10), 0, 35)
 		setProperty("chemprot", prot)
 		 // Even if soft visor, still gives some value
-		prot = max(0, visrMat.getProperty("density") - 3) / 2
+		prot = max(0, visrMat.getProperty(MATERIAL::PROPERTY::DENSITY) - 3) / 2
 		setProperty("meleeprot_head", 3 + prot)
 
 		var/image/image_item_fabric = image(src.icon, "spacemat")
@@ -1253,8 +1253,13 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	attack_self(mob/user as mob)
 		boutput(user, SPAN_NOTICE("You turn the bucket right side up."))
 		var/obj/item/reagent_containers/glass/bucket/B = new bucket_type(src.loc)
+		B.setMaterial(src.material)
+		B.forensic_holder = src.forensic_holder
+		B.color = src.color
+		src.copy_filters_to(B)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 		qdel(src)
 		return
 

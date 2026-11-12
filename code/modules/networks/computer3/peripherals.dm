@@ -301,11 +301,11 @@ TYPEINFO(/obj/item/peripheral)
 
 	New()
 		..()
+		//Let's blindy attempt to generate a unique network ID!
+		src.net_id = format_net_id("\ref[src]")
 		SPAWN(1 SECOND)
 			if(src.host && !src.link) //Wait for the map to load and hook up if installed() hasn't done it.
 				src.check_connection()
-			//Let's blindy attempt to generate a unique network ID!
-			src.net_id = format_net_id("\ref[src]")
 
 
 
@@ -324,7 +324,7 @@ TYPEINFO(/obj/item/peripheral)
 		//boutput(world, "uninstalling")
 		if((src.link) && (src.link.master == src))
 			//boutput(world, "clearing link of [src]")
-			src.link.master = null
+			src.link.set_master(null)
 
 		src.link = null
 		return 0
@@ -451,7 +451,7 @@ TYPEINFO(/obj/item/peripheral)
 	var/obj/machinery/power/data_terminal/test_link = locate() in T
 	if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 		src.link = test_link
-		src.link.master = src
+		src.link.set_master(src, src.net_id)
 		return 1
 	else
 		//boutput(world, "couldn't link")
@@ -776,7 +776,7 @@ TYPEINFO(/obj/item/peripheral)
 	uninstalled()
 		//Clear our status as the wired link's master, then null out that link.
 		if((src.wired_link) && (src.wired_link.master == src))
-			src.wired_link.master = null
+			src.wired_link.set_master(null)
 
 		src.wired_link = null
 		return 0
@@ -812,7 +812,7 @@ TYPEINFO(/obj/item/peripheral)
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
 		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 			src.wired_link = test_link
-			src.wired_link.master = src
+			src.wired_link.set_master(src, src.net_id)
 			return 1
 		else
 			return 0

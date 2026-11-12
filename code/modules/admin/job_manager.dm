@@ -90,4 +90,5 @@
 			logTheThing(LOG_DIARY, ui.user, "removed special job [job.name]", "admin")
 			job_controls.special_jobs -= job
 			job_controls.hidden_jobs -= job
+			job_controls.rebuild_job_index()
 			. = TRUE

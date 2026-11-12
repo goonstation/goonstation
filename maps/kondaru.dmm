@@ -34763,7 +34763,9 @@
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
 "ikb" = (
-/obj/machinery/computer/tetris,
+/obj/machinery/computer/tetris{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ikf" = (

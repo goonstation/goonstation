@@ -181,7 +181,7 @@
 			return list(access_brig, access_carrypermit, access_contrabandpermit, access_security, access_forensics_lockers, access_ticket,
 			access_morgue, access_maint_tunnels, access_crematorium, access_medical, access_research)
 		if("Lawyer")
-			return list(access_morgue, access_maint_tunnels)
+			return list(access_morgue, access_maint_tunnels, access_security)
 
 		// --------------------------- Medical
 		if("Medical Doctor", "Medical Trainee")

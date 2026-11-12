@@ -133,6 +133,21 @@ TYPEINFO(/mob/dead/target_observer)
 
 		src.target.ensure_listen_tree().add_message_importing_tree(src.ensure_listen_tree())
 
+	proc/to_ghost()
+		RETURN_TYPE(/mob/dead/observer)
+
+		if (isnull(src.ghost))
+			src.ghost = new(src.corpse)
+
+			if (!src.corpse)
+				src.ghost.name = src.name
+				src.ghost.real_name = src.real_name
+
+		. = src.ghost
+
+		if (!QDELETED(src))
+			qdel(src)
+
 	click(atom/target, params, location, control)
 		if(!isnull(target) && (target.flags & TGUI_INTERACTIVE))
 			if(ismob(src.target))
@@ -191,26 +206,3 @@ TYPEINFO(/mob/dead/target_observer/slasher_ghost)
 			O.update_item_abilities()
 			return O
 		return null
-
-
-/mob/dead/target_observer/verb/ghostjump(x as num, y as num, z as num)
-	set name = ".ghostjump"
-	set hidden = TRUE
-
-	if(src.type != /mob/dead/target_observer)
-		return // ugh, bad inheritance :whelm:
-
-	var/turf/T = locate(x, y, z)
-	if (!can_ghost_be_here(src, T))
-		return
-
-	if(isnull(src.ghost))
-		src.ghost = new(src.corpse)
-
-		if (!src.corpse)
-			src.ghost.name = src.name
-			src.ghost.real_name = src.real_name
-
-	var/mob/dead/observer/ghost = src.ghost
-	qdel(src)
-	ghost.set_loc(T)

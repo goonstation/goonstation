@@ -158,12 +158,13 @@
 					return
 
 			var/misstep_angle = 0
-			if (src.traitHolder && prob(5) && src.traitHolder.hasTrait("leftfeet"))
-				misstep_angle += 45
-			if (prob(DISORIENT_MISSTEP_CHANCE) && src.getStatusDuration("disorient"))
-				misstep_angle += 45
-			if (prob(src.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
-				misstep_angle += randfloat(0,src.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
+			if (!isintangible(src)) // no body, nothing to stumble with
+				if (src.traitHolder && prob(5) && src.traitHolder.hasTrait("leftfeet"))
+					misstep_angle += 45
+				if (prob(DISORIENT_MISSTEP_CHANCE) && src.getStatusDuration("disorient"))
+					misstep_angle += 45
+				if (prob(src.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
+					misstep_angle += randfloat(0,src.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
 
 			if(misstep_angle)
 				misstep_angle = min(misstep_angle,90)
@@ -254,7 +255,7 @@
 						do_step = 0
 						break
 
-					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && !H.limbs.l_leg && !H.limbs.r_leg)	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
+					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && !H.limbs.is_limb_functional("l_leg") && !H.limbs.is_limb_functional("r_leg"))	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
 						boutput(src, SPAN_ALERT("Without a leg to walk with, you flop over!"))
 						src.setStatus("resting", duration = INFINITE_STATUS)
 						src.force_laydown_standup()

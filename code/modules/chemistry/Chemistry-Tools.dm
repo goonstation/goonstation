@@ -470,20 +470,6 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 					boutput(user, SPAN_NOTICE("[I] is already fully coated, more won't do any good."))
 				return
 
-		//Hacky thing to make silver bullets (maybe todo later : all items can be dipped in any solution?)
-		else if (istype(I, /obj/item/ammo/bullets/bullet_22HP) ||istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
-			if ("silver" in src.reagents.reaction(I, react_volume = src.reagents.total_volume))
-				user.visible_message(SPAN_ALERT("<b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!"))
-				I.tooltip_rebuild = TRUE
-			else
-				if(istype(I, /obj/item/ammo/bullets))
-					var/obj/item/ammo/A = I
-					I = A.ammo_type
-				if (I.material && I.material.getID() == "silver")
-					boutput(user, SPAN_NOTICE("[I] is already coated, more silver won't do any good."))
-				else
-					boutput(user, SPAN_NOTICE("[src] doesn't have enough silver in it to coat [I]."))
-
 		else if (istype(I, /obj/item/reagent_containers/iv_drip))
 			var/obj/item/reagent_containers/iv_drip/W = I
 			if (W.slashed == 1)
@@ -617,6 +603,10 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 				return
 			user.show_text("You cut eyeholes into [src].")
 			var/obj/item/clothing/head/helmet/bucket/B = new helmet_bucket_type(src.loc)
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			B.color = src.color
+			src.copy_filters_to(B)
 			user.put_in_hand_or_drop(B)
 			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 			qdel(src)
@@ -636,6 +626,10 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 		else
 			user.show_text("You turn the bucket upside down.", "red")
 		var/obj/item/clothing/head/helmet/bucket/hat/B = new hat_bucket_type(src.loc)
+		B.setMaterial(src.material)
+		B.forensic_holder = src.forensic_holder
+		B.color = src.color
+		src.copy_filters_to(B)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
 		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)

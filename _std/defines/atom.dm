@@ -86,6 +86,7 @@
 #define THROW_PHASE			(1 << 8) //! throw has phasing through walls for two tiles. For white holes
 #define THROW_NO_CLIP		(1 << 9) //! throw has phasing through walls without a tile limit
 #define THROW_ARC			(1 << 10)//! throw in an arc, like from a catapult or something
+#define THROW_DELIVERY		(1 << 11)//! cargo delivery, doesn't set off materials on impact
 
 //For serialization purposes
 #define DESERIALIZE_ERROR				(0 << 0)
