@@ -611,7 +611,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_jump = list(/obj/item/clothing/under/rank/geneticist)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/genetics)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_ears = list(/obj/item/device/radio/headset/medical/genetics)
 	slot_poc1 = list(/obj/item/device/analyzer/genetic)
 	wiki_link = "https://wiki.ss13.co/Geneticist"
 
@@ -628,7 +628,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/robotics)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_ears = list(/obj/item/device/radio/headset/medical/robotics)
 	slot_poc1 = list(/obj/item/device/pda2/medical/robotics)
 	slot_poc2 = list(/obj/item/reagent_containers/mender/brute)
 	wiki_link = "https://wiki.ss13.co/Roboticist"
