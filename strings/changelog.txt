@@ -1,4 +1,9 @@
 
+(t)thu nov 12 26
+(u)JORJ949
+(p)28255
+(e)🎨⚖💅📦|C-Sprites, C-Balance, C-QoL, A-Game-Objects
+(*)Emote-triggered implants (Signaller and Freedom) are now item abilities that you can use when the implant is implanted inside you. You can still use them while cuffed (but not incapacitated).
 (t)tue nov 10 26
 (u)JORJ949
 (p)28158
