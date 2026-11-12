@@ -1,5 +1,6 @@
 /datum/random_event/start/poisoning
 	name = "Food Poisoning"
+	description = "Afflict one or more registered crew wtih food poisoning, causing nausea"
 	customization_available = 0
 	required_elapsed_round_time = 0
 
