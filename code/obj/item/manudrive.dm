@@ -46,7 +46,7 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		fablimit = 2
 
 	clone_rack
-		name = "Genetics ManuDrive: Clone Rack Blueprint"
+		name = "Medical ManuDrive: Clone Rack Blueprint"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture clone disk racks."
 		icon_state = "datadiskmed"
 		temp_recipe_string = list(/datum/manufacture/clone_rack)
