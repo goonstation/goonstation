@@ -266,7 +266,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 			if(in_ai_range)
 				target.attack_ai(src, params, location, control)
 
-		if (src.client.check_any_key(KEY_POINT) && in_ai_range)
+		if (src.client.check_any_key(KEY_POINT) && (in_ai_range || src.mainframe.syndicate))
 			var/turf/T = get_turf(target)
 			mainframe.show_hologram_context(T)
 			return
