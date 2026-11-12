@@ -461,7 +461,7 @@
 	big_station_bounties[/obj/machinery/computer/supplycomp] = 1
 	big_station_bounties[/obj/machinery/computer3/generic/communications] = 1
 	big_station_bounties[/obj/machinery/computer3/terminal/zeta] = 1
-	big_station_bounties[/obj/machinery/disk_rack/telesci] = 2
+	big_station_bounties[/obj/machinery/networked/teleconsole] = 2
 	big_station_bounties[/obj/machinery/chem_dispenser] = 2
 	big_station_bounties[/obj/machinery/computer/announcement] = 2
 	big_station_bounties[/obj/machinery/computer/card] = 2
