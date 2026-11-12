@@ -678,7 +678,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 
 	/// Notify all telesci disk racks that we used this destination
 	proc/notify_disk_racks(location_name)
-		for (var/obj/machinery/disk_rack/telesci/telesci_rack in by_type[/obj/machinery/disk_rack/telesci])
+		for_by_tcl(telesci_rack, /obj/machinery/disk_rack/telesci)
 			telesci_rack.set_destination_light(location_name)
 
 	proc/send(var/turf/target)
