@@ -17568,14 +17568,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "hIK" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
 /obj/machinery/alarm/directional/west,
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/caution/white{
 	dir = 8
 	},

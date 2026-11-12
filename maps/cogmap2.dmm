@@ -33834,11 +33834,7 @@
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "cik" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "cil" = (

@@ -39026,6 +39026,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"xMx" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/purple/checker,
+/area/station/science/teleporter)
 "xMD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -92158,7 +92162,7 @@ eRv
 nWp
 hkm
 qlD
-hti
+xMx
 uCl
 uCl
 aaa

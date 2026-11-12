@@ -3127,15 +3127,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen/freezer)
-"btm" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/black,
-/area/station/science/teleporter)
 "bts" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -3338,17 +3329,6 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
-"bxc" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/science/teleporter)
 "bxi" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/black,
@@ -13323,6 +13303,9 @@
 	})
 "fTt" = (
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "fTv" = (
@@ -15836,7 +15819,7 @@
 	})
 "gVU" = (
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -18857,6 +18840,9 @@
 	},
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
@@ -26269,6 +26255,12 @@
 /obj/item/storage/pill_bottle/hairgrownium,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
+"luf" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
 "lug" = (
 /obj/mapping_helper/airlock/cycler/auto/pawn,
 /turf/simulated/wall/auto/supernorn,
@@ -27994,9 +27986,6 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/northwest)
 "mfB" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/purpleblack/corner{
 	dir = 8
 	},
@@ -33913,6 +33902,9 @@
 	},
 /area/station/medical/robotics)
 "oRv" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "oRw" = (
@@ -41787,6 +41779,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -43392,9 +43387,6 @@
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "tnD" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
@@ -51458,9 +51450,7 @@
 	},
 /area/station/crew_quarters/quarters_east)
 "wYs" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/purpleblack,
 /area/station/science/teleporter)
 "wYt" = (
@@ -52468,6 +52458,9 @@
 /area/station/hallway/primary/northwest)
 "xxg" = (
 /obj/item/device/radio/beacon,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "xxh" = (
@@ -95974,7 +95967,7 @@ wxQ
 tYc
 vOZ
 sEx
-btm
+wxQ
 oRv
 hhc
 aHG
@@ -96578,8 +96571,8 @@ oWG
 oWG
 oWG
 gFj
-fyB
-oRv
+hhc
+luf
 hhc
 vvH
 cNY
@@ -97182,7 +97175,7 @@ cVH
 uvB
 vJj
 aKF
-bxc
+kGc
 iiZ
 kGc
 guk

@@ -8272,17 +8272,28 @@
 /area/station/science/lab)
 "dHV" = (
 /obj/table/glass/auto,
-/obj/item/clothing/head/helmet/camera{
-	camera_tag = "Helmet Cam 2"
-	},
-/obj/item/clothing/head/helmet/camera{
-	camera_tag = "Helmet Cam 1"
-	},
-/obj/item/clothing/head/helmet/camera,
 /obj/machinery/door_control{
 	id = "scienceteleporter";
 	name = "Teleporter Pad Lockdown";
 	pixel_x = 23
+	},
+/obj/item/paper_bin,
+/obj/item/clipboard,
+/obj/item/pen,
+/obj/item/clothing/head/helmet/camera{
+	camera_tag = "Helmet Cam 2";
+	pixel_x = 2;
+	pixel_y = 11
+	},
+/obj/item/pen,
+/obj/item/clothing/head/helmet/camera{
+	camera_tag = "Helmet Cam 1";
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/camera{
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/simulated/floor/caution,
 /area/station/science/teleporter)
@@ -27320,11 +27331,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
 "moj" = (
-/obj/table/glass/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/pen,
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/caution,
 /area/station/science/teleporter)
 "mom" = (
