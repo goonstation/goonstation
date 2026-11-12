@@ -24,6 +24,8 @@
 		"Detective" = "det",
 		"Scientist" = "sci",
 		"Medical" = "med",
+		"Genetics" = "gene",
+		"Robotics" = "robotics",
 		"Engineer" = "eng",
 		"Quartermaster" = "qm",
 		"Miner" = "Min",

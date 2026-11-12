@@ -331,6 +331,7 @@
 	name = "medical headset"
 	desc = "Nominally worn by the trained staff of the medbay, this headset can be counted on to either be utterly silent or to be squawking constantly at any given moment."
 	icon_state = "med headset"
+	wear_state = "med headset"
 	secure_frequencies = list("m" = R_FREQ_MEDICAL)
 	secure_classes = list(
 		"m" = RADIOCL_MEDICAL,
@@ -339,26 +340,17 @@
 	icon_tooltip = "Medical"
 
 /obj/item/device/radio/headset/medical/genetics
-	name = "genetics headset"
-	desc = "Nominally worn by the trained staff of the medbay gene lab, this headset can be counted on to either be utterly silent or to be squawking constantly at any given moment."
-	icon_state = "gene headset"
-	secure_frequencies = list("m" = R_FREQ_MEDICAL)
-	secure_classes = list(
-		"m" = RADIOCL_MEDICAL,
-		)
-	icon_override = "gene"
-	icon_tooltip = "Genetics"
+    name = "genetics headset"
+    desc = "Worn by the Wonderfull *statues* STAFF of the genetics lab"
+    icon_state = "gene headset"
+    icon_override = "gene"
+    icon_tooltip = "Genetics"
 
 /obj/item/device/radio/headset/medical/robotics
-	name = "robotics headset"
-	desc = "Nominally worn by the trained staff of the medbay robotics lab, this headset can be counted on to either be utterly silent or to be squawking constantly at any given moment."
-	icon_state = "robo headset"
-	secure_frequencies = list("m" = R_FREQ_MEDICAL)
-	secure_classes = list(
-		"m" = RADIOCL_MEDICAL,
-		)
-	icon_override = "robotics"
-	icon_tooltip = "Robotics"
+    name = "robotics headset"
+    icon_state = "robo headset"
+    icon_override = "robotics"
+    icon_tooltip = "Robotics"
 
 /obj/item/device/radio/headset/research
 	name = "research headset"
