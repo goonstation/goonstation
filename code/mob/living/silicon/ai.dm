@@ -2586,14 +2586,10 @@ proc/get_mobs_trackable_by_AI()
 			update_hud = TRUE
 			src.viewport_limit = SILICON::AI::MAX_VIEWPORTS
 
-	if (length(src.holoHolder.text_expansion))
-		if(length(new_holograms) == 0)
-			update_hud = TRUE
-			src.holoHolder.text_expansion = new_holograms
-	else
-		if(length(new_holograms))
-			update_hud = TRUE
-			src.holoHolder.text_expansion = new_holograms
+	// if the lengths don't match, or if the lists have different entries
+	if ((length(src.holoHolder.text_expansion) != length(new_holograms)) || (length(src.holoHolder.text_expansion) != length(src.holoHolder.text_expansion | new_holograms)))
+		update_hud = TRUE
+		src.holoHolder.text_expansion = new_holograms
 
 	var/ability_type
 	var/datum/abilityHolder/silicon/ai/aiAH = src.get_ability_holder(/datum/abilityHolder/silicon/ai)
