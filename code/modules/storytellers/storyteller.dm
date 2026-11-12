@@ -36,6 +36,9 @@ ABSTRACT_TYPE(/datum/storyteller)
 	var/want_latejoin_chance = 20 // additional chance for latejoin when we want one, but antags are still alive.
 	var/urgent_latejoin_chance = 40 // the chance for rolling latejoin when we urgently want one (i.e. all antags are dead)
 
+	/// see defines/storyteller.dm
+	var/storyteller_flags = STORYTELLER_ANTAG_THRESHOLD | STORYTELLER_SEC_CHECK
+
 	proc/set_active(datum/event_controller/random_events)
 
 		random_events.major_events_begin = src.major_event_start
@@ -273,7 +276,8 @@ ABSTRACT_TYPE(/datum/storyteller)
 		// check if any antagonists (excluding silicons) are alive at all.
 		for(var/datum/mind/brain in ticker.minds)
 			if(brain.current && brain.is_antagonist())
-				if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null) // if a silicon mob, dead or logged out, skip
+				// if a silicon mob, dead, logged out, or in cryo then skip
+				if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null || istype(brain.current.loc, /obj/cryotron))
 					continue
 
 				livingtraitor = TRUE
@@ -290,11 +294,11 @@ ABSTRACT_TYPE(/datum/storyteller)
 				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join from base chance.")
 				return TRUE // base low random chance
 
-			if(prob(src.want_latejoin_chance) && antag_percentage < random_events.alive_antags_threshold)
+			if((src.storyteller_flags & STORYTELLER_ANTAG_THRESHOLD) && prob(src.want_latejoin_chance) && antag_percentage < random_events.alive_antags_threshold)
 				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as antag percentage is below expected threshold.")
 				return TRUE // alive antag percent is below expected threshold
 
-			if(prob(src.want_latejoin_chance) && src.overwhelming_security_check())
+			if((src.storyteller_flags & STORYTELLER_SEC_CHECK) && prob(src.want_latejoin_chance) && src.overwhelming_security_check())
 				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as there are at least [src.overwhelming_sec_multiplier] \
 				times more alive security than antagonists.")
 				return TRUE // there are too many alive security crew compared to alive antags
