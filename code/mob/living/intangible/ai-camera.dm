@@ -250,7 +250,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 				return
 
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
-			if (src.mainframe && ismob(target) && is_mob_trackable_by_AI(target, src))
+			if (src.mainframe && ismob(target) && is_mob_trackable_by_AI(target))
 				mainframe.ai_actual_track(target)
 			//else if (isturf(target))
 			//	var/turf/T = target
