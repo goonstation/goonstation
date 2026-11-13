@@ -3200,7 +3200,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		butterflytype = rand(1,5)
+		butterflytype = rand(1,6)
 		src.icon_state = "butterfly[butterflytype]"
 		src.icon_state_dead = "butterfly[butterflytype]-dead"
 		START_TRACKING_CAT(TR_CAT_BUGS)
@@ -3223,11 +3223,18 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	death()
 		if (fur_color)
-			var/image/overlay = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color1")
+			var/image/overlay = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color1-dead")
 			overlay.color = fur_color
 			src.UpdateOverlays(overlay, "hair")
-		..()
 
+			var/image/overlay_eyes = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color2-dead")
+			overlay_eyes.color = eye_color
+			src.UpdateOverlays(overlay_eyes, "eyes")
+		..()
+	full_heal()
+		..()
+		src.ClearAllOverlays()
+		src.setup_overlays()
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -3245,6 +3252,29 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.name = "proboscis"
 		HH.limb_name = "mouth"
 		HH.can_hold_items = 0
+
+	animate_lying(lying)
+		if (lying)
+			src.icon_state = "butterfly[butterflytype]-sleeping"
+			if (fur_color)
+				var/image/overlay = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color1-sleeping")
+				overlay.color = fur_color
+				src.UpdateOverlays(overlay, "hair")
+
+				var/image/overlay_eyes = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color2-sleeping")
+				overlay_eyes.color = eye_color
+				src.UpdateOverlays(overlay_eyes, "eyes")
+
+		else
+			src.icon_state = "butterfly[butterflytype]"
+			if (fur_color)
+				var/image/overlay = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color1")
+				overlay.color = fur_color
+				src.UpdateOverlays(overlay, "hair")
+
+				var/image/overlay_eyes = image('icons/misc/critter.dmi', "butterfly[butterflytype]_color2")
+				overlay_eyes.color = eye_color
+				src.UpdateOverlays(overlay_eyes, "eyes")
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
