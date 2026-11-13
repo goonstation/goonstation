@@ -15,6 +15,8 @@
 	var/see_infrared = 0
 	///centerlight icon
 	var/centerlight_icon
+	///use vision_wide dmi for the centerlight icon if client is widescreen?
+	var/centerlight_wide = FALSE
 	///centerlight icon color
 	var/centerlight_color
 	///whether this vision only works in unrestricted Z levels
@@ -92,7 +94,8 @@
 	negative_sight = SEE_BLACKNESS
 	see_invisible = INVIS_MESON
 	see_in_dark_bonus = 1
-	centerlight_icon = "nightvision"
+	centerlight_icon = "meson"
+	centerlight_wide = TRUE
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
 
 /datum/vision_modifier/meson/on_apply(mob/user, source)

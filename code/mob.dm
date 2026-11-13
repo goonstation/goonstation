@@ -3687,6 +3687,7 @@ TYPEINFO(/mob)
 	var/should_register_signal = FALSE
 	var/datum/vision_modifier/weightiest_modifier
 	var/new_centerlight_icon
+	var/new_centerlight_wide = FALSE
 	var/list/centerlight_colors = list()
 
 	for(var/datum/vision_modifier/modifier in src.vision_modifiers)
@@ -3714,6 +3715,7 @@ TYPEINFO(/mob)
 		if (modifier.centerlight_icon && (!weightiest_modifier || modifier.weight > weightiest_modifier))
 			weightiest_modifier = modifier
 			new_centerlight_icon = modifier.centerlight_icon
+			new_centerlight_wide = modifier.centerlight_wide
 
 		if (modifier.centerlight_color)
 			centerlight_colors[modifier.centerlight_color] += modifier.weight
@@ -3733,7 +3735,7 @@ TYPEINFO(/mob)
 				new_color[3] += color_rgb[3]*color_w
 				w_divisor += color_w
 			new_color = rgb(new_color[1]/w_divisor, new_color[2]/w_divisor, new_color[3]/w_divisor) */
-		src.render_special.set_centerlight_icon(new_centerlight_icon, centerlight_colors[1], wide = (src.client?.widescreen))
+		src.render_special.set_centerlight_icon(new_centerlight_icon, centerlight_colors[1], wide = (new_centerlight_wide && src.client?.widescreen))
 	else if (new_centerlight_icon)
 		src.render_special.set_centerlight_icon(new_centerlight_icon)
 
