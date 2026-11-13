@@ -126,6 +126,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 	)
 	additional_area_types = list(/area/tech_outpost, /area/spyshack)
 
+/obj/machinery/gravity_tether/multi_area/super_store
+	name = "Debris-19 Xtreme Gaming Superstore gravity tether"
+	base_area_typepath = /area/super_store
 
 // debris field
 
