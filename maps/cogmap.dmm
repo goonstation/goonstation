@@ -8687,7 +8687,7 @@
 "aLD" = (
 /obj/machinery/disposal/brig,
 /obj/disposalpipe/trunk/brig{
-	dir = 1
+	dir = 8
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
@@ -121600,7 +121600,7 @@ adC
 adC
 aag
 xaG
-aai
+fxp
 hPO
 aai
 jqT
@@ -121901,8 +121901,8 @@ adC
 adC
 adC
 aag
-xaG
 aai
+xaG
 hPO
 fxp
 fxp
@@ -122203,8 +122203,8 @@ adC
 adC
 adC
 aag
+avp
 xaG
-aai
 aaC
 aap
 aaq

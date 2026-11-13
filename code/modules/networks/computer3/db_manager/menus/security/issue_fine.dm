@@ -44,7 +44,7 @@
 		text = trimtext(strip_html(text))
 
 		if (text == "0")
-			src.parent.switch_menu_to("manage_citations")
+			src.parent.previous_menu()
 			return
 
 		var/datum/db_record/personnel/bank/R = global.data_core.bank.find_record("name", text)
@@ -86,5 +86,4 @@
 		global.data_core.fines.add_record(fine)
 
 		fine.attempt_approve(src.parent.authenticated, src.parent.account.assignment, src.parent.account.access)
-		src.parent.current_record_group = src.record_group
-		src.parent.switch_menu_to("record_view", fine)
+		src.parent.switch_record_group(src.record_group, "record_view", fine)

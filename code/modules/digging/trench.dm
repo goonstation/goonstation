@@ -18,11 +18,13 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_TRENCH
 	can_replace_with_stuff = TRUE
 	layer = PLATING_LAYER
+	can_burn = FALSE
+	can_break = FALSE
 	HELP_MESSAGE_OVERRIDE("Climb in and out of the trench by <b>sprinting</b>.")
 
-	var/old_type
-	var/can_fill = TRUE
-	var/base_icon_state = "trench"
+	var/old_type //! turf type before digging the trench
+	var/can_fill = TRUE //! Can this trench be filled with a shovel
+	var/base_icon_state = "trench" //! icon_state style prefix
 
 	unfiilable
 		can_fill = FALSE
@@ -158,6 +160,8 @@
 	// Trench prying is rather buggy and unsupported by their current code.
 	pryable = FALSE
 	layer = PLATING_LAYER
+	can_burn = FALSE
+	can_break = FALSE
 	HELP_MESSAGE_OVERRIDE("Climb in and out of the trench by <b>sprinting</b>.")
 
 	var/old_type

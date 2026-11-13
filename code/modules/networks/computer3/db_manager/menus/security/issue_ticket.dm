@@ -30,7 +30,7 @@
 		text = trimtext(strip_html(text))
 
 		if (text == "0")
-			src.parent.switch_menu_to("manage_citations")
+			src.parent.previous_menu()
 			return
 
 		src.parent.switch_menu_to("issue_ticket", text)
@@ -51,5 +51,4 @@
 		)
 		global.data_core.tickets.add_record(ticket)
 
-		src.parent.current_record_group = src.record_group
-		src.parent.switch_menu_to("record_view", ticket)
+		src.parent.switch_record_group(src.record_group, "record_view", ticket)

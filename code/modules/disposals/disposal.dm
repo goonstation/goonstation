@@ -64,7 +64,7 @@
 	// start the movement process
 	// argument is the disposal unit the holder started in
 	proc/start(var/obj/machinery/disposal/D)
-		if(!D.trunk || D.trunk.loc != D.loc)
+		if(!D.trunk || D.trunk.x != D.x || D.trunk.y != D.y)
 			D.expel(src)	// no trunk connected, so expel immediately
 			return
 
@@ -168,7 +168,8 @@
 		src.gas.merge(giver)
 
 	remove_air(amount)
-		return src.gas.remove(amount)
+		if (src.gas)
+			return src.gas.remove(amount)
 
 	return_air(direct)
 		if(direct)
@@ -220,6 +221,7 @@
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
 	var/welding_cost = 3 //! Amount of welding fuel it costs to install/remove
 	var/weldable = TRUE
+	var/cross_z = 0 //! When linking disposals, use this z-level. 0 results in current z-level
 
 
 	var/image/pipeimg = null
@@ -1954,14 +1956,16 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 	proc/getlinked()
 		linked = null
-		var/obj/machinery/vending/player/vendor = locate() in src.loc
+		var/z_target = src.cross_z ? src.cross_z : src.z
+
+		var/obj/machinery/vending/player/vendor = locate() in locate(src.x, src.y, z_target)
 		if (vendor)
 			src.linked = vendor
-		var/obj/machinery/disposal/D = locate() in src.loc
+		var/obj/machinery/disposal/D = locate() in locate(src.x, src.y, z_target)
 		if(D)
 			linked = D
 
-		var/obj/disposaloutlet/O = locate() in src.loc
+		var/obj/disposaloutlet/O = locate() in locate(src.x, src.y, z_target)
 		if(O)
 			linked = O
 

@@ -400,6 +400,12 @@
 			if("r_leg")
 				. = r_leg
 
+
+	//checks if the item is functional
+	proc/is_limb_functional(var/zone)
+		var/obj/found_object = src.get_limb(zone)
+		return (found_object && !found_object.hasStatus("numb"))
+
 	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1, var/no_drop = FALSE)
 		if (!target || !new_type || !src.holder)
 			return 0
@@ -1247,13 +1253,12 @@
 	return 0
 
 /mob/living/carbon/human/restrained()
-	if (src.hasStatus("handcuffed"))
-		return 1
-	if (src.hasStatus("incorporeal"))
+	var/static/list/restraining_statuses = list("handcuffed", "incorporeal")
+	if (src.hasStatus(restraining_statuses))
 		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
-	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
+	if (src.limbs && !src.limbs.is_limb_functional("l_arm") && !src.limbs.is_limb_functional("r_arm"))
 		return 1
 
 	/*if (src.limbs && (src.hand ? !src.limbs.l_arm:can_hold_items : !src.limbs.r_arm:can_hold_items)) // this was fucking stupid and broke item limbs, I mean really, how do you restrain someone whos arm is a goddamn CHAINSAW
@@ -1479,9 +1484,9 @@
 	. = ..()
 	if (src.r_hand || src.l_hand)
 		return FALSE
-	if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
+	if (src.limbs && (!src.limbs.is_limb_functional("l_arm") || !src.limbs.is_limb_functional("r_arm")))
 		return FALSE
-	if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
+	if (src.limbs && (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
 		return FALSE
 	return TRUE
 
@@ -1521,7 +1526,7 @@
 				return TRUE
 		else
 			if (hand)
-				if (!src.l_hand)
+				if (!src.l_hand && src.limbs.is_limb_functional("l_arm"))
 					if (I == src.r_hand && I.cant_self_remove)
 						return FALSE
 					if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
@@ -1535,8 +1540,10 @@
 					src.update_inhands()
 					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"], FALSE)
 					return TRUE
+				else
+					return FALSE
 			else
-				if (!src.r_hand)
+				if (!src.r_hand && src.limbs.is_limb_functional("r_arm"))
 					if (I == src.l_hand && I.cant_self_remove)
 						return FALSE
 					if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
@@ -1776,7 +1783,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (SLOT_L_HAND)
-			if (src.limbs.l_arm)
+			if (src.limbs.is_limb_functional("l_arm"))
 				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
@@ -1789,7 +1796,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 						return FALSE
 				return TRUE
 		if (SLOT_R_HAND)
-			if (src.limbs.r_arm)
+			if (src.limbs.is_limb_functional("r_arm"))
 				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
@@ -2065,8 +2072,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		S.set_head(src.organHolder.head)
 		S.head_moved() // update tracking
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
@@ -2110,8 +2118,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	src.organHolder.create_organs()
 
-	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
-		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+	var/full_stamina = STAMINA_MAX + src.get_stam_mod_max()
+	if (src.get_stamina() != full_stamina)
+		src.set_stamina(full_stamina)
 
 	..()
 
@@ -2207,7 +2216,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 					O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 				boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-				src.handcuffs.material_trigger_when_attacked(src, src, 1)
+				src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 				src.handcuffs.destroy_handcuffs(src)
 				return
 			if (iswerewolf(src))
@@ -2217,7 +2226,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				else
 					src.visible_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</b>"))
 					boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
-					src.handcuffs.material_trigger_when_attacked(src, src, 1)
+					src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 					src.handcuffs.destroy_handcuffs(src)
 					return
 		if (src.is_hulk())
@@ -2225,14 +2234,14 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			src.handcuffs.destroy_handcuffs(src)
 		else if ( src.limbs && src.limbs.l_arm?.breaks_cuffs && src.limbs.r_arm?.breaks_cuffs)
 			for (var/mob/O in AIviewers(src))
 				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with [src.limbs.l_arm.kind_of_limb & LIMB_ROBOT ? "machine-like" : "unnatural"] strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			src.handcuffs.destroy_handcuffs(src)
 		else
 			src.last_resist = world.time + 100
@@ -2243,7 +2252,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
 			if (!src.canmove)
 				calcTime *= 1.5
-			src.handcuffs.material_trigger_when_attacked(src, src, 1)
+			src.handcuffs.material_trigger_when_hit(src, src, MATERIAL::IMPACT::MELEE)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
 	return 0
 
@@ -2505,8 +2514,15 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/obj/item/parts/arm = null
 	if (limbs) //Wire: fix for null.r_arm and null.l_arm
 		arm = hand ? limbs.l_arm : limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
-	if (arm)
+	if (arm && !arm.hasStatus("numb"))
 		arm.limb_data.attack_hand(target, src, can_reach(src, target), params, location, control)
+
+/mob/living/carbon/human/weapon_attack(atom/target, obj/item/W, reach, params)
+	//don't ignore limb stuns by using a weapon, please
+	if (src.limbs && !src.limbs.is_limb_functional(src.hand ? "l_arm" : "r_arm"))
+		return
+	. = ..()
+
 
 /mob/living/carbon/human/hand_range_attack(atom/target, params, location, control, origParams)
 	//This looks bad but it really isn't anymore. <3
@@ -2900,10 +2916,10 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/missing_legs = 0
 	var/missing_arms = 0
 	if (src.limbs)
-		if (!src.limbs.l_leg) missing_legs++
-		if (!src.limbs.r_leg) missing_legs++
-		if (!src.limbs.l_arm) missing_arms++
-		if (!src.limbs.r_arm) missing_arms++
+		if (!src.limbs.is_limb_functional("r_leg")) missing_legs++
+		if (!src.limbs.is_limb_functional("l_leg")) missing_legs++
+		if (!src.limbs.is_limb_functional("l_arm")) missing_arms++
+		if (!src.limbs.is_limb_functional("r_arm")) missing_arms++
 	if (src.lying || GET_COOLDOWN(src, "unlying_speed_cheesy"))
 		missing_legs = 2
 	else if (src.shoes && src.shoes.chained)
@@ -2911,7 +2927,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	if (missing_legs == 2 && !(locate(/datum/movement_modifier/slither) in src.movement_modifiers))
 		. += 14 - ((2-missing_arms) * 2) // each missing leg adds 7 of movement delay. Each functional arm reduces this by 2.
-	else if (missing_legs == 1 && ((src.find_type_in_hand(/obj/item/cane, "left") && !src.limbs.l_leg) || (src.find_type_in_hand(/obj/item/cane, "right") && !src.limbs.r_leg)))
+	else if (missing_legs == 1 && ((src.find_type_in_hand(/obj/item/cane, "left") && !src.limbs.is_limb_functional("l_leg")) || (src.find_type_in_hand(/obj/item/cane, "right") && !src.limbs.is_limb_functional("r_leg"))))
 		. += 0 // cane can only help when you miss one leg, cane can only help if held at the side where the leg is missing
 	else
 		. += 7*missing_legs
@@ -2919,7 +2935,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/turf/T = get_turf(src)
 
 	if (T)
-		if (T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
+		if (space_movement && T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
 			. -= space_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
@@ -3029,6 +3045,32 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		. += 1
 	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
 		. += 1
+
+///Numb one or more limbs without stacking status effects or targeting limbs that don't exist
+///A count of 0 tries to stun all limbs in target_limbs
+/mob/living/carbon/human/proc/numb_limb(var/duration = 1 SECOND, var/count = 1, var/random = TRUE, var/stack_duration = FALSE, var/ignore_numbed_limbs = FALSE, var/list/target_limbs = list("l_arm", "r_arm", "l_leg", "r_leg"))
+	if(!src.limbs || count < 0)
+		return // no limb datum or no limbs_count to stun
+	//let's generate our list now
+	var/list/limbs_to_numb = list()
+	//we kick out each index that has no limb in it
+	for(var/target in target_limbs)
+		var/obj/item/parts/selected_limb = src.limbs.get_limb(target)
+		if(selected_limb && (!ignore_numbed_limbs || !selected_limb.hasStatus("numb")))
+			limbs_to_numb += selected_limb
+	if(!length(limbs_to_numb))
+		return // no limbs
+	if(random)
+		shuffle_list(limbs_to_numb)
+	var/amount_targets = length(limbs_to_numb)
+	if (count > 0)
+		amount_targets = min(count, amount_targets)
+	for (var/i in 1 to amount_targets)
+		var/obj/item/parts/selected_limb = limbs_to_numb[i]
+		if(stack_duration)
+			selected_limb.changeStatus("numb", duration)
+		else
+			selected_limb.setStatusMin("numb", duration)
 
 /mob/living/carbon/human/get_chem_depletion_multiplier()
 	. = ..()

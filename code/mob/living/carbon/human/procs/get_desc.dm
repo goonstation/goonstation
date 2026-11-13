@@ -68,7 +68,7 @@
 	// unfortunately byond can't handle "[src.slot.blood_DNA ? "a bloody" : "\an"] [src.slot.name]" because then the \an is like "where the fuck is the thing I'm supposed to do something to???"
 	// thanks, byondbama.
 	if (src.hasStatus("handcuffed") && !show_vague)
-		. +=  "<br><b class='alert'>[Noun_is] [bicon(src.handcuffs)] handcuffed!</b>"
+		. +=  "<br><b class='alert'>[Noun_is] [bicon(src.handcuffs)] [src.handcuffs.cuff_adjective]!</b>"
 
 	if (src.w_uniform && !(src.wear_suit?.hides_from_examine & C_UNIFORM))
 		if (show_vague)

@@ -1413,8 +1413,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			// pda alert ////////
 			if (!ON_COOLDOWN(src.master, "spam_cooldown", SPAM_DELAY))
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_RESEARCH, MGT_PHARMACY, MGA_CHEMREQUEST), "sender"="00000000", "message"="Notification: [new_req.reagent_name] requested by [new_req.requester_name] at [new_req.area_name].")
-				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_RESEARCH, MGT_PHARMACY, MGA_CHEMREQUEST), "sender"="00000000", "message"="Notification: [new_req.volume] units of [new_req.reagent_name] requested by [new_req.requester_name] at [new_req.area_name].")
+				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 		else if (href_list["reset"])
 			src.temp = null
@@ -1440,20 +1440,24 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		var/dat = src.return_text_header()
-		dat += "<BR><B>Current Requests:</B> <a href='byond://?src=\ref[src];refresh=1'>Refresh Requests</a><BR>"
+		dat += "<BR><B>Current Requests:</B> <a href='byond://?src=\ref[src];update=1'>Refresh Requests</a><BR>"
 		if (src.temp)
 			dat += "<br>[src.temp]"
 
 		return dat
 
 	Topic(href, href_list)
-		var/req_id = href
+		var/req_id = href_list["id"]
 		var/datum/chem_request/request = chem_requests[req_id]
+
 		if(..())
 			return
 
-		if (href_list["refresh"])
+		if (href_list["update"])
 			refresh()
+
+		if(!chem_requests || !request)
+			return
 
 		if (href_list["deny"])
 			if (request)
@@ -1465,9 +1469,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				logTheThing(LOG_STATION, src, "[src.master.owner] fulfilled [request.requester_name]'s chemical request for [request.volume] units of [request.reagent_id] at [log_loc(src)]")
 				request.state = CHEM::REQUEST::STATE::FULFILLED
 
-		if(request.address && href["deny"] || href["fulfil"])
+		if(request.address && href_list["deny"] || href_list["fulfil"])
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("address_1"=request.address, "command"="text_message", "sender_name"="RESEARCH-MAILBOT", "sender"="00000000", "message"="Notification: request for [request.volume]u of [request.reagent_name] was DENIED.")
+			pdaSignal.data = list("address_1"=request.address, "command"="text_message", "sender_name"="RESEARCH-MAILBOT", "sender"="00000000", "message"="Notification: Request for [request.volume]u of [request.reagent_name] was [request.state].")
 			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 		refresh()
 
@@ -1481,8 +1485,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/datum/chem_request/request = chem_requests[request_id]
 			src.temp += "[request.volume] units of [request.reagent_name] requested by [request.requester_name] from [request.area_name].<BR>"
 			src.temp += "STATUS: [request.state]"
-			if(request.state == "pending")
-				src.temp += "<a href='byond://?src=\ref[src];deny=[request.id]'>Deny</a> <a href='byond://?src=\ref[src];fulfil=[request.id]'>Fulfil</a>"
+			if(request.state == CHEM::REQUEST::STATE::PENDING)
+				src.temp += " <a href='byond://?src=\ref[src];fulfil=[TRUE];id=[request.id]'>Fulfil</a> <a href='byond://?src=\ref[src];deny=[TRUE];id=[request.id]'>Deny</a>"
 			src.temp += "<BR>"
 
 /datum/computer/file/pda_program/station_name

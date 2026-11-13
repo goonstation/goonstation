@@ -116,13 +116,8 @@
 /obj/item/disk/data/fixed_disk/hd64/computer3
 	New()
 		. = ..()
-		//First off, create the directory for logging stuff
-		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
-		newfolder.name = "logs"
-		src.root.add_file( newfolder )
-		newfolder.add_file( new /datum/computer/file/record/c3help(src))
 		//This is the bin folder. For various programs I guess sure why not.
-		newfolder = new /datum/computer/folder
+		var/datum/computer/folder/newfolder = new()
 		newfolder.name = "bin"
 		src.root.add_file( newfolder )
 		//newfolder.add_file( new /datum/computer/file/terminal_program/sigcrafter(src))
@@ -137,11 +132,7 @@
 /obj/item/disk/data/fixed_disk/hd128/techcomputer3
 	New()
 		. = ..()
-		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
-		newfolder.name = "logs"
-		src.root.add_file( newfolder )
-		newfolder.add_file( new /datum/computer/file/record/c3help(src))
-		newfolder = new /datum/computer/folder
+		var/datum/computer/folder/newfolder = new()
 		newfolder.name = "bin"
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/terminal_program/sigpal(src))

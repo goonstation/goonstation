@@ -21,7 +21,7 @@
 	var/max_dist = 100
 	var/max_seen = 1000
 
-	New(var/newmaster, max_dist=100)
+	New(newmaster, max_dist=100)
 		..()
 		if(istype(newmaster, /obj/machinery/bot/guardbot))
 			src.master = newmaster
@@ -34,7 +34,7 @@
 		src.master = null
 		..()
 
-	proc/master_move(var/atom/the_target as obj|mob,var/adjacent=0)
+	proc/master_move(atom/the_target as obj|mob, adjacent=0)
 		if(!master)
 			return 1
 		if(!isturf(master.loc))
@@ -59,18 +59,23 @@
 			if (!master)
 				return
 
-			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
-			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
-			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, max_seen=src.max_seen, \
-				simulated_only=issimulatedturf(master.loc) && issimulatedturf(target_turf), \
-				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
-			if (!master)
-				return
-
-			master.path = thePath
-			if(adjacent && master.path && length(master.path)) //Make sure to check it isn't null!!
-				master.path.len-- //Only go UP to the target, not the same tile.
+			var/path_key = "[ref(get_turf(master))] [ref(target_turf)]"
+			var/searched = master.failed_path_key != path_key || !GET_COOLDOWN(master, "failed_path")
+			master.path = null
+			if(searched)
+				// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
+				// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
+				master.path = get_path_to(src.master, target_turf, max_distance=src.max_dist, max_seen=src.max_seen, \
+					simulated_only=issimulatedturf(master.loc) && issimulatedturf(target_turf), \
+					id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
+				if (!master)
+					return
+				if(adjacent && length(master.path))
+					master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && length(master.path) >= 21))
+				if(searched && the_target)
+					master.failed_path_key = path_key
+					OVERRIDE_COOLDOWN(master, "failed_path", 5 SECONDS)
 				master.task?.task_input("path_error")
 
 				master.moving = 0
@@ -3593,6 +3598,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 		var/tmp/turf/current_beacon_loc = null
 		var/tmp/awaiting_beacon = 0
 		var/tmp/current_tour_text = null
+		var/tmp/speaking_tour_text = FALSE // we're speaking, so don't interject
 		var/tmp/tour_delay = 0
 		var/tmp/neat_things = 0		//Bitfield to mark neat things seen on a tour.
 		var/tmp/recent_nav_attempts = 0
@@ -3647,7 +3653,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						state = STATE_FINDING_BEACON
 						return
 
-					if(prob(tip_prob) && !src.distracted && !GET_COOLDOWN(src.master, "tip"))
+					if(prob(tip_prob) && !src.distracted && !src.speaking_tour_text && !GET_COOLDOWN(src.master, "tip"))
 						master.say(get_random_tip())
 						ON_COOLDOWN(src.master, "tip", 10 SECONDS)
 
@@ -3670,7 +3676,6 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						return	//I realize this doesn't check if they're dead.  Buddies can't always tell, ok!! Maybe if people had helpful power lights too
 
 					speak_with_pause(current_tour_text, yield_to_neat=TRUE)
-					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 					if (next_beacon_id)
 						state = STATE_FINDING_BEACON
@@ -3712,6 +3717,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			var/proc_delay = master.base_tick_spacing*(2**(master.processing_tier-1))
 
 			SPAWN(0) // do not delay doWork
+				src.speaking_tour_text = TRUE
 				//Delay for active destraction
 				while(yield_to_neat && distracted)
 					awaiting_beacon++
@@ -3743,7 +3749,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 								speak_with_maptext(copytext(html_encode(tour_line), 1, MAX_MESSAGE_LEN), TRUE)
 								sleep(5 SECONDS)
 					else
-						speak_with_maptext(copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN), TRUE)
+						speak_with_maptext(copytext(html_encode(text), 1, MAX_MESSAGE_LEN), TRUE)
+				src.speaking_tour_text = FALSE
+				if (src.master)
+					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 
 #define MAPTEXT_SLICE_SIZE 100 // Reduce maptext slice size to avoid 4 rows
@@ -4336,7 +4345,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 		return
 
@@ -4698,7 +4707,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		src.current?.wakeup()
 		current = null
 		if (link)
-			link.master = null
+			link.set_master(null)
 			link = null
 
 		..()

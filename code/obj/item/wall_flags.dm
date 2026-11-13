@@ -153,6 +153,8 @@
 	icon_state = "nanotrasen"
 	associated_flag = /obj/decal/poster/flag/nanotrasen
 	burn_possible = TRUE
+	burn_point = 220
+	burn_output = 900
 	needs_logging = FALSE
 
 	emag_act(mob/user, obj/item/card/emag/E)
@@ -175,6 +177,8 @@
 	associated_flag = /obj/decal/poster/flag/syndicate
 	burn_possible = TRUE
 	needs_logging = FALSE
+	burn_point = 220
+	burn_output = 900
 	contraband = 2
 
 

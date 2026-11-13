@@ -1,4 +1,98 @@
 
+(t)thu nov 12 26
+(u)ANNmagedon
+(p)28288
+(e)|
+(+)The gravity tether manudrive uses the engineering disk sprite now.
+(+)The name consistency issue between the medical manudrives (genebooth, clone disk rack) has been fixed.
+(u)Spyritdragon
+(p)28231
+(e)🤖|A-Silicons
+(+)Different silicon limbs will now layer differently on clothing depending on their size and bulk.
+(u)bamlord
+(p)28167
+(e)⚖💊🤖|C-Balance, A-Medical, A-Silicons
+(*)Medical cyborg automenders are no longer infinite,  they now use up their reagents whilst refilling automatically over time.
+(u)bamlord
+(p)28156
+(e)📡🐁|A-AI, A-Critters
+(*)Enraged gorillas have become even more enraged, and will now seek to escape their confines.
+(u)LorrMaster
+(p)27978
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(*)Blob tourists and diplomats now have the innate "Eukaryotic Phagocytosis" ability, allowing them to absorb non-robotic organs into their body.
+(u)JORJ949
+(p)28210
+(e)💅🔨👮|C-QoL, A-Player-Actions, A-Security
+(+)Restraints (handcuffs/zipties/ducktape) are now easier distinguished between in chat (They aren't all assumed to be handcuffs).
+(u)JORJ949
+(p)28255
+(e)🎨⚖💅📦|C-Sprites, C-Balance, C-QoL, A-Game-Objects
+(*)Emote-triggered implants (Signaller and Freedom) are now item abilities that you can use when the implant is implanted inside you. You can still use them while cuffed (but not incapacitated).
+(t)tue nov 10 26
+(u)JORJ949
+(p)28158
+(e)🎨⚖🧑‍✈️📨|C-Sprites, C-Balance, A-Command, A-Logistics
+(+)The crate replacement Auth Disks are shipped in when it enters cryo are now locked to bridge access and have received a unique sprite. Empty versions are also printable at hacked cargo fabricators.
+(u)ANNmagedon
+(p)28208
+(e)🗺|A-Mapping
+(+)Neon's chem lab now has a proper supply of clerical equipment (in the lab counter at reception).
+(t)mon nov 09 26
+(u)LorrMaster
+(p)27961
+(e)🆕🧱📨|C-Feature, A-Materials, A-Logistics
+(*)Added Sobb, a new blob cargo trader.
+(u)Colossusqw, Lord_Earthfire & Pirate-Rob
+(p)26036
+(e)🆕🎨⚖⏰🔨🍝|C-Feature, C-Sprites, C-Balance, A-Status-Effects, A-Player-Actions, A-Catering
+(*)Limbs can be stunned, disabling them for a small period of time. See the minor changelog for more information. Sprites by Colossusqw and Pirate-Rob
+(+)Limb stuns prevent usage of an arm or leg as though they were missing, with effects like dropping items or movement slowdown
+(+)Things that mitigate missing limbs like canes work also work on numb limbs
+(+)Glass shards apply leg stuns instead of knockdowns
+(+)Touching wires or electrified doors can stun the arm that touched the corresponding object
+(+)Explosions can stun limbs instead of severing them
+(t)sun nov 08 26
+(u)Mr. Moriarty
+(p)28236
+(e)💅🖥️|C-QoL, A-Computers
+(*)Database managers (SecMate, etc) now remember previous menus, allowing users to backtrack through them instead of (sometimes) being ejected in an unrelated records list.
+(t)mon nov 02 26
+(u)EmeraldCrow
+(p)28197
+(e)🎨|C-Sprites
+(*)Adds the Miss Funny Business figurine. Go gambling for figurines today!
+(u)TealSeer
+(p)28218
+(e)🪲🖥️|C-Bug, A-Computers
+(+)Fixed certain ThinkDOS computers spawning without the help library
+(t)sun nov 01 26
+(u)ANNmagedon
+(p)28143
+(e)|
+(+)The captain now can roll a goal to keep their spare ID in their office.
+(t)sat oct 31 26
+(u)ZeWaka
+(p)27933
+(e)🚄🔄⚙💡|C-Performance, C-Rework, A-Internal, A-Station-Systems
+(*)Made some changes to how camera static works. Bug me if there's issues.
+(t)fri oct 30 26
+(u)ANNmagedon
+(p)28199
+(e)|
+(+)NanoTrasen & The Syndicate flags are now flammable.
+(u)TekoTheTeapot + ANNmagedon
+(p)28019
+(e)🎨|C-Sprites
+(*)The NT Repair Technician has received full funding and is now properly equipped to deal with emergencies.
+(u)ANNmagedon, RubiCubie & TekoTheTeapot
+(p)27901
+(e)🎨🌠📨|C-Sprites, A-Events, A-Logistics
+(*)Janitors can now find push brooms in most places that house mops, the push brooms move items on the floor to the direction you are looking at.
+(u)Cheekybrdy
+(p)27921
+(e)🌱|A-Hydroponics
+(+)Chicken Grenade chickens will not attack other chickens from the same source, regardless of species.
 (t)wed oct 28 26
 (u)DisturbHerb
 (p)28084

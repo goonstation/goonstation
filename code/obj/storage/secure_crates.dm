@@ -270,3 +270,13 @@
 		else
 			light_image.color = "#00ff00"
 		src.UpdateOverlays(light_image, "light")
+
+/obj/storage/secure/crate/gear/nanotrasen
+	name = "\improper NanoTrasen equipment crate"
+	icon_state = "nt_gear"
+	icon_closed = "nt_gear"
+	icon_opened = "nt_gearopen"
+
+/obj/storage/secure/crate/gear/nanotrasen/replacement_equipment
+	name = "Command Equipment crate (Locked \[Heads])"
+	req_access = list(access_heads)

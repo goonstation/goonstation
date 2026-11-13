@@ -1497,9 +1497,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
 		if(test_link && (!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master) || test_link.master == src))// if somehow we forgot our link but the terminal didnt
 			if(src.link && src.link?.master == src)
-				src.link?.master = null // if we had a previous link, we're just getting rid of it, just in case
+				src.link?.set_master(null) // if we had a previous link, we're just getting rid of it, just in case
 			src.link = test_link
-			src.link.master = src
+			src.link.set_master(src, src.net_id)
 	else
 		for(var/target in src.terminals) // otherwise they'll still be sorta connected
 			src.terminals.Remove(target)
@@ -1509,7 +1509,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 			SPAWN(0.4 SECONDS)
 				src.post_status(target, "command","term_disconnect")
 		SPAWN(2 SECONDS) //so our messages send before the data terminal connection closes
-			src.link?.master = null
+			src.link?.set_master(null)
 			src.link = null
 
 

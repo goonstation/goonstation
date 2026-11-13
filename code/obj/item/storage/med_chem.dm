@@ -470,7 +470,7 @@
 
 /obj/item/storage/pill_bottle/antirad
 	name = "pill bottle (potassium iodide)"
-	desc = "Contains pills ued to treat radiation poisoning."
+	desc = "Contains pills used to treat radiation poisoning."
 	spawn_contents = list(/obj/item/reagent_containers/pill/antirad = 7)
 
 /obj/item/storage/pill_bottle/salbutamol

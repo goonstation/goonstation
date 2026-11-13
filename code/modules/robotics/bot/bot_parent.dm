@@ -55,6 +55,8 @@ TYPEINFO(/obj/machinery/bot)
 	var/bot_move_delay = BOT::SPEED::DEFAULT
 	var/tmp/list/path = null	// list of path turfs
 	var/tmp/datum/robot_mover/bot_mover
+	/// "start goal" refs of the last failed path search, skipped again while the failed_path cooldown runs
+	var/tmp/failed_path_key = null
 	var/moving = 0 // Are we ON THE MOVE??
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	var/current_movepath = 0
@@ -311,9 +313,16 @@ TYPEINFO(/obj/machinery/bot)
 			master.KillPathAndGiveUp(0)
 			return
 		var/compare_movepath = src.current_movepath
+		var/path_key = "[ref(master.loc)] [ref(src.the_target)]"
+		if(master.failed_path_key == path_key && GET_COOLDOWN(master, "failed_path"))
+			master.path = null
+			qdel(src)
+			return
 		master.path = get_path_to(src.master, src.the_target, mintargetdist = adjacent ? 1 : 0, \
 			max_distance=src.max_dist, max_seen=src.max_seen, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 		if(!length(master.path))
+			master.failed_path_key = path_key
+			OVERRIDE_COOLDOWN(master, "failed_path", 5 SECONDS)
 			qdel(src)
 			return
 

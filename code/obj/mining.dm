@@ -74,10 +74,6 @@
 		chassis = target
 		if (ismob(user))
 			master = user
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onStart()
 		..()
@@ -91,6 +87,8 @@
 		else if (mag_parts != master.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 		owner.visible_message(SPAN_NOTICE("[master] begins to assemble [mag_parts]!"))
+		if (src.owner && HAS_ATOM_PROPERTY(src.owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 
 	onUpdate()
 		..()

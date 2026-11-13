@@ -1,4 +1,5 @@
 /datum/db_manager_menu/issue_bonus
+	add_to_user_journey = FALSE
 	VAR_PRIVATE/team = null
 	VAR_PRIVATE/amount = null
 	VAR_PRIVATE/static/list/job_datums_by_team = list(
@@ -81,7 +82,7 @@
 		var/index_number = round(max(command, 0))
 
 		if (index_number == 0)
-			src.parent.switch_menu_to("station_budget")
+			src.parent.previous_menu()
 			return
 
 		if (index_number > length(src.job_datums_by_team))

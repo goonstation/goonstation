@@ -513,7 +513,9 @@ proc/generate_space_color()
 	return ..() //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
-	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.
+	SHOULD_CALL_PARENT(TRUE)
+	if (Obj.opacity)
+		src.recount_opaque_atoms()
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -526,6 +528,9 @@ proc/generate_space_color()
 	return ..(Obj, newloc)
 
 /turf/Entered(atom/movable/M as mob|obj, atom/OldLoc)
+	// Above return_if_overlay_or_effect on purpose, smoke is an /obj/effects
+	if (M.opacity)
+		src.recount_opaque_atoms()
 	M.set_gravity(src)
 	///////////////////////////////////////////////////////////////////////////////////
 	..()

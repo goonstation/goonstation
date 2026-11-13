@@ -1,5 +1,4 @@
 /datum/db_record_group/citation
-	main_menu = "manage_citations"
 	record_list_prompt = "Please select a record:<br><br>%DUMMY_INDEX<b>Time      Type    Status   Recipient</b>"
 	search_input_prompt = "Please enter ID, citation type, status, target name, or issuer name:"
 	can_add_and_remove_records = FALSE
@@ -93,7 +92,7 @@
 	else if (astype(citation, /datum/db_record/citation/fine)?["status"] == "PENDING")
 		options += "<br>(A) Approve"
 
-	options += "<br>(0) Return to index."
+	options += "<br>(0) Return"
 	return options
 
 /datum/db_record_group/citation/input_command(datum/db_manager_menu/record_view/menu, datum/db_record/citation/citation, command)
