@@ -335,14 +335,6 @@
 	icon_override = "med"
 	icon_tooltip = "Medical"
 
-/obj/item/device/radio/headset/medical
-	name = "medical headset"
-	desc = "Nominally worn by the trained staff of the medbay, this headset can be counted on to either be utterly silent or to be squawking constantly at any given moment."
-	icon_state = "med headset"
-	secure_frequencies = list("m" = RADIO::FREQ::MEDICAL)
-	icon_override = "med"
-	icon_tooltip = "Medical"
-
 /obj/item/device/radio/headset/medical/genetics
 	name = "genetics headset"
 	desc = "Nominally worn by the statues of the genetics lab, this headset can be counted on to either be begging for scans or to be untouched the whole shift!"
