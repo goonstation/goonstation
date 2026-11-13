@@ -211,7 +211,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.pay) // do we need to take their money
 			var/payed = FALSE
 			if (src.acceptcard && src.scan)
-				var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+				var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 				if (account)
 					if (account["current_money"] >= R.product_cost)
 						account["current_money"] -= R.product_cost
@@ -242,7 +242,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.pay) // do we need to take their money
 			var/payed = FALSE
 			if (src.acceptcard && src.scan)
-				var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+				var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 				if (account)
 					if (account["current_money"] >= to_throw.product_cost)
 						account["current_money"] -= to_throw.product_cost
@@ -429,7 +429,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		return
 	boutput(user, SPAN_NOTICE("You swipe [card]."))
 	var/datum/db_record/account = null
-	account = FindBankAccountByName(card.registered)
+	account = global.data_core.get_bank_record(card.registered)
 	if (account)
 		var/enterpin = user.enter_pin("Enter PIN")
 		if (enterpin == card.pin)
@@ -612,7 +612,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		.["productList"] = list()
 
 /obj/machinery/vending/ui_data(mob/user)
-	var/bankaccount = FindBankAccountByName(src.scan?.registered)
+	var/bankaccount = global.data_core.get_bank_record(src.scan?.registered)
 	. = list(
 		"windowName" = src.name,
 		"wiresOpen" = src.panel_open ? TRUE : null,
@@ -630,7 +630,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(!P.owner && src.scan?.registered)
 			.["owner"] = src.scan.registered
 			P.owner = src.scan.registered
-			P.owneraccount = FindBankAccountByName(src.scan.registered)
+			P.owneraccount = global.data_core.get_bank_record(src.scan.registered)
 		else
 			.["owner"] = P.owner
 		.["playerBuilt"] = TRUE
@@ -724,8 +724,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				if (seconds_electrified)
 					if(src.shock(usr,100))
 						return
-				var/datum/db_record/account = null
-				account = FindBankAccountByName(src.scan?.registered)
+				var/datum/db_record/personnel/bank/account = global.data_core.get_bank_record(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
 					boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
 					FLICK(src.icon_deny,src)
@@ -798,10 +797,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
 				if(player_list)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
-				if(account && (account["name"] != usr.real_name))
-				    // reduce logging spam from clerical errors
-					if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src, "buy_[usr.real_name]", 10 SECONDS))
-						logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account["name"]]).")
+
+				if (account)
+					var/datum/db_record/personnel/general/general = global.data_core.get_general_record(id = account["id"])
+					var/account_name = general?["name"]
+					if (account_name && (account_name != usr.real_name))
+						// reduce logging spam from clerical errors
+						if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src, "buy_[usr.real_name]", 10 SECONDS))
+							logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account_name]).")
 		else
 			. = FALSE
 
@@ -879,10 +882,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
 				return
 
-			var/datum/db_record/account = null
+			var/datum/db_record/personnel/bank/account = null
 			if (src.pay)
 				if (src.acceptcard && src.scan)
-					account = FindBankAccountByName(src.scan.registered)
+					account = global.data_core.get_bank_record(src.scan.registered)
 					if (!account)
 						boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
 						FLICK(src.icon_deny,src)
@@ -3301,7 +3304,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		. = list()
 		.["cash"] = src.credit
 
-		var/datum/db_record/account = FindBankAccountByName(src.scan?.registered)
+		var/datum/db_record/account = global.data_core.get_bank_record(src.scan?.registered)
 		.["cardname"] = src.scan
 		.["bankMoney"] = account ? account["current_money"] : null
 
@@ -3343,7 +3346,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 						src.credit -= cost
 						src.fill()
 					else if(src.scan)
-						var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+						var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 						if (account && account["current_money"] >= cost)
 							account["current_money"] -= cost
 							src.fill()

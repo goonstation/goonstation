@@ -376,7 +376,7 @@
 		src.bilked_idiot = bilked
 
 	proc/get_amount()
-		return data_core.bank.find_record("name", bilked_idiot.real_name)["current_money"]
+		return global.data_core.get_bank_record(bilked_idiot.real_name)?["current_money"]
 
 /obj/machinery/maptext_monitor/proc_monitor/bilked_account
 	var/datum/bilked_account_proxy/my_bap = null

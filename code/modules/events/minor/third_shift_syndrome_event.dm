@@ -12,7 +12,7 @@
 			if (isnpc(H)) continue
 			if (isvirtual(H)) continue
 			if (inafterlife(H)) continue
-			var/datum/db_record/record = data_core.general.find_record("name", H.real_name)
+			var/datum/db_record/personnel/general/record = global.data_core.get_general_record(H.real_name)
 			if (!record || record["pstat"] == "*Deceased*") continue
 			if (istype(H.loc, /obj/cryotron)) continue
 			potential_victims += H

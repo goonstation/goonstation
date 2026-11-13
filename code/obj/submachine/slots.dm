@@ -155,7 +155,7 @@ TYPEINFO(/obj/submachine/slot_machine)
 				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
-			src.accessed_record = FindBankAccountByName(idcard.registered)
+			src.accessed_record = global.data_core.get_bank_record(idcard.registered)
 			if(isnull(src.accessed_record))
 				boutput(user, SPAN_ALERT("That card has no bank account associated."))
 				user.put_in_hand_or_eject(I)

@@ -270,7 +270,7 @@
 		borrow_brokers += B
 
 	proc/modifyAccount(whose, by, force=0)
-		var/datum/db_record/B = FindBankAccountByName(whose)
+		var/datum/db_record/B = global.data_core.get_bank_record(whose)
 		if (B)
 			if (by < 0 && B["current_money"] + by < 0 && !force)
 				return 0

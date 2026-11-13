@@ -603,6 +603,10 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 				return
 			user.show_text("You cut eyeholes into [src].")
 			var/obj/item/clothing/head/helmet/bucket/B = new helmet_bucket_type(src.loc)
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			B.color = src.color
+			src.copy_filters_to(B)
 			user.put_in_hand_or_drop(B)
 			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 			qdel(src)
@@ -622,6 +626,10 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 		else
 			user.show_text("You turn the bucket upside down.", "red")
 		var/obj/item/clothing/head/helmet/bucket/hat/B = new hat_bucket_type(src.loc)
+		B.setMaterial(src.material)
+		B.forensic_holder = src.forensic_holder
+		B.color = src.color
+		src.copy_filters_to(B)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
 		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)

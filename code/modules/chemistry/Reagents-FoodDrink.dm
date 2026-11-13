@@ -41,14 +41,16 @@ datum
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult)
 
-				var/datum/db_record/bilked = data_core.bank.find_record("name", M.real_name)
-				if (istype(bilked))
+				var/datum/db_record/personnel/bank/bank_record = global.data_core.get_bank_record(M.real_name)
+				if (istype(bank_record))
 					if(!isnull(src.counter))
 						bilk_ratio = 1
 					else
 						bilk_ratio = 0.1
-					if(bilked["current_money"] > 0)
-						bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
+
+					if (bank_record["current_money"] > 0)
+						bank_record["current_money"] = round(max(bank_record["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio, 0))
+
 				. = ..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -80,7 +82,7 @@ datum
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
 						// Maptext counter
 					else if(effect <= 50)
-						if(isnull(src.counter) && (data_core.bank.find_record("name", M.real_name)["current_money"] > 0))
+						if(isnull(src.counter) && (global.data_core.get_bank_record(M.real_name)?["current_money"] > 0))
 							src.counter = new(bilked = M,bilk = src)
 
 		fooddrink/milk
@@ -319,9 +321,9 @@ datum
 				if(!istype(holder) || !istype(holder.my_atom) || !ishuman(holder.my_atom))
 					return
 				var/mob/living/carbon/human/H = holder.my_atom
-				var/datum/db_record/gen_record = data_core.general.find_record("name", H.name)
+				var/datum/db_record/personnel/general/record = global.data_core.get_general_record(H.name)
 				// Yes. Its 21. This is Space America. That is canon now.
-				if(gen_record && text2num(gen_record["age"]) < 21)
+				if (record && (record["age"] < 21))
 					H.apply_automated_arrest("Underage drinking.")
 
 		fooddrink/alcoholic/hardcoffee

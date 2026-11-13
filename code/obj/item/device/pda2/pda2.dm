@@ -989,7 +989,7 @@
 		src.registered = ID.registered
 		src.assignment = ID.assignment
 		src.access = ID.access
-		src.accessed_record = data_core.bank.find_record("name", ID.registered)
+		src.accessed_record = global.data_core.get_bank_record(ID.registered)
 		if (!src.ID_image)
 			src.ID_image = image(src.icon, "blank")
 		src.ID_image = src.ID_card.icon_state

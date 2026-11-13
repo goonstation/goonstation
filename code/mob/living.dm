@@ -480,7 +480,7 @@ TYPEINFO(/mob/living)
 		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 		return
 
-	if (src.restrained())
+	if (src.restrained() && !(target.flags & ALLOW_CUFFED_CLICKS))
 		if (src.hasStatus("handcuffed"))
 			boutput(src, SPAN_ALERT("You are handcuffed! Use Resist to attempt removal."))
 		return
@@ -1540,7 +1540,7 @@ TYPEINFO(/mob/living)
 			if (T)
 				T.hotspot_expose(5000,125)
 				explosion(origin, T, -1,-1,1,2)
-			if (prob(20))
+			if (prob(clamp(round(shock_damage/100), 1, 20))) // start at 1% chance, scales to 20% with wattage
 				boutput(src, SPAN_ALERT("<b>[origin] vaporizes you with a lethal arc of electricity!</b>"))
 				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
@@ -1560,6 +1560,10 @@ TYPEINFO(/mob/living)
 	src.Virus_ShockCure(min(wattage / 500, 100))
 
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
+	//if you are too touchy towards a wire, your arm gets disabled
+	if (H && (shock_damage > 10) && (zone in list("r_arm","l_arm")))
+		H.numb_limb(duration = min(stun * 2, 20 SECONDS), target_limbs = list(zone))
+
 	src.do_disorient(100 * stun_multiplier + stun, knockdown = stun, stunned = stun, disorient = stun + 40 * stun_multiplier, remove_stamina_below_zero = 1)
 
 	return shock_damage
@@ -1821,6 +1825,9 @@ TYPEINFO(/mob/living)
 /mob/living/proc/handle_perma_cryo()
 	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 		antagonist.handle_perma_cryo()
+
+	src.handle_cryo_replacements(TRUE)
+
 	var/datum/job/job = find_job_in_controller_by_string(src.mind?.assigned_role)
 	if(istype(job) && job.unique)
 		SPAWN(5 MINUTES)
@@ -1829,15 +1836,28 @@ TYPEINFO(/mob/living)
 /mob/living/proc/handle_cryo()
 	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 		antagonist.handle_cryo()
-	for_by_tcl(disky, /obj/item/disk/data/floppy/read_only/authentication)
+
+	src.handle_cryo_replacements()
+
+
+/// Replace items that should be replaced if they are cryod with
+/mob/living/proc/handle_cryo_replacements(var/perma_cryo = FALSE)
+	var/obj/storage/secure/crate/gear/nanotrasen/replacement_equipment/crate
+	for_by_tcl(replacement_component, /datum/component/replace_on_cryo)
+		if(!perma_cryo && replacement_component.only_on_perma_cryo)
+			continue
+		var/atom/movable/thing_to_replace = replacement_component.parent
 		//Not an accurate check, will apply to the captain cryoing someone, but saves iterating up the disk's tree on all cryos
-		if (get_turf(disky) == get_turf(src))
-			if(src in obj_loc_chain(disky))
-				logTheThing(LOG_DEBUG, src, "at [log_loc(src)] cryos with the authentication disk (found in their [disky.loc])")
-				disky.safe_delete()
-				var/obj/storage/crate/crate = new
-				new /obj/item/disk/data/floppy/read_only/authentication(crate)
-				shippingmarket.receive_crate(crate)
+		if (get_turf(thing_to_replace) != get_turf(src))
+			continue
+		if(src in obj_loc_chain(thing_to_replace))
+			logTheThing(LOG_STATION, src, "at [log_loc(src)] cryos with \the [thing_to_replace] (found in their [thing_to_replace.loc]) so it is deleted and a replacement is shipped to cargo.")
+			crate ||= new()
+			var/type_to_spawn = replacement_component.get_replacement_type()
+			new type_to_spawn(crate)
+			thing_to_replace.safe_delete()
+	if(crate)
+		shippingmarket.receive_crate(crate)
 
 /// Checks if a mob can juggle and if so starts juggling their held item.
 ///
