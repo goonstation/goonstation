@@ -53,4 +53,5 @@ export interface TurbineControlData {
   ruined: BooleanLike;
   blade: TurbineBladeData | null;
   stator: TurbineStatorData | null;
+  autoAdjust: BooleanLike;
 }
