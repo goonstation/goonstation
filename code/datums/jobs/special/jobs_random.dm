@@ -155,11 +155,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 			for (var/i = 1 to 2)
 				B.storage.add_contents(new /obj/item/stamped_bullion(B))
 
-			switch(src.name) // extra treats for speicifc types related to NT products
-				if("Plasma Baron") B.storage.add_contents(new /obj/item/tank/pocket/plasma(B))
-				if("Clerical Paraphernalia Broker") B.storage.add_contents(new /obj/item/pen/omni(B))
-				if("Exo-Archaeology Patron") B.storage.add_contents(new /obj/item/clothing/head/safari/artsci(B))
-
 		return
 
 /datum/job/special/random/inspector
