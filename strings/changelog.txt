@@ -1,6 +1,10 @@
 
 (t)thu nov 12 26
 (u)bamlord
+(p)28167
+(e)⚖💊🤖|C-Balance, A-Medical, A-Silicons
+(*)Medical cyborg automenders are no longer infinite,  they now use up their reagents whilst refilling automatically over time.
+(u)bamlord
 (p)28156
 (e)📡🐁|A-AI, A-Critters
 (*)Enraged gorillas have become even more enraged, and will now seek to escape their confines.
