@@ -329,6 +329,7 @@
 		/obj/item/storage/box/misctools,
 		/obj/item/extinguisher,
 		/obj/item/device/pda2/chiefengineer,
+		/obj/item/storage/box/command_tech/ce,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
 	#elif defined(MAP_OVERRIDE_NEON)
@@ -342,7 +343,6 @@
 		/obj/item/clothing/suit/space/light/chiefengineer,
 		/obj/item/clothing/head/helmet/space/light/chiefengineer,
 	#endif
-		/obj/item/storage/box/command_tech/ce,
 	)
 
 /obj/storage/secure/closet/command/chief_engineer/puzzle

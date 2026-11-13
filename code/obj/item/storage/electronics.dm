@@ -166,7 +166,7 @@
 	name = "disk box you should not see"
 	desc = "call 1-800-IMCODER to stop this!"
 	can_hold = list(/obj/item/circuitboard, /obj/item/disk/data/floppy)
-	VAR_PRIVATE/department = "CODERS"
+	VAR_PROTECTED/department = "CODERS"
 	icon_state = "ntdisk"
 
 
