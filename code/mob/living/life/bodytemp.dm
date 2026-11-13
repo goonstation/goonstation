@@ -7,28 +7,24 @@
 		var/environment_heat_capacity = HEAT_CAPACITY(environment)
 		var/loc_temp = T0C
 		var/mult = get_multiplier()
-		if (istype(owner.loc, /turf/space))
-			var/turf/space/S = owner.loc
-			environment_heat_capacity = S.heat_capacity
-			loc_temp = S.temperature
-		else if (istype(owner.loc, /obj/machinery/vehicle))
+		if (istype(owner.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = owner.loc
 			var/obj/item/shipcomponent/life_support/life_support_part = ship.get_part(POD_PART_LIFE_SUPPORT)
 			if (life_support_part)
 				if (life_support_part.active)
 					loc_temp = life_support_part.tempreg
 				else
-					loc_temp = environment.temperature
+					loc_temp = environment.temperature()
 		// why am i repeating this shit?
 		else if (istype(owner.loc, /obj/vehicle))
 			var/obj/vehicle/V = owner.loc
 			if (V.sealed_cabin)
 				loc_temp = T20C // hardcoded honkytonk nonsense
 			else
-				loc_temp = environment.temperature
+				loc_temp = environment.temperature()
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/C = owner.loc
-			loc_temp = C.air_contents.temperature
+			loc_temp = C.air_contents.temperature()
 		else if (istype(owner.loc,/obj/icecube))
 			var/obj/icecube/ice = owner.loc
 			if (!ice.does_cooling)
@@ -36,10 +32,10 @@
 			loc_temp = ice.cooltemp// ice go brrrrrrrrr
 			if (owner.bodytemperature > ice.melttemp)
 				ice.takeDamage(1 * mult)
-			else if (environment.temperature > ice.melttemp)
+			else if (environment.temperature() > ice.melttemp)
 				ice.takeDamage(0.5 * mult)
 		else
-			loc_temp = environment.temperature
+			loc_temp = environment.temperature()
 
 		var/thermal_protection
 		if (!isdead(owner))
@@ -71,19 +67,19 @@
 
 		// lets give them a fair bit of leeway so they don't just start dying
 		//as that may be realistic but it's no fun
-		if ((owner.bodytemperature > owner.base_body_temp + (owner.temp_tolerance * 1.7) && environment.temperature > owner.base_body_temp + (owner.temp_tolerance * 1.7)) || (owner.bodytemperature < owner.base_body_temp - (owner.temp_tolerance * 1.7) && environment.temperature < owner.base_body_temp - (owner.temp_tolerance * 1.7)))
+		if ((owner.bodytemperature > owner.base_body_temp + (owner.temp_tolerance * 1.7) && environment.temperature() > owner.base_body_temp + (owner.temp_tolerance * 1.7)) || (owner.bodytemperature < owner.base_body_temp - (owner.temp_tolerance * 1.7) && environment.temperature() < owner.base_body_temp - (owner.temp_tolerance * 1.7)))
 
 			//Yep this means that the damage is no longer per limb. Restore this to per limb eventually. See above.
-			owner.handle_temperature_damage(LEGS, environment.temperature, environment_heat_capacity*thermal_divisor, mult)
-			owner.handle_temperature_damage(TORSO,environment.temperature, environment_heat_capacity*thermal_divisor, mult)
-			owner.handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*thermal_divisor, mult)
-			owner.handle_temperature_damage(ARMS, environment.temperature, environment_heat_capacity*thermal_divisor, mult)
+			owner.handle_temperature_damage(LEGS, environment.temperature(), environment_heat_capacity*thermal_divisor, mult)
+			owner.handle_temperature_damage(TORSO,environment.temperature(), environment_heat_capacity*thermal_divisor, mult)
+			owner.handle_temperature_damage(HEAD, environment.temperature(), environment_heat_capacity*thermal_divisor, mult)
+			owner.handle_temperature_damage(ARMS, environment.temperature(), environment_heat_capacity*thermal_divisor, mult)
 
 			for (var/atom/A in owner.contents)
-				A.material_trigger_on_temp(environment.temperature)
+				A.material_trigger_on_temp(environment.temperature())
 
 			for (var/atom/equipped_stuff in owner.equipped())
-				equipped_stuff.material_trigger_on_temp(environment.temperature)
+				equipped_stuff.material_trigger_on_temp(environment.temperature())
 
 		// decoupled this from environmental temp - this should be more for hypothermia/heatstroke stuff
 		//if (src.bodytemperature > src.base_body_temp || src.bodytemperature < src.base_body_temp)
