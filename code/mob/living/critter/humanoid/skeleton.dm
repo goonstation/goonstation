@@ -61,6 +61,7 @@
 
 	New()
 		..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_SILVER_VULNERABILITY, src, 100)
 		playsound(src.loc, 'sound/items/Scissor.ogg', 50, 0)
 
 	Move()

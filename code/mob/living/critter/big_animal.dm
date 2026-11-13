@@ -120,6 +120,7 @@
 		src.bioHolder.AddNewPoolEffect("ithillid", scramble=FALSE)
 		src.bioHolder.AddNewPoolEffect("breathless", scramble=FALSE)
 		src.bioHolder.AddNewPoolEffect("ghost_walk", scramble=FALSE)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_SILVER_VULNERABILITY, src, 50)
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)

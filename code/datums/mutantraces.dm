@@ -961,6 +961,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 			M.add_stam_mod_max("zombie", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "zombie", -5)
+			APPLY_ATOM_PROPERTY(M, PROP_ATOM_SILVER_VULNERABILITY, "zombie", 100)
 			M.full_heal()
 			M.real_name = "Zombie [M.real_name]"
 
@@ -1007,6 +1008,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			src.mob.can_bleed = TRUE
 			src.mob.remove_stam_mod_max("zombie")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "zombie")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_ATOM_SILVER_VULNERABILITY, "zombie")
 			if(findtext(src.mob.real_name, "Zombie") && src.mob.bioHolder?.ownerName)
 				src.mob.real_name = src.mob.bioHolder.ownerName
 		..()
@@ -1088,13 +1090,13 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 			M.update_clothing()
 			M.add_stam_mod_max("vampiric_thrall", 100)
 			M.bioHolder.AddEffect("accent_thrall", do_stability = FALSE, scannable = FALSE, innate = TRUE)
-			//APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_ATOM_SILVER_VULNERABILITY, "vampire_thrall", 100)
 
 	disposing()
 		if (ishuman(src.mob))
 			src.mob.remove_stam_mod_max("vampiric_thrall")
 			src.mob.bioHolder.RemoveEffect("accent_thrall")
-			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_ATOM_SILVER_VULNERABILITY, "vampire_thrall")
 		..()
 
 	emote(act, voluntary)
@@ -1151,10 +1153,12 @@ TYPEINFO(/datum/mutantrace/skeleton)
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
 			set_head(M.organHolder.head)
+		APPLY_ATOM_PROPERTY(src.mob, PROP_ATOM_SILVER_VULNERABILITY, "skeleton", 100)
 
 	disposing()
 		if (ishuman(src.mob))
 			src.mob.mob_flags &= ~IS_BONEY
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_ATOM_SILVER_VULNERABILITY, "skeleton")
 		. = ..()
 
 	proc/head_moved(removed = FALSE)
@@ -1412,6 +1416,7 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf", 40)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf", 40)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf", 100)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_ATOM_SILVER_VULNERABILITY, "werewolf", 100)
 			src.mob.max_health += 50
 			health_update_queue |= src.mob
 			src.original_name = src.mob.real_name
@@ -1434,6 +1439,7 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_ATOM_SILVER_VULNERABILITY, "werewolf")
 			src.mob.max_health -= 50
 			health_update_queue |= src.mob
 			src.mob.bioHolder.RemoveEffect("protanopia")

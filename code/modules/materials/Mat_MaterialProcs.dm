@@ -27,7 +27,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	proc/execute()
 		return
 
-	proc/get_scan_desc()
+	proc/get_scan_desc(var/atom/target)
 		return desc_scan
 /*
 /datum/materialProc/oneat_flesh
@@ -307,6 +307,125 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
 			particleMaster.RemoveSystem(/datum/particleSystem/sparkles, location)
 		return
+
+/datum/materialProc/silver_vulnerability_add
+	execute(var/atom/location)
+		var/current_gen = location.material.getTriggerGeneration(TRIGGERS_ON_ADD, /datum/materialProc/silver_vulnerability_add)
+		if(current_gen == -1)
+			return
+		// A bit of an experiment. Uses the generation number of the materialProc to dilute the effect.
+		// It's an alternative to adding another material property just for a specific materialProc.
+		// Original material is 100% vulnerable, next generation is 50%, then 25%.
+		var/vulnerability = 100 / (1 << current_gen)
+		APPLY_ATOM_PROPERTY(location, PROP_ATOM_SILVER_VULNERABILITY, location.material, vulnerability)
+
+	get_scan_desc(var/atom/target)
+		var/current_gen = target.material.getTriggerGeneration(TRIGGERS_ON_ADD, /datum/materialProc/silver_vulnerability_add)
+		var/vulnerability = 100 / (1 << current_gen)
+		if(vulnerability >= 100)
+			return "Vulnerable to silver"
+		return "Partial vulnerability to silver ([vulnerability]%)"
+
+/datum/materialProc/silver_vulnerability_remove
+	execute(var/atom/location)
+		REMOVE_ATOM_PROPERTY(location, PROP_ATOM_SILVER_VULNERABILITY, location.material)
+
+/datum/materialProc/silver
+	// Only works with pure silver.
+	// Partially so that alloying silver with koshmarite, ectoplasm, etc. doesn't produce something weird
+	max_generations = 0
+	desc_scan = "Burns undead and other supernatural entities."
+
+	on_pickup
+		execute(var/mob/M, var/obj/item/I)
+			var/vulnerability_mult = GET_ATOM_PROPERTY(M, PROP_ATOM_SILVER_VULNERABILITY)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.l_hand == I && H.limbs?.l_arm)
+					vulnerability_mult = max(vulnerability_mult, GET_ATOM_PROPERTY(H.limbs.l_arm, PROP_ATOM_SILVER_VULNERABILITY))
+				else if(H.r_hand == I && H.limbs?.r_arm)
+					vulnerability_mult = max(vulnerability_mult, GET_ATOM_PROPERTY(H.limbs.r_arm, PROP_ATOM_SILVER_VULNERABILITY))
+			vulnerability_mult /= 100
+			if(vulnerability_mult <= 0)
+				return
+			SPAWN(0 SECONDS)
+				// Need to wait for all the pickup code to finish before we can actually drop the item
+				M.temperature_expose(null, 1200 KELVIN, 1000 * vulnerability_mult , TRUE)
+				if(M.l_hand == I)
+					M.TakeDamage("l_arm", 0, vulnerability_mult * 5, 0, DAMAGE_BURN)
+				else if(M.r_hand == I)
+					M.TakeDamage("r_arm", 0, vulnerability_mult * 5, 0, DAMAGE_BURN)
+				else
+					M.TakeDamage("All", 0, vulnerability_mult * 5, 0, DAMAGE_BURN)
+				M.changeStatus("knockdown", 1 SECONDS)
+				M.force_laydown_standup()
+				M.emote("scream", FALSE)
+				M.visible_message(SPAN_ALERT("[M] is burned by the silver!"))
+				playsound(M, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE, pitch = 1.25)
+
+	on_life
+		execute(var/mob/M, var/obj/item/I, mult)
+			if(M.handcuffs == I) // Silver handcuffs shouldn't kill you.
+				return
+			var/vulnerability_mult = GET_ATOM_PROPERTY(M, PROP_ATOM_SILVER_VULNERABILITY)
+			vulnerability_mult /= 100
+			var/material_amount_scaled = I.material_amount_total() ** (1 / 3)  // Cubed root of the amount of silver
+			var/burn_damage = 0.5 * material_amount_scaled * vulnerability_mult * mult
+			if(burn_damage <= 0)
+				return
+
+			M.TakeDamage("All", 0, burn_damage, 0, DAMAGE_BURN)
+			M.temperature_expose(null, 1200 KELVIN, 1000 * vulnerability_mult * mult, TRUE)
+			if(isliving(M))
+				var/mob/living/L = M
+				L.stamina -= burn_damage
+			if(prob(4))
+				M.emote(pick("pale", "shiver", "groan", "faint"))
+			if(prob(4))
+				boutput(M, SPAN_ALERT("You feel a [pick("searing", "hot", "burning")] pain![pick("", " That's gotta be silver!")]"))
+
+	on_hit
+		execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/impact_type)
+			var/vulnerability_mult = GET_ATOM_PROPERTY(attackatom, PROP_ATOM_SILVER_VULNERABILITY)
+			vulnerability_mult /= 100
+			if(vulnerability_mult <= 0)
+				return
+
+			if(isobj(attackatom))
+				var/obj/O = attackatom
+				if(O.artifact)
+					// Eldritch fault rate is doubled, so this is actually 20%
+					O.ArtifactDevelopFault(10 * vulnerability_mult, 100)
+					O.visible_message(SPAN_ALERT("The [owner] appears to burn the artifact!"))
+			attackatom.temperature_expose(null, 1200 KELVIN, 1000 * vulnerability_mult , TRUE)
+
+			if(!ismob(attackatom))
+				playsound(attackatom, 'sound/impact_sounds/burn_sizzle.ogg', 80 * vulnerability_mult, TRUE, pitch = 1.25)
+				return
+			var/mob/target_mob = attackatom
+
+			var/material_amount_scaled = owner.material_amount_total() ** (1 / 3) // Cubed root of the amount of silver
+			var/burn_damage = 2 * material_amount_scaled * vulnerability_mult
+			var/damage_zone = "All"
+			var/impact_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+			if(HAS_FLAG(impact_type, MATERIAL::IMPACT::PROJECTILE))
+				if(!istype(owner, /obj/projectile))
+					return
+				var/obj/projectile/projectile = owner
+				damage_zone = "chest"
+				var/armor_value_bullet = target_mob.get_ranged_protection()
+				if(projectile.proj_data)
+					armor_value_bullet = max(armor_value_bullet * (1 - projectile.proj_data.armor_ignored), 1)
+				burn_damage = (material_amount_scaled * vulnerability_mult * 25) / armor_value_bullet
+				impact_sound = 'sound/impact_sounds/crunchy_sizzle.ogg'
+			else if(isitem(owner))
+				var/obj/item/I = owner
+				if(HAS_ANY_FLAGS(I.hit_type, DAMAGE_CUT | DAMAGE_STAB))
+					burn_damage *= 5
+					impact_sound = 'sound/impact_sounds/crunchy_sizzle.ogg'
+			if(burn_damage)
+				target_mob.TakeDamage(damage_zone, 0, burn_damage, 0, DAMAGE_BURN)
+				playsound(target_mob, impact_sound, 125 * vulnerability_mult, TRUE, pitch = 1.25)
 
 /datum/materialProc/radiation_immune_add
 	desc_scan = "Cannot be irradiated"
