@@ -34,7 +34,7 @@
 		text = trimtext(strip_html(text))
 
 		if (text == "0")
-			src.parent.switch_menu_to("manage_citations")
+			src.parent.previous_menu()
 			return
 
 		var/datum/db_record/personnel/security/R = global.data_core.security.find_record("name", text)
@@ -59,5 +59,4 @@
 		)
 		global.data_core.arrests.add_record(arrest)
 
-		src.parent.current_record_group = src.record_group
-		src.parent.switch_menu_to("record_view", arrest)
+		src.parent.switch_record_group(src.record_group, "record_view", arrest)

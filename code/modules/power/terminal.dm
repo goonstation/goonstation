@@ -19,6 +19,11 @@
 	var/turf/T = new_loc
 	if(istype(T) && level==UNDERFLOOR) hide(T.intact)
 
+/// Sets `master`, use this instead of assigning it directly
+/obj/machinery/power/terminal/proc/set_master(obj/machinery/new_master, net_id)
+	src.master = new_master
+	src.update_wired_route(new_master, net_id)
+
 /obj/machinery/power/terminal/disposing()
 	if (src.powernet && src.powernet.data_nodes)
 		src.powernet.data_nodes -= src
@@ -66,10 +71,7 @@
 			signal.transmission_method = TRANSMISSION_WIRE
 			signal.channels_passed += "PN[src.netnum];"
 
-			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
-				if(device != src)
-					device.receive_signal(signal, TRANSMISSION_WIRE)
-				LAGCHECK(LAG_MED)
+			src.send_data_signal(signal)
 
 			//qdel(signal)
 			return
@@ -113,6 +115,11 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 		master = null
 		..()
 
+	/// Sets `master`, use this instead of assigning it directly
+	proc/set_master(atom/movable/new_master, net_id)
+		src.master = new_master
+		src.update_wired_route(new_master, net_id)
+
 	receive_signal(datum/signal/signal)
 		if(!signal)
 			return
@@ -143,10 +150,7 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 			signal.transmission_method = TRANSMISSION_WIRE
 			signal.channels_passed += "PN[src.netnum];"
 
-			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
-				if(device != src)
-					device.receive_signal(signal, TRANSMISSION_WIRE)
-				LAGCHECK(LAG_MED)
+			src.send_data_signal(signal)
 
 			if(signal)
 				qdel(signal)

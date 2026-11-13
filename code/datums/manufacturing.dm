@@ -3784,6 +3784,10 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	name = "Unmarked Syndicate Crate"
 	item_outputs = list(/obj/storage/secure/crate/gear/syndicate)
 
+/datum/manufacture/crate/secure/command_gear_replacement
+	name = "Command Equipment crate (Empty)"
+	item_outputs = list(/obj/storage/secure/crate/gear/nanotrasen/replacement_equipment)
+
 /******************** Carts *******************/
 
 /datum/manufacture/cart
