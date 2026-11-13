@@ -131,7 +131,20 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/secure/sbriefcase)
 	items_in_backpack = list(/obj/item/baton/cane)
-	alt_names = list("Senator", "President", "Board Member", "Mayor", "Vice-President", "Governor")
+	alt_names = list("Senator",
+		"President",
+		"Mayor",
+		"Vice-President",
+		"Governor",
+		"Investor",
+		"Shareholder",
+		"Industrialist",
+		"Stakeholder",
+		"Strategic Partner",
+		"Hedge Fund Manager",
+		"Plasma Baron", // NT's main product
+		"Clerical Paraphernalia Broker", // National Notary stuff
+		"Exo-Archaeology Patron") // Wallace Jam Institute of Exo-Archaeology stuff
 	wiki_link = "https://wiki.ss13.co/VIP"
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -141,6 +154,11 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (B && istype(B))
 			for (var/i = 1 to 2)
 				B.storage.add_contents(new /obj/item/stamped_bullion(B))
+
+			switch(src.name) // extra treats for speicifc types related to NT products
+				if("Plasma Baron") B.storage.add_contents(new /obj/item/tank/pocket/plasma(B))
+				if("Clerical Paraphernalia Broker") B.storage.add_contents(new /obj/item/pen/omni(B))
+				if("Exo-Archaeology Patron") B.storage.add_contents(new /obj/item/clothing/head/safari/artsci(B))
 
 		return
 
