@@ -32,12 +32,12 @@ ABSTRACT_TYPE(/datum/storyteller)
 	var/overwhelming_sec_pop_threshold = 30 // population threshold at which we start checking if the number of security officers is overwhelming.
 	var/overwhelming_sec_multiplier = 2 // the multiplier for comparing security count to antag count. Higher values = more sec expected for each antag.
 
-	var/base_latejoin_chance = 4 // the flat base chance for rolling latejoin antagonist regardless of the round conditions.
-	var/want_latejoin_chance = 20 // additional chance for latejoin when we want one, but antags are still alive.
-	var/urgent_latejoin_chance = 40 // the chance for rolling latejoin when we urgently want one (i.e. all antags are dead)
+	var/latejoin_antag_chance_base = 4 // the flat base chance for rolling latejoin antagonist regardless of the round conditions.
+	var/latejoin_antag_chance_want = 20 // additional chance for latejoin when we want one, but antags are still alive.
+	var/latejoin_antag_chance_urgent = 40 // the chance for rolling latejoin when we urgently want one (i.e. all antags are dead)
 
-	/// see defines/storyteller.dm
-	var/storyteller_flags = STORYTELLER_ANTAG_THRESHOLD | STORYTELLER_SEC_CHECK
+	/// see namespaces/storyteller.dm
+	var/storyteller_flags = STORYTELLER::FLAGS::ANTAG_THRESHOLD | STORYTELLER::FLAGS::SEC_CHECK
 
 	proc/set_active(datum/event_controller/random_events)
 
@@ -243,38 +243,38 @@ ABSTRACT_TYPE(/datum/storyteller)
 
 	/// returns a decimal representing the percentage of alive crew that are also in a security job
 	proc/get_alive_security_percentage()
-		var/alive = alive_player_count()
-		var/alive_security = 0
+		var/alive_players = global.alive_player_count()
+		if(!alive_players)
+			return 0
 
+		var/alive_security = 0
 		for(var/client/C)
 			var/mob/M = C.mob
 			if(!M || isnewplayer(M) || isdead(M) || !isliving(M))
 				continue
 			if(M.mind?.assigned_role)
-				var/datum/job/J = find_job_in_controller_by_string(M.mind.assigned_role, soft = TRUE)
+				var/datum/job/J = global.find_job_in_controller_by_string(M.mind.assigned_role, soft = TRUE)
 				if(J && (J.job_category == JOB_SECURITY || istype(J, /datum/job/command/head_of_security) || istype(J, /datum/job/special/nt/security_consultant)))
 					alive_security++
-		if(!alive)
-			return 0
 
-		return (alive_security / alive)
+		return (alive_security / alive_players)
 
 	/// Returns TRUE if percentage of alive security is more than X times alive antagonists (and population is above threshold)
 	proc/overwhelming_security_check()
-		if(alive_player_count() < src.overwhelming_sec_pop_threshold)
+		if(global.alive_player_count() < src.overwhelming_sec_pop_threshold)
 			return FALSE
 
-		var/sec = get_alive_security_percentage()
-		var/antags = get_alive_antags_percentage()
+		var/sec = src.get_alive_security_percentage()
+		var/antags = global.get_alive_antags_percentage()
 		return sec > 0 && antags > 0 && sec >= src.overwhelming_sec_multiplier * antags
 
 	/// Rolls chance to be late join antag
 	proc/roll_for_latejoin_antag()
-		var/antag_percentage = get_alive_antags_percentage()
+		var/antag_percentage = global.get_alive_antags_percentage()
 		var/livingtraitor = FALSE
 
 		// check if any antagonists (excluding silicons) are alive at all.
-		for(var/datum/mind/brain in ticker.minds)
+		for(var/datum/mind/brain in global.ticker.minds)
 			if(brain.current && brain.is_antagonist())
 				// if a silicon mob, dead, logged out, or in cryo then skip
 				if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null || istype(brain.current.loc, /obj/cryotron))
@@ -285,20 +285,20 @@ ABSTRACT_TYPE(/datum/storyteller)
 				break
 
 		// no antagonists alive
-		if (!livingtraitor && prob(src.urgent_latejoin_chance))
+		if (!livingtraitor && prob(src.latejoin_antag_chance_urgent))
 			logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as there are no living antagonists.")
 			return TRUE
 		// mode accepts latejoins when antagonists are alive
-		if(livingtraitor && !ticker.mode.latejoin_only_if_all_antags_dead)
-			if(prob(src.base_latejoin_chance))
+		if(livingtraitor && !global.ticker.mode.latejoin_only_if_all_antags_dead)
+			if(prob(src.latejoin_antag_chance_base))
 				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join from base chance.")
 				return TRUE // base low random chance
 
-			if((src.storyteller_flags & STORYTELLER_ANTAG_THRESHOLD) && prob(src.want_latejoin_chance) && antag_percentage < random_events.alive_antags_threshold)
+			if((src.storyteller_flags & STORYTELLER::FLAGS::ANTAG_THRESHOLD) && prob(src.latejoin_antag_chance_want) && antag_percentage < global.random_events.alive_antags_threshold)
 				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as antag percentage is below expected threshold.")
 				return TRUE // alive antag percent is below expected threshold
 
-			if((src.storyteller_flags & STORYTELLER_SEC_CHECK) && prob(src.want_latejoin_chance) && src.overwhelming_security_check())
+			if((src.storyteller_flags & STORYTELLER::FLAGS::SEC_CHECK) && prob(src.latejoin_antag_chance_want) && src.overwhelming_security_check())
 				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as there are at least [src.overwhelming_sec_multiplier] \
 				times more alive security than antagonists.")
 				return TRUE // there are too many alive security crew compared to alive antags
