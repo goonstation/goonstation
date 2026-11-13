@@ -1,5 +1,10 @@
 
 (t)thu nov 12 26
+(u)ANNmagedon
+(p)28288
+(e)|
+(+)The gravity tether manudrive uses the engineering disk sprite now.
+(+)The name consistency issue between the medical manudrives (genebooth, clone disk rack) has been fixed.
 (u)Spyritdragon
 (p)28231
 (e)🤖|A-Silicons
