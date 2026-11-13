@@ -14,18 +14,6 @@
 	)
 	. = ..(parent, key, name, value, choices)
 
-/datum/record_field/choice/criminal/set_value(value)
-	. = ..()
-
-	var/datum/db_record/personnel/general/record = global.data_core.get_general_record(id = src.parent["id"])
-	if (!istype(record))
-		return
-
-	var/target_name = record["name"]
-	for_by_tcl(H, /mob/living/carbon/human)
-		if ((H.real_name == target_name) || (H.name == target_name))
-			H.update_arrest_icon()
-
 /datum/record_field/choice/criminal/input_load(datum/db_manager_menu/field_input/menu)
 	if (!length(global.data_core.get_open_arrests(id = src.parent["id"])))
 		return ..()

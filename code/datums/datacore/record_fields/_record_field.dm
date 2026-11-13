@@ -39,17 +39,18 @@
 
 /// Sets the value of this field. Errors if the new value does not pass validation.
 /datum/record_field/proc/set_value(value)
-	if (isnull(value))
-		src.parent.get_db()?.notify_field_change(src.parent, src.key, src.value, src.default_value)
-		src.value = src.default_value
-		return
+	if (!isnull(value) || !src.permit_null_default)
+		var/error = src.validate(value)
+		if (istext(error))
+			CRASH(error)
 
-	var/error = src.validate(value)
-	if (istext(error))
-		CRASH(error)
-	else
-		src.parent.get_db()?.notify_field_change(src.parent, src.key, src.value, value)
-		src.value = value
+	var/old_value = src.value
+	src.value = value
+
+	if (old_value != value)
+		// `notify_field_change()` is explicitly executed before emitting the VALUE_CHANGED signal, as some registrees rely upon the DB having up-to-date indices.
+		src.parent.get_db()?.notify_field_change(src.parent, src.key, old_value, value)
+		SEND_SIGNAL(src, COMSIG_FIELD_VALUE_CHANGED, old_value, value)
 
 /// Returns TRUE if the passed value may be used as a value for this field.
 /datum/record_field/proc/validate(value)

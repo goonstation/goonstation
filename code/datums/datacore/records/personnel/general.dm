@@ -18,6 +18,17 @@
 		BUILD_FIELD("syndint",		/datum/record_field/string,			"Synd Intel"),
 	)
 
+/datum/db_record/personnel/general/New(source)
+	. = ..()
+	src.RegisterSignal(src.get_field_datum("name"), COMSIG_FIELD_VALUE_CHANGED, PROC_REF(on_name_change))
+
+/datum/db_record/personnel/general/disposing()
+	src.UnregisterSignal(src.get_field_datum("name"), COMSIG_FIELD_VALUE_CHANGED)
+	var/name = src["name"]
+	. = ..()
+
+	src.on_name_change(null, name, null)
+
 /datum/db_record/personnel/general/to_display_string()
 	return "[src["id"]]: [src["name"]]"
 
@@ -79,3 +90,9 @@
 	src["dna"] = H.bioHolder.Uid
 	src["p_stat"] = "Active"
 	src["m_stat"] = "Stable"
+
+/// Called when the value of the name field is updated.
+/datum/db_record/personnel/general/proc/on_name_change(datum/record_field/field, old_value, new_value)
+	for_by_tcl(H, /mob/living/carbon/human)
+		if ((H.real_name == old_value) || (H.name == old_value) || (H.real_name == new_value) || (H.name == new_value))
+			H.update_arrest_icon()
