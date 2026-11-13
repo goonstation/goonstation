@@ -1,4 +1,6 @@
 #define DRONE_LUM 2
+/// Stack size for stackable drone tools
+#define GHOSTDRONE_STACK_CAPACITY 1000
 
 TYPEINFO(/mob/living/silicon/ghostdrone)
 	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
@@ -114,6 +116,8 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		//Make all the tools un-drop-able (to closets/tables etc)
 		for (var/obj/item/O in src.tools)
 			O.cant_drop = 1
+			if (O.max_stack > 1)
+				O.max_stack = GHOSTDRONE_STACK_CAPACITY
 
 		if(sees_static)
 			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(src)
@@ -1229,3 +1233,5 @@ TYPEINFO(/mob/living/silicon/ghostdrone/deluxe)
 				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
+
+#undef GHOSTDRONE_STACK_CAPACITY
