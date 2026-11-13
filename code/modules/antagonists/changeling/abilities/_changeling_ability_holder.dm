@@ -95,7 +95,9 @@
 		else if (M.last_client)
 			for (var/client/C in clients)
 				if (C == M.last_client && C.mob && (isobserver(C.mob) || isVRghost(C.mob)))
-					if(C.mob && C.mob.mind)
+					if (C.mob.mind && \
+						!istype(C.mob, /mob/dead/target_observer/hivemind_observer) && \
+						!C.mob.mind.get_player()?.dnr)
 						mind_to_be_transferred = C.mob.mind
 
 					break
