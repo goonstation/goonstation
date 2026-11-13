@@ -158,7 +158,11 @@
 	src.record = record
 
 /datum/db_record_group/citation/record/get_records()
-	var/name = src.record["name"]
+	var/datum/db_record/personnel/general/general = global.data_core.get_general_record(id = src.record["id"])
+	if (!istype(general))
+		return
+
+	var/name = general["name"]
 	var/list/datum/db_record/citation/citations = list()
 	citations += global.data_core.tickets.find_records("target", name)
 	citations += global.data_core.fines.find_records("target", name)

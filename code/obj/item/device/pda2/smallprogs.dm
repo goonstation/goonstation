@@ -24,33 +24,6 @@
 //Head tracker
 //Generator Controller
 
-//Banking
-/datum/computer/file/pda_program/banking
-	name = "BankBuddy"
-	size = 8
-
-	var/tmp/datum/db_record/bank_record = null
-
-	return_text()
-		if (..())
-			return
-
-		var/dat = src.return_text_header()
-
-		//todo
-
-		return dat
-
-	proc/locate_bank_record()
-		if (!src.master || !src.master.owner)
-			return 0
-
-		for(var/datum/db_record/B as anything in data_core.bank.records)
-			if(lowertext(B["name"]) == lowertext(src.master.owner))
-				src.bank_record = B
-				return 1
-		return 0
-
 
 //Manifest
 /datum/computer/file/pda_program/manifest

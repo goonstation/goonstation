@@ -724,8 +724,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				if (seconds_electrified)
 					if(src.shock(usr,100))
 						return
-				var/datum/db_record/account = null
-				account = global.data_core.get_bank_record(src.scan?.registered)
+				var/datum/db_record/personnel/bank/account = global.data_core.get_bank_record(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
 					boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
 					FLICK(src.icon_deny,src)
@@ -798,10 +797,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
 				if(player_list)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
-				if(account && (account["name"] != usr.real_name))
-				    // reduce logging spam from clerical errors
-					if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src, "buy_[usr.real_name]", 10 SECONDS))
-						logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account["name"]]).")
+
+				if (account)
+					var/datum/db_record/personnel/general/general = global.data_core.get_general_record(id = account["id"])
+					var/account_name = general?["name"]
+					if (account_name && (account_name != usr.real_name))
+						// reduce logging spam from clerical errors
+						if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src, "buy_[usr.real_name]", 10 SECONDS))
+							logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account_name]).")
 		else
 			. = FALSE
 
@@ -879,7 +882,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
 				return
 
-			var/datum/db_record/account = null
+			var/datum/db_record/personnel/bank/account = null
 			if (src.pay)
 				if (src.acceptcard && src.scan)
 					account = global.data_core.get_bank_record(src.scan.registered)

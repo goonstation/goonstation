@@ -750,12 +750,6 @@
 		. = ..()
 		STOP_TRACKING
 
-/// Given a list of jobs, return the associated bank account records. Does not de-duplicate bank account records.
-proc/FindBankAccountsByJobs(var/list/job_list)
-	RETURN_TYPE(/list/datum/db_record)
-	. = list()
-	for (var/each_job in job_list)
-		. += data_core.general.find_records("rank", each_job)
 
 #undef STATE_LOGGEDOFF
 #undef STATE_LOGGEDIN

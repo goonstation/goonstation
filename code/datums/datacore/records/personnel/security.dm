@@ -3,7 +3,6 @@
 /datum/db_record/personnel/security/build_fields()
 	return alist(
 		"id"		= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
-		"name"		= new /datum/record_field/string(src, "Name", "New Record"),
 		"criminal"	= new /datum/record_field/choice/criminal(src, "Criminal Status"),
 		"sec_flag"	= new /datum/record_field/string/sec_flag(src, "SecHUD Flag"),
 		"citations"	= new /datum/record_field/record_list(src, "Citations"),
@@ -22,7 +21,6 @@
 
 /datum/db_record/personnel/security/init_from_human(mob/living/carbon/human/H)
 	src["id"] = H.datacore_id
-	src["name"] = H.real_name
 
 	if (H.traitHolder?.hasTrait("training_clown"))
 		src["criminal"] = SECURITY::ARREST::STATE::CLOWN

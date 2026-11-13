@@ -18,6 +18,12 @@
 		"syndint"	= new /datum/record_field/string(src, "Synd Intel"),
 	)
 
+/datum/db_record/personnel/general/to_display_string()
+	return "[src["id"]]: [src["name"]]"
+
+/datum/db_record/personnel/general/to_list_display_string()
+	return "[src["id"]]: [src["name"]]"
+
 /datum/db_record/personnel/general/init_from_human(mob/living/carbon/human/H)
 	src["id"] = H.datacore_id
 	src["name"] = H.real_name
@@ -61,8 +67,7 @@
 		src["photo"] = IMG
 
 /datum/db_record/personnel/general/update_from_scan(mob/living/carbon/human/H)
-	. = ..()
-
+	src["name"] = H.real_name
 	src["sex"] = (H.gender == FEMALE) ? "Female" : "Male"
 	src["pronouns"] = H.get_pronouns().name
 	src["age"] = H.bioHolder.age

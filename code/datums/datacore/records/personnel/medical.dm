@@ -3,7 +3,6 @@
 /datum/db_record/personnel/medical/build_fields()
 	return alist(
 		"id"			= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
-		"name"			= new /datum/record_field/string(src, "Name", "New Record"),
 		"h_imp"			= new /datum/record_field/string(src, "Current Health", "No health implant detected."),
 		"blood_type"	= new /datum/record_field/choice(src, "Blood Type", "Unknown", list("A+", "A-", "B+", "B-", "AB+-", "AB+", "AB-", "O+", "O-", "Zesty Ranch", "Unknown")),
 		"mi_dis"		= new /datum/record_field/string(src, "Minor Disabilities", "None"),
@@ -22,7 +21,6 @@
 
 /datum/db_record/personnel/medical/init_from_human(mob/living/carbon/human/H)
 	src["id"] = H.datacore_id
-	src["name"] = H.real_name
 	src["blood_type"] = H.bioHolder.bloodType
 	src["dnasample"] = global.create_new_dna_sample_file(H)
 
@@ -32,7 +30,6 @@
 	src.get_traits(H)
 
 /datum/db_record/personnel/medical/update_from_scan(mob/living/carbon/human/H)
-	. = ..()
 	src["blood_type"] = H.bioHolder.bloodType
 	src.get_traits(H)
 

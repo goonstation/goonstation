@@ -67,37 +67,61 @@
 
 	groups.fields += "[J.email_group]:[username],"
 
-/datum/datacore/proc/get_general_record(target)
+/datum/datacore/proc/get_general_record(name, id)
 	RETURN_TYPE(/datum/db_record/personnel/general)
-	return src.general.find_record("name", target)
 
-/datum/datacore/proc/get_security_record(target)
+	if (id)
+		return src.general.find_record("id", id)
+
+	return src.general.find_record("name", name)
+
+/datum/datacore/proc/get_security_record(name, id)
 	RETURN_TYPE(/datum/db_record/personnel/security)
 
-	var/datum/db_record/personnel/general/general = src.get_general_record(target)
+	if (id)
+		return src.security.find_record("id", id)
+
+	var/datum/db_record/personnel/general/general = src.get_general_record(name)
 	if (general)
 		return src.security.find_record("id", general["id"])
 
-/datum/datacore/proc/get_medical_record(target)
+/datum/datacore/proc/get_medical_record(name, id)
 	RETURN_TYPE(/datum/db_record/personnel/medical)
 
-	var/datum/db_record/personnel/general/general = src.get_general_record(target)
+	if (id)
+		return src.medical.find_record("id", id)
+
+	var/datum/db_record/personnel/general/general = src.get_general_record(name)
 	if (general)
 		return src.medical.find_record("id", general["id"])
 
-/datum/datacore/proc/get_bank_record(target)
+/datum/datacore/proc/get_bank_record(name, id)
 	RETURN_TYPE(/datum/db_record/personnel/bank)
 
-	var/datum/db_record/personnel/general/general = src.get_general_record(target)
+	if (id)
+		return src.bank.find_record("id", id)
+
+	var/datum/db_record/personnel/general/general = src.get_general_record(name)
 	if (general)
 		return src.bank.find_record("id", general["id"])
 
-/datum/datacore/proc/get_open_arrests(target)
+/datum/datacore/proc/get_random_general_record()
+	RETURN_TYPE(/datum/db_record/personnel/general)
+	return pick(src.general.records)
+
+/datum/datacore/proc/get_open_arrests(name, id)
 	RETURN_TYPE(/list/datum/db_record/citation/arrest)
 	. = list()
 
+	if (id)
+		var/datum/db_record/personnel/general/general = src.get_general_record(id = id)
+		if (!istype(general))
+			return
+
+		name = general["name"]
+
 	for (var/datum/db_record/citation/arrest/arrest as anything in src.arrests.find_records("status", "OPEN"))
-		if (arrest["target"] == target)
+		if (arrest["target"] == name)
 			. += arrest
 
 /datum/datacore/proc/forensic_search(search_input)
@@ -276,7 +300,7 @@
 	var/list/section_unassigned = list()
 	var/list/section_cryo = list()
 
-	for (var/datum/db_record/record as anything in global.data_core.general.records)
+	for (var/datum/db_record/personnel/general/record as anything in global.data_core.general.records)
 		if (record["p_stat"] == "In Cryogenic Storage")
 			section_cryo += "<i>- [record["name"]]</i><br>"
 			continue
