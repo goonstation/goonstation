@@ -1,6 +1,8 @@
 /datum/record_field
 	/// The display name of this field.
 	var/name = null
+	/// The key associated with this field.
+	var/key = null
 	/// The database record that this field belongs to.
 	VAR_PROTECTED/datum/db_record/parent = null
 	/// The current value of this field.
@@ -10,9 +12,10 @@
 	/// Whether the value of this field is permitted to be null.
 	VAR_PROTECTED/permit_null_default = FALSE
 
-/datum/record_field/New(parent, name, value)
+/datum/record_field/New(parent, key, name, value)
 	. = ..()
 	src.parent = parent
+	src.key = key
 	src.name = name
 	src.value = value
 	src.default_value = value
@@ -37,6 +40,7 @@
 /// Sets the value of this field. Errors if the new value does not pass validation.
 /datum/record_field/proc/set_value(value)
 	if (isnull(value))
+		src.parent.get_db()?.notify_field_change(src.parent, src.key, src.value, src.default_value)
 		src.value = src.default_value
 		return
 
@@ -44,6 +48,7 @@
 	if (istext(error))
 		CRASH(error)
 	else
+		src.parent.get_db()?.notify_field_change(src.parent, src.key, src.value, value)
 		src.value = value
 
 /// Returns TRUE if the passed value may be used as a value for this field.

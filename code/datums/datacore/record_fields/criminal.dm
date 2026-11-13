@@ -1,6 +1,6 @@
 /datum/record_field/choice/criminal
 
-/datum/record_field/choice/criminal/New(parent, name, value, list/choices)
+/datum/record_field/choice/criminal/New(parent, key, name, value, list/choices)
 	value = SECURITY::ARREST::STATE::NONE
 	choices = list(
 		SECURITY::ARREST::STATE::ARREST,
@@ -12,7 +12,7 @@
 		SECURITY::ARREST::STATE::RELEASED,
 		SECURITY::ARREST::STATE::CLOWN,
 	)
-	. = ..(parent, name, value, choices)
+	. = ..(parent, key, name, value, choices)
 
 /datum/record_field/choice/criminal/set_value(value)
 	. = ..()

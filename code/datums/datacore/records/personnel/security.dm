@@ -2,15 +2,15 @@
 
 /datum/db_record/personnel/security/build_fields()
 	return alist(
-		"id"		= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
-		"criminal"	= new /datum/record_field/choice/criminal(src, "Criminal Status"),
-		"sec_flag"	= new /datum/record_field/string/sec_flag(src, "SecHUD Flag"),
-		"citations"	= new /datum/record_field/record_list(src, "Citations"),
-		"mi_crim"	= new /datum/record_field/string(src, "Minor Crimes", "None"),
-		"mi_crim_d"	= new /datum/record_field/string(src, "Details", "No minor crime convictions."),
-		"ma_crim"	= new /datum/record_field/string(src, "Major Crimes", "None"),
-		"ma_crim_d"	= new /datum/record_field/string(src, "Details", "No major crime convictions."),
-		"notes"		= new /datum/record_field/string(src, "Important Notes", "No notes."),
+		BUILD_FIELD("id",			/datum/record_field/string,				"ID", "000000", @"[a-f0-9]{6}"),
+		BUILD_FIELD("criminal",		/datum/record_field/choice/criminal,	"Criminal Status"),
+		BUILD_FIELD("sec_flag",		/datum/record_field/string/sec_flag,	"SecHUD Flag"),
+		BUILD_FIELD("citations",	/datum/record_field/record_list,		"Citations"),
+		BUILD_FIELD("mi_crim",		/datum/record_field/string,				"Minor Crimes", "None"),
+		BUILD_FIELD("mi_crim_d",	/datum/record_field/string,				"Details", "No minor crime convictions."),
+		BUILD_FIELD("ma_crim",		/datum/record_field/string,				"Major Crimes", "None"),
+		BUILD_FIELD("ma_crim_d",	/datum/record_field/string,				"Details", "No major crime convictions."),
+		BUILD_FIELD("notes",		/datum/record_field/string,				"Important Notes", "No notes."),
 	)
 
 /datum/db_record/personnel/security/New(source)

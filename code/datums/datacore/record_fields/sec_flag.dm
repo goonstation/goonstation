@@ -1,8 +1,8 @@
 /datum/record_field/string/sec_flag
 
-/datum/record_field/string/sec_flag/New(parent, name, value, regex_string)
+/datum/record_field/string/sec_flag/New(parent, key, name, value, regex_string)
 	value = "None"
-	. = ..(parent, name, value, regex_string)
+	. = ..(parent, key, name, value, regex_string)
 
 /datum/record_field/string/sec_flag/input_load(datum/db_manager_menu/field_input/menu)
 	if (!length(global.data_core.get_open_arrests(id = src.parent["id"])))
