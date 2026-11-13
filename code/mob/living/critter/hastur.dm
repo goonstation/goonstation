@@ -15,7 +15,7 @@ TYPEINFO(/mob/living/critter/hastur)
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
-	see_invisible = INVIS_ADVENTURE
+	innate_vision = /datum/vision_modifier/hastur
 	stat = STAT_DEAD
 	stepsound = 'sound/misc/hastur/tentacle_walk.ogg'
 	speech_verb_say = "states"
@@ -30,7 +30,6 @@ TYPEINFO(/mob/living/critter/hastur)
 
 	New()
 		..()
-		src.see_in_dark = SEE_DARK_FULL
 		northsouth = icon('icons/misc/hastur.dmi')
 		eastwest = icon('icons/misc/hastur.dmi')
 		changeIcon()
@@ -245,7 +244,6 @@ TYPEINFO(/mob/living/critter/hastur)
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_SPOOKY)
 			H.alpha = 160
 			H.stepsound = null
-			H.see_invisible = INVIS_SPOOKY
 			stage = 1
 
 //TENTACLE LONG RANGE WHIP//
