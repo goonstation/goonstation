@@ -44,14 +44,17 @@ export interface CharacterPreferencesData {
   skinTone: string;
   specialStyle: string;
   eyeColor: string;
-  customColor1: string;
-  customStyle1: string;
-  customColor2: string;
-  customStyle2: string;
-  customColor3: string;
-  customStyle3: string;
+
+  hairBottomColor: string;
+  hairBottomStyle: string;
+  hairMiddleColor: string;
+  hairMiddleStyle: string;
+  hairTopColor: string;
+  hairTopStyle: string;
+
   underwearColor: string;
   underwearStyle: string;
+
   randomAppearance: BooleanLike;
 
   jobStaticData: Record<string, JobStaticData>;

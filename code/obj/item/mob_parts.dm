@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/severed_overlay_1_icon
 	/// The state of this overlay
 	var/severed_overlay_1_state
-	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	/// The color reference. null for uncolored("#ffffff"), HAIR_BOTTOM_COLOR/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
 	var/severed_overlay_1_color
 
 	/// Gets sent to update_body to overlay something onto this limb, like kudzu vines. Only handles the limb, not the hand/foot!
@@ -45,7 +45,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/limb_overlay_1_icon
 	/// The state of this overlay
 	var/limb_overlay_1_state
-	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	/// The color reference. null for uncolored("#ffffff"), HAIR_BOTTOM_COLOR/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
 	var/limb_overlay_1_color
 
 	/// Gets sent to update_body to overlay something onto this hand/foot, like kudzu vines. Only handles the hand/foot, not the limb!
@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/handfoot_overlay_1_icon
 	/// The state of this overlay
 	var/handfoot_overlay_1_state
-	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	/// The color reference. null for uncolored("#ffffff"), HAIR_BOTTOM_COLOR/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
 	var/handfoot_overlay_1_color
 
 	///Attachable without surgery?

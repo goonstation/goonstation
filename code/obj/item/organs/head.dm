@@ -41,13 +41,13 @@
 	var/image/head_image_eyes_L = null
 	var/image/head_image_eyes_R = null
 	var/image/head_image_nose = null
-	var/image/head_image_cust_one = null
-	var/image/head_image_cust_two = null
-	var/image/head_image_cust_three = null
+	var/image/head_image_hair_bottom = null
+	var/image/head_image_hair_middle = null
+	var/image/head_image_hair_top = null
 
-	var/image/head_image_special_one = null
-	var/image/head_image_special_two = null
-	var/image/head_image_special_three = null
+	var/image/head_image_hair_bottom_special = null
+	var/image/head_image_hair_middle_special = null
+	var/image/head_image_hair_top_special = null
 
 	var/skintone = "#FFFFFF"
 
@@ -191,21 +191,21 @@
 			src.head_image_eyes_L = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 			src.head_image_eyes_R = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 
-		if (AHead.customizations["hair_bottom"].style.id == "hetcroL")
-			src.head_image_eyes_L.color = AHead.customizations["hair_bottom"].color
-		else if (AHead.customizations["hair_middle"].style.id == "hetcroL")
-			src.head_image_eyes_L.color = AHead.customizations["hair_middle"].color
-		else if (AHead.customizations["hair_top"].style.id == "hetcroL")
-			src.head_image_eyes_L.color = AHead.customizations["hair_top"].color
+		if (AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id == "hetcroL")
+			src.head_image_eyes_L.color = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+		else if (AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id == "hetcroL")
+			src.head_image_eyes_L.color = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+		else if (AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.id == "hetcroL")
+			src.head_image_eyes_L.color = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 		else
 			src.head_image_eyes_L.color = AHead.e_color
 
-		if (AHead.customizations["hair_bottom"].style.id == "hetcroR")
-			src.head_image_eyes_R.color = AHead.customizations["hair_bottom"].color
-		else if (AHead.customizations["hair_middle"].style.id == "hetcroR")
-			src.head_image_eyes_R.color = AHead.customizations["hair_middle"].color
-		else if (AHead.customizations["hair_top"].style.id == "hetcroR")
-			src.head_image_eyes_R.color = AHead.customizations["hair_top"].color
+		if (AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id == "hetcroR")
+			src.head_image_eyes_R.color = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+		else if (AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id == "hetcroR")
+			src.head_image_eyes_R.color = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+		else if (AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.id == "hetcroR")
+			src.head_image_eyes_R.color = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 		else
 			src.head_image_eyes_R.color = AHead.e_color
 
@@ -222,57 +222,57 @@
 			src.head_image_eyes_R.color = light_colors(src.head_image_eyes_R.color)
 
 		// Remove their hair first
-		src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_two = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
-		src.head_image_special_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
-		src.head_image_special_two = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
-		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
+		src.head_image_hair_bottom = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
+		src.head_image_hair_middle = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
+		src.head_image_hair_top = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
+		src.head_image_hair_bottom_special = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
+		src.head_image_hair_middle_special = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
+		src.head_image_hair_top_special = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
-		src.head_image_cust_one = image(icon = AHead.customizations["hair_bottom"].style.icon, icon_state = AHead.customizations["hair_bottom"].style.id, layer = AHead.customizations["hair_bottom"].style.default_layer)
-		src.head_image_cust_two = image(icon = AHead.customizations["hair_middle"].style.icon, icon_state = AHead.customizations["hair_middle"].style.id, layer = AHead.customizations["hair_middle"].style.default_layer)
-		src.head_image_cust_three = image(icon = AHead.customizations["hair_top"].style.icon, icon_state = AHead.customizations["hair_top"].style.id, layer = AHead.customizations["hair_top"].style.default_layer)
+		src.head_image_hair_bottom = image(icon = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.icon, icon_state = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id, layer = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.default_layer)
+		src.head_image_hair_middle = image(icon = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.icon, icon_state = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id, layer = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.default_layer)
+		src.head_image_hair_top = image(icon = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.icon, icon_state = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.id, layer = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.default_layer)
 
-		src.head_image_cust_one.color = AHead.customizations["hair_bottom"].color
-		src.head_image_cust_two.color = AHead.customizations["hair_middle"].color
-		src.head_image_cust_three.color = AHead.customizations["hair_top"].color
+		src.head_image_hair_bottom.color = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+		src.head_image_hair_middle.color = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+		src.head_image_hair_top.color = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 
-		src.head_image_special_one = image(icon = AHead.special_hair_1_icon, icon_state = AHead.special_hair_1_state, layer = AHead.special_hair_1_layer)
-		src.head_image_special_two = image(icon = AHead.special_hair_2_icon, icon_state = AHead.special_hair_2_state, layer = AHead.special_hair_2_layer)
-		src.head_image_special_three = image(icon = AHead.special_hair_3_icon, icon_state = AHead.special_hair_3_state, layer = AHead.special_hair_3_layer)
+		src.head_image_hair_bottom_special = image(icon = AHead.special_hair_bottom_icon, icon_state = AHead.special_hair_bottom_state, layer = AHead.special_hair_bottom_layer)
+		src.head_image_hair_middle_special = image(icon = AHead.special_hair_middle_icon, icon_state = AHead.special_hair_middle_state, layer = AHead.special_hair_middle_layer)
+		src.head_image_hair_top_special = image(icon = AHead.special_hair_top_icon, icon_state = AHead.special_hair_top_state, layer = AHead.special_hair_top_layer)
 
 		var/colorheck = "#FFFFFF"
-		switch(AHead.special_hair_1_color_ref)
-			if(CUST_1)
-				colorheck = AHead.customizations["hair_bottom"].color
-			if(CUST_2)
-				colorheck = AHead.customizations["hair_middle"].color
-			if(CUST_3)
-				colorheck = AHead.customizations["hair_top"].color
+		switch(AHead.special_hair_bottom_color_ref)
+			if(HAIR_BOTTOM_COLOR)
+				colorheck = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+			if(HAIR_MIDDLE_COLOR)
+				colorheck = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+			if(HAIR_TOP_COLOR)
+				colorheck = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 			else
 				colorheck = "#FFFFFF"
-		src.head_image_special_one.color = colorheck
-		switch(AHead.special_hair_2_color_ref)
-			if(CUST_1)
-				colorheck = AHead.customizations["hair_bottom"].color
-			if(CUST_2)
-				colorheck = AHead.customizations["hair_middle"].color
-			if(CUST_3)
-				colorheck = AHead.customizations["hair_top"].color
+		src.head_image_hair_bottom_special.color = colorheck
+		switch(AHead.special_hair_middle_color_ref)
+			if(HAIR_BOTTOM_COLOR)
+				colorheck = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+			if(HAIR_MIDDLE_COLOR)
+				colorheck = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+			if(HAIR_TOP_COLOR)
+				colorheck = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 			else
 				colorheck = "#FFFFFF"
-		src.head_image_special_two.color = colorheck
-		switch(AHead.special_hair_3_color_ref)
-			if(CUST_1)
-				colorheck = AHead.customizations["hair_bottom"].color
-			if(CUST_2)
-				colorheck = AHead.customizations["hair_middle"].color
-			if(CUST_3)
-				colorheck = AHead.customizations["hair_top"].color
+		src.head_image_hair_middle_special.color = colorheck
+		switch(AHead.special_hair_top_color_ref)
+			if(HAIR_BOTTOM_COLOR)
+				colorheck = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+			if(HAIR_MIDDLE_COLOR)
+				colorheck = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+			if(HAIR_TOP_COLOR)
+				colorheck = AHead.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 			else
 				colorheck = "#FFFFFF"
-		src.head_image_special_three.color = colorheck
+		src.head_image_hair_top_special.color = colorheck
 
 		if (!src.donor) // maybe someone spawned us in? Construct the dropped thing
 			update_head_image()
@@ -319,25 +319,25 @@
 
 		if(!(src.head && src.head.c_flags & COVERSHAIR))
 			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor?.hair_override)
-				src.head_image_cust_one.pixel_x = 0
-				src.head_image_cust_one.pixel_y = 0
-				src.head_image_cust_two.pixel_x = 0
-				src.head_image_cust_two.pixel_y = 0
-				src.head_image_cust_three.pixel_x = 0
-				src.head_image_cust_three.pixel_y = 0
-				actual_head.overlays += src.head_image_cust_one
-				actual_head.overlays += src.head_image_cust_two
-				actual_head.overlays += src.head_image_cust_three
+				src.head_image_hair_bottom.pixel_x = 0
+				src.head_image_hair_bottom.pixel_y = 0
+				src.head_image_hair_middle.pixel_x = 0
+				src.head_image_hair_middle.pixel_y = 0
+				src.head_image_hair_top.pixel_x = 0
+				src.head_image_hair_top.pixel_y = 0
+				actual_head.overlays += src.head_image_hair_bottom
+				actual_head.overlays += src.head_image_hair_middle
+				actual_head.overlays += src.head_image_hair_top
 			if(src.donor_appearance?.mob_appearance_flags & HAS_SPECIAL_HAIR || src.donor?.special_hair_override)
-				src.head_image_special_one.pixel_x = 0
-				src.head_image_special_one.pixel_y = 0
-				src.head_image_special_two.pixel_x = 0
-				src.head_image_special_two.pixel_y = 0
-				src.head_image_special_three.pixel_x = 0
-				src.head_image_special_three.pixel_y = 0
-				actual_head.overlays += src.head_image_special_one
-				actual_head.overlays += src.head_image_special_two
-				actual_head.overlays += src.head_image_special_three
+				src.head_image_hair_bottom_special.pixel_x = 0
+				src.head_image_hair_bottom_special.pixel_y = 0
+				src.head_image_hair_middle_special.pixel_x = 0
+				src.head_image_hair_middle_special.pixel_y = 0
+				src.head_image_hair_top_special.pixel_x = 0
+				src.head_image_hair_top_special.pixel_y = 0
+				actual_head.overlays += src.head_image_hair_bottom_special
+				actual_head.overlays += src.head_image_hair_middle_special
+				actual_head.overlays += src.head_image_hair_top_special
 
 		actual_head.appearance_flags |= KEEP_TOGETHER
 		actual_head.pixel_y = -10

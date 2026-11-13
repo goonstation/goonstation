@@ -17,9 +17,9 @@ TYPEINFO(/obj/item/device/disguiser)
 	var/anti_spam = 1 // In relation to world time.
 	var/active = 0
 
-	var/customization_first_color = 0
-	var/customization_second_color = 0
-	var/customization_third_color = 0
+	var/hair_bottom_color = 0
+	var/hair_middle_color = 0
+	var/hair_top_color = 0
 	var/e_color = 0
 	var/s_tone = "#FAD7D0"
 	var/cust1 = null

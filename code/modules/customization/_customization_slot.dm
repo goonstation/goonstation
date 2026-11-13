@@ -1,5 +1,9 @@
+/// `/datum/customization_slot`
 /// Holds all the customization information.
-/datum/customizationHolder
+ABSTRACT_TYPE(/datum/customization_slot)
+/datum/customization_slot
+	var/slot_type = CUSTOMIZATION::SLOT::HAIR
+
 	/// The color that gets used for determining your colors
 	var/color = "#101010"
 	/// The color that was set by the player's preferences
@@ -11,9 +15,15 @@
 	/// The Y offset to display this image
 	var/offset_y = 0
 
-	first
-		style =  new /datum/customization_style/hair/short/short
-	second
-		style =  new /datum/customization_style/none
-	third
-		style =  new /datum/customization_style/none
+ABSTRACT_TYPE(/datum/customization_slot/hair)
+/datum/customization_slot/hair
+	slot_type = CUSTOMIZATION::SLOT::HAIR
+
+/datum/customization_slot/hair/bottom
+	style =  new /datum/customization_style/hair/short/short
+
+/datum/customization_slot/hair/middle
+	style =  new /datum/customization_style/none
+
+/datum/customization_slot/hair/top
+	style =  new /datum/customization_style/none

@@ -198,6 +198,7 @@
 #include "namespaces\admin.dm"
 #include "namespaces\bot.dm"
 #include "namespaces\chem.dm"
+#include "namespaces\customization.dm"
 #include "namespaces\dwaine\_dwaine.dm"
 #include "namespaces\dwaine\errors.dm"
 #include "namespaces\dwaine\filenames.dm"

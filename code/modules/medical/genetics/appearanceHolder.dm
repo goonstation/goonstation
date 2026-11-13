@@ -20,39 +20,39 @@
 	var/head_icon_state = "head"
 
 	// It's probably smarter to have customizations in an associative list for later - Glamurio
-	var/list/datum/customizationHolder/customizations = list(
-		"hair_bottom" = new /datum/customizationHolder/first,
-		"hair_middle" = new /datum/customizationHolder/second,
-		"hair_top" = new /datum/customizationHolder/third,
+	var/list/datum/customization_slot/customizations = list(
+		CUSTOMIZATION::LAYER::HAIR_BOTTOM = new /datum/customization_slot/hair/bottom,
+		CUSTOMIZATION::LAYER::HAIR_MIDDLE = new /datum/customization_slot/hair/middle,
+		CUSTOMIZATION::LAYER::HAIR_TOP = new /datum/customization_slot/hair/top,
 	)
 
 	/// Currently changes which sprite sheet is used
 	var/special_style
 
 	/// Intended for extra head features that may or may not be hair
-	var/special_hair_1_icon = 'icons/mob/human_hair.dmi'
-	var/special_hair_1_state = "none"
-	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
-	var/special_hair_1_color_ref = CUST_1
-	var/special_hair_1_layer = MOB_HAIR_LAYER2
-	var/special_hair_1_offset_y = 0
-	var/special_hair_2_icon = 'icons/mob/human_hair.dmi'
-	var/special_hair_2_state = "none"
-	var/special_hair_2_color_ref = CUST_2
-	var/special_hair_2_layer = MOB_HAIR_LAYER2
-	var/special_hair_2_offset_y = 0
-	var/special_hair_3_icon = 'icons/mob/human_hair.dmi'
-	var/special_hair_3_state = "none"
-	var/special_hair_3_color_ref = CUST_3
-	var/special_hair_3_layer = MOB_HAIR_LAYER2
-	var/special_hair_3_offset_y = 0
+	var/special_hair_bottom_icon = 'icons/mob/human_hair.dmi'
+	var/special_hair_bottom_state = "none"
+	/// Which of the three customization colors to use (HAIR_BOTTOM_COLOR, HAIR_MIDDLE_COLOR, HAIR_TOP_COLOR)
+	var/special_hair_bottom_color_ref = HAIR_BOTTOM_COLOR
+	var/special_hair_bottom_layer = MOB_HAIR_LAYER2
+	var/special_hair_bottom_offset_y = 0
+	var/special_hair_middle_icon = 'icons/mob/human_hair.dmi'
+	var/special_hair_middle_state = "none"
+	var/special_hair_middle_color_ref = HAIR_MIDDLE_COLOR
+	var/special_hair_middle_layer = MOB_HAIR_LAYER2
+	var/special_hair_middle_offset_y = 0
+	var/special_hair_top_icon = 'icons/mob/human_hair.dmi'
+	var/special_hair_top_state = "none"
+	var/special_hair_top_color_ref = HAIR_TOP_COLOR
+	var/special_hair_top_layer = MOB_HAIR_LAYER2
+	var/special_hair_top_offset_y = 0
 
 	/// Intended for extra, non-head body features that may or may not be hair (just not on their head)
 	/// An image to be overlaid on the mob just above their skin
 	var/mob_detail_1_icon = 'icons/mob/human_hair.dmi'
 	var/mob_detail_1_state = "none"
-	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
-	var/mob_detail_1_color_ref = CUST_1
+	/// Which of the three customization colors to use (HAIR_BOTTOM_COLOR, HAIR_MIDDLE_COLOR, HAIR_TOP_COLOR)
+	var/mob_detail_1_color_ref = HAIR_BOTTOM_COLOR
 	var/mob_detail_1_offset_y = 0
 
 	/// An image to be overlaid on the mob between their outer-suit and backpack
@@ -60,8 +60,8 @@
 	/// This is for things like the cow having a muzzle that shows up over their outer-suit
 	var/mob_oversuit_1_icon = 'icons/mob/human_hair.dmi'
 	var/mob_oversuit_1_state = "none"
-	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
-	var/mob_oversuit_1_color_ref = CUST_1
+	/// Which of the three customization colors to use (HAIR_BOTTOM_COLOR, HAIR_MIDDLE_COLOR, HAIR_TOP_COLOR)
+	var/mob_oversuit_1_color_ref = HAIR_BOTTOM_COLOR
 	var/mob_oversuit_1_offset_y = 0
 
 	/// Used by changelings to determine which type of limbs their victim had
@@ -210,25 +210,25 @@
 		head_icon = toCopy.head_icon
 		head_icon_state = toCopy.head_icon_state
 
-		special_hair_1_icon = toCopy.special_hair_1_icon
-		special_hair_1_state = toCopy.special_hair_1_state
-		special_hair_1_color_ref = toCopy.special_hair_1_color_ref
-		special_hair_1_offset_y = toCopy.special_hair_1_offset_y
+		special_hair_bottom_icon = toCopy.special_hair_bottom_icon
+		special_hair_bottom_state = toCopy.special_hair_bottom_state
+		special_hair_bottom_color_ref = toCopy.special_hair_bottom_color_ref
+		special_hair_bottom_offset_y = toCopy.special_hair_bottom_offset_y
 
-		special_hair_2_icon = toCopy.special_hair_2_icon
-		special_hair_2_state = toCopy.special_hair_2_state
-		special_hair_2_color_ref = toCopy.special_hair_2_color_ref
-		special_hair_2_offset_y = toCopy.special_hair_2_offset_y
+		special_hair_middle_icon = toCopy.special_hair_middle_icon
+		special_hair_middle_state = toCopy.special_hair_middle_state
+		special_hair_middle_color_ref = toCopy.special_hair_middle_color_ref
+		special_hair_middle_offset_y = toCopy.special_hair_middle_offset_y
 
-		special_hair_3_icon = toCopy.special_hair_3_icon
-		special_hair_3_state = toCopy.special_hair_3_state
-		special_hair_3_color_ref = toCopy.special_hair_3_color_ref
-		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
+		special_hair_top_icon = toCopy.special_hair_top_icon
+		special_hair_top_state = toCopy.special_hair_top_state
+		special_hair_top_color_ref = toCopy.special_hair_top_color_ref
+		special_hair_top_offset_y = toCopy.special_hair_top_offset_y
 
 	proc/CopyOtherCustomizationAppearance(var/datum/appearanceHolder/toCopy)
 		for(var/holder in src.customizations)
-			var/datum/customizationHolder/custom = src.customizations[holder]
-			var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
+			var/datum/customization_slot/custom = src.customizations[holder]
+			var/datum/customization_slot/customCopy = toCopy.customizations[holder]
 			custom.color_original = customCopy.color_original
 			custom.color = customCopy.color
 			custom.style_original = customCopy.style_original
@@ -237,7 +237,7 @@
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
-	// I might have messed this up when introducting customizationHolders - Glamurio
+	// I might have messed this up when introducting customization_slots - Glamurio
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 
@@ -256,8 +256,8 @@
 			for(var/holder in src.customizations)
 				if (!src.CanCopyCustomization(toCopy))
 					continue
-				var/datum/customizationHolder/custom = src.customizations[holder]
-				var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
+				var/datum/customization_slot/custom = src.customizations[holder]
+				var/datum/customization_slot/customCopy = toCopy.customizations[holder]
 
 				custom.color = StaggeredCopyHex(custom.color, customCopy.color, adjust_denominator)
 				custom.style = customCopy.style
