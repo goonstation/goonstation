@@ -46,8 +46,9 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		fablimit = 2
 
 	clone_rack
-		name = "Genetics ManuDrive: Clone Rack Blueprint"
+		name = "Medical ManuDrive: Clone Rack Blueprint"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture clone disk racks."
+		icon_state = "datadiskmed"
 		temp_recipe_string = list(/datum/manufacture/clone_rack)
 
 	law_rack //The law rack that the CE locker starts with
@@ -60,9 +61,10 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 			fablimit = 1
 
 	gravity_tether
-		name = "Command ManuDrive: Station Gravity Tether Blueprint"
+		name = "Engineering Manudrive: Station Gravity Tether Blueprint"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture a station gravity tether."
-		icon_state = "datadiskcom"
+		icon_state = "datadiskeng"
+		disk_color = "#e49d52"
 		temp_recipe_string = list(/datum/manufacture/mechanics/gravity_tether_station)
 
 		singleuse
@@ -83,7 +85,8 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 	interdictor_parts //Compacts the parts into a single manudrive
 		name = "Engineering Manudrive: Spatial Interdictor Assembly Blueprints"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture spatial interdictor hardware."
-		icon_state = "datadisk2"
+		icon_state = "datadiskeng"
+		disk_color = "#e49d52"
 		temp_recipe_string = list(/datum/manufacture/interdictor_kit,
 		/datum/manufacture/interdictor_board_standard,
 		/datum/manufacture/interdictor_board_nimbus,
