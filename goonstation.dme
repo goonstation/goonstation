@@ -275,6 +275,7 @@
 #include "code\datums\critter_mobs\equipment.dm"
 #include "code\datums\critter_mobs\hands.dm"
 #include "code\datums\critter_mobs\health.dm"
+#include "code\datums\critter_mobs\taming.dm"
 #include "code\datums\critter_mobs\health\brain.dm"
 #include "code\datums\critter_mobs\health\flesh.dm"
 #include "code\datums\critter_mobs\health\flesh_burn.dm"
