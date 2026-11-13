@@ -370,6 +370,7 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 			"Stakeholder",
 			"Strategic Partner",
 			"Hedge Fund Manager",
+			"Board Member"
 			"Plasma Baron",
 			"Clerical Paraphernalia Broker",
 			"Exo-Archaeology Patron")

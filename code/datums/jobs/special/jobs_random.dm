@@ -142,6 +142,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		"Stakeholder",
 		"Strategic Partner",
 		"Hedge Fund Manager",
+		"Board Member", // a temp replacment of the jam brothers.
 		"Plasma Baron", // NT's main product
 		"Clerical Paraphernalia Broker", // National Notary stuff
 		"Exo-Archaeology Patron") // Wallace Jam Institute of Exo-Archaeology stuff
