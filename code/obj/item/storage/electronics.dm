@@ -162,7 +162,6 @@
 	/obj/item/pinpointer/category/apcs)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
-ABSTRACT_TYPE(/obj/item/storage/box/command_tech)
 /obj/item/storage/box/command_tech
 	name = "disk box you should not see"
 	desc = "call 1-800-IMCODER to stop this!"
