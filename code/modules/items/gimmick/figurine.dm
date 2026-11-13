@@ -359,21 +359,7 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 	vip
 		name = "\improper VIP"
 		icon_state = "vip"
-		alt_names =list("Senator",
-			"President",
-			"Mayor",
-			"Vice-President",
-			"Governor",
-			"Investor",
-			"Shareholder",
-			"Industrialist",
-			"Stakeholder",
-			"Strategic Partner",
-			"Hedge Fund Manager",
-			"Board Member"
-			"Plasma Baron",
-			"Clerical Paraphernalia Broker",
-			"Exo-Archaeology Patron")
+		alt_names = /datum/job/special/random/vip::alt_names
 
 	actor
 		name = "\improper Hollywood actor"
