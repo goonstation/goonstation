@@ -166,6 +166,9 @@ ADD_TO_NAMESPACE(RADIO)(var/alist/frequencies_to_names = alist(
 /// If TRUE, all radios will initialise as bricked.
 ADD_TO_NAMESPACE(RADIO)(var/no_more_radios = FALSE)
 
+/// If TRUE, headsets will start out locked to their department
+ADD_TO_NAMESPACE(RADIO)(var/department_only = FALSE)
+
 /// Bricks all radios globally.
 ADD_TO_NAMESPACE(RADIO)(proc/no_more_radio())
 	src.no_more_radios = TRUE
