@@ -21,6 +21,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 
+import { BooleanLike } from '../../../common/react';
 import { useBackend } from '../../backend';
 import { formatPower, formatPressure, formatSiUnit } from '../../format';
 import { Window } from '../../layouts';
@@ -29,7 +30,6 @@ import type {
   TurbineControlData,
   TurbineHistorySample,
 } from './type';
-import { BooleanLike } from '../../../common/react';
 
 type HistoryMetric =
   | 'power'
@@ -211,7 +211,14 @@ const LoadAdjustmentControls = ({
           <Box>kJ/rev</Box>
         </Stack.Item>
         <Stack.Item>
-          <Button icon="gears" tooltip="Disables MechComp control, slowly adjusts stator load when RPM is outside optimum range" selected={autoAdjust} onClick={onToggle}>Auto</Button>
+          <Button
+            icon="gears"
+            tooltip="Disables MechComp control, slowly adjusts stator load when RPM is outside optimum range"
+            selected={autoAdjust}
+            onClick={onToggle}
+          >
+            Auto
+          </Button>
         </Stack.Item>
       </Stack>
     </Stack.Item>
