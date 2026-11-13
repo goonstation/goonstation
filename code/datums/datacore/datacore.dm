@@ -67,43 +67,72 @@
 
 	groups.fields += "[J.email_group]:[username],"
 
-/datum/datacore/proc/get_general_record(name, id)
+/datum/datacore/proc/get_general_record(name, id, ensure_record = FALSE)
 	RETURN_TYPE(/datum/db_record/personnel/general)
 
+	var/datum/db_record/personnel/general/general = null
+
 	if (id)
-		return src.general.find_record("id", id)
+		general = src.general.find_record("id", id)
+	else
+		general = src.general.find_record("name", name)
 
-	return src.general.find_record("name", name)
+	if (ensure_record && !general)
+		general = new()
+		global.data_core.general.add_record(general)
 
-/datum/datacore/proc/get_security_record(name, id)
+	return general
+
+/datum/datacore/proc/get_security_record(name, id, ensure_record = FALSE)
 	RETURN_TYPE(/datum/db_record/personnel/security)
 
+	var/datum/db_record/personnel/general/general = src.get_general_record(name, id, ensure_record)
+	var/datum/db_record/personnel/security/security = null
+
 	if (id)
-		return src.security.find_record("id", id)
+		security = src.security.find_record("id", id)
+	else if (general)
+		security = src.security.find_record("id", general["id"])
 
-	var/datum/db_record/personnel/general/general = src.get_general_record(name)
-	if (general)
-		return src.security.find_record("id", general["id"])
+	if (ensure_record && !security)
+		security = new(general)
+		global.data_core.security.add_record(security)
 
-/datum/datacore/proc/get_medical_record(name, id)
+	return security
+
+/datum/datacore/proc/get_medical_record(name, id, ensure_record = FALSE)
 	RETURN_TYPE(/datum/db_record/personnel/medical)
 
+	var/datum/db_record/personnel/general/general = src.get_general_record(name, id, ensure_record)
+	var/datum/db_record/personnel/medical/medical = null
+
 	if (id)
-		return src.medical.find_record("id", id)
+		medical = src.medical.find_record("id", id)
+	else if (general)
+		medical = src.medical.find_record("id", general["id"])
 
-	var/datum/db_record/personnel/general/general = src.get_general_record(name)
-	if (general)
-		return src.medical.find_record("id", general["id"])
+	if (ensure_record && !medical)
+		medical = new(medical)
+		global.data_core.medical.add_record(medical)
 
-/datum/datacore/proc/get_bank_record(name, id)
+	return medical
+
+/datum/datacore/proc/get_bank_record(name, id, ensure_record = FALSE)
 	RETURN_TYPE(/datum/db_record/personnel/bank)
 
-	if (id)
-		return src.bank.find_record("id", id)
+	var/datum/db_record/personnel/general/general = src.get_general_record(name, id, ensure_record)
+	var/datum/db_record/personnel/bank/bank = null
 
-	var/datum/db_record/personnel/general/general = src.get_general_record(name)
-	if (general)
-		return src.bank.find_record("id", general["id"])
+	if (id)
+		bank = src.bank.find_record("id", id)
+	else if (general)
+		bank = src.bank.find_record("id", general["id"])
+
+	if (ensure_record && !bank)
+		bank = new(bank)
+		global.data_core.bank.add_record(bank)
+
+	return bank
 
 /datum/datacore/proc/get_random_general_record()
 	RETURN_TYPE(/datum/db_record/personnel/general)
