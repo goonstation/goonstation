@@ -198,7 +198,6 @@ ABSTRACT_TYPE(/obj/item/storage/box/command_tech)
 	department = "civilian"
 	spawn_contents = list(
 		/obj/item/circuitboard/card,
-		/obj/item/circuitboard/announcement/catering,
 		/obj/item/disk/data/floppy/read_only/bank_progs,
 	)
 
