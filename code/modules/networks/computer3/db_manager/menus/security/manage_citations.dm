@@ -29,7 +29,7 @@
 
 	switch (index_number)
 		if (0)
-			src.parent.switch_menu_to("main")
+			src.parent.previous_menu()
 
 		if (1)
 			src.parent.switch_menu_to("issue_ticket")
@@ -42,25 +42,20 @@
 
 		if (4)
 			src.record_group.mode = "ALL"
-			src.parent.current_record_group = src.record_group
-			src.parent.switch_menu_to("record_list")
+			src.parent.switch_record_group(src.record_group, "record_list")
 
 		if (5)
 			src.record_group.mode = "ALL"
-			src.parent.current_record_group = src.record_group
-			src.parent.switch_menu_to("search_input")
+			src.parent.switch_record_group(src.record_group, "search_input")
 
 		if (6)
 			src.record_group.mode = "TICKETS"
-			src.parent.current_record_group = src.record_group
-			src.parent.switch_menu_to("record_list")
+			src.parent.switch_record_group(src.record_group, "record_list")
 
 		if (7)
 			src.record_group.mode = "FINES"
-			src.parent.current_record_group = src.record_group
-			src.parent.switch_menu_to("record_list")
+			src.parent.switch_record_group(src.record_group, "record_list")
 
 		if (8)
 			src.record_group.mode = "ARRESTS"
-			src.parent.current_record_group = src.record_group
-			src.parent.switch_menu_to("record_list")
+			src.parent.switch_record_group(src.record_group, "record_list")

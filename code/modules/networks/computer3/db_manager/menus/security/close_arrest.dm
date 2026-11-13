@@ -18,10 +18,8 @@
 	text = trimtext(strip_html(text))
 
 	if (text == "0")
-		src.parent.current_record_group = src.record_group
-		src.parent.switch_menu_to("record_view", src.arrest)
+		src.parent.previous_menu()
 		return
 
 	src.arrest.close(src.parent.authenticated, src.parent.account.assignment, text)
-	src.parent.current_record_group = src.record_group
-	src.parent.switch_menu_to("record_view", src.arrest)
+	src.parent.switch_record_group(src.record_group, "record_view", src.arrest)
