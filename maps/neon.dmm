@@ -12217,8 +12217,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/science)
 "itQ" = (
-/obj/storage/closet/port_a_sci,
 /obj/machinery/light/incandescent/cool,
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/purplewhite/corner{
 	dir = 4
 	},
@@ -26696,6 +26696,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "sIV" = (
+/obj/storage/closet/port_a_sci,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "sJb" = (

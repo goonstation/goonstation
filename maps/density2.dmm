@@ -1068,9 +1068,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -2788,18 +2785,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "rQ" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/fakeobject{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},

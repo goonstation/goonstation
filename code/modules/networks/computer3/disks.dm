@@ -398,6 +398,13 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 		place.place_name = src.target_name
 		src.root.add_file( place )
 
+	disk_name()
+		return "'[target_name]' coordinate disk"
+
+	observatory
+		name = "galactic coordinate disk - 'Observatory'"
+		target_name = "Observatory"
+
 	icemoon
 		name = "galactic coordinate disk - 'Senex'"
 		target_name = "Senex"

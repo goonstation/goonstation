@@ -1233,8 +1233,7 @@
 	name = "West Shuttle Concourse"
 	})
 "aIR" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "aJd" = (
@@ -4489,15 +4488,11 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersC)
 "clH" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/radio/headset/multifreq,
+/obj/table/reinforced/auto,
+/obj/item/clothing/head/helmet/camera/telesci,
+/obj/item/device/camera_viewer/telesci{
+	pixel_y = 16
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
@@ -20211,8 +20206,9 @@
 /turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "krG" = (
-/obj/storage/crate/adventure,
 /obj/machinery/light_switch/directional/east,
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -30417,9 +30413,8 @@
 /turf/simulated/floor/plating,
 /area/research_outpost/limpet)
 "ptt" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
+/obj/machinery/computer/telescope{
+	dir = 4
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
@@ -31378,12 +31373,11 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quartersA)
 "pSb" = (
-/obj/table/reinforced/auto,
-/obj/item/device/camera_viewer/telesci{
-	pixel_y = 16
-	},
-/obj/item/clothing/head/helmet/camera/telesci,
 /obj/machinery/firealarm/directional/west,
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -41597,6 +41591,10 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"uYa" = (
+/obj/storage/crate/adventure,
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
 "uYj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -94016,7 +94014,7 @@ cAC
 jAy
 jAy
 yga
-eqv
+uYa
 dmU
 ujP
 sMI

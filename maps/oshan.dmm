@@ -450,10 +450,10 @@
 	pixel_x = 6;
 	pixel_y = 24
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -462,9 +462,7 @@
 /obj/decal/poster/wallsign/poster_sol{
 	pixel_y = 32
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -6295,6 +6293,9 @@
 /area/station/science/teleporter)
 "aEk" = (
 /obj/item/device/radio/beacon,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -29164,13 +29165,13 @@
 /obj/stool/chair/office/purple{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/landmark/start/job/scientist,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "gAn" = (
