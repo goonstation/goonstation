@@ -161,3 +161,70 @@
 	/obj/item/device/t_scanner,
 	/obj/item/pinpointer/category/apcs)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
+
+ABSTRACT_TYPE(/obj/item/storage/box/command_tech)
+/obj/item/storage/box/command_tech
+	name = "disk box you should not see"
+	desc = "call 1-800-IMCODER to stop this!"
+	can_hold = list(/obj/item/circuitboard, /obj/item/disk/data/floppy)
+	VAR_PRIVATE/department = "CODERS"
+	icon_state = "ntdisk"
+
+
+/obj/item/storage/box/command_tech/New()
+	. = ..()
+	src.name = "\improper Command Electronics Backup Kit ([src.department])"
+	src.desc = "A kit of backup electronics to restore verious [src.department] / AI critical inferstructure."
+
+/obj/item/storage/box/command_tech/captain
+	department = "captaincy"
+	spawn_contents = list(
+		/obj/item/circuitboard/announcement/bridge, //This one makes the arrivals announcement and this is the ONLY spare for it
+		/obj/item/circuitboard/announcement/captain,
+	)
+
+	get_desc(dist, mob/user)
+		. = ..()
+		. += " <b>Authentication disk not included!</b>"
+
+/obj/item/storage/box/command_tech/hos
+	department = "security"
+	spawn_contents = list(
+		/obj/item/circuitboard/card/security,
+		/obj/item/circuitboard/announcement/security,
+	)
+
+/obj/item/storage/box/command_tech/hop
+	department = "civilian"
+	spawn_contents = list(
+		/obj/item/circuitboard/card,
+		/obj/item/circuitboard/announcement/catering,
+		/obj/item/disk/data/floppy/read_only/bank_progs,
+	)
+
+/obj/item/storage/box/command_tech/rd
+	department = "research"
+	spawn_contents = list(
+		/obj/item/circuitboard/card/research,
+		/obj/item/circuitboard/announcement/research,
+		/obj/item/disk/data/floppy/manudrive/aiLaws,
+	)
+
+/obj/item/storage/box/command_tech/md
+	department = "medical"
+	spawn_contents = list(
+		/obj/item/circuitboard/card/medical,
+		/obj/item/circuitboard/announcement/medical,
+		/obj/item/disk/data/floppy/manudrive/ai,
+		/obj/item/disk/data/floppy/manudrive/gene_booth,
+	)
+
+/obj/item/storage/box/command_tech/ce
+	department = "engineering"
+	spawn_contents = list(
+		/obj/item/circuitboard/card/engineering,
+		/obj/item/circuitboard/announcement/engineering,
+		/obj/item/circuitboard/announcement/cargo,
+		/obj/item/disk/data/floppy/manudrive/law_rack,
+		/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse,
+	)

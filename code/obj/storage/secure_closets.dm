@@ -180,7 +180,7 @@
 		/obj/item/device/radio/headset/command/captain,
 		/obj/item/megaphone,
 		/obj/item/device/pda2/captain,
-		/obj/item/circuitboard/announcement/bridge, //This one makes the arrivals announcement and this is the ONLY spare for it
+		/obj/item/storage/box/command_tech/captain,
 	)
 
 	make_my_stuff()
@@ -222,8 +222,7 @@
 		/obj/item/clothing/shoes/swat/heavy,
 		/obj/item/barrier/collapsible/security,
 		/obj/item/device/pda2/hos,
-		/obj/item/circuitboard/card/security,
-		/obj/item/circuitboard/announcement/security,
+		/obj/item/storage/box/command_tech/hos,
 	)
 
 /obj/storage/secure/closet/command/hop
@@ -244,7 +243,7 @@
 		/obj/item/clothing/suit/hopjacket,
 		/obj/item/device/pda2/hop,
 		/obj/item/device/panicbutton/medicalalert/hop,
-		/obj/item/circuitboard/card,
+		/obj/item/storage/box/command_tech/hop,
 	)
 
 /obj/storage/secure/closet/command/research_director
@@ -253,7 +252,6 @@
 	spawn_contents = list(
 		/obj/item/pet_carrier,
 		/obj/item/plant/herb/cannabis/spawnable,
-		/obj/item/disk/data/floppy/manudrive/aiLaws,
 		/obj/item/device/light/zippo,
 		/obj/item/storage/box/clothing/research_director,
 		/obj/item/clothing/shoes/brown,
@@ -269,12 +267,11 @@
 		/obj/item/device/pda2/research_director,
 		/obj/item/places_pipes/research,
 		/obj/item/rcd_ammo/big,
-		/obj/item/circuitboard/card/research,
-		/obj/item/circuitboard/announcement/research,
 		/obj/item/clothing/suit/hazard/bio_suit/rd,
 		/obj/item/clothing/head/bio_hood/rd,
 		/obj/item/device/chemicompiler,
-		)
+		/obj/item/storage/box/command_tech/rd,
+	)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -287,8 +284,6 @@
 	req_access = list(access_medical_director)
 	spawn_contents = list(
 		/obj/item/pet_carrier,
-		/obj/item/disk/data/floppy/manudrive/ai,
-		/obj/item/disk/data/floppy/manudrive/gene_booth,
 		/obj/item/storage/box/clothing/medical_director,
 		/obj/item/clothing/shoes/brown,
 		/obj/item/gun/implanter,
@@ -304,9 +299,8 @@
 		/obj/item/stamp/md,
 		/obj/item/device/radio/headset/command/md,
 		/obj/item/device/pda2/medical_director,
-		/obj/item/circuitboard/card/medical,
-		/obj/item/circuitboard/announcement/medical,
 		/obj/item/reagent_containers/injector_filler,
+		/obj/item/storage/box/command_tech/md,
 	)
 
 	make_my_stuff()
@@ -321,8 +315,6 @@
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
 		/obj/item/pet_carrier,
-		/obj/item/disk/data/floppy/manudrive/law_rack,
-		/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse,
 		/obj/item/storage/box/clothing/chief_engineer,
 		/obj/item/device/radio/headset/command/ce,
 		/obj/item/stamp/ce,
@@ -337,8 +329,6 @@
 		/obj/item/storage/box/misctools,
 		/obj/item/extinguisher,
 		/obj/item/device/pda2/chiefengineer,
-		/obj/item/circuitboard/card/engineering,
-		/obj/item/circuitboard/announcement/engineering,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
 	#elif defined(MAP_OVERRIDE_NEON)
@@ -352,6 +342,7 @@
 		/obj/item/clothing/suit/space/light/chiefengineer,
 		/obj/item/clothing/head/helmet/space/light/chiefengineer,
 	#endif
+		/obj/item/storage/box/command_tech/ce,
 	)
 
 /obj/storage/secure/closet/command/chief_engineer/puzzle
