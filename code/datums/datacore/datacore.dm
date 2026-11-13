@@ -137,7 +137,8 @@
 
 /datum/datacore/proc/get_random_general_record()
 	RETURN_TYPE(/datum/db_record/personnel/general)
-	return pick(src.general.records)
+	if (length(src.general.records))
+		return pick(src.general.records)
 
 /datum/datacore/proc/get_open_arrests(name, id)
 	RETURN_TYPE(/list/datum/db_record/citation/arrest)
