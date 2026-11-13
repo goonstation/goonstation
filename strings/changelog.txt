@@ -1,5 +1,9 @@
 
 (t)thu nov 12 26
+(u)LorrMaster
+(p)27978
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(*)Blob tourists and diplomats now have the innate "Eukaryotic Phagocytosis" ability, allowing them to absorb non-robotic organs into their body.
 (u)JORJ949
 (p)28210
 (e)💅🔨👮|C-QoL, A-Player-Actions, A-Security
