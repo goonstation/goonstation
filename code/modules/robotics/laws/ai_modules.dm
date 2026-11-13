@@ -482,33 +482,6 @@ TYPEINFO(/obj/item/aiModule/freeform/disguised)
 	highlight_color = rgb(255, 255, 255, 166)
 	lawText =  "When given an order, if you are unable to follow that order, you must respond 'I can't let you do that, Dave'"
 
-/******************** Hologram Expansions ********************/
-
-ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
-/obj/item/aiModule/hologram_expansion
-	name = "Hologram Expansion Module"
-	desc = "A module that updates an AI's hologram images."
-	lawText = "HOLOGRAM EXPANSION MODULE"
-	var/expansion
-
-/obj/item/aiModule/hologram_expansion/clown
-	name = "Clown Hologram Expansion Module"
-	icon_state = "holo_mod_c"
-	highlight_color = rgb(241, 94, 180, 255)
-	expansion = "clown"
-
-/obj/item/aiModule/hologram_expansion/syndicate
-	name = "Syndicate Hologram Expansion Module"
-	icon_state = "holo_mod_s"
-	highlight_color = rgb(173, 11, 11, 255)
-	expansion = "rogue"
-
-/obj/item/aiModule/hologram_expansion/elden
-	name = "Old, Circular Expansion Module"
-	icon_state = "holo_mod_e"
-	highlight_color = "#E7A545"
-	expansion = "circular"
-
 /obj/item/aiModule/bread
 	name = "a slice of bread"
 	highlight_color = "#D79E6B"
@@ -548,54 +521,3 @@ ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 			playsound(rack, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Slimy_Hit_3.ogg'), 50, 1)
 			return FALSE
 		return TRUE
-
-ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
-/obj/item/aiModule/ability_expansion
-	name = "Function Expansion Module"
-	desc = "A module that expands AI functionality."
-	lawText = "ABILITY EXPANSION MODULE"
-	color = "#BBB"
-	var/list/datum/targetable/ai_abilities
-	var/last_use
-	var/shared_cooldown
-
-/obj/item/aiModule/ability_expansion/proto_teleman
-	name = "Prototype Teleporter Expansion Module"
-	desc = "An advanced spacial geometry module.  This module allows for the AI perform basic teleportation actions."
-	lawText = "Prototype Teleman EXPANSION MODULE"
-	highlight_color = rgb(53, 76, 175, 255)
-	ai_abilities = list(/datum/targetable/ai/module/teleport/send, /datum/targetable/ai/module/teleport/receive)
-
-/obj/item/aiModule/ability_expansion/nanite_hive
-	name = "Nanite Expansion Module"
-	desc = "A prototype nanite expansion module.  This module consists of a nanite hive to be utilized by the Station AI."
-	lawText = "Nanite Hive EXPANSION MODULE"
-	highlight_color = rgb(97, 47, 47, 255)
-	ai_abilities = list(/datum/targetable/ai/module/camera_repair, /datum/targetable/ai/module/nanite_repair)
-
-/obj/item/aiModule/ability_expansion/doctor_vision
-	name = "ProDoc Expansion Module"
-	desc = "A prototype Health Visualization module.  This module provides for the ability to remotely analyze crew members."
-	lawText = "Medical EXPANSION MODULE"
-	highlight_color = rgb(166, 0, 172, 255)
-	ai_abilities = list(/datum/targetable/ai/module/prodocs)
-
-
-/obj/item/aiModule/ability_expansion/security_vision
-	name = "Security Expansion Module"
-	desc = "A security record expansion module.  This module allows for remote access to security records."
-	lawText = "Security EXPANSION MODULE"
-	highlight_color = rgb(172, 0, 0, 255)
-	ai_abilities = list(/datum/targetable/ai/module/sec_huds)
-	var/obj/machinery/computer3/generic/secure_data/sec_comp = null
-
-	New()
-		. = ..()
-		src.sec_comp = new(src)
-
-/obj/item/aiModule/ability_expansion/flash
-	name = "Flash Expansion Module"
-	desc = "A camera flash expansion module.  This module allows for remote access to security records."
-	lawText = "Flash EXPANSION MODULE"
-	highlight_color = rgb(190, 39, 1, 255)
-	ai_abilities = list(/datum/targetable/ai/module/flash)

@@ -18027,14 +18027,11 @@
 	},
 /area/station/science/chemistry)
 "jkJ" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/guardbot_guide{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/item/storage/box/tapebox{
-	pixel_x = -14
+	pixel_x = -26;
+	pixel_y = 9
 	},
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "jkX" = (
@@ -21760,7 +21757,10 @@
 /area/station/turret_protected/incursion)
 "let" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/diskbox,
+/obj/item/storage/box/diskbox{
+	pixel_x = -5;
+	pixel_y = 6
+	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -34316,7 +34316,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/aiModule/hologram_expansion/clown{
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
 	pixel_x = -4;
 	pixel_y = -1
 	},
@@ -48419,12 +48419,17 @@
 /area/station/mining/staff_room)
 "yhb" = (
 /obj/table/reinforced/auto,
-/obj/item/disk/data/floppy/read_only/network_progs{
-	pixel_y = 6
-	},
 /obj/item/disk/data/floppy/read_only/communications{
-	pixel_x = -13;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_y = 9;
+	pixel_x = 7
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)

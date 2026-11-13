@@ -666,6 +666,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "ee" = (

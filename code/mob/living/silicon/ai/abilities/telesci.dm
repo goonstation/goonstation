@@ -1,4 +1,4 @@
-/datum/targetable/ai/module/teleport
+/datum/targetable/ai/program/teleport
 	targeted = TRUE
 	target_anything = 1
 

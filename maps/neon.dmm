@@ -5109,7 +5109,7 @@
 "dGq" = (
 /obj/table/auto,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "1-4"
@@ -7355,6 +7355,7 @@
 	pixel_y = 7
 	},
 /obj/item/circuitboard/robotics,
+/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "fdz" = (
@@ -24879,8 +24880,7 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "rqO" = (
-/obj/table/reinforced,
-/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "rrk" = (

@@ -11269,7 +11269,7 @@
 /obj/item/storage/goodybag,
 /obj/item/peripheral/videocard,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown{
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
 	pixel_x = -2;
 	pixel_y = 9
 	},
@@ -15555,6 +15555,13 @@
 	icon_state = "yellowblack"
 	},
 /area/station/engine/gas)
+"glW" = (
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "gmd" = (
 /obj/machinery/light{
 	dir = 8;
@@ -26317,13 +26324,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/radio{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "nGj" = (
@@ -38529,9 +38530,6 @@
 	},
 /obj/landmark/gps_waypoint,
 /obj/item/device/radio/beacon,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -78785,7 +78783,7 @@ bkl
 xNd
 nEH
 eoA
-eoA
+glW
 eoA
 eoA
 eoA

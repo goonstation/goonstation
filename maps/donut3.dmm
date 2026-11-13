@@ -24867,7 +24867,7 @@
 /area/station/maintenance/outer/se)
 "hHm" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
 /obj/item/storage/goodybag{
 	pixel_y = -6
 	},
@@ -57831,6 +57831,7 @@
 "rXe" = (
 /obj/machinery/light/incandescent/netural,
 /obj/blind_switch/directional/west,
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "rXi" = (

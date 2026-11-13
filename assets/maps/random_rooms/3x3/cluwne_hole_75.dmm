@@ -42,7 +42,7 @@
 "Q" = (
 /obj/decal/cleanable/dirt,
 /obj/table/scrap,
-/obj/item/aiModule/hologram_expansion/elden,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/elden,
 /obj/item/peripheral/videocard{
 	pixel_x = -8;
 	pixel_y = 14

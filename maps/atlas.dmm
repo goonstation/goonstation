@@ -9288,11 +9288,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/item/device/radio/intercom/AI{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
@@ -12903,12 +12903,11 @@
 /turf/simulated/floor/grass/random,
 /area/station/hallway/primary/north)
 "iML" = (
-/obj/machinery/computer3/terminal/network{
-	name = "CENTCOM Terminal";
-	setup_os_string = "MAIN_DISH_SS13"
-	},
-/obj/machinery/power/data_terminal,
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/disk_rack/ai/prefilled,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "iNe" = (
@@ -18742,7 +18741,7 @@
 	pixel_y = 29
 	},
 /obj/item/toy/sword,
-/obj/item/aiModule/hologram_expansion/clown{
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
 	pixel_x = 5;
 	pixel_y = 8
 	},
@@ -20083,10 +20082,10 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "2-8"
 	},
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)

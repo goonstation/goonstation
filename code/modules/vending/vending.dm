@@ -1884,6 +1884,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/diskbox, rand(2,3), cost=src.pay ? PAY::UNTRAINED/2 : 0)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy, rand(5,8), cost=src.pay ? PAY::UNTRAINED/5 : 0)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd64, 8, cost=src.pay ? PAY::TRADESMAN : 0) //Good drives not cheap!
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/ai_program/tracking, 2, cost=src.pay ? PAY::TRADESMAN/2 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/ai_program/viewports, 2, cost=src.pay ? PAY::TRADESMAN/2 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/ai_program/call_shuttle, 2, cost=src.pay ? PAY::TRADESMAN/2 : 0)
 
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/security_progs, 2, cost=src.pay ? PAY::TRADESMAN/2 : 0, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/bank_progs, 2, cost=src.pay ? PAY::TRADESMAN : 0, hidden=1)

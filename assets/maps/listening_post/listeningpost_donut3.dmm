@@ -807,7 +807,7 @@
 /area/listeningpost/break_room)
 "LR" = (
 /obj/table/auto,
-/obj/item/aiModule/hologram_expansion/syndicate{
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/syndicate{
 	pixel_x = -2;
 	pixel_y = 10
 	},

@@ -166,6 +166,15 @@
 	time = 60 SECONDS
 	frame_path = /obj/machinery/lawrack
 
+/***************** AI Program Disk Rack ***************/
+
+/datum/manufacture/mechanics/programRack
+	name = "AI Program Disk Rack"
+	item_requirements = list("metal_dense" = 5, "metal" = 30, "conductive" = 10)
+	create = 1
+	time = 60 SECONDS
+	frame_path = /obj/machinery/disk_rack/ai
+
 /******************** Gravity Tether *******************/
 
 /datum/manufacture/mechanics/gravity_tether_station

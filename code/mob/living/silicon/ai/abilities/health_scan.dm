@@ -1,4 +1,4 @@
-/datum/targetable/ai/module/prodocs
+/datum/targetable/ai/program/prodocs
 	name = "Camera Scan"
 	desc = "Scan basic vitals on someone."
 	targeted = TRUE

@@ -36306,7 +36306,7 @@
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/storage/goodybag,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
 /obj/item/clothing/mask/clown_nose,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
@@ -42316,7 +42316,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "qOV" = (
-/obj/table/reinforced,
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "qPf" = (

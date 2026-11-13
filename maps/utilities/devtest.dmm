@@ -607,6 +607,10 @@
 /obj/item/reagent_containers/iv_drip,
 /turf/simulated/floor/white,
 /area/station/devzone)
+"lg" = (
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor,
+/area/station/devzone)
 "lj" = (
 /obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
@@ -4920,7 +4924,7 @@ Yx
 ng
 XM
 Yx
-Yx
+lg
 se
 cH
 ng

@@ -92,7 +92,7 @@
 	drawer_contents = list(/obj/item/reagent_containers/patch/LSD,
 							/obj/item/reagent_containers/patch/lsd_bee,
 							/obj/item/cloth/handkerchief/nt,
-							/obj/item/aiModule/hologram_expansion/elden,
+							/obj/item/disk/data/floppy/read_only/ai_program/hologram/elden,
 							/obj/item/straw/fast)
 
 /area/centcom/offices/aloe

@@ -1,5 +1,5 @@
 /datum/abilityHolder/silicon/ai
-	var/datum/targetable/ai/module/camera_gun/active_camera_gun
+	var/datum/targetable/ai/program/camera_gun/active_camera_gun
 
 /datum/abilityHolder/silicon/ai/updateButtons(called_by_owner = 0, start_x = 2, start_y = 0)
 	. = ..()
@@ -29,42 +29,10 @@
 				. = FALSE
 				return 1
 
-	proc/get_law_module()
-		var/mob/living/silicon/ai/AI
-		if(istype(holder.owner,/mob/living/silicon/ai))
-			AI = holder.owner
-		else if(istype(holder.owner, /mob/living/intangible/aieye))
-			var/mob/living/intangible/aieye/Aeye = holder.owner
-			AI = Aeye.mainframe
-
-		if(istype(AI))
-			var/obj/machinery/lawrack/law_rack = AI.law_rack_connection
-			for (var/i in 1 to law_rack.MAX_CIRCUITS)
-				var/obj/item/aiModule/ability_expansion/expansion = law_rack.law_circuits[i]
-				if(istype(expansion))
-					if(src.type in expansion.ai_abilities)
-						return expansion
-
-/datum/targetable/ai/module
+/datum/targetable/ai/program
 	icon_state = "ai_template"
 
-	castcheck(atom/target)
-		. = ..()
-		if(.)
-			var/obj/item/aiModule/ability_expansion/expansion = get_law_module()
-			if(expansion)
-				if (expansion.last_use > world.time)
-					boutput(holder.owner, SPAN_ALERT("The source module is on cooldown for [round((expansion.last_use - world.time) / 10)] seconds."))
-					return FALSE
-
-	doCooldown()
-		..()
-		var/obj/item/aiModule/ability_expansion/expansion = get_law_module()
-		if(expansion)
-			expansion.last_use = world.time + expansion.shared_cooldown
-
 	proc/can_shoot_to(obj/machinery/camera/C, turf/target, atom/A, max_length=10)
-
 		if(isnull(A))
 			A = new /obj/projectile
 		var/turf/current = get_turf(C)

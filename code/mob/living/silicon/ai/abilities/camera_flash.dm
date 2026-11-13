@@ -1,4 +1,4 @@
-/datum/targetable/ai/module/flash
+/datum/targetable/ai/program/flash
 	name = "Camera Flash"
 	desc = "Supercharge the camera light to produce a flash like effect."
 	targeted = TRUE

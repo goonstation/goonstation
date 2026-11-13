@@ -59026,7 +59026,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/gravity_tether/multi_area/ai_sat,
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -62241,7 +62241,7 @@
 /obj/item/storage/goodybag,
 /obj/item/peripheral/videocard,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown{
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
 	pixel_x = -2;
 	pixel_y = 9
 	},
@@ -71179,8 +71179,8 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
 "uLU" = (
-/obj/table/reinforced/auto,
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/gravity_tether/multi_area/ai_sat,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},

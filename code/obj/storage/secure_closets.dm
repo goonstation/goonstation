@@ -232,6 +232,7 @@
 	spawn_contents = list(
 		/obj/item/pet_carrier,
 		/obj/item/device/flash,
+		/obj/item/disk/data/floppy/manudrive/aiLaws,
 		/obj/item/storage/box/id_kit,
 		/obj/item/cash_briefcase,
 		/obj/item/storage/box/clothing/hop,
@@ -253,7 +254,7 @@
 	spawn_contents = list(
 		/obj/item/pet_carrier,
 		/obj/item/plant/herb/cannabis/spawnable,
-		/obj/item/disk/data/floppy/manudrive/aiLaws,
+		/obj/item/disk/data/floppy/manudrive/program_rack,
 		/obj/item/device/light/zippo,
 		/obj/item/storage/box/clothing/research_director,
 		/obj/item/clothing/shoes/brown,
