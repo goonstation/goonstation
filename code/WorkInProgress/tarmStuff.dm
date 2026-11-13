@@ -559,7 +559,9 @@
 			else
 				boutput(M, SPAN_ALERT("You are struck by a union-busting rocket! There goes your union benefits!"))
 				M.traitHolder.removeTrait("unionized")
-				data_core.bank.find_record("name", M.real_name)["wage"] = data_core.bank.find_record("name", M.real_name)["wage"]/1.5
+				var/datum/db_record/personnel/bank/bank_record = global.data_core.get_bank_record(M.real_name)
+				if (bank_record)
+					bank_record["wage"] = bank_record["wage"] / 1.5
 
 
 //magical crap

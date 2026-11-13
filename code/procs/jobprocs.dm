@@ -807,7 +807,7 @@ Equip items from body traits.
 			if(prob(50)) realName = replacetext(realName, "t", pick("d", "k"))
 			if(prob(50)) realName = replacetext(realName, "p", pick("b", "t"))
 
-			var/datum/db_record/B = FindBankAccountByName(src.real_name)
+			var/datum/db_record/B = global.data_core.get_bank_record(src.real_name)
 			if (B?["name"])
 				B["name"] = realName
 

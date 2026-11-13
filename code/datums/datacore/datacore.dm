@@ -67,6 +67,31 @@
 
 	groups.fields += "[J.email_group]:[username],"
 
+/datum/datacore/proc/get_general_record(target)
+	RETURN_TYPE(/datum/db_record/personnel/general)
+	return src.general.find_record("name", target)
+
+/datum/datacore/proc/get_security_record(target)
+	RETURN_TYPE(/datum/db_record/personnel/security)
+
+	var/datum/db_record/personnel/general/general = src.get_general_record(target)
+	if (general)
+		return src.security.find_record("id", general["id"])
+
+/datum/datacore/proc/get_medical_record(target)
+	RETURN_TYPE(/datum/db_record/personnel/medical)
+
+	var/datum/db_record/personnel/general/general = src.get_general_record(target)
+	if (general)
+		return src.medical.find_record("id", general["id"])
+
+/datum/datacore/proc/get_bank_record(target)
+	RETURN_TYPE(/datum/db_record/personnel/bank)
+
+	var/datum/db_record/personnel/general/general = src.get_general_record(target)
+	if (general)
+		return src.bank.find_record("id", general["id"])
+
 /datum/datacore/proc/get_open_arrests(target)
 	RETURN_TYPE(/list/datum/db_record/citation/arrest)
 	. = list()

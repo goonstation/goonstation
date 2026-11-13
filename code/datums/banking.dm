@@ -270,7 +270,7 @@
 
 
 	proc/TryToFindRecord()
-		src.accessed_record = data_core.bank.find_record("name", src.scan.registered)
+		src.accessed_record = global.data_core.get_bank_record(src.scan.registered)
 		return !!src.accessed_record
 
 	Topic(href, href_list)
@@ -664,7 +664,7 @@
 
 	proc/TryToFindRecord()
 		if(src.scan)
-			src.accessed_record = data_core.bank.find_record("name", src.scan.registered)
+			src.accessed_record = global.data_core.get_bank_record(src.scan.registered)
 			return !!src.accessed_record
 		return 0
 
@@ -749,11 +749,6 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
-
-proc/FindBankAccountByName(var/nametosearch)
-	RETURN_TYPE(/datum/db_record)
-	if (!nametosearch) return
-	return data_core.bank.find_record("name", nametosearch)
 
 /// Given a list of jobs, return the associated bank account records. Does not de-duplicate bank account records.
 proc/FindBankAccountsByJobs(var/list/job_list)

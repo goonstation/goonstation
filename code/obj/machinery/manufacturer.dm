@@ -1216,7 +1216,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.grump_message(usr, "You need to be holding an ID or something with an ID to scan it in!", sound = TRUE)
 			return
 		boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
-		var/datum/db_record/bank_account = FindBankAccountByName(ID.registered)
+		var/datum/db_record/bank_account = global.data_core.get_bank_record(ID.registered)
 		if(!bank_account)
 			src.grump_message(usr, "No bank account associated with this ID found.")
 			return

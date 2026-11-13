@@ -2468,7 +2468,7 @@ TYPEINFO(/obj/item/cargotele)
 			owner_name = card.registered
 		if (owner_name)
 			boutput(user, SPAN_NOTICE("You set [src]'s payout account."))
-			src.account = data_core.bank.find_record("name", owner_name)
+			src.account = global.data_core.get_bank_record(owner_name)
 			return
 		..()
 

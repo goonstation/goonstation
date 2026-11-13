@@ -26,7 +26,7 @@
 	src["issuer_job"] = issuer_job
 	src["reason"] = reason
 
-	var/datum/db_record/personnel/security/record = global.data_core.security.find_record("name", target)
+	var/datum/db_record/personnel/security/record = global.data_core.get_security_record(target)
 	if (record)
 		record["criminal"] = SECURITY::ARREST::STATE::ARREST
 		record["sec_flag"] = reason
@@ -63,7 +63,7 @@
 	src["resolution"] = resolution
 
 	var/target = src["target"]
-	var/datum/db_record/personnel/security/record = global.data_core.security.find_record("name", target)
+	var/datum/db_record/personnel/security/record = global.data_core.get_security_record(target)
 	if (record)
 		var/list/datum/db_record/citation/arrest/arrests = global.data_core.get_open_arrests(target)
 		if (length(arrests))

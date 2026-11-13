@@ -70,7 +70,7 @@
 	src["approver"] = approver
 	src["approver_job"] = approver_job
 
-	var/datum/db_record/personnel/bank/bank_record = global.data_core.bank.find_record("name", src["target"])
+	var/datum/db_record/personnel/bank/bank_record = global.data_core.get_bank_record(src["target"])
 	var/net_id = bank_record?["pda_net_id"]
 	if (bank_record)
 		var/datum/signal/signal = global.get_free_signal()
@@ -85,7 +85,7 @@
 	return SECURITY::TICKET::ERR::SUCCESS
 
 /datum/db_record/citation/fine/proc/process_payment()
-	var/datum/db_record/personnel/bank/bank_record = global.data_core.bank.find_record("name", src["target"])
+	var/datum/db_record/personnel/bank/bank_record = global.data_core.get_bank_record(src["target"])
 	if (QDELETED(bank_record))
 		return
 

@@ -1138,7 +1138,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/ticket_target = input(usr, "Fine recipient:",src.name) as text | null
 			if(!ticket_target) return
 			ticket_target = copytext(strip_html(ticket_target),	 1, MAX_MESSAGE_LEN)
-			var/has_bank_record = !!data_core.bank.find_record("name", ticket_target)
+			var/has_bank_record = !!global.data_core.get_bank_record(ticket_target)
 			if(!has_bank_record)
 				message = "Error: No bank records found for [ticket_target]."
 				src.master.updateSelfDialog()
