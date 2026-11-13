@@ -1,18 +1,20 @@
+TYPEINFO(/datum/random_event)
+	var/initialization_args = null // let the user select any initialization arguments
 /datum/random_event
-	var/name = null                      // What is this event called?
-	var/description = null               // What does this event do?
-	var/centcom_headline = null          // The title of the displayed message.
-	var/centcom_message = null           // A message displayed to the crew.
-	var/centcom_origin = null			 // The origin of the message
-	var/message_delay = 0 SECONDS        // How long it takes after the event's effect for the message to arrive.
-	var/required_elapsed_round_time = 0  // Round elapsed ticks must be this or higher for the event to trigger naturally.
-	var/required_npc_type = null         // Check for events that require a living npc to trigger.
-	var/wont_occur_past_this_time = -1   // Event will no longer occur naturally after this many ticks have elapsed.
-	var/disabled = 0                     // Event won't occur if this is true.
-	var/announce_to_admins = 1
-	var/customization_available = 0
-	var/always_custom = FALSE
-	var/weight = 100					//for weighted probability picker. 100 is base
+	var/name = null						//! What is this event called?
+	var/description = null				//! What does this event do?
+	var/centcom_headline = null			//! The title of the in-game event announcement
+	var/centcom_message = null			//! The message of the in-game event announcement
+	var/centcom_origin = null			//! The origin of of the in-game event announcement
+	var/message_delay = 0 SECONDS		//! How long it takes after the event's effect for the message to arrive.
+	var/required_elapsed_round_time = 0	//! Round elapsed ticks must be this or higher for the event to trigger naturally.
+	var/required_npc_type = null		//! Check for events that require a living npc to trigger.
+	var/wont_occur_past_this_time = -1	//! Event will no longer occur naturally after this many ticks have elapsed.
+	var/disabled = FALSE				//! Event won't occur if this is true.
+	var/announce_to_admins = TRUE		//! Announce this event to administrators
+	var/customization_available = FALSE	//! Does this event offer customization when running the event manually?
+	var/always_custom = FALSE			//! Does this event always require customization?
+	var/weight = 100					//! Weighted probabilty for weighted probability picker. 100 is base
 
 	proc/event_effect(var/source)
 		if (!source)
@@ -51,31 +53,6 @@
 
 	proc/cleanup()
 		return
-
-/datum/random_event/minor
-	announce_to_admins = 0
-
-/datum/random_event/start
-	proc/is_crew_affected(var/mob/living/player)
-		. = TRUE
-
-	proc/apply_to_player(var/mob/living/player)
-		return
-
-	proc/get_affected_crew()
-		. = list()
-		for(var/mob/living/M in mobs)
-			if (isnpc(M))
-				continue
-			if(is_crew_affected(M))
-				. += M
-
-/datum/random_event/start/until_playing
-	var/include_latejoin = FALSE
-
-
-TYPEINFO(/datum/random_event)
-	var/initialization_args = null // let the user select any initialization arguments
 
 /datum/random_event_editor
 	var/atom/movable/target
@@ -179,12 +156,3 @@ TYPEINFO(/datum/random_event)
 		if("activate")
 			src.event.event_effect(key_name(usr, 1))
 			ui.close()
-
-ABSTRACT_TYPE(/datum/random_event/major)
-ABSTRACT_TYPE(/datum/random_event/major/antag)
-ABSTRACT_TYPE(/datum/random_event/major/player_spawn)
-ABSTRACT_TYPE(/datum/random_event/major/player_spawn/antag)
-ABSTRACT_TYPE(/datum/random_event/minor)
-ABSTRACT_TYPE(/datum/random_event/special)
-ABSTRACT_TYPE(/datum/random_event/start)
-ABSTRACT_TYPE(/datum/random_event/start/until_playing)

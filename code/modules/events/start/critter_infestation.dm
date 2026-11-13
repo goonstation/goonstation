@@ -1,5 +1,6 @@
 /datum/random_event/start/critters
 	name = "Critter Infestation"
+	description = "Spawn a number of harmful critters"
 	customization_available = 1
 	var/num_nests = 0 //number of areas
 	var/num_pests = 0 //custom critter limit

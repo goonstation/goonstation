@@ -1,5 +1,6 @@
 /datum/random_event/minor/appendicitis
 	name = "Appendicitis Contraction"
+	description = "Afflict several registered crew with Appendicitis, requiring surgery to remove or replace the organ"
 	centcom_headline = "Medical Records Notice"
 	centcom_message = "The NanoTrasen Personnel Records Department has informed us that some crew members have genetic indicators of increased Appendicitis risk and should seek medical care before their condition worsens."
 	weight = 10

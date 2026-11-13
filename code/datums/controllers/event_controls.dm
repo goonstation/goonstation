@@ -69,18 +69,14 @@ var/datum/event_controller/random_events
 		..()
 
 		for (var/X in concrete_typesof(/datum/random_event/major))
-			#ifdef RP_MODE // no full-random antags on RP
-			if (ispath(X, /datum/random_event/major/antag) || ispath(X, /datum/random_event/major/player_spawn/antag))
-				continue
-			#endif
 			var/datum/random_event/RE = new X
 			major_events += RE
 
-		for (var/X in concrete_typesof(/datum/random_event/major/antag)+concrete_typesof(/datum/random_event/major/player_spawn/antag))
+		for (var/X in concrete_typesof(/datum/random_event/respawn/antag))
 			var/datum/random_event/RE = new X
 			antag_spawn_events += RE
 
-		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn)-concrete_typesof(/datum/random_event/major/player_spawn/antag))
+		for (var/X in concrete_typesof(/datum/random_event/respawn/player))
 			var/datum/random_event/RE = new X
 			player_spawn_events += RE
 
@@ -288,6 +284,28 @@ var/datum/event_controller/random_events
 		"eventList" = roundstartEventData
 	))
 
+	var/list/spawnEventData = list()
+	for (RE in src.player_spawn_events)
+		spawnEventData += list(list(
+			"byondRef" = ref(RE),
+			"name" = RE.name,
+			"description" = RE.description,
+			"customizable" = RE.customization_available,
+			"alwaysCustom" = RE.always_custom,
+			"available" = RE.is_event_available(),
+			"enabled" =  !RE.disabled
+		))
+	for (RE in src.antag_spawn_events)
+		spawnEventData += list(list(
+			"byondRef" = ref(RE),
+			"name" = RE.name,
+			"description" = RE.description,
+			"customizable" = RE.customization_available,
+			"alwaysCustom" = RE.always_custom,
+			"available" = RE.is_event_available(),
+			"enabled" =  !RE.disabled
+		))
+
 	.["eventData"] += list(list(
 		"name" = "spawn",
 		"enabled" = TRUE,
@@ -295,6 +313,7 @@ var/datum/event_controller/random_events
 		"delayLow" = src.time_between_spawn_events_lower,
 		"delayHigh" = src.time_between_spawn_events_upper,
 		"nextEvent" = src.next_spawn_event,
+		"eventList" = spawnEventData,
 	))
 
 	.["queuedEvents"] = list()

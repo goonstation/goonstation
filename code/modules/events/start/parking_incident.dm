@@ -1,6 +1,7 @@
 #ifndef UNDERWATER_MAP
 /datum/random_event/start/parking
 	name = "Parking Incident"
+	description = "Spawn an unfueled 1x1 pod in maintenance"
 	customization_available = 0
 	required_elapsed_round_time = 0
 	wont_occur_past_this_time = 1 MINUTE
