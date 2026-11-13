@@ -14,15 +14,16 @@
 	. = ..()
 
 	src.general = new(list("id", "name"), /datum/db_record/personnel/general)
-	src.medical = new(list("id", "name"), /datum/db_record/personnel/medical)
-	src.security = new(list("id", "name"), /datum/db_record/personnel/security)
-	src.bank = new(list("id", "name"), /datum/db_record/personnel/bank)
-	src.disease = new(list("id", "name"), /datum/db_record/disease)
-	src.tickets = new(list("id", "name"), /datum/db_record/citation/ticket)
-	src.fines = new(list("id", "name", "status"), /datum/db_record/citation/fine)
-	src.arrests = new(list("id", "name", "status"), /datum/db_record/citation/arrest)
+	src.medical = new(list("id"), /datum/db_record/personnel/medical)
+	src.security = new(list("id"), /datum/db_record/personnel/security)
+	src.bank = new(list("id"), /datum/db_record/personnel/bank)
 
+	src.disease = new(list("id", "name"), /datum/db_record/disease)
 	src.populate_disease_database()
+
+	src.tickets = new(list("id", "target"), /datum/db_record/citation/ticket)
+	src.fines = new(list("id", "target", "status"), /datum/db_record/citation/fine)
+	src.arrests = new(list("id", "target", "status"), /datum/db_record/citation/arrest)
 
 /datum/datacore/proc/addManifest(mob/living/carbon/human/H, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")
 	if (!H?.mind)

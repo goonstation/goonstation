@@ -858,7 +858,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						if(divisible_amount)
 							var/amount_per_account = divisible_amount/length(accounts)
 							for(var/datum/db_record/gen_rec as anything in accounts)
-								var/datum/db_record/bank_rec = global.data_core.bank.find_record("id", gen_rec["id"])
+								var/datum/db_record/bank_rec = global.data_core.get_bank_record(id = gen_rec["id"])
 								if (istype(bank_rec))
 									bank_rec["current_money"] += amount_per_account
 									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
