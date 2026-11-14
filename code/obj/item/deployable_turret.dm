@@ -133,6 +133,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	var/default_coating_id = null //! ID of the default material coating when using infinite ammo
 	var/datum/projectile/current_projectile
 	var/current_projectile_amount = INFINITY //! If using custom rounds, keeps track of how many are left.
+	var/allow_custom_ammo = TRUE
 	var/ejection_container = null //! Type of container to use when ejecting custom rounds
 	var/burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
 	var/fire_rate = 3 // rate of fire in shots per second
@@ -389,6 +390,9 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 			..()
 
 	proc/load_ammo(var/mob/user, var/obj/item/ammo/bullets/ammo)
+		if(!src.allow_custom_ammo)
+			boutput(user, "This turret cannot be loaded with custom ammunition.")
+			return
 		if(ammo.amount_left == 0)
 			boutput(user, "The [ammo] is empty.")
 			return
@@ -600,7 +604,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		2. Use a <b>screwdriver</b> to turn it on.
 		3. (Optional) Click it with a <b>wrench</b> and then click a location to rotate the turret in that direction.
 		4. (Optional) While it's on, use a <b>welding tool</b> to repair any damage.
-		5. (Optional) Click it with custom <b>[ammo.sname]</b> ammunition to load custom rounds. Use a <b>crowbar</b> to unload them.
+		[src.allow_custom_ammo ? "5. (Optional) Click it with custom <b>[ammo.sname]</b> ammunition to load custom rounds. Use a <b>crowbar</b> to unload them." : null]
 
 		Disassembly:
 		1. Use a <b>screwdriver</b> to turn it off.

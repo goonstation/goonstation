@@ -714,7 +714,7 @@
 /obj/item/ammo/bullets/a38/mag
 	name = ".38 Hi-Tek magazine"
 	icon_state = "pistol_magazine"
-	amount_left = 10sss
+	amount_left = 10
 	max_amount = 10
 
 /obj/item/ammo/bullets/a38/mag/lb
