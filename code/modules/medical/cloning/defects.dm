@@ -502,11 +502,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	if (!ishuman(H) || !H.cloner_defects)
 		return
 
-	var/datum/db_record/genrec = get_general_record(H)
-	if (!istype(genrec))
-		return
-
-	var/datum/db_record/medrec = data_core.medical.find_record("id", genrec["id"])
+	var/datum/db_record/personnel/medical/medrec = global.data_core.get_medical_record(H.real_name)
 	if (!istype(medrec))
 		return
 

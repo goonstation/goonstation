@@ -5,8 +5,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	name = "security RecordTrak"
 	desc = "A device used to scan in prisoners and update their security records."
 	icon_state = "recordtrak"
-	var/datum/db_record/active1 = null
-	var/datum/db_record/active2 = null
 	item_state = "recordtrak"
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
@@ -70,27 +68,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		boutput(user, SPAN_NOTICE("You scan in [target]."))
 		boutput(target, SPAN_ALERT("[user] scans you with the RecordTrak!"))
 
-		// General
-		var/list/datum/db_record/personnel/general/general = global.data_core.general.find_records("name", target.real_name)
-		if (!length(general))
-			var/datum/db_record/personnel/general/R = new()
-			global.data_core.general.add_record(R)
-			general += R
-
-		for (var/datum/db_record/personnel/general/R as anything in general)
-			R.update_from_scan(target)
-			src.active1 = R
-
-		// Medical
-		var/list/datum/db_record/personnel/medical/medical = global.data_core.medical.find_records("name", target.real_name)
-		if (!length(medical))
-			var/datum/db_record/personnel/medical/R = new(src.active1)
-			global.data_core.medical.add_record(R)
-			medical += R
-
-		for (var/datum/db_record/personnel/medical/R as anything in medical)
-			R.update_from_scan(target)
-
 		// Arrests
 		var/list/datum/db_record/citation/arrest/arrests = global.data_core.get_open_arrests(target.real_name)
 		if (length(arrests))
@@ -102,28 +79,24 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			for (var/datum/db_record/citation/arrest/arrest as anything in arrests)
 				arrest.close(user.name, assignment, "Warrant closed via RecordTrak.")
 
-		// Security
-		var/list/datum/db_record/personnel/security/security = global.data_core.security.find_records("name", target.real_name)
-		if (!length(security))
-			var/datum/db_record/personnel/security/R = new(src.active1)
-			global.data_core.security.add_record(R)
-			security += R
+		// General
+		var/datum/db_record/personnel/general/general = global.data_core.get_general_record(target.real_name, ensure_record = TRUE)
+		var/record_id = general["id"]
+		general.update_from_scan(target)
 
-		for (var/datum/db_record/personnel/security/R as anything in security)
-			R.update_from_scan(target)
-			R["criminal"] = src.modes[src.mode]
-			R["sec_flag"] = src.sechud_flag
-			src.active2 = R
+		// Medical
+		var/datum/db_record/personnel/medical/medical = global.data_core.get_medical_record(id = record_id, ensure_record = TRUE)
+		medical.update_from_scan(target)
+
+		// Security
+		var/datum/db_record/personnel/security/security = global.data_core.get_security_record(id = record_id, ensure_record = TRUE)
+		security.update_from_scan(target)
+		security["criminal"] = src.modes[src.mode]
+		security["sec_flag"] = src.sechud_flag
 
 		// Bank
-		var/list/datum/db_record/personnel/bank/bank = global.data_core.bank.find_records("name", target.real_name)
-		if (!length(bank))
-			var/datum/db_record/personnel/bank/R = new(src.active1)
-			global.data_core.bank.add_record(R)
-			bank += R
-
-		for (var/datum/db_record/personnel/bank/R as anything in bank)
-			R.update_from_scan(target)
+		var/datum/db_record/personnel/bank/bank = global.data_core.get_bank_record(id = record_id, ensure_record = TRUE)
+		bank.update_from_scan(target)
 
 	attack_self(mob/user as mob)
 		user.showContextActions(src.contexts, src, src.contextLayout)

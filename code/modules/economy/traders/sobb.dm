@@ -1,0 +1,300 @@
+/datum/trader/sobb
+	// Mostly-friendly neighborhood blob.
+	// Interested in medical stuff and food. Honest and laid-back, but tends to not be very clear about what it has/wants.
+	name = "Sobb"
+	picture = "sobb/sobb_green.png"
+	crate_tag = "Sobb"
+	hiketolerance = 40
+	base_patience = list(20,35)
+	chance_leave = 10
+	chance_arrive = 20
+	chance_restock = 25
+
+	base_goods_buy = alist(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/sobb/honey,
+			/datum/commodity/trader/sobb/critters,
+			/datum/commodity/trader/sobb/monkey
+		),
+		TRADER_RARITY_UNCOMMON = list(
+			/datum/commodity/trader/sobb/chickens/white,
+			/datum/commodity/trader/sobb/chickens/brown,
+			/datum/commodity/trader/sobb/chickens/silkie,
+			/datum/commodity/trader/sobb/chickens/void,
+			/datum/commodity/trader/sobb/chickens/spicy,
+			/datum/commodity/trader/sobb/chickens/plant,
+			/datum/commodity/trader/sobb/chickens/onagadori,
+			/datum/commodity/trader/sobb/chickens/knight,
+			/datum/commodity/trader/sobb/chickens/pigeon,
+			/datum/commodity/trader/sobb/chickens/raptor
+		),
+		TRADER_RARITY_RARE = list(
+			/datum/commodity/trader/sobb/digestion,
+			/datum/commodity/trader/sobb/bot
+		)
+	)
+
+	base_goods_sell = alist(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/sobb/chunk
+		),
+		TRADER_RARITY_UNCOMMON = list(
+			/datum/commodity/trader/sobb/remains
+		),
+		TRADER_RARITY_RARE = list()
+	)
+
+	dialogue_greet = list("Grootings multicellular being. Would you like to trude?",
+	"Hello many-cells. Reudy to trude?",
+	"Do your cells want to buy somethung?")
+	dialogue_leave = list("Moybe next time.",
+	"Foolish multicellular thing.",
+	"One cell is better than mony cells.")
+	dialogue_purchase = list("Hopefully many-cells can use ut.",
+	"Huppy to holp!",
+	"Pleasure doing busuness with all of your cells.")
+	dialogue_haggle_accept = list("This is acooptable.",
+	"Faur enough. Is ut a deul?",
+	"*bubbly noises*",
+	"...okuy.",
+	"Do deul now?")
+	dialogue_haggle_reject = list("That os too much.",
+	"I connot do that.",
+	"*bubbly noises*",
+	"Too much of a shuft in pruce for me.",
+	"I'd loke to do deul now.")
+	dialogue_wrong_haggle_accept = list("If that's what you wunt.")
+	dialogue_wrong_haggle_reject = list("Allow me to clurify the prusing.")
+	dialogue_cant_afford_that = list("Not enough credots to moke tronsoctuon.",
+	"Ploase ruturn with more credots.",
+	"Account needs more stuff for trude.")
+	dialogue_out_of_stock = list("Sorry, I need to fond more of that.",
+	"That os out-of-stock for now.")
+
+	New()
+		. = ..()
+		var/datum/material/organic/blob/sobb/sobb_material = getMaterial("blob_sobb")
+		var/color_sobb = sobb_material.color_rgb
+		var/list/color_hsl = rgb2hsl(GetRedPart(color_sobb), GetGreenPart(color_sobb), GetBluePart(color_sobb))
+		var/hue = color_hsl[1] / 360
+		var/saturation = color_hsl[2] // 0 to 100
+		var/luminosity = color_hsl[3] // 0 to 100
+		if(saturation < 20)
+			if(luminosity < 33)
+				src.picture = "sobb/sobb_black.png"
+			else if(luminosity > 66)
+				src.picture = "sobb/sobb_white.png"
+			else
+				src.picture = "sobb/sobb_grey.png"
+		else
+			if(hue < 0.05)
+				src.picture = "sobb/sobb_red.png"
+			else if(hue < 0.14)
+				src.picture = "sobb/sobb_orange.png"
+			else if(hue < 0.25)
+				src.picture = "sobb/sobb_yellow.png"
+			else if(hue < 0.42)
+				src.picture = "sobb/sobb_green.png"
+			else if(hue < 0.55)
+				src.picture = "sobb/sobb_cyan.png"
+			else if(hue < 0.68)
+				src.picture = "sobb/sobb_blue.png"
+			else if(hue < 0.87)
+				src.picture = "sobb/sobb_purple.png"
+			else
+				src.picture = "sobb/sobb_red.png"
+
+// Sobb is selling these things
+
+/datum/commodity/trader/sobb/chunk
+	comname = "Chunk of Sobb"
+	comtype = /obj/item/material_piece/wad/blob/sobb
+	amount = 25
+	price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 3)
+	possible_names = list("Sellung some excess me. Organelles not oncludod.",
+	"Cytoplasm avaoloble for purchose. Strong and savory.",
+	"Need to lose weught. Contact uf you aru lookung to buy ut.")
+
+/datum/commodity/trader/sobb/remains
+	comname = "Undugested Remauns"
+	comtype = /obj/sobb_remains_spawner
+	amount = 25
+	price_boundary = list(PAY::UNTRAINED * 2, PAY::UNTRAINED * 3)
+	possible_names = list("Loftover junk from dunner.",
+	"Lookung to get rud of stuff that dudn't dussolve well.")
+
+/obj/sobb_remains_spawner
+	var/list/spawns_random = list(
+		/obj/item/material_piece/bone = 400,
+		/obj/item/skull = 70,
+		/obj/item/raw_material/chitin = 50,
+		/obj/item/mining_tool/powered/drill = 5,
+		/obj/item/mining_tool/powered/shovel = 5,
+		/obj/item/mining_tool/powered/hammer = 5,
+		/obj/item/clothing/gloves/concussive = 5,
+		/obj/item/cargotele = 5,
+		/obj/item/device/analyzer/healthanalyzer = 5,
+		/obj/item/device/analyzer/genetic = 5,
+		/obj/item/device/analyzer/atmospheric = 5,
+		/obj/item/device/reagentscanner = 5,
+		/obj/item/device/light/flashlight = 5,
+		/obj/item/device/gps = 5,
+		/obj/item/crowbar = 5,
+		/obj/item/wrench = 5,
+		/obj/item/wirecutters = 5,
+		/obj/item/screwdriver = 5,
+		/obj/item/knife = 5,
+		/obj/item/device/radio/headset/multifreq = 5,
+		/obj/item/device/radio/headset/deaf = 5,
+		/obj/item/device/speech_pro = 5,
+		/obj/item/clothing/glasses/healthgoggles = 5,
+		/obj/item/clothing/glasses/spectro = 5,
+		/obj/item/clothing/glasses/sunglasses = 5,
+		/obj/item/clothing/glasses/thermal = 5,
+		/obj/item/clothing/glasses/packetvision = 2,
+		/obj/item/clothing/glasses/monocle = 2,
+		/obj/item/clothing/mask/monkey_translator = 5,
+		/obj/item/clothing/mask/gas = 5,
+		/obj/item/implant/health = 2,
+		/obj/item/implant/tracking = 2,
+
+		/obj/item/parts/robot_parts/arm/left/standard = 10,
+		/obj/item/parts/robot_parts/arm/left/light = 10,
+		/obj/item/parts/robot_parts/arm/right/standard = 10,
+		/obj/item/parts/robot_parts/arm/right/light = 10,
+		/obj/item/parts/robot_parts/leg/left/standard = 10,
+		/obj/item/parts/robot_parts/leg/left/light = 10,
+		/obj/item/parts/robot_parts/leg/right/standard = 10,
+		/obj/item/parts/robot_parts/leg/right/light = 10,
+		/obj/item/organ/appendix/cyber = 10,
+		/obj/item/organ/heart/cyber = 10,
+		/obj/item/organ/intestines/cyber = 10,
+		/obj/item/organ/kidney/cyber/left = 10,
+		/obj/item/organ/kidney/cyber/right = 10,
+		/obj/item/organ/liver/cyber = 10,
+		/obj/item/organ/lung/cyber/left = 10,
+		/obj/item/organ/lung/cyber/right = 10,
+		/obj/item/organ/pancreas/cyber = 10,
+		/obj/item/organ/spleen/cyber = 10,
+		/obj/item/organ/stomach/cyber = 10,
+		/obj/item/organ/eye/glass = 5,
+		/obj/item/organ/eye/cyber = 5,
+		/obj/item/organ/eye/cyber/sechud = 2,
+		/obj/item/organ/eye/cyber/nightvision = 2,
+		/obj/item/organ/eye/cyber/meson = 2,
+		/obj/item/organ/eye/cyber/thermal = 2,
+		/obj/item/organ/eye/cyber/laser = 1,
+		/obj/item/organ/eye/cyber/ecto = 1,
+	)
+	New()
+		. = ..()
+		var/pick_type = weighted_pick(spawns_random)
+		var/atom/thing = new pick_type(src.loc)
+		thing.pixel_x = rand(-8, 8)
+		thing.pixel_y = rand(-8, 8)
+		qdel(src)
+
+// Sobb wants these things
+
+/datum/commodity/trader/sobb/honey
+	comname = "Honoy"
+	comtype = /obj/item/reagent_containers/food/snacks/ingredient/honey
+	price_boundary = list(PAY::UNTRAINED, PAY::UNTRAINED * 2)
+	possible_names = list("Bee food. Stucks to thungs, but somehow does not stuck to Sobb.",
+	"Buyung dulicious bee blob. Good for cytoplasm.")
+
+/datum/commodity/trader/sobb/digestion
+	comname = "Humon Dugestive Organelle"
+	comtype = null
+	possible_alt_types = list(
+		/obj/item/organ/stomach,
+		/obj/item/organ/intestines
+	)
+	alt_type_chance = 100
+	price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
+	possible_names = list("That organelle humons use for gotting food.")
+	subtype_valid = FALSE
+
+/datum/commodity/trader/sobb/bot
+	comname = "Bot-thingie"
+	comtype = null
+	possible_alt_types = list(
+		/obj/machinery/bot/cleanbot,
+		/obj/machinery/bot/firebot,
+		/obj/machinery/bot/medbot
+	)
+	alt_type_chance = 100
+	price_boundary = list(PAY::TRADESMAN, PAY::DOCTORATE * 2)
+	possible_names = list("Need that bot-thung that does stuff for you. Know whuch one?",
+	"Lookung for that bot-thung, the one that I sow before.")
+
+/datum/commodity/trader/sobb/monkey
+	comname = "Monkoys"
+	comtype = /mob/living/carbon/human // Sobb can't tell the difference. Players don't seem to be included.
+	price_boundary = list(PAY::UNTRAINED * 2, PAY::UNTRAINED * 3)
+	possible_names = list("Better for lysozymes if they dossolve slower.",
+	"Wont to dossolve creuture wuth two arms and two legs. Prefur if scream less.")
+
+/datum/commodity/trader/sobb/critters
+	comname = "Smoll Crutters"
+	comtype = /mob/living/critter
+	price_boundary = list(PAY::UNTRAINED, PAY::UNTRAINED * 2)
+	possible_names = list("Alwoys hoppy to pay for smoll snocks.",
+	"Snocks wanted for bolonced diet. Okay if squrm a little.")
+
+/datum/commodity/trader/sobb/chickens
+	comname = "Chickuns"
+	comtype = /mob/living/critter/small_animal/ranch_base/chicken
+	price_boundary = list(PAY::UNTRAINED, PAY::UNTRAINED * 3)
+	onmarket = FALSE
+
+	white
+		comname = "Whute Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/white
+		price_boundary = list(PAY::UNTRAINED, PAY::UNTRAINED * 2)
+		possible_names = list("Need plain chickuns with whute foathers for tommorows lunch.")
+	brown
+		comname = "Brown Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/brown
+		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
+		possible_names = list("Need yummy brown chickuns with brown foathers.")
+	silkie
+		comname = "Sulkie Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/silkie
+		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
+		possible_names = list("Need sulkie chickuns with smooth loght foathers.")
+	void
+		comname = "Voud Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/purple
+		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
+		possible_names = list("Need voud chickuns with purplo foathers. Good noghttome snock.")
+	onagadori
+		comname = "Onagadoru Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/onagadori
+		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
+		possible_names = list("Want whute chickuns with long blue foathers. Look prutty while dossolving.")
+	spicy
+		comname = "Spucy Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/spicy
+		price_boundary = list(PAY::DOCTORATE, PAY::DOCTORATE * 2)
+		possible_names = list("Need spucy chickuns with hot toste. Make good chickun souce.")
+	plant
+		comname = "Plont Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/plant
+		price_boundary = list(PAY::DOCTORATE, PAY::DOCTORATE * 2)
+		possible_names = list("Need plont chickuns with greun foathers for new plont-bosed diet.")
+	knight
+		comname = "Ormored Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/knight
+		price_boundary = list(PAY::DOCTORATE, PAY::DOCTORATE * 2)
+		possible_names = list("Chickuns wearung cool ormor that mukes ut dossolve very slowly for lysozymes.")
+	pigeon
+		comname = "Corrier Pugeons"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/pigeon
+		price_boundary = list(PAY::DOCTORATE, PAY::DOCTORATE * 2)
+		possible_names = list("Grey burd that look luke chickun. Ususolly hove napkin wrapped around leg.")
+	raptor
+		comname = "Raptor Burds"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/raptor
+		price_boundary = list(PAY::EXECUTIVE, PAY::EXECUTIVE * 2) // Hazard pay
+		possible_names = list("Luttle monstor burds that run to you ond not oway from you when ut is dunner tume.")

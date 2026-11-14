@@ -1253,8 +1253,13 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	attack_self(mob/user as mob)
 		boutput(user, SPAN_NOTICE("You turn the bucket right side up."))
 		var/obj/item/reagent_containers/glass/bucket/B = new bucket_type(src.loc)
+		B.setMaterial(src.material)
+		B.forensic_holder = src.forensic_holder
+		B.color = src.color
+		src.copy_filters_to(B)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 		qdel(src)
 		return
 

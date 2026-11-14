@@ -280,10 +280,10 @@
 		return
 	var/enter_pin = usr.enter_pin(src)
 	if (enter_pin == id_card.pin)
-		var/datum/db_record/record_to_access = data_core.bank.find_record("name", id_card.registered)
-		if (record_to_access)
+		var/datum/db_record/personnel/bank/record = global.data_core.get_bank_record(id_card.registered)
+		if (record)
 			src.scanned_id = id_card
-			src.accessed_record = record_to_access
+			src.accessed_record = record
 			user.visible_message(SPAN_NOTICE("[user.name] swipes [his_or_her(user)] ID card in [src]."))
 		else
 			boutput(usr, SPAN_ALERT("Cannot find a bank record for this card."))

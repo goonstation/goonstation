@@ -17,9 +17,6 @@ var/global/list/adventure_elements_by_id = list()
 	var/id = null
 
 	New()
-		if (src.opacity)
-			src.set_opacity(0)
-			set_opacity(1)
 		if(!(src.id in adventure_elements_by_id))
 			adventure_elements_by_id[src.id] = list(src)
 		else

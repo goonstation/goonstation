@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 			for (var/obj/item/currency/spacecash/C in L)
 				current_cash += C.amount
 
-		current_cash += data_core.bank.find_record("id", owner.current.datacore_id)?["current_money"] || 0
+		current_cash += global.data_core.get_bank_record(id = owner.current.datacore_id)?["current_money"] || 0
 
 		if (current_cash >= target_cash)
 			return 1
@@ -1550,12 +1550,14 @@ ABSTRACT_TYPE(/datum/objective/madness)
 
 /datum/objective_set/changeling
 	objective_list = list(/datum/objective/specialist/absorb)
-	escape_choices = list(
-		/datum/objective/escape,
+	escape_choices = list() // Escape alive is included in the absorb objective, it also doesn't break if you grant control to a hivemind member
+
 #ifndef RP_MODE
-		/datum/objective/escape/hijack_group/changeling
+	New()
+		if(prob(50)) // Don't always roll hijack
+			src.escape_choices = list(/datum/objective/escape/hijack_group/changeling)
+		. = ..()
 #endif
-	)
 
 /datum/objective_set/vampire
 	objective_list = list(/datum/objective/specialist/drinkblood)

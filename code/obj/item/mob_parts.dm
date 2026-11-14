@@ -112,6 +112,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 			limb_print = register_id(limb_id)
 		if (holder && movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
+		if(src.holder)
+			SEND_SIGNAL(src, COMSIG_LIMB_ATTACHED_TO_HUMAN, src.holder)
 
 	disposing()
 		if (limb_data)
@@ -151,6 +153,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
+			SEND_SIGNAL(H, COMSIG_HUMAN_LOST_LIMB, src)
 			H.limbs.vars[src.slot] = null
 			if(remove_object)
 				if (H.l_hand == remove_object)
@@ -200,6 +203,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
+			SEND_SIGNAL(H, COMSIG_HUMAN_LOST_LIMB, src)
 			H.limbs.vars[src.slot] = null
 			if(remove_object)
 				src.remove_object = null
@@ -215,6 +219,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			else if (src.slot == "r_arm")
 				H.drop_from_slot(H.r_hand, force_drop=TRUE)
 				H.hud.update_hands()
+
 
 		else if(remove_object)
 			src.remove_object = null
@@ -276,6 +281,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
+			SEND_SIGNAL(H, COMSIG_HUMAN_LOST_LIMB, src)
 			holder = null
 			if(H.limbs.vars[src.slot] == src) //BAD BAD HACK FUCK FUCK UGLY SHITCODE - Tarm
 				H.limbs.vars[src.slot] = null
@@ -293,6 +299,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			else if (src.slot == "r_arm")
 				H.drop_from_slot(H.r_hand)
 				H.hud.update_hands()
+
 
 		else if(remove_object)
 			src.remove_object = null
@@ -336,7 +343,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 		SPAWN(rand(150,200))
 			if(remove_stage == 2) src.remove()
-
+		SEND_SIGNAL(src, COMSIG_LIMB_ATTACHED_TO_HUMAN, attachee)
 		attachee.update_clothing()
 		attachee.update_body()
 		attachee.UpdateDamageIcon()
