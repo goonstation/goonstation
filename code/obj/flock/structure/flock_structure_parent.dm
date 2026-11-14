@@ -362,7 +362,7 @@ TYPEINFO(/obj/flock_structure)
 
 /obj/flock_structure/emp_act() //does not report attack, since EMPs disrupt radio signals
 	takeDamage("brute", 40)
-	playsound(src.loc, "sound/misc/flockmind/flockdrone_fart.ogg", 70, TRUE) //does make a sound, though
+	playsound(src.loc, 'sound/misc/flockmind/flockdrone_fart.ogg', 70, TRUE) //does make a sound, though
 
 /obj/flock_structure/Crossed(atom/movable/mover)
 	. = ..()
