@@ -12,7 +12,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/list/add_abilities = null
 
 	var/datum/hud/critter/hud
-	var/datum/hud/critter/custom_hud_type = /datum/hud/critter
+	var/datum/hud/critter/custom_hud_type = /datum/hud/critter //TODO: Remove eventually for hudzone handling
 	var/datum/organHolder/custom_organHolder_type = null
 
 	var/hand_count = 0		// Used to ease setup. Setting this in-game has no effect.
@@ -139,7 +139,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	else
 		src.organHolder = new/datum/organHolder/critter(src, custom_brain_type)
 
-	..()
+	. = ..()
 
 	src.init_hud()
 
@@ -165,31 +165,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	#endif
 
 /mob/living/critter/disposing()
-	if(organHolder)
-		organHolder.dispose()
-		organHolder = null
+	QDEL_NULL(organHolder)
+	QDEL_NULL(hud)
 
-	if(hud)
-		if(src.stamina_bar)
-			hud.remove_object(stamina_bar)
-
-		hud.dispose()
-		hud = null
-
-	for(var/datum/handHolder/hh in hands)
-		hh.dispose()
-	hands.len = 0
-	hands = null
-
-	for(var/datum/equipmentHolder/eh in equipment)
-		eh.dispose()
-	equipment.len = 0
-	equipment = null
-
-	for(var/obj/item/I in implant)
-		I.dispose()
-	implant.len = 0
-	implant = null
+	QDEL_LIST(src.hands)
+	QDEL_LIST(src.equipment)
+	QDEL_LIST(src.implant)
 
 	for(var/damage_type in healthlist)
 		var/datum/healthHolder/hh = healthlist[damage_type]
@@ -200,10 +181,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (src.is_npc)
 		src.registered_area?.registered_mob_critters -= src
 		src.registered_area = null
-	if (ai)
-		qdel(ai)
-		ai = null
-	..()
+	QDEL_NULL(src.ai)
+	. = ..()
 
 ///enables mob ai that was disabled by a hibernation task
 /mob/living/critter/proc/wake_from_hibernation()
@@ -217,6 +196,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/proc/setup_healths()
 	// add_health_holder(/datum/healthHolder/flesh)
 	// etc..
+
+/mob/living/critter/handle_stamina_updates()
+	. = ..()
+	if (src.client && src.hud?.stamina_bar)
+		src.hud.stamina_bar.update_value(src)
 
 /mob/living/critter/proc/setup_overlays()
 	//used for critters that have overlays for their bioholder (hair color eye color etc)
@@ -1674,14 +1658,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	src.init_hud()
 
 /mob/living/critter/proc/init_hud()
-	src.hud = new custom_hud_type(src)
+	src.hud = new src.custom_hud_type(src)
+	src.hud.setup_elements()
 	src.attach_hud(hud)
 
 	src.zone_sel = new(src, "CENTER[src.hud.next_right()], SOUTH")
 	src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-
-	if (src.stamina_bar)
-		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads

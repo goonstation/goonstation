@@ -34,6 +34,8 @@
 	src.elements = list()
 
 /datum/hud_zone/disposing()
+	for (var/elem_alias in src.elements)
+		qdel(src.elements[elem_alias])
 	. = ..()
 	master = null
 	elements = null
@@ -49,6 +51,8 @@
 	for (var/adjust_index in 1 to length(elements))
 		var/adjust_alias = elements[adjust_index]
 		var/datum/hud_element/to_adjust = elements[adjust_alias]
+		if (to_adjust.hidden)
+			continue
 		src.adjust_offset(to_adjust)
 
 /// internal use only. accepts an element and tries to position that element in the zone based on current element positions.
@@ -145,7 +149,7 @@
 	var/x_high_1 = coords["x_high"]
 	var/y_high_1 = coords["y_high"]
 
-	for (var/list/zone_alias in src.hud_zones)
+	for (var/zone_alias in src.hud_zones)
 		var/list/other_coords = src.hud_zones[zone_alias].coords
 		var/x_low_2 = other_coords["x_low"]
 		var/y_low_2 = other_coords["y_low"]
@@ -154,12 +158,13 @@
 
 		// sov googled this algorithm for me :3
 
+		// coords are inclusive cells, so zones sharing a row or column overlap
 		// is one rectangle to the right of the other?
-		if (x_low_1 >= x_high_2 || x_low_2 >= x_high_1)
+		if (x_low_1 > x_high_2 || x_low_2 > x_high_1)
 			continue
 
 		// is one above the other??
-		if (y_low_1 >= y_high_2 || y_low_2 >= y_high_1)
+		if (y_low_1 > y_high_2 || y_low_2 > y_high_1)
 			continue
 
 		// they overlap
@@ -242,6 +247,7 @@
 		return FALSE
 
 	src.elements[elem_alias] = element //registered element
+	src.master.add_screen(element.screen_obj) // tracked by the hud and shown to its clients
 	src.set_elem_position(element, src.coords, pos_x, pos_y) //set pos
 
 /// Removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements

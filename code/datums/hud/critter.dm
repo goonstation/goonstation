@@ -4,8 +4,6 @@
 	var/list/hands = list()
 	/// list of equipment hud elements
 	var/list/equipment = list()
-	/// health hud element
-	var/atom/movable/screen/hud/health = null
 	/// oxygen hud element
 	var/atom/movable/screen/hud/oxygen = null
 	/// fire hud element
@@ -22,6 +20,8 @@
 	var/atom/movable/screen/hud/resist = null
 	/// stamina hud element
 	var/atom/movable/screen/hud/stamina = null
+	/// actual stamina bar
+	var/atom/movable/screen/hud/stamina_bar/stamina_bar = null
 	/// backdrop of stamina hud element
 	var/atom/movable/screen/hud/stamina_back = null
 	/// temperature hud element
@@ -61,23 +61,38 @@
 	if (istext(src.hud_icon))
 		src.hud_icon = file(src.hud_icon)
 
+/datum/hud/critter/disposing()
+	src.delete_hud_zone("health_zone")
+	// Will cleanly dispose once everything is in hud zones
+	src.master = null
+	. = ..()
+
+/datum/hud/critter/proc/setup_elements()
 	// element load order determines position in the hud
 	src.create_hand_element()
-	src.create_health_element()
-	src.create_stamina_element()
-	src.create_temperature_element()
-	src.create_gravity_element()
+
+	var/list/health_zone_coords = list(x_low = ceil(WIDE_TILE_WIDTH/2), y_low = TILE_HEIGHT - 1, x_high = WIDE_TILE_WIDTH, y_high = TILE_HEIGHT) // top right, wraps onto the row below when full
+	var/datum/hud_zone/health_zone = src.create_hud_zone(health_zone_coords, "health_zone", EAST, NORTH)
+	health_zone.register_element(src.create_health_element(), "health")
+	if (src.master.use_stamina)
+		health_zone.register_element(src.create_stamina_element(), "stamina")
+	health_zone.register_element(src.create_temperature_element(), "temp")
+	health_zone.register_element(src.create_gravity_element(), "gravity")
 
 	// these elements rely on being able to breathe
 	if (src.master.get_health_holder("oxy"))
-		src.create_oxygen_element()
-		src.create_fire_element()
-		src.create_toxin_element()
+		health_zone.register_element(src.create_oxygen_element(), "oxygen")
+		health_zone.register_element(src.create_fire_element(), "fire")
+		health_zone.register_element(src.create_toxin_element(), "toxin")
 
-	src.create_radiation_element()
+	health_zone.register_element(src.create_radiation_element(), "rad")
 
 	if (src.master.can_bleed)
-		src.create_bleeding_element()
+		health_zone.register_element(src.create_bleeding_element(), "bleeding")
+
+	// warnings start inactive, so they stay out of the way until they have something to show
+	for (var/warning in list("oxygen", "fire", "toxin", "rad", "bleeding"))
+		health_zone.set_element_hidden(warning, TRUE)
 
 	src.create_throwing_element()
 
@@ -87,7 +102,6 @@
 	src.create_rest_element()
 	src.create_resist_element()
 	src.create_equipment_element()
-
 
 /// clears owner mob
 /datum/hud/critter/clear_master()
@@ -178,12 +192,14 @@
 	if (!src.oxygen)
 		return
 	src.oxygen.icon_state = "oxy[status]"
+	src.show_warning("oxygen", status)
 
 /// sets the breathing fire icon on the hud to show breathing fire status
 /datum/hud/critter/proc/set_breathing_fire(var/status)
 	if (!src.fire)
 		return
 	src.fire.icon_state = "fire[status]"
+	src.show_warning("fire", status)
 
 /// updates the hand icon(s) to reflect which hand is active
 /datum/hud/critter/proc/update_hands()
@@ -289,29 +305,33 @@
 					src.master.force_laydown_standup()
 				src.update_resting()
 
-/// updates health hud element
+/// Updates health hud element
 /datum/hud/critter/proc/update_health()
-	if (!isdead(src.master))
-		if (!src.health) //Runtime fix: Cannot modify null.icon_state
-			return
-		var/h_ratio = (src.master.health / src.master.max_health) * 100
-		switch(h_ratio)
-			if(90 to INFINITY)
-				src.health.icon_state = "health0" // green with green marker
-			if(75 to 90)
-				src.health.icon_state = "health1" // green
-			if(60 to 75)
-				src.health.icon_state = "health2" // yellow
-			if(45 to 60)
-				src.health.icon_state = "health3" // orange
-			if(20 to 45)
-				src.health.icon_state = "health4" // dark orange
-			if(10 to 20)
-				src.health.icon_state = "health5" // red
-			else
-				src.health.icon_state = "health6" // crit
-	else
-		src.health.icon_state = "health7"         // dead
+	var/datum/hud_element/health_elem = src.get_hudzone("health_zone").get_element("health")
+	var/atom/movable/screen/hud/screen_obj = health_elem.screen_obj
+	if (isnull(screen_obj))
+		return
+	if (isdead(src.master))
+		screen_obj.icon_state = "health7"		// dead
+		return
+
+	var/h_ratio = (src.master.health / src.master.max_health) * 100
+	switch(h_ratio)
+		if(90 to INFINITY)
+			screen_obj.icon_state = "health0"	// green with green marker
+		if(75 to 90)
+			screen_obj.icon_state = "health1"	// green
+		if(60 to 75)
+			screen_obj.icon_state = "health2"	// yellow
+		if(45 to 60)
+			screen_obj.icon_state = "health3"	// orange
+		if(20 to 45)
+			screen_obj.icon_state = "health4"	// dark orange
+		if(10 to 20)
+			screen_obj.icon_state = "health5"	// red
+		else
+			screen_obj.icon_state = "health6"	// crit
+
 
 /// updates intent hud element
 /datum/hud/critter/proc/update_intent()
@@ -331,19 +351,21 @@
 
 /// updates all status effect hud elements
 /datum/hud/critter/proc/update_status_effects()
-	src.sync_status_effects(src.master, src.hud_icon, "NORTH-0.7", -0.6)
+	// status effects sit just under the indicators, so drop them by any extra rows the health zone wrapped onto
+	var/datum/hud_zone/health_zone = src.get_hudzone("health_zone")
+	src.sync_status_effects(src.master, src.hud_icon, "NORTH-[0.7 + health_zone?.vertical_offset]", 0.4)
 
-//HUMAN COPOY PASTE
-/// updates stamina sprinting icon state
-/datum/hud/critter/proc/set_sprint(var/on)
-	if(src.stamina)
-		src.stamina.icon_state = on ? "stamina_sprint" : "stamina"
+/// Updates stamina sprinting icon state
+/datum/hud/critter/proc/set_sprint(on)
+	var/datum/hud_element/stamina_elem = src.get_hudzone("health_zone").get_element("stamina")
+	stamina_elem?.screen_obj.icon_state = on ? "stamina_sprint" : "stamina"
 
 /// updates bleeding hud element
 /datum/hud/critter/proc/update_blood_indicator()
 	if (!src.bleeding) return //doesn't have a hud element to update
 	if (isdead(src.master))
 		src.bleeding.icon_state = "blood0"
+		src.show_warning("bleeding", FALSE)
 		src.bleeding.tooltip_options = list("theme" = "healthDam0")
 		return
 
@@ -364,6 +386,7 @@
 			theme = 6
 
 	src.bleeding.icon_state = "blood[state]"
+	src.show_warning("bleeding", state)
 	src.bleeding.tooltip_options = list("theme" = "healthDam[theme]")
 
 /// updates temperature hud element
@@ -415,6 +438,7 @@
 	if (!src.toxin)
 		return
 	src.toxin.icon_state = "tox[status]"
+	src.show_warning("toxin", status)
 
 /// updates radiation hud element
 /datum/hud/critter/proc/update_rad_indicator()
@@ -422,6 +446,11 @@
 		return
 	var/status = (TIME - src.master.last_radiation_dose_time) < LIFE_PROCESS_TICK_SPACING
 	src.rad.icon_state = "rad[status]"
+	src.show_warning("rad", status)
+
+/// Warning indicators only take up a slot in the health zone while they're active, so there are no gaps between the rest
+/datum/hud/critter/proc/show_warning(elem_alias, active)
+	src.get_hudzone("health_zone")?.set_element_hidden(elem_alias, !active)
 
 /// updates resting status
 /datum/hud/critter/proc/update_resting()
@@ -486,51 +515,51 @@
 	src.right_offset = initial_hand_offset + length(src.master.hands)
 
 /datum/hud/critter/proc/create_health_element()
-	src.health = src.create_screen("health", "health", src.hud_icon, "health0",\
-	"EAST[src.next_topright()],NORTH", HUD_LAYER)
+	return new /datum/hud_element(src.create_screen("health", "Health", src.hud_icon, "health0"))
 
 /datum/hud/critter/proc/create_stamina_element()
-	if (src.master.use_stamina)
-		var/stamloc = "EAST[src.next_topright()], NORTH"
-		src.stamina = src.create_screen("stamina","Stamina", src.hud_icon, "stamina",\
-		stamloc, HUD_LAYER, tooltip_options = list("theme" = "stamina"))
-		src.stamina.mouse_opacity = 2
-		src.stamina_back = src.create_screen("stamina_back","Stamina", src.hud_icon, "stamina_back",\
-		stamloc, HUD_LAYER_UNDER_1)
-		if (src.master.stamina_bar)
-			src.stamina.desc = src.master.stamina_bar.getDesc(src.master)
+	var/atom/movable/screen/hud/stam_back = src.create_screen("stamina_back", "Stamina", src.hud_icon, "stamina_back", layer = HUD_LAYER_UNDER_2)
+	src.stamina_bar = create_screen("stamina_bar","Stamina", src.hud_icon, "stamina_bar", layer = HUD_LAYER_UNDER_1, customType = /atom/movable/screen/hud/stamina_bar)
+	var/atom/movable/screen/hud/stam_front = src.create_screen("stamina", "Stamina", src.hud_icon, "stamina", layer = HUD_LAYER, tooltip_options = list("theme" = "stamina"), mouse_opacity = 2)
+	// drawn through the front so they follow it wherever the zone places it, and stam_back can still be flicked
+	stam_front.vis_contents += list(stam_back, src.stamina_bar)
+	stam_front.desc = src.stamina_bar.getDesc(src.master)
+	src.stamina = stam_front
+	src.stamina_back = stam_back
+	return new /datum/hud_element(
+		stam_front
+	)
 
 /datum/hud/critter/proc/create_temperature_element()
-	src.bodytemp = src.create_screen("bodytemp","Temperature", src.hud_icon, "temp0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "tempInd0"))
-	src.bodytemp.desc = "The temperature feels fine."
+	src.bodytemp = src.create_screen("bodytemp", "Temperature", src.hud_icon, "temp0", tooltip_options = list("theme" = "tempInd0"), desc = "The temperature feels fine.")
+	return new /datum/hud_element(src.bodytemp)
 
 /datum/hud/critter/proc/create_oxygen_element()
-	src.oxygen = src.create_screen("oxygen", "Suffocation Warning", src.hud_icon, "oxy0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER)
+	src.oxygen = src.create_screen("oxygen", "Suffocation Warning", src.hud_icon, "oxy0")
+	return new /datum/hud_element(src.oxygen)
 
 /datum/hud/critter/proc/create_fire_element()
-	src.fire = src.create_screen("fire","Fire Warning", src.hud_icon, "fire0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER)
+	src.fire = src.create_screen("fire","Fire Warning", src.hud_icon, "fire0")
+	return new /datum/hud_element(src.fire)
 
 /datum/hud/critter/proc/create_toxin_element()
-	src.toxin = src.create_screen("toxin","Toxic Warning",src.hud_icon, "toxin0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusToxin"))
-	src.toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
+	src.toxin = src.create_screen("toxin","Toxic Warning",src.hud_icon, "tox0", tooltip_options = list("theme" = "statusToxin"),\
+	desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied.")
+	return new /datum/hud_element(src.toxin)
 
 /datum/hud/critter/proc/create_radiation_element()
-	src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusRad"))
-	src.rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
+	src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0", tooltip_options = list("theme" = "statusRad"),\
+	desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied.")
+	return new /datum/hud_element(src.rad)
 
 /datum/hud/critter/proc/create_bleeding_element()
-	src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
-	src.bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
+	src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0", tooltip_options = list("theme" = "healthDam0"),\
+	desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied.")
+	return new /datum/hud_element(src.bleeding)
 
 /datum/hud/critter/proc/create_gravity_element()
-	src.gravity = src.create_screen("gravity","Gravity", src.hud_icon, "gravity2",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "gravInd02"))
+	src.gravity = src.create_screen("gravity","Gravity", src.hud_icon, "gravity2", tooltip_options = list("theme" = "gravInd02"))
+	return new /datum/hud_element(src.gravity)
 
 /datum/hud/critter/proc/create_throwing_element()
 	src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, src.master.can_throw ? "throw0" : "drop0",\
