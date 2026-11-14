@@ -208,3 +208,7 @@ TYPEINFO(/obj/flock_structure/relay)
 		var/alpha_min = clamp(255 - amount * 6, 100, 255)
 		animate(src, time = 0.1 SECONDS, color = list(1.5,0,0,0, 0,1.5,0,0, 0,0,1.5,0, 0,0,0,alpha_min/255, 0,0,0,0))
 		animate(time = 0.3 SECONDS, color = null, alpha = 255)
+
+/obj/flock_structure/relay/emp_act()
+	takeDamage("brute", 5)
+	playsound(src.loc, 'sound/misc/flockmind/flockdrone_fart.ogg', 70, TRUE)
