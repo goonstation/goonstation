@@ -584,9 +584,16 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 	attack_self(var/mob/user)
 		if(src.steel_sheets)
-			src.steel_sheets.max_stack = initial(src.steel_sheets.max_stack)
-			user.put_in_hand_or_drop(steel_sheets)
+			var/obj/item/sheet/ejected_sheets = src.steel_sheets
 			src.steel_sheets = null
+
+			ejected_sheets.max_stack = initial(ejected_sheets.max_stack)
+			while (ejected_sheets.amount > ejected_sheets.max_stack)
+				var/obj/item/sheet/split_sheets = ejected_sheets.split_stack(ejected_sheets.max_stack)
+				if (!split_sheets)
+					break
+				user.put_in_hand_or_drop(split_sheets)
+			user.put_in_hand_or_drop(ejected_sheets)
 			boutput(user,SPAN_NOTICE("You eject the steel sheets stored in [src]."))
 			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 			return
