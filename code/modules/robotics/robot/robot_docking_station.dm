@@ -226,7 +226,16 @@ TYPEINFO(/obj/machinery/recharge_station)
 		return
 	if (src.status & (BROKEN | NOPOWER))
 		return
-	if (isitem(AM) && can_act(user))
+	if (!can_act(user))
+		// allow no-power/cell silicons to drag themselves into docking stations
+		if (!(user == AM)) // bail if not themselves
+			return
+		if (!(isrobot(user) || ishivebot(user))) // only allow cyborg or hivebot
+			return
+		if (is_incapacitated(user, ignore_no_power=TRUE)) // only allow if able to act ignoring power
+			return
+
+	if (isitem(AM))
 		src.Attackby(AM, user)
 		return
 

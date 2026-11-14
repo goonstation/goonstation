@@ -563,7 +563,8 @@ TYPEINFO(/obj/item/mechanics)
 		if (!src.dont_disconnect_on_change)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		if(src && !QDELETED(src))
-			src.material_trigger_when_attacked(used_wrench, user, 1)
+			src.material_trigger_when_hit(used_wrench, user, MATERIAL::IMPACT::MELEE)
+			used_wrench.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 		return TRUE
 
 	attackby(obj/item/W, mob/user)
@@ -750,7 +751,7 @@ TYPEINFO(/obj/item/mechanics)
 			// largely stolen from the gene booth. thanks, gene booth.
 			//subtract from perp bank account
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(perp_id.registered)
+			account = global.data_core.get_bank_record(perp_id.registered)
 
 			if (account)
 				if (account["current_money"] >= src.price)

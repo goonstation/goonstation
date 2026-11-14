@@ -558,14 +558,10 @@ TYPEINFO(/obj/submachine/poster_creator)
 			logTheThing(LOG_STATION, usr, "edited wanted poster's name: [ptext]")
 
 		else if (href_list["selectphoto"])
-			var/ptext = scrubbed_input(usr, "Enter name or ID of crew to search for:", "Locate File Photo", src.plist["name"])
+			var/ptext = scrubbed_input(usr, "Enter name of crew to search for:", "Locate File Photo", src.plist["name"])
 			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
-			var/datum/db_record/R
-			for (var/datum/db_record/rec as anything in data_core.general.records)
-				if ((ckey(rec["name"]) == ckey(ptext) || rec["id"] == ptext))
-					R = rec
-					break
+			var/datum/db_record/personnel/general/R = global.data_core.get_general_record(ptext)
 			if (!istype(R))
 				boutput(usr, SPAN_ALERT("No record found for \"[ptext]\"."))
 				return

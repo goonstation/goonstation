@@ -1,7 +1,5 @@
 ABSTRACT_TYPE(/datum/db_record_group)
 /datum/db_record_group
-	/// The main menu that this record group should use.
-	var/main_menu = "main"
 	/// The prompt to give a user when displaying a list of records.
 	var/record_list_prompt = "Please select a record:"
 	/// The prompt to give a user when requesting a string to search for within the record group.
@@ -138,9 +136,9 @@ ABSTRACT_TYPE(/datum/db_record_group)
 
 /datum/db_record_group/proc/get_commands(datum/db_record/record)
 	if (src.can_add_and_remove_records)
-		return "<br>(R) Redraw <br>(D) Delete <br>(P) Print <br>(0) Return to index."
+		return "<br>(R) Redraw <br>(D) Delete <br>(P) Print <br>(0) Return"
 	else
-		return "<br>(R) Redraw <br>(P) Print <br>(0) Return to index."
+		return "<br>(R) Redraw <br>(P) Print <br>(0) Return"
 
 /datum/db_record_group/proc/input_command(datum/db_manager_menu/record_view/menu, datum/db_record/record, command)
 	switch (command)

@@ -160,6 +160,10 @@
 			alert("Invalid coordinates")
 			return
 	var/turf/T = get_turf(src.mob)
+	if (!T) // ruh roh
+		alert("No turf found! Nullspaced?")
+		src.jumptocoord(1,1,1) // panik
+		return
 	src.jumptocoord(T.x, T.y, z)
 
 /client/proc/jtz(z = 1 as num)

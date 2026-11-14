@@ -15,7 +15,7 @@
 			cryo.stored_mobs -= owner.current
 			cryo.stored_mobs_volunteered -= owner.current
 			cryo.stored_crew_names -= owner.current.real_name
-			var/datum/db_record/crew_record = data_core.general.find_record("id", owner.current.datacore_id)
+			var/datum/db_record/personnel/general/crew_record = global.data_core.get_general_record(id = owner.current.datacore_id)
 			if (!isnull(crew_record))
 				crew_record["p_stat"] = "Active"
 			var/datum/job/job = find_job_in_controller_by_string(owner.current.job, soft=TRUE)

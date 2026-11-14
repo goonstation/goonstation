@@ -68,6 +68,7 @@ export interface CharacterPreferencesData {
   listenOoc: BooleanLike;
   listenLooc: BooleanLike;
   flyingChatHidden: BooleanLike;
+  flyingChatPdaHidden: BooleanLike;
   autoCapitalization: BooleanLike;
   localDeadchat: BooleanLike;
   targetingCursor: string;

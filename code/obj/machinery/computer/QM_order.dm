@@ -48,7 +48,7 @@
 	if(src.scan)
 		account_data["scanned_name"] = src.scan.registered
 		account_data["scanned_job"] = src.scan.assignment
-		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+		var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 		if(account)
 			account_data["scanned_credits"] = account["current_money"]
 	.["account_data"] = account_data
@@ -77,7 +77,7 @@
 			if (src.scan.registered in global.FrozenAccounts)
 				boutput(user, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 				return
-			var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+			var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 			var/reccomended_amount = round(account["current_money"]/20) //Make sure to donate generously!
 			var/text = "How much to donate? <br>Current Budget: [global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]]"
 			var/amount = tgui_input_number(user, text , src.name, reccomended_amount, account["current_money"])
@@ -129,7 +129,7 @@
 		if (src.scan.registered in global.FrozenAccounts)
 			boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 			return
-		account = FindBankAccountByName(src.scan.registered)
+		account = global.data_core.get_bank_record(src.scan.registered)
 	var/datum/supply_order/order = new/datum/supply_order()
 	order.object = supply_pack
 	order.orderedby = user.name
@@ -211,7 +211,7 @@
 /obj/machinery/computer/ordercomp/proc/scan_id(var/obj/item/card/id/id_card, mob/user)
 	if(!istype(id_card))
 		return
-	var/datum/db_record/account = FindBankAccountByName(id_card.registered)
+	var/datum/db_record/account = global.data_core.get_bank_record(id_card.registered)
 	if(!account)
 		boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
 		src.scan = null

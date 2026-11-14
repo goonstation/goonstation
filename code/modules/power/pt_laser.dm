@@ -138,7 +138,7 @@
 		if (!src.check_access(id_card))
 			boutput(user, SPAN_ALERT("Access denied."))
 			return TRUE
-		var/datum/db_record/account = FindBankAccountByName(id_card.registered)
+		var/datum/db_record/account = global.data_core.get_bank_record(id_card.registered)
 		if (!account)
 			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
 			return TRUE

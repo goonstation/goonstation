@@ -73,6 +73,7 @@
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(ON_COOLDOWN(src, "injection_cooldown", 0.5 SECONDS))
 			user.show_text("[src] is still recharging, give it a moment! ", "red")
+			return
 
 		if (issilicon(target))
 			user.show_text("[src] cannot be used on silicon lifeforms!", "red")

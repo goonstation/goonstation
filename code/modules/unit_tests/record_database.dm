@@ -2,10 +2,10 @@
 
 /datum/db_record/unit_test/build_fields()
 	return alist(
-		"id"			= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
-		"test_id"		= new /datum/record_field/number(src, "Test ID", 0),
-		"test_index"	= new /datum/record_field/string(src, "Test Index", "0"),
-		"test_name"		= new /datum/record_field/string(src, "Test Name", "New Record"),
+		BUILD_FIELD("id",			/datum/record_field/string,	"ID", "000000", @"[a-f0-9]{6}"),
+		BUILD_FIELD("test_id",		/datum/record_field/number,	"Test ID", 0),
+		BUILD_FIELD("test_index",	/datum/record_field/string,	"Test Index", "0"),
+		BUILD_FIELD("test_name",	/datum/record_field/string,	"Test Name", "New Record"),
 	)
 
 

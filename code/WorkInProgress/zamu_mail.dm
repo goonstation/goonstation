@@ -218,21 +218,21 @@
 	// get a list of all living, connected players
 	// that are not in the afterlife bar
 	// and which are on the manifest
-	for (var/client/C)
+	for (var/client/C in global.clients)
 		if (!isliving(C.mob) || isdead(C.mob) || !ishuman(C.mob) || inafterlife(C.mob))
 			continue
 
 		var/mob/living/carbon/human/M = C.mob
 		if (!istype(M)) continue	// this shouldn't be possible given ishuman, but lol
 
-		var/datum/db_record/manifest_record = data_core.general.find_record("id", M.datacore_id)
-		if (!manifest_record) continue	// must be on the manifest to get mail, sorry
+		var/datum/db_record/personnel/general/record = global.data_core.get_general_record(id = M.datacore_id)
+		if (!istype(record)) continue	// must be on the manifest to get mail, sorry
 
 		// these are all things we will want later
 		crew[M] = list(
-			name = manifest_record["name"],
-			job = manifest_record["rank"],
-			dna = manifest_record["dna"],
+			name = record["name"],
+			job = record["rank"],
+			dna = record["dna"],
 			)
 
 	// nobody here
