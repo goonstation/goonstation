@@ -3,8 +3,6 @@
 	var/last_recovering_msg = 0
 
 	process()
-		//proc/handle_stuns_lying(datum/controller/process/mobs/parent)
-		var/lying_old = owner.lying
 		var/cant_lie = (owner.buckled && !istype(owner.buckled, /obj/stool/bed)) || robot_owner || hivebot_owner || istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell)|| (human_owner && (human_owner.limbs && (istype(human_owner.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) || istype(human_owner.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads)) && !locate(/obj/table, human_owner.loc) && !locate(/obj/machinery/optable, human_owner.loc)))
 
 		var/list/statusList = owner.getStatusList()
@@ -70,21 +68,4 @@
 			owner.blinded = TRUE
 			setdead(owner)
 
-		if (owner.lying != lying_old)
-			owner.update_lying()
-			var/can_be_dense = initial(owner.density)
-			if(ismobcritter(owner) && isdead(owner))
-				can_be_dense = FALSE
-			owner.set_density(!owner.lying && can_be_dense)
-
-			if (owner.lying && !owner.buckled && !HAS_ATOM_PROPERTY(owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND))
-				var/turf/T = get_turf(owner)
-				var/sound_to_play = 'sound/misc/body_thud.ogg'
-				if (T?.active_liquid && T.active_liquid.my_depth_level <= 3)
-					T.active_liquid.Crossed(owner)
-					sound_to_play = 'sound/misc/splash_2.ogg'
-				else if(T?.active_liquid)
-					sound_to_play = null
-				if(sound_to_play)
-					playsound(owner.loc, sound_to_play, human_owner ? 40 : 15, 1, 0.3)
 		..()
