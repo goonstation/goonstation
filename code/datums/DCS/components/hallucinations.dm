@@ -96,6 +96,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 //                    TRIPPY COLORS
 //#########################################################
 
+#define TRIPPY_SHIFT_DURATION (5 SECONDS)
 
 /// Trippy colors - apply an RGB swap to client's vision
 /datum/component/hallucination/trippy_colors
@@ -105,12 +106,12 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 	do_mob_tick(mob, mult)
 		if(parent_mob.client && (current_color_pattern == 0 || probmult(20))) //trippy colours
-			if (!ON_COOLDOWN(parent_mob, "trippy_color_shift", 5 SECONDS))
+			if (!ON_COOLDOWN(parent_mob, "trippy_color_shift", (TRIPPY_SHIFT_DURATION + (2 SECONDS))))
 				if(src.current_color_pattern == 1)
-					parent_mob.client.animate_color(pattern2, time=(3 SECONDS), easing=SINE_EASING)
+					parent_mob.client.animate_color(pattern2, time=TRIPPY_SHIFT_DURATION, easing=SINE_EASING)
 					src.current_color_pattern = 2
 				else
-					parent_mob.client.animate_color(pattern1, time=(3 SECONDS), easing=SINE_EASING)
+					parent_mob.client.animate_color(pattern1, time=TRIPPY_SHIFT_DURATION, easing=SINE_EASING)
 					src.current_color_pattern = 1
 		..()
 
@@ -118,8 +119,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		. = ..()
 		UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
 		if(parent_mob?.client)
-			animate(parent_mob.client, color = null, time = (3 SECONDS), easing = SINE_EASING)
+			animate(parent_mob.client, color = null, time = TRIPPY_SHIFT_DURATION, easing = SINE_EASING)
 
+#undef TRIPPY_SHIFT_DURATION
 
 //#########################################################
 //                    RANDOM SOUNDS
