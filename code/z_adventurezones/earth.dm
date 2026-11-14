@@ -200,6 +200,8 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	mbc
 		ckey = "mybluecorners"
 		name = "Office of Dotty Spud"
+	mentors
+		name = "Office of The Mentor Collective"
 	mordent
 		ckey = "mordent"
 		name = "Office of Mordent"
