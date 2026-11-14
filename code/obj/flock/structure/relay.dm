@@ -211,4 +211,4 @@ TYPEINFO(/obj/flock_structure/relay)
 
 /obj/flock_structure/relay/emp_act()
 	takeDamage("brute", 5)
-	playsound(src.loc, "sound/misc/flockmind/flockdrone_fart.ogg", 70, TRUE)
+	playsound(src.loc, 'sound/misc/flockmind/flockdrone_fart.ogg', 70, TRUE)
