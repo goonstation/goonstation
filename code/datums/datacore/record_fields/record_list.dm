@@ -19,8 +19,7 @@
 	return "Record list record fields are read-only!"
 
 /datum/record_field/record_list/input_load(datum/db_manager_menu/field_input/menu)
-	menu.parent.current_record_group = src.record_group
-	menu.parent.switch_menu_to("record_list")
+	menu.parent.switch_record_group(src.record_group, "record_list")
 
 /datum/record_field/record_list/input_text(datum/db_manager_menu/field_input/menu, text)
 	CRASH("Record list record fields are read-only!")

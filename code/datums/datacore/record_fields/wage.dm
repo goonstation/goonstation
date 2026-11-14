@@ -11,4 +11,8 @@
 	if (!.)
 		return
 
-	logTheThing(LOG_STATION, usr, "set wage for [menu.record["name"]] from [old_value][CREDIT_SIGN] to [src.value][CREDIT_SIGN].")
+	var/datum/db_record/personnel/general/record = global.data_core.get_general_record(id = src.parent["id"])
+	if (!istype(record))
+		CRASH("Attempted to edit field on headless record.")
+
+	logTheThing(LOG_STATION, usr, "set wage for [record["name"]] from [old_value][CREDIT_SIGN] to [src.value][CREDIT_SIGN].")

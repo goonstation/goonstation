@@ -412,7 +412,16 @@
 
 #define rustg_json_is_valid(text) (RUSTG_CALL(RUST_G, "json_is_valid")(text) == "true")
 
-#define rustg_log_write(fname, text, format) RUSTG_CALL(RUST_G, "log_write")(fname, text, format)
+/**
+ * Writes a line to a log file.
+ *
+ * Arguments:
+ * * fname - path to the log file
+ * * text - the log message
+ * * format - optional, "false" writes the text as-is without a timestamp
+ * * timezone - optional, IANA timezone name, such as `Europe/London`, or `Local` for the server's time. Defaults to UTC.
+ */
+#define rustg_log_write(fname, text, args...) RUSTG_CALL(RUST_G, "log_write")(fname, text, args)
 /proc/rustg_log_close_all() return RUSTG_CALL(RUST_G, "log_close_all")()
 
 #define rustg_noise_get_at_coordinates(seed, x, y) RUSTG_CALL(RUST_G, "noise_get_at_coordinates")(seed, x, y)
@@ -470,16 +479,6 @@
  */
 #define rustg_redis_lpop(key, count) RUSTG_CALL(RUST_G, "redis_lpop")(key, count)
 
-/*
- * Takes in a string and json_encode()"d lists to produce a sanitized string.
- * This function operates on whitelists, there is currently no way to blacklist.
- * Args:
- * * text: the string to sanitize.
- * * attribute_whitelist_json: a json_encode()'d list of HTML attributes to allow in the final string.
- * * tag_whitelist_json: a json_encode()'d list of HTML tags to allow in the final string.
- */
-#define rustg_sanitize_html(text, attribute_whitelist_json, tag_whitelist_json) RUSTG_CALL(RUST_G, "sanitize_html")(text, attribute_whitelist_json, tag_whitelist_json)
-
 /// Provided a static RSC file path or a raw text file path, returns the duration of the file in deciseconds as a float.
 /proc/rustg_sound_length(file_path)
 	var/static/list/sound_cache
@@ -522,6 +521,66 @@
  *)
 */
 #define rustg_sound_length_list(file_paths) json_decode(RUSTG_CALL(RUST_G, "sound_len_list")(json_encode(file_paths)))
+
+// SQL calls return JSON: {"status": "ok", ...} or {"status": "err", "data": "<message>"}.
+// Async calls return a job id; use rustg_sqlite_check_query(job_id) to get the result.
+
+/// Read/write access. Creates the file if it does not exist.
+#define RUSTG_SQLITE_READ_WRITE "read_write"
+/// Read-only access. Other processes can still write to the file.
+#define RUSTG_SQLITE_READ_ONLY "read_only"
+/// Read-only access without locking or change checks. Do not modify the file while it is open.
+#define RUSTG_SQLITE_IMMUTABLE "immutable"
+
+/// Rows are lists of values in column order.
+#define RUSTG_SQLITE_ROWS_LISTS "lists"
+/// Rows are associative lists keyed by column name. Careful: duplicate names overwrite earlier values.
+#define RUSTG_SQLITE_ROWS_ASSOC "assoc"
+
+/**
+ * Opens a database. Returns {"status": "ok", "handle": "<handle>"}.
+ *
+ * Arguments:
+ * * path - The database file, relative paths are allowed. `:memory:` creates an in-memory database.
+ * * mode - RUSTG_SQLITE_READ_WRITE, RUSTG_SQLITE_READ_ONLY or RUSTG_SQLITE_IMMUTABLE.
+ * * rows - Optional. RUSTG_SQLITE_ROWS_LISTS (default) or RUSTG_SQLITE_ROWS_ASSOC.
+ */
+#define rustg_sqlite_open(path, mode, rows...) RUSTG_CALL(RUST_G, "sqlite_open")(path, mode, ##rows)
+/// Closes a database. Async queries already running will finish.
+#define rustg_sqlite_close(handle) RUSTG_CALL(RUST_G, "sqlite_close")(handle)
+
+/**
+ * Runs one SQL query. Returns {"status": "ok", "columns": [names], "rows": [rows], "affected": <# rows changed>}.
+ *
+ * Arguments:
+ * * query - SQL with `?` or `:name` parameters.
+ * * params - null, a list of values for `?`, or an associative list for named parameters, such as `list(":name" = "bob")`.
+ *   Values can be numbers, text, null, or byte lists (0-255) for blobs.
+ */
+#define rustg_sqlite_query_blocking(handle, query, params) RUSTG_CALL(RUST_G, "sqlite_query_blocking")(handle, query, json_encode(params))
+/// Runs a query on another thread. Returns a job id, or an error JSON.
+#define rustg_sqlite_query_async(handle, query, params) RUSTG_CALL(RUST_G, "sqlite_query_async")(handle, query, json_encode(params))
+/**
+ * Runs multiple SQL queries in one transaction. If any fail, none take effect.
+ * Returns {"status": "ok", "results": [{"columns": [names], "rows": [rows], "affected": <rows changed>}, ...]}.
+ *
+ * Arguments:
+ * * queries - A list of list("query" = query, "params" = params).
+ */
+#define rustg_sqlite_transaction_blocking(handle, queries) RUSTG_CALL(RUST_G, "sqlite_transaction_blocking")(handle, json_encode(queries))
+/// Runs a transaction on another thread. Returns a job id, or an error JSON.
+#define rustg_sqlite_transaction_async(handle, queries) RUSTG_CALL(RUST_G, "sqlite_transaction_async")(handle, json_encode(queries))
+/**
+ * Runs `;`-separated SQL, like table creation or pragmas. Blocks until it finishes.
+ * Returns {"status": "ok"}, or {"status": "err", "data": "<SQLite message>"} if a query fails.
+ * Queries before the failing query still take effect.
+ *
+ * Arguments:
+ * * sql - The SQL, e.g. "CREATE TABLE a (x); CREATE TABLE b (y);".
+ */
+#define rustg_sqlite_execute_batch(handle, sql) RUSTG_CALL(RUST_G, "sqlite_execute_batch")(handle, sql)
+/// Returns an async result, or a RUSTG_JOB_* status (e.g. no results yet).
+#define rustg_sqlite_check_query(job_id) RUSTG_CALL(RUST_G, "sqlite_check_query")("[job_id]")
 
 #define rustg_time_microseconds(id) text2num(RUSTG_CALL(RUST_G, "time_microseconds")(id))
 #define rustg_time_milliseconds(id) text2num(RUSTG_CALL(RUST_G, "time_milliseconds")(id))

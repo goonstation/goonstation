@@ -423,7 +423,7 @@
 		var/obj/item/card/id/id_card = get_id_card(I)
 		if (istype(id_card))
 			boutput(user, SPAN_NOTICE("You swipe the ID card."))
-			account = FindBankAccountByName(id_card.registered)
+			account = global.data_core.get_bank_record(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Barcode Computer")
 				if (enterpin == id_card.pin)

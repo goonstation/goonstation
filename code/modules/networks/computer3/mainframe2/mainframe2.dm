@@ -544,12 +544,7 @@
 	if (!program || (program == src.os))
 		return FALSE
 
-	var/processing_length = length(src.processing)
-	if (src.processing[processing_length] == program)
-		src.processing -= program
-	else if (program.progid && (program.progid <= processing_length))
-		src.processing[program.progid] = null
-
+	src.processing[program.progid] = null
 	program.initialized = FALSE
 	program.unloaded()
 

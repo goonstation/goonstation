@@ -898,15 +898,19 @@
 
 					src.master.display_alert(alert_beep, previewtext, groupAddress, src.ManageRecentCallers(sendername))
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
+					var/dest = "DM"
 					if (groupAddress)
 						if (islist(groupAddress))
+							dest = groupAddress[1] // first
 							if (MGA_CRISIS in groupAddress)
 								// first other group only sorry
 								displayMessage += " [uppertext((groupAddress[1]))] CRISIS \[<a href='byond://?src=\ref[src];input=ack;alert_group=[groupAddress[1]];responder=[src.master.owner];caller=[signal.data["sender"]];noreply=[signal.data["noreply"]]'>ACK</a>\]"
 							else
 								displayMessage += " to [jointext(groupAddress,", ")]"
 						else
+							dest = groupAddress
 							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
+					src.master.hud_message(signal.data["message"], dest)
 					var/signal_message = html_encode(signal.data["message"])
 					if (signal.data["is_alert"])
 						signal_message = SPAN_ALERT("<b>[signal_message]</b>")

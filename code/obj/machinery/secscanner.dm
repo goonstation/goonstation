@@ -260,10 +260,8 @@ TYPEINFO(/obj/machinery/secscanner)
 		if (src.check_records)
 			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
-			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
-				if(R["criminal"] == SECURITY::ARREST::STATE::ARREST)
-					threatcount = max(4,threatcount)
-					break
+			if (length(global.data_core.get_open_arrests(perpname)))
+				threatcount = max(4, threatcount)
 
 		return threatcount
 

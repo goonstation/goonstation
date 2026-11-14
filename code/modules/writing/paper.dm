@@ -425,24 +425,22 @@
 	"consort with wizards.", "sell really awesome drugs.", "have all-access.", "know the king.", "make amazing pizza.", "have a toolbox and are not afraid to use it.")
 	var/static/list/general = list("NanoTrasen locked me to this desk and is forcing me to make fortunes for these cookies please help!", "Help I'm trapped in this cookie!", "Buy Discount Dan's today!")
 	var/static/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
-	var/static/initialized = FALSE
 
 	New()
 		var/randme = rand(1,10)
 		var/fortune = "Blah."
-
-		if(!initialized)
-			initialized = TRUE
-			for(var/datum/db_record/t as anything in data_core.general.records)
-				who += "[t["name"]]"
 
 		switch(randme)
 			if(1)
 				fortune = "[pick(sol)]"
 			if(2)
 				fortune = "[pick(general)]"
-			else
+			if(3 to 5)
 				fortune = "[pick(action)] [pick(who)] for they [pick(thing)]"
+			if(6 to 10)
+				var/datum/db_record/personnel/general/record = global.data_core.get_random_general_record()
+				var/record_name = record?["name"]
+				fortune = "[pick(action)] [record_name] for they [pick(thing)]"
 
 		info = {"<font face='System' size='3'><center>YOUR FORTUNE</center><br><br>
 		Discount Dan's is the proud sponsor of your magical fortune. Whether good or bad, delightful or alarming, know it to be true.<br><br>
