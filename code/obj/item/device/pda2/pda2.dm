@@ -1170,7 +1170,7 @@
 		update_overlay("message")
 		return
 
-	proc/hud_message(message)
+	proc/hud_message(message, dest)
 		if (!length(message))
 			return
 
@@ -1193,7 +1193,8 @@
 		var/hud_element = null
 
 		// where we place the maptext depends on hud type
-		// TODO: AI(core/aieye)
+		// we should probably do explicit HUD integration but we'll base it on mob type for now
+		// meatbags
 		if (istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			var/hud_slot = null
@@ -1216,28 +1217,26 @@
 				return
 
 			hud_element = H.hud?.get_by_id(hud_slot)
-
+		// robut
 		else if (istype(M, /mob/living/silicon/robot)) // covers AI Cyborg shells
 			var/mob/living/silicon/robot/R = M
 			hud_element = R.hud?.get_by_id("charge")
-
+		// gumball
 		else if(istype(M, /mob/living/silicon/hivebot))
 			var/mob/living/silicon/hivebot/hivebot = M
 			hud_element = hivebot.hud?.get_by_id("charge")
-
+		// mobcritters
 		else if (istype(M, /mob/living/critter))
-			var/mob/living/critter/critter = M  // Not perfect but *should* work for all critter types
+			var/mob/living/critter/critter = M  // Not perfect but *should* work for all critter types regardless of where held
 			hud_element = critter.hud.get_by_id("throw")
 
 		if (!hud_element)
 			return
 
-		message = "PDA: " + message
 		if (length(message) > 80)
 			message = copytext(message, 1, 77) + "..."
 
-		// TODO: Should this respect observer preferences?
-		DISPLAY_MAPTEXT(hud_element, list(M), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/pda, message)
+		DISPLAY_MAPTEXT(hud_element, list(M), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/pda, message, dest)
 
 	proc/display_message(var/message)
 		if (ismob(loc))
