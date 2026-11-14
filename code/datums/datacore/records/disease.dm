@@ -2,14 +2,14 @@
 
 /datum/db_record/disease/build_fields()
 	return alist(
-		"id"		= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
-		"name"		= new /datum/record_field/string(src, "Name"),
-		"stages"	= new /datum/record_field/number(src, "Number Of Stages", 1, 1, INFINITY),
-		"spread"	= new /datum/record_field/string(src, "Spread"),
-		"cure"		= new /datum/record_field/string(src, "Possible Cure"),
-		"affected"	= new /datum/record_field/string(src, "Affected Species"),
-		"severity"	= new /datum/record_field/string(src, "Severity"),
-		"notes"		= new /datum/record_field/string(src, "Notes"),
+		BUILD_FIELD("id",		/datum/record_field/string, "ID", "000000", @"[a-f0-9]{6}"),
+		BUILD_FIELD("name",		/datum/record_field/string, "Name"),
+		BUILD_FIELD("stages",	/datum/record_field/number, "Number Of Stages", 1, 1, INFINITY),
+		BUILD_FIELD("spread",	/datum/record_field/string, "Spread"),
+		BUILD_FIELD("cure",		/datum/record_field/string, "Possible Cure"),
+		BUILD_FIELD("affected",	/datum/record_field/string, "Affected Species"),
+		BUILD_FIELD("severity",	/datum/record_field/string, "Severity"),
+		BUILD_FIELD("notes",	/datum/record_field/string, "Notes"),
 	)
 
 /datum/db_record/disease/to_display_string()

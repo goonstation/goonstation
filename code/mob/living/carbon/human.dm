@@ -3184,7 +3184,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (!use_visible_name || src.face_visible())
 		target_name = src.real_name
 
-	var/datum/db_record/personnel/security/record = global.data_core.security.find_record("name", target_name)
+	var/datum/db_record/personnel/security/record = global.data_core.get_security_record(target_name)
 	if (!record || (record["criminal"] == SECURITY::ARREST::STATE::ARREST))
 		return
 
@@ -3202,7 +3202,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	var/arrestState = ""
 	var/visibleName = src.face_visible() ? src.real_name : src.name
-	var/datum/db_record/record = data_core.security.find_record("name", visibleName)
+	var/datum/db_record/personnel/security/record = global.data_core.get_security_record(visibleName)
 	if(record)
 		var/criminal = record["criminal"]
 		if(criminal == SECURITY::ARREST::STATE::ARREST || criminal == SECURITY::ARREST::STATE::DETAIN || criminal == SECURITY::ARREST::STATE::SUSPECT || criminal == SECURITY::ARREST::STATE::PAROLE || criminal ==SECURITY::ARREST::STATE::INCARCERATED || criminal == SECURITY::ARREST::STATE::RELEASED || \

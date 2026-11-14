@@ -632,21 +632,7 @@
 			src.slept_through_becoming_the_law = 1	// They can do it on their own time
 			return
 		set_emotion("smug")
-		var/law_prints = null
-		var/obj/item/gun/energy/lawbringer/prints = src.budgun
-		if (prints.owner_prints && !loose)
-			var/search = lowertext(prints.owner_prints)
-			for (var/datum/db_record/R as anything in data_core.general.records)
-				if (search == lowertext(R["fprint_r"]))
-					law_prints = R["name"]
-					break
-				else if (search == lowertext(R["fprint_l"]))
-					law_prints = R["name"]
-					break
-				else if (lowertext(R["rank"]))
-					law_prints = R["name"]
-					break
-		var/dothevoice = "[src] puts on their best impression of [law_prints ? law_prints : "a big mean security person"]."
+		var/dothevoice = "[src] puts on their best impression of a big mean security person."
 		var/saytheline = "I am the law."
 		if (loose)
 			saytheline = pick("LAW.",\

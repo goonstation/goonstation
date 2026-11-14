@@ -1,4 +1,14 @@
 
+(t)sat nov 14 26
+(u)ANNmagedon & ZeWaka
+(p)28087
+(e)🎨🌠|C-Sprites, A-Events
+(+)The lightning "flash" effect in the biodome has been replaced with actual lightning.
+(t)fri nov 13 26
+(u)glowbold
+(p)28213
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)PDAs have flying text messages when equipped in inventory or as a cyborg. Option to disable in the Game Settings tab on your character profile, next to the flying chat option.
 (t)thu nov 12 26
 (u)ANNmagedon
 (p)28288

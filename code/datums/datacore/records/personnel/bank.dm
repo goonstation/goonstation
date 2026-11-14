@@ -2,13 +2,12 @@
 
 /datum/db_record/personnel/bank/build_fields()
 	return alist(
-		"id"			= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
-		"name"			= new /datum/record_field/string(src, "Name", "New Record"),
-		"pda_net_id"	= new /datum/record_field/string(src, "PDA NetID"),
-		"wage"			= new /datum/record_field/number/wage(src, "Wage", 0),
-		"current_money"	= new /datum/record_field/number/balance(src, "Balance", 0),
-		"unionized"		= new /datum/record_field/choice(src, "Unionised", "No", list("Yes", "No")),
-		"notes"			= new /datum/record_field/string(src, "Important Notes", "No notes."),
+		BUILD_FIELD("id",				/datum/record_field/string,			"ID", "000000", @"[a-f0-9]{6}"),
+		BUILD_FIELD("pda_net_id",		/datum/record_field/string,			"PDA NetID"),
+		BUILD_FIELD("wage",				/datum/record_field/number/wage,	"Wage", 0),
+		BUILD_FIELD("current_money",	/datum/record_field/number/balance,	"Balance", 0),
+		BUILD_FIELD("unionized",		/datum/record_field/choice,			"Unionised", "No", list("Yes", "No")),
+		BUILD_FIELD("notes",			/datum/record_field/string,			"Important Notes", "No notes."),
 	)
 
 /datum/db_record/personnel/bank/disposing()
@@ -21,7 +20,6 @@
 	var/datum/job/J = global.find_job_in_controller_by_string(H.job || H.mind.assigned_role)
 
 	src["id"] = H.datacore_id
-	src["name"] = H.real_name
 	src["pda_net_id"] = pda?.net_id
 	src["wage"] = round(J?.wages)
 	src["current_money"] = 100
@@ -36,5 +34,4 @@
 	global.wagesystem.payroll_stipend += src["wage"] * 1.1
 
 /datum/db_record/personnel/bank/update_from_scan(mob/living/carbon/human/H)
-	. = ..()
 	src["pda_net_id"] = astype(H.wear_id, /obj/item/device/pda2)?.net_id

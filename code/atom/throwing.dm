@@ -19,7 +19,15 @@
 			if (L.buckled == src) continue
 			src.throw_impact(A, thr)
 			if (thr.stops_on_mob_hit)
-				. = TRUE
+				// delivery crates aren't halted by mobcritters for cargo's sake
+				if (!(thr.throw_type & THROW_DELIVERY)) // delivery throw type
+					. = TRUE
+				else if (!ismobcritter(A)) // at a mob critter
+					. = TRUE
+				else
+					var/mob/living/critter/critter = A
+					if (critter.client) // that doesn't have a client
+						. = TRUE
 		// **TODO: Better behaviour for windows
 		// which are dense, but shouldn't always stop movement
 		if(isobj(A))

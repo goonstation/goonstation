@@ -22,6 +22,7 @@ var/global/list/z_level_station_outside_area_types = list(
 )
 
 /// Set a minimum gforce across an entire Z-Level e.g. terrainify and oceanify
+// TODO: Move all uses to `set_gforce` on zlevel datum
 proc/set_zlevel_gforce(z_level, new_gforce, update_tethers=FALSE)
 	global.zlevels[z_level].gforce = new_gforce
 	if (update_tethers)

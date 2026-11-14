@@ -174,8 +174,8 @@
 					. += "<br>[SPAN_NOTICE("[Noun_is] wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it.")]"
 
 	if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
-		var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
-		if(sec_record)
+		var/datum/db_record/personnel/security/sec_record = global.data_core.get_security_record(src.name)
+		if (sec_record)
 			var/sechud_flag = sec_record["sec_flag"]
 			if (lowertext(sechud_flag) != "none")
 				. += "<br>[SPAN_NOTICE("[Noun_has] a Security HUD flag set:")] [SPAN_ALERT("[sechud_flag]")]"
