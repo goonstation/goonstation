@@ -13,7 +13,7 @@
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
 		return 0
-	var/datum/db_record/B = FindBankAccountByName(logged_in)
+	var/datum/db_record/B = global.data_core.get_bank_record(logged_in)
 	if (B)
 		return B["current_money"]
 	return "--- account not found ---"
@@ -149,7 +149,7 @@
 	if (istype(ID))
 		boutput(user, SPAN_NOTICE("You swipe the ID card."))
 		var/datum/db_record/account = null
-		account = FindBankAccountByName(ID.registered)
+		account = global.data_core.get_bank_record(ID.registered)
 		if(account)
 			var/enterpin = user.enter_pin("Stock Exchange")
 			if (enterpin == ID.pin)

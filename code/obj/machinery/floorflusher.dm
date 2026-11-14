@@ -259,7 +259,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 					var/mob/living/carbon/human/H = M
 					var/name_to_check = H.face_visible() ? H.real_name : H.name
 
-					var/datum/db_record/personnel/security/R = global.data_core.security.find_record("name", name_to_check)
+					var/datum/db_record/personnel/security/R = global.data_core.get_security_record(name_to_check)
 					if (R)
 						var/criminal_status = R["criminal"]
 						var/set_status = (criminal_status == SECURITY::ARREST::STATE::INCARCERATED) || (criminal_status == SECURITY::ARREST::STATE::DETAIN)

@@ -656,11 +656,13 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		Create(var/mob/M)
 			SPAWN(rand(3 SECONDS, 15 SECONDS)) // stagger in case multiple purchases
-				var/datum/db_record/R = pick(data_core.general.records)
+				var/datum/db_record/personnel/general/record = global.data_core.get_random_general_record()
+				var/record_name = record?["name"]
+
 				var/obj/storage/S = new /obj/storage/crate/packing
-				S.name = "special delivery ([R["name"]])"
+				S.name = "special delivery ([record_name])"
 				var/obj/item/I = new /obj/item/reagent_containers/food/snacks/candy/candyheart(S)
-				I.name = "candy heart (to: [R["name"]] from: [M])"
+				I.name = "candy heart (to: [record_name] from: [M])"
 				if(transception_array) //hand off delivery to array's management systems
 					transception_array.direct_queue += S
 				else

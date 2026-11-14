@@ -406,7 +406,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	// at this point selected = the dude we wanna revive.
 
 	if (wagesystem.clones_for_cash)
-		var/datum/db_record/Ba = FindBankAccountByName(clone_file["name"])
+		var/datum/db_record/Ba = global.data_core.get_bank_record(clone_file["name"])
 		var/account_credit = 0
 
 		if (Ba?["current_money"])

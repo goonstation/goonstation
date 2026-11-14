@@ -989,7 +989,7 @@
 		src.registered = ID.registered
 		src.assignment = ID.assignment
 		src.access = ID.access
-		src.accessed_record = data_core.bank.find_record("name", ID.registered)
+		src.accessed_record = global.data_core.get_bank_record(ID.registered)
 		if (!src.ID_image)
 			src.ID_image = image(src.icon, "blank")
 		src.ID_image = src.ID_card.icon_state
@@ -1169,6 +1169,74 @@
 
 		update_overlay("message")
 		return
+
+	proc/hud_message(message, dest)
+		if (!length(message))
+			return
+
+		if (!ismob(loc))
+			return
+
+		var/mob/M = loc
+
+		if (istype(M, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/AI = M
+			if (AI.deployed_shell)
+				M = AI.deployed_shell
+
+		if (!M.client || M.client.preferences?.flying_chat_pda_hidden)
+			return
+
+		if (isdead(M) || M.sight_check(consciousness_check=TRUE) || !M.literate)
+			return
+
+		var/hud_element = null
+
+		// where we place the maptext depends on hud type
+		// we should probably do explicit HUD integration but we'll base it on mob type for now
+		// meatbags
+		if (istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			var/hud_slot = null
+
+			switch(H.get_slot_from_item(src))
+				if(SLOT_WEAR_ID)
+					hud_slot = "id"
+				if(SLOT_BELT)
+					hud_slot = "belt"
+				if(SLOT_L_STORE)
+					hud_slot = "storage1"
+				if(SLOT_R_STORE)
+					hud_slot = "storage2"
+				if(SLOT_L_HAND)
+					hud_slot = "lhand"
+				if(SLOT_R_HAND)
+					hud_slot = "rhand"
+
+			if (!hud_slot)
+				return
+
+			hud_element = H.hud?.get_by_id(hud_slot)
+		// robut
+		else if (istype(M, /mob/living/silicon/robot)) // covers AI Cyborg shells
+			var/mob/living/silicon/robot/R = M
+			hud_element = R.hud?.get_by_id("charge")
+		// gumball
+		else if(istype(M, /mob/living/silicon/hivebot))
+			var/mob/living/silicon/hivebot/hivebot = M
+			hud_element = hivebot.hud?.get_by_id("charge")
+		// mobcritters
+		else if (istype(M, /mob/living/critter))
+			var/mob/living/critter/critter = M  // Not perfect but *should* work for all critter types regardless of where held
+			hud_element = critter.hud.get_by_id("throw")
+
+		if (!hud_element)
+			return
+
+		if (length(message) > 80)
+			message = copytext(message, 1, 77) + "..."
+
+		DISPLAY_MAPTEXT(hud_element, list(M), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/pda, message, dest)
 
 	proc/display_message(var/message)
 		if (ismob(loc))

@@ -332,14 +332,14 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 					//subtract from perp bank account
 					var/datum/db_record/account = null
-					account = FindBankAccountByName(perp_id.registered)
+					account = global.data_core.get_bank_record(perp_id.registered)
 					if (account)
 						if (account["current_money"] >= selected_product.cost)
 							account["current_money"] -= selected_product.cost
 
 							//add to genetecists budget etc
 							if (selected_product.registered_sale_id)
-								account = FindBankAccountByName(selected_product.registered_sale_id)
+								account = global.data_core.get_bank_record(selected_product.registered_sale_id)
 								if (account)
 									account["current_money"] += selected_product.cost/2
 									wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] += selected_product.cost/2

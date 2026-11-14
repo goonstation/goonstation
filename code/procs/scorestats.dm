@@ -265,7 +265,7 @@ var/datum/score_tracker/score_tracker
 					most_damaged_escapee = M
 
 				var/cash_total = get_cash_in_thing(M)
-				var/bank_account = data_core.bank.find_record("name", M.real_name)
+				var/bank_account = global.data_core.get_bank_record(M.real_name)
 				var/bank_total = 0
 				if(bank_account)
 					bank_total = bank_account["current_money"]
