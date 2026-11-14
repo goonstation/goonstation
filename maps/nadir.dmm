@@ -4979,12 +4979,12 @@
 	pixel_y = 21
 	},
 /obj/landmark/bill_spawn,
-/obj/decoration/toiletholder{
-	dir = 4;
-	pixel_x = -32
-	},
 /obj/machinery/door_control/bolter/new_walls/east,
 /obj/mapping_helper/button/pair,
+/obj/decoration/toiletholder{
+	dir = 8;
+	pixel_x = -2
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "cjV" = (
@@ -6944,8 +6944,7 @@
 /area/station/chapel/sanctuary)
 "dct" = (
 /obj/decoration/toiletholder{
-	dir = 8;
-	pixel_x = 32
+	dir = 4
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/security/brig/genpop)
@@ -31733,12 +31732,12 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/decoration/toiletholder{
-	dir = 4;
-	pixel_x = -32
-	},
 /obj/machinery/door_control/bolter/new_walls/east,
 /obj/mapping_helper/button/pair,
+/obj/decoration/toiletholder{
+	dir = 8;
+	pixel_x = -2
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "nPF" = (
@@ -34732,12 +34731,12 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/decoration/toiletholder{
-	dir = 4;
-	pixel_x = -32
-	},
 /obj/machinery/door_control/bolter/new_walls/east,
 /obj/mapping_helper/button/pair,
+/obj/decoration/toiletholder{
+	dir = 8;
+	pixel_x = -2
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "pjA" = (
@@ -38498,12 +38497,12 @@
 	pixel_y = 21
 	},
 /obj/item/storage/toilet,
-/obj/decoration/toiletholder{
-	dir = 4;
-	pixel_x = -32
-	},
 /obj/machinery/door_control/bolter/new_walls/east,
 /obj/mapping_helper/button/pair,
+/obj/decoration/toiletholder{
+	dir = 8;
+	pixel_x = -2
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "rav" = (
@@ -51068,8 +51067,8 @@
 /area/station/medical/head)
 "wQJ" = (
 /obj/decoration/toiletholder{
-	dir = 4;
-	pixel_x = -32
+	dir = 8;
+	pixel_x = -2
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/hop)
@@ -51102,13 +51101,13 @@
 /area/station/bridge/reception)
 "wRx" = (
 /obj/item/storage/toilet,
-/obj/decoration/toiletholder{
-	dir = 8;
-	pixel_x = 32
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 5
 	},
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/ce)

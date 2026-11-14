@@ -26152,15 +26152,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "nmT" = (
-/obj/decoration/toiletholder{
-	dir = 8;
-	pixel_x = 32
-	},
 /obj/item/storage/toilet,
 /obj/landmark/bill_spawn,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 5
 	},
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/east)
@@ -39958,7 +39958,7 @@
 	icon_state = "line2"
 	},
 /obj/storage/crate/furnacefuel{
-	spawn_contents = list(/obj/item/raw_material/char = 4)
+	spawn_contents = list(/obj/item/raw_material/char=4)
 	},
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
