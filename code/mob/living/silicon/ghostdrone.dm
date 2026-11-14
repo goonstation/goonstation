@@ -1,5 +1,5 @@
 #define DRONE_LUM 2
-/// Stack size for stackable drone tools
+/// Stack size for stackable drone items
 #define GHOSTDRONE_STACK_CAPACITY 1000
 
 TYPEINFO(/mob/living/silicon/ghostdrone)
