@@ -141,7 +141,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 
 		. = ..()
 
-		if(src.loc.z != 1)	//you may only move on the station z level!!!
+		if(src.loc.z != 1 && !(src.mainframe.syndicate && istypes(get_area(src), list(/area/syndicate_station, /area/listeningpost))))	//you may only move on the station z level!!!
 			src.cancel_camera()
 
 	proc/add_all_statics()
@@ -149,6 +149,8 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (!src.loc || !src.client)
 			return
 		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
+			if(!T?.aiImage)
+				continue
 			src.client.images |= T.aiImage
 #endif
 
@@ -189,11 +191,13 @@ TYPEINFO(/mob/living/intangible/aieye)
 				src.client.images -= T.aiImage
 
 			for (var/turf/T as anything in (add_block - remove_block))
+				if(!T?.aiImage)
+					continue
 				src.client.images |= T.aiImage
 #endif
 
 	set_loc(atom/newloc)
-		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION) // Sorry!
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !(src.mainframe.syndicate && istypes(get_area(newloc), list(/area/syndicate_station, /area/listeningpost)))) // Sorry!
 			src.return_mainframe()
 		else
 			last_loc = src.loc
@@ -262,7 +266,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 			if(in_ai_range)
 				target.attack_ai(src, params, location, control)
 
-		if (src.client.check_any_key(KEY_POINT) && in_ai_range)
+		if (src.client.check_any_key(KEY_POINT) && (in_ai_range || src.mainframe.syndicate))
 			var/turf/T = get_turf(target)
 			mainframe.show_hologram_context(T)
 			return
