@@ -105,19 +105,20 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 	do_mob_tick(mob, mult)
 		if(parent_mob.client && (current_color_pattern == 0 || probmult(20))) //trippy colours
-			if(src.current_color_pattern == 1)
-				parent_mob.client.animate_color(pattern2, time=40, easing=SINE_EASING)
-				src.current_color_pattern = 2
-			else
-				parent_mob.client.animate_color(pattern1, time=40, easing=SINE_EASING)
-				src.current_color_pattern = 1
+			if (!ON_COOLDOWN(parent_mob, "trippy_color_shift", 5 SECONDS))
+				if(src.current_color_pattern == 1)
+					parent_mob.client.animate_color(pattern2, time=(3 SECONDS), easing=SINE_EASING)
+					src.current_color_pattern = 2
+				else
+					parent_mob.client.animate_color(pattern1, time=(3 SECONDS), easing=SINE_EASING)
+					src.current_color_pattern = 1
 		..()
 
 	UnregisterFromParent()
 		. = ..()
 		UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
 		if(parent_mob?.client)
-			animate(parent_mob.client, color = null, time = 2 SECONDS, easing = SINE_EASING)
+			animate(parent_mob.client, color = null, time = (3 SECONDS), easing = SINE_EASING)
 
 
 //#########################################################
