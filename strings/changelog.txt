@@ -1,4 +1,9 @@
 
+(t)sat nov 14 26
+(u)ANNmagedon & ZeWaka
+(p)28087
+(e)🎨🌠|C-Sprites, A-Events
+(+)The lightning "flash" effect in the biodome has been replaced with actual lightning.
 (t)fri nov 13 26
 (u)glowbold
 (p)28213
