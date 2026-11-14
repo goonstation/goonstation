@@ -2,6 +2,7 @@
 
 /turf/simulated/floor/auto/trench/gutter
 	name = "gutter"
+	icon_state = "gutter-0"
 	intact = FALSE
 	can_fill = FALSE
 	step_material = "step_lattice"
@@ -12,6 +13,7 @@
 
 /turf/unsimulated/floor/auto/trench/gutter
 	name = "gutter"
+	icon_state = "gutter-0"
 	intact = FALSE
 	can_fill = FALSE
 	step_material = "step_lattice"
