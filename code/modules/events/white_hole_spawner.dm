@@ -286,7 +286,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/reagent_containers/food/drinks/bottle/champagne = 3,
 		/obj/item/toy/judge_gavel = 1,
 		/obj/stool/chair/comfy = 5,
-		/mob/living/critter/small_animal/cat/jones = 5,
 		/obj/item/clothing/suit/bedsheet/captain = 2,
 		/obj/item/card/id/gold/captains_spare = 0.1,
 		/obj/item/currency/spacecash/small = 5,
@@ -714,6 +713,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		add_reagent(0.1, /datum/reagent/harmful/saxitoxin)
 		add_reagent(1, /datum/reagent/blood)
 
+	unleash(var/obj/whitehole/whitehole)
+		. = ..()
+		if(prob(15))
+			playsound(whitehole, 'sound/effects/first_reality.ogg', 80, TRUE)
+
 /datum/whitehole_spawner/main/nuclear
 	name = "nuclear reactor"
 	icon_view = "nuclear"
@@ -1090,8 +1094,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		src.reagent_type = reagent_type
 
 	unleash(var/obj/whitehole/whitehole)
-		var/datum/reagent/dummy = new src.reagent_type
-		var/reagent_id = initial(dummy.id)
+		var/datum/reagent/reagent_dummy = src.reagent_type
+		var/reagent_id = initial(reagent_dummy.id)
 		var/amount = rand(src.amount_min, src.amount_max)
 		if(prob(src.flood_prob))
 			amount *= 10
