@@ -538,7 +538,7 @@ TYPEINFO(/obj/stool/wooden)
 			if (M.buckled == src)
 				M.buckled = null
 				src.buckled_guy = null
-				M.lying = 0
+				M.set_lying(FALSE)
 				reset_anchored(M)
 		if (src.sheet && src.sheet.bed == src)
 			src.sheet.bed = null

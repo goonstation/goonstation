@@ -30,16 +30,16 @@
 					setStat = STAT_ALIVE
 				if (statusList["knockdown"] || statusList["pinned"])
 					if (!cant_lie)
-						owner.lying = TRUE
+						owner.set_lying(TRUE)
 					setStat = STAT_ALIVE
 				if (statusList["unconscious"])
 					if (!cant_lie)
-						owner.lying = TRUE
+						owner.set_lying(TRUE)
 					setStat = STAT_UNCONSCIOUS
 				if (isalive(owner) && setStat == STAT_UNCONSCIOUS && owner.mind)
 					owner.lastgasp() // calling lastgasp() here because we just got knocked out
 				if (must_lie)
-					owner.lying = TRUE
+					owner.set_lying(TRUE)
 
 				owner.stat = setStat
 				owner.empty_hands()
@@ -57,14 +57,14 @@
 					setalive(owner)
 
 			else	//Not stunned.
-				owner.lying = must_lie ? TRUE : FALSE
+				owner.set_lying(must_lie ? TRUE : FALSE)
 				setalive(owner)
 
 		else //Dead.
 			if (cant_lie || ismobcritter(owner))
-				owner.lying = FALSE
+				owner.set_lying(FALSE)
 			else
-				owner.lying = TRUE
+				owner.set_lying(TRUE)
 			owner.blinded = TRUE
 			setdead(owner)
 

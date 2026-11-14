@@ -959,14 +959,14 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
-					usr.lying = 1
+					usr.set_lying(TRUE)
 				src.close()
 		else if (src.open(user=usr))
 			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
-					usr.lying = 1
+					usr.set_lying(TRUE)
 				src.close()
 		return
 
