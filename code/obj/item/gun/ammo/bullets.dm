@@ -714,11 +714,11 @@
 /obj/item/ammo/bullets/a38/mag
 	name = ".38 Hi-Tek magazine"
 	icon_state = "pistol_magazine"
-	amount_left = 10
+	amount_left = 10sss
 	max_amount = 10
 
 /obj/item/ammo/bullets/a38/mag/lb
-	name = ".38 Hi-Tek LB magazine" // I don't know what LB stands for.
+	name = ".38 Hi-Tek LB magazine" // LB stands for lawbringer
 	ammo_type = new/datum/projectile/bullet/revolver_38/lb
 
 //0.38

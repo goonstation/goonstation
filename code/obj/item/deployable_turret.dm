@@ -130,9 +130,10 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	var/internal_angle = 0 // used for the matrix transforms
 	var/external_angle = 180 // used for determining target validity
 	var/projectile_type = null
+	var/default_coating_id = null //! ID of the default material coating when using infinite ammo
 	var/datum/projectile/current_projectile
-	var/current_projectile_amount = INFINITY // If using custom rounds, keeps track of how many are left.
-	var/ejection_container = null // Type of container to use when ejecting custom rounds
+	var/current_projectile_amount = INFINITY //! If using custom rounds, keeps track of how many are left.
+	var/ejection_container = null //! Type of container to use when ejecting custom rounds
 	var/burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
 	var/fire_rate = 3 // rate of fire in shots per second
 	var/angle_arc_size = 45
@@ -234,6 +235,8 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		if(!ammo)
 			src.current_projectile = new src.projectile_type
 			src.current_projectile_amount = INFINITY
+			if(src.default_coating_id)
+				src.current_projectile.coating = getMaterial(src.default_coating_id)
 		else
 			src.current_projectile = new ammo.ammo_type.type
 			src.current_projectile.coating = ammo.ammo_type.coating
