@@ -1184,10 +1184,10 @@
 			if (AI.deployed_shell)
 				M = AI.deployed_shell
 
-		if (!M.client)
+		if (!M.client || M.client.preferences?.flying_chat_pda_hidden)
 			return
 
-		if (M.client.preferences.flying_chat_pda_hidden)
+		if (isdead(M) || M.sight_check(consciousness_check=TRUE) || !M.literate)
 			return
 
 		var/hud_element = null
