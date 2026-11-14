@@ -584,6 +584,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 	attack_self(var/mob/user)
 		if(src.steel_sheets)
+			src.steel_sheets.max_stack = initial(src.steel_sheets.max_stack)
 			user.put_in_hand_or_drop(steel_sheets)
 			src.steel_sheets = null
 			boutput(user,SPAN_NOTICE("You eject the steel sheets stored in [src]."))
