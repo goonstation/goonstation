@@ -26,13 +26,13 @@ def seed(conn):
 
 	bans = [
 		(
-			1, 45021, 1001, "local-1", 1,
+			1, 45021, 1001, "local", 1,
 			"Griefing and deliberate team sabotage",
 			1, timestamp(-30), timestamp(30), now,
 			"admin1", "Admin One"
 		),
 		(
-			2, 45089, 1002, "local-1", 1,
+			2, 45089, 1002, "local", 1,
 			"Repeated metagaming",
 			0, None, timestamp(25), now,
 			"admin2", "Admin Two"
@@ -44,7 +44,7 @@ def seed(conn):
 			"admin1", "Admin One"
 		),
 		(
-			4, 45190, 1003, "local-1", 1,
+			4, 45190, 1003, "local", 1,
 			"Exploiting a known game bug",
 			1, None, timestamp(15), now,
 			"admin3", "Admin Three"
@@ -56,7 +56,7 @@ def seed(conn):
 			"admin2", "Admin Two"
 		),
 		(
-			6, 45255, 1001, "local-1", 1,
+			6, 45255, 1001, "local", 1,
 			"Inappropriate player conduct",
 			1, timestamp(-2), timestamp(10), now,
 			"admin1", "Admin One"
@@ -68,7 +68,7 @@ def seed(conn):
 			"admin3", "Admin Three"
 		),
 		(
-			8, 45342, 1002, "local-1", 1,
+			8, 45342, 1002, "local", 1,
 			"Intentional round disruption",
 			0, timestamp(-1), timestamp(2), now,
 			"admin2", "Admin Two"
@@ -147,7 +147,7 @@ def seed(conn):
 		INSERT INTO export_metadata (
 			schema_version, server_id, server_group_id, snapshot_at
 		) VALUES (?, ?, ?, ?)
-	""", (1, "local-1", 1, now))
+	""", (1, "local", 1, now))
 
 
 def main():

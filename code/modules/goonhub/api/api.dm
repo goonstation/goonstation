@@ -132,6 +132,7 @@ var/global/datum/apiHandler/apiHandler
 				return FALSE
 			var/datum/apiModel/model = new route.correct_response
 			model.SetupFromResponse(response)
+			return model
 
 		var/req_route = "[config.goonhub_api_endpoint][route.path][route.routeParams ? "/[route.formatRouteParams()]" : ""]/?[route.formatQueryParams()]"
 		var/headers = list(
