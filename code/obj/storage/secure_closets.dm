@@ -179,8 +179,8 @@
 		/obj/item/stamp/cap,
 		/obj/item/device/radio/headset/command/captain,
 		/obj/item/megaphone,
-		/obj/item/device/pda2/captain,
 		/obj/item/storage/box/command_tech/captain,
+		/obj/item/device/pda2/captain,
 	)
 
 	make_my_stuff()
@@ -221,8 +221,8 @@
 		/obj/item/device/radio/headset/command/hos,
 		/obj/item/clothing/shoes/swat/heavy,
 		/obj/item/barrier/collapsible/security,
-		/obj/item/device/pda2/hos,
 		/obj/item/storage/box/command_tech/hos,
+		/obj/item/device/pda2/hos,
 	)
 
 /obj/storage/secure/closet/command/hop
@@ -241,9 +241,9 @@
 		/obj/item/device/accessgun,
 		/obj/item/clipboard,
 		/obj/item/clothing/suit/hopjacket,
+		/obj/item/storage/box/command_tech/hop,
 		/obj/item/device/pda2/hop,
 		/obj/item/device/panicbutton/medicalalert/hop,
-		/obj/item/storage/box/command_tech/hop,
 	)
 
 /obj/storage/secure/closet/command/research_director
@@ -264,13 +264,13 @@
 		/obj/item/stamp/rd,
 		/obj/item/clothing/suit/labcoat,
 		/obj/item/device/radio/headset/command/rd,
+		/obj/item/storage/box/command_tech/rd,
 		/obj/item/device/pda2/research_director,
 		/obj/item/places_pipes/research,
 		/obj/item/rcd_ammo/big,
 		/obj/item/clothing/suit/hazard/bio_suit/rd,
 		/obj/item/clothing/head/bio_hood/rd,
 		/obj/item/device/chemicompiler,
-		/obj/item/storage/box/command_tech/rd,
 	)
 
 	make_my_stuff()
@@ -298,9 +298,9 @@
 		/obj/item/device/flash,
 		/obj/item/stamp/md,
 		/obj/item/device/radio/headset/command/md,
+		/obj/item/storage/box/command_tech/md,
 		/obj/item/device/pda2/medical_director,
 		/obj/item/reagent_containers/injector_filler,
-		/obj/item/storage/box/command_tech/md,
 	)
 
 	make_my_stuff()
@@ -328,8 +328,8 @@
 		/obj/item/storage/toolbox/mechanical/yellow_tools,
 		/obj/item/storage/box/misctools,
 		/obj/item/extinguisher,
-		/obj/item/device/pda2/chiefengineer,
 		/obj/item/storage/box/command_tech/ce,
+		/obj/item/device/pda2/chiefengineer,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
 	#elif defined(MAP_OVERRIDE_NEON)

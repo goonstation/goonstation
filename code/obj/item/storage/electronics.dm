@@ -163,45 +163,30 @@
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 /obj/item/storage/box/command_tech
-	name = "disk box you should not see"
-	desc = "call 1-800-IMCODER to stop this!"
+	name = "Electronics Backup Kit"
+	desc = "A kit of backup electronics to restore critical station inferstructure."
 	can_hold = list(/obj/item/circuitboard, /obj/item/disk/data/floppy)
-	VAR_PROTECTED/department = "CODERS"
-	icon_state = "ntdisk"
-
-
-/obj/item/storage/box/command_tech/New()
-	. = ..()
-	src.name = "\improper Command Electronics Backup Kit ([src.department])"
-	src.desc = "A kit of backup electronics to restore verious [src.department] / AI critical inferstructure."
+	icon_state = "circuit_kit" // sprite by jorj
 
 /obj/item/storage/box/command_tech/captain
-	department = "captaincy"
 	spawn_contents = list(
 		/obj/item/circuitboard/announcement/bridge, //This one makes the arrivals announcement and this is the ONLY spare for it
 		/obj/item/circuitboard/announcement/captain,
 	)
 
-	get_desc(dist, mob/user)
-		. = ..()
-		. += " <b>Authentication disk not included!</b>"
-
 /obj/item/storage/box/command_tech/hos
-	department = "security"
 	spawn_contents = list(
 		/obj/item/circuitboard/card/security,
 		/obj/item/circuitboard/announcement/security,
 	)
 
 /obj/item/storage/box/command_tech/hop
-	department = "civilian"
 	spawn_contents = list(
 		/obj/item/circuitboard/card,
 		/obj/item/disk/data/floppy/read_only/bank_progs,
 	)
 
 /obj/item/storage/box/command_tech/rd
-	department = "research"
 	spawn_contents = list(
 		/obj/item/circuitboard/card/research,
 		/obj/item/circuitboard/announcement/research,
@@ -209,7 +194,6 @@
 	)
 
 /obj/item/storage/box/command_tech/md
-	department = "medical"
 	spawn_contents = list(
 		/obj/item/circuitboard/card/medical,
 		/obj/item/circuitboard/announcement/medical,
@@ -218,7 +202,6 @@
 	)
 
 /obj/item/storage/box/command_tech/ce
-	department = "engineering"
 	spawn_contents = list(
 		/obj/item/circuitboard/card/engineering,
 		/obj/item/circuitboard/announcement/engineering,
