@@ -1,5 +1,10 @@
 
 (t)sun nov 15 26
+(u)SmileyLemonade
+(p)28262
+(e)🪲🤖🚗|C-Bug, A-Silicons, A-Vehicles
+(+)Fixed cyborgs and ghostdrones losing resources when dragging stacks onto their toolbar.
+(+)Fixed cyborgs and ghostdrones being unable to drag more resources onto their toolbar despite having room left.
 (u)ANNmagedon
 (p)28293
 (e)🆕🐣|C-Feature, A-Respawning
