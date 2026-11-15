@@ -250,8 +250,9 @@
 #elif defined(RANDOM_ROOM_CHECKING)
 	placeAllRandomRooms()
 #else
+	var/run_until = world.time + 15 SECONDS // Total of 15s soak time
 	check_map_correctness()
-	sleep(15 SECONDS) // Let the station run for a bit to catch runtimes from processes.
+	sleep(run_until - world.time) // Let the station run for a bit to catch runtimes from processes.
 #endif
 	SPAWN(1 SECOND)
 		Reboot_server()
