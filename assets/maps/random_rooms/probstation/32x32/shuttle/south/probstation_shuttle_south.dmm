@@ -8,7 +8,7 @@
 /obj/stool/chair/office/red{
 	dir = 4
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "bS" = (
 /obj/decal/stripe_delivery,
@@ -18,7 +18,7 @@
 /area/station/hallway/secondary/northwest)
 "cg" = (
 /obj/machinery/light/small/frostedred,
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "cH" = (
 /obj/table/wood/round/auto,
@@ -161,7 +161,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "lJ" = (
 /obj/stool/chair/office/red{
@@ -185,7 +185,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "nX" = (
 /obj/table/syndicate/auto,
@@ -195,7 +195,7 @@
 	pixel_y = 4;
 	pixel_x = -4
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "oM" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
@@ -372,7 +372,7 @@
 /obj/machinery/computer/television/small{
 	pixel_y = 4
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "EE" = (
 /obj/machinery/power/apc/autoname_east,
@@ -554,7 +554,7 @@
 	pixel_x = -1;
 	pixel_y = -10
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "RN" = (
 /obj/cable{
@@ -628,10 +628,10 @@
 /obj/item/cigarbox/gold{
 	pixel_y = 9
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "WT" = (
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "Xg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
