@@ -4,7 +4,6 @@
 (p)28254
 (e)🗺🎨|A-Mapping, C-Sprites
 (+)Refurbishes the clown nest prefab with a few new sprites.
-(t)sat nov 15 26
 (u)AronBattlnode
 (e)⚖💊|C-Balance, A-Medical
 (+)Base Anaerobic Metabolism no longer provides immunity to smoked chemical reagents
