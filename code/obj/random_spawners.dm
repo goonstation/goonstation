@@ -1841,7 +1841,7 @@
 	New()
 		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
 		. = ..()
-w
+
 	equip_cyborgs // spawn and equip a single gun to a mobbe
 		var/mob/myMob
 		New(atom/newLoc, mob/attachedMob)
