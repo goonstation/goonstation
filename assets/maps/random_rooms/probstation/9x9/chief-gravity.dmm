@@ -129,6 +129,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/grey,
 /area/station/engine/gravity)
 "o" = (

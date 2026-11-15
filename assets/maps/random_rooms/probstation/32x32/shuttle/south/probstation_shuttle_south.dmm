@@ -613,6 +613,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/hallway/secondary/exit)
+"UC" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "Vu" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
@@ -1347,7 +1353,7 @@ NX
 Bc
 vC
 LQ
-LQ
+UC
 Mv
 fJ
 LQ
