@@ -1,4 +1,9 @@
 
+(t)sun nov 15 26
+(u)TemThrush
+(p)28254
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Refurbishes the clown nest prefab with a few new sprites.
 (t)sat nov 15 26
 (u)AronBattlnode
 (e)⚖💊|C-Balance, A-Medical
