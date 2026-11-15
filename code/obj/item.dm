@@ -674,31 +674,24 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return src.change_stack_amount(new_amount - src.amount)
 
 /obj/item/proc/stack_item(obj/item/other)
-	var/added = 0
-	var/imrobot
-	var/imdrone
 	var/obj/item/stacker
 	var/obj/item/stackee
 	if(QDELETED(other))
-		return added
+		return 0
 
-	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
-		if (imrobot)
-			max_stack = 300
-		else if (imdrone)
-			max_stack = 1000
+	if (isrobot(other.loc) || isghostdrone(other.loc) || istype(other.loc, /obj/item/magtractor))
 		stacker = other
 		stackee = src
 	else
-		if(istype(src.loc,/obj/item/shipcomponent/mainweapon/constructor))
-			max_stack = 200
 		stacker = src
 		stackee = other
 
-	if (stacker == stackee || !check_valid_stack(stackee))
-		return added
+	if (stacker == stackee || stacker.max_stack <= 1 || !stacker.check_valid_stack(stackee))
+		return 0
 
-	added = clamp(stackee.amount, 0, max_stack - stacker.amount)
+	var/added = clamp(stackee.amount, 0, stacker.max_stack - stacker.amount)
+	if (!added)
+		return 0
 
 	stacker.change_stack_amount(added)
 	stackee.change_stack_amount(-added)
@@ -745,33 +738,33 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 /obj/item/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..()
-	if (!QDELETED(src) && max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && check_valid_stack(O))
-		if ( src.amount >= max_stack)
-			failed_stack(O, user)
+	if (!QDELETED(src) && src.max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && src.check_valid_stack(O))
+		if (src.amount >= src.max_stack)
+			src.failed_stack(O, user)
 			return
 
 		var/added = 0
 		var/staystill = user.loc
 		var/stack_result = 0
 
-		before_stack(O, user)
+		src.before_stack(O, user)
 
 		for(var/obj/item/other in view(1,user))
 			if (QDELETED(src))
 				//let's not try to stack items into items that are disposed but not deleted yet
 				return
-			stack_result = stack_item(other)
+			stack_result = src.stack_item(other)
 			if (!stack_result)
 				continue
 			else
 				sleep(0.5 DECI SECONDS)
 				added += stack_result
 				if (user.loc != staystill) break
-				if (src.amount >= max_stack)
-					failed_stack(O, user)
+				if (src.amount >= src.max_stack)
+					src.failed_stack(O, user)
 					return
 
-		after_stack(O, user, added)
+		src.after_stack(O, user, added)
 
 #define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 

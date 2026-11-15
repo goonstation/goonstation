@@ -1217,7 +1217,7 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 
 	equipped(mob/user, slot)
 		..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_BREATHLESS, src.type) //we need no oxygen in this place
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_NO_OXY_LOSS, src.type) //we need no oxygen in this place
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_STUN_RESIST, src.type, 80) // falling to a couple batons is shameful
 		APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/pain_immune, src.type) // slow for nothing
 		user.add_antagonist(role_id = ROLE_CONFIRMED_CRIMINAL, do_equip = FALSE, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE) //crime time

@@ -1842,6 +1842,20 @@
 		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
 		. = ..()
 
+	equip_cyborgs // spawn and equip a single gun to a mobbe
+		var/mob/myMob
+		New(atom/newLoc, mob/attachedMob)
+			. = ..()
+			src.myMob = attachedMob
+
+		closet_check_spawn(obj/item/new_item)
+			if (src.myMob && isrobot(src.myMob))
+				var/mob/living/silicon/robot/R = src.myMob
+				if (R.module) // if they don't have a module, use the parent
+					R.module.add_contents(new new_item(R))
+					return
+			. = ..()
+
 	one_or_zero
 		min_amt2spawn = 0
 		max_amt2spawn = 1
@@ -1890,6 +1904,20 @@
 
 	one
 		amt2spawn = 1
+
+		equip_cyborgs // spawn and equip a single gun to a mobbe
+			var/mob/myMob
+			New(atom/newLoc, mob/attachedMob)
+				. = ..()
+				src.myMob = attachedMob
+
+			closet_check_spawn(obj/item/new_item)
+				if (src.myMob && isrobot(src.myMob))
+					var/mob/living/silicon/robot/R = src.myMob
+					if (R.module) // if they don't have a module, use the parent
+						R.module.add_contents(new new_item(R))
+						return
+				. = ..()
 
 	one_or_zero
 		min_amt2spawn = 0

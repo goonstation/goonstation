@@ -1405,3 +1405,18 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
+
+/turf/unsimulated/floor/auto/web
+    name = "web"
+    desc = "The floor is coated in webbing."
+    icon = 'icons/turf/web.dmi'
+    icon_state = "web1"
+    edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
+    icon_state_edge = "web_edge"
+    step_material = "step_outdoors"
+    step_priority = STEP_PRIORITY_MED
+
+    New()
+        . = ..()
+        if(src.type == /turf/unsimulated/floor/auto/web && prob(10))
+            src.icon_state = "web[rand(1,2)]"

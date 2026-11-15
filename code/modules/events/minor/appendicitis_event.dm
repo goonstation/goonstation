@@ -14,7 +14,7 @@
 			if (isvirtual(H)) continue
 			if (inafterlife(H)) continue
 			var/datum/db_record/personnel/general/record = global.data_core.get_general_record(H.real_name)
-			if (!record || record["pstat"] == "*Deceased*") continue
+			if (!record || record["p_stat"] == "*Deceased*") continue
 			if (istype(H.loc, /obj/cryotron)) continue
 			if (!H.organHolder?.appendix) continue // with appendix
 			if (H.organHolder?.appendix?.robotic) continue // that isn't robotic

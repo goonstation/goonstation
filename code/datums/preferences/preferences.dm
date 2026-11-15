@@ -95,6 +95,7 @@ var/list/removed_jobs = list(
 	var/listen_ooc = TRUE
 	var/listen_looc = TRUE
 	var/flying_chat_hidden = FALSE
+	var/flying_chat_pda_hidden = FALSE
 	var/auto_capitalization = FALSE
 	var/local_deadchat = FALSE
 	var/use_wasd = TRUE
@@ -349,6 +350,7 @@ var/list/removed_jobs = list(
 			"listenOoc" = src.listen_ooc,
 			"listenLooc" = src.listen_looc,
 			"flyingChatHidden" = src.flying_chat_hidden,
+			"flyingChatPdaHidden" = src.flying_chat_pda_hidden,
 			"autoCapitalization" = src.auto_capitalization,
 			"localDeadchat" = src.local_deadchat,
 			"hudTheme" = src.hud_style,
@@ -1005,6 +1007,11 @@ var/list/removed_jobs = list(
 
 			if ("update-flyingChatHidden")
 				src.flying_chat_hidden = !src.flying_chat_hidden
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-flyingChatPdaHidden")
+				src.flying_chat_pda_hidden = !src.flying_chat_pda_hidden
 				src.profile_modified = TRUE
 				return TRUE
 

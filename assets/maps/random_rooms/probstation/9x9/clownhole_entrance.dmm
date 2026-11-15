@@ -126,6 +126,16 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/station/crew_quarters/clown/entryway)
+"I" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
 "J" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -239,7 +249,7 @@ Q
 z
 h
 P
-h
+I
 B
 Q
 r

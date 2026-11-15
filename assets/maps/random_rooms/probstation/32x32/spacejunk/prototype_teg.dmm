@@ -635,6 +635,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "IC" = (
