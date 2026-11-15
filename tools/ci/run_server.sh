@@ -2,7 +2,12 @@
 set -euo pipefail
 
 touch errors.log
-DreamDaemon goonstation.dmb -once -close -trusted -verbose -invisible
+# Timeout wrapper instead of --once because it would shut the world down after 5 minutes of no players
+if ! timeout 15m DreamDaemon goonstation.dmb -close -trusted -verbose -invisible
+then
+	echo "DreamDaemon timed out or exited with an error."
+	exit 1
+fi
 if [ -s "errors.log" ]
 then
 	echo "Errors detected!"
