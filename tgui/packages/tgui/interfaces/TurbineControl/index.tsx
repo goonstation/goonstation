@@ -213,11 +213,11 @@ const LoadAdjustmentControls = ({
         <Stack.Item>
           <Button
             icon="gears"
-            tooltip="Disables MechComp control, slowly adjusts stator load when RPM is outside optimum range"
+            tooltip="Disables manual and MechComp control, slowly adjusts stator load when RPM is outside optimum range"
             selected={autoAdjust}
             onClick={onToggle}
           >
-            Auto
+            Auto: {autoAdjust ? 'On' : 'Off'}
           </Button>
         </Stack.Item>
       </Stack>
