@@ -10,6 +10,11 @@ CREATE_NAMESPACE(CI)
 /// Prefabs currently loaded: `list(path, min_x, min_y, max_x, max_y, z)`
 ADD_TO_NAMESPACE(CI)(var/list/placed_prefabs = CI_LIST)
 
+/// Sends a message to anyone connected and to the CI job log.
+ADD_TO_NAMESPACE(CI)(proc/announce(text))
+	boutput(world, SPAN_ALERT(text))
+	world.log << text
+
 /// Format a turf's position and the prefab/area it's in into a single string.
 ADD_TO_NAMESPACE(CI)(proc/format_location(turf/T))
 	for (var/list/prefab as anything in CI.placed_prefabs)
