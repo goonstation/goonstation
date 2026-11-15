@@ -1,4 +1,11 @@
 
+(t)sat nov 15 26
+(u)AronBattlnode
+(e)⚖💊|C-Balance, A-Medical
+(+)Base Anaerobic Metabolism no longer provides immunity to smoked chemical reagents
+(u)glowbold
+(e)⚖💊|C-Balance, A-Medical
+(+)Lexorin's active effect makes you smoke immune as well as unable to lose breath.
 (t)sat nov 14 26
 (u)ANNmagedon & ZeWaka
 (p)28087
