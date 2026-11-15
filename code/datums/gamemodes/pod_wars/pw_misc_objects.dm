@@ -1342,8 +1342,8 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 /obj/item/clothing/head/helmet/space/pod_wars/NT/industrial
 	name = "nanotrasen industrial mining helmet"
 	desc = "A reinforced mining space helmet used by Nanotrasen miners."
-	icon_state = "EOD"
-	item_state = "EOD"
+	icon_state = "indus_specialist"
+	item_state = "indus_specialist"
 
 	setupProperties()
 		..()
