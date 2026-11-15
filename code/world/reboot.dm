@@ -105,7 +105,7 @@ var/server_rebuild_file_path = "data/triggers/rebuild"
 		text2file(apc_error_str, "errors.log")
 #endif
 	Shutdown_server()
-#endif
+#endif // defined(CI_RUNTIME_CHECKING) || defined(UNIT_TESTS)
 
 	SPAWN(world.tick_lag)
 		var/sound/round_end_sound = null

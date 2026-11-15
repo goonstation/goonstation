@@ -2,7 +2,7 @@
 set -euo pipefail
 
 touch errors.log
-# Timeout wrapper instead of --once because it would shut the world down after 5 minutes of no players
+# Timeout wrapper instead of --once because BYOND shuts the world down after 5min of no players
 if ! timeout 15m DreamDaemon goonstation.dmb -close -trusted -verbose -invisible
 then
 	echo "DreamDaemon timed out or exited with an error."
