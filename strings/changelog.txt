@@ -1,5 +1,9 @@
 
 (t)sun nov 15 26
+(u)ANNmagedon
+(p)28293
+(e)🆕🐣|C-Feature, A-Respawning
+(+)NT has convinced more types of VIPs to visit the station with their briefcase full of riches.
 (u)TemThrush
 (p)28254
 (e)🗺🎨|A-Mapping, C-Sprites
