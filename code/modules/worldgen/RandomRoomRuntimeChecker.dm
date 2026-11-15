@@ -36,7 +36,10 @@
 		else
 			rooms += room
 	place_prefabs_for_checking(rooms, correctness_label = "random rooms")
-	place_prefabs_for_checking(probstation_rooms, correctness_label = "probstation rooms")
+	// Probstation provides the APCs for areas its rooms share with it
+	place_prefabs_for_checking(probstation_rooms, correctness_label = "probstation rooms", \
+		skipped_checks = list(/datum/map_correctness_check/apcless_areas) \
+	)
 	CI.announce("Placed random rooms in [((world.timeofday - startTime)/10)] seconds!")
 
 #endif

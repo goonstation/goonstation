@@ -1,13 +1,13 @@
 #ifdef CI_RUNTIME_CHECKING
 
 // Not quite a unit test but achieves the same goal. Ran for each map unlike actual unit tests.
-/proc/check_map_correctness(label)
+/proc/check_map_correctness(label, list/skipped_checks)
 	var/success = TRUE
 	var/log_text = "Map Correctness Checks Failed[label ? " ([label])" : null]!"
 
 	for (var/T in concrete_typesof(/datum/map_correctness_check))
 		var/datum/map_correctness_check/map_check = new T()
-		if (!map_check.can_run_check())
+		if (!map_check.can_run_check() || (T in skipped_checks))
 			continue
 
 		var/list/map_check_result = map_check.run_check()

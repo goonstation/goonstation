@@ -41,7 +41,7 @@
  * Each batch is loaded + initialised, then spawned procs get a second to run,
  * then the map correctness checks possibly run, and then the batch is cleared.
  */
-/proc/place_prefabs_for_checking(list/datum/mapPrefab/prefabs, correctness_label)
+/proc/place_prefabs_for_checking(list/datum/mapPrefab/prefabs, correctness_label, list/skipped_checks)
 	var/min_coord = 1 + AST_MAPBORDER
 	var/x = min_coord
 	var/y = min_coord
@@ -54,7 +54,7 @@
 			row_height = 0
 		if (y + prefab.prefabSizeY - 1 > (world.maxy - AST_MAPBORDER)) // z-level is full :(
 			CI.announce("The z-level is full, resetting...")
-			finish_prefab_check_batch(correctness_label)
+			finish_prefab_check_batch(correctness_label, skipped_checks)
 			x = min_coord
 			y = min_coord
 
@@ -73,12 +73,12 @@
 		row_height = max(row_height, prefab.prefabSizeY)
 
 	if (length(CI.placed_prefabs))
-		finish_prefab_check_batch(correctness_label)
+		finish_prefab_check_batch(correctness_label, skipped_checks)
 
 /proc/cmp_prefab_height_dsc(datum/mapPrefab/a, datum/mapPrefab/b)
 	return b.prefabSizeY - a.prefabSizeY
 
-/proc/finish_prefab_check_batch(correctness_label)
+/proc/finish_prefab_check_batch(correctness_label, list/skipped_checks)
 	var/max_x = 0
 	var/max_y = 0
 	for (var/list/prefab as anything in CI.placed_prefabs)
@@ -95,7 +95,7 @@
 
 	sleep(1 SECOND)
 	if (correctness_label)
-		check_map_correctness(correctness_label)
+		check_map_correctness(correctness_label, skipped_checks)
 
 	// Delete everything in the batch's area
 	for (var/turf/T as anything in block(bottom_left, top_right))
