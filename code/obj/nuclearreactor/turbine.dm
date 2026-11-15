@@ -5,7 +5,7 @@
 #define TURBINE_FLOW_RATE_MIN 1
 #define TURBINE_OVERSPEED_MULTIPLIER 1.2
 #define TURBINE_AUTOADJUST_THRESHOLD 100 //begins adjusting at ~65% efficiency
-#define TURBINE_AUTOADJUST_RATE 3000 //
+#define TURBINE_AUTOADJUST_RATE 5000 //
 
 // ----------------------------------------------------- //
 // Defintion for the turbine used by the nuclear reactor
@@ -271,9 +271,9 @@
 
 			if(src.auto_adjust)
 				if(src.RPM < best_RPM - TURBINE_AUTOADJUST_THRESHOLD)
-					src.stator_load += TURBINE_AUTOADJUST_RATE
-				else if(src.RPM > best_RPM + TURBINE_AUTOADJUST_THRESHOLD)
 					src.stator_load -= TURBINE_AUTOADJUST_RATE
+				else if(src.RPM > best_RPM + TURBINE_AUTOADJUST_THRESHOLD)
+					src.stator_load += TURBINE_AUTOADJUST_RATE
 
 		src.input.air_contents?.volume = src.flow_rate
 		src.air_contents?.volume = src.flow_rate
