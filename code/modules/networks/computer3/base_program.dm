@@ -25,6 +25,10 @@
 		os_call(var/list/call_list, var/datum/computer/file/terminal_program/caller_prog, var/datum/computer/file/file)
 			return (!master || master.status & (NOPOWER|BROKEN) || !caller_prog || !call_list)
 
+		/// Perform any OS-specific first time setup on the filesystem
+		proc/setup_disk(obj/item/disk/data/fixed_disk/hd)
+			return
+
 	termapp //Small applications for the "termos" computer3s.
 		name = "blank terminal app"
 		extension = "TAPP"

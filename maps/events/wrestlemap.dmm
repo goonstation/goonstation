@@ -1009,7 +1009,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "ati" = (
 /obj/disposalpipe/segment/vertical,
@@ -1215,7 +1215,7 @@
 /area/station/storage/warehouse)
 "ayr" = (
 /obj/stone,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "ayD" = (
 /obj/cable{
@@ -1860,7 +1860,7 @@
 /area/station/hallway/primary/south)
 "aMJ" = (
 /obj/machinery/light_switch/directional/south,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "aMS" = (
 /obj/machinery/atmospherics/unary/tank/air_repressurization{
@@ -7017,7 +7017,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/north)
 "diA" = (
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "diB" = (
 /obj/stool/bar,
@@ -27078,7 +27078,7 @@
 "mgX" = (
 /obj/tree,
 /obj/machinery/light/small/greenish,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "mhf" = (
 /obj/landmark/start/job/AI,
@@ -31201,7 +31201,7 @@
 /obj/shrub{
 	dir = 1
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "nYt" = (
 /obj/rack,
@@ -34523,7 +34523,7 @@
 /area/station/crew_quarters/utility)
 "pxV" = (
 /obj/tree,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "pyj" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -36010,7 +36010,7 @@
 /obj/shrub{
 	dir = 10
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "qkO" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -36578,7 +36578,7 @@
 /area/research_outpost/protest)
 "quX" = (
 /obj/shrub,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "qvn" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
@@ -41902,7 +41902,7 @@
 /obj/item/clothing/under/gimmick/owl,
 /obj/item/clothing/under/gimmick/owl,
 /obj/item/clothing/mask/owl_mask,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "sZD" = (
 /obj/table/reinforced/auto,
@@ -46276,7 +46276,7 @@
 /area/station/quartermaster/office)
 "vcq" = (
 /mob/living/critter/small_animal/bird/owl,
-/turf/simulated/grass,
+/turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "vcs" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{

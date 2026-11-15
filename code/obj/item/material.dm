@@ -792,16 +792,30 @@
 			return
 		if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
 			return
-		if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
+		if(!H.shoes || (src.material && src.material.hasProperty(MATERIAL::PROPERTY::HARDNESS) && src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) >= 7))
 			boutput(H, SPAN_ALERT("<B>You step on [src]! Ouch!</B>"))
 			step_on(H)
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
-	H.changeStatus("knockdown", 3 SECONDS)
-	H.force_laydown_standup()
-	var/zone = pick("l_leg", "r_leg")
+	var/list/zones = list()
+	if (H.limbs.is_limb_functional("l_leg"))
+		zones += "l_leg"
+	if (H.limbs.is_limb_functional("r_leg"))
+		zones += "r_leg"
+
+	if (!length(zones) || H.lying) // no legs or lying down just does damage
+		H.TakeDamage("chest", force, 0, 0, DAMAGE_CUT)
+		return
+
+	var/zone = pick(zones)
+	var/duration = src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) * 2 SECONDS // sharper is hurtier
+
 	H.TakeDamage(zone, force, 0, 0, DAMAGE_CUT)
+
+	//if your one foot is already numbed, you likely used the other one
+	H.numb_limb(duration = duration, ignore_numbed_limbs = TRUE, target_limbs = list("l_leg", "r_leg"))
+	H.force_laydown_standup()
 
 /obj/item/raw_material/chitin
 	name = "chitin sample"

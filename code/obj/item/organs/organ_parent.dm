@@ -125,9 +125,6 @@
 
 		..()
 
-	add_fingerprint(mob/living/M as mob, hidden_only = TRUE)
-		. = ..()
-
 	New(loc, datum/organHolder/nholder)
 		..()
 		if (istype(nholder) && nholder.donor)

@@ -1,13 +1,15 @@
 /datum/db_record/citation/ticket
-	fields = alist(
-		"id" 			= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
-		"time"			= new /datum/record_field/string("Time Issued", "2053-01-01T00:00:00Z"),
-		"authority"		= new /datum/record_field/string("Authority", "Nanotrasen Corporate Security"),
-		"type"			= new /datum/record_field/choice("Type", "TICKET", list("TICKET", "FINE")),
-		"target"		= new /datum/record_field/string("Recipient", "Unknown"),
-		"issuer"		= new /datum/record_field/string("Issuer", "Unknown"),
-		"issuer_job"	= new /datum/record_field/string("Issuer Job", "Unknown"),
-		"reason"		= new /datum/record_field/string("Reason", "Unknown"),
+
+/datum/db_record/citation/ticket/build_fields()
+	return alist(
+		BUILD_FIELD("id", 			/datum/record_field/string, "ID", "000000", @"[a-f0-9]{6}"),
+		BUILD_FIELD("time",			/datum/record_field/string, "Time Issued", "2053-01-01T00:00:00Z"),
+		BUILD_FIELD("authority",	/datum/record_field/string, "Authority", "Nanotrasen Corporate Security"),
+		BUILD_FIELD("type",			/datum/record_field/choice, "Type", "TICKET", list("TICKET", "FINE")),
+		BUILD_FIELD("target",		/datum/record_field/string, "Recipient", "Unknown"),
+		BUILD_FIELD("issuer",		/datum/record_field/string, "Issuer", "Unknown"),
+		BUILD_FIELD("issuer_job",	/datum/record_field/string, "Issuer Job", "Unknown"),
+		BUILD_FIELD("reason",		/datum/record_field/string, "Reason", "Unknown"),
 	)
 
 /datum/db_record/citation/ticket/New(authority, target, issuer, issuer_job, reason)

@@ -103,6 +103,9 @@
 	**/
 	var/list/datum/hud_zone/hud_zones = list()
 
+	/// Assoc list of status effect instance -> its `/atom/movable/screen/statusEffect`, see [/datum/hud/proc/sync_status_effects]
+	var/list/statusUiElements = null
+
 	disposing()
 		for (var/mob/M in src.mobs)
 			M.detach_hud(src)
@@ -225,6 +228,44 @@
 			src.objects -= S
 		for (var/client/C in src.clients)
 			C.screen -= S
+
+	/// Shows owner's visible status effects in a row going west from `start_x` tiles off the east edge at `screen_y`.
+	/// Only touches elements whose position or value changed.
+	proc/sync_status_effects(atom/owner, status_icon, screen_y, start_x)
+		var/list/datum/statusEffect/statuses = owner?.statusEffects
+		for (var/datum/statusEffect/S as anything in src.statusUiElements) //Remove ended effects
+			if (!(S in statuses))
+				var/atom/movable/screen/statusEffect/U = src.statusUiElements[S]
+				src.remove_screen(U)
+				qdel(U)
+				src.statusUiElements -= S
+				qdel(S)
+
+		// Nobody is looking
+		if (!length(src.clients) || !length(statuses))
+			return
+
+		var/pos_x = start_x
+		for (var/datum/statusEffect/S as anything in statuses)
+			if (!S.visible)
+				continue
+			var/atom/movable/screen/statusEffect/U = src.statusUiElements?[S]
+			var/is_new = isnull(U)
+			if (is_new)
+				U = new
+				U.init(owner, S)
+				LAZYLISTINIT(src.statusUiElements)
+				src.statusUiElements[S] = U
+			if (U.icon != status_icon)
+				U.icon = status_icon
+			var/new_screen_loc = "EAST[pos_x < 0 ? "" : "+"][pos_x],[screen_y]"
+			if (U.screen_loc != new_screen_loc)
+				U.screen_loc = new_screen_loc
+			U.update_value()
+			if (is_new)
+				src.add_screen(U)
+				animate_buff_in(U)
+			pos_x -= 0.6
 
 	proc/remove_screen_id(var/id)
 		var/atom/movable/screen/S = get_by_id(id)

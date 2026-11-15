@@ -156,7 +156,7 @@ TYPEINFO_NEW(/obj/table)
 			victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src]!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
-		src.material_trigger_when_attacked(victim, user, 1)
+		src.material_trigger_when_hit(victim, user, MATERIAL::IMPACT::MELEE)
 
 
 	/// Slam a dude on the table (gently, with great care)
@@ -322,7 +322,7 @@ TYPEINFO_NEW(/obj/table)
 						H.limbs.r_arm.sever()
 
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				src.material_trigger_when_attacked(user, user, 1)
+				src.material_trigger_when_hit(user, user, MATERIAL::IMPACT::MELEE)
 				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
@@ -1206,7 +1206,7 @@ TYPEINFO(/obj/table/glass)
 		victim.changeStatus("knockdown", 4 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src]!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
-		src.material_trigger_when_attacked(victim, user, 1)
+		src.material_trigger_when_hit(victim, user, MATERIAL::IMPACT::MELEE)
 		if ((prob(src.reinforced ? 60 : 80)) || (user.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
 			src.smash()
 			random_brute_damage(victim, rand(20,40),1)
@@ -1369,10 +1369,6 @@ TYPEINFO(/obj/table/glass)
 			interaction = interact
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner) && interaction != TABLE_LOCKPICK)
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1421,6 +1417,8 @@ TYPEINFO(/obj/table/glass)
 			if (TABLE_LOCKPICK)
 				verbing = "picking the lock on"
 				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
+		if (interaction != TABLE_LOCKPICK && owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			src.duration = round(src.duration / 2)
 		owner.visible_message(SPAN_NOTICE("[owner] begins [verbing] [the_table]."))
 
 	onEnd()

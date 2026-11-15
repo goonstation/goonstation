@@ -188,7 +188,11 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/cyberlung_right,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
+		/datum/manufacture/metal/bulk,
+		/datum/manufacture/metalR,
+		/datum/manufacture/metalR/bulk,
 		/datum/manufacture/glass,
+		/datum/manufacture/glass/bulk,
 		/datum/manufacture/asimov_laws,
 		/datum/manufacture/borg_linker)
 
@@ -630,6 +634,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 
 	hidden = list(
 		/datum/manufacture/crate/class,
+		/datum/manufacture/crate/secure/command_gear_replacement,
 		/datum/manufacture/crate/secure/syndicate,
 		/datum/manufacture/cart/hotdog,
 		/datum/manufacture/locker/secure/nanotrasen,

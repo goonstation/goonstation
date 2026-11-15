@@ -78,17 +78,10 @@
 			src.mode = max(newmode, 0)
 
 		else if(href_list["select_rec"])
-			var/datum/db_record/R = locate(href_list["select_rec"])
-			var/datum/db_record/S = locate(href_list["select_rec"])
-
-			if (data_core.general.has_record(R))
-				S = data_core.security.find_record("id", R["id"])
-				if(!S) S = data_core.security.find_record("name", R["name"])
-				if(!S) S = locate(href_list["select_rec"])
-
+			var/datum/db_record/personnel/general/R = locate(href_list["select_rec"])
+			if (istype(R) && global.data_core.general.has_record(R))
 				src.active1 = R
-				src.active2 = S
-
+				src.active2 = global.data_core.get_security_record(R["name"])
 				src.mode = 1
 
 		src.master.add_fingerprint(usr)
@@ -172,17 +165,10 @@
 			src.mode = max(newmode, 0)
 
 		else if(href_list["select_rec"])
-			var/datum/db_record/R = locate(href_list["select_rec"])
-			var/datum/db_record/M = locate(href_list["select_rec"])
-
-			if (data_core.general.has_record(R))
-				M = data_core.medical.find_record("id", R["id"])
-				if(!M) M = data_core.medical.find_record("name", R["name"])
-				if(!M) M = locate(href_list["select_rec"])
-
+			var/datum/db_record/personnel/general/R = locate(href_list["select_rec"])
+			if (istype(R) && global.data_core.general.has_record(R))
 				src.active1 = R
-				src.active2 = M
-
+				src.active2 = global.data_core.get_medical_record(R["name"])
 				src.mode = 1
 
 		src.master.add_fingerprint(usr)

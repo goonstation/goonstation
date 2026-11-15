@@ -846,6 +846,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is trained in engineering."
 	id = "training_engineer"
 
+	onAdd(mob/owner)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD, src)
+
+	onRemove(mob/owner)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD, src)
+
 /datum/trait/job/security
 	name = "Security Training"
 	desc = "Subject is trained in generalized robustness and asskicking."
@@ -1347,6 +1355,14 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "carpenter"
 	id = "carpenter"
 	points = -1
+
+	onAdd(mob/owner)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD, src)
+
+	onRemove(mob/owner)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD, src)
 
 /datum/trait/kleptomaniac
 	name = "Kleptomaniac"

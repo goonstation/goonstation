@@ -361,16 +361,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 		else
 			death()
 
-	verb/show_laws()
-		set category = "AI Commands"
-		set name = "Show Laws"
-
-		if (src.mainframe)
-			mainframe.show_laws(0, src)
-		else
-			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
-		return
-
 	verb/cmd_return_mainframe()
 		set category = "AI Commands"
 		set name = "Recall to Mainframe"
@@ -392,47 +382,16 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (mainframe)
 			mainframe.ai_view_crew_manifest()
 
-	verb/ai_state_laws_standard()
+	verb/ai_interact_laws()
 		set category = "AI Commands"
-		set name = "State Standard Laws"
-		if (mainframe)
-			mainframe.ai_state_laws_standard()
+		set name = "Laws"
+		mainframe?.interact_laws()
 
-	verb/ai_state_laws_all()
+	verb/ai_customization()
 		set category = "AI Commands"
-		set name = "State All Laws"
-		if (mainframe)
-			mainframe.ai_state_laws_all()
+		set name = "Customize Status"
 
-	verb/ai_set_laws_all()
-		set category = "AI Commands"
-		set name = "Set Fake Laws"
-		if (mainframe)
-			mainframe.ai_set_fake_laws()
-
-	verb/ai_state_laws_fake()
-		set category = "AI Commands"
-		set name = "State Fake Laws"
-		if (mainframe)
-			mainframe.ai_state_fake_laws()
-
-	verb/ai_show_laws_fake()
-		set category = "AI Commands"
-		set name = "Show Fake Laws"
-		if (mainframe)
-			mainframe.ai_show_fake_laws()
-
-	verb/ai_statuschange()
-		set category = "AI Commands"
-		set name = "AI status"
-		if (mainframe)
-			mainframe.ai_statuschange()
-
-	verb/ai_colorchange()
-		set category = "AI Commands"
-		set name = "AI Color"
-		if (mainframe)
-			mainframe.ai_colorchange()
+		mainframe?.ai_customize_options_menu()
 
 	verb/reset_apcs()
 		set category = "AI Commands"
@@ -542,13 +501,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 		set desc = "Automatically opens the nearest door to a selected individual, if possible."
 		if(mainframe)
 			mainframe.open_nearest_door_silicon()
-
-	verb/toggle_monospace()
-		set category = "AI Commands"
-		set name = "Toggle Monospace Speech"
-		set desc = "Switches your speech between normal and forced-monospace mode."
-
-		src.mainframe?.toggle_monospace(src)
 
 	proc/ai_alerts()
 		set category = "AI Commands"

@@ -1,9 +1,5 @@
 
 /datum/lifeprocess/breath
-	var/breathtimer = 0
-	var/breathtimerstage = 0
-	var/breathtimernotifredundant = 0
-	var/breathstate = 0
 
 	proc/update_breath_hud(datum/organ_status/lung/status_updates)
 		src.human_owner?.hud.update_breathing_indicators(status_updates)
@@ -13,48 +9,11 @@
 		if(isdead(owner))
 			return ..()
 
-		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
-		if (manualbreathing && human_owner)
-			breathtimer += get_multiplier()
-			var/datum/organ_status/lung/status_updates = new
+		var/datum/component/manual_breathing/manual_breathing = owner.GetComponent(/datum/component/manual_breathing)
+		if (manual_breathing?.breath_timer > 15)
+			return
 
-			switch(breathtimer)
-				if (0 to 15)
-					breathe(environment)
-					breathtimerstage = 0
-					breathtimernotifredundant = 0
-				if (15 to 34)
-					; // this statement is intentionally left blank
-				if (34 to 51)
-					if (prob(5)) owner.emote("gasp")
-					if (!breathtimernotifredundant)
-						breathtimerstage = 1
-				if (52 to 61)
-					status_updates.show_oxy_indicator = TRUE
-					owner.take_oxygen_deprivation(breathtimer/12)
-					if (breathtimernotifredundant < 2)
-						breathtimerstage = 2
-				if (62 to INFINITY)
-					status_updates.show_oxy_indicator = TRUE
-					owner.take_oxygen_deprivation(breathtimer/6)
-					if (breathtimernotifredundant < 3)
-						breathtimerstage = 3
-			switch(breathtimerstage)
-				if (0)
-					; // this statement is intentionally left blank
-				if (1)
-					boutput(owner, SPAN_ALERT("You need to breathe!"))
-					breathtimernotifredundant = 1
-				if (2)
-					boutput(owner, SPAN_ALERT("Your lungs start to hurt. You really need to breathe!"))
-					breathtimernotifredundant = 2
-				if (3)
-					boutput(owner, SPAN_ALERT("Your lungs are burning and the need to take a breath is almost unbearable!"))
-					breathtimernotifredundant = 3
-			breathtimerstage = 0
-			src.human_owner.hud.update_breathing_indicators(status_updates)
-		else // plain old automatic breathing
-			breathe(environment)
+		breathe(environment)
 
 		if (istype(owner.loc, /obj/))
 			var/obj/location_as_object = owner.loc
@@ -120,13 +79,6 @@
 			src.update_breath_hud(status_updates)
 			return
 
-		//if (istype(loc, /obj/machinery/clonepod)) return
-
-		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING))
-			src.update_breath_hud(status_updates)
-			if(owner.losebreath)
-				owner.losebreath -= (1.3 * mult) // base losebreath recovery
-			return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
 		// And because they're excluded from the breathing procs, said damage didn't heal
@@ -135,12 +87,18 @@
 		// If you have the breathless effect, same deal - you'd never heal oxy damage
 		// If your mutant race doesn't need oxygen from breathing, ya no losebreath
 		// so, now you do
-		if (ischangeling(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS))
-			src.update_breath_hud(status_updates)
+		if (ischangeling(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS))
 			if (owner.losebreath)
 				owner.losebreath = 0
 			if (owner.get_oxygen_deprivation())
 				owner.take_oxygen_deprivation(-50 * mult)
+			src.update_breath_hud(status_updates)
+			return
+
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH))
+			if(owner.losebreath)
+				owner.losebreath -= (1.3 * mult) // base losebreath recovery
+			src.update_breath_hud(status_updates)
 			return
 
 #ifdef UNDERWATER_MAP
@@ -162,10 +120,6 @@
 				boutput(owner, SPAN_ALERT("You are drowning!"))
 
 		var/datum/gas_mixture/breath = null
-		// HACK NEED CHANGING LATER
-		//if (src.oxymax == 0 || (breathtimer > 15))
-		if (breathtimer > 15)
-			owner.losebreath += (0.7 * mult)
 
 		if (owner.grabbed_by && length(owner.grabbed_by))
 			breath = get_breath_grabbed_by(BREATH_VOLUME * mult)

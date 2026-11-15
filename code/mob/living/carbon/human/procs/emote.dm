@@ -564,63 +564,8 @@
 
 	//april fools start
 
-			if ("inhale")
-				if (!manualbreathing)
-					src.show_text("You are already breathing!")
-					return
-
-				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
-				if (B)
-					if (B.breathstate)
-						src.show_text("You just breathed in, try breathing out next dummy!")
-						return
-					B.breathtimer = 0
-					B.breathstate = 1
-
-				src.show_text("You breathe in.")
-
-			if ("exhale")
-				if (!manualbreathing)
-					src.show_text("You are already breathing!")
-					return
-
-				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
-				if (B)
-					if (!B.breathstate)
-						src.show_text("You just breathed out, try breathing in next silly!")
-						return
-					B.breathstate = 0
-
-				src.show_text("You breathe out.")
-
-			if ("closeeyes")
-				if (!manualblinking)
-					src.show_text("Why would you want to do that?")
-					return
-
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
-				if (S)
-					if (S.blinkstate)
-						src.show_text("You just closed your eyes, try opening them now dumbo!")
-						return
-					S.blinkstate = 1
-					S.blinktimer = 0
-
-				src.show_text("You close your eyes.")
-
-			if ("openeyes")
-				if (!manualblinking)
-					src.show_text("Your eyes are already open!")
-					return
-
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
-				if (S)
-					if (!S.blinkstate)
-						src.show_text("Your eyes are already open, try closing them next moron!")
-						return
-					S.blinkstate = 0
-
-				src.show_text("You open your eyes.")
+			if ("inhale", "exhale", "closeeyes", "openeyes")
+				; // Handled by signals.
 
 	//april fools end
 

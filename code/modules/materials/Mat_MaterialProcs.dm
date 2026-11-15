@@ -1,6 +1,7 @@
 /*
 triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+triggerOnHit(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/impact_type)
 triggerOnLife(var/mob/M, var/obj/item/I)
 triggerOnAdd(var/owner)
 triggerChem(var/atom/location, var/datum/reagent/chem, var/amount)
@@ -406,7 +407,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if(!location.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
 			location.material = location.material.getMutable()
 			return location.material.triggerTemp(location, 0)
-		var/total_plasma = location.material.getProperty("plasma_offgas")
+		var/total_plasma = location.material.getProperty(MATERIAL::PROPERTY::GAS_PLASMA)
 		if(total_plasma <= 0)
 			if(prob(2) && location)
 				location.visible_message("<span class='alert>[location] dissipates.</span>")
@@ -428,7 +429,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			payload.temperature = T20C
 			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 			target.air.merge(payload)
-			location.material.setProperty("plasma_offgas", total_plasma)
+			location.material.setProperty(MATERIAL::PROPERTY::GAS_PLASMA, total_plasma)
 
 /datum/materialProc/molitz_temp
 	max_generations = 1
@@ -447,7 +448,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		var/datum/material/crystal/molitz/molitz = src.find_molitz(owner.material)
 		if (!istype(molitz))
 			CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
-		var/iterations = owner.material.getProperty("molitz_bubbles")
+		var/iterations = owner.material.getProperty(MATERIAL::PROPERTY::GAS_MOLITZ)
 		if(iterations <= 0)
 			owner.setMaterial(getMaterial("molitz_expended"))
 			return
@@ -487,7 +488,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 
 
-		owner.material.setProperty("molitz_bubbles", iterations-1)
+		owner.material.setProperty(MATERIAL::PROPERTY::GAS_MOLITZ, iterations-1)
 
 
 /datum/materialProc/molitz_temp/agent_b
@@ -502,7 +503,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if(!istype(owner.material, /datum/material/crystal/molitz))
 			return
 		var/datum/material/crystal/molitz/molitz = owner.material
-		var/iterations = molitz.getProperty("molitz_bubbles")
+		var/iterations = molitz.getProperty(MATERIAL::PROPERTY::GAS_MOLITZ)
 		if(iterations <= 0) return
 		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
 			owner.material = owner.material.getMutable()
@@ -517,7 +518,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			payload.oxygen = 50
 			payload.temperature = T20C
 			target.assume_air(payload)
-			molitz.setProperty("molitz_bubbles", iterations-2)
+			molitz.setProperty(MATERIAL::PROPERTY::GAS_MOLITZ, iterations-2)
 
 
 /datum/materialProc/miracle_add
@@ -536,7 +537,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		color_end[17] = 1
 
 		location.avoid_animating = TRUE
-		var/loop_length = (location.material.getProperty("reflective") - 1) / (location.material.getProperty("reflective", VALUE_MAX) - 1)
+		var/loop_length = (location.material.getProperty(MATERIAL::PROPERTY::REFLECT) - 1) / (location.material.getProperty(MATERIAL::PROPERTY::REFLECT, VALUE_MAX) - 1)
 		loop_length = (((1 - loop_length) * 17) + 5) SECONDS
 		animate(filter, color = color_end, time = loop_length, loop = -1, easing = LINEAR_EASING)
 		animate(color = color_start, time = 0, loop = -1, easing = JUMP_EASING)
@@ -549,7 +550,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty(MATERIAL::PROPERTY::RADS)*10, FALSE, FALSE, 1)
 		return
 
 /datum/materialProc/radioactive_remove
@@ -562,7 +563,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON)*10, FALSE, TRUE, 1)
 		return
 
 /datum/materialProc/n_radioactive_remove
@@ -581,8 +582,8 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			return
 		var/datum/material/material = owner.material
 		var/material_amount = owner.material_amount_total()
-		var/rads = material.getProperty("radioactive")
-		var/n_rads = material.getProperty("n_radioactive")
+		var/rads = material.getProperty(MATERIAL::PROPERTY::RADS)
+		var/n_rads = material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON)
 		var/power = (rads + (n_rads * 1.2)) * material_amount * 0.25
 		var/brisance_bonus = n_rads / 9
 		explosion_new(owner, get_turf(owner), 0.25 + power, 1 + brisance_bonus)
@@ -611,8 +612,8 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 /datum/materialProc/explosion/impact
 	desc_scan = "Explodes on kinetic impact"
-	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
-		if(meleeorthrow != 2)
+	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/impact_type)
+		if(HAS_FLAG(impact_type, MATERIAL::IMPACT::MELEE))
 			return
 		material_explode(owner)
 
@@ -647,7 +648,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
 			C.changeBodyTemp(-2 KELVIN)
-			if (C.bodytemperature > I.material.getProperty("melting_point") && probmult(4))
+			if (C.bodytemperature > I.material.getProperty(MATERIAL::PROPERTY::MELTING_POINT) && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
@@ -656,7 +657,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	desc = "It would melt when exposed to heat."
 
 	execute(var/atom/owner, var/temp)
-		if(temp < owner.material.getProperty("melting_point")) return // less than reaction temp
+		if(temp < owner.material.getProperty(MATERIAL::PROPERTY::MELTING_POINT)) return // less than reaction temp
 
 		var/turf/T = get_turf(owner)
 
@@ -774,7 +775,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 		location.avoid_animating = TRUE
 		var/datum/material/blob_mat = location.material
-		var/wiggle_time = round(5 * (blob_mat.getProperty("density") ** 1.4), 1)
+		var/wiggle_time = round(5 * (blob_mat.getProperty(MATERIAL::PROPERTY::DENSITY) ** 1.4), 1)
 		var/blob_offset = TIME % wiggle_time
 		animate(filter, offset = blob_offset, time = 0, loop = -1, flags = ANIMATION_PARALLEL)
 		animate(offset = blob_offset + 1, time = wiggle_time, loop = -1)
@@ -816,8 +817,8 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				wall_owner.dismantle_wall(1)
 
 /datum/materialProc/cardboard_on_hit // MARK: add to ignorant children
-	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
-		if (meleeorthrow == 1) //if it was a melee attack
+	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/impact_type)
+		if (HAS_FLAG(impact_type, MATERIAL::IMPACT::MELEE))
 			if (issnippingtool(attackatom)||iscuttingtool(attackatom))
 				if (isExploitableObject(owner))
 					boutput(attacker, "Cutting [owner] into a sheet isn't possible.")
@@ -830,7 +831,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				return
 
 		var/crumple = FALSE
-		if (meleeorthrow == 1)
+		if (HAS_FLAG(impact_type, MATERIAL::IMPACT::MELEE))
 			if (isitem(attackatom))
 				var/obj/item/meleeitem = attackatom
 				if (prob(meleeitem.force*3))
@@ -854,7 +855,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				if (istype(owner, /turf/simulated/wall))
 					var/turf/simulated/wall/wall_owner = owner
 					owner.visible_message(SPAN_ALERT("[owner] shears apart under the force of [attackatom]! "),SPAN_ALERT("You hear a crumpling sound."))
-					logTheThing(LOG_STATION, attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackatom] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"][meleeorthrow == 1 ? ", this was a thrown item" : null]")
+					logTheThing(LOG_STATION, attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackatom] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"[HAS_FLAG(impact_type, MATERIAL::IMPACT::THROW) ? ", this was a thrown item" : null]]")
 					wall_owner.dismantle_wall(1, 0)
 
 				else if (istype(owner, /turf/simulated/floor))
@@ -940,8 +941,8 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		var/obj/item/I = owner
 		if (I.amount < 1) return
 		/// Init a property to 1 if it doesn't exist, its real value if it does, and if it does exist, delete it if the value is 0
-		var/radioactive = I.material.getProperty("radioactive")
-		var/n_radioactive = I.material.getProperty("n_radioactive")
+		var/radioactive = I.material.getProperty(MATERIAL::PROPERTY::RADS)
+		var/n_radioactive = I.material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON)
 		if (!radioactive && !n_radioactive)
 			I.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
 			return
@@ -957,13 +958,13 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if (!I.material.isMutable())
 			I.material = I.material.getMutable()
 		if (radioactive)
-			I.material.setProperty("radioactive", radioactive - min(radioactive, moles_to_convert/(10*I.amount)))
+			I.material.setProperty(MATERIAL::PROPERTY::RADS, radioactive - min(radioactive, moles_to_convert/(10*I.amount)))
 		else
-			I.material.removeProperty("radioactive")
+			I.material.removeProperty(MATERIAL::PROPERTY::RADS)
 		if (n_radioactive)
-			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
+			I.material.setProperty(MATERIAL::PROPERTY::RADS_NEUTRON, n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
 		else
-			I.material.removeProperty("n_radioactive")
+			I.material.removeProperty(MATERIAL::PROPERTY::RADS_NEUTRON)
 
 /datum/materialProc/electrical
 	proc/shock_animate(var/atom/target)

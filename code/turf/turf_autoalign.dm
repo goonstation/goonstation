@@ -187,7 +187,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			else
 				return
 
-		src.material_trigger_when_attacked(W, user, 1)
+		src.material_trigger_when_hit(W, user, MATERIAL::IMPACT::MELEE)
 		src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
 
 /turf/simulated/wall/auto/reinforced/the_tuff_stuff
@@ -1198,6 +1198,19 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	mod = "hedge-"
 	light_mod = "wall-"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
+
+TYPEINFO(/turf/unsimulated/wall/auto/web)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/web)
+    . = ..()
+    connect_diagonal = 1
+    connects_to = typecacheof(list(/obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/))
+/turf/unsimulated/wall/auto/web
+    name = "webbing wall"
+    desc = "A wall of tightly wound spider silk."
+    icon = 'icons/turf/walls/Spidersilkwall.dmi'
+    mod = "Spidersilk-"
+    light_mod = "wall-"
+    icon_state = "Spidersilk-0"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	connect_diagonal = TRUE

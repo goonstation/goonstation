@@ -1094,11 +1094,19 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 			playsound(src.loc, 'sound/vox/crime.ogg', 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
-		var/reason = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
-		var/details = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/reason = pick(
+			"Being unstoppable",
+			"Swagging out so hard",
+			"Stylin on \'em",
+			"Puttin\' in work",
+			"Convicted Badass, to the bone.",
+			"Certified Turbonerd, home-grown.",
+			"Absolute Salad.",
+			"King of crimes, Queen of Flexxin\'",
+		)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
-			H.apply_automated_arrest(reason,details,TRUE,FALSE,FALSE)
+			H.apply_automated_arrest(reason, requires_camera_seen = FALSE, use_visible_name = FALSE)
 
 	custom_suicide = 1
 	suicide_in_hand = 0
@@ -1209,7 +1217,7 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 
 	equipped(mob/user, slot)
 		..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_BREATHLESS, src.type) //we need no oxygen in this place
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_NO_OXY_LOSS, src.type) //we need no oxygen in this place
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_STUN_RESIST, src.type, 80) // falling to a couple batons is shameful
 		APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/pain_immune, src.type) // slow for nothing
 		user.add_antagonist(role_id = ROLE_CONFIRMED_CRIMINAL, do_equip = FALSE, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE) //crime time
@@ -2817,3 +2825,10 @@ obj/item/clothing/head/headscarf
 		name = "white headscarf"
 		icon_state = "headscarf-white"
 		item_state = "headscarf-white"
+
+// Seasonal autumn hats
+/obj/item/clothing/head/newsboy
+	name = "newsboy cap"
+	desc = "Extra, Extra! Read all about it!"
+	icon_state = "newsboy"
+	item_state = "newsboy"

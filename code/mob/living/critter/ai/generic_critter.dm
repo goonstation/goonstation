@@ -474,3 +474,68 @@
 	move_through_space = TRUE
 
 
+// basically just attack but for targeting objects, windows and such.
+// If you're gonna use this, make sure ur critter actually has limbs that do something when attacking windows etc.
+/datum/aiTask/sequence/goalbased/critter/smash_stuff
+	name = "smash stuff"
+	weight = 0.1 // low weight so if any nerds are reachable they get attacked normally
+	ai_turbo = TRUE // have gorillas gone too far...
+	max_dist = 7
+	score_by_distance_only = FALSE
+	/// Window must always score higher than grilles or they will be attacked under the window. Only 1 score difference is needed for tie break.
+	/// Much higher scores are prioritised over distance. Put subtypes before types in this list if ever adding both.
+	var/list/target_priorities = list(/obj/blob = 100, /obj/window = 1, /obj/mesh/grille = 0, /obj/table = 0)
+
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/New(parentHolder, transTask)
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/smash_stuff, list(holder)))
+
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/precondition()
+	var/mob/living/critter/C = holder.owner
+	return C.can_critter_attack()
+
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/on_reset()
+	..()
+	var/mob/living/critter/C = holder.owner
+	if(C)
+		C.set_a_intent(INTENT_HARM)
+
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/get_targets()
+	. = list()
+	for(var/obj/O in view(src.max_dist, holder.owner))
+		if(istypes(O, src.target_priorities))
+			. += O
+
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/score_target(atom/target)
+	. = ..()
+	for(var/target_type in src.target_priorities)
+		if(istype(target, target_type))
+			return . + src.target_priorities[target_type]
+
+/datum/aiTask/succeedable/critter/smash_stuff
+	name = "smashing stuff subtask"
+	var/has_started = FALSE
+
+/datum/aiTask/succeedable/critter/smash_stuff/failed()
+	var/mob/living/critter/C = holder.owner
+	var/atom/A = holder.target
+	if(!has_started && !C.can_critter_attack())
+		return TRUE
+	if(!C || QDELETED(A) || BOUNDS_DIST(A, C) > 0)
+		return TRUE
+
+/datum/aiTask/succeedable/critter/smash_stuff/succeeded()
+	var/mob/living/critter/C = holder.owner
+	return has_started && C.can_critter_attack()
+
+/datum/aiTask/succeedable/critter/smash_stuff/on_tick()
+	if(!has_started)
+		var/mob/living/critter/C = holder.owner
+		var/atom/A = holder.target
+		if(C && A && BOUNDS_DIST(C, A) == 0)
+			C.set_dir(get_dir(C, A))
+			C.critter_basic_attack(A)
+			src.has_started = TRUE
+
+/datum/aiTask/succeedable/critter/smash_stuff/on_reset()
+	src.has_started = FALSE

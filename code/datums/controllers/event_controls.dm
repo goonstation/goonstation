@@ -69,6 +69,10 @@ var/datum/event_controller/random_events
 		..()
 
 		for (var/X in concrete_typesof(/datum/random_event/major))
+			#ifdef RP_MODE // no full-random antags on RP
+			if (ispath(X, /datum/random_event/major/antag) || ispath(X, /datum/random_event/major/player_spawn/antag))
+				continue
+			#endif
 			var/datum/random_event/RE = new X
 			major_events += RE
 

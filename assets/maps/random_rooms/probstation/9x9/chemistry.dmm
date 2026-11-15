@@ -304,7 +304,6 @@
 "N" = (
 /obj/item/device/radio/intercom/science,
 /obj/machinery/glass_recycler/chemistry,
-/obj/table/reinforced/chemistry/auto/beakers,
 /obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)

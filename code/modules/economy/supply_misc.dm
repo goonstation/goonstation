@@ -128,7 +128,7 @@ TYPEINFO(/obj/strip_door)
 			return
 		if (isliving(A))
 			var/mob/living/M = A
-			var/density = src.flap_material.hasProperty("density") ? src.flap_material.getProperty("density") : 3
+			var/density = src.flap_material.hasProperty(MATERIAL::PROPERTY::DENSITY) ? src.flap_material.getProperty(MATERIAL::PROPERTY::DENSITY) : 3
 			M.changeStatus("slowed", 2 SECONDS, density * 2)
 		src.flap_material.triggerOnEntered(src, A)
 

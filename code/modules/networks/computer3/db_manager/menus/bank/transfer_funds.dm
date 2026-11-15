@@ -1,4 +1,5 @@
 /datum/db_manager_menu/transfer_funds
+	add_to_user_journey = FALSE
 	VAR_PRIVATE/transfer_from = null
 	VAR_PRIVATE/transfer_to = null
 	VAR_PRIVATE/static/list/budgets = list(
@@ -51,7 +52,7 @@
 
 	if (index_number == 0)
 		if (!src.transfer_from)
-			src.parent.switch_menu_to("station_budget")
+			src.parent.previous_menu()
 		else if (!src.transfer_to)
 			src.parent.switch_menu_to("transfer_funds")
 		else

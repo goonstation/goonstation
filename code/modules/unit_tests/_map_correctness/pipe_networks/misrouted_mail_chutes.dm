@@ -17,7 +17,7 @@
 			chute.destination_tag = destination
 			chute.flush(destination)
 
-	sleep(5 SECONDS)
+	wait_for_pipenet_dummies(dummy_list)
 	for (var/obj/item/pipenet_test_dummy/mail/dummy as anything in dummy_list)
 		if (istype(dummy.ejection_chute) && (dummy.ejection_chute.mail_tag == dummy.destination_tag))
 			continue

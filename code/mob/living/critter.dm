@@ -906,7 +906,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	src.visible_message(SPAN_ALERT("[src] has been hit by [AM]."))
-	random_brute_damage(src, AM.throwforce, TRUE)
+	 // delivery throws cross through mobcritters, so reduce damage appropriately
+	random_brute_damage(src, AM.throwforce * ((thr.throw_type & THROW_DELIVERY) ? 0.1 : 1), TRUE)
 	if (src.client)
 		logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 	if(thr?.user)

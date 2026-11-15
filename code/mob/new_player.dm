@@ -354,10 +354,10 @@ TYPEINFO(/mob/new_player)
 				ticker.generate_individual_objectives(character.mind)
 #endif
 
-			if (manualbreathing)
-				boutput(character, "<B>You must breathe manually using the *inhale and *exhale commands!</B>")
-			if (manualblinking)
-				boutput(character, "<B>You must blink manually using the *closeeyes and *openeyes commands!</B>")
+			if (global.manual_breathing)
+				character.AddComponent(/datum/component/manual_breathing)
+			if (global.manual_blinking)
+				character.AddComponent(/datum/component/manual_blinking)
 
 			if (ticker && character.mind)
 				character.mind.join_time = world.time
@@ -431,6 +431,7 @@ TYPEINFO(/mob/new_player)
 
 		S.traitHolder.removeTrait("cyber_incompatible")
 		S.mind.join_time = world.time
+		S.mind.brain = latejoin
 		logTheThing(LOG_DEBUG, S, "<b>Late join:</b> added player to ticker.minds. [S.mind.on_ticker_add_log()]")
 		ticker.minds += S.mind
 

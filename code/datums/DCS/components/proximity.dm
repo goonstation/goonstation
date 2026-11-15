@@ -38,8 +38,10 @@ TYPEINFO(/datum/component/proximity)
 		RegisterSignal(T, COMSIG_ATOM_ENTERED, PROC_REF(Detect))
 
 /datum/component/proximity/UnregisterFromParent()
-	UnregisterSignal(src.parent, XSIG_MOVABLE_TURF_CHANGED)
-	UnregisterSignal(src.parent, XSIG_OUTERMOST_MOVABLE_CHANGED)
+	// Only registered while enabled and deleting our parent cleans these up itself
+	if(src.enabled && !QDELETED(src.parent))
+		UnregisterSignal(src.parent, XSIG_MOVABLE_TURF_CHANGED)
+		UnregisterSignal(src.parent, XSIG_OUTERMOST_MOVABLE_CHANGED)
 	for(var/turf/T as anything in src.listening_to)
 		UnregisterSignal(T, COMSIG_ATOM_ENTERED)
 	src.listening_to?.len = 0
@@ -64,6 +66,8 @@ TYPEINFO(/datum/component/proximity)
 
 /// Sets whether or not we are detecting.
 /datum/component/proximity/proc/set_detection(state)
+	if (!state == !src.enabled)
+		return
 	src.enabled = state
 	if(src.enabled)
 		var/atom/A = src.parent

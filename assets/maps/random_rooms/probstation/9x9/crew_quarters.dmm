@@ -32,6 +32,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/junction/right/west,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "h" = (

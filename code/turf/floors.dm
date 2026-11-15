@@ -2457,7 +2457,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		..()
-		src.material_trigger_when_attacked(C, user, 1)
+		src.material_trigger_when_hit(C, user, MATERIAL::IMPACT::MELEE)
 
 /turf/simulated/floor/proc/reinforce(obj/item/rods/I)
 	src.ReplaceWithEngineFloor()
@@ -3051,6 +3051,17 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "swampgrass_edge"
 	can_dig = TRUE
+
+/turf/simulated/floor/auto/web
+    name = "web"
+    desc = "A thick coating of web."
+    icon = 'icons/turf/web.dmi'
+    icon_state = "web1"
+    pryable = FALSE
+    edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
+    icon_state_edge = "web_edge"
+    step_material = "step_outdoors"
+    step_priority = STEP_PRIORITY_MED
 
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")

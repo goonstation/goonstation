@@ -9,6 +9,8 @@
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
+	var/cuff_adjective = "handcuffed" // Adjective to describe someone who is restrained by these cuffs e.g. "taped"
+	var/cuff_name = "handcuff" // Name of the cuffs specifically, rather than the item
 	var/strength = 2
 	var/delete_on_last_use = 0 // Delete src when it's used up (e.g. tape roll)?
 	var/apply_multiplier = 1
@@ -31,7 +33,7 @@
 /obj/item/handcuffs/examine()
 	. = ..()
 	if (src.delete_on_last_use)
-		. += "There are [src.amount] lengths of [istype(src, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left!"
+		. += "There are [src.amount] lengths of [src.cuff_name] left!"
 
 /obj/item/handcuffs/suicide(var/mob/living/carbon/human/user as mob) //brutal
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
@@ -104,13 +106,13 @@
 		var/handslost = !istype(H.limbs.l_arm,/obj) + !istype(H.limbs.r_arm,/obj)
 		switch(handslost)
 			if (1)
-				boutput(user, SPAN_ALERT("[H.name] only has one arm, you still try to handcuff [him_or_her(H)]!"))
+				boutput(user, SPAN_ALERT("[H.name] only has one arm, you still try to [src.cuff_name] [him_or_her(H)]!"))
 			if (2)
-				boutput(user, SPAN_ALERT("[H.name] has no arms, you can't handcuff [him_or_her(H)]!"))
+				boutput(user, SPAN_ALERT("[H.name] has no arms, you can't [src.cuff_name] [him_or_her(H)]!"))
 				return
 
 		if (H.hasStatus("handcuffed"))
-			boutput(user, SPAN_ALERT("[H] is already handcuffed"))
+			boutput(user, SPAN_ALERT("[H] is already [H.handcuffs?.cuff_adjective || "restrained"]!"))
 			return
 
 		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
@@ -165,9 +167,10 @@
 	name = "ducktape"
 	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
-	c_flags = ONBELT
 	m_amt = 200
 	amount = 10
+	cuff_adjective = "taped"
+	cuff_name = "tape"
 	delete_on_last_use = TRUE
 
 /obj/item/handcuffs/tape_roll/crappy
@@ -184,6 +187,8 @@
 	name = "ziptie cuffs"
 	desc = "A wrist-binding tie made from a durable synthetic material.  Weaker than traditional handcuffs, but much more comfortable."
 	icon_state = "buddycuff"
+	cuff_adjective = "ziptied"
+	cuff_name = "ziptie"
 	m_amt = 0
 	strength = 1
 

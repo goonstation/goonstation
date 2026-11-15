@@ -10685,13 +10685,6 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
-"cUC" = (
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/table/reinforced/auto,
-/obj/disposalpipe/segment,
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint/escape)
 "cUF" = (
 /obj/machinery/light/runway_light/delay3,
 /obj/lattice{
@@ -19840,6 +19833,12 @@
 	dir = 1
 	},
 /area/station/security/main)
+"jkO" = (
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/table/reinforced/auto,
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/escape)
 "jkU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -21065,6 +21064,18 @@
 	},
 /turf/space,
 /area/space)
+"kfr" = (
+/obj/machinery/computer/tetris{
+	dir = 4
+	},
+/obj/blind_switch/directional/west{
+	pixel_y = 4
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -4
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "kfw" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -26251,16 +26262,6 @@
 	dir = 4
 	},
 /area/space)
-"nCr" = (
-/obj/machinery/computer/tetris,
-/obj/blind_switch/directional/west{
-	pixel_y = 4
-	},
-/obj/machinery/light_switch/directional/west{
-	pixel_y = -4
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/arcade)
 "nDs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack/corner{
@@ -76906,7 +76907,7 @@ xTP
 fOr
 avo
 baq
-cUC
+jkO
 bxH
 adM
 fhj
@@ -77230,7 +77231,7 @@ bAx
 xBG
 bmh
 biN
-nCr
+kfr
 bmh
 lye
 rEE
