@@ -653,6 +653,12 @@
 		return
 */
 
+	setup_disk(obj/item/disk/data/fixed_disk/hd)
+		var/datum/computer/folder/logs_folder = new()
+		logs_folder.name = "logs"
+		hd.root.add_file(logs_folder)
+		logs_folder.add_file(new /datum/computer/file/record/c3help(hd))
+
 	proc
 		//Log this text in the ~system log~ as well as printing it.
 		print_error_text(text)

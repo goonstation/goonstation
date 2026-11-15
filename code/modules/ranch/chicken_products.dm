@@ -802,22 +802,23 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 	visible = 1
 	var/already_had_aquabreath = 0
 
-	onAdd(var/optional=null)
+	onAdd(optional)
 		. = ..()
-		var/mob/living/L = owner
-		if(istype(L))
-			if(L.lifeprocesses[/datum/lifeprocess/aquatic_breathing])
-				already_had_aquabreath = 1
-			else
-				L.add_lifeprocess(/datum/lifeprocess/aquatic_breathing,5,5)
+		if (!isliving(src.owner))
+			return
+
+		if (src.owner.GetComponent(/datum/component/aquatic_breathing))
+			src.already_had_aquabreath = TRUE
+		else
+			src.owner.AddComponent(/datum/component/aquatic_breathing, 5, 5)
 
 
 	onRemove()
 		. = ..()
-		var/mob/living/L = owner
-		if(istype(L))
-			if(!already_had_aquabreath)
-				L.remove_lifeprocess(/datum/lifeprocess/aquatic_breathing)
+		if (!isliving(src.owner) || src.already_had_aquabreath)
+			return
+
+		src.owner.RemoveComponentsOfType(/datum/component/aquatic_breathing)
 
 /datum/statusEffect/supersleep
 	id = "supersleep"

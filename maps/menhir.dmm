@@ -30629,12 +30629,6 @@
 	},
 /turf/simulated/floor/shuttle/menhir_arm,
 /area/station/hallway/primary/southeast)
-"pAm" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/shuttle/menhir_arm,
-/area/station/hallway/primary/southwest)
 "pAs" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/table/reinforced/industrial/auto,
@@ -39038,12 +39032,6 @@
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
-"tJb" = (
-/obj/disposalpipe/segment/transport{
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/shuttle/menhir_arm,
-/area/station/hallway/primary/central)
 "tJA" = (
 /obj/storage/closet/coffin/wood,
 /obj/machinery/light/small{
@@ -39678,9 +39666,6 @@
 	},
 /obj/machinery/cashreg,
 /obj/mapping_helper/access/cargo,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/caution,
 /area/station/quartermaster/office)
@@ -40324,13 +40309,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/psychiatrist)
-"urd" = (
-/obj/mesh/catwalk,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/southeast)
 "urh" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -40787,9 +40765,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quartersC)
 "uDB" = (
@@ -93097,7 +93072,7 @@ ept
 swZ
 wTQ
 lZH
-tJb
+blY
 fNn
 aJd
 lhN
@@ -93123,7 +93098,7 @@ lhN
 lhN
 jVK
 xFh
-pAm
+xFh
 iCx
 bOZ
 aBi
@@ -99468,7 +99443,7 @@ aSL
 aSL
 aSL
 cCb
-urd
+cCb
 gnO
 jgi
 aID

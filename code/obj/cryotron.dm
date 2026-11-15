@@ -196,7 +196,7 @@
 				for (var/name in H.sims.motives)
 					H.sims.affectMotive(name, 100)
 
-		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
+		var/datum/db_record/personnel/general/crew_record = global.data_core.get_general_record(id = L.datacore_id)
 		if (!isnull(crew_record))
 			crew_record["p_stat"] = "In Cryogenic Storage"
 		var/datum/job/job = find_job_in_controller_by_string(L.job, soft=TRUE)
@@ -327,7 +327,7 @@
 			stored_mobs -= user
 			stored_mobs_volunteered -= user
 			stored_crew_names -= user.real_name
-			var/datum/db_record/crew_record = data_core.general.find_record("id", user.datacore_id)
+			var/datum/db_record/personnel/general/crew_record = global.data_core.get_general_record(id = user.datacore_id)
 			if (!isnull(crew_record))
 				crew_record["p_stat"] = "Active"
 			var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
@@ -351,7 +351,7 @@
 				stored_mobs_volunteered -= L
 				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
 					stored_crew_names -= L.real_name // you shouldn't be removed from the list when you ghost
-					var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
+					var/datum/db_record/personnel/general/crew_record = global.data_core.get_general_record(id = L.datacore_id)
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 

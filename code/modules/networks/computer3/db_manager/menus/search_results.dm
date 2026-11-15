@@ -26,7 +26,7 @@
 	var/command = global.text2num_safe(src.parent.parse_string(text)[1])
 	var/index_number = round(max(command, 0))
 	if (index_number == 0)
-		src.parent.switch_menu_to(src.parent.current_record_group.main_menu)
+		src.parent.previous_menu()
 		return
 
 	if (index_number > length(src.results))

@@ -390,10 +390,14 @@ TYPEINFO(/atom)
 	return
 
 /atom/proc/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_FLUID_ENTERED, F)
+	. = 0
 
 /atom/proc/ExitedFluid(obj/fluid/F as obj)
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_FLUID_EXITED, F)
+	. = 0
 
 /atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, atom/old_loc)
 	.=0
@@ -916,7 +920,8 @@ TYPEINFO(/obj/item/disk)
 	if (!W || !user || src.storage?.storage_item_attack_by(W, user) || W.should_suppress_attack(src, user, params))
 		return
 	W.material_on_attack_use(user, src)
-	src.material_trigger_when_attacked(W, user, 1)
+	src.material_trigger_when_hit(W, user, MATERIAL::IMPACT::MELEE)
+	W.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 	if (silent)
 		return
 	var/hits = src

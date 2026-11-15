@@ -12,8 +12,10 @@ TYPEINFO(/obj/machinery/disk_rack)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	requires_power = FALSE //we handle our own power stuff
-	var/list/obj/item/disk/data/floppy/disks[MAX_DISKS]
+	var/list/obj/item/disk/data/disks[MAX_DISKS]
 	var/list/active_lights[MAX_DISKS]
+	var/accepted_disk_type = /obj/item/disk/data/floppy
+	var/disk_overlay_state = "disk_overlay"
 
 /obj/machinery/disk_rack/New()
 	. = ..()
@@ -27,11 +29,11 @@ TYPEINFO(/obj/machinery/disk_rack)
 
 /obj/machinery/disk_rack/update_icon(...)
 	for (var/i in 1 to MAX_DISKS)
-		var/obj/item/disk/data/floppy/disk = src.disks[i]
+		var/obj/item/disk/data/disk = src.disks[i]
 		if (!disk)
 			src.ClearSpecificOverlays("disks_[i]")
 			continue
-		var/image/overlay = image(src.icon, "disk_overlay")
+		var/image/overlay = image(src.icon, disk_overlay_state)
 		overlay.color = disk.disk_color
 		overlay.pixel_y = (i-1) * 2
 		src.UpdateOverlays(overlay, "disks_[i]")
@@ -45,7 +47,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 /obj/machinery/disk_rack/ui_data(mob/user)
 	var/list/disk_data[MAX_DISKS]
 	for (var/i in 1 to MAX_DISKS)
-		var/obj/item/disk/data/floppy/disk = src.disks[i]
+		var/obj/item/disk/data/disk = src.disks[i]
 		if (disk)
 			disk_data[i] = list("name" = disk.disk_name(), "color" = disk.disk_color)
 			disk_data[i] += src.special_disk_data(disk, i)
@@ -67,29 +69,32 @@ TYPEINFO(/obj/machinery/disk_rack)
 		if (src.disks[index])
 			src.remove_disk(index, ui.user)
 			return TRUE
-		var/obj/item/disk/data/floppy/disk = ui.user.equipped()
-		if (!istype(disk))
+		var/disk = ui.user.equipped()
+		if (!istype(disk, accepted_disk_type))
 			return FALSE
 		src.insert_disk(index, disk, ui.user)
 		return TRUE
 
 /obj/machinery/disk_rack/proc/remove_disk(index, mob/user)
-	var/obj/item/disk/data/floppy/disk = src.disks[index]
+	var/obj/item/disk/data/disk = src.disks[index]
 	disk.set_loc(get_turf(src))
 	user?.put_in_hand_or_drop(disk)
 	src.disks[index] = null
 	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 	src.UpdateIcon()
 
-/obj/machinery/disk_rack/proc/insert_disk(index, obj/item/disk/data/floppy/disk, mob/user)
+/obj/machinery/disk_rack/proc/insert_disk(index, obj/item/disk/data/disk, mob/user)
+	if (!istype(disk, src.accepted_disk_type))
+		if (user)
+			boutput(user, SPAN_ALERT("This disk rack cannot accept a disk of this size!"))
 	src.disks[index] = disk
 	user?.drop_item(disk)
 	disk.set_loc(src)
 	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 	src.UpdateIcon()
 
-/obj/machinery/disk_rack/attackby(obj/item/disk/data/floppy/disk, mob/user)
-	if (istype(disk))
+/obj/machinery/disk_rack/attackby(obj/item/disk/data/disk, mob/user)
+	if (istype(disk, src.accepted_disk_type))
 		for (var/i in 1 to MAX_DISKS)
 			if (src.disks[i])
 				continue
@@ -194,6 +199,11 @@ TYPEINFO(/obj/machinery/disk_rack)
 		var/i = 1
 		for (var/type in childrentypesof(/obj/item/disk/data/floppy/office))
 			src.insert_disk(i++, new type)
+
+/obj/machinery/disk_rack/wide_disk
+	icon_state = "disk_rack_wide"
+	accepted_disk_type = /obj/item/disk/data/wide_floppy
+	disk_overlay_state = "disk_overlay_wide"
 
 /obj/spawner/clone_rack
 	icon = 'icons/obj/disk_rack.dmi'

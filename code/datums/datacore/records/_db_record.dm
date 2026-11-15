@@ -27,7 +27,7 @@ ABSTRACT_TYPE(/datum/db_record)
 /datum/db_record/proc/build_fields()
 	RETURN_TYPE(/alist)
 	return alist(
-		"id" = new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
+		BUILD_FIELD("id", /datum/record_field/string, "ID", "000000", @"[a-f0-9]{6}"),
 	)
 
 /// Returns this record's parent database, if it has one.
@@ -70,7 +70,6 @@ ABSTRACT_TYPE(/datum/db_record)
 
 /// Sets the value of the specified field on this record.
 /datum/db_record/proc/operator[]=(key, value)
-	src.db?.notify_field_change(src, key, src[key], value)
 	var/datum/record_field/field = src.fields[key]
 	return field.set_value(value)
 

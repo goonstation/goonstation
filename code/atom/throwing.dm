@@ -19,7 +19,15 @@
 			if (L.buckled == src) continue
 			src.throw_impact(A, thr)
 			if (thr.stops_on_mob_hit)
-				. = TRUE
+				// delivery crates aren't halted by mobcritters for cargo's sake
+				if (!(thr.throw_type & THROW_DELIVERY)) // delivery throw type
+					. = TRUE
+				else if (!ismobcritter(A)) // at a mob critter
+					. = TRUE
+				else
+					var/mob/living/critter/critter = A
+					if (critter.client) // that doesn't have a client
+						. = TRUE
 		// **TODO: Better behaviour for windows
 		// which are dense, but shouldn't always stop movement
 		if(isobj(A))
@@ -53,9 +61,10 @@
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
 		return TRUE
-	if (!(thr?.throw_type & THROW_DELIVERY))
+	if(!(thr?.throw_type & THROW_DELIVERY))
 		src.material_on_attack_use(thr?.user, hit_atom)
-		hit_atom.material_trigger_when_attacked(src, thr?.user, 2)
+		hit_atom.material_trigger_when_hit(src, thr?.user, MATERIAL::IMPACT::THROW)
+		src.material_trigger_when_hit(hit_atom, thr?.user, MATERIAL::IMPACT::THROW)
 	if(ismob(hit_atom))
 		var/mob/hit_mob = hit_atom
 		for(var/atom/A in hit_mob)
