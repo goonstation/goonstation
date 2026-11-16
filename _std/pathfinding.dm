@@ -237,7 +237,7 @@
 	var/search_z = start.z
 	var/possible_goal_count = 0
 	for(var/turf/end as anything in ends)
-		if(end.z != search_z || max_distance && (max_distance < GET_DIST(start, end)))
+		if(end.z != search_z || max_distance && (max_distance + mintargetdist < GET_DIST(start, end)))
 			ends -= end
 			continue
 		if(GET_DIST(start, end) <= mintargetdist) // already close enough
