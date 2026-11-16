@@ -539,7 +539,7 @@
 		/obj/rack = 20,
 		/obj/structure/girder = 20,
 		// still mad, fuck this shit
-		/obj/stool = 0,
+		// /obj/stool = 0, // couches and others are indestructible still :(
 	)
 
 /datum/aiTask/succeedable/critter/smash_stuff

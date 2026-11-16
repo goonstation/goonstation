@@ -2156,6 +2156,7 @@
 			/obj/machinery/computer,
 			/obj/machinery/computer3,
 			/obj/machinery/vending,
+			/obj/machinery/door,
 			/obj/machinery/manufacturer,
 			/obj/computerframe,
 			/obj/computer3frame,
@@ -2167,6 +2168,5 @@
 			/obj/structure/girder,
 			/obj/structure/woodwall,
 			/obj/mesh/grille,
-			/obj/stool,
 			/obj/rack,
 		)
