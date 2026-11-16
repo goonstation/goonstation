@@ -52245,7 +52245,9 @@
 	},
 /area/station/hydroponics/bay)
 "fBC" = (
-/obj/decoration/toiletholder,
+/obj/decoration/toiletholder{
+	desc = "An extremely expensive brand of toilet paper made from.... Real paper? Not even Command can afford to buy this pristine toilet paper."
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/south)
 "fCj" = (
@@ -69306,6 +69308,7 @@
 	dir = 8;
 	interesting = "This toilet is immaculately clean. Like, suspiciously clean."
 	},
+/obj/landmark/start/job/medical_director,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "tlk" = (
