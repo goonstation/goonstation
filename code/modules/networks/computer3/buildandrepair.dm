@@ -54,6 +54,14 @@ TYPEINFO(/obj/item/motherboard)
 	var/glass_needed = 2 //How much glass does this need for a screen?
 	var/metal_given = 5 //How much metal does this give when destroyed?
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+		make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+		qdel(src)
+		return TRUE
+
 	terminal //Light frame
 		name = "Terminal-frame"
 		desc = "A light micro-computer frame used for terminal systems."

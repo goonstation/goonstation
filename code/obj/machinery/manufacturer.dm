@@ -306,6 +306,27 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.power_change()
 		return TRUE
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+		global.hit_twitch(src)
+		playsound(src.loc, src.sound_damaged, 50, 2)
+		switch(src.dismantle_stage)
+			if(DISMANTLE_NONE)
+				src.dismantle_stage = DISMANTLE_PLATING_BOLTS
+				src.build_icon()
+			if(DISMANTLE_PLATING_BOLTS)
+				src.dismantle_stage = DISMANTLE_PLATING_SHEETS
+				src.build_icon()
+			if(DISMANTLE_PLATING_SHEETS)
+				src.dismantle_stage = DISMANTLE_WIRES
+				src.build_icon()
+			if(DISMANTLE_WIRES)
+				playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+				make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+				qdel(src)
+		return TRUE
+
 	power_change()
 		if (QDELETED(src))
 			return

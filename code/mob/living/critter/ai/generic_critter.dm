@@ -512,6 +512,36 @@
 		if(istype(target, target_type))
 			return . + src.target_priorities[target_type]
 
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/apeshit
+	name = "go apeshit"
+	weight = 10 // just as likely to kill something than someone. Seeing red. Seething. In their lane. Thriving.
+
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/apeshit/New(parentHolder, transTask)
+	. = ..()
+	src.target_priorities = list(
+		// bob
+		/obj/blob = 100,
+		// glowy lights, loud noises
+		/obj/machinery/computer = 40,
+		/obj/machinery/computer3 = 40,
+		/obj/machinery/vending = 40,
+		/obj/machinery/manufacturer = 40,
+		// shit's in the way
+		/obj/computerframe = 35,
+		/obj/computer3frame = 35,
+		/obj/storage/closet = 30,
+		/obj/storage/secure/closet = 30,
+		/obj/table = 30,
+		/obj/machinery/disposal = 30,
+		// i want out
+		/obj/window = 21,
+		/obj/mesh/grille = 20,
+		/obj/rack = 20,
+		/obj/structure/girder = 20,
+		// still mad, fuck this shit
+		/obj/stool = 0,
+	)
+
 /datum/aiTask/succeedable/critter/smash_stuff
 	name = "smashing stuff subtask"
 	var/has_started = FALSE

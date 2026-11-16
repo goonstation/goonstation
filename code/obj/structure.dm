@@ -17,6 +17,16 @@
 			or add reinforced metal to make the girder stronger.
 		"})
 
+		smash_act(atom/movable/smasher, show_message)
+			if (show_message)
+				smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src], displacing it!"))
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+			src.material_trigger_when_hit(src, smasher, MATERIAL::IMPACT::MELEE)
+			var/atom/A = new/obj/structure/girder/displaced( src.loc )
+			if(src.material) A.setMaterial(src.material)
+			qdel(src)
+			return TRUE
+
 		displaced
 			name = "displaced girder"
 			icon_state = "displaced"
@@ -28,6 +38,21 @@
 				use a <b>wrench</b> to anchor the girder in place,
 				or add metal or reinforced metal to turn it into fake wall that can opened by hand.
 			"})
+
+			smash_act(atom/movable/smasher, show_message)
+				if (show_message)
+					smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src], destroying it!"))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+				src.material_trigger_when_hit(src, smasher, MATERIAL::IMPACT::MELEE)
+				var/atom/A = new /obj/item/sheet(get_turf(src))
+				if (src.material)
+					A.setMaterial(src.material)
+				else
+					var/datum/material/defaultMaterial = getMaterial("steel")
+					A.setMaterial(defaultMaterial)
+				qdel(src)
+				return TRUE
+
 
 		reinforced
 			name = "reinforced girder"
@@ -41,6 +66,16 @@
 				else if (src.state == 1)
 					. = {"You can use a pair of <b>wirecutters</b> to cut the support struts,"}
 				. += "\nor add reinforced metal to finish the reinforced wall."
+
+			smash_act(atom/movable/smasher, show_message)
+				if (show_message)
+					smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src], weakening the support struts!"))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+				src.material_trigger_when_hit(src, smasher, MATERIAL::IMPACT::MELEE)
+				var/atom/A = new /obj/structure/girder(src.loc)
+				if(src.material) A.setMaterial(src.material)
+				qdel(src)
+				return TRUE
 
 	blob_act(var/power)
 		if (prob(power))
