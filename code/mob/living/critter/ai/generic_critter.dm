@@ -107,7 +107,7 @@
 	var/mob/T = holder.target
 	if(!has_started && !C.can_critter_attack()) //if we haven't started and can't attack, task fail.
 		return TRUE
-	if(!C || !T || BOUNDS_DIST(T, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !T || !can_reach(C, T)) //the tasks fails and is re-evaluated if the target is not in reach
 		return TRUE
 
 /datum/aiTask/succeedable/critter/attack/succeeded()
@@ -120,7 +120,7 @@
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
-		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
+		if(C && T && can_reach(C, T))
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
 			C.critter_attack(holder.target)
 			has_started = TRUE
