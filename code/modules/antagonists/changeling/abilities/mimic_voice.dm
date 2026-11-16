@@ -11,36 +11,49 @@
 	do_logs = FALSE
 	interrupt_action_bars = FALSE
 	var/last_mimiced_name = ""
-	var/headset_icon_labels = list( // list for what changelings can mimic over radio, key refers to headset.icon_tooltip and is used in the selection menu and value refers to associated headset.icon_override, check headsets.dm
-		"Captain" = "cap",
-		"Head of Personnel" = "hop",
-		"Head of Security" = "hos",
-		"Head of Staff" = "head",
-		"Research Director" = "rd",
-		"Medical Director" = "md",
-		"Chief Engineer" = "ce",
-		"NanoTrasen Security Consultant" = "nt",
-		"Security" = "sec",
-		"Detective" = "det",
-		"Scientist" = "sci",
-		"Medical" = "med",
-		"Geneticist" = "gene",
-		"Roboticist" = "robotics",
-		"Pharmacist" = "pharmacist",
-		"Engineer" = "eng",
-		"Quartermaster" = "qm",
-		"Miner" = "Min",
-		"Civilian" = "civ",
-		"Chaplain" = "chaplain",
-		"Hydroponics" = "hydroponics",
-		"Catering" = "catering",
-		"Janitor" = "janitor",
-		"Radio Show Host" = "rh",
-		"Mail Courier" = "mail",
-		"Clown" = "clown",
-		"Blue Clown" = "clown_blue",
-		"Inspector" = "inspector",
-		"Ghost Buster" = "hunter_ghost")
+	var/mimicable_headsets = list( // List of mimicable headsets
+		// Command
+		/obj/item/device/radio/headset/command/captain,
+		/obj/item/device/radio/headset/command/hop,
+		/obj/item/device/radio/headset/command/hos,
+		/obj/item/device/radio/headset/command/rd,
+		/obj/item/device/radio/headset/command/md,
+		/obj/item/device/radio/headset/command/ce,
+		/obj/item/device/radio/headset/command,
+
+		// Security
+		/obj/item/device/radio/headset/command/nt/consultant,
+		/obj/item/device/radio/headset/security,
+		/obj/item/device/radio/headset/detective,
+
+		// Research
+		/obj/item/device/radio/headset/research,
+
+		// Medical
+		/obj/item/device/radio/headset/medical,
+		/obj/item/device/radio/headset/medical/genetics,
+		/obj/item/device/radio/headset/medical/robotics,
+		/obj/item/device/radio/headset/pharmacist,
+
+		// Engineering
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/device/radio/headset/shipping,
+		/obj/item/device/radio/headset/miner,
+
+		// Civilian
+		/obj/item/device/radio/headset/civilian,
+		/obj/item/device/radio/headset/civilian/chaplain,
+		/obj/item/device/radio/headset/civilian/hydroponics,
+		/obj/item/device/radio/headset/civilian/catering,
+		/obj/item/device/radio/headset/civilian/janitor,
+		/obj/item/device/radio/headset/command/radio_show_host,
+		/obj/item/device/radio/headset/mail,
+		/obj/item/device/radio/headset/clown,
+
+		// Special roles
+		/obj/item/device/radio/headset/clown/blue,
+		/obj/item/device/radio/headset/command/inspector,
+		/obj/item/device/radio/headset/ghost_buster)
 
 	cast(atom/target)
 		if (..())
@@ -66,10 +79,13 @@
 		if (H?.ears && istype(H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
-				var/radio_tooltip = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in headset_icon_labels
+				var/list/headset_options = list()
+				for(var/obj/item/device/radio/headset/headset_type as anything in src.mimicable_headsets)
+					headset_options |= list("[headset_type.icon_tooltip]" = "[headset_type.icon_override]")
+
+				var/radio_tooltip = tgui_input_list(src.holder.owner, "Select a radio to disguise as...", "Mimic Radio Selection", headset_options)
 				if (radio_tooltip)
-					var/radio_override = headset_icon_labels[radio_tooltip]
-					headset.icon_override = radio_override
+					headset.icon_override = headset_options[radio_tooltip]
 					headset.icon_tooltip = radio_tooltip
 					headset_was_comic = headset.ensure_listen_tree().GetModifierByID(LISTEN_MODIFIER_COMIC_SANS)
 					//This is heavily jank but I'm not aware of anything better without a complete refactor of this ability
