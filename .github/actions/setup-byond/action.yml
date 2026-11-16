@@ -9,6 +9,12 @@ runs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
+        # stupid flaky github runner bullshit
+        if ! apt-cache show libcurl4t64:i386 > /dev/null 2>&1; then
+          . /etc/os-release
+          printf "deb http://azure.archive.ubuntu.com/ubuntu %s main\n" $VERSION_CODENAME $VERSION_CODENAME-updates $VERSION_CODENAME-security | sudo tee /etc/apt/sources.list.d/fallback.list
+          sudo apt-get update
+        fi
         sudo apt-get install -y --no-install-recommends libcurl4t64:i386 libstdc++6:i386 libgcc-s1:i386
 
     - name: Cache BYOND
