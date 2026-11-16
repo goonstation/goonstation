@@ -327,8 +327,10 @@
  * * original_turf: What turf did we start this scan at?
  * * heading: What direction are we going in? Obviously, should be cardinal
  * * parent_node: Only given for normal cardinal scans, if we don't have one, we're a diagonal subscan.
+ * * start_cost: What it cost to get to original_turf - to respect max_distance (subscans only)
 */
-/datum/pathfind/proc/cardinal_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node)
+/datum/pathfind/proc/cardinal_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node, start_cost = 0)
+	var/base_cost = parent_node ? parent_node.number_tiles : start_cost
 	var/steps_taken = 0
 
 	var/turf/current_turf = original_turf
@@ -342,6 +344,8 @@
 		src.total_seen++
 		steps_taken++
 		if(!CAN_STEP(lag_turf, current_turf))
+			return
+		if(max_distance && base_cost + steps_taken > max_distance)
 			return
 
 		if(sources[current_turf]) // already visited, essentially in the closed list
@@ -367,9 +371,6 @@
 				for(var/goal in reached_target_goals)
 					src.paths[goal] = path.Copy()
 			return list(final_node, reached_target_goals)
-
-		if(max_distance && parent_node && parent_node.number_tiles + steps_taken > max_distance)
-			return
 
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
 
@@ -418,6 +419,8 @@
 		steps_taken += cardinal_only ? 2 : 1
 		if(!CAN_STEP(lag_turf, current_turf))
 			return
+		if(max_distance && parent_node.number_tiles + steps_taken > max_distance)
+			return
 
 		if(sources[current_turf]) // already visited, essentially in the closed list
 			return
@@ -444,33 +447,31 @@
 			if(FINISHED_SEARCH)
 				return
 
-		if(max_distance && parent_node.number_tiles + steps_taken > max_distance)
-			return
-
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
 		var/possible_child_node_pair = null
+		var/cost = parent_node.number_tiles + steps_taken // so subscans still respect max_distance
 
 		switch(heading)
 			if(NORTHWEST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, NORTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHWEST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, WEST) || cardinal_scan_spec(current_turf, NORTH))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, WEST, null, cost) || cardinal_scan_spec(current_turf, NORTH, null, cost))
 			if(NORTHEAST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHEAST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, EAST) || cardinal_scan_spec(current_turf, NORTH))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, EAST, null, cost) || cardinal_scan_spec(current_turf, NORTH, null, cost))
 			if(SOUTHWEST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH) || cardinal_scan_spec(current_turf, WEST))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH, null, cost) || cardinal_scan_spec(current_turf, WEST, null, cost))
 			if(SOUTHEAST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHEAST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH) || cardinal_scan_spec(current_turf, EAST))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH, null, cost) || cardinal_scan_spec(current_turf, EAST, null, cost))
 
 		if(interesting || possible_child_node_pair)
 			if(isnull(newnode))
