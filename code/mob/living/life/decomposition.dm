@@ -37,7 +37,7 @@
 			var/env_temp = 0
 
 			if (!suspend_rot && environment)
-				env_temp = environment.temperature
+				env_temp = environment.temperature()
 				var/temperature_modifier = (env_temp - T20C) / 10
 				H.time_until_decomposition -= clamp(2 SECONDS + temperature_modifier, 0, 6 SECONDS) * mult
 

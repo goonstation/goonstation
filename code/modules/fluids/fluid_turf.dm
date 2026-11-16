@@ -29,7 +29,7 @@
 	nitrogen = MOLES_N2STANDARD * 0.5
 	temperature = OCEAN_TEMP
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 700000
+	heat_capacity = 700
 
 	special_volume_override = 0.62
 

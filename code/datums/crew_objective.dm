@@ -849,7 +849,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 			var/cryocount = 0
 			check_result = FALSE
 			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
-				if(C.on && C.air_contents.temperature < 225)
+				if(C.on && C.air_contents.temperature() < 225)
 					cryocount ++
 			if(cryocount > 1)
 				check_result = TRUE
@@ -966,7 +966,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 			var/cryocount = 0
 			check_result = FALSE
 			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
-				if(C.on && C.air_contents.temperature < 225)
+				if(C.on && C.air_contents.temperature() < 225)
 					cryocount ++
 			if(cryocount > 1)
 				check_result = TRUE

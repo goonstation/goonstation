@@ -116,11 +116,11 @@
 
 		if(istype(src, /turf/simulated))
 			if(air) // force reverting air to floor turf as this is post replace
-#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
+#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.set_##GAS(GAS);
 				APPLY_TO_GASES(_TRANSFER_GAS_TO_AIR)
 #undef _TRANSFER_GAS_TO_AIR
 
-				air.temperature = temperature
+				air.set_temperature(temperature)
 
 		if(station_repair.allows_vehicles)
 			src.allows_vehicles = station_repair.allows_vehicles

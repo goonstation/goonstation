@@ -39,7 +39,7 @@
 	. = ..()
 	.["active"] = src.on
 	.["target_temperature"] = src.current_temperature
-	.["air_temperature"] = src.air_contents.temperature
+	.["air_temperature"] = src.air_contents.temperature()
 	.["air_pressure"] = MIXTURE_PRESSURE(src.air_contents)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/ui_interact(mob/user, datum/tgui/ui)

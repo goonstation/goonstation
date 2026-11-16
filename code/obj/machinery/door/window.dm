@@ -148,26 +148,7 @@
 	UNCROSS_BUMP_CHECK(mover)
 
 /obj/machinery/door/window/update_nearby_tiles(need_rebuild)
-	if (!air_master) return 0
-
 	var/turf/simulated/source = loc
-	var/turf/simulated/target = get_step(source,dir)
-
-	if (need_rebuild)
-		if (istype(source)) // Rebuild resp. update nearby group geometry.
-			if (source.parent)
-				air_master.groups_to_rebuild[source.parent] = null
-			else
-				air_master.tiles_to_update[source] = null
-
-		if (istype(target))
-			if (target.parent)
-				air_master.groups_to_rebuild[target.parent] = null
-			else
-				air_master.tiles_to_update[target] = null
-	else
-		if (istype(source)) air_master.tiles_to_update[source] = null
-		if (istype(target)) air_master.tiles_to_update[target] = null
 
 	if (istype(source))
 		source.selftilenotify() //for fluids

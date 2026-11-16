@@ -99,25 +99,25 @@
 			src.gas_amount_current = min(src.gas_amount_current + src.gas_amount_growth, src.gas_amount)
 		var/turf/simulated/L = get_turf(O)
 		if(istype(L))
-			var/datum/gas_mixture/gas = new /datum/gas_mixture
+			var/datum/gas_mixture/normal/gas = new /datum/gas_mixture/normal
 			switch(src.gas_type)
 				if("oxygen")
-					gas.oxygen = src.gas_amount_current
+					gas.set_oxygen(src.gas_amount_current)
 				if("nitrogen")
-					gas.nitrogen = src.gas_amount_current
+					gas.set_nitrogen(src.gas_amount_current)
 				if("plasma")
-					gas.toxins = src.gas_amount_current
+					gas.set_toxins(src.gas_amount_current)
 				if("carbon dioxide")
-					gas.carbon_dioxide = src.gas_amount_current
+					gas.set_carbon_dioxide(src.gas_amount_current)
 				if("farts")
-					gas.farts = src.gas_amount_current
+					gas.set_farts(src.gas_amount_current)
 				if("agent b")
-					gas.oxygen_agent_b = src.gas_amount_current
+					gas.set_oxygen_agent_b(src.gas_amount_current)
 				if("sleeping agent")
-					gas.nitrous_oxide = src.gas_amount_current
+					gas.set_nitrous_oxide(src.gas_amount_current)
 				if("fallout")
-					gas.radgas = src.gas_amount_current
-			gas.temperature = src.gas_temp
+					gas.set_radgas(src.gas_amount_current)
+			gas.set_temperature(src.gas_temp)
 			if (L)
 				L.assume_air(gas)
 

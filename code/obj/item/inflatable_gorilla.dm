@@ -1,13 +1,13 @@
 /obj/item/inflatable_mob
 	var/mob_type
 	var/mob_name = "thing"
-	var/datum/gas_mixture/air_contents = new
+	var/datum/gas_mixture/normal/air_contents = new
 	HELP_MESSAGE_OVERRIDE("Use a gas tank on this to inflate.")
 
 /obj/item/inflatable_mob/New()
 	. = ..()
 	src.name = "inflatable [src.mob_name]"
-	src.air_contents.volume = 40 LITERS
+	src.air_contents.set_volume(40 LITERS)
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 
 /obj/item/inflatable_mob/proc/assembly_setup(var/manipulated_gorilla, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)

@@ -98,7 +98,7 @@
 				var/datum/gas_mixture/GM = T.return_air()
 				var/amount = (clamp(V.strength**1.5, 1, CELL_VOLUME/18))  //FUCK IF I KNOW WHAT GOES HERE FUCK
 				if (istype(GM))
-					GM.oxygen += amount
+					GM.adjust_oxygen(amount)
 					loc.assume_air(GM)
 			else
 				var/energy_counter = 1
@@ -113,7 +113,7 @@
 					var/datum/gas_mixture/GM = T.return_air()
 					var/amount = (clamp(V.strength**1.5, 1, CELL_VOLUME/25)) //FUCK IF I KNOW WHAT GOES HERE FUCK. Also weaker version for AOE.
 					if (istype(GM))
-						GM.oxygen += amount
+						GM.adjust_oxygen(amount)
 						T.assume_air(GM)
 			return list()
 

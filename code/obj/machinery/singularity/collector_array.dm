@@ -53,7 +53,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 		icon_state = "ca_active"
 	else
 		if(P)
-			if(P.air_contents.toxins <= 0)
+			if(P.air_contents.toxins() <= 0)
 				src.active = 0
 				icon_state = "ca_deactive"
 				UpdateIcon()

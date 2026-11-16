@@ -41,7 +41,7 @@
 	if(!on)
 		return FALSE
 
-	var/datum/gas_mixture/removed = air1.remove_ratio(src.transfer_rate/air1.volume)
+	var/datum/gas_mixture/removed = air1.remove_ratio(src.transfer_rate/air1.volume())
 
 	air2.merge(removed)
 

@@ -777,7 +777,7 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
-	heat_capacity = 325000
+	heat_capacity = 325
 	reinforced = TRUE
 	allows_vehicles = 1
 
