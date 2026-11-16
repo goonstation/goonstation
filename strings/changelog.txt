@@ -1,5 +1,60 @@
 
+(t)sun nov 15 26
+(u)SmileyLemonade
+(p)28262
+(e)🪲🤖🚗|C-Bug, A-Silicons, A-Vehicles
+(+)Fixed cyborgs and ghostdrones losing resources when dragging stacks onto their toolbar.
+(+)Fixed cyborgs and ghostdrones being unable to drag more resources onto their toolbar despite having room left.
+(u)ANNmagedon
+(p)28293
+(e)🆕🐣|C-Feature, A-Respawning
+(+)NT has convinced more types of VIPs to visit the station with their briefcase full of riches.
+(u)TemThrush
+(p)28254
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Refurbishes the clown nest prefab with a few new sprites.
+(u)AronBattlnode
+(e)⚖💊|C-Balance, A-Medical
+(+)Base Anaerobic Metabolism no longer provides immunity to smoked chemical reagents
+(u)glowbold
+(e)⚖💊|C-Balance, A-Medical
+(+)Lexorin's active effect makes you smoke immune as well as unable to lose breath.
+(t)sat nov 14 26
+(u)ANNmagedon & ZeWaka
+(p)28087
+(e)🎨🌠|C-Sprites, A-Events
+(+)The lightning "flash" effect in the biodome has been replaced with actual lightning.
+(t)fri nov 13 26
+(u)glowbold
+(p)28213
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)PDAs have flying text messages when equipped in inventory or as a cyborg. Option to disable in the Game Settings tab on your character profile, next to the flying chat option.
 (t)thu nov 12 26
+(u)ANNmagedon
+(p)28288
+(e)|
+(+)The gravity tether manudrive uses the engineering disk sprite now.
+(+)The name consistency issue between the medical manudrives (genebooth, clone disk rack) has been fixed.
+(u)Spyritdragon
+(p)28231
+(e)🤖|A-Silicons
+(+)Different silicon limbs will now layer differently on clothing depending on their size and bulk.
+(u)bamlord
+(p)28167
+(e)⚖💊🤖|C-Balance, A-Medical, A-Silicons
+(*)Medical cyborg automenders are no longer infinite,  they now use up their reagents whilst refilling automatically over time.
+(u)bamlord
+(p)28156
+(e)📡🐁|A-AI, A-Critters
+(*)Enraged gorillas have become even more enraged, and will now seek to escape their confines.
+(u)LorrMaster
+(p)27978
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(*)Blob tourists and diplomats now have the innate "Eukaryotic Phagocytosis" ability, allowing them to absorb non-robotic organs into their body.
+(u)JORJ949
+(p)28210
+(e)💅🔨👮|C-QoL, A-Player-Actions, A-Security
+(+)Restraints (handcuffs/zipties/ducktape) are now easier distinguished between in chat (They aren't all assumed to be handcuffs).
 (u)JORJ949
 (p)28255
 (e)🎨⚖💅📦|C-Sprites, C-Balance, C-QoL, A-Game-Objects

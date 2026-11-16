@@ -1,6 +1,6 @@
 /datum/record_field/choice/criminal
 
-/datum/record_field/choice/criminal/New(parent, name, value, list/choices)
+/datum/record_field/choice/criminal/New(parent, key, name, value, list/choices)
 	value = SECURITY::ARREST::STATE::NONE
 	choices = list(
 		SECURITY::ARREST::STATE::ARREST,
@@ -12,18 +12,10 @@
 		SECURITY::ARREST::STATE::RELEASED,
 		SECURITY::ARREST::STATE::CLOWN,
 	)
-	. = ..(parent, name, value, choices)
-
-/datum/record_field/choice/criminal/set_value(value)
-	. = ..()
-
-	var/target_name = src.parent["name"]
-	for_by_tcl(H, /mob/living/carbon/human)
-		if ((H.real_name == target_name) || (H.name == target_name))
-			H.update_arrest_icon()
+	. = ..(parent, key, name, value, choices)
 
 /datum/record_field/choice/criminal/input_load(datum/db_manager_menu/field_input/menu)
-	if (!length(global.data_core.get_open_arrests(src.parent["name"])))
+	if (!length(global.data_core.get_open_arrests(id = src.parent["id"])))
 		return ..()
 
 	var/text = "Criminal status field cannot be altered while subject has open arrest warrants. Warrants may be accessed and closed from the citations list."
@@ -39,7 +31,11 @@
 	if (index_number == 0)
 		return TRUE
 
-	var/target_name = src.parent["name"]
+	var/datum/db_record/personnel/general/record = global.data_core.get_general_record(id = src.parent["id"])
+	if (!istype(record))
+		CRASH("Attempted to edit field on headless record.")
+
+	var/target_name = record["name"]
 	if (length(global.data_core.get_open_arrests(target_name)))
 		switch (index_number)
 			if (1)

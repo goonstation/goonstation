@@ -33833,10 +33833,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
-"cik" = (
-/obj/spawner/disk_rack_lrt,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/teleporter)
 "cil" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -52240,6 +52236,12 @@
 	dir = 5
 	},
 /area/station/hydroponics/bay)
+"fBC" = (
+/obj/decoration/toiletholder{
+	desc = "An extremely expensive brand of toilet paper made from.... Real paper? Not even Command can afford to buy this pristine toilet paper."
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/solar/south)
 "fCj" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/machinery/atmospherics/binary/valve/notify_admins{
@@ -66633,6 +66635,14 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/primary/southwest)
+"qUa" = (
+/obj/item/storage/toilet{
+	dir = 8;
+	interesting = "This toilet is immaculately clean. Like, suspiciously clean."
+	},
+/obj/landmark/start/job/medical_director,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/south)
 "qUH" = (
 /obj/machinery/vending/medical_public,
 /obj/disposalpipe/segment/transport,
@@ -69293,18 +69303,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"tkB" = (
-/obj/item/storage/toilet{
-	dir = 8;
-	interesting = "This toilet is immaculately clean. Like, suspiciously clean."
-	},
-/obj/decoration/toiletholder{
-	interesting = "An extremely expensive brand of toilet paper made from....real paper? Not even Command can afford to buy this pristine toilet paper.";
-	pixel_y = -6
-	},
-/obj/landmark/start/job/medical_director,
-/turf/simulated/floor/plating,
-/area/station/maintenance/solar/south)
 "tlk" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
@@ -70350,6 +70348,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
+"tVT" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/teleporter)
 "tWh" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -106188,7 +106190,7 @@ aaI
 aaa
 aaa
 chg
-cik
+tVT
 cjx
 ckW
 iFq
@@ -107733,8 +107735,8 @@ daK
 cMt
 dcH
 lEO
-ddv
-tkB
+fBC
+qUa
 ddv
 deU
 oDm

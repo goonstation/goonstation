@@ -30,7 +30,7 @@
 /datum/aiTask/succeedable/critter/dog/fetch/failed()
 	var/mob/living/critter/C = holder.owner
 	var/obj/item/I = holder.target
-	if(!C || !I || BOUNDS_DIST(I, C) > 0 || !istype(I.loc, /turf)) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !I || !can_reach(C, I) || !istype(I.loc, /turf)) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/dog/fetch/succeeded()
@@ -41,7 +41,7 @@
 		holder.stop_move()
 		var/mob/living/critter/C = holder.owner
 		var/obj/item/I = holder.target
-		if(C && I && BOUNDS_DIST(C, I) == 0 && istype(I.loc, /turf))
+		if(C && I && can_reach(C, I) && istype(I.loc, /turf))
 			C.set_dir(get_dir(C, I))
 			if(C.set_hand(1))
 				C.drop_item()
@@ -89,7 +89,7 @@
 /datum/aiTask/succeedable/critter/dog/fetch_back/failed()
 	var/mob/living/critter/C = holder.owner
 	var/mob/living/M = holder.target
-	if(!C || !M || BOUNDS_DIST(M, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !M || !can_reach(C, M)) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/dog/fetch_back/succeeded()
@@ -100,7 +100,7 @@
 		holder.stop_move()
 		var/mob/living/critter/C = holder.owner
 		var/mob/living/M = holder.target
-		if(C && M && BOUNDS_DIST(C, M) == 0)
+		if(C && M && can_reach(C, M))
 			C.set_dir(get_dir(C, M))
 			if(C.set_hand(1))
 				C.drop_item()

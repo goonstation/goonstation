@@ -306,6 +306,27 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.power_change()
 		return TRUE
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+		global.hit_twitch(src)
+		playsound(src.loc, src.sound_damaged, 50, 2)
+		switch(src.dismantle_stage)
+			if(DISMANTLE_NONE)
+				src.dismantle_stage = DISMANTLE_PLATING_BOLTS
+				src.build_icon()
+			if(DISMANTLE_PLATING_BOLTS)
+				src.dismantle_stage = DISMANTLE_PLATING_SHEETS
+				src.build_icon()
+			if(DISMANTLE_PLATING_SHEETS)
+				src.dismantle_stage = DISMANTLE_WIRES
+				src.build_icon()
+			if(DISMANTLE_WIRES)
+				playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+				make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+				qdel(src)
+		return TRUE
+
 	power_change()
 		if (QDELETED(src))
 			return
@@ -858,7 +879,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						if(divisible_amount)
 							var/amount_per_account = divisible_amount/length(accounts)
 							for(var/datum/db_record/gen_rec as anything in accounts)
-								var/datum/db_record/bank_rec = global.data_core.bank.find_record("id", gen_rec["id"])
+								var/datum/db_record/bank_rec = global.data_core.get_bank_record(id = gen_rec["id"])
 								if (istype(bank_rec))
 									bank_rec["current_money"] += amount_per_account
 									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
@@ -1216,7 +1237,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.grump_message(usr, "You need to be holding an ID or something with an ID to scan it in!", sound = TRUE)
 			return
 		boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
-		var/datum/db_record/bank_account = FindBankAccountByName(ID.registered)
+		var/datum/db_record/bank_account = global.data_core.get_bank_record(ID.registered)
 		if(!bank_account)
 			src.grump_message(usr, "No bank account associated with this ID found.")
 			return

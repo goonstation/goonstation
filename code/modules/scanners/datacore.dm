@@ -4,17 +4,15 @@
 // get security record global proc
 
 
-/// Returns the datacore general record, or null if none found
-/proc/get_general_record(mob/living/carbon/human/H)
-	if (!istype(H))
-		return null
-	var/patientname = H.name
-	if (H:wear_id && H:wear_id:registered)
-		patientname = H.wear_id:registered
-	return data_core.general.find_record("name", patientname)
-
 /proc/update_medical_record(var/mob/living/carbon/human/M)
-	var/datum/db_record/E = get_general_record(M)
+	if (!istype(M))
+		return
+
+	var/patientname = M.name
+	if (M:wear_id && M:wear_id:registered)
+		patientname = M.wear_id:registered
+
+	var/datum/db_record/personnel/general/E = global.data_core.get_general_record(patientname)
 	if(!istype(E))
 		return
 
@@ -29,7 +27,7 @@
 		if (STAT_DEAD)
 			E["p_stat"] = "*Deceased*"
 
-	var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
+	var/datum/db_record/personnel/medical/R = global.data_core.get_medical_record(patientname)
 	if(!R)
 		return
 
@@ -54,8 +52,8 @@
 		animate_scanning(M, "#0AEFEF")
 
 	var/mob/living/carbon/human/H = M
-	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
-	var/datum/db_record/MR = data_core.medical.find_record("name", H.name)
+	var/datum/db_record/personnel/general/GR = global.data_core.get_general_record(H.name)
+	var/datum/db_record/personnel/medical/MR = global.data_core.get_medical_record(H.name)
 	if (!MR)
 		return SPAN_ALERT("ERROR: NO RECORD FOUND")
 
@@ -84,8 +82,8 @@
 		animate_scanning(M, "#ef0a0a")
 
 	var/mob/living/carbon/human/H = M
-	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
-	var/datum/db_record/SR = data_core.security.find_record("name", H.name)
+	var/datum/db_record/personnel/general/GR = global.data_core.get_general_record(H.name)
+	var/datum/db_record/personnel/security/SR = global.data_core.get_security_record(H.name)
 	if (!SR)
 		return SPAN_ALERT("ERROR: NO RECORD FOUND")
 

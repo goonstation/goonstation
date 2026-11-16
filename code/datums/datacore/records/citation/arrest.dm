@@ -2,19 +2,19 @@
 
 /datum/db_record/citation/arrest/build_fields()
 	return alist(
-		"id" 			= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
-		"time"			= new /datum/record_field/string(src, "Time Issued", "2053-01-01T00:00:00Z"),
-		"time_closed"	= new /datum/record_field/string(src, "Time Closed", "N/A"),
-		"authority"		= new /datum/record_field/string(src, "Authority", "Nanotrasen Corporate Security"),
-		"type"			= new /datum/record_field/choice(src, "Type", "ARREST", list("ARREST")),
-		"target"		= new /datum/record_field/string(src, "Suspect", "Unknown"),
-		"status"		= new /datum/record_field/choice(src, "Status", "OPEN", list("OPEN", "CLOSED")),
-		"issuer"		= new /datum/record_field/string(src, "Issuer", "Unknown"),
-		"issuer_job"	= new /datum/record_field/string(src, "Issuer Job", "Unknown"),
-		"reason"		= new /datum/record_field/string(src, "Reason", "Unknown"),
-		"closer"		= new /datum/record_field/string(src, "Closer", "N/A"),
-		"closer_job"	= new /datum/record_field/string(src, "Closer Job", "N/A"),
-		"resolution"	= new /datum/record_field/string(src, "Resolution", "N/A"),
+		BUILD_FIELD("id", 			/datum/record_field/string, "ID", "000000", @"[a-f0-9]{6}"),
+		BUILD_FIELD("time",			/datum/record_field/string, "Time Issued", "2053-01-01T00:00:00Z"),
+		BUILD_FIELD("time_closed",	/datum/record_field/string, "Time Closed", "N/A"),
+		BUILD_FIELD("authority",	/datum/record_field/string, "Authority", "Nanotrasen Corporate Security"),
+		BUILD_FIELD("type",			/datum/record_field/choice, "Type", "ARREST", list("ARREST")),
+		BUILD_FIELD("target",		/datum/record_field/string, "Suspect", "Unknown"),
+		BUILD_FIELD("status",		/datum/record_field/choice, "Status", "OPEN", list("OPEN", "CLOSED")),
+		BUILD_FIELD("issuer",		/datum/record_field/string, "Issuer", "Unknown"),
+		BUILD_FIELD("issuer_job",	/datum/record_field/string, "Issuer Job", "Unknown"),
+		BUILD_FIELD("reason",		/datum/record_field/string, "Reason", "Unknown"),
+		BUILD_FIELD("closer",		/datum/record_field/string, "Closer", "N/A"),
+		BUILD_FIELD("closer_job",	/datum/record_field/string, "Closer Job", "N/A"),
+		BUILD_FIELD("resolution",	/datum/record_field/string, "Resolution", "N/A"),
 	)
 
 /datum/db_record/citation/arrest/New(target, issuer, issuer_job, reason)
@@ -26,7 +26,7 @@
 	src["issuer_job"] = issuer_job
 	src["reason"] = reason
 
-	var/datum/db_record/personnel/security/record = global.data_core.security.find_record("name", target)
+	var/datum/db_record/personnel/security/record = global.data_core.get_security_record(target)
 	if (record)
 		record["criminal"] = SECURITY::ARREST::STATE::ARREST
 		record["sec_flag"] = reason
@@ -63,7 +63,7 @@
 	src["resolution"] = resolution
 
 	var/target = src["target"]
-	var/datum/db_record/personnel/security/record = global.data_core.security.find_record("name", target)
+	var/datum/db_record/personnel/security/record = global.data_core.get_security_record(target)
 	if (record)
 		var/list/datum/db_record/citation/arrest/arrests = global.data_core.get_open_arrests(target)
 		if (length(arrests))

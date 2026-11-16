@@ -54,6 +54,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -202,6 +205,10 @@
 	can_rupture = 0;
 	dir = 5
 	},
+/obj/cable{
+	icon_state = "0-1"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/purple/side,
 /area/station/science/lab)
 "qY" = (

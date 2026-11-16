@@ -179,6 +179,14 @@
 /mob/living/critter/aquatic/fish/jellyfish,
 /turf/simulated/floor/sand,
 /area/station/crew_quarters/aquarium)
+"Q" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/sand,
+/area/station/crew_quarters/aquarium)
 "R" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -248,7 +256,7 @@ X
 v
 t
 m
-D
+Q
 O
 Z
 C

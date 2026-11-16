@@ -168,8 +168,8 @@ var/list/globalRituals = list() //Global list of rituals.
 		breakLinks()
 		filterList = null
 		if(istype(owner))
-			owner.listen_tree.RemoveListenInput(LISTEN_INPUT_OUTLOUD)
-			owner.listen_tree.RemoveListenEffect(LISTEN_EFFECT_RITUAL)
+			owner.listen_tree?.RemoveListenInput(LISTEN_INPUT_OUTLOUD)
+			owner.listen_tree?.RemoveListenEffect(LISTEN_EFFECT_RITUAL)
 			owner.ritualComponent = null
 			qdel(owner)
 			owner = null

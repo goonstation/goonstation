@@ -233,7 +233,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 
 	disposing()
 		if(donor)
-			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_REBREATHING, "cyberlungs")
+			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_NO_LOSEBREATH, "cyberlungs")
 		..()
 
 	emag_act(mob/user, obj/item/card/emag/E)

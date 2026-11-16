@@ -1150,8 +1150,6 @@
 						qdel(src.brain)
 					else
 						return 0
-				if (!src.skull)
-					return 0
 				var/obj/item/organ/brain/newBrain = I
 				if (!is_transformation)
 					boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
@@ -1168,14 +1166,14 @@
 								G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
-				src.head.brain = newBrain
-
-				// if the head has a skeleton, and we're not taking it, eject the skeleton out of the head
-				if (src.head.head_type == HEAD_SKELETON)
-					var/mob/living/carbon/human/H = src.head.linked_human
-					if (H && (!isskeleton(src.donor) && H != src.donor))
-						var/datum/mutantrace/skeleton/S = H?.mutantrace
-						S.set_head(null)
+				if(src.head)
+					src.head.brain = newBrain
+					// if the head has a skeleton, and we're not taking it, eject the skeleton out of the head
+					if(src.head.head_type == HEAD_SKELETON)
+						var/mob/living/carbon/human/H = src.head.linked_human
+						if (H && (!isskeleton(src.donor) && H != src.donor))
+							var/datum/mutantrace/skeleton/S = H?.mutantrace
+							S.set_head(null)
 
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src
@@ -1909,9 +1907,9 @@
 		for(var/obj/item/organ/lung/cyber/L in linked_organ)
 			L.overloading = is_on
 		if(is_on)
-			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_REBREATHING, "cyberlungs")
+			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_NO_LOSEBREATH, "cyberlungs")
 		else
-			REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_REBREATHING, "cyberlungs")
+			REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_NO_LOSEBREATH, "cyberlungs")
 
 		if(is_on)
 			src.icon_state = initial(src.icon_state)

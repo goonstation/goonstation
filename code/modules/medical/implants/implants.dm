@@ -353,9 +353,9 @@
 		if (!H.mini_health_hud)
 			H.mini_health_hud = 1
 
-		var/datum/db_record/probably_my_record = data_core.medical.find_record("id", H.datacore_id)
-		if (probably_my_record)
-			probably_my_record["h_imp"] = "[src.sensehealth()]"
+		var/datum/db_record/personnel/medical/medical_record = global.data_core.get_medical_record(H.real_name)
+		if (medical_record)
+			medical_record["h_imp"] = "[src.sensehealth()]"
 		..()
 
 	on_crit()
