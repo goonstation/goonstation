@@ -238,7 +238,7 @@
 	for(var/turf/end as anything in ends)
 		if(end.z != search_z || max_distance && (max_distance < GET_DIST(start, end)))
 			ends -= end
-		else if(end == start)
+		else if(GET_DIST(start, end) <= mintargetdist) // already close enough
 			for(var/goal in ends[end])
 				src.paths[goal] = list(start)
 			ends -= end
