@@ -183,21 +183,21 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 
 /proc/test_click(turf/from, turf/target, actually_test_entering=FALSE)
 	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
-	click_dummy.set_loc(from)
+	click_dummy.loc = from // bypasing set_loc, we dont actually want the Entered/Crossed side effects/cost
 	for (var/atom/A in from)
 		if ((A.flags & ON_BORDER) || actually_test_entering)
 			if (!A.CheckExit(click_dummy, target))
-				click_dummy.set_loc(null)
+				click_dummy.loc = null
 				return FALSE
 	for (var/atom/A in target)
 		if ((A.flags & ON_BORDER) || actually_test_entering)
 			if (!A.Cross(click_dummy))
-				click_dummy.set_loc(null)
+				click_dummy.loc = null
 				return FALSE
 	if(actually_test_entering && !target.Enter(click_dummy) && !from.Exit(click_dummy))
-		click_dummy.set_loc(null)
+		click_dummy.loc = null
 		return FALSE
-	click_dummy.set_loc(null)
+	click_dummy.loc = null
 	return TRUE
 
 proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)

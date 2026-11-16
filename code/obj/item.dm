@@ -1114,12 +1114,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.artifact.effect_click_tile(src, user, get_turf(target))
 	return
 
-/obj/item/dummy/ex_act()
-	return
-
-/obj/item/dummy/blob_act(var/power)
-	return
-
 /obj/item/ex_act(severity)
 	switch(severity)
 		if (2)
