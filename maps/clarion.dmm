@@ -28122,7 +28122,7 @@
 "oRN" = (
 /obj/decoration/toiletholder{
 	dir = 4;
-	pixel_x = 5
+	pixel_x = 6
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/bridge/execrestroom)

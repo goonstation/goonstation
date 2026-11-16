@@ -4983,7 +4983,7 @@
 /obj/mapping_helper/button/pair,
 /obj/decoration/toiletholder{
 	dir = 8;
-	pixel_x = -2
+	pixel_x = -7
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -6944,7 +6944,8 @@
 /area/station/chapel/sanctuary)
 "dct" = (
 /obj/decoration/toiletholder{
-	dir = 4
+	dir = 4;
+	pixel_x = 7
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/security/brig/genpop)
@@ -31736,7 +31737,7 @@
 /obj/mapping_helper/button/pair,
 /obj/decoration/toiletholder{
 	dir = 8;
-	pixel_x = -2
+	pixel_x = -7
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -34735,7 +34736,7 @@
 /obj/mapping_helper/button/pair,
 /obj/decoration/toiletholder{
 	dir = 8;
-	pixel_x = -2
+	pixel_x = -7
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -38501,7 +38502,7 @@
 /obj/mapping_helper/button/pair,
 /obj/decoration/toiletholder{
 	dir = 8;
-	pixel_x = -2
+	pixel_x = -7
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -51068,7 +51069,7 @@
 "wQJ" = (
 /obj/decoration/toiletholder{
 	dir = 8;
-	pixel_x = -2
+	pixel_x = -7
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/hop)
@@ -51107,7 +51108,7 @@
 	},
 /obj/decoration/toiletholder{
 	dir = 4;
-	pixel_x = 5
+	pixel_x = 7
 	},
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/ce)
