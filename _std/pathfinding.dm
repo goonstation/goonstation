@@ -121,22 +121,19 @@
 	var/f_value
 	/// The A* node heuristic (a rough estimate of how far we are from the goal)
 	var/heuristic
-	/// How many steps it's taken to get here from the start (currently pulling double duty as steps taken & cost to get here, since all moves incl diagonals cost 1 rn)
+	/// Cost to get here from the start
 	var/number_tiles
-	/// How many steps it took to get here from the last node
-	var/jumps
 	/// Nodes store the endgoal so they can process their heuristic without a reference to the pathfind datum
 	var/list/turf/node_goals
 
-/datum/jps_node/New(turf/our_tile, datum/jps_node/incoming_previous_node, jumps_taken, list/turf/incoming_goals)
+/datum/jps_node/New(turf/our_tile, datum/jps_node/incoming_previous_node, cost, list/turf/incoming_goals)
 	..()
 	tile = our_tile
-	jumps = jumps_taken
 	if(incoming_goals) // if we have the goal argument, this must be the first/starting node
 		node_goals = incoming_goals
 	else if(incoming_previous_node) // if we have the parent, this is from a direct cardinal/diagonal scan, we can fill it all out now
 		previous_node = incoming_previous_node
-		number_tiles = previous_node.number_tiles + jumps
+		number_tiles = previous_node.number_tiles + cost
 		node_goals = previous_node.node_goals
 		heuristic = INFINITY
 		for(var/turf/goal as anything in node_goals)
@@ -151,8 +148,7 @@
 /datum/jps_node/proc/update_parent(datum/jps_node/new_parent)
 	previous_node = new_parent
 	node_goals = previous_node.node_goals
-	jumps = GET_DIST(tile, previous_node.tile)
-	number_tiles = previous_node.number_tiles + jumps
+	number_tiles = previous_node.number_tiles + GET_DIST(tile, previous_node.tile) // always a cardinal line away
 	heuristic = INFINITY
 	for(var/turf/goal as anything in node_goals)
 		heuristic = min(heuristic, GET_DIST(tile, goal))
@@ -303,9 +299,10 @@
 	. += iter_turf
 
 	while(unwind_node.previous_node)
-		var/dir_goal = get_dir(iter_turf, unwind_node.previous_node.tile)
+		var/turf/previous_tile = unwind_node.previous_node.tile
+		var/dir_goal = get_dir(iter_turf, previous_tile)
 
-		for(var/i in 1 to unwind_node.jumps)
+		while(iter_turf != previous_tile) // nodes are always a straight line apart
 			var/turf/next_turf = get_step(iter_turf,dir_goal)
 			if(cardinal_only && !is_cardinal(dir_goal))
 				var/candidate_dir = dir_goal & (prob(50) ? (NORTH | SOUTH) : (EAST | WEST))
@@ -418,7 +415,7 @@
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
 		src.total_seen++
-		steps_taken++
+		steps_taken += cardinal_only ? 2 : 1
 		if(!CAN_STEP(lag_turf, current_turf))
 			return
 
