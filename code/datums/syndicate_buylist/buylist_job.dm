@@ -325,7 +325,7 @@
 	cost = 2
 	vr_allowed = FALSE
 	desc = "Two small bottles containing a banned version of smoke powder."
-	job = list(ALL_RESEARCH)
+	job = list(ALL_RESEARCH, "Pharmacist")
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/robosuit
