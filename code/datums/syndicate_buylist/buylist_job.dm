@@ -319,6 +319,15 @@
 	job = list(ALL_DOCTORS, ALL_RESEARCH, "Bartender", ALL_CHEFS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/propellant
+	name = "Aerosol Propellant"
+	items = list(/obj/item/storage/box/propellant)
+	cost = 2
+	vr_allowed = FALSE
+	desc = "Two small bottles containing a banned version of smoke powder."
+	job = list(ALL_RESEARCH)
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/traitor/robosuit
 	name = "Syndicate Robot Frame"
 	items = list(/obj/item/parts/robot_parts/robot_frame/syndicate)

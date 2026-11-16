@@ -455,3 +455,14 @@
 	amount_per_transfer_from_this = 10
 	fluid_overlay_states = 0
 	default_material = "plastic"
+
+/obj/item/reagent_containers/glass/bottle/propellant
+	name = "chemical bottle"
+	desc = "A reagent storage bottle. The label seems to have been torn off."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "reagent_bottle"
+	initial_volume = 30
+	amount_per_transfer_from_this = 5
+	fluid_overlay_states = 0
+	initial_reagents = "propellant"
+	default_material = "plastic"

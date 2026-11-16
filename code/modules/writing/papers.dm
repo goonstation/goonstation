@@ -1595,3 +1595,12 @@ Only trained personnel should operate station systems. Follow all procedures car
 	We will supply it once our budget is renewed.<br>
 	"}
 
+/obj/item/paper/propellant_note
+	name = "Aerosol Propellant Disclaimer"
+	info = {"<b>Dear Operative,</b><br>
+	Thank you for your purchase of our patented Aerosol Propellant formulation. Following the incident on ██████,
+	we have ensured that recursive synthesis of aerosol within the respiratory system is now impossible. We remind you to
+	wear a Syndicate approved air filtration system and Chemical Protection suit when handling and deploying propellant mixes.<br>
+	This formulation was brought to you by the collaborative efforts of Operational Cells Aqua and Terra. <br><br>
+	<b>BURN THIS MESSAGE AFTER READING.</b>
+	"}

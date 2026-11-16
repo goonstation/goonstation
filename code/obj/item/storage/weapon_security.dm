@@ -428,6 +428,11 @@
 	icon_state = "box"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
 
+/obj/item/storage/box/propellant
+	name = "ordinary box"
+	desc = "Just a regular ordinary box. It smells like ozone a little bit. Probably some staff assistant kept their bodyspray in here."
+	icon_state = "box"
+	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/propellant = 2, /obj/item/paper/propellant_note)
 
 /obj/item/storage/briefcase/instruments
 	name = "instrument case"
