@@ -35,6 +35,7 @@
  * * ends: What we're trying to path to. It doesn't matter if this is a turf or some other atom, we're gonna just path to the turf it's on anyway
  * * max_distance: The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
  * * mintargetdistance: Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example.
+ * * * At 1 range the target must also be reachable from the last tile, so we don't stop behind a directional blocker
  * * id: An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant
  * * simulated_only: Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
@@ -238,14 +239,13 @@
 	for(var/turf/end as anything in ends)
 		if(end.z != search_z || max_distance && (max_distance < GET_DIST(start, end)))
 			ends -= end
-		else if(GET_DIST(start, end) <= mintargetdist) // already close enough
-			for(var/goal in ends[end])
+			continue
+		if(GET_DIST(start, end) <= mintargetdist) // already close enough
+			for(var/goal in pop_reached_goals(start, end))
 				src.paths[goal] = list(start)
-			ends -= end
-		else
-			possible_goal_count += length(ends[end])
-	n_target_goals = min(n_target_goals, possible_goal_count)
-	if(n_target_goals == 0)
+		possible_goal_count += length(ends[end])
+	n_target_goals = min(n_target_goals, length(src.paths) + possible_goal_count)
+	if(FINISHED_SEARCH)
 		return
 
 	//initialization
@@ -281,6 +281,20 @@
 				path.Swap(i, length(path) - i + 1)
 	sources = null
 	qdel(open)
+
+/// Pops the goals on `goal_turf` that can be reached from `current_turf`.
+/datum/pathfind/proc/pop_reached_goals(turf/current_turf, turf/goal_turf)
+	var/list/goals = ends[goal_turf]
+	if(mintargetdist == 1)
+		var/list/reached = null
+		for(var/goal in goals)
+			if(can_reach_from(current_turf, goal))
+				LAZYLISTADD(reached, goal)
+		if(length(reached) < length(goals)) // the rest stay, maybe reachable from another tile
+			goals -= reached
+			return reached
+	ends -= goal_turf
+	return goals
 
 /// Called when we've hit the goal with the node that represents the last tile, then sets the path var to that path so it can be returned by [datum/pathfind/proc/search]
 /datum/pathfind/proc/unwind_path(datum/jps_node/unwind_node)
@@ -341,8 +355,9 @@
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
 				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf, /turf/simulated/wall))
-					LAZYLISTADD(reached_target_goals, ends[T])
-					ends -= T
+					var/list/goals = pop_reached_goals(current_turf, T)
+					if(goals)
+						LAZYLISTADD(reached_target_goals, goals)
 		else if(current_turf in ends)
 			reached_target_goals = ends[current_turf]
 			ends -= current_turf
@@ -417,8 +432,9 @@
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
 				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf,/turf/simulated/wall))
-					LAZYLISTADD(reached_target_goals, ends[T])
-					ends -= T
+					var/list/goals = pop_reached_goals(current_turf, T)
+					if(goals)
+						LAZYLISTADD(reached_target_goals, goals)
 		else if(current_turf in ends)
 			reached_target_goals = ends[current_turf]
 			ends -= current_turf
