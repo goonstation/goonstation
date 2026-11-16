@@ -28121,8 +28121,8 @@
 /area/station/crewquarters/cryotron)
 "oRN" = (
 /obj/decoration/toiletholder{
-	dir = 8;
-	pixel_x = 32
+	dir = 4;
+	pixel_x = 6
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/bridge/execrestroom)
