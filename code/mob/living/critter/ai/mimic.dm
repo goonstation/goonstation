@@ -78,7 +78,7 @@
 	//has_started marks that we've hit them once
 	var/mob/living/critter/C = holder.owner
 	var/mob/M = holder.target
-	if(C && M && BOUNDS_DIST(C, M) == 0)
+	if(C && M && can_reach(C, M))
 		C.set_dir(get_dir(C, M))
 		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
 			C.critter_attack(holder.target)

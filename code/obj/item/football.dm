@@ -140,7 +140,7 @@
 		var/adjective = pick("hard", "strong", "powerful", "rough", "driven", "beefy", "big", "tough")
 		src.visible_message(SPAN_ALERT("<B>[src] smashes into [target] with a [adjective] shoulder!</B>"))
 		logTheThing(LOG_COMBAT, src, "tackles [target] using football gear [log_loc(src)].")
-		switch (src.smash_through(O, list("window", "grille", "table"), 0))
+		switch (src.smash_through(O, list(/obj/window, /obj/mesh/grille, /obj/table), 0))
 			if (0)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)

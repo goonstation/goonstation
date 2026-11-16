@@ -660,6 +660,20 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			qdel(src)
 		return
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+
+		if (!src.open)
+			src._health = 0
+			src.break_open()
+			return TRUE
+
+		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+		src.flip_health = 0
+		src.bust_out()
+		return TRUE
+
 	proc/is_acceptable_content(var/atom/A)
 		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))

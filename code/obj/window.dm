@@ -303,6 +303,13 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			if("foof")
 				damage_heat(volume)
 
+	smash_act(atom/movable/smasher, show_message=TRUE)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes through \the [src]."), SPAN_NOTICE("You smash through \the [src]."))
+		src.health = 0
+		src.smash()
+		return TRUE
+
 	get_desc()
 		var/the_text = ""
 		var/healthpercent = src.health/src.health_max * 100
@@ -915,6 +922,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	bullet_act()
 	ex_act()
 	blob_act()
+	smash_act()
 	meteorhit()
 	damage_heat()
 	damage_corrosive()

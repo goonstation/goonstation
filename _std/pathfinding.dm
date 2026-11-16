@@ -35,6 +35,7 @@
  * * ends: What we're trying to path to. It doesn't matter if this is a turf or some other atom, we're gonna just path to the turf it's on anyway
  * * max_distance: The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
  * * mintargetdistance: Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example.
+ * * * At 1 range the target must also be reachable from the last tile, so we don't stop behind a directional blocker
  * * id: An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant
  * * simulated_only: Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
@@ -108,7 +109,7 @@
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 
-#define FINISHED_SEARCH (length(paths) == n_target_goals)
+#define FINISHED_SEARCH (length(paths) >= n_target_goals)
 
 /// The JPS Node datum represents a turf that we find interesting enough to add to the open list and possibly search for new tiles from
 /datum/jps_node
@@ -120,22 +121,19 @@
 	var/f_value
 	/// The A* node heuristic (a rough estimate of how far we are from the goal)
 	var/heuristic
-	/// How many steps it's taken to get here from the start (currently pulling double duty as steps taken & cost to get here, since all moves incl diagonals cost 1 rn)
+	/// Cost to get here from the start
 	var/number_tiles
-	/// How many steps it took to get here from the last node
-	var/jumps
 	/// Nodes store the endgoal so they can process their heuristic without a reference to the pathfind datum
 	var/list/turf/node_goals
 
-/datum/jps_node/New(turf/our_tile, datum/jps_node/incoming_previous_node, jumps_taken, list/turf/incoming_goals)
+/datum/jps_node/New(turf/our_tile, datum/jps_node/incoming_previous_node, cost, list/turf/incoming_goals)
 	..()
 	tile = our_tile
-	jumps = jumps_taken
 	if(incoming_goals) // if we have the goal argument, this must be the first/starting node
 		node_goals = incoming_goals
 	else if(incoming_previous_node) // if we have the parent, this is from a direct cardinal/diagonal scan, we can fill it all out now
 		previous_node = incoming_previous_node
-		number_tiles = previous_node.number_tiles + jumps
+		number_tiles = previous_node.number_tiles + cost
 		node_goals = previous_node.node_goals
 		heuristic = INFINITY
 		for(var/turf/goal as anything in node_goals)
@@ -150,8 +148,7 @@
 /datum/jps_node/proc/update_parent(datum/jps_node/new_parent)
 	previous_node = new_parent
 	node_goals = previous_node.node_goals
-	jumps = GET_DIST(tile, previous_node.tile)
-	number_tiles = previous_node.number_tiles + jumps
+	number_tiles = previous_node.number_tiles + GET_DIST(tile, previous_node.tile) // always a cardinal line away
 	heuristic = INFINITY
 	for(var/turf/goal as anything in node_goals)
 		heuristic = min(heuristic, GET_DIST(tile, goal))
@@ -236,16 +233,15 @@
 	var/search_z = start.z
 	var/possible_goal_count = 0
 	for(var/turf/end as anything in ends)
-		if(end.z != search_z || max_distance && (max_distance < GET_DIST(start, end)))
+		if(end.z != search_z || max_distance && (max_distance + mintargetdist < GET_DIST(start, end)))
 			ends -= end
-		else if(end == start)
-			for(var/goal in ends[end])
+			continue
+		if(GET_DIST(start, end) <= mintargetdist) // already close enough
+			for(var/goal in pop_reached_goals(start, end))
 				src.paths[goal] = list(start)
-			ends -= end
-		else
-			possible_goal_count += length(ends[end])
-	n_target_goals = min(n_target_goals, possible_goal_count)
-	if(n_target_goals == 0)
+		possible_goal_count += length(ends[end])
+	n_target_goals = min(n_target_goals, length(src.paths) + possible_goal_count)
+	if(FINISHED_SEARCH)
 		return
 
 	//initialization
@@ -265,10 +261,10 @@
 			continue
 
 		var/turf/current_turf = current_processed_node.tile
-		for(var/scan_direction in list(EAST, WEST, NORTH, SOUTH))
+		for(var/scan_direction in cardinal)
 			cardinal_scan_spec(current_turf, scan_direction, current_processed_node)
 
-		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
+		for(var/scan_direction in ordinal)
 			diag_scan_spec(current_turf, scan_direction, current_processed_node)
 
 		LAGCHECK(LAG_MED)
@@ -282,6 +278,20 @@
 	sources = null
 	qdel(open)
 
+/// Pops the goals on `goal_turf` that can be reached from `current_turf`.
+/datum/pathfind/proc/pop_reached_goals(turf/current_turf, turf/goal_turf)
+	var/list/goals = ends[goal_turf]
+	if(mintargetdist == 1)
+		var/list/reached = null
+		for(var/goal in goals)
+			if(can_reach_from(current_turf, goal))
+				LAZYLISTADD(reached, goal)
+		if(length(reached) < length(goals)) // the rest stay, maybe reachable from another tile
+			goals -= reached
+			return reached
+	ends -= goal_turf
+	return goals
+
 /// Called when we've hit the goal with the node that represents the last tile, then sets the path var to that path so it can be returned by [datum/pathfind/proc/search]
 /datum/pathfind/proc/unwind_path(datum/jps_node/unwind_node)
 	. = list()
@@ -289,9 +299,10 @@
 	. += iter_turf
 
 	while(unwind_node.previous_node)
-		var/dir_goal = get_dir(iter_turf, unwind_node.previous_node.tile)
+		var/turf/previous_tile = unwind_node.previous_node.tile
+		var/dir_goal = get_dir(iter_turf, previous_tile)
 
-		for(var/i in 1 to unwind_node.jumps)
+		while(iter_turf != previous_tile) // nodes are always a straight line apart
 			var/turf/next_turf = get_step(iter_turf,dir_goal)
 			if(cardinal_only && !is_cardinal(dir_goal))
 				var/candidate_dir = dir_goal & (prob(50) ? (NORTH | SOUTH) : (EAST | WEST))
@@ -316,8 +327,10 @@
  * * original_turf: What turf did we start this scan at?
  * * heading: What direction are we going in? Obviously, should be cardinal
  * * parent_node: Only given for normal cardinal scans, if we don't have one, we're a diagonal subscan.
+ * * start_cost: What it cost to get to original_turf - to respect max_distance (subscans only)
 */
-/datum/pathfind/proc/cardinal_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node)
+/datum/pathfind/proc/cardinal_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node, start_cost = 0)
+	var/base_cost = parent_node ? parent_node.number_tiles : start_cost
 	var/steps_taken = 0
 
 	var/turf/current_turf = original_turf
@@ -332,6 +345,8 @@
 		steps_taken++
 		if(!CAN_STEP(lag_turf, current_turf))
 			return
+		if(max_distance && base_cost + steps_taken > max_distance)
+			return
 
 		if(sources[current_turf]) // already visited, essentially in the closed list
 			return
@@ -341,9 +356,10 @@
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
 				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf, /turf/simulated/wall))
-					LAZYLISTADD(reached_target_goals, ends[T])
-					ends -= T
-		else if(current_turf in ends)
+					var/list/goals = pop_reached_goals(current_turf, T)
+					if(goals)
+						LAZYLISTADD(reached_target_goals, goals)
+		else if(ends[current_turf])
 			reached_target_goals = ends[current_turf]
 			ends -= current_turf
 
@@ -355,9 +371,6 @@
 				for(var/goal in reached_target_goals)
 					src.paths[goal] = path.Copy()
 			return list(final_node, reached_target_goals)
-
-		if(parent_node && parent_node.number_tiles + steps_taken > max_distance)
-			return
 
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
 
@@ -403,8 +416,10 @@
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
 		src.total_seen++
-		steps_taken++
+		steps_taken += cardinal_only ? 2 : 1
 		if(!CAN_STEP(lag_turf, current_turf))
+			return
+		if(max_distance && parent_node.number_tiles + steps_taken > max_distance)
 			return
 
 		if(sources[current_turf]) // already visited, essentially in the closed list
@@ -417,9 +432,10 @@
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
 				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf,/turf/simulated/wall))
-					LAZYLISTADD(reached_target_goals, ends[T])
-					ends -= T
-		else if(current_turf in ends)
+					var/list/goals = pop_reached_goals(current_turf, T)
+					if(goals)
+						LAZYLISTADD(reached_target_goals, goals)
+		else if(ends[current_turf])
 			reached_target_goals = ends[current_turf]
 			ends -= current_turf
 
@@ -431,33 +447,31 @@
 			if(FINISHED_SEARCH)
 				return
 
-		if(parent_node.number_tiles + steps_taken > max_distance)
-			return
-
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
 		var/possible_child_node_pair = null
+		var/cost = parent_node.number_tiles + steps_taken // so subscans still respect max_distance
 
 		switch(heading)
 			if(NORTHWEST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, NORTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHWEST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, WEST) || cardinal_scan_spec(current_turf, NORTH))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, WEST, null, cost) || cardinal_scan_spec(current_turf, NORTH, null, cost))
 			if(NORTHEAST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHEAST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, EAST) || cardinal_scan_spec(current_turf, NORTH))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, EAST, null, cost) || cardinal_scan_spec(current_turf, NORTH, null, cost))
 			if(SOUTHWEST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH) || cardinal_scan_spec(current_turf, WEST))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH, null, cost) || cardinal_scan_spec(current_turf, WEST, null, cost))
 			if(SOUTHEAST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHEAST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH) || cardinal_scan_spec(current_turf, EAST))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH, null, cost) || cardinal_scan_spec(current_turf, EAST, null, cost))
 
 		if(interesting || possible_child_node_pair)
 			if(isnull(newnode))

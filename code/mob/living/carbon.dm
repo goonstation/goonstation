@@ -152,7 +152,7 @@
 	if (..())
 		return
 
-	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BREATHLESS))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_NO_OXY_LOSS))
 		src.oxyloss = 0
 		return
 

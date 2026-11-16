@@ -63,7 +63,7 @@
 		return TRUE
 	if(!(thr?.throw_type & THROW_DELIVERY))
 		src.material_on_attack_use(thr?.user, hit_atom)
-		hit_atom.material_trigger_when_hit(src, thr?.user, MATERIAL::IMPACT::THROW)
+		hit_atom?.material_trigger_when_hit(src, thr?.user, MATERIAL::IMPACT::THROW)
 		src.material_trigger_when_hit(hit_atom, thr?.user, MATERIAL::IMPACT::THROW)
 	if(ismob(hit_atom))
 		var/mob/hit_mob = hit_atom
