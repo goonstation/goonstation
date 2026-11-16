@@ -371,7 +371,7 @@
 					src.paths[goal] = path.Copy()
 			return list(final_node, reached_target_goals)
 
-		if(parent_node && parent_node.number_tiles + steps_taken > max_distance)
+		if(max_distance && parent_node && parent_node.number_tiles + steps_taken > max_distance)
 			return
 
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
@@ -447,7 +447,7 @@
 			if(FINISHED_SEARCH)
 				return
 
-		if(parent_node.number_tiles + steps_taken > max_distance)
+		if(max_distance && parent_node.number_tiles + steps_taken > max_distance)
 			return
 
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
