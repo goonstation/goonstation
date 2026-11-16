@@ -80,7 +80,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	was_deconstructed_to_frame(mob/user)
 		src.remove_portals()
@@ -1051,7 +1051,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	disposing()
 		. = ..()

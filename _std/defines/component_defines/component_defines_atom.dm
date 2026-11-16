@@ -22,6 +22,10 @@
 	#define COMSIG_ATOM_CROSSED "atom_crossed"
 	/// when something triggers Uncrossed by exiting this atom's turf (/atom/movable)
 	#define COMSIG_ATOM_UNCROSSED "atom_uncrossed"
+	/// When this atom enters a turf with a fluid. (/atom, /obj/fluid)
+	#define COMSIG_ATOM_FLUID_ENTERED "atom_fluid_entered"
+	/// When this atom leaves a turf with a fluid. (/atom, /obj/fluid)
+	#define COMSIG_ATOM_FLUID_EXITED "atom_fluid_exited"
 	/// When something that's caused an AM to be slipped ends that slip. (thing, /atom/movable/victim)
 	#define COMSIG_ATOM_SLIP_END "mov_throw_end"
 	/// When something calls UpdateIcon, before the icon is updated
@@ -198,6 +202,10 @@
 	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
 	/// Send out to every item directly in and on the person on no-suicide-death
 	#define COMSIG_ITEM_ON_OWNER_DEATH "itm_on_owner_death"
+	/// Send out to the item whenever it is attached to a human as a limb (target, human_attached_to)
+	#define COMSIG_LIMB_ATTACHED_TO_HUMAN "itm_limb_attached_to_human"
+	/// Send out to the item whenever it is inserted into an limb (target, limb_inserted_into)
+	#define COMSIG_ITEM_SET_AS_LIMB "itm_item_set_as_limb"
 	/// After an item is altered by being removed and replaced with another item, sent shortly before being removed. The original is not always
 	/// deleted but instead treated as if it were a part of the new item, see assemblies. (item or list of items produced by conversion, user)
 	#define COMSIG_ITEM_CONVERTED "itm_converted"
@@ -335,7 +343,16 @@
 		/// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
+// ---- aquatic signals ----
+		/// If the mob has an aquatic breathing component, returns the water need.
+		#define COMSIG_AQUATIC_GET_WATER_NEED "aquatic_get_water_need"
+
 // ---- human signals ----
+		/// When an limb is lost (target, limb_lost)
+		#define COMSIG_HUMAN_LOST_LIMB "human_lost_limb"
+		/// Send out to a human whenever their update_hands() is called (hud_owner, hud_element, zone)
+		#define COMSIG_HUMAN_ARM_IS_HUD_UPDATED "itm_arm_is_hud_updated"
+
 
 // ---- cross server message signals
 	/// Sent when a server sync response is received

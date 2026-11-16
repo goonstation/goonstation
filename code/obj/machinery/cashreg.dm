@@ -121,7 +121,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			return
 		var/enter_pin = user.enter_pin()
 		if (enter_pin == O.pin)
-			var/datum/db_record/card_account = data_core.bank.find_record("name", O.registered)
+			var/datum/db_record/personnel/bank/card_account = global.data_core.get_bank_record(O.registered)
 			if (card_account)
 				user.visible_message(SPAN_NOTICE("[user] swipes [src] with [O]."))
 				return card_account

@@ -171,6 +171,19 @@
 		set_broken()
 		src.set_density(0)
 
+/obj/machinery/computer/smash_act(atom/movable/smasher, show_message)
+	if (show_message)
+		smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+	if (src.circuit_type)
+		src.set_broken()
+		src.unscrew_monitor()
+		playsound('sound/impact_sounds/Crystal_Shatter_1.ogg')
+	else
+		playsound(src, 'sound/impact_sounds/locker_break.ogg', 50, TRUE)
+		new /obj/computerframe(src.loc)
+		qdel(src)
+	return TRUE
+
 /obj/machinery/computer/overload_act()
 	return !src.set_broken()
 

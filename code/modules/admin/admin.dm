@@ -2529,13 +2529,13 @@ var/global/noir = 0
 									logTheThing(LOG_ADMIN, usr, "gave everyone a random safe firearm.")
 									logTheThing(LOG_DIARY, usr, "gave everyone a random safe firearm.", "admin")
 									for (var/mob/living/L in mobs)
-										new /obj/random_item_spawner/kineticgun/safer/one(get_turf(L))
+										new /obj/random_item_spawner/kineticgun/safer/one/equip_cyborgs(get_turf(L), L)
 								if("ANY GUN")
 									message_admins("[key_name(usr)] gave everyone a completely random firearm.")
 									logTheThing(LOG_ADMIN, usr, "gave everyone a completely random firearm.")
 									logTheThing(LOG_DIARY, usr, "gave everyone a completely random firearm.", "admin")
 									for (var/mob/living/L in mobs)
-										new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
+										new /obj/random_item_spawner/kineticgun/fullrandom/equip_cyborgs(get_turf(L), L)
 
 
 						else
@@ -3615,12 +3615,6 @@ var/global/noir = 0
 				src.showPlayerCompIDs(ckey)
 			else
 				usr.client.cmd_admin_show_player_compids()
-
-		if ("lightweight_doors")
-			if (src.level < LEVEL_PA)
-				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
-
-			usr.client.lightweight_doors()
 
 		if ("lightweight_mobs")
 			if (src.level < LEVEL_PA)

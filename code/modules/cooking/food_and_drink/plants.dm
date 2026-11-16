@@ -472,6 +472,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
+	make_reagents()
+		..()
+		src.reagents.add_reagent("juice_grape", 10)
+
 /obj/item/reagent_containers/food/snacks/plant/grape/green
 	name = "grapes"
 	desc = "Not the purple ones."
@@ -530,7 +534,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		src.reagents.add_reagent("juice_grapefruit",10)
+		src.reagents.add_reagent("juice_cherry",10)
 
 /obj/item/reagent_containers/food/snacks/plant/melon
 	name = "melon"
@@ -877,10 +881,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Whether or not you like the taste, its freshness is appearant."
 	icon_state = "pear"
 	planttype = /datum/plant/fruit/pear
-	bites_left = 1
+	bites_left = 3
 	heal_amt = 2
 	brew_result = list("cider"=20) // pear cider is delicious, fuck you.
 	food_color = "#3FB929"
+
+	make_reagents()
+		..()
+		src.reagents.add_reagent("juice_pear", 15)
 
 /obj/item/reagent_containers/food/snacks/plant/pear/sickly
 	name = "sickly pear"

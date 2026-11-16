@@ -450,6 +450,17 @@ TYPEINFO_NEW(/obj/mesh/grille)
 			connectdir = (SOUTH + EAST + WEST) //14
 	return connectdir
 
+/obj/mesh/grille/smash_act(atom/movable/smasher, show_message)
+	if (ismob(smasher))
+		if (src.shock(smasher, 70))
+			return TRUE // twell, you tried
+
+	if (show_message)
+		smasher?.visible_message(SPAN_ALERT("[smasher] violently slams [src]!"))
+	playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
+	src.damage_slashing(15)
+	return TRUE
+
 /// Shock user with given probability (if all connections & power are working).
 /// Returns TRUE if shocked, FALSE otherwise.
 /obj/mesh/grille/proc/shock(mob/user, probability, ignore_gloves = FALSE)

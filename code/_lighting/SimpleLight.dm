@@ -378,7 +378,12 @@
 		////light.pixel_x = (vx * min(dist,light.dist) * 32) - 32
 		//light.pixel_y = (vy * min(dist,light.dist) * 32) - 32
 
-		animate(light,pixel_x = ((vx * min(dist,light.dist) * 32) - 32), pixel_y = ((vy * min(dist,light.dist) * 32) - 32), time = 1, easing = EASE_IN)
+		// Offsets are relative to the owner and depend only on dir and beam length,
+		// so a move in the same direction without occlusion changes can be ignored
+		var/target_pixel_x = trunc((vx * min(dist,light.dist) * 32) - 32)
+		var/target_pixel_y = trunc((vy * min(dist,light.dist) * 32) - 32)
+		if (light.pixel_x != target_pixel_x || light.pixel_y != target_pixel_y)
+			animate(light,pixel_x = target_pixel_x, pixel_y = target_pixel_y, time = 1, easing = EASE_IN)
 
 		src:vis_contents += light
 

@@ -660,6 +660,20 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			qdel(src)
 		return
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+
+		if (!src.open)
+			src._health = 0
+			src.break_open()
+			return TRUE
+
+		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+		src.flip_health = 0
+		src.bust_out()
+		return TRUE
+
 	proc/is_acceptable_content(var/atom/A)
 		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
@@ -1046,10 +1060,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			icon_state = the_wrench.icon_state
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1064,6 +1074,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		..()
 		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] begins taking apart [the_storage]."))
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			duration = round(duration / 2)
 
 	onEnd()
 		..()

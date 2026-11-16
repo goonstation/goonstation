@@ -431,6 +431,7 @@ TYPEINFO(/mob/new_player)
 
 		S.traitHolder.removeTrait("cyber_incompatible")
 		S.mind.join_time = world.time
+		S.mind.brain = latejoin
 		logTheThing(LOG_DEBUG, S, "<b>Late join:</b> added player to ticker.minds. [S.mind.on_ticker_add_log()]")
 		ticker.minds += S.mind
 

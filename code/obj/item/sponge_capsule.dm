@@ -91,6 +91,7 @@
 	qdel(src)
 
 /obj/item/toy/sponge_capsule/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
+	. = ..()
 	if(F.group.reagents && F.group.reagents.reagent_list["water"])
 		src.add_water()
 

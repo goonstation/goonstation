@@ -120,7 +120,7 @@
 					)
 				)
 		.["items_in_cart"] = cart_items
-		var/account = FindBankAccountByName(src.scan?.registered)
+		var/account = global.data_core.get_bank_record(src.scan?.registered)
 		if(src.barter && !src.barter_customers[barter_lookup(user)])
 			src.barter_customers[barter_lookup(user)] = 0
 		.["available_currency"] = (src.barter ? barter_customers[barter_lookup(user)] : account?["current_money"])
@@ -201,7 +201,7 @@
 		if (istype(id_card))
 			boutput(user, SPAN_NOTICE("You swipe the ID card in the card reader."))
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(id_card.registered)
+			account = global.data_core.get_bank_record(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Card Reader")
 				if (enterpin == id_card.pin)
@@ -251,7 +251,7 @@
 			if (src.scan.registered in global.FrozenAccounts)
 				boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 				return
-			account = FindBankAccountByName(src.scan.registered)
+			account = global.data_core.get_bank_record(src.scan.registered)
 		if (!src.barter && !account)
 			src.say("That's odd, I can't seem to find your account!")
 			return
@@ -286,7 +286,7 @@
 		if(!sell_item)
 			boutput(user, SPAN_ALERT("You can't sell nothing!"))
 			return
-		var/account = FindBankAccountByName(src.scan?.registered)
+		var/account = global.data_core.get_bank_record(src.scan?.registered)
 		if(!src.barter && !account)
 			boutput(user, SPAN_ALERT("You need to register an ID to sell things!"))
 			return
@@ -311,7 +311,7 @@
 			if (istype(id_card))
 				boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
 				var/datum/db_record/account = null
-				account = FindBankAccountByName(id_card.registered)
+				account = global.data_core.get_bank_record(id_card.registered)
 				if(account)
 					var/enterpin = usr.enter_pin("Card Reader")
 					if (enterpin == id_card.pin)
@@ -441,7 +441,7 @@
 	///////////////////////////////////////////////
 	////// special handling for selling an item ///
 	///////////////////////////////////////////////
-	proc/sold_item(datum/commodity/C, obj/S, count, mob/user as mob)
+	proc/sold_item(datum/commodity/C, atom/S, count, mob/user as mob)
 		. = C.price * count
 
 	///////////////////////////////////
@@ -456,7 +456,7 @@
 			if(!src.scan)
 				boutput(user, SPAN_ALERT("You have to scan your ID first!"))
 				return
-			account = FindBankAccountByName(src.scan.registered)
+			account = global.data_core.get_bank_record(src.scan.registered)
 			if(!account)
 				boutput(user, SPAN_ALERT("[src]There is no account registered with this card!"))
 				return
@@ -476,12 +476,16 @@
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
 				var/list/sold_string = list()
-				for (var/obj/item/sellitem in O.contents)
-					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
+				for (var/atom/A in O.contents)
+					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, A)
 					if(tradetype)
-						cratevalue += sold_item(tradetype, sellitem, sellitem.amount, user)
-						qdel(sellitem)
-						sold_string[sellitem.type] += sellitem.amount
+						var/amount = 1
+						if(isitem(A))
+							var/obj/item/I = A
+							amount = I.amount
+						cratevalue += sold_item(tradetype, A, amount, user)
+						qdel(A)
+						sold_string[A.type] += amount
 				if(log_trades && length(sold_string))
 					logTheThing(LOG_STATION, user, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
 				if(cratevalue)

@@ -305,11 +305,11 @@ proc/get_icon_states(icon)
 		src.material.triggerTemp(src, temperature_applied)
 	return
 
-/// Called when the item is attacked with another atom for mat effects.
+/// Called when the item is hit by another atom for mat effects.
 /// If someone is smashed against the item or with hands, the mob itself is expected to be passed as attackatom
-/atom/proc/material_trigger_when_attacked(var/atom/attackatom, var/mob/attacker, var/meleeorthrow, var/situation_modifier)
+/atom/proc/material_trigger_when_hit(var/atom/attackatom, var/mob/attacker, var/impact_type, var/situation_modifier)
 	if (src.material)
-		src.material.triggerOnHit(src, attackatom, attacker, meleeorthrow)
+		src.material.triggerOnHit(src, attackatom, attacker, impact_type)
 	return
 
 ///Called when an item is picked up for mat effects

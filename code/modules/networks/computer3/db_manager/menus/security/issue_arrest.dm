@@ -12,11 +12,11 @@
 
 	text += "<br><b>General Record:</b>      "
 	if (src.target)
-		text += global.data_core.general.find_record("name", src.target) ? "On Record" : "NONE"
+		text += global.data_core.get_general_record(src.target) ? "On Record" : "NONE"
 
 	text += "<br><b>Security Record:</b>     "
 	if (src.target)
-		text += global.data_core.security.find_record("name", src.target) ? "On Record" : "NONE"
+		text += global.data_core.get_security_record(src.target) ? "On Record" : "NONE"
 
 	if (!src.target)
 		text += "<br><br>Input arrest warrant suspect. Enter '0' to return."
@@ -34,10 +34,10 @@
 		text = trimtext(strip_html(text))
 
 		if (text == "0")
-			src.parent.switch_menu_to("manage_citations")
+			src.parent.previous_menu()
 			return
 
-		var/datum/db_record/personnel/security/R = global.data_core.security.find_record("name", text)
+		var/datum/db_record/personnel/security/R = global.data_core.get_security_record(text)
 		if (!istype(R))
 			src.parent.print_text("<b>Error:</b> Could not locate security record for \"[text]\".")
 			return
@@ -59,5 +59,4 @@
 		)
 		global.data_core.arrests.add_record(arrest)
 
-		src.parent.current_record_group = src.record_group
-		src.parent.switch_menu_to("record_view", arrest)
+		src.parent.switch_record_group(src.record_group, "record_view", arrest)

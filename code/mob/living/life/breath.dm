@@ -79,13 +79,6 @@
 			src.update_breath_hud(status_updates)
 			return
 
-		//if (istype(loc, /obj/machinery/clonepod)) return
-
-		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING))
-			src.update_breath_hud(status_updates)
-			if(owner.losebreath)
-				owner.losebreath -= (1.3 * mult) // base losebreath recovery
-			return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
 		// And because they're excluded from the breathing procs, said damage didn't heal
@@ -94,12 +87,18 @@
 		// If you have the breathless effect, same deal - you'd never heal oxy damage
 		// If your mutant race doesn't need oxygen from breathing, ya no losebreath
 		// so, now you do
-		if (ischangeling(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS))
-			src.update_breath_hud(status_updates)
+		if (ischangeling(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS))
 			if (owner.losebreath)
 				owner.losebreath = 0
 			if (owner.get_oxygen_deprivation())
 				owner.take_oxygen_deprivation(-50 * mult)
+			src.update_breath_hud(status_updates)
+			return
+
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH))
+			if(owner.losebreath)
+				owner.losebreath -= (1.3 * mult) // base losebreath recovery
+			src.update_breath_hud(status_updates)
 			return
 
 #ifdef UNDERWATER_MAP

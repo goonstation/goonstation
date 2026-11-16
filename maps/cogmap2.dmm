@@ -52244,6 +52244,12 @@
 	dir = 5
 	},
 /area/station/hydroponics/bay)
+"fBC" = (
+/obj/decoration/toiletholder{
+	desc = "An extremely expensive brand of toilet paper made from.... Real paper? Not even Command can afford to buy this pristine toilet paper."
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/solar/south)
 "fCj" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/machinery/atmospherics/binary/valve/notify_admins{
@@ -53240,11 +53246,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/arcade)
-"gvQ" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "gvW" = (
 /obj/filing_cabinet,
 /turf/simulated/floor/carpet{
@@ -69306,10 +69307,6 @@
 /obj/item/storage/toilet{
 	dir = 8;
 	interesting = "This toilet is immaculately clean. Like, suspiciously clean."
-	},
-/obj/decoration/toiletholder{
-	interesting = "An extremely expensive brand of toilet paper made from....real paper? Not even Command can afford to buy this pristine toilet paper.";
-	pixel_y = -6
 	},
 /obj/landmark/start/job/medical_director,
 /turf/simulated/floor/plating,
@@ -107742,7 +107739,7 @@ daK
 cMt
 dcH
 lEO
-ddv
+fBC
 tkB
 ddv
 deU
@@ -129108,7 +129105,7 @@ qKM
 aaa
 bgM
 bhD
-gvQ
+bit
 bja
 bkk
 blQ
