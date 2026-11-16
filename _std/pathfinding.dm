@@ -265,10 +265,10 @@
 			continue
 
 		var/turf/current_turf = current_processed_node.tile
-		for(var/scan_direction in list(EAST, WEST, NORTH, SOUTH))
+		for(var/scan_direction in cardinal)
 			cardinal_scan_spec(current_turf, scan_direction, current_processed_node)
 
-		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
+		for(var/scan_direction in ordinal)
 			diag_scan_spec(current_turf, scan_direction, current_processed_node)
 
 		LAGCHECK(LAG_MED)
@@ -358,7 +358,7 @@
 					var/list/goals = pop_reached_goals(current_turf, T)
 					if(goals)
 						LAZYLISTADD(reached_target_goals, goals)
-		else if(current_turf in ends)
+		else if(ends[current_turf])
 			reached_target_goals = ends[current_turf]
 			ends -= current_turf
 
@@ -435,7 +435,7 @@
 					var/list/goals = pop_reached_goals(current_turf, T)
 					if(goals)
 						LAZYLISTADD(reached_target_goals, goals)
-		else if(current_turf in ends)
+		else if(ends[current_turf])
 			reached_target_goals = ends[current_turf]
 			ends -= current_turf
 
