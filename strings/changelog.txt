@@ -1,4 +1,9 @@
 
+(t)mon nov 16 26
+(u)glowbold
+(p)28281
+(e)🆕🗺🎨⚖🧛🔬🐣📨|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Gamemodes, A-Science, A-Respawning, A-Logistics
+(*)Telescience labs have a disk rack that auto-saves coordinates from inserted disks, and blinks when matching Long Range destinations are used
 (t)sun nov 15 26
 (u)SmileyLemonade
 (p)28262
