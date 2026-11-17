@@ -192,6 +192,7 @@
 		/obj/item/circuitboard/card/research,
 		/obj/item/circuitboard/announcement/research,
 		/obj/item/disk/data/floppy/manudrive/program_rack,
+		/obj/item/disk/data/floppy/manudrive/telesci_rack,
 	)
 
 /obj/item/storage/box/command_tech/md
