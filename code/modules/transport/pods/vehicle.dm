@@ -810,16 +810,7 @@
 			sec_part.run_component(mult)
 		var/obj/item/shipcomponent/engine_part = src.get_part(POD_PART_ENGINE)
 		if(engine_part?.active)
-			var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-			var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
-			var/toxins = consumed?.toxins
-			if(isnull(toxins))
-				toxins = 0
-			if(usage)
-				src.myhud?.update_fuel()
-				if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
-					engine_part.deactivate()
-			consumed?.dispose()
+			src.use_power(src.powercurrent * mult)
 
 #ifdef MAP_OVERRIDE_NADIR
 		if(src.acid_damage_multiplier > 0)
@@ -829,6 +820,22 @@
 				src.health -= max(0.1 * power, 0.2) * acid_damage_multiplier * mult
 				checkhealth()
 #endif
+
+	use_power(amount, chan)
+		var/obj/item/shipcomponent/engine_part = src.get_part(POD_PART_ENGINE)
+		if (!istype(engine_part))
+			return
+
+		var/gas_usage = amount / 3000  // 0.0333 moles consumed per 100W
+		var/datum/gas_mixture/consumed = src.fueltank?.remove_air(gas_usage)
+		var/toxins = consumed?.toxins
+		if(isnull(toxins))
+			toxins = 0
+		if(gas_usage)
+			src.myhud?.update_fuel()
+			if(abs(gas_usage - toxins)/gas_usage > 0.10) // 5% difference from expectation
+				engine_part.deactivate()
+		consumed?.dispose()
 
 	proc/checkhealth()
 		myhud?.update_health()
