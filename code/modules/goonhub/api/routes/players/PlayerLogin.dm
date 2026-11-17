@@ -17,3 +17,19 @@
 		server_id
 	)
 		. = ..(args)
+
+/datum/apiRoute/players/login/local_fallback(db_handle)
+	var/player_ckey = ckey(src.body.ckey)
+    if(!length(player_ckey))
+        throw "Player ckey is required"
+    var/list/rows = FALLBACK_DB.rows(db_handle, {"
+        SELECT EXISTS (
+            SELECT 1 FROM player_mentors WHERE player_ckey = ?
+        ) AS is_mentor, EXISTS (
+            SELECT 1 FROM player_hos WHERE player_ckey = ?
+        ) AS is_hos
+    "}, list(player_ckey, player_ckey))
+    var/list/flags = rows[1]
+    flags["is_mentor"] = !!flags["is_mentor"]
+    flags["is_hos"] = !!flags["is_hos"]
+    return flags
