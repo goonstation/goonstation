@@ -98,6 +98,27 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 							/obj/item/extinguisher,
 							/obj/item/storage/box/casualties)
 
+/datum/job/special/nt/janitor
+	name = "Nanotrasen Emergency Sanitizer"
+	trait_list = list("training_medical")
+
+	slot_back = list(/obj/item/storage/backpack/NT/ERT)
+	slot_belt = list(/obj/item/storage/fanny/nanotrasen/janitor)
+	slot_suit = list(/obj/item/clothing/suit/space/ntso/janitor)
+	slot_head = list(/obj/item/clothing/head/helmet/space/ntso/janitor)
+	slot_foot = list(/obj/item/clothing/shoes/galoshes)
+	slot_glov = list(/obj/item/clothing/gloves/long)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/janitor)
+	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
+	slot_poc1 = list(/obj/item/storage/ntsc_pouch/janitor)
+	slot_poc2 = list(/obj/item/tank/pocket/extended/oxygen)
+	/// gets placed within the mob's id slot by put_id_in_pda, required because they need both of their pockets for the oxy (on spawn readiness is required) & pouch ("correct" slot for pouch)
+	items_in_mob = list(/obj/item/device/pda2/nt/janitor)
+	items_in_backpack = list(/obj/item/device/flash,
+							/obj/item/mop/nanotrasen,
+							/obj/item/broom/nanotrasen)
+
 // Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt/security_consultant
 	name = "Nanotrasen Security Consultant"

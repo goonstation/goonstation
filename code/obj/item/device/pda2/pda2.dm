@@ -210,6 +210,12 @@
 			mailgroups = list(MGD_ENGINEER, MGD_SUPPLY, MGD_COMMAND, MGD_PARTY)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
 
+		janitor
+			icon_state = "pda-nt_janitor"
+			setup_default_cartridge = /obj/item/disk/data/cartridge/superjanitor
+			mailgroups = list(MGT_JANITOR, MGA_PLUMBING, MGD_COMMAND, MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CRISIS)
+
 	// Security
 
 	security

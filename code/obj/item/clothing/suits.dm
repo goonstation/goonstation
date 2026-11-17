@@ -1555,6 +1555,18 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		src.setProperty("radprot", 50)
 		src.setProperty("heatprot", 45)
 
+/obj/item/clothing/suit/space/ntso/janitor
+	name = "NT janitorial pressure suit"
+	desc = "A specialised Nanotrasen space suit with an integrated chest rig, meant for sanitizing teams. The fabric has been modified to be extremely resistant to chemical and biological hazards."
+	icon_state = "ntso_janitor"
+	item_state = "ntso_janitor"
+	item_function_flags = IMMUNE_TO_ACID
+
+	setupProperties()
+		. = ..()
+		setProperty("viralprot", 50)
+		setProperty("chemprot", 70)
+
 /obj/item/clothing/suit/space/ntso/bellona
 	name = "NTSO combat dress"
 	desc = "A modernized NTSO combat suit, with an integrated energy shield."

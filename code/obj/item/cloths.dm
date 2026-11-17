@@ -181,6 +181,11 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	name = "security towel"
 	icon_state = "towel_security"
 
+/obj/item/cloth/towel/nanotrasen
+	name = "nanotrasen towel"
+	icon_state = "towel_nanotrasen"
+	desc = "About the most massively useful thing a janitor can have, now in black and blue."
+
 ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 /obj/item/cloth/handkerchief
 	name = "handkerchief"

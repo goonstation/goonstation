@@ -184,6 +184,12 @@ TRASH BAG
 	icon_state = "mop_orange"
 	item_state = "mop_orange"
 
+/obj/item/mop/nanotrasen
+	desc = "Now YOU are on top of the world of janitorial paraphernalia. Doesn't make mopping up the blood feel any better, though."
+	name = "emergency mop"
+	icon_state = "mop_nt"
+	force = 5
+
 /obj/item/mop/orange/battleworn
 	desc = "It's been through some shit."
 	name = "battleworn mop"
@@ -439,6 +445,13 @@ TRASH BAG
 	return TRUE
 
 #undef PUSH_BATCH_SIZE
+
+/obj/item/broom/nanotrasen
+	desc = "This one is NOT humble. Look at that detailing!"
+	name = "emergency push broom"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "broom_nt"
+	force = 5
 
 // SPONGES? idk
 
