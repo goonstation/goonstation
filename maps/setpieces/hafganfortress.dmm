@@ -14730,8 +14730,8 @@
 	pixel_y = 18
 	},
 /obj/landmark/viscontents_spawn/same_z{
-	xOffset = -4;
-	yOffset = 1
+	xOffset = -1;
+	yOffset = -4
 	},
 /turf/unsimulated/floor/stairs/dark{
 	dir = 8
