@@ -6,9 +6,6 @@
 	var/list/blink_until[DISK::RACK::MAX_DISKS]
 	var/blink_duration = 10 SECONDS
 
-// TODO: Telesci console requires disks to use? Would need backup measures for disks?
-// TODO: Network connected
-
 /obj/machinery/disk_rack/telesci/New()
 	. = ..()
 	// tracking for LRT usage to trigger our lights
@@ -36,6 +33,7 @@
 		if (!target)
 			continue // we didnt find a turf to send to
 		else
+			playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
 			global.special_places.Add(galactic_position.place_name)
 
 /// Returns a list of location Names on a given disk
