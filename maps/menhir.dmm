@@ -2005,6 +2005,7 @@
 /obj/item/device/radio/intercom/science{
 	dir = 8
 	},
+/obj/item/storage/firstaid/regular,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -34873,8 +34874,7 @@
 /area/station/maintenance/northwest)
 "rEo" = (
 /obj/machinery/light_switch/directional/east,
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
+/obj/storage/crate/adventure,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -41579,10 +41579,6 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"uYa" = (
-/obj/storage/crate/adventure,
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "uYj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -94014,7 +94010,7 @@ cAC
 jAy
 jAy
 yga
-uYa
+eqv
 dmU
 ujP
 sMI
