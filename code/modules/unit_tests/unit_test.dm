@@ -66,7 +66,9 @@ var/global/datum/unit_test_controller/unit_tests = new()
 		src.current_test = test
 		var/duration = TIME
 
+		test.SetUp()
 		test.Run()
+		test.TearDown()
 
 		duration = TIME - duration
 
@@ -142,6 +144,12 @@ var/global/datum/unit_test_controller/unit_tests = new()
 				continue
 			qdel(content)
 	return ..()
+
+/datum/unit_test/SetUp()
+	// Override this to set up your test environment
+
+/datum/unit_test/TearDown()
+	// Override this to clean up your test environment
 
 /datum/unit_test/proc/Run()
 	Fail("Run() called parent or not implemented")
