@@ -55,5 +55,5 @@
 
 /// Implement to provide a local fallback that uses the on-server cached database.
 /// Returns a list, similar to a real API call, or null if unimplemented
-/datum/apiRoute/proc/local_fallback(database/db)
+/datum/apiRoute/proc/local_fallback(db_handle)
 	return null
