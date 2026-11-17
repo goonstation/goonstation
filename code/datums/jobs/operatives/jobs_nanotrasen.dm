@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 /datum/job/special/nt/vip
 	name = "Nanotrasen VIP"
 	wages = PAY::EMBEZZLED //big money
-	badge = /obj/item/clothing/suit/security_badge/shielded
+	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_jump = list(/obj/item/clothing/under/misc/ntvip)
@@ -142,8 +142,8 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_glov = null
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_belt = list(/obj/item/device/pda2/nt)
-	slot_poc1 = list(/obj/item/device/panicbutton/medicalalert/hop)
-	slot_poc2 = list(/obj/item/device/flash)
+	slot_poc1 = list(/obj/item/device/panicbutton)
+	items_in_backpack =  = list(/obj/item/device/flash)
 	alt_names = list("Corporate Executive",
 		"Shipyard Overseer",
 		"Regional Accountant",
@@ -159,10 +159,21 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_jump = list(/obj/item/clothing/under/misc/ntvip)
-	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_glov = null
-	slot_head = list(/obj/item/clothing/head/NTberet)
+	slot_head = list(/obj/item/clothing/head/NTberet/commander)
 	slot_belt = list(/obj/item/device/pda2/nt)
 	slot_poc1 = list(/obj/item/device/panicbutton/medicalalert/hop)
-	slot_poc2 = list(/obj/item/device/flash)
+	slot_lhan = list(/obj/item/storage/briefcase/nanotrasen)
+	items_in_backpack = list(/obj/item/device/flash)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+
+		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase/nanotrasen)
+		if (B && istype(B))
+			B.storage.add_contents(new /obj/item/stamp/centcom(B))
+		return
