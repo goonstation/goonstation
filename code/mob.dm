@@ -84,8 +84,6 @@ TYPEINFO(/mob)
 	var/vdisfigured = FALSE
 	var/druggy = 0
 	var/sleeping = 0
-	var/lying = 0
-	var/lying_old = 0
 	var/can_lie = 0
 	var/canmove = 1
 	var/incrit = 0

@@ -151,7 +151,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 
 	clamp_values()
 		..()
-		src.lying = 0
+		src.set_lying(FALSE)
 
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
