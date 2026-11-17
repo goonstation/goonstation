@@ -2,19 +2,19 @@
 
 /datum/db_record/citation/fine/build_fields()
 	return alist(
-		"id" 			= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
-		"time"			= new /datum/record_field/string(src, "Time Issued", "00:00:00"),
-		"authority"		= new /datum/record_field/string(src, "Authority", "Nanotrasen Corporate Security"),
-		"type"			= new /datum/record_field/choice(src, "Type", "FINE", list("TICKET", "FINE")),
-		"target"		= new /datum/record_field/string(src, "Recipient", "Unknown"),
-		"status"		= new /datum/record_field/choice(src, "Status", "PENDING", list("PENDING", "UNPAID", "PAID")),
-		"amount"		= new /datum/record_field/number(src, "Amount", 0),
-		"paid_amount"	= new /datum/record_field/number(src, "Amount Paid", 0),
-		"issuer"		= new /datum/record_field/string(src, "Issuer", "Unknown"),
-		"issuer_job"	= new /datum/record_field/string(src, "Issuer Job", "Unknown"),
-		"approver"		= new /datum/record_field/string(src, "Approver", "Awaiting Approval"),
-		"approver_job"	= new /datum/record_field/string(src, "Approver Job", "Awaiting Approval"),
-		"reason"		= new /datum/record_field/string(src, "Reason", "Unknown"),
+		BUILD_FIELD("id", 			/datum/record_field/string, "ID", "000000", @"[a-f0-9]{6}"),
+		BUILD_FIELD("time",			/datum/record_field/string, "Time Issued", "00:00:00"),
+		BUILD_FIELD("authority",	/datum/record_field/string, "Authority", "Nanotrasen Corporate Security"),
+		BUILD_FIELD("type",			/datum/record_field/choice, "Type", "FINE", list("TICKET", "FINE")),
+		BUILD_FIELD("target",		/datum/record_field/string, "Recipient", "Unknown"),
+		BUILD_FIELD("status",		/datum/record_field/choice, "Status", "PENDING", list("PENDING", "UNPAID", "PAID")),
+		BUILD_FIELD("amount",		/datum/record_field/number, "Amount", 0),
+		BUILD_FIELD("paid_amount",	/datum/record_field/number, "Amount Paid", 0),
+		BUILD_FIELD("issuer",		/datum/record_field/string, "Issuer", "Unknown"),
+		BUILD_FIELD("issuer_job",	/datum/record_field/string, "Issuer Job", "Unknown"),
+		BUILD_FIELD("approver",		/datum/record_field/string, "Approver", "Awaiting Approval"),
+		BUILD_FIELD("approver_job",	/datum/record_field/string, "Approver Job", "Awaiting Approval"),
+		BUILD_FIELD("reason",		/datum/record_field/string, "Reason", "Unknown"),
 	)
 
 /datum/db_record/citation/fine/New(authority, target, amount, issuer, issuer_job, reason)
@@ -70,7 +70,7 @@
 	src["approver"] = approver
 	src["approver_job"] = approver_job
 
-	var/datum/db_record/personnel/bank/bank_record = global.data_core.bank.find_record("name", src["target"])
+	var/datum/db_record/personnel/bank/bank_record = global.data_core.get_bank_record(src["target"])
 	var/net_id = bank_record?["pda_net_id"]
 	if (bank_record)
 		var/datum/signal/signal = global.get_free_signal()
@@ -85,7 +85,7 @@
 	return SECURITY::TICKET::ERR::SUCCESS
 
 /datum/db_record/citation/fine/proc/process_payment()
-	var/datum/db_record/personnel/bank/bank_record = global.data_core.bank.find_record("name", src["target"])
+	var/datum/db_record/personnel/bank/bank_record = global.data_core.get_bank_record(src["target"])
 	if (QDELETED(bank_record))
 		return
 

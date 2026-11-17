@@ -42,6 +42,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -128,6 +129,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/grey,
 /area/station/engine/gravity)
 "o" = (

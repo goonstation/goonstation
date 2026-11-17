@@ -24,13 +24,15 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_REBREATHING, src.type)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_NO_LOSEBREATH, src.type)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_REBREATHING, src.type)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_NO_LOSEBREATH, src.type)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)

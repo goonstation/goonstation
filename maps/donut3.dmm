@@ -51260,6 +51260,7 @@
 /obj/decal/poster/wallsign/poster_sol{
 	pixel_y = 28
 	},
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/purple/checker{
 	dir = 1
 	},

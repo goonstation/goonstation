@@ -324,6 +324,10 @@ TYPEINFO(/atom)
 /atom/proc/emag_act(var/mob/user, var/obj/item/card/emag/E) //This is gonna be fun!
 	return 0
 
+/// An atom/movable is trying to smash us. Returns TRUE if the attacker did strike it.
+/atom/proc/smash_act(atom/movable/smasher, show_message=TRUE)
+	return FALSE
+
 /atom/proc/demag(var/mob/user) //hail satan full of grace
 	return 0
 

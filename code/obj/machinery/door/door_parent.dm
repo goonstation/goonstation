@@ -438,6 +438,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 				elecflash(src,power=2)
 			take_damage(health_max/6)
 
+/obj/machinery/door/smash_act(atom/movable/smasher, show_message)
+	if (ismob(smasher))
+		SPAWN(0)
+			src.tear_apart(smasher)
+		return TRUE
+	if (show_message)
+		smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+	src.break_me_complitely()
+	return TRUE
+
 /obj/machinery/door/proc/break_me_complitely()
 	set waitfor = 0
 	robogibs(src.loc)

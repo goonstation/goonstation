@@ -199,6 +199,13 @@ TYPEINFO_NEW(/obj/table)
 				return
 		return
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+		src.deconstruct()
+		return TRUE
+
 	disposing()
 		var/turf/OL = get_turf(src)
 		if (!OL)

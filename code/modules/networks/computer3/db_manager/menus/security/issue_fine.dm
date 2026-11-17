@@ -14,11 +14,11 @@
 
 	text += "<br><b>General Record:</b>  "
 	if (src.target)
-		text += global.data_core.general.find_record("name", src.target) ? "On Record" : "NONE"
+		text += global.data_core.get_general_record(src.target) ? "On Record" : "NONE"
 
 	text += "<br><b>Bank Record:</b>     "
 	if (src.target)
-		text += global.data_core.bank.find_record("name", src.target) ? "On Record" : "NONE"
+		text += global.data_core.get_bank_record(src.target) ? "On Record" : "NONE"
 
 	text += "<br><b>Fine Amount:</b>     "
 	if (src.amount)
@@ -47,7 +47,7 @@
 			src.parent.previous_menu()
 			return
 
-		var/datum/db_record/personnel/bank/R = global.data_core.bank.find_record("name", text)
+		var/datum/db_record/personnel/bank/R = global.data_core.get_bank_record(text)
 		if (!istype(R))
 			src.parent.print_text("<b>Error:</b> Could not locate bank record for \"[text]\".")
 			return

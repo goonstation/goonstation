@@ -751,7 +751,7 @@ TYPEINFO(/obj/item/mechanics)
 			// largely stolen from the gene booth. thanks, gene booth.
 			//subtract from perp bank account
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(perp_id.registered)
+			account = global.data_core.get_bank_record(perp_id.registered)
 
 			if (account)
 				if (account["current_money"] >= src.price)

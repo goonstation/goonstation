@@ -3012,15 +3012,11 @@ TYPEINFO(/mob)
 			src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 			continue
 		if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
-			var/datum/db_record/gen_record = global.data_core.general.find_record("id", src.datacore_id)
-			if (gen_record)
-				gen_record["name"] = newname
-				gen_record["full_name"] = newname
+			var/datum/db_record/personnel/general/record = global.data_core.get_general_record(id = src.datacore_id)
+			if (record)
+				record["name"] = newname
+				record["full_name"] = newname
 
-			for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.medical))
-				var/datum/db_record/sub_record = DB.find_record("id", src.datacore_id)
-				if (sub_record)
-					sub_record["name"] = newname
 			for (var/obj/item/I in src.contents)
 				var/obj/item/card/id/ID = get_id_card(I)
 				if (!ID)

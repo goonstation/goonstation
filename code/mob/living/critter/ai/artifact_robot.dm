@@ -41,7 +41,7 @@
 
 /datum/aiTask/succeedable/actionbar/wall_smash/failed()
 	.=..() //did actionbar fail
-	if(. || !holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(. || !holder.owner || !holder.target || !can_reach(holder.owner, holder.target)) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/actionbar/wall_smash/succeeded()
@@ -116,7 +116,7 @@
 
 /datum/aiTask/succeedable/actionbar/floor_place/failed()
 	.=..() //did actionbar fail
-	if(. || !holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(. || !holder.owner || !holder.target || !can_reach(holder.owner, holder.target)) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/actionbar/floor_place/succeeded()
@@ -180,7 +180,7 @@
 
 /datum/aiTask/succeedable/actionbar/wall_place/failed()
 	.=..() //did actionbar fail
-	if(. || !holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(. || !holder.owner || !holder.target || !can_reach(holder.owner, holder.target)) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/actionbar/wall_place/succeeded()

@@ -4,7 +4,6 @@ TYPEINFO(/datum/mapPrefab/mining)
 
 ABSTRACT_TYPE(/datum/mapPrefab/mining)
 /datum/mapPrefab/mining
-	var/underwater = 0 //! prefab will only be used if this matches map_currently_underwater. I.e. if this is 1 and map_currently_underwater is 1 then the prefab may be used.
 
 	adjust_position(turf/target)
 		RETURN_TYPE(/turf)
