@@ -1973,6 +1973,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	category = "Research"
 	frames = list(/obj/machinery/networked/teleconsole,
 					/obj/machinery/networked/telepad,
+					/obj/machinery/disk_rack/telesci,
 					/obj/machinery/power/data_terminal = 2)
 	cost = PAY::IMPORTANT*10
 	hidden = 1
