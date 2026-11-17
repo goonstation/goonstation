@@ -692,18 +692,25 @@
 		lit_state = "hardhat_chief_engineer"
 
 	mining
-		name = "Miner's hard hat"
-		icon_state = "hardhat_mining_0"
-		item_state = "hardhat_mining_0"
+		name = "miner's hard hat"
+		icon_state = "hardhat_orange0"
+		item_state = "hardhat_orange0"
 		desc = "A cheap looking orange hard hat that has a pickaxe emblem engraved inside it."
-		lit_state = "hardhat_mining_"
+		lit_state = "hardhat_orange"
+
+	technical
+		name = "technical hard hat"
+		icon_state = "hardhat_blue0"
+		item_state = "hardhat_blue0"
+		desc = "A hard hat provided by Nanotrasen to technicians and mechanics"
+		lit_state = "hardhat_blue"
 
 	trainee
-		name = "Trainee's hard hat"
-		icon_state = "hardhat_trainee_0"
-		item_state = "hardhat_trainee_0"
-		desc = "A squaky clean blue hardhat provided by NanoTrasen to Trainee's"
-		lit_state = "hardhat_trainee_"
+		name = "trainee's hard hat"
+		icon_state = "hardhat_green0"
+		item_state = "hardhat_green0"
+		desc = "A shiny new green hard hat issued by Nanotrasen to trainees. Safety First!"
+		lit_state = "hardhat_green"
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"

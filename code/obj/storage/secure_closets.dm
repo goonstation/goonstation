@@ -820,7 +820,8 @@
 	/obj/item/deconstructor,
 	/obj/item/electronics/frame/mech_cabinet=2,
 	/obj/item/storage/mechanics/housing_handheld=1,
-	/obj/item/paper/manufacturer_blueprint/ai_status_display)
+	/obj/item/paper/manufacturer_blueprint/ai_status_display,
+	/obj/item/clothing/head/helmet/hardhat/technical)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
@@ -833,7 +834,7 @@
 	/obj/item/storage/toolbox/mechanical,
 	/obj/item/extinguisher,
 	/obj/item/chem_grenade/firefighting,
-	/obj/item/chem_grenade/firefighting)
+	/obj/item/chem_grenade/firefighting,)
 
 /obj/storage/secure/closet/engineering/engineer
 	name = "\improper Engineer's locker"
@@ -866,7 +867,8 @@
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining,
 	/obj/item/device/geiger,
-	/obj/item/device/appraisal)
+	/obj/item/device/appraisal,
+	/obj/item/clothing/head/helmet/hardhat/mining)
 
 /obj/storage/secure/closet/engineering/cargo
 	name = "\improper Quartermaster's locker"

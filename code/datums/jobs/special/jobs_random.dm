@@ -438,6 +438,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat/technical)
 	#ifdef UNDERWATER_MAP
 	items_in_backpack = list(/obj/item/preassembled_frame_box/sub, /obj/item/podarmor/armor_light, /obj/item/clothing/head/helmet/welding)
 	#else
@@ -510,6 +511,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_poc1 = list(/obj/item/device/pda2/atmos)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat/technical)
 	items_in_backpack = list(/obj/item/clothing/mask/gas/emergency, /obj/item/rcd_ammo/big)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 	email_group = MGD_ENGINEER
