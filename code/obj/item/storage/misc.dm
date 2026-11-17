@@ -135,6 +135,7 @@
 	spawn_contents = list(
 		/obj/item/heat_dowsing = 3,
 		/obj/item/clothing/shoes/stomp_boots,
+		/obj/item/clothing/shoes/flippers,
 		/obj/item/cable_coil/reinforced
 	)
 

@@ -140,8 +140,19 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 	satchel_variant = /obj/item/storage/backpack/satchel/NT
 
-	ERT
-		spawn_contents = list(/obj/item/storage/box/starternt)
+/obj/item/storage/backpack/NT/ERT
+	spawn_contents = list(/obj/item/storage/box/starternt)
+
+/obj/item/storage/backpack/NT/large
+	name = "\improper NT technician backpack"
+	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back. This one is roomier and has a few extra pockets."
+	icon_state = "NTbackpack_large"
+	item_state = "NTbackpack_large"
+	satchel_variant = null
+	slots = 9
+
+/obj/item/storage/backpack/NT/large/ERT
+	spawn_contents = list(/obj/item/storage/box/starternt)
 
 /obj/item/storage/backpack/syndie
 	name = "\improper Syndicate backpack"
@@ -505,8 +516,8 @@
 	item_state = "NTsatchel"
 	spawn_contents = list(/obj/item/storage/box/starter)
 
-	ERT
-		spawn_contents = list(/obj/item/storage/box/starternt)
+/obj/item/storage/backpack/satchel/NT/ERT
+	spawn_contents = list(/obj/item/storage/box/starternt)
 
 /obj/item/storage/backpack/satchel/captain
 	name = "Captain's Satchel"
