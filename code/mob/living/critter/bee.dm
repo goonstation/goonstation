@@ -234,7 +234,7 @@
 			return 0
 		if (isdead(src))
 			return
-		if (E.icon_state == "gold")
+		if (E.icon_state == "emag_gold")
 			user.visible_message("<b>[user]</b> offers [E] to [src], but [src] respectfully declines, as it didn't stay down the first time.",\
 			"You offer [E] to [src], but [src] respectfully decline, as it didn't stay down the first time.")
 			return
@@ -246,7 +246,7 @@
 			"You feed [E] to [src]. Fuck!")
 
 		sleep(2 SECONDS)
-		E.icon_state = "id_gold"
+		E.icon_state = "emag_gold"
 		E.desc += "  It appears to be covered in honey.  Gross."
 		src.visible_message("<b>[src]</b> regurgitates [E]!")
 		E.name = "sticky [E.name]"
