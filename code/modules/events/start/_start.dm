@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/random_event/start/until_playing)
 			if((!player.mind.is_antagonist() || include_antags) && prob(player_chance))
 				. = TRUE
 
-	proc/notify_player(var/mob/living/player)
+	proc/player_notification(var/mob/living/player)
 		if(notify_player)
 			SPAWN(0)
 				if(isnum(notify_player))
@@ -59,7 +59,7 @@ ABSTRACT_TYPE(/datum/random_event/start/until_playing)
 		. = TRUE
 
 	apply_to_player(var/mob/living/player)
-		. = notify_player(player)
+		. = player_notification(player)
 
 	event_effect(var/source)
 		if(current_state < GAME_STATE_PLAYING)
