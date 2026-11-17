@@ -399,7 +399,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 		src.root.add_file( place )
 
 	disk_name()
-		return "'[target_name]' coordinate disk"
+		return "'[src.target_name]' coordinate disk"
 
 	observatory
 		name = "galactic coordinate disk - 'Observatory'"
