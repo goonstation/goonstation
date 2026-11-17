@@ -305,6 +305,7 @@
 		/obj/item/clothing/under/misc/mime/alt,
 		/obj/item/clothing/suit/scarf,
 		/obj/item/clothing/shoes/black,
+		/obj/item/stamp/mime,
 	)
 
 /obj/item/storage/box/costume/mime/alt //people can have either the normal clothes or the other clothes
@@ -315,6 +316,7 @@
 		/obj/item/clothing/under/misc/mime,
 		/obj/item/clothing/suit/suspenders,
 		/obj/item/clothing/shoes/black,
+		/obj/item/stamp/mime,
 	)
 
 /obj/item/storage/box/costume/jester
