@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	trait_list = list("training_security", "training_medical")
 	wages = PAY::EXECUTIVE //The big boss
 	receives_miranda = TRUE
-	receives_disk = /obj/item/disk/data/floppy/sec_command
+	receives_disk = /obj/item/disk/data/floppy/sec_command/ntboss
 
 	slot_belt = list(/obj/item/swords_sheaths/ntboss)
 	slot_jump = list(/obj/item/clothing/under/misc/NT)
@@ -48,8 +48,10 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/nt_operative)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/commander)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/device/pda2/nt/ntso)
-	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
+	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
+	slot_poc2 = list(/obj/item/gun/energy/optio1)
+	// gets placed within the mob's id slot by put_id_in_pda, required because they need both of their pockets for the oxy (on spawn readiness is required) & pouch ("correct" slot for pouch)
+	items_in_mob = list(/obj/item/device/pda2/nt/commander)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 
 

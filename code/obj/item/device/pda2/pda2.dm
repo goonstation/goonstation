@@ -191,6 +191,14 @@
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 		bg_color = "#1b57b1"
 
+		commander
+			icon_state = "pda-nt_commander"
+			setup_default_pen = /obj/item/pen/NT
+			setup_default_cartridge = /obj/item/disk/data/cartridge/ntboss
+			setup_default_module = /obj/item/device/pda_module/flashlight/high_power
+			mailgroups = list(MGD_SECURITY, MGD_MEDICAL, MGD_ENGINEER, MGD_CIVILIAN, MGD_COMMAND, MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
+
 		ntso
 			setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
 			setup_default_module = /obj/item/device/pda_module/flashlight

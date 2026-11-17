@@ -182,6 +182,9 @@
 							"SEC"="[netpass_security]",)
 		src.root.add_file(authrec)
 
+/obj/item/disk/data/floppy/sec_command/ntboss
+	icon_state = "datadiskntboss"
+
 /obj/item/disk/data/floppy/security
 	icon_state = "datadisksec"
 	random_color = FALSE

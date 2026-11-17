@@ -1472,6 +1472,7 @@ TYPEINFO(/obj/item/swords/captain)
 	name = "NanoTrasen Commander's Sabre"
 	desc = "A sharp sabre for the most trusted and competent NanoTrasen Commanders. The blue paint is peeling a bit..."
 	force = 20
+	delimb_prob = 20
 	contraband = 4
 
 	New()
