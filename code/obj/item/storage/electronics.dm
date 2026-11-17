@@ -191,6 +191,7 @@
 		/obj/item/circuitboard/card/research,
 		/obj/item/circuitboard/announcement/research,
 		/obj/item/disk/data/floppy/manudrive/aiLaws,
+		/obj/item/disk/data/floppy/manudrive/telesci_rack,
 	)
 
 /obj/item/storage/box/command_tech/md
