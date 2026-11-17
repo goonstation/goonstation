@@ -142,7 +142,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		"Stakeholder",
 		"Strategic Partner",
 		"Hedge Fund Manager",
-		"Board Member",
 		"Plasma Baron",
 		"Clerical Paraphernalia Broker",
 		"Exo-Archaeology Patron")

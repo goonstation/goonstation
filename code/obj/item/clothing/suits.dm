@@ -2324,11 +2324,11 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 		src.show_off_badge(user, target)
 
 /obj/item/clothing/suit/security_badge/shielded
-	name = "NTSO Tactical Badge"
-	desc = "An official badge for an NTSO operator, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch."
+	name = "NanoTrasen VIP Badge"
+	desc = "The official badge of an NT VIP, with a miniaturized shield projector and the capacity to be used as a backup power cell in a pinch. The letters 'B.S.R.' are engraved on the inside."
 	tooltip_flags = REBUILD_ALWAYS
-	icon_state = "security_badge_shielded"
-	item_state = "security_badge_shielded"
+	icon_state = "NT_badge_shielded"
+	item_state = "NT_badge_shielded"
 
 	get_desc()
 		. = ..()
