@@ -208,6 +208,9 @@
 		for (var/effect_id in src.listen_effects_by_id)
 			src.listen_effects_by_id[effect_id].process(message)
 
+		for (var/datum/callback/callback as anything in message.listener_callbacks)
+			callback.Invoke(message, src)
+
 		if (src.signal_recipients[message.signal_recipient])
 			src.UnregisterSignal(message.signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
 			src.signal_recipients -= message.signal_recipient

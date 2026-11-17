@@ -136,16 +136,22 @@
 	burn_possible = FALSE
 	item_function_flags = IMMUNE_TO_ACID
 
-	disposing()
-		disposed = FALSE
-		..()
-		CRASH("Something tried to delete the can_reach dummy!")
+/obj/item/dummy/disposing()
+	disposed = FALSE
+	..()
+	CRASH("Something tried to delete the can_reach dummy!")
 
-	ex_act()
-		return
+/obj/item/dummy/ex_act()
+	return
 
-	changeHealth(change)
-		return
+/obj/item/dummy/blob_act(power)
+	return
+
+/obj/item/dummy/changeHealth(change)
+	return
+
+/obj/item/dummy/update_traction(turf/T)
+	return
 
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"

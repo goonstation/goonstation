@@ -17567,19 +17567,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"hIK" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/obj/machinery/alarm/directional/west,
-/turf/simulated/floor/caution/white{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "hIO" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -23190,6 +23177,13 @@
 	dir = 10
 	},
 /area/station/science/chemistry)
+"lCD" = (
+/obj/machinery/alarm/directional/west,
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/caution/white{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "lDg" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -28119,13 +28113,6 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
-"oRN" = (
-/obj/decoration/toiletholder{
-	dir = 8;
-	pixel_x = 32
-	},
-/turf/simulated/floor/sanitary/blue,
-/area/station/bridge/execrestroom)
 "oSr" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -41118,6 +41105,13 @@
 	},
 /turf/space,
 /area/space)
+"xEz" = (
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 6
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/bridge/execrestroom)
 "xEU" = (
 /obj/disposalpipe/segment,
 /obj/machinery/conveyor/EW{
@@ -84525,7 +84519,7 @@ bJM
 mTN
 lyt
 mtl
-oRN
+xEz
 xXx
 pRS
 nfm
@@ -86929,7 +86923,7 @@ aQT
 iBE
 fRA
 vvL
-hIK
+lCD
 nvq
 aZD
 baL

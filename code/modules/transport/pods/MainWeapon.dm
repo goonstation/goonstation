@@ -112,6 +112,8 @@
 				boutput(user, "[ship.ship_message("<b>All ammunition expended.</b>")]")
 			else
 				boutput(user, "[ship.ship_message("[remaining_ammunition - ship.AmmoPerShot()] shots remaining.")]")
+	else
+		ship.use_power(src.power_used)
 
 
 	var/rdir = ship.dir
@@ -584,8 +586,16 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 	attack_self(var/mob/user)
 		if(src.steel_sheets)
-			user.put_in_hand_or_drop(steel_sheets)
+			var/obj/item/sheet/ejected_sheets = src.steel_sheets
 			src.steel_sheets = null
+
+			ejected_sheets.max_stack = initial(ejected_sheets.max_stack)
+			while (ejected_sheets.amount > ejected_sheets.max_stack)
+				var/obj/item/sheet/split_sheets = ejected_sheets.split_stack(ejected_sheets.max_stack)
+				if (!split_sheets)
+					break
+				user.put_in_hand_or_drop(split_sheets)
+			user.put_in_hand_or_drop(ejected_sheets)
 			boutput(user,SPAN_NOTICE("You eject the steel sheets stored in [src]."))
 			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 			return
@@ -733,6 +743,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(user) user.u_equip(S)
 			I.set_loc(src)
 			src.steel_sheets = S
+			src.steel_sheets.max_stack = src.max_sheets
 		else
 			sheets_before = src.steel_sheets.amount
 			src.steel_sheets.stack_item(S)
@@ -1131,7 +1142,8 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	New()
 		. = ..()
 		src.steel_sheets = new /obj/item/sheet/steel(src)
-		src.steel_sheets.set_stack_amount(200)
+		src.steel_sheets.max_stack = src.max_sheets
+		src.steel_sheets.set_stack_amount(src.max_sheets)
 
 #undef EFIF_MODE_DRILL
 #undef EFIF_MODE_FLOORS

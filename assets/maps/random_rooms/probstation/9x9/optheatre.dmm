@@ -354,6 +354,7 @@
 /obj/table/auto,
 /obj/machinery/defib_mount,
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 

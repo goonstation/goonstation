@@ -1,4 +1,39 @@
 
+(t)tue nov 17 26
+(u)ANNmagedon & JORJ985
+(p)28295
+(e)🎨|C-Sprites
+(+)In effort to stop command staff from loosing expensive disks & circuits in their lockers, corporate now packs those in boxes!
+(t)mon nov 16 26
+(u)glowbold
+(p)28217
+(f)https://forum.ss13.co/showthread.php?tid=25482
+(e)⚖🚗|C-Balance, A-Vehicles
+(*)Firing ammo-less pod weapons like phasers now uses pod fuel.
+(u)glowbold
+(p)28281
+(e)🆕🗺🎨⚖🧛🔬🐣📨|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Gamemodes, A-Science, A-Respawning, A-Logistics
+(*)Telescience labs have a disk rack that auto-saves coordinates from inserted disks, and blinks when matching Long Range destinations are used
+(t)sun nov 15 26
+(u)SmileyLemonade
+(p)28262
+(e)🪲🤖🚗|C-Bug, A-Silicons, A-Vehicles
+(+)Fixed cyborgs and ghostdrones losing resources when dragging stacks onto their toolbar.
+(+)Fixed cyborgs and ghostdrones being unable to drag more resources onto their toolbar despite having room left.
+(u)ANNmagedon
+(p)28293
+(e)🆕🐣|C-Feature, A-Respawning
+(+)NT has convinced more types of VIPs to visit the station with their briefcase full of riches.
+(u)TemThrush
+(p)28254
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Refurbishes the clown nest prefab with a few new sprites.
+(u)AronBattlnode
+(e)⚖💊|C-Balance, A-Medical
+(+)Base Anaerobic Metabolism no longer provides immunity to smoked chemical reagents
+(u)glowbold
+(e)⚖💊|C-Balance, A-Medical
+(+)Lexorin's active effect makes you smoke immune as well as unable to lose breath.
 (t)sat nov 14 26
 (u)ANNmagedon & ZeWaka
 (p)28087

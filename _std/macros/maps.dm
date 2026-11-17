@@ -2,8 +2,8 @@
 /// Given a map type, returns true if it is that map.
 #define ismap(x) (map_setting == x)
 
-#define isrestrictedz(z) ((z) > 0 && length(global.zlevels) > (z) && global.zlevels[(z)].teleport_restricted)
-#define isghostrestrictedz(z) ((z) > 0 && length(global.zlevels) > (z) && global.zlevels[(z)].ghost_restricted)
+#define isrestrictedz(z) ((z) && !isnum(z) || (z) < 0 || (z) > length(global.zlevels) || global.zlevels[(z)].teleport_restricted)
+#define isghostrestrictedz(z) ((z) && !isnum(z) || (z) < 0 || (z) > length(global.zlevels) || global.zlevels[(z)].ghost_restricted)
 #define isonstationz(z) ((z) == Z_LEVEL_STATION)
 #define in_shuttle_transit(x) (istype(get_area(x), /area/shuttle/escape/transit) || istype(get_area(x), /area/shuttle_transit_space))
 

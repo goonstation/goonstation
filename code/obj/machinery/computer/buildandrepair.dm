@@ -19,6 +19,13 @@
 	blob_act(var/power)
 		qdel(src)
 //	weight = 1.0E8
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+		make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+		qdel(src)
+		return TRUE
 
 ABSTRACT_TYPE(/obj/item/circuitboard)
 TYPEINFO(/obj/item/circuitboard)

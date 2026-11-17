@@ -2,6 +2,7 @@
 
 /turf/simulated/floor/auto/trench/gutter
 	name = "gutter"
+	icon_state = "gutter-0"
 	intact = FALSE
 	can_fill = FALSE
 	step_material = "step_lattice"
@@ -9,9 +10,18 @@
 
 	edge_overlays()
 		return
+
+	with_catwalk
+		icon_state = "map-gutter-catwalk"
+		spawn_catwalk = /obj/mesh/catwalk
+
+	with_catwalk/jen
+		icon_state = "map-gutter-cat-jen"
+		spawn_catwalk = /obj/mesh/catwalk/jen
 
 /turf/unsimulated/floor/auto/trench/gutter
 	name = "gutter"
+	icon_state = "gutter-0"
 	intact = FALSE
 	can_fill = FALSE
 	step_material = "step_lattice"
@@ -19,6 +29,15 @@
 
 	edge_overlays()
 		return
+
+	with_catwalk
+		icon_state = "map-gutter-catwalk"
+		spawn_catwalk = /obj/mesh/catwalk
+
+	with_catwalk/jen
+		icon_state = "map-gutter-cat-jen"
+		spawn_catwalk = /obj/mesh/catwalk/jen
+
 
 /turf/unsimulated/floor/auto/trench/gutter/underlit
 

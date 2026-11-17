@@ -449,7 +449,6 @@
 /area/station/security/detectives_office)
 "YS" = (
 /obj/table/auto,
-/obj/table/auto,
 /obj/item/paper/book/from_file/space_law{
 	pixel_x = 4;
 	pixel_y = 5

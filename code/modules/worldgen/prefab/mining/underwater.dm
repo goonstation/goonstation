@@ -1,3 +1,5 @@
+ABSTRACT_TYPE(/datum/mapPrefab/mining/underwater)
+
 // Prefabs that can spawn on every water map including nadir
 TYPEINFO(/datum/mapPrefab/mining/underwater/nadir_safe)
 	stored_as_subtypes = TRUE

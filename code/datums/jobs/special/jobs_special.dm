@@ -360,3 +360,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_foot = list(/obj/item/clothing/shoes/black = 1, /obj/item/clothing/shoes/brown = 1, /obj/item/clothing/shoes/cowboy = 1, /obj/item/clothing/shoes/detective = 1)
 	items_in_backpack = list(/obj/item/handcuffs/tape_roll, /obj/item/bat)
 
+/datum/job/special/mode
+	name = "MODE"
+	limit = 0
+

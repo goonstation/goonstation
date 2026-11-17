@@ -390,6 +390,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/core/singularity)
+"T" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/core/singularity)
 "U" = (
 /obj/machinery/power/collector_array,
 /obj/cable/orange{
@@ -447,7 +456,7 @@ P
 i
 l
 j
-i
+T
 f
 y
 L

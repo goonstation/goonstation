@@ -94,12 +94,14 @@
 	var/list/maptext_variables = null
 	/// A list of colours for the maptext to oscillate through. Use the "start_colour" value to determine the colour to animate from to `maptext_css_values["color"]`.
 	var/list/maptext_animation_colours = null
-	/// A list of callback datums to be invoked, with the message itself as the first argument and the maptext image created by this message as the second argument.
-	var/list/datum/callback/maptext_callbacks = null
 	/// A prefix that should only be displayed on the maptext.
 	var/maptext_prefix = null
 	/// A suffix that should only be displayed on the maptext.
 	var/maptext_suffix = null
+
+	// Miscellaneous:
+	/// A list of callback datums to be invoked upon this message being received by a listen tree, with the message itself as the first argument and the listen tree as the second argument.
+	var/list/datum/callback/listener_callbacks = null
 
 // Note that this proc is for `/datum/say_message/original` and not `/datum/say_message`. Copies have all var information copied to them from another say message datum.
 /datum/say_message/original/New(message as text, atom/speaker, flags, list/message_params = null, atom_listeners_override = null)
@@ -465,8 +467,10 @@
 	copy.maptext_css_values = src.maptext_css_values?.Copy()
 	copy.maptext_variables = src.maptext_variables?.Copy()
 	copy.maptext_animation_colours = src.maptext_animation_colours?.Copy()
-	copy.maptext_callbacks = src.maptext_callbacks?.Copy()
 	copy.maptext_prefix = src.maptext_prefix
 	copy.maptext_suffix = src.maptext_suffix
+
+	// Miscellaneous:
+	copy.listener_callbacks = src.listener_callbacks?.Copy()
 
 	return copy
