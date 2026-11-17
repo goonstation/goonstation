@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
 	slot_poc1 = list(/obj/item/device/pda2/engine)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
-	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat/trainee)
 #ifdef HOTSPOTS_ENABLED
 	items_in_backpack = list(/obj/item/clothing/shoes/stomp_boots)
 #endif
@@ -108,13 +108,15 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
 	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/mining,
+							/obj/item/clothing/head/helmet/hardhat/mining,
 							/obj/item/clothing/shoes/flippers,
 							/obj/item/item_box/glow_sticker)
 	#else
 	slot_suit = list(/obj/item/clothing/suit/space/engineer)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer)
 	items_in_backpack = list(/obj/item/crowbar,
-							/obj/item/paper/book/from_file/pocketguide/mining)
+							/obj/item/paper/book/from_file/pocketguide/mining,
+							/obj/item/clothing/head/helmet/hardhat/mining)
 	#endif
 	wiki_link = "https://wiki.ss13.co/Miner"
 	email_group = MGD_SUPPLY

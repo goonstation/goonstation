@@ -703,6 +703,46 @@
 					flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 			return
 
+	mining
+		name = "Miner's hard hat"
+		icon_state = "hardhat_mining_0"
+		item_state = "hardhat_mining_0"
+		desc = "A cheap looking orange hard hat that has a pickaxe emblem engraved inside it."
+
+		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
+			on = !on
+			src.icon_state = "hardhat_mining_[on]"
+			if (on)
+				light_dir.update(1)
+			else
+				light_dir.update(0)
+			user.update_clothing()
+			if (activated_inhand)
+				var/obj/ability_button/flashlight_hardhat/flashlight_button = locate(/obj/ability_button/flashlight_hardhat) in src.ability_buttons
+				if (istype(flashlight_button))
+					flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
+			return
+
+	trainee
+		name = "Trainee's hard hat"
+		icon_state = "hardhat_trainee_0"
+		item_state = "hardhat_trainee_0"
+		desc = "A squaky clean blue hardhat provided by NanoTrasen to Trainee's"
+
+		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
+			on = !on
+			src.icon_state = "hardhat_trainee_[on]"
+			if (on)
+				light_dir.update(1)
+			else
+				light_dir.update(0)
+			user.update_clothing()
+			if (activated_inhand)
+				var/obj/ability_button/flashlight_hardhat/flashlight_button = locate(/obj/ability_button/flashlight_hardhat) in src.ability_buttons
+				if (istype(flashlight_button))
+					flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
+			return
+
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"
 	icon_state = "helmet-sec"
