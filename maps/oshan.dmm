@@ -443,32 +443,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/east)
-"abO" = (
-/obj/machinery/door_control{
-	id = "scienceteleporter";
-	name = "Teleporter Pad Public Access Lockdown";
-	pixel_x = 6;
-	pixel_y = 24
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/station/science/teleporter)
-"abP" = (
-/obj/decal/poster/wallsign/poster_sol{
-	pixel_y = 32
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/station/science/teleporter)
 "abQ" = (
 /obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/white,
@@ -6292,12 +6266,6 @@
 /area/station/science/teleporter)
 "aEi" = (
 /turf/simulated/floor,
-/area/station/science/teleporter)
-"aEk" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
 /area/station/science/teleporter)
 "aEm" = (
 /obj/machinery/networked/teleconsole{
@@ -23965,6 +23933,19 @@
 /obj/landmark/pest,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"cFM" = (
+/obj/stool/chair/office/purple{
+	dir = 4
+	},
+/obj/landmark/start/job/scientist,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
 "cFN" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -29160,19 +29141,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"gAj" = (
-/obj/stool/chair/office/purple{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/start/job/scientist,
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "gAn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Locker Room"
@@ -30960,6 +30928,15 @@
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
+"hSA" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/storage/goodybag,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/clown)
 "hSD" = (
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/neutral/side{
@@ -34470,6 +34447,15 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"kHX" = (
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_y = 32
+	},
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/station/science/teleporter)
 "kIj" = (
 /obj/mapping_helper/mailtag/public/radio,
 /obj/disposalpipe/switch_junction/left/north,
@@ -36301,15 +36287,6 @@
 /obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"maO" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/storage/goodybag,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
-/obj/item/clothing/mask/clown_nose,
-/turf/simulated/floor/carpet/arcade/half,
-/area/station/crew_quarters/clown)
 "maS" = (
 /mob/living/critter/small_animal/seal,
 /turf/simulated/floor/grass,
@@ -42315,10 +42292,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
-"qOV" = (
-/obj/machinery/disk_rack/ai/prefilled,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "qPf" = (
 /obj/decal/cleanable/blood/drip/high,
 /obj/item/furniture_parts/table/desk,
@@ -43250,6 +43223,15 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"rwI" = (
+/obj/item/device/radio/beacon,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "rwS" = (
 /obj/machinery/power/furnace/thermo,
 /obj/decal/poster/wallsign/iso/prohibited/touch,
@@ -43937,6 +43919,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/processing)
+"rYE" = (
+/obj/machinery/door_control{
+	id = "scienceteleporter";
+	name = "Teleporter Pad Public Access Lockdown";
+	pixel_x = 6;
+	pixel_y = 24
+	},
+/obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/station/science/teleporter)
 "rYG" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -49724,6 +49721,10 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
+"wxe" = (
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "wxv" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -107057,8 +107058,8 @@ azQ
 aAY
 ayd
 aCF
-abO
-aEk
+rYE
+rwI
 aEZ
 abQ
 aCF
@@ -107351,7 +107352,7 @@ arC
 arz
 aek
 azU
-maO
+hSA
 acc
 arz
 ayN
@@ -107359,8 +107360,8 @@ azQ
 aAY
 ayp
 aCF
-abP
-gAj
+kHX
+cFM
 aFa
 abR
 aCF
@@ -109160,7 +109161,7 @@ aoj
 aoj
 apb
 apb
-qOV
+wxe
 asP
 syx
 cNn

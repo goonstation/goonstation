@@ -33833,14 +33833,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
-"cik" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/teleporter)
 "cil" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -52244,6 +52236,12 @@
 	dir = 5
 	},
 /area/station/hydroponics/bay)
+"fBC" = (
+/obj/decoration/toiletholder{
+	desc = "An extremely expensive brand of toilet paper made from.... Real paper? Not even Command can afford to buy this pristine toilet paper."
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/solar/south)
 "fCj" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/machinery/atmospherics/binary/valve/notify_admins{
@@ -55500,6 +55498,13 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"iec" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/gravity_tether/multi_area/ai_sat,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai)
 "ieu" = (
 /obj/machinery/computer3/generic/communications,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -59021,16 +59026,6 @@
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"kSL" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/disk_rack/ai/prefilled,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/ai)
 "kSZ" = (
 /obj/table/wood/auto,
 /obj/item/clothing/head/apprentice{
@@ -62234,21 +62229,6 @@
 	dir = 9
 	},
 /area/station/catwalk/north)
-"nuC" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
-	pixel_x = -2;
-	pixel_y = 9
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "nvi" = (
 /obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/reagent_containers/food/drinks/bottle/soda,
@@ -64881,6 +64861,16 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/research_outpost)
+"pJn" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai)
 "pJo" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -65028,6 +65018,21 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
+"pOB" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/storage/goodybag,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "pOG" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -66637,6 +66642,14 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/primary/southwest)
+"qUa" = (
+/obj/item/storage/toilet{
+	dir = 8;
+	interesting = "This toilet is immaculately clean. Like, suspiciously clean."
+	},
+/obj/landmark/start/job/medical_director,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/south)
 "qUH" = (
 /obj/machinery/vending/medical_public,
 /obj/disposalpipe/segment/transport,
@@ -69297,18 +69310,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"tkB" = (
-/obj/item/storage/toilet{
-	dir = 8;
-	interesting = "This toilet is immaculately clean. Like, suspiciously clean."
-	},
-/obj/decoration/toiletholder{
-	interesting = "An extremely expensive brand of toilet paper made from....real paper? Not even Command can afford to buy this pristine toilet paper.";
-	pixel_y = -6
-	},
-/obj/landmark/start/job/medical_director,
-/turf/simulated/floor/plating,
-/area/station/maintenance/solar/south)
 "tlk" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
@@ -70354,6 +70355,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
+"tVT" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/teleporter)
 "tWh" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -71178,13 +71183,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
-"uLU" = (
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/gravity_tether/multi_area/ai_sat,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/ai)
 "uMd" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -106192,7 +106190,7 @@ aaI
 aaa
 aaa
 chg
-cik
+tVT
 cjx
 ckW
 iFq
@@ -107737,8 +107735,8 @@ daK
 cMt
 dcH
 lEO
-ddv
-tkB
+fBC
+qUa
 ddv
 deU
 oDm
@@ -109727,7 +109725,7 @@ aaa
 adf
 adD
 hsx
-nuC
+pOB
 afW
 biF
 bYU
@@ -133577,8 +133575,8 @@ aHr
 vWN
 abf
 aeE
-uLU
-kSL
+iec
+pJn
 aeB
 tql
 abu

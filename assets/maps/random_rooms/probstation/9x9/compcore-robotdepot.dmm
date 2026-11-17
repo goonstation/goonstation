@@ -9,6 +9,17 @@
 /obj/item/circuitboard/robotics,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"b" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/guardbot_guide,
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/clothing/suit/robuddy,
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "c" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31,11 +42,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"e" = (
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/disk_rack/ai/prefilled,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "f" = (
 /obj/storage/crate{
 	name = "Spare Parts"
@@ -330,19 +336,6 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
-"J" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/guardbot_guide,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/item/paper/book/from_file/dwainedummies{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/clothing/suit/robuddy,
-/turf/simulated/floor,
-/area/station/science/bot_storage)
 "K" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -353,6 +346,11 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"L" = (
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "M" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -498,7 +496,7 @@ W
 (2,1,1) = {"
 W
 p
-e
+L
 t
 X
 u
@@ -558,7 +556,7 @@ s
 Z
 C
 d
-J
+b
 m
 "}
 (8,1,1) = {"

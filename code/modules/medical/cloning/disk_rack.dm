@@ -1,4 +1,3 @@
-#define MAX_DISKS 8
 TYPEINFO(/obj/machinery/disk_rack)
 	mats = list("metal" = 30, "conductive" = 10)
 
@@ -12,8 +11,8 @@ TYPEINFO(/obj/machinery/disk_rack)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	requires_power = FALSE //we handle our own power stuff
-	var/list/obj/item/disk/data/disks[MAX_DISKS]
-	var/list/active_lights[MAX_DISKS]
+	var/list/obj/item/disk/data/disks[DISK::RACK::MAX_DISKS]
+	var/list/active_lights[DISK::RACK::MAX_DISKS]
 	var/accepted_disk_type = /obj/item/disk/data/floppy
 	var/disk_overlay_state = "disk_overlay"
 
@@ -23,12 +22,12 @@ TYPEINFO(/obj/machinery/disk_rack)
 
 /obj/machinery/disk_rack/was_deconstructed_to_frame(mob/user)
 	. = ..()
-	for (var/i in 1 to MAX_DISKS)
+	for (var/i in 1 to DISK::RACK::MAX_DISKS)
 		if (disks[i])
 			src.remove_disk(i)
 
 /obj/machinery/disk_rack/update_icon(...)
-	for (var/i in 1 to MAX_DISKS)
+	for (var/i in 1 to DISK::RACK::MAX_DISKS)
 		var/obj/item/disk/data/disk = src.disks[i]
 		if (!disk)
 			src.ClearSpecificOverlays("disks_[i]")
@@ -45,8 +44,8 @@ TYPEINFO(/obj/machinery/disk_rack)
 		ui.open()
 
 /obj/machinery/disk_rack/ui_data(mob/user)
-	var/list/disk_data[MAX_DISKS]
-	for (var/i in 1 to MAX_DISKS)
+	var/list/disk_data[DISK::RACK::MAX_DISKS]
+	for (var/i in 1 to DISK::RACK::MAX_DISKS)
 		var/obj/item/disk/data/disk = src.disks[i]
 		if (disk)
 			disk_data[i] = list("name" = disk.disk_name(), "color" = disk.disk_color)
@@ -62,7 +61,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 		return .
 	if (action == "diskAction")
 		var/index = text2num_safe(params["dmIndex"])
-		if (index < 1 || index > MAX_DISKS) //nu
+		if (index < 1 || index > DISK::RACK::MAX_DISKS) //nu
 			return FALSE
 		if (BOUNDS_DIST(ui.user, src) || isintangible(ui.user))
 			return FALSE
@@ -87,15 +86,17 @@ TYPEINFO(/obj/machinery/disk_rack)
 	if (!istype(disk, src.accepted_disk_type))
 		if (user)
 			boutput(user, SPAN_ALERT("This disk rack cannot accept a disk of this size!"))
+		return FALSE
 	src.disks[index] = disk
 	user?.drop_item(disk)
 	disk.set_loc(src)
 	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 	src.UpdateIcon()
+	return TRUE
 
 /obj/machinery/disk_rack/attackby(obj/item/disk/data/disk, mob/user)
 	if (istype(disk, src.accepted_disk_type))
-		for (var/i in 1 to MAX_DISKS)
+		for (var/i in 1 to DISK::RACK::MAX_DISKS)
 			if (src.disks[i])
 				continue
 			src.insert_disk(i, disk, user)
@@ -109,7 +110,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	icon_state = "clone_rack_med"
 	var/emagged = FALSE
 	var/net_id
-	var/list/last_heartbeats[MAX_DISKS]
+	var/list/last_heartbeats[DISK::RACK::MAX_DISKS]
 	/// If we were a concerned mother, how long would our daughter have to have NOT TEXTED for us to assume they are dead?
 	var/patience = 10 SECONDS
 
@@ -122,7 +123,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 /obj/machinery/disk_rack/clone/receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 	if(signal.data["sender"] && signal.data["command"] == "heartbeat")
 		var/uid = signal.data["bio_id"]
-		for (var/i in 1 to MAX_DISKS)
+		for (var/i in 1 to DISK::RACK::MAX_DISKS)
 			var/obj/item/disk/data/floppy/disk = src.disks[i]
 			if (!disk)
 				continue
@@ -163,13 +164,13 @@ TYPEINFO(/obj/machinery/disk_rack)
 /obj/machinery/disk_rack/clone/power_change()
 	..()
 	if (status & NOPOWER)
-		for (var/i in 1 to MAX_DISKS)
+		for (var/i in 1 to DISK::RACK::MAX_DISKS)
 			src.ClearSpecificOverlays(LIGHT_KEY)
 
 /obj/machinery/disk_rack/clone/proc/update_lights()
 	if (status & NOPOWER)
 		return
-	for (var/i in 1 to MAX_DISKS)
+	for (var/i in 1 to DISK::RACK::MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
 		if (!disk || !(src.cloneable_disk(i) || src.emagged && prob(20)))
 			src.active_lights[i] = FALSE

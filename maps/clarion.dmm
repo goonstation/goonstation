@@ -11264,18 +11264,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"dtB" = (
-/obj/table/auto,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
-	pixel_x = -2;
-	pixel_y = 9
-	},
-/obj/item/clothing/mask/clown_nose,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown)
 "dtY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12860,6 +12848,18 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"eyQ" = (
+/obj/table/auto,
+/obj/item/storage/goodybag,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown)
 "ezb" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -13562,6 +13562,14 @@
 /obj/storage/closet/radiation,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"eZS" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "fal" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16368,6 +16376,17 @@
 	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
+"gOC" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/landmark/gps_waypoint,
+/obj/item/device/radio/beacon,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "gPb" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor{
@@ -17574,19 +17593,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"hIK" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/obj/machinery/alarm/directional/west,
-/turf/simulated/floor/caution/white{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "hIO" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -23197,6 +23203,13 @@
 	dir = 10
 	},
 /area/station/science/chemistry)
+"lCD" = (
+/obj/machinery/alarm/directional/west,
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/caution/white{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "lDg" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -26319,14 +26332,6 @@
 	icon_state = "Stairs_wide"
 	},
 /area/station/hangar/escape)
-"nFv" = (
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/machinery/disk_rack/ai/prefilled,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "nGj" = (
 /obj/machinery/alarm/directional/west,
 /obj/machinery/power/nuclear/reactor_control,
@@ -28120,13 +28125,6 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
-"oRN" = (
-/obj/decoration/toiletholder{
-	dir = 8;
-	pixel_x = 32
-	},
-/turf/simulated/floor/sanitary/blue,
-/area/station/bridge/execrestroom)
 "oSr" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -38524,17 +38522,6 @@
 	dir = 4
 	},
 /area/station/engine/substation/west)
-"vRm" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/landmark/gps_waypoint,
-/obj/item/device/radio/beacon,
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "vRz" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -41116,6 +41103,13 @@
 	},
 /turf/space,
 /area/space)
+"xEz" = (
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 6
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/bridge/execrestroom)
 "xEU" = (
 /obj/disposalpipe/segment,
 /obj/machinery/conveyor/EW{
@@ -69093,7 +69087,7 @@ axQ
 azX
 aAP
 rFd
-dtB
+eyQ
 aCR
 hRm
 bkJ
@@ -78481,7 +78475,7 @@ bkl
 flL
 qAY
 nvz
-nFv
+eZS
 mFs
 tXI
 iaB
@@ -79085,7 +79079,7 @@ bkl
 dsV
 pGS
 aCW
-vRm
+gOC
 vuX
 psg
 itm
@@ -84523,7 +84517,7 @@ bJM
 mTN
 lyt
 mtl
-oRN
+xEz
 xXx
 pRS
 nfm
@@ -86927,7 +86921,7 @@ aQT
 iBE
 fRA
 vvL
-hIK
+lCD
 nvq
 aZD
 baL

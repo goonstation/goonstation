@@ -2154,24 +2154,6 @@
 /obj/decal/cleanable/rust,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
-"alJ" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/radio/headset/multifreq,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/machinery/light_switch/directional/north,
-/turf/simulated/floor/purple/checker,
-/area/station/science/teleporter)
 "alM" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice{
@@ -8014,6 +7996,14 @@
 	dir = 6
 	},
 /area/station/storage/primary)
+"bhy" = (
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/disk_rack/ai/prefilled,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "bie" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -8898,6 +8888,32 @@
 	dir = 5
 	},
 /area/station/medical/research)
+"cES" = (
+/obj/rack,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/device/radio/headset/multifreq,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/machinery/light_switch/directional/north,
+/obj/item/device/gps{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/device/gps{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/space/emerg,
+/obj/item/camera,
+/turf/simulated/floor/purple/checker,
+/area/station/science/teleporter)
 "cFx" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -9284,18 +9300,6 @@
 	dir = 8
 	},
 /area/station/science/artifact)
-"dex" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/item/device/radio/intercom/AI{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "dfp" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -10309,6 +10313,27 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
+"ePb" = (
+/obj/item/stamp/clown,
+/obj/table/folding,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/instrument/bikehorn,
+/obj/item/card_group/tarot,
+/obj/machinery/light_switch/directional/west,
+/obj/item/chair/folded{
+	layer = 2;
+	pixel_y = 29
+	},
+/obj/item/toy/sword,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/turf/simulated/floor/plating/random{
+	wet = 2
+	},
+/area/station/crew_quarters/clown)
 "ePd" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/atmospherics/unary/cryo_cell,
@@ -11111,28 +11136,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
-"fTa" = (
-/obj/rack,
-/obj/item/device/gps{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/device/gps{
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/obj/item/device/gps{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/device/gps{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/light,
-/turf/simulated/floor/purple/checker,
-/area/station/science/teleporter)
 "fVd" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
@@ -12212,22 +12215,6 @@
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/purple,
 /area/research_outpost/hangar)
-"hTZ" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/radio/headset/multifreq,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/science/teleporter)
 "hUo" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -12902,14 +12889,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hallway/primary/north)
-"iML" = (
-/obj/machinery/light_switch/directional/north,
-/obj/machinery/disk_rack/ai/prefilled,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "iNe" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 2;
@@ -13436,6 +13415,18 @@
 "jrG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/primary)
+"jrH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "jsd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16946,6 +16937,30 @@
 	dir = 1
 	},
 /area/station/hangar/engine)
+"oip" = (
+/obj/rack,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/device/radio/headset/multifreq,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/device/gps{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/device/gps{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/space/emerg,
+/obj/item/camera,
+/turf/simulated/floor/purple/checker,
+/area/station/science/teleporter)
 "oiH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -18344,6 +18359,10 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
+"qOt" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/purple/checker,
+/area/station/science/teleporter)
 "qPw" = (
 /obj/lattice{
 	dir = 4;
@@ -18728,27 +18747,6 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
-"rBj" = (
-/obj/item/stamp/clown,
-/obj/table/folding,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/instrument/bikehorn,
-/obj/item/card_group/tarot,
-/obj/machinery/light_switch/directional/west,
-/obj/item/chair/folded{
-	layer = 2;
-	pixel_y = 29
-	},
-/obj/item/toy/sword,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/turf/simulated/floor/plating/random{
-	wet = 2
-	},
-/area/station/crew_quarters/clown)
 "rBn" = (
 /obj/machinery/computer/camera_viewer{
 	dir = 8
@@ -19486,10 +19484,6 @@
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor/purple/side,
 /area/research_outpost/hangar)
-"sFU" = (
-/obj/storage/closet/port_a_sci,
-/turf/simulated/floor/purple/checker,
-/area/station/science/teleporter)
 "sGB" = (
 /obj/cable/yellow{
 	icon_state = "2-8"
@@ -20077,18 +20071,6 @@
 	dir = 4
 	},
 /area/station/security/main)
-"twz" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "txb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20379,6 +20361,18 @@
 /obj/rack,
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"tMc" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "tMA" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -20636,6 +20630,13 @@
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/engine/core/thermoelectric)
+"ugd" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/light,
+/obj/storage/closet/port_a_sci,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/purple/checker,
+/area/station/science/teleporter)
 "uhq" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -64183,9 +64184,9 @@ atB
 lqA
 atB
 igd
-iML
-dex
-twz
+bhy
+jrH
+tMc
 jTy
 fjY
 igd
@@ -64197,7 +64198,7 @@ anv
 aPq
 nDi
 aGG
-alJ
+cES
 fIx
 icY
 pwd
@@ -64463,7 +64464,7 @@ aaa
 aaa
 ayn
 azF
-rBj
+ePb
 cFA
 aSJ
 aaa
@@ -64499,7 +64500,7 @@ jKN
 aWh
 xsU
 aGG
-hTZ
+oip
 dIJ
 qnU
 nKI
@@ -64802,9 +64803,9 @@ wBL
 wIF
 aDb
 lxx
-sFU
+qOt
 eQw
-fTa
+ugd
 aDa
 eIp
 kTx

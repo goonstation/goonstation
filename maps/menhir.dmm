@@ -1232,11 +1232,6 @@
 /area/station/hallway/secondary/west{
 	name = "West Shuttle Concourse"
 	})
-"aIR" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
-/turf/simulated/floor/purple,
-/area/station/science/teleporter)
 "aJd" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/tea{
@@ -1997,23 +1992,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
-"bcA" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit{
-	pixel_y = 4;
-	pixel_x = 3
-	},
-/obj/item/extinguisher{
-	pixel_y = 6;
-	pixel_x = -11
-	},
-/obj/item/device/radio/intercom/science{
-	dir = 8
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 6
-	},
-/area/station/science/teleporter)
 "bcE" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/north,
@@ -2892,6 +2870,14 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/qm)
+"bvR" = (
+/obj/machinery/computer/telescope{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "bwd" = (
 /obj/machinery/sink/slim{
 	dir = 8;
@@ -4448,6 +4434,24 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"ckY" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/trackimp_kit{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/obj/item/extinguisher{
+	pixel_y = 6;
+	pixel_x = -11
+	},
+/obj/item/device/radio/intercom/science{
+	dir = 8
+	},
+/obj/item/storage/firstaid/regular,
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
+/area/station/science/teleporter)
 "clb" = (
 /obj/lattice{
 	dir = 10;
@@ -4488,20 +4492,6 @@
 /obj/item/storage/wall/random,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersC)
-"clH" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/radio/headset/multifreq,
-/turf/simulated/floor/purplewhite{
-	dir = 10
-	},
-/area/station/science/teleporter)
 "clS" = (
 /obj/machinery/computer/television,
 /obj/item/clothing/head/fedora{
@@ -13539,6 +13529,10 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/southwest)
+"hbB" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
 "hbJ" = (
 /obj/disposalpipe/segment/transport{
 	dir = 8;
@@ -18026,14 +18020,6 @@
 	dir = 8
 	},
 /area/station/science/chemistry)
-"jkJ" = (
-/obj/item/storage/box/tapebox{
-	pixel_x = -26;
-	pixel_y = 9
-	},
-/obj/machinery/disk_rack/ai/prefilled,
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "jkX" = (
 /obj/rack,
 /obj/item/clothing/suit/hazard/fire,
@@ -20207,13 +20193,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/industrial,
 /area/station/hangar/sec)
-"krG" = (
-/obj/storage/crate/adventure,
-/obj/machinery/light_switch/directional/east,
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
-/area/station/science/teleporter)
 "krT" = (
 /obj/decal/tile_edge/floorguide/arrow_w,
 /obj/decal/tile_edge/floorguide/mining{
@@ -20573,6 +20552,21 @@
 "kBc" = (
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"kBh" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/diskbox{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/greenblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "kBl" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -21505,6 +21499,30 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"kXR" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/peripheral/videocard{
+	pixel_x = -5;
+	pixel_y = 16
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "kXX" = (
 /obj/stool/chair/comfy/wheelchair{
 	dir = 8
@@ -21755,21 +21773,6 @@
 /obj/machinery/camera/directional/south,
 /turf/simulated/floor/black,
 /area/station/turret_protected/incursion)
-"let" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/diskbox{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/greenblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
 "lfl" = (
 /obj/machinery/power/apc/autoname_east{
 	areastring = "East Primary Hallway";
@@ -22308,6 +22311,16 @@
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/purpleblack{
 	dir = 1
+	},
+/area/station/science/teleporter)
+"lsB" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/head/helmet/camera/telesci,
+/obj/item/device/camera_viewer/telesci{
+	pixel_y = 16
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 10
 	},
 /area/station/science/teleporter)
 "lsC" = (
@@ -26151,19 +26164,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"nmT" = (
-/obj/decoration/toiletholder{
-	dir = 8;
-	pixel_x = 32
-	},
-/obj/item/storage/toilet,
-/obj/landmark/bill_spawn,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/sanitary,
-/area/station/hallway/primary/east)
 "nng" = (
 /obj/mesh/catwalk,
 /obj/machinery/light_switch/directional/west,
@@ -30416,15 +30416,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/research_outpost/limpet)
-"ptt" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "ptu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31377,17 +31368,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quartersA)
-"pSb" = (
-/obj/table/reinforced/auto,
-/obj/item/device/camera_viewer/telesci{
-	pixel_y = 16
-	},
-/obj/item/clothing/head/helmet/camera/telesci,
-/obj/machinery/firealarm/directional/west,
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "pSd" = (
 /obj/table/wood/round/auto,
 /obj/machinery/power/apc/autoname_east,
@@ -31808,6 +31788,16 @@
 	dir = 6
 	},
 /area/station/bridge)
+"qdF" = (
+/obj/machinery/firealarm/directional/west,
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "qdU" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -32732,6 +32722,22 @@
 	},
 /turf/space,
 /area/space)
+"qyD" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_y = 9;
+	pixel_x = 7
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "qyY" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -34062,6 +34068,19 @@
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
 	})
+"rlo" = (
+/obj/item/storage/toilet,
+/obj/landmark/bill_spawn,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 5
+	},
+/turf/simulated/floor/sanitary,
+/area/station/hallway/primary/east)
 "rlr" = (
 /obj/machinery/light{
 	dir = 8;
@@ -34282,6 +34301,14 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
+"rpQ" = (
+/obj/item/storage/box/tapebox{
+	pixel_x = -26;
+	pixel_y = 9
+	},
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "rpW" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/caution/side{
@@ -34303,30 +34330,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
-	})
-"rqs" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/peripheral/videocard{
-	pixel_x = -5;
-	pixel_y = 16
-	},
-/obj/item/storage/goodybag{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
 	})
 "rqG" = (
 /obj/disposalpipe/segment/brig{
@@ -34885,6 +34888,13 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"rEo" = (
+/obj/machinery/light_switch/directional/east,
+/obj/storage/crate/adventure,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/teleporter)
 "rEx" = (
 /obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
@@ -39952,18 +39962,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
-"uhf" = (
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line2"
-	},
-/obj/storage/crate/furnacefuel{
-	spawn_contents = list(/obj/item/raw_material/char = 4)
-	},
-/turf/simulated/floor/caution/corner/misc{
-	dir = 6
-	},
-/area/research_outpost/limpet/maint)
 "uhi" = (
 /obj/machinery/power/pt_laser,
 /obj/machinery/light,
@@ -46832,6 +46830,18 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/chapel/sanctuary)
+"xuV" = (
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/storage/crate/furnacefuel{
+	spawn_contents = list(/obj/item/raw_material/char=4)
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/research_outpost/limpet/maint)
 "xvi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -48417,22 +48427,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/caution,
 /area/station/mining/staff_room)
-"yhb" = (
-/obj/table/reinforced/auto,
-/obj/item/disk/data/floppy/read_only/communications{
-	pixel_x = -6;
-	pixel_y = 1
-	},
-/obj/item/disk/data/floppy/read_only/network_progs{
-	pixel_y = 9;
-	pixel_x = 7
-	},
-/obj/item/paper/book/from_file/guardbot_guide{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "yhB" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -75398,7 +75392,7 @@ sEf
 sEf
 cIX
 beS
-uhf
+xuV
 unv
 dmy
 jel
@@ -92812,9 +92806,9 @@ qUS
 vpK
 kak
 awj
-ptt
-pSb
-clH
+bvR
+qdF
+lsB
 ujP
 lYJ
 oUB
@@ -93414,7 +93408,7 @@ cLp
 fNG
 fZM
 vpK
-aIR
+hbB
 nzb
 sim
 eqv
@@ -93428,7 +93422,7 @@ oSO
 iod
 wso
 fvO
-let
+kBh
 sNg
 bXu
 weo
@@ -93730,7 +93724,7 @@ soG
 fVL
 ott
 dDq
-jkJ
+rpQ
 sNg
 jbL
 uYH
@@ -94032,7 +94026,7 @@ gKT
 dDq
 gFF
 dDq
-yhb
+qyD
 sNg
 iBT
 jCd
@@ -94323,8 +94317,8 @@ acI
 abB
 lQz
 uyl
-krG
-bcA
+rEo
+ckY
 ujP
 iTH
 qft
@@ -107883,7 +107877,7 @@ qfg
 qfg
 qfg
 qfg
-nmT
+rlo
 bwd
 dCn
 cKX
@@ -108766,7 +108760,7 @@ hDr
 hDr
 dIO
 lsG
-rqs
+kXR
 fSi
 nTB
 gHW

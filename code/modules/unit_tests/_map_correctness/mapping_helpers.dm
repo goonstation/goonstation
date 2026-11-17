@@ -10,7 +10,7 @@
 			if ((mapping_helper == other) || (mapping_helper.type != other.type))
 				continue
 
-			. += "([T.x], [T.y], [T.z]) in [global.loaded_prefab_path ? "prefab [global.loaded_prefab_path]" : "[T.loc]"]"
+			. += CI.format_location(T)
 			break
 
 

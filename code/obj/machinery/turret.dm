@@ -69,6 +69,9 @@
 	if(istype(TP))
 		TP.turret_list -= src
 	STOP_TRACKING
+	QDEL_NULL(src.void)
+	QDEL_NULL(src.cover)
+	QDEL_NULL(src.base)
 	..()
 
 /obj/machinery/turret/proc/isPopping()
@@ -120,12 +123,12 @@
 	if(lastfired && world.time - lastfired < shot_delay)
 		return
 
-	if (src.cover==null)
+	if (isnull(src.cover))
 		src.cover = new /obj/machinery/turretcover(src.loc)
-	if (src.base==null)
+	if (isnull(src.base))
 		src.base = new /obj/machinery/turretbase(src.loc)
 	var/turf/T = get_turf(src)
-	if (isfloor(T))
+	if (isnull(src.void) && isfloor(T))
 		src.void = new /obj/decal/turretvoid(src.loc)
 
 	if(GET_COOLDOWN(src, "emp_timer"))
@@ -315,8 +318,6 @@
 		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay")
 		src.icon_state = "Turret_destroyed" //same deal here
 		SPAWN(0.6 SECONDS)
-			qdel(cover)
-			qdel(base)
 			qdel(src)
 
 /*

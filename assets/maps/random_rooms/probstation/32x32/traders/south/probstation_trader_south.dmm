@@ -48,6 +48,7 @@
 /obj/machinery/computer/stockexchange{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "jg" = (
@@ -188,6 +189,7 @@
 /obj/machinery/light/incandescent/small{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor,
 /area/station/hallway/secondary/northwest)
 "IO" = (

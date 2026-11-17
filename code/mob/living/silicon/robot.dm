@@ -2720,10 +2720,13 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		if (part == "l_leg" || update_all)
 			if (src.part_leg_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
+				var/leg_layer = MOB_LIMB_LAYER
+				if (src.part_leg_l.kind_of_limb & LIMB_TREADS)
+					leg_layer = MOB_HAND_LAYER1 // Treads hide jumpsuit legs
 				if (src.part_leg_l.slot == "leg_both")
-					src.i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString, layer=leg_layer)
 				else
-					src.i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString, layer=leg_layer)
 				if (color_matrix)
 					src.internal_paint_part(src.i_leg_l, color_matrix)
 			else
@@ -2731,10 +2734,13 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		if (part == "r_leg" || update_all)
 			if (src.part_leg_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
+				var/leg_layer = MOB_LIMB_LAYER
+				if (src.part_leg_l.kind_of_limb & LIMB_TREADS)
+					leg_layer = MOB_HAND_LAYER1 // Treads hide jumpsuit legs
 				if (src.part_leg_r.slot == "leg_both")
-					src.i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString, layer=leg_layer)
 				else
-					src.i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString, layer=leg_layer)
 				if (color_matrix)
 					src.internal_paint_part(src.i_leg_r, color_matrix)
 			else
@@ -2743,11 +2749,11 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (part == "l_arm" || update_all)
 			if (src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_l.slot == "arm_both")
-					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
-					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
+					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=src.part_arm_l.arm_layer)
+					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=src.part_arm_l.hand_layer)
 				else
-					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
-					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
+					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=src.part_arm_l.arm_layer)
+					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=src.part_arm_l.hand_layer)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_l, color_matrix)
 					src.internal_paint_part(src.i_hand_l, color_matrix)
@@ -2758,11 +2764,11 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (part == "r_arm" || update_all)
 			if (src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_r.slot == "arm_both")
-					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
-					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
+					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=src.part_arm_r.arm_layer)
+					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=src.part_arm_r.hand_layer)
 				else
-					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
-					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
+					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=src.part_arm_r.arm_layer)
+					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=src.part_arm_r.hand_layer)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_r, color_matrix)
 					src.internal_paint_part(src.i_hand_r, color_matrix)

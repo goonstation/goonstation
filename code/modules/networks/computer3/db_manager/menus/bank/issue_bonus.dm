@@ -170,4 +170,4 @@
 		if (!cached_job_names[record["rank"]])
 			continue
 
-		. += global.data_core.bank.find_record("id", record["id"])
+		. += global.data_core.get_bank_record(id = record["id"])

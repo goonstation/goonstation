@@ -14,15 +14,16 @@
 	. = ..()
 
 	src.general = new(list("id", "name"), /datum/db_record/personnel/general)
-	src.medical = new(list("id", "name"), /datum/db_record/personnel/medical)
-	src.security = new(list("id", "name"), /datum/db_record/personnel/security)
-	src.bank = new(list("id", "name"), /datum/db_record/personnel/bank)
-	src.disease = new(list("id", "name"), /datum/db_record/disease)
-	src.tickets = new(list("id", "name"), /datum/db_record/citation/ticket)
-	src.fines = new(list("id", "name", "status"), /datum/db_record/citation/fine)
-	src.arrests = new(list("id", "name", "status"), /datum/db_record/citation/arrest)
+	src.medical = new(list("id"), /datum/db_record/personnel/medical)
+	src.security = new(list("id"), /datum/db_record/personnel/security)
+	src.bank = new(list("id"), /datum/db_record/personnel/bank)
 
+	src.disease = new(list("id", "name"), /datum/db_record/disease)
 	src.populate_disease_database()
+
+	src.tickets = new(list("id", "target"), /datum/db_record/citation/ticket)
+	src.fines = new(list("id", "target", "status"), /datum/db_record/citation/fine)
+	src.arrests = new(list("id", "target", "status"), /datum/db_record/citation/arrest)
 
 /datum/datacore/proc/addManifest(mob/living/carbon/human/H, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")
 	if (!H?.mind)
@@ -67,12 +68,91 @@
 
 	groups.fields += "[J.email_group]:[username],"
 
-/datum/datacore/proc/get_open_arrests(target)
+/datum/datacore/proc/get_general_record(name, id, ensure_record = FALSE)
+	RETURN_TYPE(/datum/db_record/personnel/general)
+
+	var/datum/db_record/personnel/general/general = null
+
+	if (id)
+		general = src.general.find_record("id", id)
+	else
+		general = src.general.find_record("name", name)
+
+	if (ensure_record && !general)
+		general = new()
+		global.data_core.general.add_record(general)
+
+	return general
+
+/datum/datacore/proc/get_security_record(name, id, ensure_record = FALSE)
+	RETURN_TYPE(/datum/db_record/personnel/security)
+
+	var/datum/db_record/personnel/general/general = src.get_general_record(name, id, ensure_record)
+	var/datum/db_record/personnel/security/security = null
+
+	if (id)
+		security = src.security.find_record("id", id)
+	else if (general)
+		security = src.security.find_record("id", general["id"])
+
+	if (ensure_record && !security)
+		security = new(general)
+		global.data_core.security.add_record(security)
+
+	return security
+
+/datum/datacore/proc/get_medical_record(name, id, ensure_record = FALSE)
+	RETURN_TYPE(/datum/db_record/personnel/medical)
+
+	var/datum/db_record/personnel/general/general = src.get_general_record(name, id, ensure_record)
+	var/datum/db_record/personnel/medical/medical = null
+
+	if (id)
+		medical = src.medical.find_record("id", id)
+	else if (general)
+		medical = src.medical.find_record("id", general["id"])
+
+	if (ensure_record && !medical)
+		medical = new(medical)
+		global.data_core.medical.add_record(medical)
+
+	return medical
+
+/datum/datacore/proc/get_bank_record(name, id, ensure_record = FALSE)
+	RETURN_TYPE(/datum/db_record/personnel/bank)
+
+	var/datum/db_record/personnel/general/general = src.get_general_record(name, id, ensure_record)
+	var/datum/db_record/personnel/bank/bank = null
+
+	if (id)
+		bank = src.bank.find_record("id", id)
+	else if (general)
+		bank = src.bank.find_record("id", general["id"])
+
+	if (ensure_record && !bank)
+		bank = new(bank)
+		global.data_core.bank.add_record(bank)
+
+	return bank
+
+/datum/datacore/proc/get_random_general_record()
+	RETURN_TYPE(/datum/db_record/personnel/general)
+	if (length(src.general.records))
+		return pick(src.general.records)
+
+/datum/datacore/proc/get_open_arrests(name, id)
 	RETURN_TYPE(/list/datum/db_record/citation/arrest)
 	. = list()
 
+	if (id)
+		var/datum/db_record/personnel/general/general = src.get_general_record(id = id)
+		if (!istype(general))
+			return
+
+		name = general["name"]
+
 	for (var/datum/db_record/citation/arrest/arrest as anything in src.arrests.find_records("status", "OPEN"))
-		if (arrest["target"] == target)
+		if (arrest["target"] == name)
 			. += arrest
 
 /datum/datacore/proc/forensic_search(search_input)
@@ -251,7 +331,7 @@
 	var/list/section_unassigned = list()
 	var/list/section_cryo = list()
 
-	for (var/datum/db_record/record as anything in global.data_core.general.records)
+	for (var/datum/db_record/personnel/general/record as anything in global.data_core.general.records)
 		if (record["p_stat"] == "In Cryogenic Storage")
 			section_cryo += "<i>- [record["name"]]</i><br>"
 			continue

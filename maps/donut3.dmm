@@ -7205,6 +7205,19 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
+"chO" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
+/obj/item/storage/goodybag{
+	pixel_y = -6
+	},
+/obj/item/peripheral/videocard{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "chW" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker{
@@ -14949,6 +14962,15 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
+"eDR" = (
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_y = 28
+	},
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/purple/checker{
+	dir = 1
+	},
+/area/station/science/teleporter)
 "eDW" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -24865,19 +24887,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
-"hHm" = (
-/obj/table/reinforced/auto,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
-/obj/item/storage/goodybag{
-	pixel_y = -6
-	},
-/obj/item/peripheral/videocard{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/clothing/mask/clown_nose,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "hHo" = (
 /obj/decal/stripe_caution,
 /obj/machinery/clonepod,
@@ -43258,6 +43267,12 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor,
 /area/station/storage/tools)
+"nxl" = (
+/obj/machinery/light/incandescent/netural,
+/obj/blind_switch/directional/west,
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit/purple,
+/area/station/crew_quarters/hor)
 "nxu" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/wreckage{
@@ -51256,14 +51271,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
-"pTF" = (
-/obj/decal/poster/wallsign/poster_sol{
-	pixel_y = 28
-	},
-/turf/simulated/floor/purple/checker{
-	dir = 1
-	},
-/area/station/science/teleporter)
 "pTL" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -57828,12 +57835,6 @@
 /obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
-"rXe" = (
-/obj/machinery/light/incandescent/netural,
-/obj/blind_switch/directional/west,
-/obj/machinery/disk_rack/ai/prefilled,
-/turf/simulated/floor/circuit/purple,
-/area/station/crew_quarters/hor)
 "rXi" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools/one_or_zero,
@@ -126236,7 +126237,7 @@ tJZ
 hpM
 mZl
 sTE
-pTF
+eDR
 vTy
 eKX
 mer
@@ -126254,7 +126255,7 @@ gVj
 nsV
 tjK
 ftV
-rXe
+nxl
 hmI
 hmI
 rdj
@@ -152038,7 +152039,7 @@ bKc
 diY
 ppM
 dOB
-hHm
+chO
 eSa
 rFB
 jhP

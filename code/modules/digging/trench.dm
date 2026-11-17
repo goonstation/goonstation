@@ -25,6 +25,7 @@
 	var/old_type //! turf type before digging the trench
 	var/can_fill = TRUE //! Can this trench be filled with a shovel
 	var/base_icon_state = "trench" //! icon_state style prefix
+	var/spawn_catwalk = null //! Typepath of the catwalk to spawn
 
 	unfiilable
 		can_fill = FALSE
@@ -37,6 +38,9 @@
 
 		src.buried_storage.move_storage_contents_to_turf()
 		src.update_trench_overlay()
+
+		if (src.spawn_catwalk)
+			new src.spawn_catwalk(src)
 
 	Del()
 		src.buried_storage.move_turf_contents_to_storage()
@@ -167,6 +171,7 @@
 	var/old_type
 	var/can_fill = TRUE
 	var/base_icon_state = "trench"
+	var/spawn_catwalk = null //! Typepath of the catwalk to spawn
 
 	unfillable
 		can_fill = FALSE
@@ -179,6 +184,9 @@
 
 		src.buried_storage.move_storage_contents_to_turf()
 		src.update_trench_overlay()
+
+		if (src.spawn_catwalk)
+			new src.spawn_catwalk(src)
 
 	Del()
 		src.buried_storage.move_turf_contents_to_storage()

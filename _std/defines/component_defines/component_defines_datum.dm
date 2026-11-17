@@ -52,3 +52,7 @@
 	#define COMSIG_REAGENTS_ANALYZED "reagents_analyzed"
 	/// When this reagent changes stops/starts processing reactions (reagents)
 	#define COMSIG_REAGENTS_PROCESSING_REACTIONS_CHANGE "reagents_processing_reactions_change"
+
+// ---- Record Database Signals ----
+	/// When a record field datum's value is updated. (field, old_value, new_value)
+	#define COMSIG_FIELD_VALUE_CHANGED "field_value_changed"

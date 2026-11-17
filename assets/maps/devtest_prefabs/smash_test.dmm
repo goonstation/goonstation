@@ -1,0 +1,630 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ap" = (
+/obj/machinery/vending/fortune,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"aB" = (
+/obj/machinery/disposal/brig,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"aK" = (
+/obj/table/auto/desk,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"bC" = (
+/obj/computer3frame,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"ef" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"ek" = (
+/mob/living/carbon/human/tdummy,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"eq" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/bolter,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"fu" = (
+/obj/stool/chair/comfy,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"fy" = (
+/obj/machinery/computer/ordercomp,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"gE" = (
+/obj/structure/girder,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"im" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"jO" = (
+/obj/stool/chair/office/syndie,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"kM" = (
+/obj/machinery/computer3/generic/communications,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"mO" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"nw" = (
+/obj/stool/chair/comfy/purple,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"oA" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"oL" = (
+/obj/machinery/disposal/sci,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"oM" = (
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"oV" = (
+/obj/storage/closet,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"oZ" = (
+/obj/stool,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"rq" = (
+/obj/machinery/vending/janitor,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"sD" = (
+/obj/machinery/vending/computer3,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"uD" = (
+/obj/stool/chair/comfy/green,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"vi" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"vQ" = (
+/obj/machinery/manufacturer/mining,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"xh" = (
+/obj/machinery/manufacturer,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"yk" = (
+/turf/unsimulated/wall/setpieces/leadwindow{
+	dir = 4
+	},
+/area/station/devzone)
+"yz" = (
+/obj/computerframe,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"zi" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"AQ" = (
+/obj/table/auto,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"AW" = (
+/mob/living/critter/gorilla/gorillier,
+/mob/living/critter/gorilla/gorillier,
+/mob/living/critter/gorilla/gorillier,
+/mob/living/critter/gorilla/gorillier,
+/mob/living/critter/gorilla/gorillier,
+/mob/living/critter/gorilla/gorillier,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"BN" = (
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Cz" = (
+/obj/machinery/computer/robotics/lab,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"CF" = (
+/obj/machinery/computer/power_monitor,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"DT" = (
+/obj/storage/secure/closet,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"EE" = (
+/obj/machinery/computer3/generic/personnel_management,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"FJ" = (
+/obj/machinery/disposal,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"GE" = (
+/obj/stool/chair/office,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"GT" = (
+/obj/machinery/vending/jobclothing/security,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Iw" = (
+/obj/stool/chair/dining/wood,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"KB" = (
+/obj/machinery/disposal/botany,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"LB" = (
+/obj/stool/chair/red,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"ME" = (
+/obj/rack,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Nh" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"NP" = (
+/obj/machinery/computer3/generic/secure_data,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Op" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/station/devzone)
+"Os" = (
+/obj/machinery/computer3/generic/bank_data,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Qs" = (
+/obj/machinery/disposal/ore,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"QI" = (
+/obj/stool/chair/comfy/red,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"RG" = (
+/turf/unsimulated/wall/setpieces/leadwindow,
+/area/station/devzone)
+"SU" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"TU" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"TW" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/breaker,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"VN" = (
+/obj/machinery/computer/card,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"VO" = (
+/obj/machinery/manufacturer/personnel,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+
+(1,1,1) = {"
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+"}
+(2,1,1) = {"
+BN
+Op
+Op
+RG
+Op
+Op
+RG
+Op
+Op
+eq
+Op
+Op
+RG
+Op
+Op
+RG
+Op
+Op
+BN
+"}
+(3,1,1) = {"
+BN
+Op
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+Op
+BN
+"}
+(4,1,1) = {"
+BN
+yk
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+yk
+BN
+"}
+(5,1,1) = {"
+BN
+Op
+BN
+BN
+ek
+nw
+nw
+ME
+ME
+ME
+ME
+ME
+Iw
+Iw
+ek
+BN
+BN
+Op
+BN
+"}
+(6,1,1) = {"
+BN
+Op
+BN
+BN
+fu
+AQ
+AQ
+Nh
+Nh
+Nh
+Nh
+Nh
+mO
+mO
+LB
+BN
+BN
+Op
+BN
+"}
+(7,1,1) = {"
+BN
+yk
+BN
+BN
+fu
+AQ
+VO
+oV
+oV
+oV
+oV
+oV
+vQ
+mO
+LB
+BN
+BN
+yk
+BN
+"}
+(8,1,1) = {"
+BN
+Op
+BN
+BN
+FJ
+im
+NP
+ef
+ef
+ef
+ef
+ef
+VN
+vi
+oZ
+BN
+BN
+Op
+BN
+"}
+(9,1,1) = {"
+BN
+Op
+BN
+BN
+KB
+im
+kM
+ef
+SU
+SU
+SU
+ef
+fy
+vi
+oZ
+BN
+BN
+Op
+BN
+"}
+(10,1,1) = {"
+BN
+TW
+BN
+BN
+aB
+im
+bC
+ef
+SU
+AW
+SU
+ef
+yz
+vi
+oZ
+BN
+BN
+TW
+BN
+"}
+(11,1,1) = {"
+BN
+Op
+BN
+BN
+oL
+im
+Os
+ef
+SU
+SU
+SU
+ef
+Cz
+vi
+oZ
+BN
+BN
+Op
+BN
+"}
+(12,1,1) = {"
+BN
+Op
+BN
+BN
+Qs
+im
+EE
+ef
+ef
+ef
+ef
+ef
+CF
+vi
+oZ
+BN
+BN
+Op
+BN
+"}
+(13,1,1) = {"
+BN
+yk
+BN
+BN
+uD
+TU
+oM
+DT
+DT
+DT
+DT
+DT
+xh
+aK
+jO
+BN
+BN
+yk
+BN
+"}
+(14,1,1) = {"
+BN
+Op
+BN
+BN
+uD
+TU
+TU
+gE
+gE
+gE
+gE
+gE
+aK
+aK
+jO
+BN
+BN
+Op
+BN
+"}
+(15,1,1) = {"
+BN
+Op
+BN
+BN
+ek
+QI
+QI
+sD
+zi
+ap
+rq
+GT
+GE
+GE
+ek
+BN
+BN
+Op
+BN
+"}
+(16,1,1) = {"
+BN
+yk
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+yk
+BN
+"}
+(17,1,1) = {"
+BN
+Op
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+Op
+BN
+"}
+(18,1,1) = {"
+BN
+Op
+Op
+RG
+Op
+Op
+RG
+Op
+Op
+oA
+Op
+Op
+RG
+Op
+Op
+RG
+Op
+Op
+BN
+"}
+(19,1,1) = {"
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+BN
+"}

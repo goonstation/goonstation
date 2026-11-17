@@ -11,7 +11,8 @@
 	icon_state = "airlock_open";
 	name = "broken external airlock"
 	},
-/turf/simulated/floor/airless/plating,
+/obj/structure/woodwall/web/small/tiny,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "bw" = (
 /obj/decal/cleanable/balloon,
@@ -23,6 +24,9 @@
 "bT" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/airless/plating,
+/area/prefab/clown_nest)
+"cs" = (
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "cH" = (
 /obj/random_item_spawner/junk/one_or_zero,
@@ -36,11 +40,6 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"dI" = (
-/obj/decal/cleanable/cobweb2,
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/variableTurf/floor,
-/area/prefab/clown_nest)
 "eb" = (
 /turf/variableTurf/clear,
 /area/allowGenerate)
@@ -62,7 +61,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "fO" = (
 /obj/item/reagent_containers/food/snacks/candy/peach_ring{
@@ -79,13 +78,18 @@
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
+"gD" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/web_sack,
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
 "gG" = (
 /obj/item/material_piece/cloth/spidersilk{
 	pixel_x = -7;
 	pixel_y = -2
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "ix" = (
 /obj/decal/cleanable/slime,
@@ -94,7 +98,7 @@
 	pixel_x = 2;
 	pixel_y = -6
 	},
-/turf/simulated/floor/carpet/arcade/half,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "iy" = (
 /obj/decal/cleanable/dirt/dirt3,
@@ -112,7 +116,7 @@
 	pixel_x = -6;
 	pixel_y = 1
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "om" = (
 /turf/simulated/floor/airless/solar,
@@ -132,12 +136,12 @@
 /obj/item/reagent_containers/food/snacks/candy/peach_ring{
 	pixel_y = -1
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "qF" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "rj" = (
 /obj/mapping_helper/wingrille_spawn/auto/tuff,
@@ -149,7 +153,7 @@
 	pixel_y = 1
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "rO" = (
 /obj/fakeobject{
@@ -182,14 +186,11 @@
 /obj/decal/cleanable/blood{
 	icon_state = "u_guilty"
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
-"tP" = (
-/obj/item/material_piece/cloth/spidersilk{
-	pixel_x = 1
-	},
-/obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+"tX" = (
+/mob/living/critter/spider/clown,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "uY" = (
 /obj/lattice{
@@ -208,11 +209,15 @@
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
+"wg" = (
+/obj/decal/cleanable/cobwebFloor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "xI" = (
 /obj/decal/cleanable/cobweb,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "xJ" = (
 /turf/variableTurf/floor,
@@ -221,10 +226,14 @@
 /obj/fitness/speedbag/clown,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
+"AJ" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
 "Ch" = (
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Cu" = (
 /obj/item/material_piece/cloth/spidersilk{
@@ -232,7 +241,7 @@
 	pixel_y = -2
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Cw" = (
 /obj/table/round/auto,
@@ -270,7 +279,7 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Ff" = (
 /obj/lattice{
@@ -288,6 +297,7 @@
 /area/prefab/clown_nest)
 "GS" = (
 /obj/decal/cleanable/dirt/dirt4,
+/obj/structure/woodwall/web/small,
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "Hf" = (
@@ -297,7 +307,7 @@
 	pixel_x = -5;
 	pixel_y = -5
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "HA" = (
 /obj/candle_light{
@@ -314,7 +324,7 @@
 /area/prefab/clown_nest)
 "II" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "JG" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
@@ -329,7 +339,18 @@
 	icon_state = "floor6"
 	},
 /mob/living/critter/spider/clownqueen/cluwne,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
+"KJ" = (
+/turf/unsimulated/wall/auto/web,
+/area/prefab/clown_nest)
+"KQ" = (
+/obj/decal/cleanable/web_sack{
+	dir = 4;
+	pixel_x = 6;
+	pixel_y = -7
+	},
+/turf/unsimulated/wall/auto/web,
 /area/prefab/clown_nest)
 "Lg" = (
 /obj/table/auto{
@@ -368,15 +389,36 @@
 	},
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
+"PG" = (
+/obj/decal/cleanable/cobweb,
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
 "PL" = (
 /turf/variableTurf/wall,
+/area/prefab/clown_nest)
+"PT" = (
+/mob/living/critter/spider/clownqueen,
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
+"Qm" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = 1
+	},
+/turf/unsimulated/floor/auto/web,
+/area/prefab/clown_nest)
+"Sn" = (
+/obj/item/reagent_containers/food/snacks/candy/peach_ring{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "SD" = (
 /obj/item/material_piece/cloth/spidersilk{
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Ty" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -399,7 +441,7 @@
 /obj/item/material_piece/cloth/spidersilk{
 	pixel_y = 5
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Vz" = (
 /obj/decal/cleanable/vomit/spiders,
@@ -408,7 +450,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Ww" = (
 /obj/juggleplaque{
@@ -416,6 +458,10 @@
 	name = "Honkys Clownspider Farm"
 	},
 /turf/variableTurf/wall,
+/area/prefab/clown_nest)
+"WP" = (
+/obj/decal/cleanable/web_sack,
+/turf/unsimulated/wall/auto/web,
 /area/prefab/clown_nest)
 "Xv" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -425,7 +471,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/turf/simulated/floor/carpet/arcade/half,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "XW" = (
 /obj/item/kitchen/peach_rings{
@@ -438,7 +484,7 @@
 /area/noGenerate)
 "Zg" = (
 /obj/decal/cleanable/dirt,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/auto/web,
 /area/prefab/clown_nest)
 "Zh" = (
 /obj/fakeobject/pipe{
@@ -687,8 +733,8 @@ XY
 PL
 PL
 PL
-PL
-PL
+KJ
+KJ
 PL
 XY
 XY
@@ -719,16 +765,16 @@ XY
 cH
 PL
 GB
-xJ
+cs
+KJ
+PL
+PL
+XY
+XY
 PL
 PL
 PL
-XY
-XY
 PL
-XY
-XY
-XY
 XY
 XY
 XY
@@ -751,18 +797,18 @@ iy
 xJ
 ja
 xJ
-fO
+Sn
+KJ
 PL
 PL
 PL
 PL
 PL
+KJ
+KJ
 PL
 PL
-XY
-XY
-XY
-XY
+PL
 XY
 XY
 XY
@@ -789,13 +835,13 @@ JG
 PL
 PL
 PL
-xI
+KJ
+KJ
+KJ
+KJ
 PL
 PL
 PL
-XY
-XY
-XY
 XY
 XY
 eb
@@ -821,13 +867,13 @@ II
 Vz
 PL
 SD
-xJ
-xJ
-cH
+cs
+cs
+AJ
+KJ
+KJ
 PL
 PL
-XY
-XY
 XY
 XY
 eb
@@ -850,16 +896,16 @@ PL
 PL
 Hf
 sH
-PL
+cs
 PL
 EN
-xJ
-eV
-xJ
+cs
+tX
+wg
+KJ
+KJ
 PL
 PL
-PL
-XY
 XY
 eb
 eb
@@ -883,14 +929,14 @@ Ty
 bT
 Ty
 Ty
-PL
-cH
+KJ
+AJ
 xJ
-tP
+KJ
+KJ
+KJ
 PL
 PL
-PL
-XY
 XY
 XY
 XY
@@ -915,13 +961,13 @@ CZ
 gl
 Lg
 Ty
-PL
-PL
+KJ
+WP
 xJ
-xJ
-xJ
+Qm
+KJ
+KJ
 PL
-XY
 XY
 XY
 XY
@@ -948,8 +994,8 @@ ix
 Ty
 Ty
 Ty
-PL
-PL
+KJ
+KJ
 xJ
 xJ
 GS
@@ -981,15 +1027,15 @@ aV
 Zh
 Ty
 PL
-PL
+KJ
 Xv
-xJ
-xJ
+cs
+KJ
 PL
 XY
-XY
-XY
-XY
+PL
+PL
+PL
 XY
 XY
 eb
@@ -1013,16 +1059,16 @@ Ty
 LW
 Ty
 PL
-xJ
-xJ
+WP
+cs
+KJ
+KJ
 PL
 PL
 PL
-XY
 PL
 PL
 PL
-XY
 XY
 eb
 eb
@@ -1044,16 +1090,16 @@ PL
 Ty
 fr
 bT
+PG
 xJ
-xJ
-xJ
+cs
 nl
-PL
-PL
-PL
-PL
-PL
-PL
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
 PL
 XY
 XY
@@ -1076,16 +1122,16 @@ PL
 eJ
 wc
 Zg
-xJ
+cs
 bw
 xJ
-xJ
-xJ
-PL
-PL
+cs
+cs
+KJ
+KJ
 Ch
 qF
-PL
+KJ
 PL
 XY
 XY
@@ -1102,23 +1148,23 @@ XY
 XY
 PL
 PL
-PL
-xJ
+KJ
+KJ
 ja
 xJ
-xJ
+cs
 xJ
 xJ
 PL
 Ww
 xJ
-xJ
-PL
+cs
+KJ
 xI
 pV
+KJ
+KJ
 PL
-PL
-XY
 XY
 XY
 eb
@@ -1133,24 +1179,24 @@ XY
 XY
 XY
 PL
-PL
-dI
-xJ
-xJ
-xJ
+KJ
+WP
+gD
+cs
+cs
 xJ
 Ma
 xJ
+cs
+cs
 xJ
-xJ
-xJ
-xJ
+cs
 cH
-xJ
-xJ
+cs
+cs
+KJ
 PL
 PL
-XY
 XY
 XY
 XY
@@ -1165,21 +1211,21 @@ XY
 XY
 XY
 PL
-PL
-PL
+KJ
+KJ
 rG
-xJ
-xJ
-ja
+cs
+cs
+PT
+KJ
 PL
 PL
 PL
-PL
-PL
-xJ
+KJ
+KQ
 xJ
 fO
-xJ
+cs
 Lj
 PL
 PL
@@ -1198,18 +1244,18 @@ XY
 XY
 PL
 PL
-PL
+KJ
 UC
-xJ
+cs
 gG
-PL
+KJ
+KJ
 PL
 XY
-XY
 PL
 PL
-PL
-PL
+KJ
+xJ
 cH
 eV
 xJ
@@ -1233,16 +1279,16 @@ PL
 PL
 PL
 PL
-PL
+KJ
+KJ
 PL
 PL
 XY
 XY
-XY
-XY
-XY
 PL
 PL
+PL
+xJ
 xJ
 xJ
 XY
@@ -1267,15 +1313,15 @@ PL
 PL
 PL
 PL
+PL
 XY
 XY
 XY
 XY
-XY
-XY
-XY
-XY
-XY
+PL
+PL
+PL
+PL
 XY
 XY
 XY
@@ -1296,9 +1342,9 @@ XY
 XY
 XY
 XY
-XY
 PL
-XY
+PL
+PL
 XY
 XY
 XY

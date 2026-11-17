@@ -67,7 +67,7 @@
 			boutput(src.get_message_mob(), SPAN_ALERT("You don't have any hologram emitter programs installed!"))
 			return
 
-		if(get_z(src) != Z_LEVEL_STATION)
+		if(get_z(src) != Z_LEVEL_STATION && !src.syndicate)
 			src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 			return
 

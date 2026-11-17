@@ -27,6 +27,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"m" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "n" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -175,7 +179,7 @@ t
 T
 Z
 Y
-D
+m
 K
 v
 a

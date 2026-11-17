@@ -2275,6 +2275,24 @@
 "aVl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge)
+"aVq" = (
+/obj/table/glass/auto,
+/obj/item/storage/box/diskbox,
+/obj/item/storage/box/tapebox,
+/obj/item/disk/data/tape{
+	layer = 3.5;
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/disk/data/tape/master/readonly,
+/obj/item/paper/book/from_file/dwainedummies,
+/obj/item/device/multitool,
+/obj/item/luggable_computer,
+/obj/machinery/turretid{
+	pixel_y = -24
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "aVw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4021,6 +4039,33 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/innercorner/nw,
 /area/station/crew_quarters/bar)
+"bOy" = (
+/obj/table/glass/auto,
+/obj/machinery/door_control{
+	id = "scienceteleporter";
+	name = "Teleporter Pad Lockdown";
+	pixel_x = 23
+	},
+/obj/item/paper_bin,
+/obj/item/clipboard,
+/obj/item/pen,
+/obj/item/clothing/head/helmet/camera{
+	camera_tag = "Helmet Cam 2";
+	pixel_x = 2;
+	pixel_y = 11
+	},
+/obj/item/pen,
+/obj/item/clothing/head/helmet/camera{
+	camera_tag = "Helmet Cam 1";
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/camera{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/turf/simulated/floor/caution,
+/area/station/science/teleporter)
 "bOE" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Maintenance Access"
@@ -5170,6 +5215,16 @@
 "cnO" = (
 /turf/simulated/floor/wood/two,
 /area/station/science/lobby)
+"cnZ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
 "cop" = (
 /obj/mesh/catwalk,
 /obj/mesh/catwalk/dubious,
@@ -8270,22 +8325,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
-"dHV" = (
-/obj/table/glass/auto,
-/obj/item/clothing/head/helmet/camera{
-	camera_tag = "Helmet Cam 2"
-	},
-/obj/item/clothing/head/helmet/camera{
-	camera_tag = "Helmet Cam 1"
-	},
-/obj/item/clothing/head/helmet/camera,
-/obj/machinery/door_control{
-	id = "scienceteleporter";
-	name = "Teleporter Pad Lockdown";
-	pixel_x = 23
-	},
-/turf/simulated/floor/caution,
-/area/station/science/teleporter)
 "dIj" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Genetics"
@@ -9173,16 +9212,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
-"edg" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
 "edk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14440,6 +14469,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"gxj" = (
+/obj/table/glass/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/device/gps,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/item/circuitboard/robotics,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "gxP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15917,22 +15954,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
-"hhQ" = (
-/obj/decal/tile_edge/line/green{
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
 "hig" = (
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -10
@@ -16984,11 +17005,6 @@
 /obj/machinery/computer/television/small,
 /turf/simulated/floor/carpet/grime,
 /area/station/mining/cargo_staff_room)
-"hGN" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
 "hGP" = (
 /obj/machinery/sleeper/compact{
 	dir = 8
@@ -27323,14 +27339,6 @@
 /obj/item/wrench,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
-"moj" = (
-/obj/table/glass/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/pen,
-/turf/simulated/floor/caution,
-/area/station/science/teleporter)
 "mom" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27764,6 +27772,11 @@
 "myH" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/breakroom)
+"mzg" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "mzh" = (
 /obj/landmark/gps_waypoint,
 /obj/cable/orange{
@@ -32958,20 +32971,6 @@
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
-"oNd" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
 "oNe" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/grey,
@@ -33548,6 +33547,10 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"oZj" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/caution,
+/area/station/science/teleporter)
 "oZL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34160,24 +34163,6 @@
 	},
 /turf/space,
 /area/space)
-"ppH" = (
-/obj/table/glass/auto,
-/obj/item/storage/box/diskbox,
-/obj/item/storage/box/tapebox,
-/obj/item/disk/data/tape{
-	layer = 3.5;
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/from_file/dwainedummies,
-/obj/item/device/multitool,
-/obj/item/luggable_computer,
-/obj/machinery/turretid{
-	pixel_y = -24
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "pqr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36746,6 +36731,20 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
+"qzp" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
 "qzD" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -37157,6 +37156,14 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/maintenance/disposal)
+"qLj" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "qLL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40567,6 +40574,22 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_south)
+"swM" = (
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
 "swQ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_south)
@@ -42664,11 +42687,6 @@
 /area/station/maintenance/west{
 	name = "Boardroom"
 	})
-"tpP" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "tpS" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -42956,14 +42974,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"txI" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
-/obj/machinery/firealarm/directional/south,
-/obj/machinery/disk_rack/ai/prefilled,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "txK" = (
 /obj/submachine/cargopad/podbay,
 /obj/decal/stripe_caution,
@@ -47617,6 +47627,11 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/bridge)
+"vIf" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
 "vIo" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -48530,14 +48545,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/blackwhite,
 /area/station/turret_protected/ai_upload)
-"wdn" = (
-/obj/table/glass/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/device/gps,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/item/circuitboard/robotics,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "wds" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
@@ -85582,9 +85589,9 @@ gLn
 wbf
 rTo
 uTh
-moj
+oZj
 vdx
-dHV
+bOy
 dCQ
 kYS
 vTN
@@ -109148,7 +109155,7 @@ gmC
 wfe
 jXC
 ihM
-edg
+cnZ
 sVN
 erX
 uDJ
@@ -109450,7 +109457,7 @@ nQr
 maB
 gAs
 ptj
-ppH
+aVq
 sVN
 pHL
 lCP
@@ -109752,7 +109759,7 @@ jxa
 buQ
 pyM
 dak
-wdn
+gxj
 sVN
 hdt
 fWM
@@ -110054,7 +110061,7 @@ oXM
 kwp
 wUi
 xaO
-txI
+qLj
 sVN
 utm
 sVN
@@ -110355,8 +110362,8 @@ wfe
 ygL
 arK
 hAe
-hhQ
-tpP
+swM
+mzg
 wfe
 roM
 sfw
@@ -110657,8 +110664,8 @@ wfe
 wfe
 wfe
 ouY
-oNd
-hGN
+qzp
+vIf
 wfe
 rET
 vnX

@@ -9659,6 +9659,19 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics/bay)
+"dMr" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/storage/box/tapebox{
+	pixel_x = 4
+	},
+/obj/item/storage/box/diskbox{
+	pixel_x = -6
+	},
+/obj/table/auto,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "dMs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -10721,19 +10734,6 @@
 /obj/cable,
 /turf/simulated/floor/greenwhite,
 /area/station/medical/medbay/cloner)
-"ewn" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/storage/box/tapebox{
-	pixel_x = 4
-	},
-/obj/item/storage/box/diskbox{
-	pixel_x = -6
-	},
-/obj/table/auto,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "ewq" = (
 /obj/machinery/bot/cleanbot,
 /obj/cable{
@@ -14630,6 +14630,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"hqk" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "hqs" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -20335,15 +20344,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/science/artifact)
-"lCm" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/light_switch/directional/north,
-/obj/machinery/disk_rack/ai/prefilled,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "lCo" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -23648,6 +23648,20 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"nYO" = (
+/obj/table/auto,
+/obj/decal/cleanable/desk_clutter,
+/obj/decal/cleanable/dirt,
+/obj/item/instrument/bikehorn,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/machinery/light_switch/directional/west,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/peripheral/videocard,
+/obj/item/storage/goodybag,
+/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
+/obj/item/stamp/clown,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "nZa" = (
 /obj/machinery/sink{
 	dir = 8;
@@ -36420,20 +36434,6 @@
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/equipment)
-"vUO" = (
-/obj/table/auto,
-/obj/decal/cleanable/desk_clutter,
-/obj/decal/cleanable/dirt,
-/obj/item/instrument/bikehorn,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/machinery/light_switch/directional/west,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/peripheral/videocard,
-/obj/item/storage/goodybag,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
-/obj/item/stamp/clown,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
 "vVm" = (
 /obj/shrub,
 /obj/machinery/light/incandescent,
@@ -39025,6 +39025,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"xMx" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/purple/checker,
+/area/station/science/teleporter)
 "xMD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -79751,7 +79755,7 @@ xvz
 bpx
 aqj
 gKh
-vUO
+nYO
 txf
 upT
 bYc
@@ -92157,7 +92161,7 @@ eRv
 nWp
 hkm
 qlD
-hti
+xMx
 uCl
 uCl
 aaa
@@ -95778,7 +95782,7 @@ tBb
 uSS
 ocl
 sTK
-ewn
+dMr
 ehT
 kAt
 lCo
@@ -96682,7 +96686,7 @@ rzT
 sPT
 tGx
 uSS
-lCm
+hqk
 wIv
 xJQ
 wIj
