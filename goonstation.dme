@@ -1315,6 +1315,8 @@
 #include "code\modules\cross_server\cross_server_messages\announce.dm"
 #include "code\modules\currents\currents.dm"
 #include "code\modules\currents\turbine.dm"
+#include "code\modules\database\_seeder.dm"
+#include "code\modules\database\banSeeder.dm"
 #include "code\modules\digging\buried_storage.dm"
 #include "code\modules\digging\dig_bar.dm"
 #include "code\modules\digging\gutter.dm"
