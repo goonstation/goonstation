@@ -132,13 +132,12 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 
 /datum/job/special/nt/vip
 	name = "Nanotrasen VIP"
-	wages = PAY::EMBEZZLED //big money
+	wages = PAY::EMBEZZLED //bigger money
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_jump = list(/obj/item/clothing/under/misc/ntvip)
 	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_glov = null
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_belt = list(/obj/item/device/pda2/nt)
@@ -154,7 +153,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 
 /datum/job/special/nt/centcomrep //will have a special headset and icon via a separate PR, meant to be REALLY important and so you can always have a specific guy
 	name = "CentCom Representative"
-	wages = PAY::EMBEZZLED //big money
+	wages = PAY::DONTBUYIT //BIGGEST money
 	badge = /obj/item/clothing/suit/security_badge/shielded
 
 	slot_back = list(/obj/item/storage/backpack/NT)
