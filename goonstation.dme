@@ -2316,6 +2316,7 @@
 #include "code\modules\speech\modules\speech\modifiers\muzzle.dm"
 #include "code\modules\speech\modules\speech\modifiers\radio.dm"
 #include "code\modules\speech\modules\speech\modifiers\revenant.dm"
+#include "code\modules\speech\modules\speech\modifiers\revolutionary_keywords.dm"
 #include "code\modules\speech\modules\speech\modifiers\shrouded.dm"
 #include "code\modules\speech\modules\speech\modifiers\test_dummy.dm"
 #include "code\modules\speech\modules\speech\modifiers\translator.dm"

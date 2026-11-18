@@ -118,10 +118,13 @@
 			src.owner.store_memory("<b>Uplink frequency:</b> [uplink.lock_code].")
 
 		if(ROLEPLAY_REVOLUTIONARIES)
+			// Grant access to the syndicate radio.
 			var/obj/item/device/radio/headset/headset = H.ears
 			if(headset && istype(headset))
 				headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/syndicatechannel)
 				boutput(H, SPAN_NOTICE(SPAN_BOLD("The syndicate has granted \the [headset] on your head access to the syndicate channel to speak with your fellow revolutionaries.")))
+			// Grant them the ability to speak keywords
+			H.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS)
 
 	add_to_image_groups()
 		. = ..()

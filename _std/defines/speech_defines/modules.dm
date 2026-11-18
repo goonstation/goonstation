@@ -147,6 +147,7 @@
 #define SPEECH_MODIFIER_MUZZLE "muzzle"
 #define SPEECH_MODIFIER_RADIO "radio"
 #define SPEECH_MODIFIER_REVENANT "revenant"
+#define SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS "revolutionary_keywords"
 #define SPEECH_MODIFIER_SHROUDED "shrouded"
 #define SPEECH_MODIFIER_TEST_DUMMY "test_dummy"
 #define SPEECH_MODIFIER_TRANSLATOR "translator"
