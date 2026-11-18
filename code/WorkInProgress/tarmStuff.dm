@@ -190,8 +190,8 @@
 		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
 		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
 
-		var/Hx = (get_turf(P)).x*32 + (get_turf(P)).pixel_x
-		var/Hy = (get_turf(P)).y*32 + (get_turf(P)).pixel_y
+		var/Hx = P.x*32 + P.pixel_x
+		var/Hy = P.y*32 + P.pixel_y
 
 		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
 
