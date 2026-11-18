@@ -179,6 +179,20 @@
 		pda_list += H.get_slot(SLOT_WEAR_ID)
 		pda_list += H.get_slot(SLOT_BELT)
 
+	// check internal pda if they're a cyborg
+	if(isrobot(user))
+		var/mob/living/silicon/robot/H = user
+		pda_list += H.internal_pda
+
+	// check for internal pda if they're an ai
+	if(isAI(user))
+		if(isAIeye(user))
+			var/mob/living/intangible/aieye/H = user
+			pda_list += H.mainframe.internal_pda
+		else
+			var/mob/living/silicon/ai/H = user
+			pda_list += H.internal_pda
+
 	for (var/obj/item/device/pda2/pda in pda_list)
 		if (pda.host_program.message_on && pda.owner)
 			order.address = pda.net_id
