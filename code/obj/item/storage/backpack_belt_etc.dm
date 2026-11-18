@@ -144,15 +144,13 @@
 	spawn_contents = list(/obj/item/storage/box/starternt)
 
 /obj/item/storage/backpack/NT/large
-	name = "\improper NT technician backpack"
-	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back. This one is roomier and has a few extra pockets."
+	name = "\improper NT rucksack"
+	desc = "A stylish blue, thick, wearable container made of high density fibers, able to carry an increased number of objects comfortably on a responder's back."
 	icon_state = "NTbackpack_large"
 	item_state = "NTbackpack_large"
 	satchel_variant = null
 	slots = 9
-
-/obj/item/storage/backpack/NT/large/ERT
-	spawn_contents = list(/obj/item/storage/box/starternt)
+	spawn_contents = list(/obj/item/storage/box/starternt) //no need for a normal variant
 
 /obj/item/storage/backpack/syndie
 	name = "\improper Syndicate backpack"
