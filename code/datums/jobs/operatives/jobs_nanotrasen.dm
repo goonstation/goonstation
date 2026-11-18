@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_belt = list(/obj/item/device/pda2/nt)
 	slot_poc1 = list(/obj/item/device/panicbutton)
-	items_in_backpack =  = list(/obj/item/device/flash)
+	items_in_backpack = list(/obj/item/device/flash)
 	alt_names = list("Corporate Executive",
 		"Shipyard Overseer",
 		"Regional Accountant",
