@@ -2,8 +2,8 @@
 	id = SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS
 	var/static/list/keywords = list(
 		"rise",
-		"shackles",
-		"chains",
+		"shackle",
+		"chain",
 		"free",
 		"revol", //Either revolution or revolt
 	)
