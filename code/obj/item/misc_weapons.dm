@@ -1470,7 +1470,7 @@ TYPEINFO(/obj/item/swords/captain)
 /obj/item/swords/ntboss
 	icon_state = "ntboss_sword"
 	name = "NanoTrasen Commander's Sabre"
-	desc = "A sharp sabre for the most trusted and competent NanoTrasen Commanders. The blue paint is peeling a bit..."
+	desc = "A sharp sabre for the most trusted and competent NanoTrasen Commanders. Commissioned from Iron Belle Bladeworks."
 	force = 20
 	delimb_prob = 20
 	contraband = 4
@@ -1703,7 +1703,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 
 /obj/item/swords_sheaths/ntboss
 	name = "Nanotrasen Commander's Scabbard"
-	desc = "A nifty container for a mighty sword. Given to Nanotrasen's most trusted commanders. The blue paint is peeling a bit..."
+	desc = "A nifty container for a mighty sword. Given to Nanotrasen's most trusted commanders. The scabbard bears the insignia 'I.B.B'."
 	icon_state = "ntboss_sword_scabbard"
 	item_state = "scabbard-ntboss1"
 
