@@ -95,7 +95,7 @@
 		src.icon_state = "[src.base_icon]-empty"
 
 
-/obj/item/shrapnel_extractor/proc/attempt_extraction(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
+/obj/item/shrapnel_extractor/proc/attempt_extraction(mob/living/carbon/human/patient as mob, mob/living/surgeon as mob)
 	var/fluff = pick(" messes up", "'s hand slips", " nearly drops [src]", "'s hand twitches", " accidentally vacuum their nose")
 
 	var/screw_up_prob = calc_screw_up_prob(patient, surgeon, 10)
@@ -104,15 +104,8 @@
 	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(5,10))
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(30))
-		surgeon.visible_message(\
-		SPAN_ALERT("<b>[surgeon]</b> points the [src] to [his_or_her(surgeon)] face to check if its working and sucks [his_or_her(surgeon)] eyeball!"), \
-		SPAN_ALERT("You point the [src] to your face and suck in your eyeball!"))
-
-		surgeon.changeStatus("disorient", 2 SECOND)
-		JOB_XP(surgeon, "Clown", 1)
-
-		CAUSE_EXPECTED_PAIN(surgeon, damage_high)
-		return
+		if(src.try_agonize_clown(surgeon, damage_high))
+			return
 
 	playsound(patient, 'sound/effects/suck.ogg', 20, TRUE)
 
@@ -135,6 +128,33 @@
 		CAUSE_EXPECTED_PAIN(patient, damage_low)
 
 		return
+
+/obj/item/shrapnel_extractor/proc/try_agonize_clown(mob/living/carbon/human/stupid_clown, damage)
+
+	if(isnull(stupid_clown.organHolder.left_eye) && isnull(stupid_clown.organHolder.right_eye))
+		return FALSE
+
+	var/obj/item/organ/eye/popped_out = null
+
+	if (stupid_clown.organHolder.left_eye && stupid_clown.organHolder.right_eye) // if both eyes are available, pick one at random
+		popped_out = prob(50) ? stupid_clown.drop_organ("left_eye") : stupid_clown.drop_organ("right_eye")
+	else if (stupid_clown.organHolder.left_eye)
+		popped_out = stupid_clown.drop_organ("left_eye")
+	else
+		popped_out = stupid_clown.drop_organ("right_eye")
+
+	src.storage.add_contents(popped_out, stupid_clown, visible=FALSE)
+
+	stupid_clown.visible_message(\
+		SPAN_ALERT("<b>[stupid_clown]</b> points the [src] to [his_or_her(stupid_clown)] face to check if its working and sucks [his_or_her(stupid_clown)] eyeball!"), \
+		SPAN_ALERT("You point the [src] to your face and suck in your eyeball!"))
+
+	stupid_clown.changeStatus("disorient", 2 SECOND)
+	JOB_XP(stupid_clown, "Clown", 1)
+
+	CAUSE_EXPECTED_PAIN(stupid_clown, damage)
+
+	return TRUE
 
 
 #undef CAUSE_EXPECTED_PAIN
