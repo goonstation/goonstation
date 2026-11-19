@@ -47,11 +47,11 @@
 	)
 
 	if(prob(5)) // :pensive:
-		desc += " After 7 month in R&D, hopefully it's been worth the wait."
+		desc += " After 3 months in R&D, hopefully it's been worth the wait."
 
 /obj/item/shrapnel_extractor/get_desc(dist, mob/user)
 	. = ..()
-	. += " It currently housing [length(src.storage.get_contents())]/[DRUM_BUFFER_SIZE] shrapnel fragments."
+	. += " It is currently housing [length(src.storage.get_contents())]/[DRUM_BUFFER_SIZE] shrapnel fragments."
 
 /obj/item/shrapnel_extractor/attack(mob/target, mob/user, def_zone, is_special, params)
 	if(is_special || !ishuman(target) || user.a_intent != INTENT_HELP)
@@ -62,7 +62,7 @@
 		return
 
 	if(src.storage.is_full())
-		boutput(user, SPAN_NOTICE("The internal collection drum is full! dump it before you can use it again."))
+		boutput(user, SPAN_NOTICE("The internal collection drum is full! Dump it before you can use it again."))
 		playsound(user, 'sound/effects/brrp.ogg', 20, TRUE, 0, 0.8)
 		return
 
