@@ -1,0 +1,26 @@
+CREATE TABLE bans (
+    id INTEGER PRIMARY KEY, round_id INTEGER, game_admin_id INTEGER, server_id TEXT, server_group INTEGER,
+    reason TEXT NOT NULL, requires_appeal INTEGER NOT NULL CHECK (requires_appeal IN (0, 1)),
+    expires_at TEXT, created_at TEXT, updated_at TEXT, admin_ckey TEXT, admin_alias TEXT
+);
+CREATE TABLE ban_details (
+    id INTEGER PRIMARY KEY, ban_id INTEGER NOT NULL REFERENCES bans(id), ckey TEXT, comp_id TEXT,
+    ip TEXT, player_id INTEGER, created_at TEXT, updated_at TEXT, player_ckey TEXT
+);
+CREATE INDEX ban_details_ban_id ON ban_details(ban_id);
+CREATE INDEX ban_details_ckey ON ban_details(ckey);
+CREATE INDEX ban_details_comp_id ON ban_details(comp_id);
+CREATE INDEX ban_details_player_id ON ban_details(player_id);
+CREATE INDEX ban_details_ip ON ban_details(ip);
+CREATE TABLE player_mentors (
+    id INTEGER PRIMARY KEY, player_id INTEGER NOT NULL UNIQUE, created_at TEXT, updated_at TEXT, player_ckey TEXT NOT NULL
+);
+CREATE INDEX player_mentors_player_ckey ON player_mentors(player_ckey);
+CREATE TABLE player_hos (
+    id INTEGER PRIMARY KEY, player_id INTEGER NOT NULL UNIQUE, created_at TEXT, updated_at TEXT, player_ckey TEXT NOT NULL
+);
+CREATE INDEX player_hos_player_ckey ON player_hos(player_ckey);
+CREATE TABLE export_metadata (
+    schema_version INTEGER NOT NULL CHECK (schema_version = 1), server_id TEXT NOT NULL,
+    server_group_id INTEGER, snapshot_at TEXT NOT NULL
+);
