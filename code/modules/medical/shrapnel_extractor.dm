@@ -5,10 +5,13 @@
 	take_bleeding_damage(victim, null, damage);\
 	victim.emote("scream");
 
+#define DRUM_BUFFER_SIZE 5
+
 /obj/item/shrapnel_extractor
 	name = "Shrapnel Extractor"
-	desc = "An inovative tool that barely reached the minimal safety requirment to become a medical product. \
-	 You can use it on anyone who got embedded with shrapnel to suck it out with <I>acceptable</I> levels of bleeding."
+	desc = "An inovative tool that barely reached the minimal safety requirment to become a marketable medical product. \
+	 You can use it on anyone who got embedded with shrapnel to suck it out with <I>acceptable</I> levels of bleeding. \
+	 "
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "shrapnel_extractor-empty" // icon by TekoTheTeapot
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -19,13 +22,14 @@
 	hit_type = DAMAGE_BLUNT
 	force = 5
 	w_class = W_CLASS_SMALL
+	tooltip_flags = REBUILD_ALWAYS
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
 	g_amt = 5000
 	stamina_damage = 5
-	stamina_cost = 5
+	stamina_cost = DRUM_BUFFER_SIZE
 	stamina_crit_chance = 35
 	move_triggered = FALSE
 
@@ -44,26 +48,43 @@
 	if(prob(10))
 		desc += " After 7 month in r&d, hopefully it been worth the wait."
 
+/obj/item/shrapnel_extractor/get_desc(dist, mob/user)
+	. = ..()
+	. += " It currently housing [length(src.storage)]/[DRUM_BUFFER_SIZE] shrapnel fragments."
 
 /obj/item/shrapnel_extractor/attack(mob/target, mob/user, def_zone, is_special, params)
-	if(is_special || !ishuman(target))
+	if(is_special || !ishuman(target) || user.a_intent != INTENT_HELP)
 		return ..()
 
-	if(isnull(src.storage)) // should not happen but eh cant risk it.
+	if(isnull(src.storage)) // should not happen but cant risk it.
 		boutput(user, SPAN_NOTICE("The internal collection drum broke! you can not use this!"))
 		return
 
 	if(src.storage.is_full())
-		boutput(user, SPAN_NOTICE("The internal collection drum is full!"))
+		boutput(user, SPAN_NOTICE("The internal collection drum is full! dump it before you can use it again."))
+		playsound(user, 'sound/effects/brrp.ogg', 20, TRUE, 0, 0.8)
 		return
 
 	var/mob/living/carbon/human/patient = target
 
 	if (length(patient.implant) == 0)
-		boutput(user, SPAN_NOTICE("You try to find a fragment wound on [target], but could not find any."))
+		boutput(user, SPAN_NOTICE("You can not find any remnent within [target]."))
 		return
 
 	SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS ,PROC_REF(attempt_extraction), list(patient, user), src.icon, src.icon_state, null, src.interrupt_flags)
+
+/obj/item/shrapnel_extractor/attack_self(mob/user)
+	. = ..()
+	if(isnull(src.storage) || !length(src.storage.get_contents()))
+		return .
+
+	for (var/obj/item/I as anything in src.storage.get_contents())
+		src.storage.transfer_stored_item(I, get_turf(src))
+		I.pixel_x = rand(-4, 10)
+		I.pixel_y = rand(-4, 10)
+
+	playsound(src, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 30, 0.1)
+
 
 /obj/item/shrapnel_extractor/update_icon()
 	. = ..()
@@ -108,16 +129,12 @@
 		patient.implant.Remove(I)
 
 		src.storage.add_contents(I, surgeon, visible=FALSE)
-		src.UpdateIcon()
-		// The shrapnel gets pulled to the user
-		// I.set_loc(surgeon.loc)
-		// I.pixel_x = rand(-2, 5)
-		// I.pixel_y = rand(-6, 1)
 
-		// This tool is sophisticated, but operating on a patient who's awake and moving is risky
+		// This tool is sophisticated, but operating on a patient who's awake, moving (and probably full of adrelaline) with a glorified handheld vacuum is risky.
 		CAUSE_EXPECTED_PAIN(patient, damage_low)
 
 		return
 
 
 #undef CAUSE_EXPECTED_PAIN
+#undef DRUM_BUFFER_SIZE
