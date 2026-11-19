@@ -13,7 +13,6 @@
 		SELECT CAST(id AS TEXT) AS id, reason, requires_appeal,
 			   expires_at, admin_ckey, admin_alias
 		FROM bans
-		WHERE expires_at IS NULL OR expires_at > datetime('now')
 		ORDER BY id DESC LIMIT ? OFFSET ?
 	"}, list(page_size, (page - 1) * page_size))
-	return rows[1]
+	return list("data" = rows)
