@@ -138,6 +138,9 @@
 		var/datum/client_image_group/rev_image_group = global.get_image_group(ROLE_REVOLUTIONARY)
 		rev_image_group.add_image(src.bar.img)
 		rev_image_group.add_image(src.border.img)
+		var/datum/client_image_group/all_antags_image_group = global.get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+		all_antags_image_group.add_image(src.bar.img)
+		all_antags_image_group.add_image(src.border.img)
 
 	onUpdate()
 		var/datum/statusEffect/weakened_loyalty/loyalty_status = src.owner.hasStatus("weakened_loyalty")
