@@ -42,7 +42,7 @@
 	src.create_storage(/datum/storage/no_hud,
 			prevent_holding = list(/obj/item),
 			can_hold=list(/obj/item/implant/projectile, /obj/item/organ/eye),
-			slots = 5,
+			slots = DRUM_BUFFER_SIZE,
 			params = list("use_inventory_counter" = TRUE)
 	)
 
