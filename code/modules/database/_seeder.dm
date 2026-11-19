@@ -1,4 +1,4 @@
-#define RUN_SEEDER(type) get_singleton(type):Seed()
+#define RUN_SEEDER(type, handle) get_singleton(type):Seed(handle)
 /// Seeders for the local fallback sqlite database
 ABSTRACT_TYPE(/datum/seeder)
 /datum/seeder
