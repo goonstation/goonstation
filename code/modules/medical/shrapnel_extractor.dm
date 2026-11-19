@@ -81,8 +81,8 @@
 
 	for (var/obj/item/I as anything in src.storage.get_contents())
 		src.storage.transfer_stored_item(I, get_turf(src))
-		I.pixel_x = rand(-4, 10)
-		I.pixel_y = rand(-4, 10)
+		I.pixel_x = rand(-8, 8)
+		I.pixel_y = rand(-8, 8)
 
 	playsound(src, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 30, 0.1)
 
