@@ -5,11 +5,11 @@
 
 #define DRUM_BUFFER_SIZE 5
 
-/// This tool is mainly used by NanoTrasen Emergency Paramedics. It lets you remove shrapnel from someone whos standing up, at the cost of hurting. Its kind of a pseudo surgery that really hurts.
+/// This tool is mainly used by NanoTrasen Emergency Paramedics. It lets you remove shrapnel from someone who’s standing up, at the cost of hurting them. It's kind of a pseudo surgery that really hurts.
 /obj/item/shrapnel_extractor
 	name = "Shrapnel Extractor"
-	desc = "An inovative tool that barely reached the minimal safety requirment to become a marketable medical product. \
-	 You can use it on anyone who got embedded with shrapnel to suck it out with <I>acceptable</I> levels of bleeding. \
+	desc = "An innovative tool that barely reached the minimal safety requirements to become a marketable medical product. \
+	 You can use it on anyone with embedded shrapnel to suck it out with <I>acceptable</I> levels of bleeding. \
 	 "
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "shrapnel_extractor-empty" // icon by TekoTheTeapot
@@ -51,14 +51,14 @@
 
 /obj/item/shrapnel_extractor/get_desc(dist, mob/user)
 	. = ..()
-	. += " It is currently housing [length(src.storage.get_contents())]/[DRUM_BUFFER_SIZE] shrapnel fragments."
+	. += " It's currently housing [length(src.storage.get_contents())]/[DRUM_BUFFER_SIZE] shrapnel fragments."
 
 /obj/item/shrapnel_extractor/attack(mob/target, mob/user, def_zone, is_special, params)
 	if(is_special || !ishuman(target) || user.a_intent != INTENT_HELP)
 		return ..()
 
 	if(isnull(src.storage)) // should not happen but cant risk it.
-		boutput(user, SPAN_NOTICE("The internal collection drum broke! you can not use this!"))
+		boutput(user, SPAN_NOTICE("The internal collection drum broke! you can't use this anymore!"))
 		return
 
 	if(src.storage.is_full())
@@ -68,8 +68,15 @@
 
 	var/mob/living/carbon/human/patient = target
 
-	if (length(patient.implant) == 0)
-		boutput(user, SPAN_NOTICE("You can not find any remnent within [target]."))
+	// grumble grumble if we just check length it tries to extract useful implants and does nothing.
+	var/has_implant_that_is_shrapnel = FALSE
+	for (var/obj/item/implant/I in patient.implant)
+		if(istype(I, /obj/item/implant/projectile))
+			has_implant_that_is_shrapnel = TRUE
+			break
+
+	if(!has_implant_that_is_shrapnel)
+		boutput(user, SPAN_NOTICE("You can't find any remnants within [target]."))
 		return
 
 	SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS ,PROC_REF(attempt_extraction), list(patient, user), src.icon, src.icon_state, null, src.interrupt_flags)
@@ -96,7 +103,7 @@
 
 
 /obj/item/shrapnel_extractor/proc/attempt_extraction(mob/living/carbon/human/patient as mob, mob/living/surgeon as mob)
-	var/fluff = pick(" messes up", "'s hand slips", " nearly drops [src]", "'s hand twitches", " accidentally vacuum their nose")
+	var/fluff = pick(" messes up", "'s hand slips", " nearly drops [src]", "'s hand twitches", " accidentally vacuums up their nose")
 
 	var/screw_up_prob = calc_screw_up_prob(patient, surgeon, 10)
 
@@ -115,9 +122,9 @@
 
 	for (var/obj/item/implant/projectile/I in patient.implant)
 		surgeon.tri_message(patient, \
-			SPAN_ALERT("<b>[surgeon]</b> reaches with the [src] into [patient == surgeon ? his_or_her(patient) : "[patient]'s"] wound and pull \an [I] from [patient == surgeon ? "[him_or_her(patient)]self" : patient] with the [src]!"),\
-			SPAN_ALERT("You suck out \an [I] from [surgeon == patient ? "yourself" : "[patient]"] with [src]!"),\
-			SPAN_ALERT("[patient == surgeon ? "You suck" : "<b>[surgeon]</b> suck"] out \an [I] from you with [src]!"))
+			SPAN_ALERT("<b>[surgeon]</b> reaches with the [src] into [patient == surgeon ? his_or_her(patient) : "[patient]'s"] wound and pull \a [I] from [patient == surgeon ? "[him_or_her(patient)]self" : patient] with the [src]!"),\
+			SPAN_ALERT("You suck out \a [I] from [surgeon == patient ? "yourself" : "[patient]"] with [src]!"),\
+			SPAN_ALERT("[patient == surgeon ? "You suck" : "<b>[surgeon]</b> suck"] out \a [I] from you with [src]!"))
 
 		I.on_remove(patient)
 		patient.implant.Remove(I)
@@ -145,8 +152,8 @@
 	src.storage.add_contents(popped_out, stupid_clown, visible=FALSE)
 
 	stupid_clown.visible_message(\
-		SPAN_ALERT("<b>[stupid_clown]</b> points the [src] to [his_or_her(stupid_clown)] face to check if its working and sucks [his_or_her(stupid_clown)] eyeball!"), \
-		SPAN_ALERT("You point the [src] to your face and suck in your eyeball!"))
+		SPAN_ALERT("<b>[stupid_clown]</b> points the [src] to [his_or_her(stupid_clown)] face to check if it's working and accidentally sucks out [his_or_her(stupid_clown)] eyeball!"), \
+		SPAN_ALERT("You point the [src] to your face and suck out in your eyeball!"))
 
 	stupid_clown.changeStatus("disorient", 2 SECOND)
 	JOB_XP(stupid_clown, "Clown", 1)
