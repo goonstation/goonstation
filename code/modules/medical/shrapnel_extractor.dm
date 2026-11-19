@@ -51,7 +51,7 @@
 
 /obj/item/shrapnel_extractor/get_desc(dist, mob/user)
 	. = ..()
-	. += " It currently housing [length(src.storage)]/[DRUM_BUFFER_SIZE] shrapnel fragments."
+	. += " It currently housing [length(src.storage.get_contents())]/[DRUM_BUFFER_SIZE] shrapnel fragments."
 
 /obj/item/shrapnel_extractor/attack(mob/target, mob/user, def_zone, is_special, params)
 	if(is_special || !ishuman(target) || user.a_intent != INTENT_HELP)
