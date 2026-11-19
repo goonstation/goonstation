@@ -1,5 +1,3 @@
-/// This tool is mainly used by NanoTrasen Emergency Paramedics. It lets you remove shrapnel from someone whos standing up, at the cost of hurting. Its kind of a pseudo surgery that really hurts.
-
 #define CAUSE_EXPECTED_PAIN(victim, damage)\
 	random_brute_damage(victim, damage);\
 	take_bleeding_damage(victim, null, damage);\
@@ -7,6 +5,7 @@
 
 #define DRUM_BUFFER_SIZE 5
 
+/// This tool is mainly used by NanoTrasen Emergency Paramedics. It lets you remove shrapnel from someone whos standing up, at the cost of hurting. Its kind of a pseudo surgery that really hurts.
 /obj/item/shrapnel_extractor
 	name = "Shrapnel Extractor"
 	desc = "An inovative tool that barely reached the minimal safety requirment to become a marketable medical product. \
@@ -33,6 +32,8 @@
 	stamina_crit_chance = 35
 	move_triggered = FALSE
 
+	HELP_MESSAGE_OVERRIDE("Use on a person with embedded shrapnel in them to extract it. Use in hand to dump the shrapnel you extracted.")
+
 	var/base_icon = "shrapnel_extractor"
 	var/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_ACT
 
@@ -40,13 +41,13 @@
 	..()
 	src.create_storage(/datum/storage/no_hud,
 			prevent_holding = list(/obj/item),
-			can_hold=list(/obj/item/implant/projectile),
+			can_hold=list(/obj/item/implant/projectile, /obj/item/organ/eye),
 			slots = 5,
 			params = list("use_inventory_counter" = TRUE)
 	)
 
-	if(prob(10))
-		desc += " After 7 month in r&d, hopefully it been worth the wait."
+	if(prob(5)) // :pensive:
+		desc += " After 7 month in R&D, hopefully it's been worth the wait."
 
 /obj/item/shrapnel_extractor/get_desc(dist, mob/user)
 	. = ..()
