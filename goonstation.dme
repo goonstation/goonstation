@@ -2163,6 +2163,7 @@
 #include "code\modules\robotics\robot\module\mining.dm"
 #include "code\modules\robotics\robot\module\parent.dm"
 #include "code\modules\robotics\robot\module_tool_creator\construction.dm"
+#include "code\modules\robotics\robot\module_tool_creator\cyborg_version.dm"
 #include "code\modules\robotics\robot\module_tool_creator\gimmick.dm"
 #include "code\modules\robotics\robot\module_tool_creator\modules.dm"
 #include "code\modules\robotics\robot\module_tool_creator\parent.dm"
