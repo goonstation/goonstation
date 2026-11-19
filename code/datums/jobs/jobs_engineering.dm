@@ -107,15 +107,15 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_head = list(/obj/item/clothing/head/helmet/hardhat/mining)
 	#ifdef UNDERWATER_MAP
 	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
+	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
 	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/mining,
 							/obj/item/clothing/shoes/flippers,
-							/obj/item/item_box/glow_sticker,
-							/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
+							/obj/item/item_box/glow_sticker)
 	#else
 	slot_suit = list(/obj/item/clothing/suit/space/engineer)
+	slot_head = list(/obj/item/clothing/head/helmet/space/engineer)
 	items_in_backpack = list(/obj/item/crowbar,
-							/obj/item/paper/book/from_file/pocketguide/mining,
-							/obj/item/clothing/head/helmet/space/engineer)
+							/obj/item/paper/book/from_file/pocketguide/mining)
 	#endif
 	wiki_link = "https://wiki.ss13.co/Miner"
 	email_group = MGD_SUPPLY

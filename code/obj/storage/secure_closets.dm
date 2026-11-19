@@ -834,7 +834,7 @@
 	/obj/item/storage/toolbox/mechanical,
 	/obj/item/extinguisher,
 	/obj/item/chem_grenade/firefighting,
-	/obj/item/chem_grenade/firefighting,)
+	/obj/item/chem_grenade/firefighting)
 
 /obj/storage/secure/closet/engineering/engineer
 	name = "\improper Engineer's locker"
