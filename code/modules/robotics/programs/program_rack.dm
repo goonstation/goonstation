@@ -3,8 +3,9 @@
 /obj/machinery/disk_rack/ai
 	name = "AI Program Disk Rack"
 	desc = "A disk rack for uploading AI-compatible programs from floppy disks."
-	icon_state = "disk_rack_ai"
-	accepted_disk_type = /obj/item/disk/data/floppy
+	icon_state = "disk_rack_wide_ai"
+	disk_overlay_state = "disk_overlay_wide"
+	accepted_disk_type = /obj/item/disk/data/wide_floppy
 
 	var/list/ai_abilities = list()
 	var/list/hologram_libraries = list()
@@ -57,7 +58,7 @@
 		var/list/new_skills = list()
 
 		for(var/i in 1 to 8)
-			var/obj/item/disk/data/floppy/disk = src.disks[i]
+			var/obj/item/disk/data/disk = src.disks[i]
 			if (!disk)
 				continue
 			for (var/datum/computer/file/ai_program/ai_program in disk.root.contents)
@@ -78,10 +79,17 @@
 		for_by_tcl(AI, /mob/living/silicon/ai)
 			AI.update_programs()
 
+TYPEINFO(/obj/machinery/disk_rack/ai/prefilled)
+	manufactured_type = /obj/machinery/disk_rack/ai
 /// Program Rack with basic programs
 /obj/machinery/disk_rack/ai/prefilled
 	initialize()
 		. = ..()
 		var/i = 1
-		for (var/typepath in list(/obj/item/disk/data/floppy/read_only/ai_program/hologram/standard,/obj/item/disk/data/floppy/read_only/ai_program/tracking,/obj/item/disk/data/floppy/read_only/ai_program/viewports,/obj/item/disk/data/floppy/read_only/ai_program/call_shuttle))
+		for (var/typepath in list(
+			/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/standard,
+			/obj/item/disk/data/wide_floppy/read_only/ai_program/tracking,
+			/obj/item/disk/data/wide_floppy/read_only/ai_program/viewports,
+			/obj/item/disk/data/wide_floppy/read_only/ai_program/call_shuttle
+		))
 			src.insert_disk(i++, new typepath)

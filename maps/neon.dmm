@@ -19824,7 +19824,7 @@
 "nHi" = (
 /obj/table/auto,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown,
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "1-4"

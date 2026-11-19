@@ -12137,7 +12137,7 @@
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown{
 	pixel_y = 7
 	},
 /turf/simulated/floor/carpet/arcade,

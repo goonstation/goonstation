@@ -4,6 +4,7 @@
 /datum/abilityHolder/silicon/ai/updateButtons(called_by_owner = 0, start_x = 2, start_y = 0)
 	. = ..()
 
+ABSTRACT_TYPE(/datum/targetable/ai)
 /datum/targetable/ai
 	preferred_holder_type = /datum/abilityHolder/silicon/ai
 	icon = 'icons/mob/hud_ai.dmi'

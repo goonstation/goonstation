@@ -12853,7 +12853,7 @@
 /obj/item/storage/goodybag,
 /obj/item/peripheral/videocard,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown{
 	pixel_x = -2;
 	pixel_y = 9
 	},

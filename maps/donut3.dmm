@@ -7207,7 +7207,7 @@
 /area/station/hallway/primary/south)
 "chO" = (
 /obj/table/reinforced/auto,
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown,
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown,
 /obj/item/storage/goodybag{
 	pixel_y = -6
 	},

@@ -477,10 +477,18 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 				src.disk_color = "#6f228d"
 			if(6)
 				src.icon_state = "big-pink"
-				src.disk_color = "#c168c4"
+				src.disk_color = "#f884fc"
 			if(7)
 				src.icon_state = "big-cyan"
 				src.disk_color = "#1ba89c"
+
+/obj/item/disk/data/wide_floppy/read_only
+	name = "permafloppy"
+
+	attack_self(mob/user as mob)
+		boutput(user, SPAN_ALERT("You can't flip the write-protect tab, it's held in place with glue or something!"))
+		return
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 ///Misc Disks

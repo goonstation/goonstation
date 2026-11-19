@@ -54965,7 +54965,7 @@
 	pixel_x = 10;
 	pixel_y = 5
 	},
-/obj/item/disk/data/floppy/read_only/ai_program/hologram/clown{
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown{
 	pixel_x = -4;
 	pixel_y = -1
 	},
