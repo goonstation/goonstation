@@ -34,8 +34,8 @@
 
 	HELP_MESSAGE_OVERRIDE("Use on a person with embedded shrapnel in them to extract it. Use in hand to dump the shrapnel you extracted.")
 
-	var/base_icon = "shrapnel_extractor"
-	var/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_ACT
+	VAR_PROTECTED/base_icon = "shrapnel_extractor"
+	VAR_PROTECTED/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_ACT
 
 /obj/item/shrapnel_extractor/New()
 	..()
