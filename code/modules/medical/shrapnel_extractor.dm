@@ -41,6 +41,9 @@
 			params = list("use_inventory_counter" = TRUE)
 	)
 
+	if(prob(10))
+		desc += " After 7 month in r&d, hopefully it been worth the wait."
+
 
 /obj/item/shrapnel_extractor/attack(mob/target, mob/user, def_zone, is_special, params)
 	if(is_special || !ishuman(target))
@@ -62,11 +65,12 @@
 
 	SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS ,PROC_REF(attempt_extraction), list(patient, user), src.icon, src.icon_state, null, src.interrupt_flags)
 
-/obj/item/shrapnel_extractor/update_icon(mob/user)
-	if(isnull(src.storage) || !length(src.storage.get_contents()))
-		src.icon = "[src.base_icon]-full"
+/obj/item/shrapnel_extractor/update_icon()
+	. = ..()
+	if(isnull(src.storage) || length(src.storage.get_contents()))
+		src.icon_state = "[src.base_icon]-full"
 	else
-		src.icon = "[src.base_icon]-empty"
+		src.icon_state = "[src.base_icon]-empty"
 
 
 /obj/item/shrapnel_extractor/proc/attempt_extraction(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
@@ -104,7 +108,7 @@
 		patient.implant.Remove(I)
 
 		src.storage.add_contents(I, surgeon, visible=FALSE)
-
+		src.UpdateIcon()
 		// The shrapnel gets pulled to the user
 		// I.set_loc(surgeon.loc)
 		// I.pixel_x = rand(-2, 5)
