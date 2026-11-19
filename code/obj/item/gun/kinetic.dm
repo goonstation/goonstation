@@ -3568,19 +3568,22 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 		setProperty("carried_movespeed", 0.8)
 
-/obj/item/gun/kinetic/sniper/gooose
+/obj/item/gun/kinetic/sniper/goose
 	name = "\improper Battlegoose sniper rifle"
-	desc = "A semi-automatic bullpup sniper rifle, developed by... Wait, this is not the Betelgeuse! And it doesn't even look like a goose!"
+	desc = "A semi-automatic bullpup sniper rifle, developed by... Wait... This is not the Betelgeuse! And it doesn't even look like a goose!"
 	icon_state = "sniper-goose"
+	item_state = "sniper-goose"
 	click_sound = 'sound/misc/eggdrop.ogg'
 	click_msg = "*honk* *honk*"
 	sound_load_override = 'sound/vox/goose.ogg'
 
-	alter_projectile(obj/projectile/P)
-		. = ..()
-		P.proj_data.shot_sound = 'sound/voice/animal/goose.ogg'
+/obj/item/gun/kinetic/sniper/goose/alter_projectile(obj/projectile/P)
+	. = ..()
+	P.proj_data.shot_sound = 'sound/voice/animal/goose.ogg'
 
-
+/obj/item/gun/kinetic/sniper/goose/New()
+	. = ..()
+	STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) // kind of a hack but whatever...
 
 // WIP //////////////////////////////////
 /obj/item/gun/kinetic/antiair
