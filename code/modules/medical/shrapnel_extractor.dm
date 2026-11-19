@@ -14,7 +14,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "shrapnel_extractor-empty" // icon by TekoTheTeapot
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	item_state = "shrapnel_extractor"
+	item_state = "syringe_15" // looks close enough to the item sprite
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
@@ -124,7 +124,6 @@
 
 		src.storage.add_contents(I, surgeon, visible=FALSE)
 
-		// This tool is sophisticated, but operating on a patient who's awake, moving (and probably full of adrelaline) with a glorified handheld vacuum is risky.
 		CAUSE_EXPECTED_PAIN(patient, damage_low)
 
 		return
@@ -136,7 +135,7 @@
 
 	var/obj/item/organ/eye/popped_out = null
 
-	if (stupid_clown.organHolder.left_eye && stupid_clown.organHolder.right_eye) // if both eyes are available, pick one at random
+	if (stupid_clown.organHolder.left_eye && stupid_clown.organHolder.right_eye)
 		popped_out = prob(50) ? stupid_clown.drop_organ("left_eye") : stupid_clown.drop_organ("right_eye")
 	else if (stupid_clown.organHolder.left_eye)
 		popped_out = stupid_clown.drop_organ("left_eye")
