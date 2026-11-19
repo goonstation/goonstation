@@ -2,13 +2,13 @@
 
 CREATE_NAMESPACE(FALLBACK_DB)
 
-ADD_TO_NAMESPACE(FALLBACK_DB)(proc/open(path, expected_server, expected_group, max_age_seconds = 900))
+ADD_TO_NAMESPACE(FALLBACK_DB)(proc/open(path, expected_server, expected_group, max_age_seconds = 900, rw_flag = RUSTG_SQLITE_READ_ONLY))
 #ifndef LIVE_SERVER
 	max_age_seconds = INFINITY
 #endif
 	if(!fexists(path))
 		throw "Fallback file missing"
-	var/list/response = json_decode(rustg_sqlite_open(path, RUSTG_SQLITE_READ_ONLY, RUSTG_SQLITE_ROWS_ASSOC))
+	var/list/response = json_decode(rustg_sqlite_open(path, rw_flag, RUSTG_SQLITE_ROWS_ASSOC))
 	if (response["status"] != "ok")
 		throw "Fallback file could not be opened"
 	var/handle = response["handle"]
