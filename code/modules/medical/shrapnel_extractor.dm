@@ -28,7 +28,7 @@
 	m_amt = 10000
 	g_amt = 5000
 	stamina_damage = 5
-	stamina_cost = DRUM_BUFFER_SIZE
+	stamina_cost = 5
 	stamina_crit_chance = 35
 	move_triggered = FALSE
 
