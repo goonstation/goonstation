@@ -4,6 +4,7 @@
 	var/stealthy = 1
 	var/venom_id = "toxin"
 	var/inject_amount = 50
+	var/alter_blood = FALSE // if true, permanantly changes the targets blood type to changeling blood
 	cooldown = 1400
 	targeted = 1
 	target_anything = 1
@@ -59,7 +60,10 @@
 			if (MT.reagents.total_volume + toxin_holder.total_volume > MT.reagents.maximum_volume)
 				MT.reagents.remove_any((MT.reagents.total_volume + toxin_holder.total_volume) - MT.reagents.maximum_volume)
 			if (isliving(MT))
-				MT:was_harmed(holder.owner, special = "ling")
+				var/mob/living/M = MT
+				M.was_harmed(holder.owner, special = "ling")
+				if(alter_blood)
+					M.blood_id = "bloodc"
 		if (!stealthy)
 			holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] stings [target]!</b>"))
 		else
@@ -108,11 +112,12 @@
 
 	dna
 		name = "DNA Sting"
-		desc = "Injects stable mutagen and the blood of the selected victim into your target."
+		desc = "Transforms a target into the selected appearance, altering their blood permanantly. Great for framing someone."
 		icon_state = "stingdna"
 		venom_id = "dna_mutagen"
 		inject_amount = 30
-		pointCost = 4
+		pointCost = 8
+		alter_blood = TRUE
 		var/datum/targetable/changeling/dna_target_select/targeting = null
 
 		create_toxins()
