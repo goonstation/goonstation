@@ -41,3 +41,6 @@ ADD_TO_NAMESPACE(FALLBACK_DB)(proc/rows(handle, sql, list/parameters = null))
 		throw "Fallback SQLite query failed"
 	var/list/rows = response["rows"]
 	return rows
+
+ADD_TO_NAMESPACE(FALLBACK_DB)(proc/close(handle))
+	rustg_sqlite_close(handle)
