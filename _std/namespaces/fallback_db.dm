@@ -6,7 +6,7 @@ ADD_TO_NAMESPACE(FALLBACK_DB)(proc/open(path, expected_server, expected_group, m
 #ifndef LIVE_SERVER
 	max_age_seconds = INFINITY
 #endif
-	if(!fexists(path))
+	if(!fexists(path) && !rw_flag == RUSTG_SQLITE_READ_WRITE)
 		throw "Fallback file missing"
 	var/list/response = json_decode(rustg_sqlite_open(path, rw_flag, RUSTG_SQLITE_ROWS_ASSOC))
 	if (response["status"] != "ok")

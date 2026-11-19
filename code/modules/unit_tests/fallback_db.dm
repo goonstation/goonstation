@@ -3,8 +3,8 @@
 	var/handle
 
 /datum/unit_test/fallback_db/SetUp()
-	RUN_SEEDER(/datum/seeder/banSeeder)
 	src.handle = FALLBACK_DB.open("fallback_db_local.sqlite", config.server_id, config.server_group_id, rw_flag = RUSTG_SQLITE_READ_WRITE)
+	RUN_SEEDER(/datum/seeder/banSeeder, handle)
 
 /datum/unit_test/fallback_db/Run()
 	TEST_ASSERT(!isnull(handle), "Fallback DB failed to open")
