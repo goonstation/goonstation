@@ -687,6 +687,8 @@ var/global/list/job_start_locations = list()
 	color = "#FF0000"
 	/// target z-level to push it's contents to
 	var/targetZ = 1
+	/// always target the z level this landmark is on
+	var/targetCurrentZ = FALSE
 	/// x offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
 	var/xOffset = 0
 	/// /y offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
@@ -707,7 +709,8 @@ var/global/list/job_start_locations = list()
 	proc/setup(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
 		if (man_xOffset) src.xOffset = man_xOffset
 		if (man_yOffset) src.yOffset = man_yOffset
-		if (man_targetZ) src.targetZ = man_targetZ
+		if (src.targetCurrentZ) src.targetZ = get_z(src)
+		else if (man_targetZ) src.targetZ = man_targetZ
 		if (!isnull(man_warptarget_modifier)) src.warptarget_modifier = man_warptarget_modifier
 		var/turf/T = get_turf(src)
 		if (!T) return
@@ -726,6 +729,10 @@ var/global/list/job_start_locations = list()
 				T.vistarget.fullbright = TRUE
 				T.vistarget.RL_Init()
 		qdel(src)
+
+/obj/landmark/viscontents_spawn/same_z
+	targetCurrentZ = TRUE
+	color = "#aa00ff"
 
 /obj/landmark/viscontents_spawn/no_vis
 	name = "instant hole spawn"
