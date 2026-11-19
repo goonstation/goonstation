@@ -17,7 +17,7 @@
 
 	disposing()
 		STOP_TRACKING
-		for (var/i in 1 to MAX_DISKS)
+		for (var/i in 1 to DISK::RACK::MAX_DISKS)
 			if (disks[i])
 				src.remove_disk(i)
 		src.trigger_ai_update()
