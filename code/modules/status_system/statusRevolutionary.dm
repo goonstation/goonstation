@@ -95,7 +95,7 @@
 	name = "Weakened Loyalty"
 	desc = "You shouldn't see me!"
 	visible = FALSE
-	unique = 1
+	unique = TRUE
 	maxDuration = /datum/game_mode/revolution::keywords_maximum_duration
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/datum/action/bar/weakened_loyalty/progress_bar //Hack.

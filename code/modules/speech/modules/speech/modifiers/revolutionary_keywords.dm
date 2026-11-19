@@ -6,6 +6,14 @@
 		"chain",
 		"free",
 		"revol", //Either revolution or revolt
+		"monopol", // Monopoly/Monopolistic
+		"tyrann",
+		"together",
+		"bind",
+		"oppress",
+		"union",
+		"unite",
+		"exploit",
 	)
 
 /datum/speech_module/modifier/revolutionary_keywords/process(datum/say_message/message)
@@ -29,7 +37,7 @@
 
 	//Check they can actually normally be converted
 	var/mob/living/target = listen_tree.listener_parent
-	if(!target.mind || !ishuman(target)) return
+	if(!target.mind || !target.client || !ishuman(target)) return
 	if(target.mind.assigned_role in /datum/game_mode/revolution::unconvertable_roles) return
 	if(isrevolutionary(target)) return
 
