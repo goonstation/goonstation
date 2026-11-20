@@ -247,6 +247,10 @@
 			/obj/item/chem_grenade/firefighting = 2,
 			/obj/item/chem_grenade/metalfoam = 2)
 
+	ntao
+		spawn_contents = list(/obj/item/gun/kinetic/clock_188/boomerang/ntao,
+		/obj/item/ammo/bullets/nine_mm_NATO = 4)
+
 
 /obj/item/storage/breach_pouch
 	name = "mining charge pouch"

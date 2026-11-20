@@ -1017,6 +1017,20 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			projectiles = list(current_projectile)
 			UpdateIcon()
 
+	ntao
+		desc = "Jokingly called a \"Gunarang\" in some circles. Uses- Wait, where's the trigger??"
+
+		New()
+			..()
+			default_magazine = /obj/item/ammo/bullets/nine_mm_NATO
+			ammo = new default_magazine
+			set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO)
+			projectiles = list(current_projectile)
+			UpdateIcon()
+
+		pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
+			return 0
+
 /obj/item/gun/kinetic/uzi
 	desc = "A stamped metal PDW, produced to respond to Mortian raids. A favorite of armed bodyguards, hired muscle, henchmen, and gangsters."
 	name = "\improper MOR-30"
