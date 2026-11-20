@@ -14,13 +14,17 @@
 		"union",
 		"unite",
 		"exploit",
-		"helicon",
+		"helicon", // SS13 specific, the refinery disaster
 		"struggle",
 		"class",
-		"bourgeois",
+		"bourgeois", //also bourgeoisie
 		"rebel",
 		"resist",
 		"solidarity",
+		"prole", //also proletariat
+		"hegemony",
+		"greed",
+		"comrade",
 	)
 
 /datum/speech_module/modifier/revolutionary_keywords/process(datum/say_message/message)
