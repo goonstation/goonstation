@@ -48,6 +48,7 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = TRUE
+	var/fold_possible = TRUE
 	var/list/form_startpoints
 	var/list/form_endpoints
 	var/font_css_crap = null
@@ -96,11 +97,15 @@
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
-	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Fold", "Read", "Nothing"))
+	var/list/initial_options = src.fold_possible ? list("Fold", "Read", "Nothing") : list("Read", "Nothing")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", initial_options)
 	if (!menuchoice || menuchoice == "Nothing")
 		return
 	if (menuchoice == "Read")
 		src.examine(user)
+		return
+
+	if(!src.fold_possible) // you will not fold this important paper, no sir!
 		return
 
 	var/list/options = list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet")

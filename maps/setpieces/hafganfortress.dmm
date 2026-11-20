@@ -15727,7 +15727,7 @@
 /obj/machinery/light/small/frostedred,
 /obj/table/reinforced/auto,
 /obj/table/reinforced/auto,
-/obj/item/paper/image/syndicate_files{
+/obj/item/paper/image/syndicate_backers_files{
 	pixel_x = -1;
 	pixel_y = 4
 	},

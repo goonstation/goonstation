@@ -152,13 +152,18 @@
 		path = "images/sstv/13.png"
 		desc = "Oh god."
 
-/obj/item/paper/image/syndicate_files
-	name = "\improper Ominous Classified Folder"
-	desc = "The Syndicate probably want to keep this away from NanoTrasen. Theres a small inscription in the corner: \"FOR VESTAL EYES ONLY\"."
+/obj/item/paper/image/syndicate_backers_files
+	name = "\improper Classified Syndicate Files"
+	desc = "The Syndicate probably want to keep this away from NanoTrasen. Theres a small note slipping out of the folder	q: \"FOR VESTAL EYES ONLY\"."
+	SYNDICATE_STEALTH_DESCRIPTION("KEEP. THIS. SAFE.")
+	tooltip_flags = REBUILD_USER
+
 	icon_state = "folder-syndicate"
 	path = "images/arts/Syndicate_Org_Chart.png" // by cogwerks
 	rarity = ITEM_RARITY_LEGENDARY // scary color!
-	sizex = 800
-	sizey = 450
+
+	sizex = 630
+	sizey = 420
 	scrollbar = FALSE
 	burn_possible = FALSE
+	fold_possible = FALSE
