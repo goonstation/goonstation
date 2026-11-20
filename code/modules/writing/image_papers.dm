@@ -154,7 +154,7 @@
 
 /obj/item/paper/image/syndicate_backers_files
 	name = "\improper Classified Syndicate Files"
-	desc = "The Syndicate probably want to keep this away from NanoTrasen. Theres a small note slipping out of the folder	q: \"FOR VESTAL EYES ONLY\"."
+	desc = "The Syndicate probably want to keep this away from NanoTrasen. Theres a small note slipping out of the folder: \"FOR VESTAL EYES ONLY\"."
 	SYNDICATE_STEALTH_DESCRIPTION("KEEP. THIS. SAFE.")
 	tooltip_flags = REBUILD_USER
 
