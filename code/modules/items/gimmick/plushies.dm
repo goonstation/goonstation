@@ -305,9 +305,16 @@ TYPEINFO(/obj/submachine/claw_machine)
 	name = "gnarp plushie"
 	icon_state = "kitten_gnarp"
 
-/obj/item/toy/plush/small/kitten/gnarp/say_something(mob/user)
-	. = ..()
-	playsound(src, 'sound/voice/animal/glorp/glorp1.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+/obj/item/toy/plush/small/kitten/gnarp/attack_self(mob/user)
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Awe", "Say"))
+	if (!menuchoice)
+		return
+	if (menuchoice == "Awe" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
+		playsound(user, 'sound/voice/animal/glorp/glorp1.ogg', 50, TRUE)
+		src.audible_message(SPAN_EMOTE("[src] awes!"))
+	else if (menuchoice == "Say")
+		src.say_something(user)
+
 
 /obj/item/toy/plush/small/monkey
 	name = "monkey plush toy"
