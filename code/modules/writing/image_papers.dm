@@ -151,3 +151,14 @@
 	crewlog2
 		path = "images/sstv/13.png"
 		desc = "Oh god."
+
+/obj/item/paper/image/syndicate_files
+	name = "\improper Ominous Classified Folder"
+	desc = "The Syndicate probably want to keep this away from NanoTrasen"
+	icon_state = "folder-syndicate"
+	path = "images/arts/Syndicate_Org_Chart.png" // by cogwerks
+	rarity = ITEM_RARITY_LEGENDARY // scary color!
+	sizex = 800
+	sizey = 450
+	scrollbar = FALSE
+	burn_possible = FALSE

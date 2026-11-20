@@ -7872,6 +7872,9 @@
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/gemstone,
+/obj/item/cane/golden,
+/obj/item/cane/golden,
+/obj/item/cane/golden,
 /turf/unsimulated/floor/engine,
 /area/prefab/vault)
 "uI" = (
@@ -15695,12 +15698,9 @@
 /obj/machinery/light/small/frostedred,
 /obj/table/reinforced/auto,
 /obj/table/reinforced/auto,
-/obj/item/objBriefcase/syndicate{
-	name = "classified documents";
-	pixel_y = 6
-	},
-/obj/item/objBriefcase/syndicate{
-	name = "classified documents"
+/obj/item/paper/image/syndicate_files{
+	pixel_x = -1;
+	pixel_y = 4
 	},
 /turf/unsimulated/floor/terrazzo/black,
 /area/prefab/synd_lab{
@@ -17443,6 +17443,9 @@
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/gemstone,
+/obj/item/cane/golden,
+/obj/item/cane/golden,
+/obj/item/cane/golden,
 /turf/unsimulated/floor/engine,
 /area/prefab/vault)
 "SV" = (
@@ -17713,6 +17716,20 @@
 	},
 /area/prefab/water_treatment{
 	name = "Deep Maint"
+	})
+"Tx" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line-broken1";
+	dir = 1;
+	plane = -108
+	},
+/obj/landmark/antagonist/operative/ai,
+/turf/unsimulated/floor/marble/black,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
 	})
 "Ty" = (
 /obj/structure/girder/reinforced,
@@ -23045,7 +23062,7 @@ tk
 je
 DZ
 do
-nF
+Tx
 uQ
 QX
 Al
