@@ -59,3 +59,21 @@
 	// Brainwashing time
 	if(!ON_COOLDOWN(target, "revolutionary_keywords", /datum/game_mode/revolution::keywords_cooldown_per_message))
 		target.changeStatus("weakened_loyalty", /datum/game_mode/revolution::keywords_time_per_message)
+
+// Grant the owner an ability to see the keywords at any time
+/datum/targetable/view_revolutionary_keywords
+	name = "View Keywords"
+	desc = "View the list of all revolutionary keywords."
+	icon = 'icons/mob/wraith_ui.dmi'
+	icon_state = "mass_whisper"
+	border_icon = 'icons/mob/critter_ui.dmi'
+	border_icon_state = "template_red"
+	targeted = 0
+	cooldown = 0
+
+	cast(atom/target)
+		. = ..()
+		if (!src.holder.owner)
+			return
+		var/list/keywords = /datum/speech_module/modifier/revolutionary_keywords::keywords
+		tgui_message(src.holder.owner, "<b>Revolutionary Keywords:</b><hr>[english_list(keywords)]", "Revolutionary Keywords")

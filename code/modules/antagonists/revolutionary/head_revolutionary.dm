@@ -125,8 +125,9 @@
 				boutput(H, SPAN_NOTICE(SPAN_BOLD("The syndicate has granted \the [headset] on your head access to the syndicate channel to speak with your fellow revolutionaries.")))
 			// Grant the power to brainwash
 			H.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS)
-			boutput(H, SPAN_ALERT(SPAN_BOLD("In order to make the crew susceptible to your flash, you must speak KEYWORDS to them.")))
-			boutput(H, SPAN_ALERT("Keywords are as follows: [english_list(/datum/speech_module/modifier/revolutionary_keywords::keywords)]"))
+			H.addAbility(/datum/targetable/view_revolutionary_keywords)
+			boutput(H, SPAN_ALERT(SPAN_BOLD("In order to make the crew susceptible to your flash, you must speak KEYWORDS to them. <br>\
+											You can see the list of keywords at any time using the \"View Keywords\" ability.")))
 
 	add_to_image_groups()
 		. = ..()
@@ -162,11 +163,13 @@
 		// Grant them the ability to speak keywords if cloned or whatever
 		if(ROLEPLAY_REVOLUTIONARIES && ishuman(new_mob))
 			new_mob.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS)
+			new_mob.addAbility(/datum/targetable/view_revolutionary_keywords)
 
 	mind_detach(source, mob/old_mob, mob/new_mob)
 		. = ..()
 		if(ROLEPLAY_REVOLUTIONARIES)
-			new_mob.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS)
+			old_mob.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS)
+			old_mob.removeAbility(/datum/targetable/view_revolutionary_keywords)
 
 
 	get_statistics()
