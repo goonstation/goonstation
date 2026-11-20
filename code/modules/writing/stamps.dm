@@ -102,10 +102,17 @@
 
 /obj/item/stamp/centcom
 	name = "\improper centcom executive rubber stamp"
-	desc = "Some bureaucrat from Centcom probably lost this. Dang, is that National Notary's 'Admiral Sampson' model with the exclusive blackwood handle?"
+	desc = "Dang, is that National Notary's 'Admiral Sampson' model with the exclusive blackwood handle?"
 	icon_state = "stamp-centcom"
 	default_material = "synthrubber_blue"
 	special_mode = "Centcom"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind && user.mind.assigned_role == "CentCom Representative")
+			. = "You better not lose it!"
+		else
+			. = "Some bureaucrat from CentCom probably lost it."
+		. = ..()
 
 /obj/item/stamp/inspector
 	name = "\improper inspector rubber stamp"
