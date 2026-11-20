@@ -156,12 +156,13 @@
 	name = "\improper Classified Syndicate Files"
 	desc = "The Syndicate probably want to keep this away from NanoTrasen. Theres a small note slipping out of the folder: \"FOR VESTAL EYES ONLY\"."
 	SYNDICATE_STEALTH_DESCRIPTION("KEEP. THIS. SAFE.")
+	rarity = ITEM_RARITY_LEGENDARY // scary color!
 	tooltip_flags = REBUILD_USER
-
 	icon_state = "folder-syndicate"
 	path = "images/arts/Syndicate_Org_Chart.png" // by cogwerks
-	rarity = ITEM_RARITY_LEGENDARY // scary color!
-
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "folder"
+	inhand_color = "#D20040"
 	sizex = 630
 	sizey = 420
 	scrollbar = FALSE
