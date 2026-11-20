@@ -268,6 +268,15 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"aL" = (
+/obj/landmark/antagonist/operative/ai,
+/turf/unsimulated/floor/marble/black,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "aM" = (
 /obj/mapping_helper/wingrille_spawn/auto/hardened/tuff,
 /turf/unsimulated/floor/industrial,
@@ -8870,6 +8879,12 @@
 /obj/item/ammo/bullets/rifle_762_NATO{
 	pixel_x = -7
 	},
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -13371,6 +13386,20 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"IR" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/black,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "IS" = (
 /obj/concrete_wall,
 /turf/unsimulated/floor/concrete,
@@ -17717,20 +17746,6 @@
 /area/prefab/water_treatment{
 	name = "Deep Maint"
 	})
-"Tx" = (
-/obj/decal/tile_edge/line/red{
-	icon_state = "line-broken1";
-	dir = 1;
-	plane = -108
-	},
-/obj/landmark/antagonist/operative/ai,
-/turf/unsimulated/floor/marble/black,
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
 "Ty" = (
 /obj/structure/girder/reinforced,
 /obj/decal/tile_edge/line/black,
@@ -18518,6 +18533,12 @@
 /obj/item/gun/kinetic/breakaction/singleshotrifle{
 	pixel_y = 8
 	},
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -22987,7 +23008,7 @@ DZ
 DZ
 nF
 uQ
-uQ
+aL
 gY
 jj
 fL
@@ -23062,7 +23083,7 @@ tk
 je
 DZ
 do
-Tx
+nF
 uQ
 QX
 Al
@@ -23919,7 +23940,7 @@ fa
 kU
 kU
 fa
-vK
+IR
 hh
 tQ
 EV
