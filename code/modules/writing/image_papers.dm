@@ -160,7 +160,6 @@
 	tooltip_flags = REBUILD_USER
 	icon_state = "folder-syndicate"
 	path = "images/arts/Syndicate_Org_Chart.png" // by cogwerks
-	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "folder"
 	inhand_color = "#D20040"
 	sizex = 630
