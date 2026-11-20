@@ -14,6 +14,13 @@
 		"union",
 		"unite",
 		"exploit",
+		"helicon",
+		"struggle",
+		"class",
+		"bourgeois",
+		"rebel",
+		"resist",
+		"solidarity",
 	)
 
 /datum/speech_module/modifier/revolutionary_keywords/process(datum/say_message/message)
