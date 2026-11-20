@@ -76,4 +76,4 @@
 		if (!src.holder.owner)
 			return
 		var/list/keywords = /datum/speech_module/modifier/revolutionary_keywords::keywords
-		tgui_message(src.holder.owner, "<b>Revolutionary Keywords:</b><hr>[english_list(keywords)]", "Revolutionary Keywords")
+		tgui_message(src.holder.owner, "<b>Revolutionary Keywords:</b><hr>[english_list(keywords)]", "Revolutionary Keywords", theme = "syndicate")
