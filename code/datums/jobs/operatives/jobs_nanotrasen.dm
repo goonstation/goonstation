@@ -125,20 +125,13 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
 
-	slot_back = list(/obj/item/storage/backpack/NT/ERT)
-	slot_jump = list(/obj/item/clothing/under/misc/turds)
-	slot_foot = list(/obj/item/clothing/shoes/swat)
-	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
-	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
-	slot_card = /obj/item/card/id/nanotrasen
-	faction = list(FACTION_NANOTRASEN)
-
 /datum/job/special/nt/asssistant_operative
-	name = "Nanotrasen Assistant Operative"
+	name = "Nanotrasen Assistant Operative" //putting the Ass in Assistant
+	wages = PAY::UNTRAINED //rookies
 	trait_list = list("training_security")
 	receives_miranda = TRUE
 	slot_head = list(/obj/item/clothing/head/NTberet)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/NT)
 	slot_poc1 = list(/obj/item/storage/ntsc_pouch/ntao)
 	slot_poc2 = list(/obj/item/paper/iou_trigger)
@@ -146,5 +139,5 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_glov = list(/obj/item/clothing/gloves/fingerless)
 	slot_belt = list(/obj/item/barrier/collapsible/security)
-	slot_ears =  null
-	items_in_backpack = list(/obj/item/storage/firstaid/regular)
+	slot_ears = list (/obj/item/device/radio/headset/command/nt/assistant)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular/empty) //lol, lmao even

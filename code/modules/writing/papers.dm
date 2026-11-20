@@ -1595,3 +1595,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	We will supply it once our budget is renewed.<br>
 	"}
 
+/obj/item/paper/iou_trigger
+	name = "I.O.U Pistol Trigger"
+	desc = "Fuck's sake."
+	info = {"So, uh, this shipment of Clocks had no triggers. Not a single one.  When I asked for replacements, corporate didn't approve the budget for new triggers, nor did approve the budget for more Clocks, so you'll have to just deal with it. Have fun!"}
