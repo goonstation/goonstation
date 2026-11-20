@@ -3495,16 +3495,6 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
-"jI" = (
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red.";
-	pixel_y = 32
-	},
-/turf/unsimulated/floor/black,
-/area/prison/cell_block/wards{
-	name = "Syndicate Brig"
-	})
 "jJ" = (
 /obj/barricade,
 /turf/unsimulated/floor/concrete,
@@ -5745,9 +5735,7 @@
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/gloves/swat,
 /obj/item/clothing/gloves/swat,
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red.";
+/obj/decal/poster/flag/syndicate{
 	pixel_y = 32
 	},
 /obj/item/clothing/under/color/brown,
@@ -7078,9 +7066,7 @@
 /obj/machinery/vending/cigarette{
 	pixel_y = 4
 	},
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red.";
+/obj/decal/poster/flag/syndicate{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/concrete,
@@ -7491,6 +7477,19 @@
 /obj/decal/poster/wallsign/stencil/right/n,
 /turf/unsimulated/wall/auto/lead/gray{
 	name = "plated wall"
+	},
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
+"tR" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/stairs/dark{
+	dir = 9
 	},
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -8931,18 +8930,6 @@
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
-"xr" = (
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red."
-	},
-/turf/unsimulated/wall/auto/adventure/overgrown1,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -11457,6 +11444,14 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"Ee" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/prefab/synd_lab{
+	name = "Executive Wing"
+	})
 "Ei" = (
 /obj/ladder{
 	id = "vedwyd_tunnel1";
@@ -12037,9 +12032,7 @@
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/gloves/swat,
 /obj/item/clothing/gloves/swat,
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red.";
+/obj/decal/poster/flag/syndicate{
 	pixel_y = 32
 	},
 /obj/item/clothing/under/color/brown,
@@ -16220,6 +16213,9 @@
 	})
 "Ql" = (
 /obj/table/podium_white/syndicate,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/shiny,
 /area/prefab/vault)
 "Qm" = (
@@ -23090,8 +23086,8 @@ PA
 PA
 ip
 gd
-xr
-gd
+PA
+tR
 Cr
 PA
 PA
@@ -24349,7 +24345,7 @@ aY
 hS
 cd
 My
-Ck
+Ee
 bg
 vU
 mG
@@ -24362,7 +24358,7 @@ Qd
 fa
 fa
 fa
-jI
+oY
 gR
 ya
 MW
@@ -24516,7 +24512,7 @@ fa
 sT
 FK
 fa
-jI
+oY
 kY
 uJ
 TL
