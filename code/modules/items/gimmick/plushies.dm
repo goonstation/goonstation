@@ -25,6 +25,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	/obj/item/toy/plush/small/buddy/future,\
 	/obj/item/toy/plush/small/kitten/wizard,\
 	/obj/item/toy/plush/small/kitten/bingus,\
+	/obj/item/toy/plush/small/kitten/gnarp,\
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool,\
@@ -299,6 +300,14 @@ TYPEINFO(/obj/submachine/claw_machine)
 	. = ..()
 	if(prob(30))
 		src.name = pick("bingus plush toy", "rotisserie chicken plush toy")
+
+/obj/item/toy/plush/small/kitten/gnarp
+	name = "gnarp plushie"
+	icon_state = "kitten_gnarp"
+
+/obj/item/toy/plush/small/kitten/gnarp/say_something(mob/user)
+	. = ..()
+	playsound(src, 'sound/voice/animal/glorp/glorp1.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 
 /obj/item/toy/plush/small/monkey
 	name = "monkey plush toy"
