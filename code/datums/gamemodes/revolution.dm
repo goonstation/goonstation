@@ -32,6 +32,23 @@
 	var/gibwave_started = FALSE
 	do_antag_random_spawns = 0
 	escape_possible = 0
+	var/list/unconvertable_roles = list( //TODO: Replace with job var
+		"Captain",
+		"Head of Personnel",
+		"Head of Security",
+		"Research Director",
+		"Medical Director",
+		"Chief Engineer",
+		"Communications Officer",
+		"Head of Mining",
+		"Nanotrasen Special Operative",
+		"Nanotrasen Security Consultant",
+		"Security Officer",
+		"Security Assistant",
+		"Vice Officer",
+		"Detective",
+		"AI",
+		"Cyborg")
 
 //Has several changes to accomodate the RP experience. See ROLEPLAY_REVOLUTIONARIES define for changes.
 /datum/game_mode/revolution/extended

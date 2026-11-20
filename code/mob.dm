@@ -3636,3 +3636,40 @@ TYPEINFO(/mob)
 ///"Getter" method so I can private the var
 /mob/proc/has_ailment_resistance(type)
 	return type in src.resistances
+
+/// Return all messageable PDAs attached to the mob that a third party can message, if they exist.
+///
+/// PDA must be on, and either externally visible (carbons), their internal PDA (silicons), or held (critters)
+/mob/proc/get_visible_pdas()
+	RETURN_TYPE(/list/obj/item/device/pda2)
+	return list()
+
+/mob/living/carbon/human/get_visible_pdas()
+	. = list()
+	var/obj/item/device/pda2/PDA
+	for (var/slot in list(SLOT_L_HAND, SLOT_R_HAND, SLOT_WEAR_ID, SLOT_BELT))
+		PDA = src.get_slot(slot)
+		if (istype(PDA))
+			. += PDA
+
+/mob/living/critter/get_visible_pdas()
+	. = list()
+	var/obj/item/device/pda2/PDA
+	for (var/datum/handHolder/HH as anything in src.hands)
+		PDA = HH.item
+		if (istype(PDA))
+			. += PDA
+
+/mob/living/silicon/get_visible_pdas()
+	if (src.mainframe)
+		return list(src.mainframe.internal_pda)
+	return list()
+
+/mob/living/silicon/robot/get_visible_pdas()
+	if (src.mainframe)
+		return list(src.mainframe.internal_pda)
+	return list(src.internal_pda)
+
+/mob/living/silicon/ai/get_visible_pdas()
+	return list(src.internal_pda)
+

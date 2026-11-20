@@ -169,24 +169,15 @@
 		src.pda_alert("Notification: [order.object] ordered by [order.orderedby] using personal account at [order.console_location].", list(MGT_CARGO, MGA_SHIPPING))
 		return
 
-	var/list/pda_list = list()
-
-	// check visible PDAs
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		pda_list += H.get_slot(SLOT_L_HAND)
-		pda_list += H.get_slot(SLOT_R_HAND)
-		pda_list += H.get_slot(SLOT_WEAR_ID)
-		pda_list += H.get_slot(SLOT_BELT)
-
-	for (var/obj/item/device/pda2/pda in pda_list)
-		if (pda.host_program.message_on && pda.owner)
-			order.address = pda.net_id
+	var/list/obj/item/device/pda2/PDAs = user.get_visible_pdas()
+	for (var/obj/item/device/pda2/PDA in PDAs)
+		if (PDA.owner && PDA.host_program?.message_on)
+			order.address = PDA.net_id
 			break
 
 	shippingmarket.supply_requests += order
 	logTheThing(LOG_STATION, usr, "placed a request for a [supply_pack.name] at [log_loc(src)].")
-	boutput(user, "Request for [supply_pack.name] sent to Supply Console. The Quartermasters will process your request as soon as possible.")
+	boutput(user, "Request for [supply_pack.name] sent to \the [/obj/machinery/computer/supplycomp::name], and will be processed as soon as possible.")
 	src.pda_alert("Notification: [order.object] requested by [order.orderedby] at [order.console_location].", list(MGT_CARGO, MGA_CARGOREQUEST))
 	src.update_static_data_for_all_viewers()
 
