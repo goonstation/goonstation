@@ -154,7 +154,7 @@
 
 /obj/item/paper/image/syndicate_files
 	name = "\improper Ominous Classified Folder"
-	desc = "The Syndicate probably want to keep this away from NanoTrasen"
+	desc = "The Syndicate probably want to keep this away from NanoTrasen. Theres a small inscription in the corner: \"FOR VESTAL EYES ONLY\"."
 	icon_state = "folder-syndicate"
 	path = "images/arts/Syndicate_Org_Chart.png" // by cogwerks
 	rarity = ITEM_RARITY_LEGENDARY // scary color!
