@@ -440,6 +440,15 @@
 		if (isAI(src.holder.owner))
 			src.turret.loc = src.holder.owner
 
+// BEGIN TM compat, remove before release
+/obj/item/aiModule/ability_expansion
+	var/list/ai_abilities
+/obj/item/aiModule/ability_expansion/unfriend_turret
+/obj/item/aiModule/ability_expansion/assisted_guidance
+/datum/targetable/ai/module/turret/deploy
+/datum/targetable/ai/module/turret/target
+// END TM compat
+
 /datum/targetable/ai/program/turret/deploy
 	name = "Deploy Turret"
 	desc = "Conviently place a turret for fun and compliance."
@@ -517,6 +526,7 @@
 		if(src.turret.target)
 			if(GET_DIST(src.turret, src.turret.target) > 10)
 				src.turret.target = null
+
 
 /datum/targetable/ai/program/turret/target
 	name = "Assign Target"
