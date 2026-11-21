@@ -5,9 +5,10 @@
 	icon_state = "bike_horn"
 	var/mode = "honk"
 	var/custom_file = null
+	var/cooldown = 4 SECONDS
 
 	attack_self(var/mob/user as mob)
-		if (ON_COOLDOWN(src, "attack_self", 1 SECOND))
+		if (ON_COOLDOWN(src, "attack_self", src.cooldown))
 			return
 		if(custom_file)
 			playsound(src.loc, custom_file, 100, 1)
