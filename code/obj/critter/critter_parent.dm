@@ -787,8 +787,10 @@
 				src.name = "[nickname] [src.name]"
 		src.AddComponent(/datum/component/proximity, FALSE) // enabled once hibernating
 		..()
+		global.classifier_hashmap.register_hashmap_entry(src)
 
 	disposing()
+		global.classifier_hashmap.unregister_hashmap_entry(src)
 		STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 		registered_area?.registered_critters -= src
 		if(src.is_pet)

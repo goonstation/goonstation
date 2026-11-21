@@ -56,3 +56,7 @@
 // ---- Record Database Signals ----
 	/// When a record field datum's value is updated. (field, old_value, new_value)
 	#define COMSIG_FIELD_VALUE_CHANGED "field_value_changed"
+
+// ---- visual classifier signals ----
+	/// Visor controls changed (cancel_targeting).
+	#define COMSIG_CLASSIFIER_CHANGED "classifier_changed"
