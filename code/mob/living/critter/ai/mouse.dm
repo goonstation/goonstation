@@ -1,7 +1,5 @@
 /datum/aiHolder/mouse
-	New()
-		..()
-		default_task = get_instance(/datum/aiTask/prioritizer/critter/mouse, list(src))
+	default_task = /datum/aiTask/prioritizer/critter/mouse
 
 /datum/aiTask/prioritizer/critter/mouse/New()
 	..()
@@ -9,9 +7,7 @@
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/eat, list(holder, src))
 
 /datum/aiHolder/mouse/mad
-	New()
-		..()
-		default_task = get_instance(/datum/aiTask/prioritizer/critter/mouse_mad, list(src))
+	default_task = /datum/aiTask/prioritizer/critter/mouse_mad
 
 /datum/aiTask/prioritizer/critter/mouse_mad/New()
 	..()

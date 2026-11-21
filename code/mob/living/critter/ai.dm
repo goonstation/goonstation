@@ -6,9 +6,10 @@ var/list/ai_move_scheduled = list()
 	var/atom/target = null // the simplest blackboard ever
 	/// Stores most recently generated path to target - if null, it needs regenerating, or a new target selected
 	var/list/target_path = null
-	///What the critter is currently doing. Do not set directly, use switch_to
+	/// What the critter is currently doing. Do not set directly, use switch_to
 	var/datum/aiTask/current_task = null
-	var/datum/aiTask/default_task = null  // what behavior the critter will fall back on
+	/// What behavior the critter will fall back on, pass a typepath
+	var/datum/aiTask/default_task = null
 	var/list/task_cache = list()
 	/// The default prioritizer will consume tasks from this list in order before it picks any others
 	var/list/datum/aiTask/priority_tasks = list()
@@ -26,7 +27,7 @@ var/list/ai_move_scheduled = list()
 
 	var/exclude_from_mobs_list = 0
 
-	New(var/mob/M)
+	New(mob/M)
 		..()
 		owner = M
 		if(istype(M, /mob/living/carbon/human))
@@ -50,6 +51,9 @@ var/list/ai_move_scheduled = list()
 			else
 				owner.add_ability_holder(/datum/abilityHolder/composite)
 				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
+
+		if(ispath(default_task))
+			default_task = get_instance(default_task, list(src))
 
 	disposing()
 		stop_move()
@@ -78,6 +82,8 @@ var/list/ai_move_scheduled = list()
 		//This SHOULD_NOT_SLEEP is *absolutely necessary* for protecting the mobAI loop from hangs.
 		//Do not remove unless you understand the implications.
 		SHOULD_NOT_SLEEP(TRUE)
+		if(current_task?.ai_turbo)
+			owner.mob_flags &= ~HEAVYWEIGHT_AI_MOB
 		current_task = task
 		if(task?.ai_turbo)
 			owner.mob_flags |= HEAVYWEIGHT_AI_MOB
@@ -95,17 +101,15 @@ var/list/ai_move_scheduled = list()
 
 			var/datum/aiTask/T = current_task.next_task()
 			if (T)
-				if(current_task.ai_turbo)
-					owner.mob_flags &= ~HEAVYWEIGHT_AI_MOB
 				switch_to(T)
 				T.reset()
 
 	proc/get_instance(taskType, list/nparams)
 		RETURN_TYPE(taskType)
-		if (taskType in task_cache)
-			return task_cache[taskType]
-		task_cache[taskType] = new taskType(arglist(nparams))
-		return task_cache[taskType]
+		. = task_cache[taskType]
+		if (!.)
+			. = new taskType(arglist(nparams))
+			task_cache[taskType] = .
 
 // bumping these up to parent because these are undoubtedly gonna be useful for more than just flockdrones - cirr
 	proc/wait(var/time=10)
@@ -115,6 +119,7 @@ var/list/ai_move_scheduled = list()
 		waitTask.elapsed_ticks = 0
 		waitTask.minimum_task_ticks = time
 		waitTask.maximum_task_ticks = time
+		waitTask.current_target_ticks = time
 		switch_to(waitTask)
 
 	proc/interrupt_to_task(datum/aiTask/task)

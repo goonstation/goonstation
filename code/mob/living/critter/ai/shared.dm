@@ -63,6 +63,12 @@
 	if(.)
 		holder.owner.icon_state = initial(holder.owner.icon_state)
 
+/datum/aiTask/timed/sitting/on_reset()
+	..()
+	var/mob/living/owner = holder?.owner
+	if(owner?.icon_state == "[initial(owner.icon_state)]-sit") // interrupted while sitting
+		owner.icon_state = initial(owner.icon_state)
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
 // spend a few ticks wandering aimlessly
@@ -111,6 +117,11 @@
 /datum/aiTask/timed/targeted
 	name = "targeted"
 	var/target_range = 8
+
+	/// Cheap gate checked first in evaluate()
+	/// Return FALSE to skip scoring entirely
+	proc/precondition()
+		return TRUE
 
 	score_target(atom/target)
 		. = 0
@@ -225,7 +236,7 @@
 	var/last_seek = null
 	var/following = null
 
-/datum/aiTask/timed/targeted/follower/proc/precondition()
+/datum/aiTask/timed/targeted/follower/precondition()
 	. = 0
 	if(following)
 		if(IN_RANGE(holder.owner, following, target_range))
@@ -246,8 +257,9 @@
 	. = ..()
 
 /datum/aiTask/timed/targeted/follower/evaluate()
-	..()
-	. = precondition() * 4 //FOLLOW_PRIORITY = 4
+	if(!precondition())
+		return 0
+	return 4 //FOLLOW_PRIORITY = 4
 
 /datum/aiTask/timed/targeted/follower/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
