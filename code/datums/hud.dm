@@ -30,12 +30,16 @@
 	screen_loc = "[x]:[px],[y]:[py]"
 
 /atom/movable/screen/hud
-	plane = PLANE_HUD
 	var/datum/hud/master
 	var/id = ""
 	var/show_tooltip = FALSE
 	var/list/tooltip_options = list()
 	var/obj/item/item
+
+/atom/movable/screen/hud/New(loc, icon, icon_state)
+	. = ..()
+	src.icon ||= icon
+	src.icon_state ||= icon_state
 
 /atom/movable/screen/hud/disposing()
 	qdel(src.master)
@@ -120,8 +124,8 @@
 					H.master = null
 		src.objects = null
 
-		for (var/datum/hud_zone/zone in src.hud_zones)
-			qdel(zone)
+		for (var/zone_alias in src.hud_zones)
+			qdel(src.hud_zones[zone_alias])
 		src.hud_zones = null
 
 		src.clear_master()
