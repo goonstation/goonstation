@@ -294,12 +294,12 @@
 	if(!precondition())
 		return 0
 	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
-	if(istype(C))
-		for(var/mob/M in view(target_range,C))
-			if(!isdead(M))
-				if(C.mate == M)
-					if(get_dist(C,M) > target_range/2)
-						return FOLLOW_PRIORITY
+	if(!istype(C) || !C.mate || isdead(C.mate))
+		return 0
+	if(GET_DIST(C, C.mate) <= target_range/2)
+		return 0
+	if(C.mate in view(target_range, C))
+		return FOLLOW_PRIORITY
 	. = 0
 
 /datum/aiTask/timed/targeted/follow_mate/on_tick()
