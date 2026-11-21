@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/obj/machinery/disk_rack, proc/add_disk_of_type)
 TYPEINFO(/obj/machinery/disk_rack)
 	mats = list("metal" = 30, "conductive" = 10)
 
@@ -103,6 +104,18 @@ TYPEINFO(/obj/machinery/disk_rack)
 			tgui_process.update_uis(src)
 			return
 	. = ..()
+
+/obj/machinery/disk_rack/proc/add_disk_of_type()
+	set name = "Add Disk"
+	var/chosen = tgui_input_list(usr, "Select disk type to add", "Disk To Add", concrete_typesof(src.accepted_disk_type))
+	if (chosen)
+		var/obj/item/disk/data/new_disk = new chosen(src)
+		for (var/i in 1 to DISK::RACK::MAX_DISKS)
+			if (src.disks[i])
+				continue
+			src.insert_disk(i, new_disk, null)
+			tgui_process.update_uis(src)
+			return
 
 /obj/machinery/disk_rack/clone
 	name = "clone rack"
