@@ -28,8 +28,9 @@ TYPEINFO(/obj/machinery/chem_heater)
 			return ..()
 
 	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
-		if(!istypes(B, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks/cocktailshaker))) //container paths are so baaad
+		if(B.w_class > W_CLASS_TINY) // You will NOT put the wav3 backtank / fuel tanks in your magic fire box
 			return
+
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
