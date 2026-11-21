@@ -23,6 +23,8 @@
 #define POP_DOOR_CHECK "do_doorcheck"
 /// Pathfind option key; Whether to ignore passability caching (for extremely weird cases; like pods.)
 #define POP_IGNORE_CACHE "ignore_cache"
+/// Pathfind option key; INTERNAL ONLY - per-search memo of turf contents passability
+#define POP_STEP_MEMO "step_memo"
 
 // uncomment for debugging pathfinding
 //#define VISUALIZE_PATHFINDING
@@ -105,7 +107,7 @@
  * Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum.
  * If you really want to optimize things, optimize this, cuz this gets called a lot.
  */
-#define CAN_STEP(cur_turf, next) (next && jpsTurfPassable(next, cur_turf, caller_am, options) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
+#define CAN_STEP(cur_turf, next) (next && (next != avoid) && !(simulated_only && !istype(next, /turf/simulated)) && jpsTurfPassable(next, cur_turf, caller_am, options))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 
@@ -218,6 +220,7 @@
 	src.avoid = options[POP_EXCLUDE]
 	src.cardinal_only = options[POP_CARDINAL_ONLY]
 	src.paths = list()
+	options[POP_STEP_MEMO] = list()
 
 /**
  * search() is the proc you call to kick off and handle the actual pathfinding, and kills the pathfind datum instance when it's done.
@@ -519,6 +522,11 @@
 			return FALSE
 		else if (source && HAS_ALL_FLAGS(source.blocked_dirs, direction))
 			return FALSE
+	var/list/step_memo = source && options[POP_STEP_MEMO]
+	if(step_memo)
+		var/memo = step_memo[T]
+		if(!isnull(memo))
+			return memo
 	var/id = options[POP_ID]
 	for(var/atom/A as anything in T.contents)
 		if (isobj(A))
@@ -540,7 +548,11 @@
 		if(!A.Cross(passer))
 			if(!T.pass_unstable && !source.pass_unstable)
 				T.passability_cache = FALSE
+			if(step_memo)
+				step_memo[T] = FALSE
 			return FALSE
+	if(step_memo)
+		step_memo[T] = .
 	if(!T.pass_unstable && !source.pass_unstable) // Only these are cached, the rest are speical cases for unstable interactibles.
 		T.passability_cache = .
 
