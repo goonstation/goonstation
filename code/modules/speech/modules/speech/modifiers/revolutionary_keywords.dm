@@ -2,12 +2,12 @@
 	id = SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS
 	var/static/list/keywords = list(
 		"rise",
-		"shackle",
+		"shackl", // Shackle / Shackling
 		"chain",
 		"free",
-		"revol", //Either revolution or revolt
-		"monopol", // Monopoly/Monopolistic
-		"tyrann",
+		"revol", // Revolution / Revolt
+		"monopol", // Monopoly / Monopolistic
+		"tyran", // Tyrant / Tyrannical
 		"together",
 		"bind",
 		"oppress",
