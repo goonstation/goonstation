@@ -78,6 +78,8 @@ var/list/ai_move_scheduled = list()
 		//This SHOULD_NOT_SLEEP is *absolutely necessary* for protecting the mobAI loop from hangs.
 		//Do not remove unless you understand the implications.
 		SHOULD_NOT_SLEEP(TRUE)
+		if(current_task?.ai_turbo)
+			owner.mob_flags &= ~HEAVYWEIGHT_AI_MOB
 		current_task = task
 		if(task?.ai_turbo)
 			owner.mob_flags |= HEAVYWEIGHT_AI_MOB
@@ -95,8 +97,6 @@ var/list/ai_move_scheduled = list()
 
 			var/datum/aiTask/T = current_task.next_task()
 			if (T)
-				if(current_task.ai_turbo)
-					owner.mob_flags &= ~HEAVYWEIGHT_AI_MOB
 				switch_to(T)
 				T.reset()
 
