@@ -1,5 +1,6 @@
 /datum/random_event/minor/pests
 	name = "Pests"
+	description = "Spawn a set of small mobcritters, some harmful"
 
 	event_effect()
 		..()

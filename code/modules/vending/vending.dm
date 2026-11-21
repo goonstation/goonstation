@@ -3233,6 +3233,8 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/instrument/whistle/janitor, 4)
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/mario/waluigi, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/mario/waluigi, 2, hidden=1)
 
 /obj/machinery/vending/air_vendor
 	name = "Oxygen Vending Machine"
