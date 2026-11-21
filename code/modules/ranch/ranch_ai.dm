@@ -63,6 +63,10 @@
 		var/mob/living/critter/small_animal/ranch_base/ranch_critter = holder.owner
 		src.eat_bodies = ranch_critter.eat_dead_mobs
 
+	reset()
+		..()
+		src.currently_eating = FALSE
+
 	failed()
 		if(src.currently_eating)
 			return FALSE
