@@ -29,6 +29,13 @@
 
 /datum/aiTask/sequence/goalbased/eat/get_targets()
 	. = list()
+	var/feed_nearby = FALSE
+	for_by_tcl(feed, /obj/decal/cleanable/ranch_feed) // feed is usually limited
+		if(IN_RANGE(holder.owner, feed, max_dist))
+			feed_nearby = TRUE
+			break
+	if(!feed_nearby)
+		return
 	for(var/obj/decal/cleanable/ranch_feed/F in view(max_dist, holder.owner))
 		. += F
 
