@@ -38,6 +38,7 @@ ABSTRACT_TYPE(/datum/random_event/minor/fault)
 
 /datum/random_event/minor/fault/camera
 	name = "Camera Failure"
+	description = "Cut several station cameras, notifying silicons after a brief period"
 
 	event_effect(source, amount)
 		..()
@@ -73,6 +74,7 @@ ABSTRACT_TYPE(/datum/random_event/minor/fault)
 
 /datum/random_event/minor/fault/door
 	name = "Door Failure"
+	description = "Apply a wiring fault to multiple doors on station, notifying silicon and engineering after a brief period"
 
 	event_effect(source, amount)
 		..()
