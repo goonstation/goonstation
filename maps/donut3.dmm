@@ -39564,6 +39564,10 @@
 "mnJ" = (
 /obj/table/wood/auto,
 /obj/decal/cleanable/desk_clutter,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 1
+	},
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "mnL" = (
@@ -43270,7 +43274,6 @@
 "nxl" = (
 /obj/machinery/light/incandescent/netural,
 /obj/blind_switch/directional/west,
-/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "nxu" = (
@@ -53575,11 +53578,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "qHz" = (
-/obj/table/wood/auto,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 1
-	},
+/obj/machinery/disk_rack/ai/prefilled,
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "qHC" = (
@@ -63732,7 +63731,9 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
-/obj/machinery/ai_status_display,
+/obj/machinery/ai_status_display{
+	pixel_y = -1
+	},
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/turret_protected/AIbaseoutside)
 "tNb" = (
@@ -71567,7 +71568,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "wdM" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/ai_status_display{
+	pixel_y = -1
+	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
