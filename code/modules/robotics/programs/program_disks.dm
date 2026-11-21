@@ -175,9 +175,9 @@
 // -- Reworked Disks
 
 /obj/item/disk/data/wide_floppy/read_only/ai_program/viewports_expansion
-	name = "data disk-'AI Viewport Expansion'"
-	software_package = "Viewport Expansion"
-	desc = "A disk with programs that compress video data even further. Allows AIs to process an additional visual stream."
+	name = "data disk-'ViewPort: Enterprise License'"
+	software_package = "ViewPort: Enterprise License"
+	desc = "A disk with programs that compress video data even further. This license allows AIs to process an additional visual stream."
 	New()
 		. = ..()
 		src.root.add_file(new /datum/computer/file/ai_program/skill/viewport_expansion)
