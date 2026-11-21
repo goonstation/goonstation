@@ -231,7 +231,6 @@
 	spawn_contents = list(
 		/obj/item/pet_carrier,
 		/obj/item/device/flash,
-		/obj/item/disk/data/floppy/manudrive/aiLaws,
 		/obj/item/storage/box/id_kit,
 		/obj/item/cash_briefcase,
 		/obj/item/storage/box/clothing/hop,
