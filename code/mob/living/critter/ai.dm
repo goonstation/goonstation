@@ -102,10 +102,10 @@ var/list/ai_move_scheduled = list()
 
 	proc/get_instance(taskType, list/nparams)
 		RETURN_TYPE(taskType)
-		if (taskType in task_cache)
-			return task_cache[taskType]
-		task_cache[taskType] = new taskType(arglist(nparams))
-		return task_cache[taskType]
+		. = task_cache[taskType]
+		if (!.)
+			. = new taskType(arglist(nparams))
+			task_cache[taskType] = .
 
 // bumping these up to parent because these are undoubtedly gonna be useful for more than just flockdrones - cirr
 	proc/wait(var/time=10)
