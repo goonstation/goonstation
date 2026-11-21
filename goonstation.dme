@@ -1786,6 +1786,7 @@
 #include "code\modules\medical\defibrillator.dm"
 #include "code\modules\medical\health_scans.dm"
 #include "code\modules\medical\medicaldiagnosis.dm"
+#include "code\modules\medical\shrapnel_extractor.dm"
 #include "code\modules\medical\surgery_procs.dm"
 #include "code\modules\medical\surgery_tools.dm"
 #include "code\modules\medical\triage.dm"
