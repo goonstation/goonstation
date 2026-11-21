@@ -45,19 +45,18 @@
 	.= 0
 
 /mob/living/carbon/human/update_stamina_desc(var/newDesc)
-	if (src.hud && src.hud.stamina)
-		src.hud.stamina.desc = newDesc
+	src.hud?.stamina?.desc = newDesc
 
 /mob/living/critter/update_stamina_desc(var/newDesc)
-	if (src.hud && src.hud.stamina)
-		src.hud.stamina.desc = newDesc
+	src.hud?.stamina?.desc = newDesc
 
-/atom/movable/screen/stamina_bar
+/atom/movable/screen/hud/stamina_bar
 	name = "Stamina"
 	desc = ""
 	icon = 'icons/mob/hud_human_new.dmi'
 	icon_state = "stamina_bar"
 	var/last_val = -123123
+
 	var/last_update = 0
 	layer = HUD_LAYER-1
 
@@ -89,9 +88,8 @@
 		if(C.stamina < 0)
 			//icon_state = "stamina_bar_neg"
 			var/scaling = C.stamina / STAMINA_NEG_CAP
-			src.transform = matrix(1, scaling, MATRIX_SCALE)
 			var/offy = nround((21 - (21 * scaling)) / 2)
-			src.screen_loc =  "EAST-1:0, NORTH:-[offy]"
+			src.transform = matrix(1, scaling, MATRIX_SCALE).Translate(0, -offy)
 			animate(src, time = 1, color = rgb(255, 0, 0),  easing = LINEAR_EASING, loop = -1)
 			animate(time = 1, color = rgb(200, 200, 200),  easing = LINEAR_EASING, loop = -1)
 		else
@@ -99,9 +97,8 @@
 			var/x = max(0, C.stamina)
 			var/scaling = x / C.stamina_max
 			//var/red = ((1 - scaling) * 255)
-			src.transform = matrix(1, scaling, MATRIX_SCALE)
 			var/offy = nround((21 - (21 * scaling)) / 2)
-			src.screen_loc =  "EAST-1:0, NORTH:-[offy]"
+			src.transform = matrix(1, scaling, MATRIX_SCALE).Translate(0, -offy)
 			animate(src, time = 5, color = rgb(255, 255, 1),  easing = LINEAR_EASING)
 			//src.transform = M
 			//src.color = rgb(red, 255 - red, 1)
