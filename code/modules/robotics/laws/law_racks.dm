@@ -835,9 +835,11 @@
 				src.power_usage += 100
 
 	proc/link_to_program_rack(obj/machinery/disk_rack/ai/new_rack)
-		src.program_rack?.linked_rack = null
+		if(src.program_rack)
+			src.program_rack.linked_lawracks -= src
 		src.program_rack = new_rack
-		new_rack?.linked_rack = src
+		if (new_rack)
+			new_rack.linked_lawracks |= src
 		src.update_ai_programs()
 
 	proc/update_ai_programs()

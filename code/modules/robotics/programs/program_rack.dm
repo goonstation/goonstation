@@ -6,7 +6,7 @@
 	icon_state = "disk_rack_wide_ai"
 	disk_overlay_state = "disk_overlay_wide"
 	accepted_disk_type = /obj/item/disk/data/wide_floppy
-	var/obj/machinery/lawrack/linked_rack
+	var/list/obj/machinery/lawrack/linked_lawracks
 
 	var/can_track = FALSE
 	var/can_call_shuttle = FALSE
@@ -19,11 +19,12 @@
 	New()
 		. = ..()
 		START_TRACKING
+		src.linked_lawracks = list()
 		src.attempt_claim()
 
 	disposing()
 		STOP_TRACKING
-		src.linked_rack?.link_to_program_rack(null)
+		src.disconnect_from_all_lawracks()
 		for (var/i in 1 to DISK::RACK::MAX_DISKS)
 			if (disks[i])
 				src.remove_disk(i)
@@ -35,25 +36,16 @@
 			if (!linker.linked_rack)
 				user?.show_message(SPAN_ALERT("\The [linker] isn't linked to a law rack!"))
 				return
-			if (src.linked_rack == linker.linked_rack)
+			if (linker.linked_rack in src.linked_lawracks)
 				user?.show_message(SPAN_ALERT("[src] is already linked to the same law rack as \the [linker]!"))
 				return
-			if (src.linked_rack)
-				if (user)
-					var/area/old_area = get_area(src.linked_rack)
-					if (tgui_alert(user, "[src] is linked to the law rack at [old_area.name], really change the linked rack?", "Change Linked Rack", list("Yes", "No")) != "Yes")
-						return
 			var/area/new_area = get_area(linker.linked_rack)
 			user?.show_message(SPAN_NOTICE("[src] linked to the law rack at [new_area.name]."))
 			linker.linked_rack.link_to_program_rack(src)
+			src.linked_lawracks |= linker.linked_rack
 			FLICK("cyborg_linker-active", linker)
-			src.linked_rack = linker.linked_rack
 			return
 		. = ..()
-
-	get_desc(dist, mob/user)
-		. = ..()
-		. += "<br>It is [src.linked_rack ? "" : "NOT "]linked to a law rack."
 
 	power_change()
 		. = ..()
@@ -62,8 +54,7 @@
 	was_deconstructed_to_frame(mob/user)
 		. = ..()
 		src.update_offerings()
-		src.linked_rack?.link_to_program_rack(null)
-		src.linked_rack = null
+		src.disconnect_from_all_lawracks()
 
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
@@ -81,6 +72,11 @@
 		if (ticker?.ai_law_rack_manager?.default_ai_rack?.program_rack)
 			return
 		ticker?.ai_law_rack_manager?.default_ai_rack?.link_to_program_rack(src)
+
+	proc/disconnect_from_all_lawracks()
+		for (var/obj/machinery/lawrack/lawrack in src.linked_lawracks)
+			lawrack.link_to_program_rack(null)
+		src.linked_lawracks = list()
 
 	proc/update_offerings()
 		if (src.status & (NOPOWER|BROKEN))
@@ -125,7 +121,8 @@
 		else
 			src.viewport_limit = 0
 
-		src.linked_rack?.update_ai_programs()
+		for (var/obj/machinery/lawrack/lawrack in src.linked_lawracks)
+			lawrack.update_ai_programs()
 
 /obj/machinery/disk_rack/ai/ui_data(mob/user)
 	return ..() + list("is_wide" = TRUE)
