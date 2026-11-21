@@ -241,6 +241,7 @@
 
 	if (ismob(holder.target))
 		var/mob/M = holder.target
+		// stop once in crit, otherwise too lethal to noobs
 		. = !(holder.target && isalive(M))
 	else
 		. = !(holder.target)
