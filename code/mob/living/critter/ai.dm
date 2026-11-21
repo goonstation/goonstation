@@ -115,6 +115,7 @@ var/list/ai_move_scheduled = list()
 		waitTask.elapsed_ticks = 0
 		waitTask.minimum_task_ticks = time
 		waitTask.maximum_task_ticks = time
+		waitTask.current_target_ticks = time
 		switch_to(waitTask)
 
 	proc/interrupt_to_task(datum/aiTask/task)
