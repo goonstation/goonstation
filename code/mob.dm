@@ -3673,3 +3673,5 @@ TYPEINFO(/mob)
 /mob/living/silicon/ai/get_visible_pdas()
 	return list(src.internal_pda)
 
+/mob/living/intangible/aieye/get_visible_pdas()
+	return list(src.mainframe.internal_pda)

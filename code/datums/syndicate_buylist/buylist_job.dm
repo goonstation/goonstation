@@ -243,6 +243,14 @@
 			return
 		..()
 
+/datum/syndicate_buylist/traitor/pipe_crawling_outfit
+	name = "Pipe-Crawling outfit"
+	items = list(/obj/item/clothing/under/gimmick/mario/syndicate/waluigi, /obj/item/clothing/head/mario/waluigi)
+	cost = 3
+	desc = "An advanced uniform that allows the wearer to crawl through tight disposal shafts or dive through the station's toilet network. Comes with a matching hat."
+	job = list("Janitor")
+	vr_allowed = FALSE
+
 /datum/syndicate_buylist/traitor/overcharged_vacuum
 	name = "Overcharged Vacuum Cleaner"
 	items = list(/obj/item/handheld_vacuum/overcharged)

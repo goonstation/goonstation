@@ -1,6 +1,7 @@
 
 /datum/random_event/minor/sleeper_dead_drop
 	name = "Sleeper Dead Drop"
+	description = "Provide a sleeper agent with some randomized gear inside a station object."
 	customization_available = TRUE
 	var/admin_override = FALSE
 	var/dead_drop_type
