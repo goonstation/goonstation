@@ -1223,6 +1223,12 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/reinforced)
 		name = "Rack Parts"
 		icon = 'icons/obj/metal.dmi'
 		icon_state = "rack_base_parts"
+	mannequin
+		recipe_id = "mannequin"
+		craftedType = /obj/mannequin
+		name = "Mannequin"
+		icon = 'icons/obj/furniture/mannequin.dmi'
+		icon_state = "mannequin"
 	railing
 		recipe_id = "railing"
 		craftedType = /obj/railing
