@@ -3217,3 +3217,19 @@ DEFINE_FLOORS(bamboo,
 	icon_state = "floor$$bamboo";\
 	default_material = "bamboo";\
 	uses_default_material_appearance = TRUE)
+
+/turf/unsimulated/floor/concrete
+	name = "concrete floor"
+	desc = "It's pretty sturdy."
+	icon = 'icons/misc/terra8.dmi'
+	icon_state = "floor"
+
+/turf/unsimulated/floor/moss
+	name = "moss"
+	desc = "A deep mat of lichens and mosses."
+	icon = 'icons/misc/terra8.dmi'
+	icon_state = "moss"
+
+	New()
+		..()
+		src.dir = pick(alldirs)

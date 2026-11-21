@@ -763,6 +763,33 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		. += SPAN_NOTICE("*---------*")
 
+		if (isAI(user))
+			var/mob/living/silicon/ai/mainframe
+			if (isAIeye(user))
+				var/mob/living/intangible/aieye/ai = user
+				mainframe = ai.mainframe
+			else
+				mainframe = user
+			if (!istype(mainframe))
+				return
+
+			var/list/obj/item/device/pda2/PDAs = src.get_visible_pdas()
+			var/found_messagable_pda = FALSE
+			var/batch_add = ""
+			if (length(PDAs))
+				for (var/obj/item/device/pda2/PDA in PDAs)
+					if (!PDA.owner)
+						continue
+					if (PDA.host_program?.message_on) // see ai.dm under Topic() to continue from here!
+						found_messagable_pda = TRUE
+						batch_add += "<br>[bicon(PDA)][PDA.name] - <a href='byond://?src=\ref[mainframe];net_id=[PDA.net_id];owner=[PDA.owner]'><u>*MESSAGE*</u></a>"
+					else
+						batch_add += "<br>[bicon(PDA)][PDA.name] - *MESSENGER DISABLED*"
+			if (!found_messagable_pda)
+				batch_add += "<br>*No messagable PDA detected!*"
+			. += batch_add
+
+
 	choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 		var/newname
 		if(isnull(default_name))
@@ -2529,7 +2556,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)
 		if (src.get_ear_damage()) src.take_ear_damage(-INFINITY)
 		if (src.get_ear_damage(1)) src.take_ear_damage(-INFINITY, 1)
-		src.lying = 0
+		src.set_lying(FALSE)
 		src.set_density(1)
 		if(src.stat)
 			src.camera.set_camera_status(FALSE)

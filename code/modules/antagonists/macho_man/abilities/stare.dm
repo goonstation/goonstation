@@ -10,7 +10,7 @@
 					holder.owner.verbs -= /mob/living/carbon/human/machoman/verb/macho_stare
 					var/mob/living/H = G.affecting
 					if (H.lying)
-						H.lying = 0
+						H.set_lying(FALSE)
 						H.remove_stuns()
 						H.set_clothing_icon_dirty()
 					H.jitteriness = 0

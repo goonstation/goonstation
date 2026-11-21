@@ -49,7 +49,7 @@
 	src.sight |= SEE_OBJS
 	src.see_in_dark = SEE_DARK_FULL
 	src.see_invisible = INVIS_CLOAK
-	src.lying = 1
+	src.set_lying(TRUE)
 	src.icon_state = "hive_main-crash"
 
 	src.mind?.register_death()

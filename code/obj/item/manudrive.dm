@@ -52,9 +52,9 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		temp_recipe_string = list(/datum/manufacture/clone_rack)
 
 	telesci_rack
-		name = "Medical ManuDrive: Clone Rack Blueprint"
-		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture clone disk racks."
-		icon_state = "datadiskmed"
+		name = "Research ManuDrive: Coordinate Rack Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture coordinate disk racks."
+		icon_state = "datadisksci"
 		temp_recipe_string = list(/datum/manufacture/telesci_rack)
 
 	law_rack //The law rack that the CE locker starts with
