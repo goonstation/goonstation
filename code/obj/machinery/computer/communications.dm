@@ -2,7 +2,7 @@
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
 
-	if (!src.can_call_shuttle)
+	if (!src.law_rack_connection?.program_rack?.can_call_shuttle)
 		src.show_text("You don't have a program installed to call the shuttle!", "red")
 		return
 

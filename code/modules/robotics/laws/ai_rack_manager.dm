@@ -20,6 +20,8 @@
 		//On initialisation of the ticker's ai rack manager, find all racks on the station and register them, and all silicons and associate them with default rack
 		for_by_tcl(R, /obj/machinery/lawrack)
 			src.register_new_rack(R)
+		for_by_tcl(P, /obj/machinery/disk_rack/ai)
+			src.link_program_rack(P)
 		//Find all mapped corrupted modules that couldn't be setup before we were
 		for_by_tcl(module, /obj/item/aiModule/experimental/corrupted)
 			if(module.lawText != "This law does not exist.")
@@ -60,6 +62,19 @@
 					S.playsound_local(S, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
 					S.show_laws()
+			if (isnull(src.default_ai_rack.program_rack))
+				for_by_tcl(program_rack, /obj/machinery/disk_rack/ai)
+					if (istype(program_rack, /obj/machinery/disk_rack/ai/prefilled))
+						src.default_ai_rack.link_to_program_rack(program_rack)
+						break
+
+				// the default rack is GONE, try to find another non-syndie one
+				if (isnull(src.default_ai_rack.program_rack))
+					for_by_tcl(program_rack, /obj/machinery/disk_rack/ai)
+						if (istype(program_rack, /obj/machinery/disk_rack/ai/syndicate))
+							continue
+						src.default_ai_rack.link_to_program_rack(program_rack)
+
 			#endif
 			logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims default rack!")
 
@@ -177,3 +192,10 @@
 			laws += "No law racks with connected silicons detected."
 
 		return jointext(laws, glue)
+
+	proc/link_program_rack(obj/machinery/disk_rack/ai/program_rack)
+		program_rack.update_offerings()
+		if (istype(program_rack, /obj/machinery/disk_rack/ai/prefilled))
+			src.default_ai_rack.link_to_program_rack(program_rack)
+		if (istype(program_rack, /obj/machinery/disk_rack/ai/syndicate))
+			src.default_ai_rack_syndie.link_to_program_rack(program_rack)

@@ -22,6 +22,8 @@
 	var/list/welded[MAX_CIRCUITS]
 	/// screwed status of law module by slot number
 	var/list/screwed[MAX_CIRCUITS]
+	/// Our linked AI program rack
+	var/obj/machinery/disk_rack/ai/program_rack
 
 	New(loc)
 		START_TRACKING
@@ -47,6 +49,7 @@
 
 	disposing()
 		STOP_TRACKING
+		src.link_to_program_rack(null)
 		ticker?.ai_law_rack_manager.unregister_rack(src)
 		src.drop_all_modules()
 		UpdateIcon()
@@ -829,6 +832,16 @@
 		for (var/i in 1 to MAX_CIRCUITS)
 			if (src.law_circuits[i])
 				src.power_usage += 100
+
+	proc/link_to_program_rack(obj/machinery/disk_rack/ai/new_rack)
+		src.program_rack = new_rack
+		new_rack?.linked_rack = src
+		src.update_ai_programs()
+
+	proc/update_ai_programs()
+		for_by_tcl(AI, /mob/living/silicon/ai)
+			if(AI.law_rack_connection == src)
+				AI.update_programs()
 
 /particles/rack_smoke
 	icon = 'icons/effects/effects.dmi'

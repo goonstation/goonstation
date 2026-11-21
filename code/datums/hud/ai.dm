@@ -142,17 +142,23 @@
 				tracking.maptext = ""
 
 		update_skills()
-			if (length(src.master.holoHolder.text_expansion))
+			if (!master.law_rack_connection?.program_rack)
+				src.hologram.underlays = list("button_disabled")
+				src.viewport.underlays = list("button_disabled")
+				src.tracking.underlays = list("button_disabled")
+				return
+
+			if (length(master.law_rack_connection.program_rack.hologram_libraries))
 				src.hologram.underlays = list("button")
 			else
 				src.hologram.underlays = list("button_disabled")
 
-			if (master.viewport_limit > 0)
+			if (master.law_rack_connection.program_rack.viewport_limit > 0)
 				src.viewport.underlays = list("button")
 			else
 				src.viewport.underlays = list("button_disabled")
 
-			if (master.can_track)
+			if (master.law_rack_connection.program_rack.can_track)
 				src.tracking.underlays = list("button")
 			else
 				src.tracking.underlays = list("button_disabled")
@@ -179,7 +185,7 @@
 				master.eyecam.access_area_apc()
 
 			if ("tracking")
-				if (!master.can_track)
+				if (!master.law_rack_connection?.program_rack?.can_track)
 					master.tracker.cease_track()
 				else if (master.tracker.tracking)
 					// stop
