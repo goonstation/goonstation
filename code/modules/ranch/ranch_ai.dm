@@ -45,17 +45,11 @@
 			return
 		eater_type = ranch_critter.species_type
 	for(var/mob/living/L in view(max_dist, holder.owner))
-		if(isalive(L))
+		if(istype(L, eater_type)) // Cannibalism prevention
 			continue
 		if(GET_COOLDOWN(L, "corpse_eating"))
 			continue
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
-				continue
-		else if(isunconscious(L)) // Kill critters before eating them
-			continue
-		if(istype(L, eater_type)) // Cannibalism prevention
+		if(!ranch_corpse_edible(L))
 			continue
 		. += L
 
@@ -88,7 +82,7 @@
 			. = !EF.cast(holder.target)
 		if(!. && src.eat_bodies)
 			var/datum/targetable/critter/eat_bodies/ED = holder.owner.abilityHolder.getAbility(/datum/targetable/critter/eat_bodies)
-			if(ED.cast(holder.target))
+			if(ED?.cast(holder.target) == CAST_ATTEMPT_SUCCESS)
 				src.currently_eating = TRUE
 				return FALSE
 
@@ -511,18 +505,55 @@
 		var/mob/living/critter/small_animal/ranch_base/ranch_critter = holder.owner
 		if(!istype(ranch_critter))
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
-		var/turf/T = get_turf(target)
-		if(get_dist(T, ranch_critter) < 2)
-			var/mob/living/L = locate(/mob/living) in T
-			if(!isalive(L) && !GET_COOLDOWN(L, "corpse_eating"))
-				var/duration = 6 SECONDS
-				if(ishuman(L))
-					duration = 4 SECONDS // Humans have limbs and organs that take a while to eat
-				if(ranch_critter.hunger > RANCH_HUNGER_STARVING)
-					duration /= 2
-				actions.start(new/datum/action/bar/corpse_eating(L, duration), ranch_critter)
-				return CAST_ATTEMPT_SUCCESS
-		. = 1
+		var/mob/living/L = target
+		if(!istype(L) || istype(L, ranch_critter.species_type) || GET_COOLDOWN(L, "corpse_eating"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if(get_dist(L, ranch_critter) >= 2 || !ranch_corpse_edible(L))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		var/duration = 6 SECONDS
+		if(ishuman(L))
+			duration = 4 SECONDS // Humans have limbs and organs that take a while to eat
+		if(ranch_critter.hunger > RANCH_HUNGER_STARVING)
+			duration /= 2
+		actions.start(new/datum/action/bar/corpse_eating(L, duration), ranch_critter)
+		return CAST_ATTEMPT_SUCCESS
+
+/// If a ranch critter can eat (part of) this mob
+/proc/ranch_corpse_edible(mob/living/L)
+	if(isalive(L))
+		return FALSE
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
+			return FALSE
+		return !isnull(ranch_edible_part(H))
+	return istype(L, /mob/living/critter) && isdead(L) // Kill critters before eating them
+
+/// Picks a random edible part of a human.
+/// Returns null if none left
+/proc/ranch_edible_part(mob/living/carbon/human/H)
+	if(H.limbs)
+		var/list/obj/item/parts/limb_list = H.limbs.get_limbs_all()
+		while(length(limb_list))
+			var/obj/item/parts/limb = pick(limb_list)
+			limb_list -= limb
+			if(!isrobolimb(limb))
+				return limb
+	if(H.organHolder)
+		var/list/organ_list = H.organHolder.get_organs_all()
+		while(length(organ_list))
+			var/organ = pick(organ_list)
+			organ_list -= organ
+			if(istype(organ, /obj/item/organ))
+				var/obj/item/organ/O = organ
+				if(O.organ_holder_name == "chest" || O.organ_holder_name == "head" || O.organ_holder_name == "brain")
+					continue
+				if(!O.robotic)
+					return O
+			else if(istype(organ, /obj/item/clothing/head/butt))
+				var/obj/item/clothing/head/butt/butt = organ
+				if(!butt.is_robotic)
+					return butt
 
 /datum/action/bar/corpse_eating
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -539,15 +570,13 @@
 	onUpdate()
 		..()
 		var/mob/M = src.owner
-		if(QDELETED(src.target) || !IN_RANGE(M, src.target, 1))
-			M.canmove = TRUE
+		if(QDELETED(src.target) || isalive(src.target) || !IN_RANGE(M, src.target, 1))
 			OVERRIDE_COOLDOWN(target, "corpse_eating", 0)
 			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
 		var/mob/M = src.owner
-		M.canmove = FALSE
 		M.visible_message(SPAN_ALERT("[src.owner] starts eating \the [src.target]!"), SPAN_NOTICE("You start eating the [src.target]!"))
 
 	onEnd()
@@ -555,53 +584,33 @@
 		var/mob/M = src.owner
 		if(!M || !src.target)
 			return
-		M.canmove = TRUE
+		if(!eat_target(M))
+			return
 		playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-		eat_target(M)
 		if(istype(M, /mob/living/critter/small_animal/ranch_base))
 			var/mob/living/critter/small_animal/ranch_base/ranch_critter = src.owner
 			ranch_critter.ranch_eating(src.target, 5, 40, FALSE)
 
-	proc/eat_target(var/mob/M)
+	/// Eats the target or one part of it.
+	/// Returns FALSE if nothing was edible
+	proc/eat_target(mob/M)
+		if(!ranch_corpse_edible(src.target))
+			return FALSE
 		if(!ishuman(target))
 			M.visible_message(SPAN_ALERT("[src.owner] ate \the [src.target]!"), SPAN_NOTICE("You ate \the [src.target]."))
 			src.target.unequip_all()
 			qdel(src.target)
-			return
+			return TRUE
 		var/mob/living/carbon/human/H = src.target
-		if(H.limbs)
-			// Eat limbs first.
-			var/list/obj/item/parts/limb_list = H.limbs.get_limbs_all()
-			while(length(limb_list) > 0)
-				var/obj/item/parts/limb = pick(limb_list)
-				limb_list -= limb
-				if(!isrobolimb(limb))
-					M.visible_message(SPAN_ALERT("[src.owner] ate [src.target]'s [limb]!"), SPAN_NOTICE("You ate [src.target]'s [limb]."))
-					limb.delete()
-					return
-
-		if(H.organHolder)
-			// Now eat their organs.
-			var/list/organ_list = H.organHolder.get_organs_all()
-			while(length(organ_list) > 0)
-				var/organ = pick(organ_list)
-				organ_list -= organ
-				if(istype(organ, /obj/item/organ))
-					var/obj/item/organ/O = organ
-					if(O.organ_holder_name == "chest" || O.organ_holder_name == "head" || O.organ_holder_name == "brain")
-						continue
-					if(!O.robotic)
-						M.visible_message(SPAN_ALERT("[src.owner] ate [src.target]'s [O]!"), SPAN_NOTICE("You ate [src.target]'s [O]."))
-						H.organHolder.drop_organ(O, H.loc)
-						qdel(O)
-						return
-				else if(istype(organ, /obj/item/clothing/head/butt))
-					var/obj/item/clothing/head/butt/butt = organ
-					if(!butt.is_robotic)
-						M.visible_message(SPAN_ALERT("[src.owner] ate [src.target]'s [butt]!"), SPAN_NOTICE("You ate [src.target]'s [butt]."))
-						H.organHolder.drop_organ(butt, H.loc)
-						qdel(butt)
-						return
-
-		M.visible_message(SPAN_ALERT("[src.owner] finished eating \the [H]!"), SPAN_NOTICE("You finished eating \the [H]."))
+		var/obj/item/part = ranch_edible_part(H)
+		M.visible_message(SPAN_ALERT("[src.owner] ate [H]'s [part]!"), SPAN_NOTICE("You ate [H]'s [part]."))
+		if(istype(part, /obj/item/parts))
+			var/obj/item/parts/limb = part
+			limb.delete()
+		else
+			H.organHolder.drop_organ(part, H.loc)
+			qdel(part)
+		if(!ranch_edible_part(H))
+			M.visible_message(SPAN_ALERT("[src.owner] finished eating \the [H]!"), SPAN_NOTICE("You finished eating \the [H]."))
+		return TRUE
 
