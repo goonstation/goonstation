@@ -660,7 +660,7 @@
 		src.equipped():AttackSelf(src)
 
 	src.canmove = FALSE
-	src.lying = TRUE
+	src.set_lying(TRUE)
 	src.last_sleep = 0
 	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand

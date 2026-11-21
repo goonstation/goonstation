@@ -1,5 +1,6 @@
 /datum/random_event/start/poisoning
 	name = "Food Poisoning"
+	description = "Afflict one or more registered crew wtih food poisoning, causing nausea"
 	customization_available = 0
 	required_elapsed_round_time = 0
 
@@ -17,7 +18,7 @@
 			if (isvirtual(H)) continue
 			if (inafterlife(H)) continue
 			var/datum/db_record/personnel/general/record = global.data_core.get_general_record(H.real_name)
-			if (!record || record["pstat"] == "*Deceased*") continue
+			if (!record || record["p_stat"] == "*Deceased*") continue
 			if (istype(H.loc, /obj/cryotron)) continue
 			potential_victims += H
 		if (length(potential_victims))

@@ -1,5 +1,6 @@
 /datum/random_event/minor/third_shift_syndrome
 	name = "Third Shift Syndrome"
+	description = "Afflict several registered crew with third shift syndrome, which causes crew apparitions to appear"
 	weight = 5
 	var/const/tss_infect_percentage = 0.075
 
@@ -13,7 +14,7 @@
 			if (isvirtual(H)) continue
 			if (inafterlife(H)) continue
 			var/datum/db_record/personnel/general/record = global.data_core.get_general_record(H.real_name)
-			if (!record || record["pstat"] == "*Deceased*") continue
+			if (!record || record["p_stat"] == "*Deceased*") continue
 			if (istype(H.loc, /obj/cryotron)) continue
 			potential_victims += H
 

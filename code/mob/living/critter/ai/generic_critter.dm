@@ -107,7 +107,7 @@
 	var/mob/T = holder.target
 	if(!has_started && !C.can_critter_attack()) //if we haven't started and can't attack, task fail.
 		return TRUE
-	if(!C || !T || BOUNDS_DIST(T, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !T || !can_reach(C, T)) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/attack/succeeded()
@@ -120,7 +120,7 @@
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
-		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
+		if(C && T && can_reach(C, T))
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
 			C.critter_attack(holder.target)
 			has_started = TRUE
@@ -287,7 +287,7 @@
 	var/mob/T = holder.target
 	if(!has_started && !C.can_critter_attack()) //if we haven't started and can't scavenge, task fail.
 		return TRUE
-	if(!C || !T || BOUNDS_DIST(T, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !T || !can_reach(C, T)) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/scavenge/succeeded()
@@ -298,7 +298,7 @@
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
-		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
+		if(C && T && can_reach(C, T))
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
 			C.critter_scavenge(holder.target)
 			has_started = TRUE
@@ -338,7 +338,7 @@
 	var/mob/living/critter/C = holder.owner
 	if(!has_started && !C.can_critter_eat()) //if we haven't started and can't eat, task fail.
 		return TRUE
-	if(!C || !holder.target || BOUNDS_DIST(holder.target, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !holder.target || !can_reach(C, holder.target)) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/eat/succeeded()
@@ -348,7 +348,7 @@
 /datum/aiTask/succeedable/critter/eat/on_tick()
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
-		if(C && holder.target && BOUNDS_DIST(holder.owner, holder.target) == 0)
+		if(C && holder.target && can_reach(C, holder.target))
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
 			C.critter_eat(holder.target)
 			has_started = TRUE
@@ -428,7 +428,7 @@
 
 	var/mob/living/critter/C = holder.owner
 	var/mob/T = holder.target
-	if(C && T && BOUNDS_DIST(C, T) == 0)
+	if(C && T && can_reach(C, T))
 		C.set_dir(get_dir(C, T))
 		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
 			src.tick = !src.tick
@@ -511,6 +511,36 @@
 	for(var/target_type in src.target_priorities)
 		if(istype(target, target_type))
 			return . + src.target_priorities[target_type]
+
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/apeshit
+	name = "go apeshit"
+	weight = 10 // just as likely to kill something than someone. Seeing red. Seething. In their lane. Thriving.
+
+/datum/aiTask/sequence/goalbased/critter/smash_stuff/apeshit/New(parentHolder, transTask)
+	. = ..()
+	src.target_priorities = list(
+		// bob
+		/obj/blob = 100,
+		// glowy lights, loud noises
+		/obj/machinery/computer = 40,
+		/obj/machinery/computer3 = 40,
+		/obj/machinery/vending = 40,
+		/obj/machinery/manufacturer = 40,
+		// shit's in the way
+		/obj/computerframe = 35,
+		/obj/computer3frame = 35,
+		/obj/storage/closet = 30,
+		/obj/storage/secure/closet = 30,
+		/obj/table = 30,
+		/obj/machinery/disposal = 30,
+		// i want out
+		/obj/window = 21,
+		/obj/mesh/grille = 20,
+		/obj/rack = 20,
+		/obj/structure/girder = 20,
+		// still mad, fuck this shit
+		// /obj/stool = 0, // couches and others are indestructible still :(
+	)
 
 /datum/aiTask/succeedable/critter/smash_stuff
 	name = "smashing stuff subtask"

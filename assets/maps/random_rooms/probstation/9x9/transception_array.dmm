@@ -22,6 +22,18 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"f" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "g" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -44,6 +56,16 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"l" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/station/engine/inner{
@@ -104,6 +126,12 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"E" = (
+/obj/machinery/light_switch/directional/north,
+/turf/space,
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
@@ -198,7 +226,7 @@ V
 "}
 (4,1,1) = {"
 Z
-a
+l
 q
 w
 D
@@ -209,7 +237,7 @@ Z
 "}
 (5,1,1) = {"
 S
-U
+f
 U
 U
 h
@@ -220,7 +248,7 @@ r
 "}
 (6,1,1) = {"
 Z
-a
+E
 e
 w
 y

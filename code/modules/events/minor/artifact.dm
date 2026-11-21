@@ -1,5 +1,6 @@
 /datum/random_event/minor/artifact
 	name = "Artifact Spawn"
+	description = "Randomly spawn an artifact somewhere on station"
 
 	event_effect()
 		..()

@@ -828,7 +828,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "blob")))
+			switch (user.smash_through(target, list(/obj/window, /obj/mesh/grille, /obj/blob)))
 				if (FALSE)
 					if (isitem(target))
 						boutput(user, SPAN_ALERT("You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice."))
@@ -1087,7 +1087,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "door", "blob")))
+			switch (user.smash_through(target, list(/obj/window, /obj/mesh/grille, /obj/machinery/door, /obj/blob)))
 				if (0)
 					if (istype(target, /obj/item/reagent_containers))
 						if (prob(50 * quality))
@@ -1306,7 +1306,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "door", "blob")))
+			switch (user.smash_through(target, list(/obj/window, /obj/mesh/grille, /obj/machinery/door, /obj/blob)))
 				if (0)
 					target.Attackhand(user, params, location, control)
 					return
@@ -1574,7 +1574,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("door")))
+			switch (user.smash_through(target, list(/obj/machinery/door)))
 				if (0)
 					target.Attackhand(user, params, location, control)
 					return
@@ -1615,7 +1615,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("grille","blob")))
+			switch (user.smash_through(target, list(/obj/mesh/grille, /obj/blob)))
 				if (0)
 					if (isitem(target))
 						if (prob(60))
@@ -1733,7 +1733,7 @@
 
 		if (isobj(target))
 			user.lastattacked = get_weakref(target)
-			user.smash_through(target, list("grille"))
+			user.smash_through(target, list(/obj/mesh/grille))
 			var/obj/O = target
 			if (isitem(O) && !O.anchored)
 				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, pitch = 1.7)
@@ -2026,6 +2026,11 @@
 
 /datum/limb/gorilla // gorilla arms. they are not removable from gorillas (for now)
 	can_beat_up_robots = TRUE //it's a gorilla
+	var/list/smashable_stuff
+
+	New(obj/item/parts/holder)
+		. = ..()
+		src.smashable_stuff = list(/obj/window, /obj/table, /obj/mesh/grille, /obj/blob)
 
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -2036,8 +2041,9 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "table", "grille", "blob")))
+			switch (user.smash_through(target, src.smashable_stuff))
 				if (TRUE)
+					attack_twitch(src)
 					user.lastattacked = get_weakref(target)
 					return
 				if (FALSE)
@@ -2141,3 +2147,26 @@
 
 		user.lastattacked = get_weakref(target)
 		return
+
+/datum/limb/gorilla/gorillier
+	New(obj/item/parts/holder)
+		. = ..()
+		src.smashable_stuff = list(
+			/obj/blob,
+			/obj/machinery/computer,
+			/obj/machinery/computer3,
+			/obj/machinery/vending,
+			/obj/machinery/door,
+			/obj/machinery/manufacturer,
+			/obj/computerframe,
+			/obj/computer3frame,
+			/obj/storage/secure/closet,
+			/obj/storage/closet,
+			/obj/table,
+			/obj/machinery/disposal,
+			/obj/window,
+			/obj/structure/girder,
+			/obj/structure/woodwall,
+			/obj/mesh/grille,
+			/obj/rack,
+		)

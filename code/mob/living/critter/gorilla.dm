@@ -26,6 +26,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 	add_abilities = list(/datum/targetable/critter/roar, /datum/targetable/wrestler/throw/gorilla_fling)
 	has_genes = TRUE
 	var/enraged = FALSE // gorillas that are not already enraged and witness an ally being harmed will switch to aggressive AI
+	var/default_limb_type = /datum/limb/gorilla
 
 	New()
 		..()
@@ -45,13 +46,13 @@ TYPEINFO(/mob/living/critter/gorilla)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/gorilla
+		HH.limb = new default_limb_type
 		HH.icon_state = "handl"				// the icon state of the hand UI background
 		HH.limb_name = "left gorilla arm"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/gorilla
+		HH.limb = new default_limb_type
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
@@ -102,6 +103,10 @@ TYPEINFO(/mob/living/critter/gorilla)
 					gorilla_fling.handleCast(target)
 					src.set_a_intent(INTENT_HARM)
 					return TRUE
+		var/datum/targetable/critter/powerkick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/powerkick)
+		if (kick && !kick.disabled && kick.cooldowncheck())
+			kick.handleCast(target)
+			return TRUE
 
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -172,3 +177,19 @@ TYPEINFO(/mob/living/critter/gorilla)
 		..()
 		src.name = "Carl Jr."
 		src.real_name = src.name
+
+/mob/living/critter/gorilla/gorillier // gorilla, but more gorilla like
+	ai_type = /datum/aiHolder/gorillier
+	desc = "HOLY FUCKING SHIT"
+	enraged = TRUE
+	default_limb_type = /datum/limb/gorilla/gorillier
+	add_abilities = list(/datum/targetable/critter/roar, /datum/targetable/wrestler/throw/gorilla_fling, /datum/targetable/critter/powerkick)
+
+	New()
+		. = ..()
+		src.bioHolder.AddEffect("regenerator", magical=TRUE, innate=TRUE)
+		src.bioHolder.AddEffect("detox", magical=TRUE, innate=TRUE)
+		src.bioHolder.AddEffect("blood_overdrive", magical=TRUE, innate=TRUE)
+
+	gorilla_rage()
+		return // we are at maximum rage

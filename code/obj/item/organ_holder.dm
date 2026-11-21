@@ -1907,9 +1907,9 @@
 		for(var/obj/item/organ/lung/cyber/L in linked_organ)
 			L.overloading = is_on
 		if(is_on)
-			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_REBREATHING, "cyberlungs")
+			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_NO_LOSEBREATH, "cyberlungs")
 		else
-			REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_REBREATHING, "cyberlungs")
+			REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_NO_LOSEBREATH, "cyberlungs")
 
 		if(is_on)
 			src.icon_state = initial(src.icon_state)

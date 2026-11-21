@@ -424,6 +424,24 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending/overload_act()
 	return !src.set_broken()
 
+/obj/machinery/vending/smash_act(atom/movable/smasher, show_message)
+	if (show_message)
+		smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+	if (prob(50))
+		if (src.fall())
+			return TRUE
+		if (!src.set_broken())
+			return TRUE
+	else
+		if (!src.set_broken())
+			return TRUE
+		if (src.fall())
+			return TRUE
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+	make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+	qdel(src)
+	return TRUE
+
 /obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 	if (!card || !user || !src.acceptcard)
 		return
@@ -1067,7 +1085,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 /obj/machinery/vending/proc/fall(mob/living/carbon/victim)
 	if (!can_fall || fallen)
-		return
+		return FALSE
 	fallen = TRUE
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
@@ -1091,7 +1109,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	src.anchored = UNANCHORED
 	src.provides_grip = FALSE
 	vicTurf?.grip_atom_count -= 1
-	return
+	return TRUE
 
 /obj/machinery/vending/set_broken()
 	. = ..()
@@ -3212,6 +3230,8 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/instrument/whistle/janitor, 4)
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/mario/waluigi, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/mario/waluigi, 2, hidden=1)
 
 /obj/machinery/vending/air_vendor
 	name = "Oxygen Vending Machine"
