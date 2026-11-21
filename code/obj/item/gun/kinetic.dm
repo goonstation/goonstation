@@ -3572,7 +3572,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "\improper Battlegoose sniper rifle"
 	desc = "A semi-automatic bullpup sniper rifle, developed by... Wait... \
 	This is not the Betelgeuse! And it doesn't even look like a goose! It's amusing duck shaped!"
-	
+
 	icon_state = "sniper-goose"
 	item_state = "sniper-goose"
 	click_sound = 'sound/misc/eggdrop.ogg'
@@ -3582,8 +3582,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/sniper/goose/alter_projectile(obj/projectile/P)
 	. = ..()
 	P.proj_data.shot_sound = 'sound/voice/animal/goose.ogg'
-	P.proj_data.icon_state = "easter_egg"
-	P.proj_data.icon = 'icons/obj/items/items.dmi'
+	P.proj_data.icon_state = "egg"
+	P.proj_data.icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
 
 /obj/item/gun/kinetic/sniper/goose/New()
 	. = ..()
