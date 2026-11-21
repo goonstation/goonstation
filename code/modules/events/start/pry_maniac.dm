@@ -1,5 +1,6 @@
 /datum/random_event/start/prying
 	name = "Pry Maniac"
+	description = "Pry random station tiles"
 	customization_available = 0
 	required_elapsed_round_time = 0
 

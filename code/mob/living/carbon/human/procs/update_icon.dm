@@ -12,8 +12,6 @@
 	var/hand_offset = src.mutantrace.hand_offset
 	var/body_offset = src.mutantrace.body_offset
 
-	src.update_lying()
-
 	// If he's wearing magnetic boots anchored = ANCHORED, otherwise anchored = UNANCHORED
 	reset_anchored(src)
 	// Automatically drop anything in store / id / belt if you're not wearing a uniform.

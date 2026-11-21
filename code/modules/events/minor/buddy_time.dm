@@ -1,5 +1,6 @@
 /datum/random_event/minor/buddy_time
 	name = "Buddy Time"
+	description = "Wake up all guardbuddies and take a break in the bar."
 
 	event_effect()
 		..()

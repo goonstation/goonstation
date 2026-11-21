@@ -110,10 +110,9 @@ var/global/harddel_count = 0
 		return
 		#else
 
-		L.lying = FALSE
+		L.set_lying(FALSE)
 		L.dir = SOUTH
 		L.invisibility = INVIS_NONE
-		L.update_lying()
 		put_mob_in_centcom_cloner(L, indirect=TRUE)
 		#endif
 
