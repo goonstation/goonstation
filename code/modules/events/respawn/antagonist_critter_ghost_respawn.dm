@@ -55,8 +55,9 @@
 
 
 //very similar to playable_pests.dm :)
-/datum/random_event/major/player_spawn/antag/antagonist_pest
+/datum/random_event/respawn/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
+	description = "Prompt ghosts to respawn as an antagonist critter"
 	customization_available = 1
 	targetable = TRUE
 	var/num_critters = 0

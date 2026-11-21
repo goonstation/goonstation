@@ -1,5 +1,6 @@
-/datum/random_event/major/antag/sleeper_agent
+/datum/random_event/respawn/antag/sleeper_agent
 	name = "Awaken Sleeper Agents"
+	description = "Turn random crew members into Sleeper Agent antagonists."
 	required_elapsed_round_time = 26.6 MINUTES
 	customization_available = TRUE
 	announce_to_admins = FALSE // Doing it manually.

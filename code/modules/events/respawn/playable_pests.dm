@@ -1,5 +1,6 @@
-/datum/random_event/major/player_spawn/pests
+/datum/random_event/respawn/player/pests
 	name = "Pests (playable)"
+	description = "Prompt ghosts to spawn as a group of a type of mob critter."
 	customization_available = 1
 	targetable = TRUE
 	var/num_pests = 0 //custom critter limit

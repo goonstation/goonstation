@@ -1,9 +1,10 @@
-/datum/random_event/major/player_spawn/crew
+/datum/random_event/respawn/player/crew
 	disabled = TRUE
 	targetable = TRUE
 	customization_available = TRUE
 	always_custom = TRUE
 	name = "Crew respawn"
+	description = "Prompt ghosts to rejoin as a specific crew role, with optional objective"
 	var/ghost_confirmation_delay = 20 SECONDS // time to acknowledge or deny respawn offer.
 	var/datum/job/respawn_job = null
 	var/num_crew = 1

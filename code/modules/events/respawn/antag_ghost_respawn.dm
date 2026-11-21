@@ -1,17 +1,6 @@
-/datum/random_event/major/player_spawn
-	///Can this event be given a custom spawn location
-	var/targetable = FALSE
-	var/turf/custom_spawn_turf = null
-	admin_call(var/source)
-		if (src.targetable)
-			var/custom_loc = alert("Custom spawn location?","[src.name]","Default","Custom") == "Custom"
-			if (custom_loc)
-				src.custom_spawn_turf = get_turf(pick_ref(usr))
-
-	cleanup()
-		src.custom_spawn_turf = null
-/datum/random_event/major/player_spawn/antag/antagonist
-	name = "Antagonist Spawn"
+/datum/random_event/respawn/antag/solo_antag
+	name = "Solo Antagonist Spawn"
+	description = "Prompt ghosts to spawn in solo antagonist roles"
 	required_elapsed_round_time = 26.6 MINUTES
 	customization_available = 1
 	announce_to_admins = 0 // Doing it manually.
@@ -124,7 +113,7 @@
 		return ..()
 
 	proc/do_event(var/source)
-		if (!src || !istype(src, /datum/random_event/major/player_spawn/antag/antagonist))
+		if (!src || !istype(src, /datum/random_event/respawn/antag/solo_antag))
 			return
 
 		src.respawn_lock = 1
@@ -419,7 +408,7 @@
 
 	// Restore defaults.
 	cleanup()
-		if (!src || !istype(src, /datum/random_event/major/player_spawn/antag/antagonist))
+		if (!src || !istype(src, /datum/random_event/respawn/antag/solo_antag))
 			return
 		..()
 		src.antagonist_type = initial(src.antagonist_type)

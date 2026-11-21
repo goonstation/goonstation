@@ -1,5 +1,6 @@
-/datum/random_event/major/player_spawn/sudden_sapience_disease
+/datum/random_event/respawn/player/sudden_sapience_disease
 	name = "Sudden Sapience Disease"
+	description = "Prompt ghosts to spawn as a random monkey on station; evil monkeys result in a new antagonist"
 	required_elapsed_round_time = 10 MINUTES
 	required_npc_type = /mob/living/carbon/human/npc/monkey
 	weight = 60

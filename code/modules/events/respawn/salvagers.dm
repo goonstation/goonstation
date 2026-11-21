@@ -1,5 +1,6 @@
-/datum/random_event/major/antag/salvagers
+/datum/random_event/respawn/antag/salvagers
 	name = "Salvagers"
+	description = "Prompt ghosts to spawn as one or more Salvagers."
 	required_elapsed_round_time = 15 MINUTES
 	wont_occur_past_this_time = 70 MINUTES
 	customization_available = 1
@@ -74,7 +75,7 @@
 			do_event(source)
 
 	proc/do_event(var/source)
-		if (!src || !istype(src, /datum/random_event/major/antag/salvagers))
+		if (!src || !istype(src, /datum/random_event/respawn/antag/salvagers))
 			return
 
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
@@ -166,7 +167,7 @@
 		src.post_event()
 
 	proc/post_event()
-		if (!src || !istype(src, /datum/random_event/major/antag/salvagers))
+		if (!src || !istype(src, /datum/random_event/respawn/antag/salvagers))
 			return
 
 		src.lock = initial(src.lock)

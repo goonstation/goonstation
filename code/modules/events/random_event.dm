@@ -159,7 +159,3 @@ TYPEINFO(/datum/random_event)
 		if("activate")
 			src.event.event_effect(key_name(usr, 1))
 			ui.close()
-
-ABSTRACT_TYPE(/datum/random_event/major/antag)
-ABSTRACT_TYPE(/datum/random_event/major/player_spawn)
-ABSTRACT_TYPE(/datum/random_event/major/player_spawn/antag)
