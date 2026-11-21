@@ -49,6 +49,9 @@
 
 	var/layout_style = "goon"
 
+	var/hand_type_l = null
+	var/hand_type_r = null
+
 	var/mutable_appearance/default_sel_appearance
 
 	var/static/list/layouts = \
@@ -712,7 +715,7 @@
 		if (master.limbs && !master.limbs.l_arm)
 			lhand.icon_state = "handl[master.hand]d"
 		else
-			lhand.icon_state = "handl[master.hand]"
+			lhand.icon_state = "handl[master.hand][hand_type_l]"
 			if(src.master.limbs && src.master.limbs.l_arm)
 				SEND_SIGNAL(src.master, COMSIG_HUMAN_ARM_IS_HUD_UPDATED, src.lhand, "l_arm")
 
@@ -720,7 +723,7 @@
 		if (master.limbs && !master.limbs.r_arm)
 			rhand.icon_state = "handr[!master.hand]d"
 		else
-			rhand.icon_state = "handr[!master.hand]"
+			rhand.icon_state = "handr[!master.hand][hand_type_r]"
 			if(src.master.limbs && src.master.limbs.r_arm)
 				SEND_SIGNAL(src.master, COMSIG_HUMAN_ARM_IS_HUD_UPDATED, src.rhand, "r_arm")
 
