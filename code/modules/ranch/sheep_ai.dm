@@ -218,6 +218,8 @@
 		. = ..()
 		var/mob/living/critter/small_animal/ranch_base/R = owner
 		var/mob/living/critter/small_animal/ranch_base/T = target
+		R?.use_stunned_icon = TRUE
+		T?.use_stunned_icon = TRUE
 		REMOVE_ATOM_PROPERTY(T, PROP_MOB_CANTMOVE, "SHEEP_PARTNER")
 		REMOVE_ATOM_PROPERTY(R, PROP_MOB_CANTMOVE, "SHEEP_PARTNER")
 		if(T?.is_npc && T?.ai && !T?.ai.enabled)
