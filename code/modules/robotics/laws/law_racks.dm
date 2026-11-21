@@ -22,7 +22,7 @@
 	var/list/welded[MAX_CIRCUITS]
 	/// screwed status of law module by slot number
 	var/list/screwed[MAX_CIRCUITS]
-	/// Our linked AI program rack
+	/// Our linked AI program rack. Do not set or clear directly, use `link_to_program_rack()` (with null to clear)
 	var/obj/machinery/disk_rack/ai/program_rack
 
 	New(loc)
@@ -314,6 +314,7 @@
 			var/obj/item/device/borg_linker/linker = I
 			linker.linked_rack = src
 			var/area/A = get_area(src.loc)
+			FLICK("cyborg_linker-active", linker)
 			boutput(user,"Linker: Linked to law rack at "+ A.name)
 			return
 		else if (istypes(I, list(/obj/item/aiModule, /obj/item/reagent_containers/food/snacks/breadslice)) && !issilicon(user))
@@ -834,6 +835,7 @@
 				src.power_usage += 100
 
 	proc/link_to_program_rack(obj/machinery/disk_rack/ai/new_rack)
+		src.program_rack?.linked_rack = null
 		src.program_rack = new_rack
 		new_rack?.linked_rack = src
 		src.update_ai_programs()

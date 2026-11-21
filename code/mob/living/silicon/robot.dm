@@ -1155,6 +1155,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
 						src.set_law_rack(linker.linked_rack, user)
+						FLICK("cyborg_linker-active", linker)
 			else
 				boutput(user,"Linker lost connection to the stored law rack!")
 			return

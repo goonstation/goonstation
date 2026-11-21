@@ -2,7 +2,7 @@ TYPEINFO(/obj/item/device/borg_linker)
 	mats = list("crystal" = 1,
 				"conductive_high" = 1)
 /obj/item/device/borg_linker
-	name = "cyborg law linker"
+	name = "law rack linker"
 	icon_state = "cyborg_linker"
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
@@ -12,10 +12,16 @@ TYPEINFO(/obj/item/device/borg_linker)
 	throwforce = 5
 	throw_range = 15
 	throw_speed = 3
-	desc = "A device for connecting silicon beings to a law rack, setting restrictions on their behaviour."
+	desc = "A device for connecting silicon beings and program rack to a law rack, setting restrictions on their behaviour."
 	m_amt = 50
 	g_amt = 20
 	var/obj/machinery/lawrack/linked_rack = null
+	HELP_MESSAGE_OVERRIDE({"
+		Use in-hand to clear the linked rack.
+		Use on a Law Rack to link to it.
+		Use on an unlocked cyborg or AI to change its lawrack to the linked law rack.
+		Use on a program rack to link it to the law rack.
+	"})
 
 	New()
 		. = ..()

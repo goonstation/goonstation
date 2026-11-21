@@ -40,9 +40,13 @@
 				return
 			if (src.linked_rack)
 				if (user)
-					if (tgui_alert(user, "This is linked to [src.linked_rack], really change the linked rack?", "Change Linked Rack", list("Yes", "No")) != "Yes")
+					var/area/old_area = get_area(src.linked_rack)
+					if (tgui_alert(user, "[src] is linked to the law rack at [old_area.name], really change the linked rack?", "Change Linked Rack", list("Yes", "No")) != "Yes")
 						return
+			var/area/new_area = get_area(linker.linked_rack)
+			user?.show_message(SPAN_NOTICE("[src] linked to the law rack at [new_area.name]."))
 			linker.linked_rack.link_to_program_rack(src)
+			FLICK("cyborg_linker-active", linker)
 			src.linked_rack = linker.linked_rack
 			return
 		. = ..()

@@ -1970,7 +1970,7 @@
 	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/borg_linker
-	name = "AI Linker"
+	name = "Law Rack Linker"
 	item_requirements = list("metal" = 2,
 							 "crystal" = 1,
 							 "conductive" = 2)
