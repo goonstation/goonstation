@@ -1,4 +1,11 @@
 
+(t)fri nov 20 26
+(u)JORJ949
+(p)28321
+(e)🔄🧛🎩|C-Rework, A-Gamemodes, A-Clothing
+(*)Syndicate Janitors (and spy thieves and surplus gamblers) can now find a syndicate plumbers outfit, granting the wearer the ability to both dive through the toilet network and crawl around in disposals.
+(*)Hacked JaniTechs now contain purple plumber outfits. All plumber outfits can be used in hand to cycle their style.
+(*)Non-syndicate plumber outfits can no longer toilet-dive (teleport to a random station toilet from any station toilet)
 (t)tue nov 17 26
 (u)ANNmagedon & JORJ949
 (p)28295

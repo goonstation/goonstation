@@ -209,6 +209,7 @@
 #include "namespaces\ci.dm"
 #include "namespaces\dcs.dm"
 #include "namespaces\disk.dm"
+#include "namespaces\event.dm"
 #include "namespaces\fish.dm"
 #include "namespaces\food.dm"
 #include "namespaces\helper_color.dm"
