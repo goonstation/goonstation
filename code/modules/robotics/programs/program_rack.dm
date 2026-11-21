@@ -79,6 +79,9 @@
 		for_by_tcl(AI, /mob/living/silicon/ai)
 			AI.update_programs()
 
+/obj/machinery/disk_rack/ai/ui_data(mob/user)
+	return ..() + list("is_wide" = TRUE)
+
 TYPEINFO(/obj/machinery/disk_rack/ai/prefilled)
 	manufactured_type = /obj/machinery/disk_rack/ai
 /// Program Rack with basic programs

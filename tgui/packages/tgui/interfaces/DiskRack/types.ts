@@ -10,6 +10,7 @@ import type { BooleanLike } from 'common/react';
 export interface DiskRackData {
   disks: Disk[];
   has_lights: BooleanLike;
+  is_wide: BooleanLike;
 }
 
 export interface Disk {
