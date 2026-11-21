@@ -55,6 +55,8 @@
 		/datum/manufacture/table_folding,
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
+		/datum/manufacture/camera,
+		/datum/manufacture/camera_film,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/flippers,
 #endif
