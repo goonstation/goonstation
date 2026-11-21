@@ -471,10 +471,10 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 				src.disk_color = "#07a507"
 			if(4)
 				src.icon_state = "big-brown"
-				src.disk_color = "#524030"
+				src.disk_color = "#705339"
 			if(5)
 				src.icon_state = "big-purple"
-				src.disk_color = "#6f228d"
+				src.disk_color = "#8d37af"
 			if(6)
 				src.icon_state = "big-pink"
 				src.disk_color = "#f884fc"
