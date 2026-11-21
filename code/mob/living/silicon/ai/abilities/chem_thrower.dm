@@ -1,4 +1,4 @@
-/datum/targetable/ai/module/chems
+/datum/targetable/ai/program/chems
 	targeted = TRUE
 	target_anything = 1
 	var/obj/item/thrown_reagents/reagent_capsule
@@ -45,7 +45,7 @@
 		boutput(holder.owner, SPAN_ALERT("Unable to calculate valid shot from available camera."))
 		return 1
 
-/datum/targetable/ai/module/chems/metal_foam
+/datum/targetable/ai/program/chems/metal_foam
 	name = "Spray Metal Foam"
 	desc = "Launches a small stream of metal foam from the camera."
 	icon_state = "camera_foam"

@@ -5106,17 +5106,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
-"dGq" = (
-/obj/table/auto,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown,
-/obj/machinery/light/incandescent/warm,
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/clothing/mask/clown_nose,
-/turf/simulated/floor/carpet/arcade/half,
-/area/station/crew_quarters/clown)
 "dGY" = (
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -7160,6 +7149,10 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge)
+"eVO" = (
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "eWb" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -7348,15 +7341,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"fdu" = (
-/obj/table/reinforced,
-/obj/machinery/light/incandescent/cool,
-/obj/item/disk/data/tape/master/readonly{
-	pixel_y = 7
-	},
-/obj/item/circuitboard/robotics,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "fdz" = (
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
@@ -8841,6 +8825,16 @@
 	dir = 8
 	},
 /area/station/security/brig)
+"gbl" = (
+/obj/table/reinforced,
+/obj/machinery/light/incandescent/cool,
+/obj/item/disk/data/tape/master/readonly{
+	pixel_y = 7
+	},
+/obj/item/circuitboard/robotics,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "gbH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12216,13 +12210,6 @@
 "itG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/science)
-"itQ" = (
-/obj/machinery/light/incandescent/cool,
-/obj/spawner/disk_rack_lrt,
-/turf/simulated/floor/purplewhite/corner{
-	dir = 4
-	},
-/area/station/science/teleporter)
 "itW" = (
 /turf/simulated/wall/auto/asteroid/geode,
 /area/space)
@@ -14644,6 +14631,10 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
+"jWL" = (
+/obj/storage/closet/port_a_sci,
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
 "jWT" = (
 /obj/storage/closet/wardrobe/blue,
 /obj/item/clothing/mask/balaclava,
@@ -19830,6 +19821,17 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
+"nHi" = (
+/obj/table/auto,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown,
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/clown)
 "nIg" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -24878,11 +24880,6 @@
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor,
 /area/station/hangar/main)
-"rqO" = (
-/obj/table/reinforced,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "rrk" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -26695,10 +26692,6 @@
 /obj/item/device/radio/electropack,
 /turf/simulated/floor/grime,
 /area/iss)
-"sIV" = (
-/obj/storage/closet/port_a_sci,
-/turf/simulated/floor/purplewhite,
-/area/station/science/teleporter)
 "sJb" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/purple/corner{
@@ -27763,6 +27756,13 @@
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
+"ttK" = (
+/obj/machinery/light/incandescent/cool,
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/purplewhite/corner{
+	dir = 4
+	},
+/area/station/science/teleporter)
 "ttR" = (
 /obj/machinery/vending/electronics,
 /turf/simulated/floor/plating,
@@ -70613,7 +70613,7 @@ uaw
 lRl
 uui
 gKB
-rqO
+eVO
 psH
 qlP
 aRX
@@ -70911,7 +70911,7 @@ qpn
 qpn
 qpn
 psH
-fdu
+gbl
 sEK
 gYR
 sEK
@@ -77248,7 +77248,7 @@ fok
 mTQ
 qnF
 spn
-sIV
+jWL
 eWR
 fHD
 aPL
@@ -77550,7 +77550,7 @@ tOP
 tOP
 tOP
 tOP
-itQ
+ttK
 jsg
 tku
 wXJ
@@ -82997,7 +82997,7 @@ fIn
 uoS
 tUd
 lna
-dGq
+nHi
 kEy
 ean
 qpn

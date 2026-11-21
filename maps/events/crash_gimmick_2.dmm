@@ -357,6 +357,13 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"lu" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater-R"
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "ly" = (
 /obj/machinery/power/rtg,
 /obj/cable{
@@ -478,6 +485,13 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"nD" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/mapping_helper/access/ai_upload,
+/turf/space,
+/area/space)
 "nO" = (
 /obj/lattice{
 	dir = 9;
@@ -538,6 +552,10 @@
 /area/built_zone)
 "oT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/arrival/station)
 "pq" = (
@@ -1473,6 +1491,13 @@
 	},
 /turf/space,
 /area/shuttle/arrival/station)
+"PT" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater-L"
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "PW" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/shuttle,
@@ -1695,6 +1720,9 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"VT" = (
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/arrival/station)
 "VU" = (
 /obj/machinery/nanofab/mining,
 /turf/simulated/floor/shuttle,
@@ -1751,6 +1779,12 @@
 	name = "steel plating"
 	},
 /area/built_zone)
+"XB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/arrival/station)
 "Ya" = (
 /obj/lattice{
 	dir = 9;
@@ -1818,20 +1852,21 @@
 /area/space)
 "YV" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
-	},
-/obj/mapping_helper/access/ai_upload,
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "0-8"
 	},
-/turf/simulated/floor/shuttlebay,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
 /area/shuttle/arrival/station)
 "Zr" = (
 /obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle/red,
+/area/shuttle/arrival/station)
+"ZA" = (
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit,
 /area/shuttle/arrival/station)
 
 (1,1,1) = {"
@@ -44553,7 +44588,6 @@ ay
 ay
 ay
 ay
-ay
 HK
 EV
 EV
@@ -44562,6 +44596,7 @@ HK
 ps
 ps
 Ya
+ay
 ay
 ay
 ay
@@ -44855,7 +44890,6 @@ ay
 ay
 ay
 ay
-ay
 HK
 Xi
 zH
@@ -44864,6 +44898,7 @@ HK
 dE
 Ko
 ap
+ay
 ay
 ay
 ay
@@ -45157,7 +45192,6 @@ ay
 ay
 ay
 ay
-ay
 EV
 Du
 zH
@@ -45170,6 +45204,7 @@ ay
 ay
 ay
 YP
+ps
 ps
 ps
 ps
@@ -45459,7 +45494,6 @@ ay
 ay
 ay
 ay
-ay
 EV
 TX
 zH
@@ -45475,6 +45509,7 @@ ap
 ay
 ay
 Dl
+lu
 si
 pq
 NH
@@ -45761,7 +45796,6 @@ ay
 ay
 ay
 ay
-ay
 HK
 cZ
 zH
@@ -45776,6 +45810,7 @@ ay
 ap
 ay
 ND
+si
 si
 si
 si
@@ -46063,7 +46098,6 @@ ay
 ay
 ay
 ay
-ay
 HK
 ui
 YO
@@ -46079,6 +46113,7 @@ NH
 jp
 si
 gL
+ZA
 Fi
 si
 SE
@@ -46365,7 +46400,6 @@ ay
 ay
 ay
 ay
-ay
 HK
 HK
 HK
@@ -46380,6 +46414,7 @@ ps
 Ut
 Fz
 jj
+Bl
 Bl
 yX
 si
@@ -46668,7 +46703,6 @@ ay
 ay
 ay
 ay
-ay
 UQ
 kQ
 qG
@@ -46681,8 +46715,9 @@ ay
 ay
 YL
 Nu
-oT
 JP
+oT
+nD
 YV
 si
 Wg
@@ -46970,7 +47005,6 @@ ay
 ay
 ay
 ay
-ay
 HK
 Xp
 IL
@@ -46985,6 +47019,7 @@ WZ
 DR
 ly
 wq
+XB
 Vb
 si
 hC
@@ -47272,7 +47307,6 @@ ay
 ay
 ay
 ay
-ay
 UQ
 Da
 ry
@@ -47287,6 +47321,7 @@ nO
 Pu
 si
 yu
+VT
 iQ
 sU
 NT
@@ -47574,7 +47609,6 @@ ay
 ay
 ay
 ay
-ay
 HK
 HX
 tY
@@ -47587,6 +47621,7 @@ ay
 Rx
 oG
 ps
+si
 si
 si
 si
@@ -47876,7 +47911,6 @@ ay
 ay
 ay
 ay
-ay
 UQ
 Co
 Fg
@@ -47891,6 +47925,7 @@ lR
 ND
 si
 vZ
+tK
 le
 cN
 dz
@@ -48178,7 +48213,6 @@ ay
 ay
 ay
 ay
-ay
 HK
 fU
 Fg
@@ -48193,6 +48227,7 @@ Dl
 Fz
 HM
 vM
+Wb
 vM
 vM
 vM
@@ -48480,7 +48515,6 @@ ay
 ay
 ay
 ay
-ay
 UQ
 pT
 Fg
@@ -48494,6 +48528,7 @@ ay
 YL
 Nu
 xY
+tK
 tK
 tK
 vv
@@ -48782,7 +48817,6 @@ ay
 ay
 ay
 ay
-ay
 HK
 HK
 Oz
@@ -48797,6 +48831,7 @@ PR
 DR
 RR
 lE
+Wb
 Wb
 Wb
 Wb
@@ -49085,7 +49120,6 @@ ay
 ay
 ay
 ay
-ay
 Dm
 Fg
 ay
@@ -49099,6 +49133,7 @@ NH
 Qu
 si
 rv
+tK
 yB
 CP
 oz
@@ -49388,7 +49423,6 @@ ay
 ay
 ay
 ay
-ay
 oo
 ay
 ay
@@ -49400,6 +49434,7 @@ ay
 ap
 ay
 Pu
+si
 si
 si
 si
@@ -49698,11 +49733,11 @@ ay
 ay
 ay
 ay
-ay
 ap
 ay
 ay
 WZ
+PT
 si
 EO
 NH
@@ -50000,8 +50035,8 @@ ay
 ay
 ay
 ay
-ay
 YD
+ps
 ps
 ps
 ps
@@ -91365,8 +91400,8 @@ ay
 ay
 ay
 ay
-ay
 Qx
+ay
 ay
 ay
 ay
@@ -91666,15 +91701,15 @@ ay
 ay
 ay
 ay
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
 ay
-rQ
-rQ
-rQ
-rQ
-rQ
-rQ
-rQ
-rQ
 ay
 ay
 ay
@@ -91968,15 +92003,15 @@ ay
 ay
 ay
 ay
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
 ay
-rQ
-rQ
-rQ
-rQ
-rQ
-rQ
-rQ
-rQ
 ay
 ay
 ay
@@ -92270,15 +92305,15 @@ ay
 ay
 ay
 ay
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
 ay
-rQ
-rQ
-rQ
-rQ
-rQ
-rQ
-rQ
-rQ
 ay
 ay
 ay

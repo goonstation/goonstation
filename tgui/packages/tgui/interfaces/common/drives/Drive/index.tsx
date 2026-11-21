@@ -25,6 +25,7 @@ export function Drive(props: PropsWithChildren<DriveProps>) {
     onContentClick,
     onEject,
     onInsert,
+    is_wide,
     slotComponent: SlotComponent = DriveSlot,
   } = props;
   const hasContent = !!children;
@@ -47,7 +48,7 @@ export function Drive(props: PropsWithChildren<DriveProps>) {
             verticalAlignContent="middle"
           />
         </Stack.Item>
-        <Stack.Item width={22}>
+        <Stack.Item width={is_wide ? 34 : 22}>
           {children || <SlotComponent onClick={onInsert} />}
         </Stack.Item>
       </Stack>

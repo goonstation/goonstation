@@ -1,4 +1,4 @@
-/datum/targetable/ai/module/camera_gun
+/datum/targetable/ai/program/camera_gun
 	name = "Camera Lasers"
 	desc = "Makes nearby cameras shoot lasers at the target. Somehow."
 	targeted = TRUE
@@ -66,13 +66,13 @@
 			boutput(holder.owner, SPAN_ALERT("Unable to calculate valid shot from available camera."))
 		return 1
 
-/datum/targetable/ai/module/camera_gun/taser
+/datum/targetable/ai/program/camera_gun/taser
 	name = "Camera Taser"
 	icon_state = "camera_taser"
 	P = /datum/projectile/energy_bolt
 	charge_color = rgb(217, 255, 0)
 
-/datum/targetable/ai/module/camera_gun/laser
+/datum/targetable/ai/program/camera_gun/laser
 	name = "Camera Laser"
 	icon_state = "camera_laser"
 	P = /datum/projectile/laser/light/tracer

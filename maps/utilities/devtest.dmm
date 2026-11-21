@@ -279,6 +279,12 @@
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor,
 /area/station/devzone)
+"fz" = (
+/obj/machinery/lawrack{
+	pixel_x = 4
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "fG" = (
 /obj/submachine/cargopad/robotics,
 /turf/simulated/floor/bluewhite,
@@ -603,7 +609,9 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "lb" = (
-/obj/machinery/lawrack/syndicate,
+/obj/machinery/lawrack/syndicate{
+	pixel_x = -5
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "ld" = (
@@ -931,14 +939,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor,
-/area/station/devzone)
-"pH" = (
-/obj/machinery/power/data_terminal,
-/obj/landmark/start/job/AI,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor,
 /area/station/devzone)
 "pL" = (
@@ -1320,6 +1320,12 @@
 /obj/machinery/clonepod,
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
+"wE" = (
+/obj/machinery/disk_rack/ai/syndicate{
+	pixel_x = 6
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "wJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/engine,
@@ -1646,8 +1652,10 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "AY" = (
+/obj/landmark/start/job/AI,
+/obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "0-8"
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2797,7 +2805,9 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
 "TK" = (
-/obj/machinery/lawrack,
+/obj/machinery/disk_rack/ai/prefilled{
+	pixel_x = -7
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "TM" = (
@@ -4789,10 +4799,10 @@ Yx
 Yx
 Yx
 Yx
-DP
-ng
-ng
-ng
+pL
+hS
+hS
+PK
 ng
 ng
 ng
@@ -4833,9 +4843,9 @@ Yx
 Yx
 Yx
 Yx
-pL
-Cv
-Cv
+ng
+fz
+Yx
 AY
 Yx
 Yx
@@ -4880,7 +4890,7 @@ Yx
 ng
 TK
 Yx
-pH
+XM
 Yx
 ZX
 ng
@@ -4922,7 +4932,7 @@ Yx
 Yx
 Yx
 ng
-XM
+wE
 Yx
 Yx
 se

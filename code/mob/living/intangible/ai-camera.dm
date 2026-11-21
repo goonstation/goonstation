@@ -347,11 +347,15 @@ TYPEINFO(/mob/living/intangible/aieye)
 
 
 	create_viewport(kind, title, size, share_planes)
-		if (length(src.client?.getViewportsByType(VIEWPORT_ID_AI)) >= src.mainframe.viewport_limit)
+		if (!src.mainframe.law_rack_connection?.program_rack || src.mainframe.law_rack_connection.program_rack.viewport_limit == 0)
+			boutput(src, SPAN_ALERT("You do not have a program installed to create viewports."))
+			return
+		if (length(src.client?.getViewportsByType(VIEWPORT_ID_AI)) >= src.mainframe.law_rack_connection.program_rack.viewport_limit)
 			boutput(src, SPAN_ALERT("You lack the computing resources needed to open another viewport."))
-		else
-			src.open_viewports += ..()
-			src.add_all_statics()
+			return
+
+		src.open_viewports += ..()
+		src.add_all_statics()
 
 	on_close_viewport(datum/viewport/vp)
 		src.remove_all_statics()

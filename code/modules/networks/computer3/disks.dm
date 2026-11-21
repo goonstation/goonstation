@@ -343,10 +343,11 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	random_color = 0
-	file_amount = 32
+	file_amount = 64
 	HELP_MESSAGE_OVERRIDE({"Use on an armed nuclear bomb to alter the time remaining until detonation.
 	Use on an armory authorization computer to issue an emergency authorization or unauthorization.
-	Use on an escape shuttle launch computer to alter the time until departure."})
+	Use on an escape shuttle launch computer to alter the time until departure.
+	Slot in the AI Program Rack to enable the AI to call for the shuttle without a console."})
 
 	New()
 		. = ..()
@@ -364,6 +365,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
+			src.root.add_file( new /datum/computer/file/ai_program/skill/call_shuttle(src))
 			src.read_only = 1
 
 	disposing()
@@ -469,16 +471,24 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 				src.disk_color = "#07a507"
 			if(4)
 				src.icon_state = "big-brown"
-				src.disk_color = "#524030"
+				src.disk_color = "#705339"
 			if(5)
 				src.icon_state = "big-purple"
-				src.disk_color = "#6f228d"
+				src.disk_color = "#8d37af"
 			if(6)
 				src.icon_state = "big-pink"
-				src.disk_color = "#c168c4"
+				src.disk_color = "#f884fc"
 			if(7)
 				src.icon_state = "big-cyan"
 				src.disk_color = "#1ba89c"
+
+/obj/item/disk/data/wide_floppy/read_only
+	name = "permafloppy"
+
+	attack_self(mob/user as mob)
+		boutput(user, SPAN_ALERT("You can't flip the write-protect tab, it's held in place with glue or something!"))
+		return
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 ///Misc Disks

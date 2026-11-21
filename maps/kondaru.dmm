@@ -12123,6 +12123,27 @@
 	dir = 8
 	},
 /area/station/hallway/primary/east)
+"bcF" = (
+/obj/table/auto,
+/obj/decal/cleanable/desk_clutter,
+/obj/item/instrument/bikehorn,
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/stamp/clown,
+/obj/juggleplaque{
+	pixel_y = 32
+	},
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown{
+	pixel_y = 7
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "bcJ" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
@@ -20585,10 +20606,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
-"bPG" = (
-/obj/spawner/disk_rack_lrt,
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "bPI" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -36286,15 +36303,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"jiW" = (
-/obj/item/device/camera_viewer/telesci,
-/obj/item/clothing/head/helmet/camera/telesci,
-/obj/machinery/light_switch/directional/north,
-/obj/table/reinforced/auto,
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/station/science/teleporter)
 "jjb" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -38458,6 +38466,11 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/station/mining/refinery)
+"kEV" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular,
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
 "kFb" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -41901,11 +41914,6 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor,
 /area/station/bridge)
-"mZL" = (
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
-/area/station/turret_protected/Zeta)
 "mZQ" = (
 /obj/table/reinforced/auto,
 /obj/item/gun/kinetic/riot40mm{
@@ -42194,27 +42202,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/southeast)
-"nju" = (
-/obj/table/auto,
-/obj/decal/cleanable/desk_clutter,
-/obj/item/instrument/bikehorn,
-/obj/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/item/stamp/clown,
-/obj/juggleplaque{
-	pixel_y = 32
-	},
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_y = 7
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
 "njG" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -43522,6 +43509,10 @@
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
+"oiT" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
 "oiX" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -43720,6 +43711,12 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"oqh" = (
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/turret_protected/Zeta)
 "oqr" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -45119,11 +45116,6 @@
 /obj/item/storage/fanny,
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/research_outpost/indigo_rye)
-"ptX" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
-/turf/simulated/floor/purplewhite,
-/area/station/science/teleporter)
 "pur" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -46649,6 +46641,15 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"qvB" = (
+/obj/item/device/camera_viewer/telesci,
+/obj/item/clothing/head/helmet/camera/telesci,
+/obj/machinery/light_switch/directional/north,
+/obj/table/reinforced/auto,
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/station/science/teleporter)
 "qvC" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/television/small{
@@ -92926,7 +92927,7 @@ aci
 aaa
 aaa
 rSs
-nju
+bcF
 ahg
 aiq
 ajh
@@ -94817,7 +94818,7 @@ bAU
 rxZ
 bAU
 bLL
-jiW
+qvB
 bOm
 bPE
 bQZ
@@ -95428,7 +95429,7 @@ cnz
 cnA
 cnD
 cnG
-ptX
+kEV
 bLL
 xZF
 bAQ
@@ -95725,7 +95726,7 @@ bAU
 bLL
 bML
 bOp
-bPG
+oiT
 bRb
 bSB
 bSA
@@ -124715,7 +124716,7 @@ bHl
 wqb
 gQB
 dcb
-mZL
+oqh
 fbA
 lSk
 ebn

@@ -183,6 +183,7 @@
 /obj/item/storage/box/command_tech/hop
 	spawn_contents = list(
 		/obj/item/circuitboard/card,
+		/obj/item/disk/data/floppy/manudrive/aiLaws,
 		/obj/item/disk/data/floppy/read_only/bank_progs,
 	)
 
@@ -190,7 +191,7 @@
 	spawn_contents = list(
 		/obj/item/circuitboard/card/research,
 		/obj/item/circuitboard/announcement/research,
-		/obj/item/disk/data/floppy/manudrive/aiLaws,
+		/obj/item/disk/data/floppy/manudrive/program_rack,
 		/obj/item/disk/data/floppy/manudrive/telesci_rack,
 	)
 

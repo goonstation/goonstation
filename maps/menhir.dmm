@@ -1992,24 +1992,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
-"bcA" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit{
-	pixel_y = 4;
-	pixel_x = 3
-	},
-/obj/item/extinguisher{
-	pixel_y = 6;
-	pixel_x = -11
-	},
-/obj/item/device/radio/intercom/science{
-	dir = 8
-	},
-/obj/item/storage/firstaid/regular,
-/turf/simulated/floor/purplewhite{
-	dir = 6
-	},
-/area/station/science/teleporter)
 "bcE" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/north,
@@ -4452,6 +4434,24 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"ckY" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/trackimp_kit{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/obj/item/extinguisher{
+	pixel_y = 6;
+	pixel_x = -11
+	},
+/obj/item/device/radio/intercom/science{
+	dir = 8
+	},
+/obj/item/storage/firstaid/regular,
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
+/area/station/science/teleporter)
 "clb" = (
 /obj/lattice{
 	dir = 10;
@@ -18020,17 +18020,6 @@
 	dir = 8
 	},
 /area/station/science/chemistry)
-"jkJ" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/guardbot_guide{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/tapebox{
-	pixel_x = -14
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "jkX" = (
 /obj/rack,
 /obj/item/clothing/suit/hazard/fire,
@@ -20563,6 +20552,21 @@
 "kBc" = (
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"kBh" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/diskbox{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/greenblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "kBl" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -21495,6 +21499,30 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"kXR" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/peripheral/videocard{
+	pixel_x = -5;
+	pixel_y = 16
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "kXX" = (
 /obj/stool/chair/comfy/wheelchair{
 	dir = 8
@@ -21745,18 +21773,6 @@
 /obj/machinery/camera/directional/south,
 /turf/simulated/floor/black,
 /area/station/turret_protected/incursion)
-"let" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/diskbox,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/greenblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
 "lfl" = (
 /obj/machinery/power/apc/autoname_east{
 	areastring = "East Primary Hallway";
@@ -32706,6 +32722,22 @@
 	},
 /turf/space,
 /area/space)
+"qyD" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_y = 9;
+	pixel_x = 7
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "qyY" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -34269,6 +34301,14 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
+"rpQ" = (
+/obj/item/storage/box/tapebox{
+	pixel_x = -26;
+	pixel_y = 9
+	},
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "rpW" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/caution/side{
@@ -34290,30 +34330,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
-	})
-"rqs" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/peripheral/videocard{
-	pixel_x = -5;
-	pixel_y = 16
-	},
-/obj/item/storage/goodybag{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
 	})
 "rqG" = (
 /obj/disposalpipe/segment/brig{
@@ -48411,17 +48427,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/caution,
 /area/station/mining/staff_room)
-"yhb" = (
-/obj/table/reinforced/auto,
-/obj/item/disk/data/floppy/read_only/network_progs{
-	pixel_y = 6
-	},
-/obj/item/disk/data/floppy/read_only/communications{
-	pixel_x = -13;
-	pixel_y = 6
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "yhB" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -93417,7 +93422,7 @@ oSO
 iod
 wso
 fvO
-let
+kBh
 sNg
 bXu
 weo
@@ -93719,7 +93724,7 @@ soG
 fVL
 ott
 dDq
-jkJ
+rpQ
 sNg
 jbL
 uYH
@@ -94021,7 +94026,7 @@ gKT
 dDq
 gFF
 dDq
-yhb
+qyD
 sNg
 iBT
 jCd
@@ -94313,7 +94318,7 @@ abB
 lQz
 uyl
 rEo
-bcA
+ckY
 ujP
 iTH
 qft
@@ -108755,7 +108760,7 @@ hDr
 hDr
 dIO
 lsG
-rqs
+kXR
 fSi
 nTB
 gHW

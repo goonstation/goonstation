@@ -56969,7 +56969,9 @@
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod1)
 "gmY" = (
-/obj/machinery/lawrack/syndicate,
+/obj/machinery/lawrack/syndicate{
+	pixel_x = -5
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "gny" = (
@@ -70432,6 +70434,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"qgo" = (
+/obj/machinery/disk_rack/ai/syndicate{
+	pixel_x = 7
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "qgr" = (
 /obj/decal/poster/wallsign/stencil/left/o,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -114525,7 +114533,7 @@ lzl
 lzl
 lzl
 lzl
-btf
+qgo
 btf
 btf
 btf

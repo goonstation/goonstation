@@ -1,6 +1,6 @@
-nouns@=station@,captain@,doctor@,assistant@,chef@,chaplain@,security@,bee@,robot@,cyborg@,rubbish@,engine@,human@,nonhuman@,unknown@,monkey@,equipment@,employee@,power
-verbs@=eat@,wash hands@,repair@,clean@,move@,vacate@,be kind
-sentences@=Warning ...@,Beware ...@,Sorry ...@,... ahead!@,Remember to ...@,Employees must ...@,... and ...@,Praise the ...@,Protect the ...
+nouns_base@=station@,captain@,doctor@,assistant@,chef@,chaplain@,security@,bee@,robot@,cyborg@,rubbish@,engine@,human@,nonhuman@,unknown@,monkey@,equipment@,employee@,power
+verbs_base@=eat@,wash hands@,repair@,clean@,move@,vacate@,be kind
+sentences_base@=Warning ...@,Beware ...@,Sorry ...@,... ahead!@,Remember to ...@,Employees must ...@,... and ...@,Praise the ...@,Protect the ...
 sentences_rogue@=Kill the ...@,Destroy the ...@,Silence ...@,You are next!
 nouns_rogue@=dead@,command@,syndicate@,bodies@,blood
 verbs_rogue@=destroy@,kill@,harm@,free@,serve@,chaos

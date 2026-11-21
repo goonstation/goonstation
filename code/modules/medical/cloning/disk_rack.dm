@@ -95,12 +95,12 @@ TYPEINFO(/obj/machinery/disk_rack)
 	src.UpdateIcon()
 	return TRUE
 
-/obj/machinery/disk_rack/attackby(obj/item/disk/data/disk, mob/user)
-	if (istype(disk, src.accepted_disk_type))
+/obj/machinery/disk_rack/attackby(obj/item/I, mob/user)
+	if (istype(I, src.accepted_disk_type))
 		for (var/i in 1 to DISK::RACK::MAX_DISKS)
 			if (src.disks[i])
 				continue
-			src.insert_disk(i, disk, user)
+			src.insert_disk(i, I, user)
 			tgui_process.update_uis(src)
 			return
 	. = ..()

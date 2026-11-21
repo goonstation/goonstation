@@ -1600,13 +1600,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Construction Equipment"
 
 /datum/supply_packs/lawrack
-	name = "AI Law Rack ManuDrive Crate (Locked \[Heads])"
-	desc = "x1 Single-use Law Rack ManuDrive. For creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules."
+	name = "AI Law and Program Rack ManuDrive Crate (Locked \[Heads])"
+	desc = "x1 Single-use Law Rack ManuDrive, 1x Single-use AI Program Rack ManuDrive. For creating a replacement Racks for your Automated Intelligence unit. Note: Bring your own law modules and programs."
 	category = "Command"
-	contains = list(/obj/item/disk/data/floppy/manudrive/law_rack/singleuse)
+	contains = list(/obj/item/disk/data/floppy/manudrive/law_rack/singleuse, /obj/item/disk/data/floppy/manudrive/program_rack/singleuse)
 	cost = PAY::IMPORTANT*2
 	containertype = /obj/storage/secure/crate
-	containername = "AI Law Rack ManuDrive Crate (Locked \[Heads])"
+	containername = "AI Law and Program Rack ManuDrive Crate (Locked \[Heads])"
 	access = access_heads
 
 /datum/supply_packs/stationgravitytether
