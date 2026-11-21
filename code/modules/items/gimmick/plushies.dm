@@ -25,6 +25,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	/obj/item/toy/plush/small/buddy/future,\
 	/obj/item/toy/plush/small/kitten/wizard,\
 	/obj/item/toy/plush/small/kitten/bingus,\
+	/obj/item/toy/plush/small/kitten/gnarp,\
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool,\
@@ -299,6 +300,21 @@ TYPEINFO(/obj/submachine/claw_machine)
 	. = ..()
 	if(prob(30))
 		src.name = pick("bingus plush toy", "rotisserie chicken plush toy")
+
+/obj/item/toy/plush/small/kitten/gnarp
+	name = "gnarp plushie"
+	icon_state = "kitten_gnarp"
+
+/obj/item/toy/plush/small/kitten/gnarp/attack_self(mob/user)
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Awe", "Say"))
+	if (!menuchoice)
+		return
+	if (menuchoice == "Awe" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
+		playsound(user, 'sound/voice/animal/glorp/glorp1.ogg', 50, TRUE)
+		src.audible_message(SPAN_EMOTE("[src] awes!"))
+	else if (menuchoice == "Say")
+		src.say_something(user)
+
 
 /obj/item/toy/plush/small/monkey
 	name = "monkey plush toy"
