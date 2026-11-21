@@ -141,6 +141,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	..()
 
+	global.classifier_hashmap.register_hashmap_entry(src)
 	src.init_hud()
 
 	health_update_queue |= src
@@ -165,6 +166,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	#endif
 
 /mob/living/critter/disposing()
+	global.classifier_hashmap.unregister_hashmap_entry(src)
 	if(organHolder)
 		organHolder.dispose()
 		organHolder = null

@@ -38,6 +38,7 @@ proc/make_cleanable(var/type,var/loc)
 
 	New(var/loc)
 		..()
+		global.classifier_hashmap.register_hashmap_entry(src)
 		if(loc)
 			setup(loc)
 
@@ -74,6 +75,7 @@ proc/make_cleanable(var/type,var/loc)
 			T.messy++
 
 	disposing()
+		global.classifier_hashmap.unregister_hashmap_entry(src)
 		if (can_dry)
 			processing_items.Remove(src)
 
