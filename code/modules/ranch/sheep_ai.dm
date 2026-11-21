@@ -192,6 +192,7 @@
 		var/mob/living/critter/small_animal/ranch_base/T = target
 		if(!T || !R)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if(get_dist(target,owner) >= 2)
 			interrupt(INTERRUPT_ALWAYS)
 		if(T.mate || R.mate)
