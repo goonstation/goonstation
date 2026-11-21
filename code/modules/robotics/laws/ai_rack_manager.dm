@@ -108,6 +108,17 @@
 				logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
 		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
+
+		if (isnull(new_rack.program_rack)) // find a program rack if we don't have one
+			for_by_tcl(program_rack, /obj/machinery/disk_rack/ai)
+				if (istype(program_rack, /obj/machinery/disk_rack/ai/prefilled))
+					new_rack.link_to_program_rack(program_rack)
+			if (isnull(new_rack.program_rack))
+				for_by_tcl(program_rack, /obj/machinery/disk_rack/ai)
+					if (istype(program_rack, /obj/machinery/disk_rack/ai/syndicate))
+						continue
+					new_rack.link_to_program_rack(program_rack)
+
 		new_rack.update_last_laws()
 
 	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
