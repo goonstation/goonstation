@@ -13,7 +13,7 @@
 					holder.owner.verbs -= /mob/living/carbon/human/machoman/verb/macho_heal
 					living_target = grab_item.affecting
 					if (living_target.lying)
-						living_target.lying = 0
+						living_target.set_lying(FALSE)
 						living_target.remove_stuns()
 						living_target.set_clothing_icon_dirty()
 					living_target.transforming = 1

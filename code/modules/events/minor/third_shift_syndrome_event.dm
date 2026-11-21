@@ -1,5 +1,6 @@
 /datum/random_event/minor/third_shift_syndrome
 	name = "Third Shift Syndrome"
+	description = "Afflict several registered crew with third shift syndrome, which causes crew apparitions to appear"
 	weight = 5
 	var/const/tss_infect_percentage = 0.075
 

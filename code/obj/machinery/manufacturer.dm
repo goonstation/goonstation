@@ -1253,11 +1253,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/get_bank_data()
 		if (!src.account)
 			return
-		var/list/bank_info = list()
-		var/list/keys_of_interest = list("name", "current_money")
-		for (var/key in keys_of_interest)
-			bank_info[key] = src.account[key]
-		return bank_info
+
+		var/name = global.data_core.get_general_record(id = src.account["id"])?["name"]
+		var/current_money = src.account["current_money"]
+
+		return list(
+			"name" = name,
+			"current_money" = current_money
+		)
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
