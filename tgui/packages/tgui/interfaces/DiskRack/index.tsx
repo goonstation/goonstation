@@ -45,7 +45,7 @@ export const DiskRack = (_props: unknown) => {
                         is_wide={is_wide}
                       >
                         {disk && (
-                          <DiskDrive.Disk color={disk.color}>
+                          <DiskDrive.Disk color={disk.color} is_wide={is_wide}>
                             {disk.name}
                           </DiskDrive.Disk>
                         )}

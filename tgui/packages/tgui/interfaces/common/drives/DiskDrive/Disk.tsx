@@ -8,16 +8,18 @@
 
 import { PropsWithChildren, useContext } from 'react';
 import { Box, Button } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { DriveContext } from '../context';
 
 interface DiskProps {
   color: string;
   tooltip?: string;
+  is_wide?: BooleanLike;
 }
 
 export function Disk(props: PropsWithChildren<DiskProps>) {
-  const { children, color, tooltip } = props;
+  const { children, color, tooltip, is_wide } = props;
   const { onContentClick: onClick } = useContext(DriveContext);
   const style = onClick ? { cursor: 'grab' } : undefined;
   return (
@@ -34,7 +36,7 @@ export function Disk(props: PropsWithChildren<DiskProps>) {
         <Box
           backgroundColor="white"
           px={1}
-          mx={2}
+          mx={is_wide ? 7 : 2}
           bold
           textAlign="center"
           style={{
