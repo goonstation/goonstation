@@ -4,6 +4,7 @@
 /datum/random_event/special/halloween
 #endif
 	name = "Spooky!"
+	description = "Spawn a number of spooky objects, including NPC mobs and relics"
 
 	event_effect()
 		..()

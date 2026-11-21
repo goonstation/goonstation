@@ -1,5 +1,6 @@
 /datum/random_event/special/whoopsies
-	name = "Whoops, someone put detergent in the air system again!"
+	name = "Foamy Air"
+	description = "Whoops, someone put detergent in the air system again! Spawn reagent foam from air outlet injectors in the world"
 	customization_available = 1
 
 	admin_call(var/source)

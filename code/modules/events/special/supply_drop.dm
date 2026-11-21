@@ -7,6 +7,7 @@
 
 /datum/random_event/special/supplydrop
 	name = "Supply Drop"
+	description = "Spawn a random lootbox with a prize inside, used in battle royale"
 
 	event_effect(var/source, var/area/A, var/preDropTime = 300, var/howMany = 3)
 		..()

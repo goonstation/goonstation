@@ -1,5 +1,6 @@
 /datum/random_event/special/power_down
 	name = "Power Outage"
+	description = "Remove all power from APCs and SMESes"
 	centcom_headline = "Critical Power Failure"
 	centcom_message = "Abnormal activity has been detected in the station power grid. As a precautionary measure, the station's power will be shut off for an indeterminate duration."
 	centcom_origin = ALERT_STATION
@@ -20,6 +21,7 @@
 
 /datum/random_event/special/power_up
 	name = "Power Grid Recharge"
+	description = "Fill all APCs and charge SMESes"
 	centcom_headline = "Power Systems Nominal"
 	centcom_message = "Power has been restored to the station's power grid. We apologize for the inconvenience."
 	centcom_origin = ALERT_STATION

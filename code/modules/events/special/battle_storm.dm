@@ -4,6 +4,7 @@
 // Basically a weaker radioactive blowout
 /datum/random_event/special/battlestorm
 	name = "Battle Storm"
+	description = "After announcing safe zones, irradiate the station"
 	customization_available = TRUE
 	required_elapsed_round_time = 0 MINUTES
 	var/space_color = "#ff4646"

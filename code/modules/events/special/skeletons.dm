@@ -7,6 +7,7 @@
 #endif
 
 	name = "Closet Skeletons"
+	description = "Spawns NPC skeletons in a number of closets on station"
 	customization_available = 1
 
 	admin_call(var/source)

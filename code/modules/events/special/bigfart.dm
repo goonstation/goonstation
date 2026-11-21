@@ -1,5 +1,6 @@
 /datum/random_event/special/bigfart
 	name = "Flatulent Anomaly"
+	description = "After a warning, any mobs not laying down will have their asses blown off"
 	customization_available = 1
 
 	// I implemented a bit of customization. Modify the proc call in rathens.dm if you want to nerf/buff the wizard spell (Convair880).

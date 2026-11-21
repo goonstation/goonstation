@@ -1,5 +1,6 @@
 /datum/random_event/special/slippery
 	name = "Slippery Floors"
+	description = "Make all floors slippery for a period of time"
 
 	event_effect()
 		..()
