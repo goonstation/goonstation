@@ -1,6 +1,7 @@
 #ifndef UNDERWATER_MAP
 /datum/random_event/major/pretty_space
 	name = "Space Colors"
+	description = "Applies a color matrix to space parallax sources"
 	customization_available = 1
 	required_elapsed_round_time = 0 MINUTES
 

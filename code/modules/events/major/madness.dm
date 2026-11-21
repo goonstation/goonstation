@@ -1,7 +1,8 @@
 #ifdef MAP_OVERRIDE_NEON //no, you can't have seamonsters on cogmap!
 //Lovingly Adapted from sleeper agent code
-/datum/random_event/major/antag/madness
+/datum/random_event/major/madness
 	name = "Broken Madness"
+	description = "Plays a big sea monster effect, then applies a temporary Madness antagonist status to some crew with a common goal"
 	disabled = FALSE
 	customization_available = TRUE
 	var/num_victims = 0

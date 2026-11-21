@@ -7,6 +7,7 @@ TYPEINFO(/datum/random_event/major/law_rack_corruption)
 
 /datum/random_event/major/law_rack_corruption
 	name = "Law Rack Corruption"
+	description = "Overwrites or modifies a law in all Silicon Law Racks"
 	customization_available = TRUE
 	var/law_text = ""
 	var/law_number = null

@@ -14,6 +14,7 @@ TYPEINFO(/datum/random_event/major/white_hole)
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
+	description = "Spawn an anomaly that turns into a white hole, spewing out things of a particular theme"
 	required_elapsed_round_time = 20 MINUTES
 	customization_available = TRUE
 

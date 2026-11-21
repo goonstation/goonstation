@@ -15,6 +15,7 @@ TYPEINFO(/datum/random_event/major/find_planet)
 
 /datum/random_event/major/find_planet
 	name = "Find Planet"
+	description = "Generates a planet surface for players to explore via telescience"
 	required_elapsed_round_time = 28 MINUTES
 	customization_available = 1
 	weight = 10

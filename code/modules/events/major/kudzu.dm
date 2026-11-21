@@ -39,6 +39,7 @@
 
 /datum/random_event/major/kudzu
 	name = "Kudzu Outbreak"
+	description = "Plants a Kudzu seed on a random tile"
 	centcom_headline = "Plant Outbreak"
 	centcom_message = "Rapidly expanding plant organism detected aboard the station. All personnel must contain the outbreak."
 	centcom_origin = ALERT_STATION

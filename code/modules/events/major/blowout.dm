@@ -1,5 +1,6 @@
 /datum/random_event/major/blowout
 	name = "Radioactive Blowout"
+	description = "After a short warning, turfs in the station Z that are NOT in maintenance cause massive radiation"
 	var/list/space_color = list(
 		2,  2,  2,  0,
 	   -2,  2,  2,  0,

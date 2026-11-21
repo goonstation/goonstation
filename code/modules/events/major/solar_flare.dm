@@ -1,5 +1,6 @@
 /datum/random_event/major/solarflare
 	name = "Solar Flare"
+	description = "Block general radio, comms dish, and trader communication. Massively boost solar intake."
 	var/space_color = "#FFD446"
 
 	event_effect(var/source)

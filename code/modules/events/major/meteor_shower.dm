@@ -2,6 +2,7 @@ var/global/meteor_shower_active = 0
 
 /datum/random_event/major/meteor_shower
 	name = "Meteor Shower"
+	description = "After a warning period, fires destructive meteor objects at the station that can turn into asteroid pockets"
 	// centcom message handled modularly here
 #ifdef APRIL_FOOLS
 	required_elapsed_round_time = 10 MINUTES

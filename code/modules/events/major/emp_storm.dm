@@ -1,5 +1,6 @@
 /datum/random_event/major/emp_storm
 	name = "EMP Storm"
+	description = "Spawns several anomalies that burst into EMPs"
 	weight = 80
 	centcom_headline = "Electromagnetic Storm"
 	centcom_message = {"Electromagnetic storm passing by the station. Electromagnetic anomalies have been detected on the station. Evacuate any areas containing abnormal electronic activity. Monitor electronic equipment for faults."}

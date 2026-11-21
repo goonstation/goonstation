@@ -1,5 +1,6 @@
 /datum/random_event/major/ion_storm
 	name = "Ion Storm"
+	description = "Cause malfunctions in various machinery and bots across the station, causes cyborg hallucinations"
 	centcom_headline = "Equipment Malfunction"
 	centcom_message = "An electromagnetic storm recently passed by the station. Sensitive electrical equipment may require maintenance."
 	centcom_origin = ALERT_WEATHER

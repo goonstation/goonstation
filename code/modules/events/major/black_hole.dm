@@ -1,5 +1,6 @@
 /datum/random_event/major/black_hole
 	name = "Black Hole"
+	description = "Spawn an anomaly that will turn into a black hole if not fed"
 	required_elapsed_round_time = 26.6 MINUTES
 #ifdef RP_MODE
 	disabled = 1

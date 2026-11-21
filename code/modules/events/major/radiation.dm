@@ -1,5 +1,6 @@
 /datum/random_event/major/radiation
 	name = "Radiation Storm"
+	description = "Creates anomalies that burst into radiation and neutrons"
 	centcom_headline = "Radioactive Anomaly"
 	centcom_message = {"Radioactive anomalies have been detected on the station. Evacuate any areas containing abnormal green or blue energy fields. Medical personnel are advised to prepare potassium iodide and anti-toxin treatments, and remain on standby to treat cases of irradiation."}
 	centcom_origin = ALERT_WEATHER
@@ -149,6 +150,7 @@
 
 /datum/random_event/special/mutation
 	name = "Radiation Wave"
+	description = "Randomly give all alive human mobs a mutation, usually bad"
 	centcom_headline = "Radiation Wave"
 	centcom_message = "A large wave of radiation is approaching the station. Personnel should use caution when traversing the station and seek medical attention if they experience any side effects from the wave."
 	centcom_origin = ALERT_WEATHER

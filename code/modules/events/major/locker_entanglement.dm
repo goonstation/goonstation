@@ -1,5 +1,6 @@
 /datum/random_event/major/locker_entanglement
 	name = "Locker Entanglement"
+	description = "Links pairs of closets, allowing players to warp between the two when closing the locker"
 	centcom_headline = "Quantum Anomaly"
 	centcom_message = {"A quantum anomaly has been detected on station. Locker dimensional subspaces might have become unstable. Enter lockers at your own risk."}
 	centcom_origin = ALERT_ANOMALY
