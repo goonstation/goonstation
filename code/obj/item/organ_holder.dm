@@ -460,6 +460,17 @@
 			if (!organ_list[i])
 				organs += i
 		return organs
+
+	/// Returns a list of every organ
+	proc/get_organs_all()
+		RETURN_TYPE(/list)
+		var/list/organs = list()
+		// if (islist(organ_list))
+		for(var/i in organ_list)
+			if(organ_list[i])
+				organs += organ_list[i]
+		return organs
+
 	//(damage|heal)_organs used for effecting a lot of organs at once just by supplying a list and a damage amount.
 
 	//probability, num 0-100 for whether or not to damage an organ found
