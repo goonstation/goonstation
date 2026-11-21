@@ -11,12 +11,22 @@ ABSTRACT_TYPE(/datum/targetable/ai)
 
 	castcheck(atom/target)
 		. = TRUE
-		var/mob/living/silicon/ai/AI = holder.owner
+		var/mob/living/silicon/ai/AI = src.holder.owner
+		if (isAIeye(src.holder.owner))
+			var/mob/living/intangible/aieye/AIeye = src.holder.owner
+			AI = AIeye.mainframe
+
 		if(istype(AI))
 			if (!AI.deployed_to_eyecam)
-				boutput(holder.owner, "Deploy to an AI Eye first to do that.")
+				boutput(AI.get_message_mob(), SPAN_ALERT("Deploy to an AI Eye first to do that."))
 				. = FALSE
 				return
+
+		// if you're not on a dataterm, you can be radio jammed to block these abilities
+		if (!AI.link && global.check_for_radio_jammers(AI))
+			boutput(AI.get_message_mob(), SPAN_ALERT("Unable to establish connection to program rack, please check wireless and wired connections."))
+			. = FALSE
+			return
 
 	cast(atom/target)
 		. = ..()
@@ -30,6 +40,7 @@ ABSTRACT_TYPE(/datum/targetable/ai)
 				. = FALSE
 				return 1
 
+ABSTRACT_TYPE(/datum/targetable/ai/program)
 /datum/targetable/ai/program
 	icon_state = "ai_template"
 
