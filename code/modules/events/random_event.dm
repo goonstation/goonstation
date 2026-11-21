@@ -57,24 +57,6 @@ TYPEINFO(/datum/random_event)
 /datum/random_event/minor
 	announce_to_admins = 0
 
-/datum/random_event/start
-	proc/is_crew_affected(var/mob/living/player)
-		. = TRUE
-
-	proc/apply_to_player(var/mob/living/player)
-		return
-
-	proc/get_affected_crew()
-		. = list()
-		for(var/mob/living/M in mobs)
-			if (isnpc(M))
-				continue
-			if(is_crew_affected(M))
-				. += M
-
-/datum/random_event/start/until_playing
-	var/include_latejoin = FALSE
-
 /datum/random_event_editor
 	var/atom/movable/target
 	var/datum/random_event/event
@@ -184,5 +166,3 @@ ABSTRACT_TYPE(/datum/random_event/major/player_spawn)
 ABSTRACT_TYPE(/datum/random_event/major/player_spawn/antag)
 ABSTRACT_TYPE(/datum/random_event/minor)
 ABSTRACT_TYPE(/datum/random_event/special)
-ABSTRACT_TYPE(/datum/random_event/start)
-ABSTRACT_TYPE(/datum/random_event/start/until_playing)
