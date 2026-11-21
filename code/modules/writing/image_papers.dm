@@ -20,6 +20,14 @@
 			)
 		)
 
+/obj/item/paper/image/tamper_proof
+	scrollbar = FALSE
+	burn_possible = FALSE
+	fold_possible = FALSE
+	burn_point = 15000 KELVIN
+	burn_output = 1500 KELVIN
+
+
 /obj/item/paper/image/xg_tapes
 	name = "XIANG|GIESEL Onboarding Course"
 	desc = "A cover sheet meant to accompany a set of corporate training materials."
@@ -152,18 +160,20 @@
 		path = "images/sstv/13.png"
 		desc = "Oh god."
 
-/obj/item/paper/image/syndicate_backers_files
-	name = "\improper Classified Syndicate Files"
-	desc = "The Syndicate probably want to keep this away from NanoTrasen. Theres a small note slipping out of the folder: \"FOR VESTAL EYES ONLY\"."
+/obj/item/paper/image/tamper_proof/syndicate_folder
+	name = "Classified Syndicate Files"
+	desc = "The Syndicate probably want to keep this away from NanoTrasen."
+	item_state = "folder"
+	icon_state = "folder-syndicate"
+	inhand_color = "#D20040"
+
+/obj/item/paper/image/tamper_proof/syndicate_folder/org_chart
+	desc = "The Syndicate probably want to keep this away from NanoTrasen. There's a small note slipping out of the folder: \"FOR VESTAL EYES ONLY\"."
+	tooltip_flags = REBUILD_USER
 	SYNDICATE_STEALTH_DESCRIPTION("KEEP. THIS. SAFE.")
 	rarity = ITEM_RARITY_LEGENDARY // scary color!
 	tooltip_flags = REBUILD_USER
-	icon_state = "folder-syndicate"
 	path = "images/arts/Syndicate_Org_Chart.png" // by cogwerks
-	item_state = "folder"
-	inhand_color = "#D20040"
 	sizex = 630
 	sizey = 420
-	scrollbar = FALSE
-	burn_possible = FALSE
-	fold_possible = FALSE
+
