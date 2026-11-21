@@ -1335,6 +1335,11 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 				return "There's already a diskette in the drive."
 		return 1
 
+/obj/item/peripheral/drive/wide_floppy
+	name = "large floppy drive module"
+	desc = "A peripheral board containing a large floppy disk interface."
+	setup_disk_type = /obj/item/disk/data/wide_floppy
+
 /obj/item/peripheral/drive/cart_reader
 	name = "ROM cart reader module"
 	desc = "A peripheral board for reading ROM carts."
