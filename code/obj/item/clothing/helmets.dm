@@ -637,6 +637,7 @@
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 	c_flags = null
+	var/lit_state = "hardhat"
 	var/on = 0
 	var/datum/component/loctargeting/simple_light/light_dir
 
@@ -651,14 +652,20 @@
 			light_dir.light_target = src.loc
 		light_dir.update(0)
 
-	attack_self(mob/user)
-		src.flashlight_toggle(user, activated_inhand = TRUE)
-		return
+	attack_self(mob/user as mob)
+		if (src.icon_state == "hardhat0")
+			src.icon_state = "alt_hardhat0"
+			src.item_state = "alt_hardhat0"
+			src.lit_state = "alt_hardhat"
+		else
+			src.icon_state = "hardhat0"
+			src.item_state = "hardhat0"
+			src.lit_state = "hardhat"
 
 	proc/flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
-		src.icon_state = "hardhat[on]"
-		src.item_state = "hardhat[on]"
+		src.icon_state = "[lit_state][on]"
+		src.item_state = "[lit_state][on]"
 		user.update_clothing()
 		if (on)
 			light_dir.update(1)
@@ -688,19 +695,41 @@
 		icon_state = "hardhat_chief_engineer0"
 		item_state = "hardhat_chief_engineer0"
 		desc = "A dented old helmet with a bright green stripe. An engraving on the inside reads 'CE'."
+		lit_state = "hardhat_chief_engineer"
 
-		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
-			on = !on
-			src.icon_state = "hardhat_chief_engineer[on]"
-			if (on)
-				light_dir.update(1)
+		attack_self(mob/user as mob)
+			if (src.icon_state == "hardhat_chief_engineer0")
+				src.icon_state = "alt_hardhat_chief_engineer0"
+				src.item_state = "alt_hardhat_chief_engineer0"
+				src.lit_state = "alt_hardhat_chief_engineer"
 			else
-				light_dir.update(0)
-			user.update_clothing()
-			if (activated_inhand)
-				var/obj/ability_button/flashlight_hardhat/flashlight_button = locate(/obj/ability_button/flashlight_hardhat) in src.ability_buttons
-				if (istype(flashlight_button))
-					flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
+				src.icon_state = "hardhat_chief_engineer0"
+				src.item_state = "hardhat_chief_engineer0"
+				src.lit_state = "hardhat_chief_engineer"
+	mining
+		name = "miner's hard hat"
+		icon_state = "hardhat_orange0"
+		item_state = "hardhat_orange0"
+		desc = "A cheap looking orange hard hat that has a pickaxe emblem engraved inside it."
+		lit_state = "hardhat_orange"
+		attack_self(mob/user as mob)
+			return
+
+	technical
+		name = "technical hard hat"
+		icon_state = "hardhat_blue0"
+		item_state = "hardhat_blue0"
+		desc = "A hard hat provided by Nanotrasen to technicians and mechanics"
+		lit_state = "hardhat_blue"
+		attack_self(mob/user as mob)
+			return
+	trainee
+		name = "trainee's hard hat"
+		icon_state = "hardhat_green0"
+		item_state = "hardhat_green0"
+		desc = "A shiny new green hard hat issued by Nanotrasen to trainees. Safety First!"
+		lit_state = "hardhat_green"
+		attack_self(mob/user as mob)
 			return
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
