@@ -101,7 +101,7 @@ TYPEINFO(/mob/living/silicon)
 	return
 
 /mob/living/silicon/proc/show_laws()
-	return
+	src.interact_laws(SILICON::LAWS::SET::REAL, SILICON::LAWS::ACTION::VIEW)
 
 /mob/living/silicon/on_close_viewport(datum/viewport/vp)
 	src.mainframe?.on_close_viewport(vp)
