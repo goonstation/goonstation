@@ -1233,6 +1233,10 @@ All other chickens in this file are non-secret. Please be respectful.
 	happiness = 0
 	favorite_flag = "eggplant"
 
+	New()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_SILVER_VULNERABILITY, src, 50)
+
 	grow_up()
 		..()
 		if(is_masc)
@@ -1389,6 +1393,10 @@ All other chickens in this file are non-secret. Please be respectful.
 	happiness = 0
 	favorite_flag = "silkie_black"
 	egg_cooldown = 60
+
+	New()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_SILVER_VULNERABILITY, src, 50)
 
 	grow_up()
 		..()
@@ -1598,6 +1606,10 @@ All other chickens in this file are non-secret. Please be respectful.
 	hyperaggressive = TRUE
 	befriend_with_feed = FALSE
 	befriend_with_pets = FALSE
+
+	New()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_SILVER_VULNERABILITY, src, 100)
 
 	grow_up()
 		..()

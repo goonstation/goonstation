@@ -27,6 +27,8 @@
 		src.ability_holder.addAbility(/datum/targetable/vampire/vamp_cloak)
 		src.ability_holder.check_for_unlocks()
 
+		APPLY_ATOM_PROPERTY(src.owner.current, PROP_ATOM_SILVER_VULNERABILITY, "vampire", 100)
+
 		src.owner.current.assign_gimmick_skull()
 
 	remove_equipment()
@@ -39,6 +41,8 @@
 		src.ability_holder.removeAbility(/datum/targetable/vampire/vamp_cloak)
 		src.ability_holder.remove_unlocks()
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/vampire)
+
+		REMOVE_ATOM_PROPERTY(src.owner.current, PROP_ATOM_SILVER_VULNERABILITY, "vampire")
 
 		SPAWN(2.5 SECONDS)
 			src.owner.current.assign_gimmick_skull()

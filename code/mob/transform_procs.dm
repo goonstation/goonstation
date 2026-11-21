@@ -493,6 +493,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.literate = 0
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE
+	APPLY_ATOM_PROPERTY(C, PROP_ATOM_SILVER_VULNERABILITY, "ghost_critter", 20)
 
 	if (antag_critter)
 		C.show_antag_popup("ghostcritter_antag")
