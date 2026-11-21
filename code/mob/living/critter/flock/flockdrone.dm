@@ -986,6 +986,10 @@
 
 /mob/living/critter/flock/drone/emp_act()
 	SEND_SIGNAL(src.cell, COMSIG_CELL_USE, src.cell.max_charge/2)
+	src.TakeDamage("All", brute = 42) //convenience, not actually brute in terms of what it would be doing
+	src.changeStatus("disorient", 4 SECONDS)
+	emote("scream")
+	boutput(src, SPAN_ALERT("You feel your systems falter as the electromagnetic pulse disrupts your connection to the Signal!"))
 
 /////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE SPECIFIC LIMBS AND EQUIPMENT SLOTS
