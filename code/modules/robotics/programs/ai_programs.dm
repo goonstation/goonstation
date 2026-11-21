@@ -1,7 +1,7 @@
 /datum/computer/file/ai_program
 	name = "AI Software"
 	extension = "AI"
-	size = 32
+	size = 32 // bigge
 
 	asText()
 		return /datum/language/binary::to_binary(src.name)
@@ -29,26 +29,31 @@
 
 /datum/computer/file/ai_program/skill
 	name = "AI Expansion Program - Skill"
-	var/skill = ""
+	var/skill = "" //! Use SILICON::AI::SKILL::*
 
 /datum/computer/file/ai_program/skill/hologram_emitter
 	name = "HoloEmitter"
 	size = 8  // flavor
 	skill = SILICON::AI::SKILL::HOLOGRAM
+
 /datum/computer/file/ai_program/skill/call_shuttle
 	name = "ShuttleCall"
 	skill = SILICON::AI::SKILL::SHUTTLE
+
 /datum/computer/file/ai_program/skill/camera_tracking
 	name = "CameraTrack"
 	skill = SILICON::AI::SKILL::TRACKING
+
 /datum/computer/file/ai_program/skill/viewports
 	name = "ViewMirror"
 	skill = SILICON::AI::SKILL::VIEWPORT
 
+/datum/computer/file/ai_program/skill/viewport_expansion
+	name = "VizExtender"
+	skill = SILICON::AI::SKILL::VIEWPORT_EXP
 
 /datum/computer/file/ai_program/ability
 	name = "AI Expansion Program - Ability"
-	extension = "AIEP"
 	var/list/datum/targetable/ai_abilities
 	var/last_use
 	var/shared_cooldown
@@ -60,14 +65,6 @@
 /datum/computer/file/ai_program/ability/nanite_hive
 	name = "CameraEmitter_Nanite"
 	ai_abilities = list(/datum/targetable/ai/program/camera_repair, /datum/targetable/ai/program/nanite_repair)
-
-/datum/computer/file/ai_program/ability/doctor_vision
-	name = "Medical_Optics"
-	ai_abilities = list(/datum/targetable/ai/program/prodocs)
-
-/datum/computer/file/ai_program/ability/security_vision
-	name = "Security_Optics"
-	ai_abilities = list(/datum/targetable/ai/program/sec_huds)
 
 /datum/computer/file/ai_program/ability/camera_flash
 	name = "CameraLensFocus_Flash"
@@ -92,3 +89,66 @@
 /datum/computer/file/ai_program/ability/friend_turret
 	name = "TurretControl"
 	ai_abilities = list(/datum/targetable/ai/program/turret/deploy, /datum/targetable/ai/program/turret/target, /datum/targetable/ai/program/turret/swap_bullets)
+
+/datum/computer/file/ai_program/ability/record
+	size = 8
+
+/datum/computer/file/ai_program/ability/record/med
+	name = "RecordKeeperMedical"
+	ai_abilities = list(/datum/targetable/ai/program/datacore_lookup/medical)
+
+/datum/computer/file/ai_program/ability/record/sec
+	name = "RecordKeeperSecurity"
+	ai_abilities = list(/datum/targetable/ai/program/datacore_lookup/security)
+
+/datum/computer/file/ai_program/ability/record/bank
+	name = "RecordKeeperBank"
+	ai_abilities = list(/datum/targetable/ai/program/datacore_lookup/bank)
+
+/datum/computer/file/ai_program/ability/vision
+	size = 16
+/datum/computer/file/ai_program/ability/vision/sechud
+	name = "ContraSeeker"
+	ai_abilities = list(/datum/targetable/ai/program/add_image_group/sechud)
+
+/datum/computer/file/ai_program/ability/vision/prodoc
+	name = "TriageTrainer"
+	ai_abilities = list(/datum/targetable/ai/program/add_image_group/prodoc)
+
+/datum/computer/file/ai_program/ability/vision/mechcomp
+	name = "MajorMechanic"
+	ai_abilities = list(/datum/targetable/ai/program/add_image_group/mechcomp)
+
+/datum/computer/file/ai_program/ability/vision/mining
+	name = "MineralMania"
+	ai_abilities = list(/datum/targetable/ai/program/add_image_group/mining)
+
+/datum/computer/file/ai_program/ability/vision/pressure
+	name = "AirVizTurbo"
+	ai_abilities = list(/datum/targetable/ai/program/pressure_vision)
+
+/datum/computer/file/ai_program/ability/scan
+	size = 8
+/datum/computer/file/ai_program/ability/scan/health
+	name = "TriageTrainer"
+	ai_abilities = list(/datum/targetable/ai/program/scan_health)
+
+/datum/computer/file/ai_program/ability/scan/prisoner
+	name = "PrisonerPro"
+	ai_abilities = list(/datum/targetable/ai/program/change_arrest)
+
+/datum/computer/file/ai_program/ability/scan/atmos
+	name = "AtmosAnalyzer"
+	ai_abilities = list(/datum/targetable/ai/program/scan_atmos)
+
+/datum/computer/file/ai_program/ability/scan/plant
+	name = "PhytoSource"
+	ai_abilities = list(/datum/targetable/ai/program/scan_plant)
+
+/datum/computer/file/ai_program/ability/scan/reagent
+	name = "ChemId"
+	ai_abilities = list(/datum/targetable/ai/program/scan_reagent)
+
+/datum/computer/file/ai_program/ability/issue_citation
+	name = "CiteLock"
+	ai_abilities = list(/datum/targetable/ai/program/issue_citation)

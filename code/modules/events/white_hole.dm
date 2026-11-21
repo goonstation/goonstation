@@ -543,7 +543,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/paper = 2,
 			/obj/item/clothing/suit/cardboard_box/ai = 1,
 			/obj/item/disk/data/floppy/manudrive/ai = 1,
-			/obj/item/disk/data/wide_floppy/read_only/ai_program/remote_health_scan = 0.5,
+			/obj/item/disk/data/wide_floppy/read_only/ai_program/medical_heavy = 0.5,
 			/obj/item/disk/data/wide_floppy/read_only/ai_program/proto_teleman = 0.2
 		),
 		"bridge" = list(

@@ -4,7 +4,7 @@
 	var/software_package
 
 	disk_name()
-		return "AI Program: [src.software_package]"
+		return "[src.software_package]"
 
 /obj/item/disk/data/wide_floppy/read_only/ai_program/hologram
 	name = "data disk-'AI Hologram Library'"
@@ -56,7 +56,7 @@
 	software_package = "Elden"
 	random_color = FALSE
 	icon_state = "big-brown"
-	disk_color = "#524030"
+	disk_color = "#705339"
 
 	New()
 		. = ..()
@@ -67,8 +67,8 @@
 
 /obj/item/disk/data/wide_floppy/read_only/ai_program/tracking // Camera tracking
 	name = "data disk-'AI Camera Tracking'"
-	software_package = "Camera Tracking"
-	desc = "A disk with programs that adjust camera lense focus. Allows AI controlled cameras to produce a hologram."
+	software_package = "Tracking Camera"
+	desc = "A disk with programs that provide facial and ID recognition across all connected cameras."
 
 	New()
 		. = ..()
@@ -76,8 +76,8 @@
 		src.read_only = TRUE
 
 /obj/item/disk/data/wide_floppy/read_only/ai_program/viewports // Create Viewport / Viewport windows
-	name = "data disk-'Remote AI Viewports'"
-	software_package = "Viewports"
+	name = "data disk-'Remote Viewports'"
+	software_package = "Viewport Video Streams"
 	desc = "A disk with programs that compress video data. Allows AIs to process multiple visual streams."
 	New()
 		. = ..()
@@ -86,8 +86,8 @@
 
 /obj/item/disk/data/wide_floppy/read_only/ai_program/call_shuttle // Ability to call shuttle (need to modify checks in terminal program?)
 	name = "data disk-'Remote AI Shuttle Call'"
-	software_package = "Shuttle Call"
-	desc = "A disk with programs that adjust camera lens focus. Allows AI controlled cameras to produce a hologram."
+	software_package = "Emergency Shuttle Call"
+	desc = "A disk with programs that adjust camera lens focus. Allows AIs to remotely call the emergency shuttle."
 	New()
 		. = ..()
 		src.root.add_file(new /datum/computer/file/ai_program/skill/call_shuttle)
@@ -105,11 +105,8 @@
 		src.root.add_file(new /datum/computer/file/ai_program/ability/camera_laser)
 		src.read_only = TRUE
 
-//-- Common programs
+//-- Misc programs
 
-// none, yet!
-
-//-- Uncommon programs
 /obj/item/disk/data/wide_floppy/read_only/ai_program/flash // Emit an AOE flash from a camera
 	name = "data disk-'CLF: Flash'"
 	software_package = "CLF: Flash"
@@ -130,8 +127,8 @@
 
 /obj/item/disk/data/wide_floppy/read_only/ai_program/assisted_guidance // Provide GPS targets for crew
 	name = "data disk-'Remote Path Projection'"
-	software_package = "Remote GPS"
-	desc = "A disk with programs that enable to project a path from a crew member to a destination."
+	software_package = "Remote GPS Pathing"
+	desc = "A disk with programs that enable to project a hologrpahic path from a crew member to a destination."
 	New()
 		. = ..()
 		src.root.add_file(new /datum/computer/file/ai_program/ability/assisted_guidance)
@@ -146,26 +143,7 @@
 		src.root.add_file(new /datum/computer/file/ai_program/ability/proto_teleman)
 		src.read_only = TRUE
 
-/obj/item/disk/data/wide_floppy/read_only/ai_program/remote_health_scan // get a remote health scan
-	name = "data disk-'Visual Health Analysis'"
-	software_package = "Health Scanning"
-	desc = "A disk with programs for AI units to remotely survey crew health."
-	New()
-		. = ..()
-		src.root.add_file(new /datum/computer/file/ai_program/ability/doctor_vision)
-		src.read_only = TRUE
-
 //-- Admin only
-
-/obj/item/disk/data/wide_floppy/read_only/ai_program/remote_security_record // lookup a security record on examine
-	name = "data disk-'Visual Security Lookup'"
-	software_package = "Security Scanning"
-	desc = "A disk with programs for AI units to remotely control a turret."
-	New()
-		. = ..()
-		src.root.add_file(new /datum/computer/file/ai_program/ability/security_vision)
-		src.read_only = TRUE
-
 
 /obj/item/disk/data/wide_floppy/read_only/ai_program/metal_foam_launcher // shoot metal foam from a camera
 	name = "data disk-'Remote Foam Displacement'"
@@ -192,4 +170,94 @@
 	New()
 		. = ..()
 		src.root.add_file(new /datum/computer/file/ai_program/ability/friend_turret)
+		src.read_only = TRUE
+
+// -- Reworked Disks
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/viewports_expansion
+	name = "data disk-'AI Viewport Expansion'"
+	software_package = "Viewport Expansion"
+	desc = "A disk with programs that compress video data even further. Allows AIs to process an additional visual stream."
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/skill/viewport_expansion)
+		src.read_only = TRUE
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/security_lite
+	name = "data disk-'SecHelper Lite'"
+	software_package = "Security Records"
+	desc = "A disk with programs for AI units to check and set a crewmember's security records."
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/ability/record/sec)
+		src.root.add_file(new /datum/computer/file/ai_program/ability/scan/prisoner)
+		src.read_only = TRUE
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/security_heavy
+	name = "data disk-'SecHelper Control Upgrade'"
+	software_package = "Flagging and Citation"
+	desc = "A disk with programs for AI units to assist station security in maintaining order."
+	file_amount = 64
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/ability/vision/sechud)
+		src.root.add_file(new /datum/computer/file/ai_program/ability/issue_citation)
+		src.read_only = TRUE
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/medical_lite
+	name = "data disk-'Medical Record Lookup'"
+	software_package = "Medical Record Lookup"
+	desc = "A disk with programs for AI units to check a crewmember's medical records."
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/ability/record/med)
+		src.read_only = TRUE
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/medical_heavy
+	name = "data disk-'Remote Medical Examination'"
+	software_package = "Medical Examination"
+	desc = "A disk with programs for AI units to remotely monitor crew vitals."
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/ability/scan/health)
+		src.root.add_file(new /datum/computer/file/ai_program/ability/vision/prodoc)
+		src.read_only = TRUE
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/engi_air
+	name = "data disk-'Re-Air Lite'"
+	software_package = "Breach Detection"
+	desc = "A disk with programs for AI units to assist engineering teams in repairing breaches."
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/ability/vision/pressure)
+		src.root.add_file(new /datum/computer/file/ai_program/ability/scan/atmos)
+		src.read_only = TRUE
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/engi_mech
+	name = "data disk-'MechMinder'"
+	software_package = "MechComp Visualizer"
+	desc = "A disk with programs for AI unitPs to visualize MechComp connections."
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/ability/vision/mechcomp)
+		src.read_only = TRUE
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/misc
+	name = "data disk-'MiscAssist'"
+	software_package = "MiscAssist"
+	desc = "A disk with programs for AI units to assist with miscellaneous tasks."
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/ability/record/bank)
+		src.root.add_file(new /datum/computer/file/ai_program/ability/scan/plant)
+		src.root.add_file(new /datum/computer/file/ai_program/ability/vision/mining)
+		src.read_only = TRUE
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/fluid_scan
+	name = "data disk-'Fluid Scan'"
+	software_package = "Fluid Scanner"
+	desc = "A disk with programs for AI units to scan loose fluids."
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/ability/scan/reagent)
 		src.read_only = TRUE
