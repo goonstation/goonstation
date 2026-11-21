@@ -270,7 +270,7 @@
 	var/last_seek
 
 
-/datum/aiTask/timed/targeted/follow_mate/proc/precondition()
+/datum/aiTask/timed/targeted/follow_mate/precondition()
 	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
 	. = 0
 	if(isalive(C))
@@ -288,14 +288,15 @@
 		. = !(holder.target)
 
 /datum/aiTask/timed/targeted/follow_mate/evaluate()
-	..()
+	if(!precondition())
+		return 0
 	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
 	if(istype(C))
 		for(var/mob/M in view(target_range,C))
 			if(!isdead(M))
 				if(C.mate == M)
 					if(get_dist(C,M) > target_range/2)
-						return precondition() * FOLLOW_PRIORITY
+						return FOLLOW_PRIORITY
 	. = 0
 
 /datum/aiTask/timed/targeted/follow_mate/on_tick()
