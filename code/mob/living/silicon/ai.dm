@@ -2594,7 +2594,10 @@ proc/get_mobs_trackable_by_AI()
 	else
 		if (new_skills.Find(SILICON::AI::SKILL::VIEWPORT))
 			update_hud = TRUE
-			src.viewport_limit = SILICON::AI::MAX_VIEWPORTS
+			if (new_skills.Find(SILICON::AI::SKILL::VIEWPORT_EXP))
+				src.viewport_limit = SILICON::AI::BASE_VIEWPORTS + 1
+			else
+				src.viewport_limit = SILICON::AI::BASE_VIEWPORTS
 
 	// if the lengths don't match, or if the lists have different entries
 	if ((length(src.holoHolder.text_expansion) != length(new_holograms)) || (length(src.holoHolder.text_expansion) != length(src.holoHolder.text_expansion | new_holograms)))
