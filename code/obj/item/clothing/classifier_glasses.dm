@@ -1,6 +1,6 @@
 /obj/item/clothing/glasses/classifier
 	name = "RAT//SCAN janitorial visor"
-	desc = "desc = "A janitorial visor with a milspec threat display and a dedicated pest-tracking coprocessor. The lenses are synthetic sapphire. The little box it draws around a mouse is pink."
+	desc = "A janitorial visor with a milspec threat display and a dedicated pest-tracking coprocessor. The lenses are synthetic sapphire. The little box it draws around a mouse is pink."
 	icon = 'icons/obj/clothing/classifier_glasses.dmi'
 	icon_state = "visor"
 	wear_image_icon = 'icons/mob/clothing/classifier_glasses.dmi'
