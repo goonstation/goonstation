@@ -133,7 +133,7 @@
 				var/mob/living/critter/small_animal/ranch_base/C = owncritter
 				if(istype(C))
 					C.visible_message(SPAN_ALERT("[C] cries out in fear!"))
-					C.gossip()
+					C.gossip(holder.target)
 					messaged = 1
 
 		holder.move_away(holder.target,target_range)
@@ -248,7 +248,7 @@
 				var/mob/living/critter/small_animal/ranch_base/C = owncritter
 				if(istype(C))
 					C.visible_message(SPAN_ALERT("[C] cries out in anger!"))
-					C.gossip()
+					C.gossip(M)
 					messaged = 1
 
 		var/dist = get_dist(owncritter, M)
