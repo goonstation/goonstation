@@ -6,9 +6,10 @@ var/list/ai_move_scheduled = list()
 	var/atom/target = null // the simplest blackboard ever
 	/// Stores most recently generated path to target - if null, it needs regenerating, or a new target selected
 	var/list/target_path = null
-	///What the critter is currently doing. Do not set directly, use switch_to
+	/// What the critter is currently doing. Do not set directly, use switch_to
 	var/datum/aiTask/current_task = null
-	var/datum/aiTask/default_task = null  // what behavior the critter will fall back on
+	/// What behavior the critter will fall back on, pass a typepath
+	var/datum/aiTask/default_task = null
 	var/list/task_cache = list()
 	/// The default prioritizer will consume tasks from this list in order before it picks any others
 	var/list/datum/aiTask/priority_tasks = list()
@@ -26,7 +27,7 @@ var/list/ai_move_scheduled = list()
 
 	var/exclude_from_mobs_list = 0
 
-	New(var/mob/M)
+	New(mob/M)
 		..()
 		owner = M
 		if(istype(M, /mob/living/carbon/human))
@@ -50,6 +51,9 @@ var/list/ai_move_scheduled = list()
 			else
 				owner.add_ability_holder(/datum/abilityHolder/composite)
 				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
+
+		if(ispath(default_task))
+			default_task = get_instance(default_task, list(src))
 
 	disposing()
 		stop_move()
