@@ -63,6 +63,12 @@
 	if(.)
 		holder.owner.icon_state = initial(holder.owner.icon_state)
 
+/datum/aiTask/timed/sitting/on_reset()
+	..()
+	var/mob/living/owner = holder?.owner
+	if(owner?.icon_state == "[initial(owner.icon_state)]-sit") // interrupted while sitting
+		owner.icon_state = initial(owner.icon_state)
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
 // spend a few ticks wandering aimlessly
