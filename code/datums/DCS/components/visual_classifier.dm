@@ -27,9 +27,6 @@
 			targets += footprints
 		visible_tiles += targets
 
-TYPEINFO(/datum/component/visual_classifier)
-	initialization_args = list(ARG_INFO("slot", DATA_INPUT_NUM, "Equipment slot (items only)", SLOT_GLASSES))
-
 /datum/component/visual_classifier
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/enabled = TRUE
@@ -54,12 +51,12 @@ TYPEINFO(/datum/component/visual_classifier)
 	var/display_name = "Classifier"
 	var/boot_banner_type
 	var/boot_sound
-	var/equipment_slot
 	var/tmp/list/categories_by_type
 	var/tmp/list/unindexed_categories
 	var/tmp/list/flavor_rule_by_type
 	var/tmp/mob/living/wearer
 	var/tmp/client/viewer
+	var/tmp/datum/hud/visual_classifier/classifier_hud
 	var/tmp/scan_generation = 0
 	var/tmp/atom/movable/focused_target
 	var/tmp/obj/overlay/classifier_projection/projection
@@ -68,11 +65,10 @@ TYPEINFO(/datum/component/visual_classifier)
 	var/tmp/list/last_label_layout
 	var/tmp/atom/movable/screen/boot_banner
 
-	Initialize(slot = SLOT_GLASSES)
+	Initialize()
 		. = ..()
-		if (!isliving(src.parent) && !isitem(src.parent))
+		if (!isitem(src.parent) && !isliving(src.parent))
 			return COMPONENT_INCOMPATIBLE
-		src.equipment_slot = slot
 
 	RegisterWithParent()
 		. = ..()
@@ -81,17 +77,10 @@ TYPEINFO(/datum/component/visual_classifier)
 		else
 			src.RegisterSignal(src.parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 			src.RegisterSignal(src.parent, COMSIG_ITEM_UNEQUIPPED, PROC_REF(detach_wearer))
-			src.check_current_slot()
-
-	proc/check_current_slot()
-		var/obj/item/item = src.parent
-		if (!istype(item))
-			return
-		var/mob/living/carbon/human/user = item.loc
-		if (istype(user) && user.get_slot(src.equipment_slot) == item)
-			src.attach_wearer(user)
-		else
-			src.detach_wearer()
+			var/obj/item/item = src.parent
+			var/mob/living/user = item.loc
+			if (istype(user) && (item.equipped_in_slot || (istype(user, /mob/living/critter) && (item in user.equipment_list()))))
+				src.attach_wearer(user)
 
 	UnregisterFromParent()
 		src.detach_wearer()
@@ -99,11 +88,9 @@ TYPEINFO(/datum/component/visual_classifier)
 			src.UnregisterSignal(src.parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_UNEQUIPPED))
 		. = ..()
 
-	proc/on_equip(obj/item/source, mob/living/user, slot)
-		if (slot == src.equipment_slot && istype(user))
+	proc/on_equip(obj/item/source, mob/living/user)
+		if (istype(user))
 			src.attach_wearer(user)
-		else
-			src.detach_wearer()
 
 	proc/attach_wearer(mob/living/user)
 		if (src.wearer == user)
@@ -131,6 +118,9 @@ TYPEINFO(/datum/component/visual_classifier)
 		src.stop_scanning()
 		src.viewer = active_client
 		src.callouts = list()
+		src.classifier_hud = new
+		src.classifier_hud.callouts = src.callouts
+		user.attach_hud(src.classifier_hud)
 		var/generation = src.scan_generation
 		// force_equip() still has to move the item into the wearer's contents.
 		SPAWN(0)
@@ -148,6 +138,10 @@ TYPEINFO(/datum/component/visual_classifier)
 	proc/stop_scanning()
 		src.scan_generation++
 		src.reset_display()
+		if (src.classifier_hud)
+			src.wearer.detach_hud(src.classifier_hud)
+			qdel(src.classifier_hud)
+			src.classifier_hud = null
 		src.callouts = null
 		src.viewer = null
 
@@ -162,7 +156,7 @@ TYPEINFO(/datum/component/visual_classifier)
 			return
 		var/atom/movable/screen/banner = new src.boot_banner_type
 		src.boot_banner = banner
-		src.viewer.screen += banner
+		src.classifier_hud.add_screen(banner)
 		if (src.boot_sound)
 			src.wearer.playsound_local_not_inworld(src.boot_sound, 25, FALSE, flags = SOUND_SKIP_OBSERVERS)
 		SPAWN(src.boot_duration)
@@ -172,7 +166,7 @@ TYPEINFO(/datum/component/visual_classifier)
 	proc/clear_boot()
 		if (!src.boot_banner)
 			return
-		src.viewer?.screen -= src.boot_banner
+		src.classifier_hud.remove_screen(src.boot_banner)
 		qdel(src.boot_banner)
 		src.boot_banner = null
 
@@ -189,8 +183,6 @@ TYPEINFO(/datum/component/visual_classifier)
 		switch (variable)
 			if ("enabled")
 				src.set_power(newval)
-			if ("equipment_slot")
-				src.check_current_slot()
 			if ("category_types", "excluded_types", "flavor_labels")
 				src.invalidate_rules()
 			if ("target_limit", "label_limit", "label_attempt_limit", "max_frame_tiles", "scan_interval", "boot_duration")
@@ -272,7 +264,7 @@ TYPEINFO(/datum/component/visual_classifier)
 		src.last_label_layout = null
 		if (src.focused_target == target && !src.projection)
 			src.set_filter(src.filter_class)
-		callout.hide_from(src.viewer)
+		callout.hide_from(src.classifier_hud.clients)
 		src.callouts -= target
 		src.UnregisterSignal(target, COMSIG_ATOM_PROP_MOB_INVISIBILITY)
 		if (target != src.wearer)
@@ -280,13 +272,8 @@ TYPEINFO(/datum/component/visual_classifier)
 		qdel(callout)
 
 	proc/source_active()
-		if (src.wearer == src.parent)
-			return TRUE
-		var/obj/item/item = src.parent
-		if (!item || item.loc != src.wearer)
-			return FALSE
-		var/mob/living/carbon/human/human = src.wearer
-		return !istype(human) || human.get_slot(src.equipment_slot) == item
+		var/atom/source = src.parent
+		return source == src.wearer || source.loc == src.wearer
 
 	proc/can_scan()
 		if (!src.enabled || !src.viewer || src.viewer.eye != src.wearer || !src.source_active())
@@ -550,7 +537,7 @@ TYPEINFO(/datum/component/visual_classifier)
 					caption = "[caption] [callout.tile_count]T"
 				glitch_chance = src.glitch_chance_for(target)
 			var/focused = target == src.focused_target
-			callout.present(src.viewer, corner, focused, caption, glitch_chance, focused ? src.projection : null)
+			callout.present(src.classifier_hud.clients, corner, focused, caption, glitch_chance, focused ? src.projection : null)
 
 	proc/can_mark(atom/movable/target, category)
 		if (!category || QDELETED(target) || target.invisibility || !target.alpha || !isturf(target.loc) || target.plane == PLANE_UNDERFLOOR || !target.icon)

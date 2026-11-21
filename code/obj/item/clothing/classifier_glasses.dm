@@ -14,7 +14,7 @@
 		. = ..()
 		src.RegisterSignal(src, COMSIG_COMPONENT_ADDED, PROC_REF(bind_classifier))
 		src.RegisterSignal(src, COMSIG_COMPONENT_REMOVING, PROC_REF(unbind_classifier))
-		src.AddComponent(src.classifier_type, SLOT_GLASSES)
+		src.AddComponent(src.classifier_type)
 
 	proc/bind_classifier(datum/source, datum/component/visual_classifier/scanner)
 		if (!src.classifier && istype(scanner, src.classifier_type))

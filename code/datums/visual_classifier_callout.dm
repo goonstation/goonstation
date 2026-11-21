@@ -4,6 +4,25 @@
 #define CLASSIFIER_GLYPH_BLEED 2
 #define CLASSIFIER_GLITCH_TRACKS 6
 
+/datum/hud/visual_classifier
+	var/list/callouts
+
+	add_client(client/viewer)
+		if (viewer in src.clients)
+			return
+		. = ..()
+		for (var/target in src.callouts)
+			var/datum/classifier_callout/callout = src.callouts[target]
+			callout.add_viewer(viewer)
+
+	remove_client(client/viewer)
+		if (!(viewer in src.clients))
+			return
+		for (var/target in src.callouts)
+			var/datum/classifier_callout/callout = src.callouts[target]
+			callout.remove_viewer(viewer)
+		. = ..()
+
 /datum/client_image_group/classifier_bracket
 	var/static/list/by_target = list()
 	var/image/classifier_frame/bracket
@@ -24,9 +43,7 @@
 	proc/matches(datum/classifier_callout/marker)
 		return src.category == marker.category && src.bracket.color == marker.tint && src.bracket.appearance_flags == marker.frame_flags
 
-	proc/release(client/viewer)
-		if (viewer && src.subscribed_clients_with_subcount[viewer])
-			src.remove_client(viewer)
+	proc/release()
 		if (--src.users == 0)
 			qdel(src)
 
@@ -75,10 +92,23 @@
 	var/datum/client_image_group/classifier_bracket/shared_group
 	var/delivery_changed = TRUE
 
-	proc/use_shared_bracket(client/viewer)
+	proc/add_viewer(client/viewer)
+		if (src.shared_group)
+			src.shared_group.add_client(viewer)
+		else if (src.private_image?.loc)
+			viewer.images += src.private_image
+
+	proc/remove_viewer(client/viewer)
+		if (src.shared_group)
+			if (src.shared_group.subscribed_clients_with_subcount[viewer])
+				src.shared_group.remove_client(viewer)
+		else if (src.private_image?.loc)
+			viewer.images -= src.private_image
+
+	proc/use_shared_bracket(list/viewers)
 		if (src.shared_group?.matches(src))
 			return
-		src.hide_from(viewer)
+		src.hide_from(viewers)
 		for (var/datum/client_image_group/classifier_bracket/group as anything in /datum/client_image_group/classifier_bracket::by_target[src.target])
 			if (group.matches(src))
 				src.shared_group = group
@@ -86,14 +116,16 @@
 		if (!src.shared_group)
 			src.shared_group = new(src)
 		src.shared_group.users++
-		src.shared_group.add_client(viewer)
+		for (var/client/viewer as anything in viewers)
+			src.shared_group.add_client(viewer)
 
-	proc/hide_from(client/viewer)
+	proc/hide_from(list/viewers)
+		for (var/client/viewer as anything in viewers)
+			src.remove_viewer(viewer)
 		if (src.shared_group)
-			src.shared_group.release(viewer)
+			src.shared_group.release()
 			src.shared_group = null
 		if (src.private_image)
-			viewer?.images -= src.private_image
 			qdel(src.private_image)
 			src.private_image = null
 
@@ -202,7 +234,7 @@
 	proc/label_bottom(corner)
 		return (corner & NORTH) ? src.frame_height + CLASSIFIER_LABEL_GAP_Y : -CLASSIFIER_LABEL_GAP_Y - CLASSIFIER_LABEL_HEIGHT
 
-	proc/present(client/viewer, new_side, new_locked, new_caption, glitch_chance, obj/overlay/classifier_projection/projection)
+	proc/present(list/viewers, new_side, new_locked, new_caption, glitch_chance, obj/overlay/classifier_projection/projection)
 		var/redraw = src.frame_changed || src.side != new_side || src.locked != new_locked || src.caption != new_caption
 		var/new_projection = projection && !projection.icon
 		if (!redraw && !src.delivery_changed && !new_projection)
@@ -216,19 +248,21 @@
 		src.caption = new_caption
 		var/standard_frame = src.frame_width == world.icon_size && src.frame_height == world.icon_size && !src.offset_x && !src.offset_y
 		if (standard_frame && !src.side && !src.locked && !src.overflow_dirs)
-			src.use_shared_bracket(viewer)
+			src.use_shared_bracket(viewers)
 			return
 		if (!src.private_image)
-			src.hide_from(viewer)
+			src.hide_from(viewers)
 			src.private_image = new
 			redraw = TRUE
 		// The wearer can already see the projection.
 		if (projection && src.private_image.loc)
-			viewer.images -= src.private_image
+			for (var/client/viewer as anything in viewers)
+				viewer.images -= src.private_image
 			src.private_image.loc = null
 		else if (!projection && !src.private_image.loc)
 			src.private_image.loc = src.target
-			viewer?.images += src.private_image
+			for (var/client/viewer as anything in viewers)
+				viewer.images += src.private_image
 		src.private_image.color = src.tint
 		src.private_image.appearance_flags = src.frame_flags
 		src.private_image.pixel_x = src.offset_x
