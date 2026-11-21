@@ -268,6 +268,15 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"aL" = (
+/obj/landmark/antagonist/operative/ai,
+/turf/unsimulated/floor/marble/black,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "aM" = (
 /obj/mapping_helper/wingrille_spawn/auto/hardened/tuff,
 /turf/unsimulated/floor/industrial,
@@ -3495,16 +3504,6 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
-"jI" = (
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red.";
-	pixel_y = 32
-	},
-/turf/unsimulated/floor/black,
-/area/prison/cell_block/wards{
-	name = "Syndicate Brig"
-	})
 "jJ" = (
 /obj/barricade,
 /turf/unsimulated/floor/concrete,
@@ -5745,9 +5744,7 @@
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/gloves/swat,
 /obj/item/clothing/gloves/swat,
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red.";
+/obj/decal/poster/flag/syndicate{
 	pixel_y = 32
 	},
 /obj/item/clothing/under/color/brown,
@@ -7078,9 +7075,7 @@
 /obj/machinery/vending/cigarette{
 	pixel_y = 4
 	},
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red.";
+/obj/decal/poster/flag/syndicate{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/concrete,
@@ -7498,6 +7493,19 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"tR" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/stairs/dark{
+	dir = 9
+	},
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "tT" = (
 /obj/machinery/door_control{
 	id = "vedwyd_armoryL";
@@ -7873,6 +7881,9 @@
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/gemstone,
+/obj/item/cane/golden,
+/obj/item/cane/golden,
+/obj/item/cane/golden,
 /turf/unsimulated/floor/engine,
 /area/prefab/vault)
 "uI" = (
@@ -8868,6 +8879,12 @@
 /obj/item/ammo/bullets/rifle_762_NATO{
 	pixel_x = -7
 	},
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -8931,18 +8948,6 @@
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
-"xr" = (
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red."
-	},
-/turf/unsimulated/wall/auto/adventure/overgrown1,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -11457,6 +11462,14 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"Ee" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/prefab/synd_lab{
+	name = "Executive Wing"
+	})
 "Ei" = (
 /obj/ladder{
 	id = "vedwyd_tunnel1";
@@ -12037,9 +12050,7 @@
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/gloves/swat,
 /obj/item/clothing/gloves/swat,
-/obj/decal/poster/flag{
-	color = "red";
-	desc = "A simple banner in Syndicate red.";
+/obj/decal/poster/flag/syndicate{
 	pixel_y = 32
 	},
 /obj/item/clothing/under/color/brown,
@@ -13369,6 +13380,20 @@
 	name = "crusher door"
 	},
 /turf/unsimulated/floor/industrial,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
+"IR" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/black,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -15702,12 +15727,9 @@
 /obj/machinery/light/small/frostedred,
 /obj/table/reinforced/auto,
 /obj/table/reinforced/auto,
-/obj/item/objBriefcase/syndicate{
-	name = "classified documents";
-	pixel_y = 6
-	},
-/obj/item/objBriefcase/syndicate{
-	name = "classified documents"
+/obj/item/paper/image/tamper_proof/syndicate_folder/org_chart{
+	pixel_x = -1;
+	pixel_y = 4
 	},
 /turf/unsimulated/floor/terrazzo/black,
 /area/prefab/synd_lab{
@@ -16220,6 +16242,9 @@
 	})
 "Ql" = (
 /obj/table/podium_white/syndicate,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/shiny,
 /area/prefab/vault)
 "Qm" = (
@@ -17447,6 +17472,9 @@
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/gemstone,
+/obj/item/cane/golden,
+/obj/item/cane/golden,
+/obj/item/cane/golden,
 /turf/unsimulated/floor/engine,
 /area/prefab/vault)
 "SV" = (
@@ -18505,6 +18533,12 @@
 /obj/item/gun/kinetic/breakaction/singleshotrifle{
 	pixel_y = 8
 	},
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
+/obj/item/flag/syndicate,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -22974,7 +23008,7 @@ DZ
 DZ
 nF
 uQ
-uQ
+aL
 gY
 jj
 fL
@@ -23090,8 +23124,8 @@ PA
 PA
 ip
 gd
-xr
-gd
+PA
+tR
 Cr
 PA
 PA
@@ -23906,7 +23940,7 @@ fa
 kU
 kU
 fa
-vK
+IR
 hh
 tQ
 EV
@@ -24349,7 +24383,7 @@ aY
 hS
 cd
 My
-Ck
+Ee
 bg
 vU
 mG
@@ -24362,7 +24396,7 @@ Qd
 fa
 fa
 fa
-jI
+oY
 gR
 ya
 MW
@@ -24516,7 +24550,7 @@ fa
 sT
 FK
 fa
-jI
+oY
 kY
 uJ
 TL
