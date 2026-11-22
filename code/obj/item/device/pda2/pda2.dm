@@ -1193,7 +1193,7 @@
 		if (!M.client || M.client.preferences?.flying_chat_pda_hidden)
 			return
 
-		if (isdead(M) || M.sight_check(consciousness_check=TRUE) || !M.literate)
+		if (isdead(M) || !M.sight_check(consciousness_check=TRUE) || !M.literate)
 			return
 
 		var/hud_element = null

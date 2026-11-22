@@ -38,7 +38,6 @@ TYPEINFO(/mob)
 	var/last_move_trigger = 0
 
 	var/atom/movable/screen/internals = null
-	var/atom/movable/screen/stamina_bar/stamina_bar = null
 
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = null
@@ -84,8 +83,6 @@ TYPEINFO(/mob)
 	var/vdisfigured = FALSE
 	var/druggy = 0
 	var/sleeping = 0
-	var/lying = 0
-	var/lying_old = 0
 	var/can_lie = 0
 	var/canmove = 1
 	var/incrit = 0
@@ -227,6 +224,7 @@ TYPEINFO(/mob)
 	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
 	/// last time this mob got dosed with radiation
 	var/last_radiation_dose_time = 0
+
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob
@@ -3638,3 +3636,42 @@ TYPEINFO(/mob)
 ///"Getter" method so I can private the var
 /mob/proc/has_ailment_resistance(type)
 	return type in src.resistances
+
+/// Return all messageable PDAs attached to the mob that a third party can message, if they exist.
+///
+/// PDA must be on, and either externally visible (carbons), their internal PDA (silicons), or held (critters)
+/mob/proc/get_visible_pdas()
+	RETURN_TYPE(/list/obj/item/device/pda2)
+	return list()
+
+/mob/living/carbon/human/get_visible_pdas()
+	. = list()
+	var/obj/item/device/pda2/PDA
+	for (var/slot in list(SLOT_L_HAND, SLOT_R_HAND, SLOT_WEAR_ID, SLOT_BELT))
+		PDA = src.get_slot(slot)
+		if (istype(PDA))
+			. += PDA
+
+/mob/living/critter/get_visible_pdas()
+	. = list()
+	var/obj/item/device/pda2/PDA
+	for (var/datum/handHolder/HH as anything in src.hands)
+		PDA = HH.item
+		if (istype(PDA))
+			. += PDA
+
+/mob/living/silicon/get_visible_pdas()
+	if (src.mainframe)
+		return list(src.mainframe.internal_pda)
+	return list()
+
+/mob/living/silicon/robot/get_visible_pdas()
+	if (src.mainframe)
+		return list(src.mainframe.internal_pda)
+	return list(src.internal_pda)
+
+/mob/living/silicon/ai/get_visible_pdas()
+	return list(src.internal_pda)
+
+/mob/living/intangible/aieye/get_visible_pdas()
+	return list(src.mainframe.internal_pda)

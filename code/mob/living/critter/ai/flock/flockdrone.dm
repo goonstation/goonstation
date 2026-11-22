@@ -1,8 +1,5 @@
 /datum/aiHolder/flock/drone
-
-/datum/aiHolder/flock/drone/New()
-	..()
-	default_task = get_instance(/datum/aiTask/prioritizer/flock/drone, list(src))
+	default_task = /datum/aiTask/prioritizer/flock/drone
 
 /datum/aiHolder/flock/drone/was_harmed(obj/item/W, mob/M)
 	. = ..()
@@ -41,10 +38,7 @@
 		F.flock_name_tag?.set_info_tag(capitalize(src.name))
 
 /datum/aiHolder/flock/drone/tutorial
-
-/datum/aiHolder/flock/drone/tutorial/New()
-	..()
-	default_task = get_instance(/datum/aiTask/prioritizer/flock/drone/tutorial, list(src))
+	default_task = /datum/aiTask/prioritizer/flock/drone/tutorial
 
 /datum/aiTask/prioritizer/flock/drone/tutorial
 	New()
