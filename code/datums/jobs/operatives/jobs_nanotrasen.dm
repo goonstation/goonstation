@@ -132,7 +132,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	receives_miranda = TRUE
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
-	slot_mask = list(/obj/item/clothing/mask/gas/swat/NT)
+	slot_mask = list(/obj/item/clothing/mask/gas/swat/NT = 20, /obj/item/clothing/mask/clown_hat/blue = 1) //heh
 	slot_poc1 = list(/obj/item/storage/ntsc_pouch/ntao)
 	slot_poc2 = list(/obj/item/paper/iou_trigger)
 	slot_back = list(/obj/item/storage/backpack/NT)
