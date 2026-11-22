@@ -137,7 +137,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_jump = list(/obj/item/clothing/under/misc/ntvip)
-	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_glov = null
 	slot_head = list(/obj/item/clothing/head/NTberet/vip)
