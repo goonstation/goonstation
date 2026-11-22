@@ -778,7 +778,7 @@ stare
 		D.wander_count = 0
 		D.flock_name_tag?.set_info_tag(capitalize(src.name))
 
-/datum/aiTask/timed/targeted/flockdrone_shoot/proc/precondition()
+/datum/aiTask/timed/targeted/flockdrone_shoot/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(length(F.flock?.enemies))
 		return TRUE
