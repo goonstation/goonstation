@@ -32,10 +32,7 @@
 //Hen Ai holder
 
 /datum/aiHolder/chicken/hen
-
-/datum/aiHolder/chicken/hen/New()
-	..()
-	default_task = get_instance(/datum/aiTask/prioritizer/chicken/hen, list(src))
+	default_task = /datum/aiTask/prioritizer/chicken/hen
 
 /datum/aiTask/prioritizer/chicken/hen
 	name = "thinking (hen)"
@@ -58,9 +55,7 @@
 //Aggressive Hen holder
 
 /datum/aiHolder/chicken/hen/aggressive
-	New()
-		. = ..()
-		default_task = get_instance(/datum/aiTask/prioritizer/chicken/hen/aggressive, list(src))
+	default_task = /datum/aiTask/prioritizer/chicken/hen/aggressive
 
 /datum/aiTask/prioritizer/chicken/hen/aggressive/New()
 	. = ..()

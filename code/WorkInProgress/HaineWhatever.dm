@@ -1853,7 +1853,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						sleep(1 SECOND)
 						var/mob/living/H = G.affecting
 						if(H.lying)
-							H.lying = 0
+							H.set_lying(FALSE)
 							H.delStatus("unconscious")
 							H.delStatus("knockdown")
 							H.set_clothing_icon_dirty()

@@ -1,5 +1,6 @@
 /datum/random_event/start/wire_feast
 	name = "Wire Feast"
+	description = "Cut wires and spawn mad mice in station maintenance"
 	customization_available = 0
 	required_elapsed_round_time = 0
 

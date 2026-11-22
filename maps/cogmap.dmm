@@ -36392,17 +36392,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "fqm" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
 /obj/machinery/alarm/directional/north,
-/obj/cable{
-	icon_state = "0-4"
-	},
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/caution/white{
 	dir = 8
 	},
@@ -39581,9 +39572,6 @@
 "hto" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -98147,7 +98135,7 @@ adC
 adC
 aah
 bIP
-bTi
+bLu
 bLu
 bLu
 bOz

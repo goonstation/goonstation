@@ -145,9 +145,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge/spawner)
 			var/throw_type = THROW_NORMAL
 			var/mob/M = new src.spawned_type(get_turf(src))
 			if (ismob(M))
-				M.lying = TRUE // So mobs dont hit other mobs when being flung
+				M.set_lying(TRUE) // So mobs dont hit other mobs when being flung
 				SPAWN(1 SECOND)
-					M.lying = FALSE
+					M.set_lying(FALSE)
 			else
 				throw_type = THROW_PHASE
 			M.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2, throw_type = throw_type)

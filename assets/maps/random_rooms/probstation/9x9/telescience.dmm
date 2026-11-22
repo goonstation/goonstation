@@ -29,6 +29,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/storage/crate/adventure,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "eN" = (
@@ -154,12 +155,8 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "tp" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/tank/air,
-/obj/item/clothing/mask/breath,
 /obj/machinery/light/incandescent/cool,
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
@@ -585,8 +582,12 @@
 /turf/simulated/wall/auto/supernorn/colored/purple,
 /area/station/science/teleporter/foyer)
 "XN" = (
-/obj/storage/crate/adventure,
 /obj/machinery/firealarm/directional/west,
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/tank/air,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
