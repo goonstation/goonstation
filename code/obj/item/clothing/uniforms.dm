@@ -1502,6 +1502,26 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 	desc = "Do plumbers actually wear outfits like this?"
 	icon_state = "mario"
 	item_state = "mario"
+	HELP_MESSAGE_OVERRIDE("Use in-hand to change style.")
+
+	attack_self(mob/user)
+		. = ..()
+		boutput(user, SPAN_NOTICE("You change the style on [src]."))
+		switch(src.icon_state)
+			if(/obj/item/clothing/under/gimmick/mario::icon_state)
+				src.copy_appearance(/obj/item/clothing/under/gimmick/mario/luigi)
+			if(/obj/item/clothing/under/gimmick/mario/luigi::icon_state)
+				src.copy_appearance(/obj/item/clothing/under/gimmick/mario/wario)
+			if(/obj/item/clothing/under/gimmick/mario/wario::icon_state)
+				src.copy_appearance(/obj/item/clothing/under/gimmick/mario/waluigi)
+			else
+				src.copy_appearance(/obj/item/clothing/under/gimmick/mario)
+
+	proc/copy_appearance(var/obj/item/clothing/type)
+		src.name = type::name
+		src.desc = type::desc
+		src.icon_state = type::icon_state
+		src.item_state = type::item_state
 
 	luigi
 		desc = "These are some seriously second-rate overalls."
@@ -1520,11 +1540,56 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 		icon_state = "waluigi"
 		item_state = "waluigi"
 
+/obj/item/clothing/under/gimmick/mario/syndicate //This one allows flushing yourself to another toilet
+	tooltip_flags = REBUILD_USER
+	SYNDICATE_STEALTH_DESCRIPTION("It looks extra slippery.")
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		if (istrainedsyndie(user) || isspythief(user))
+			. += SPAN_ALERT("<br>Click-drag yourself to a toilet you're sitting on to dive in and appear at a random other toilet on station.")
+
+	equipped(mob/user, slot)
+		. = ..()
+		if(slot == SLOT_W_UNIFORM)
+			user.abilityHolder.addAbility(/datum/targetable/vent_move)
+
+	unequipped(mob/user)
+		if(src.equipped_in_slot == SLOT_W_UNIFORM)
+			user.abilityHolder.removeAbility(/datum/targetable/vent_move)
+		. = ..()
+
+	waluigi // Only defining this one so I can show the purple one in the uplink UI.
+		name = /obj/item/clothing/under/gimmick/mario/waluigi::name
+		desc = /obj/item/clothing/under/gimmick/mario/waluigi::desc
+		icon_state = /obj/item/clothing/under/gimmick/mario/waluigi::icon_state
+		item_state = /obj/item/clothing/under/gimmick/mario/waluigi::item_state
+
 /obj/item/clothing/head/mario
 	name = "plumber's hat"
 	desc = "A red cap with an \"M\" on it. Probably not actually related to plumbing at all."
 	icon_state = "mario"
 	item_state = "rgloves"
+	HELP_MESSAGE_OVERRIDE("Use in-hand to change style.")
+
+	attack_self(mob/user)
+		. = ..()
+		boutput(user, SPAN_NOTICE("You change the style on [src]."))
+		switch(src.icon_state)
+			if(/obj/item/clothing/head/mario::icon_state)
+				src.copy_appearance(/obj/item/clothing/head/mario/luigi)
+			if(/obj/item/clothing/head/mario/luigi::icon_state)
+				src.copy_appearance(/obj/item/clothing/head/mario/wario)
+			if(/obj/item/clothing/head/mario/wario::icon_state)
+				src.copy_appearance(/obj/item/clothing/head/mario/waluigi)
+			else
+				src.copy_appearance(/obj/item/clothing/head/mario)
+
+	proc/copy_appearance(var/obj/item/clothing/type)
+		src.name = type::name
+		src.desc = type::desc
+		src.icon_state = type::icon_state
+		src.item_state = type::item_state
 
 	luigi
 		desc = "A green cap with an \"L\" on it. What kind of manchild wears this?"

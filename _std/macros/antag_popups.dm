@@ -90,6 +90,7 @@
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
 	<a href='byond://?src=\ref[src];action=[ROLE_SYNDICATE_ROBOT]'>Rogue Borg</a> |
 	<a href='byond://?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_NUKEOP_AI]'>Syndicate Mission Control (AI)</a> |
 	<a href='byond://?src=\ref[src];action=antagremoved'>Antag Removed</a> |
 	<a href='byond://?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
 	<a href='byond://?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a> |
