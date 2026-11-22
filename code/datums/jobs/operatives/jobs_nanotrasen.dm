@@ -100,9 +100,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 
 /datum/job/special/nt/janitor
 	name = "Nanotrasen Emergency Sanitizer"
-	trait_list = list("training_medical")
 
-	slot_back = list(/obj/item/storage/backpack/NT/ERT)
 	slot_belt = list(/obj/item/storage/fanny/nanotrasen/janitor)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso/janitor)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso/janitor)
