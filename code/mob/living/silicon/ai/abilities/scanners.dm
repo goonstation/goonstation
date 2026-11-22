@@ -48,6 +48,19 @@
 		. = ..()
 		if (.)
 			return .
-		if (!istype(target, /obj/fluid))
-			return
-		boutput(src.holder.owner, global.scan_reagents(target))
+
+		var/turf/T = get_turf(target)
+		var/data = ""
+
+		if (CHECK_LIQUID_CLICK(target))
+			var/obj/fluid/liquid = T.active_liquid
+			var/obj/fluid/airborne/gas = T.active_airborne_liquid
+			if (liquid)
+				data += "<br>[scan_reagents(liquid)]"
+			if (gas)
+				data += "<br>[scan_reagents(gas)]"
+
+		if (data)
+			boutput(src.holder.owner, data)
+		else
+			boutput(src.holder.owner, "No reagents detected on [T]")
