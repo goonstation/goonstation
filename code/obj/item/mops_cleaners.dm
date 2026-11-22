@@ -430,7 +430,7 @@ TRASH BAG
 		I.glide_size = 0
 		I.set_loc(pushed_to)
 		I.glide_size = original_glide
-		
+
 		pushed_item_count++
 
 
@@ -762,22 +762,7 @@ TRASH BAG
 	throw_pixel = 0
 	throw_spin = 0
 	var/currentSelection = "wet"
-	var/ownerKey = null
 	anchored = UNANCHORED
-
-	attack_hand(mob/user)
-		if(user.key != ownerKey && ownerKey != null)
-			boutput(user, "<span style='color: red; font-weight: bold'>The [src.name] makes a grumpy buzzing sound and delivers a small electric shock! You drop it.</span>")
-			return
-		..()
-
-	pull(mob/user)
-		if (!istype(user))
-			return
-		if(user.key != ownerKey && ownerKey != null)
-			boutput(user, "<span style='color: red; font-weight: bold'>The [src.name] makes a grumpy buzzing sound and delivers a small electric shock! You drop it.</span>")
-			return
-		return ..()
 
 	attack_self(mob/user as mob)
 		switch(currentSelection)

@@ -3210,6 +3210,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	icon_fallen = "janitor-fallen"
 	pay = 1
 	acceptcard = 1
+	req_access = list(access_janitor)
 
 	create_products(restocked)
 		..()
@@ -3218,6 +3219,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/sponge, 4)
 		product_list += new/datum/data/vending_product(/obj/item/spraybottle/cleaner, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bucket, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bucket/red, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/cleaner, 4)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 6)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/trash_bags, 8)
@@ -3229,7 +3231,10 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical, 4)
 		product_list += new/datum/data/vending_product(/obj/item/instrument/whistle/janitor, 4)
 
+		product_list += new/datum/data/vending_product(/obj/item/mop/orange, 5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/holoemitter, 6, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/janiberet, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/mario/waluigi, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/mario/waluigi, 2, hidden=1)
 
