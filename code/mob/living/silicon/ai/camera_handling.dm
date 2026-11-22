@@ -14,6 +14,9 @@
 	if(isdead(usr))
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
+	if (!src.law_rack_connection?.program_rack?.can_track)
+		boutput(usr, SPAN_ALERT("You don't have any tracking programs installed!"))
+		return
 
 	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 
@@ -31,6 +34,9 @@
 /mob/living/silicon/proc/ai_name_track(var/heard_name)
 	if(isdead(usr))
 		boutput(usr, "You can't track with camera because you are dead!")
+		return
+	if (!src.law_rack_connection?.program_rack?.can_track)
+		boutput(usr, SPAN_ALERT("You don't have any tracking programs installed!"))
 		return
 
 	var/list/mob/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
