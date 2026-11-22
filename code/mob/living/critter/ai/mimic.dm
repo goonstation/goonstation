@@ -119,13 +119,19 @@
 	for(var/turf/T in orange(holder.owner, max_dist))
 		if(GET_DIST(holder.owner, T) < min_dist)
 			continue
+		var/list/items = null
+		for(var/obj/item/I in T)
+			if(!I.anchored) //don't be wall closets or buttons
+				LAZYLISTADD(items, I)
+		if(!items) // check for items first
+			continue
+		var/seen = FALSE
 		for(var/mob/living/carbon/human/H in viewers(T, 3))
 			if(!isdead(H))
-				goto breakout //this is a little cursed. If there are humans that can see this turf, jump to the end of the outer loop
-		for(var/obj/item/I in T) //otherwise add the items in this turf
-			if(!I.anchored) //don't be wall closets or buttons
-				. += I
-		breakout:
+				seen = TRUE
+				break
+		if(!seen)
+			. += items
 
 /datum/aiTask/succeedable/run_and_hide
 	name = "hiding subtask"

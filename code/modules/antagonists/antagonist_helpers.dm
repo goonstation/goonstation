@@ -59,25 +59,7 @@ proc/get_all_gangs()
 	if (!src.mind || isghostcritter(src) || implant?.online)
 		return FALSE
 
-	var/list/unconvertable_roles = list(
-		"Captain",
-		"Head of Personnel",
-		"Head of Security",
-		"Research Director",
-		"Medical Director",
-		"Chief Engineer",
-		"Communications Officer",
-		"Head of Mining",
-		"Nanotrasen Special Operative",
-		"Nanotrasen Security Consultant",
-		"Security Officer",
-		"Security Assistant",
-		"Vice Officer",
-		"Detective",
-		"AI",
-		"Cyborg")
-
-	if (src.mind.assigned_role in unconvertable_roles)
+	if (src.mind.assigned_role in /datum/game_mode/revolution::unconvertable_roles)
 		return FALSE
 
 	return TRUE

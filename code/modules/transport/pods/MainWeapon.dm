@@ -112,6 +112,8 @@
 				boutput(user, "[ship.ship_message("<b>All ammunition expended.</b>")]")
 			else
 				boutput(user, "[ship.ship_message("[remaining_ammunition - ship.AmmoPerShot()] shots remaining.")]")
+	else
+		ship.use_power(src.power_used)
 
 
 	var/rdir = ship.dir

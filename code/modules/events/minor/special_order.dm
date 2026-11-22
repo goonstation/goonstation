@@ -1,6 +1,7 @@
 
 /datum/random_event/minor/special_order
 	name = "Special Order"
+	description = "Spawn a special cargo requisition"
 	customization_available = TRUE
 	var/list/special_order_weights
 

@@ -71,7 +71,7 @@ TYPEINFO(/obj/item/storage/toilet)
 		return
 	if (M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/mario) && istype(H.head, /obj/item/clothing/head/mario))
+		if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/mario/syndicate))
 			user.visible_message(SPAN_NOTICE("[user] dives into [src]!"), SPAN_NOTICE("You dive into [src]!"))
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(src.loc))
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
