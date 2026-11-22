@@ -62,6 +62,11 @@ proc/get_all_gangs()
 	if (src.mind.assigned_role in /datum/game_mode/revolution::unconvertable_roles)
 		return FALSE
 
+	if(ROLEPLAY_REVOLUTIONARIES)
+		var/weakness_strength = src.getStatusDuration("weakened_loyalty")
+		if(isnull(weakness_strength) || weakness_strength < /datum/game_mode/revolution::keywords_required_duration_to_convert)
+			return FALSE
+
 	return TRUE
 
 /datum/mind/proc/is_head_of_staff()
