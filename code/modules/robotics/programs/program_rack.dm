@@ -121,6 +121,11 @@
 		else
 			src.viewport_limit = 0
 
+		if (src.ai_skills.Find(SILICON::AI::SKILL::SHUTTLE))
+			src.can_call_shuttle = TRUE
+		else
+			src.can_call_shuttle = FALSE
+
 		for (var/obj/machinery/lawrack/lawrack in src.linked_lawracks)
 			lawrack.update_ai_programs()
 
