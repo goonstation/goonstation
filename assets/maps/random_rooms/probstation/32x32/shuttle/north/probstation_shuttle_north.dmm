@@ -201,6 +201,10 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"nG" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "nY" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/stripe_delivery,
@@ -249,6 +253,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"po" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
 /area/station/hallway/secondary/exit)
 "qa" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -304,6 +314,10 @@
 	dir = 4
 	},
 /area/station/security/checkpoint/escape)
+"sk" = (
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "tj" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -866,7 +880,7 @@ oX
 oX
 oX
 vK
-Oa
+po
 wj
 ib
 ha
@@ -1488,7 +1502,7 @@ Hg
 Hg
 WZ
 Oa
-Pu
+sk
 vK
 oX
 oX
@@ -1500,7 +1514,7 @@ pd
 pd
 vK
 vK
-Yl
+nG
 Yl
 vK
 vK

@@ -395,6 +395,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel
 	overload_act()
 		return !src.set_broken()
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+
+		if(!src.set_broken())
+			return TRUE
+		make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+		src.onDestroy()
+		return TRUE
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
@@ -438,6 +448,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel
 						mode = DISPOSAL_CHUTE_CHARGING
 				update()
 				. = TRUE
+
+	Click(location, control, params)
+		if(src.trunk?.cross_z && isobserver(usr))
+			usr.set_loc(get_turf(src.trunk))
 
 	// eject the contents of the disposal unit
 	proc/eject()

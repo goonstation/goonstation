@@ -1044,18 +1044,17 @@
 
 			if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 				var/mob/living/carbon/human/H = target
-				if (H.can_be_converted_to_the_revolution())
-					if (isrevolutionary(owner))
-						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED))
-							H.changeStatus("newcause", 5 SECONDS)
-							H.HealDamage("All", max(30 - H.health,0), 0)
-							H.HealDamage("All", 0, max(30 - H.health,0))
-					else
-						if (H.mind?.remove_antagonist(ROLE_REVOLUTIONARY))
-							H.delStatus("derevving") //Make sure they lose this status upon completion
-							H.changeStatus("newcause", 5 SECONDS)
-							H.HealDamage("All", max(30 - H.health,0), 0)
-							H.HealDamage("All", 0, max(30 - H.health,0))
+				if (isrevolutionary(owner) && H.can_be_converted_to_the_revolution())
+					if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED))
+						H.changeStatus("newcause", 5 SECONDS)
+						H.HealDamage("All", max(30 - H.health,0), 0)
+						H.HealDamage("All", 0, max(30 - H.health,0))
+				else
+					if (H.mind?.remove_antagonist(ROLE_REVOLUTIONARY))
+						H.delStatus("derevving") //Make sure they lose this status upon completion
+						H.changeStatus("newcause", 5 SECONDS)
+						H.HealDamage("All", max(30 - H.health,0), 0)
+						H.HealDamage("All", 0, max(30 - H.health,0))
 		clear(null)
 
 /datum/attackResults/disarm

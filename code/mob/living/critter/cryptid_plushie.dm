@@ -250,6 +250,13 @@
 				return
 		last_witness = null
 
+		// skip when no client is in range
+		var/turf/T = get_turf(src)
+		if (!T || !length(global.client_hashmap.exact_supremum(T, world.view)))
+			being_seen = FALSE
+			set_dormant_status(FALSE)
+			return
+
 		for (var/mob/M in viewers(src))
 			if (M == src)
 				continue

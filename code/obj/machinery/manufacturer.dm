@@ -156,7 +156,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/obj/machinery/power/data_terminal/test_link = locate() in T
 			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 				src.link = test_link
-				src.link.master = src
+				src.link.set_master(src, src.net_id)
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 5)
 
@@ -201,7 +201,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.sound_damaged = null
 		src.sound_destroyed = null
 		if (src.link)
-			src.link.master = null
+			src.link.set_master(null)
 			src.link = null
 
 		for (var/obj/O in src.contents)
@@ -304,6 +304,27 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.visible_message(SPAN_ALERT("<b>[src] breaks down and stops working!</b>"))
 		src.status |= BROKEN
 		src.power_change()
+		return TRUE
+
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+		global.hit_twitch(src)
+		playsound(src.loc, src.sound_damaged, 50, 2)
+		switch(src.dismantle_stage)
+			if(DISMANTLE_NONE)
+				src.dismantle_stage = DISMANTLE_PLATING_BOLTS
+				src.build_icon()
+			if(DISMANTLE_PLATING_BOLTS)
+				src.dismantle_stage = DISMANTLE_PLATING_SHEETS
+				src.build_icon()
+			if(DISMANTLE_PLATING_SHEETS)
+				src.dismantle_stage = DISMANTLE_WIRES
+				src.build_icon()
+			if(DISMANTLE_WIRES)
+				playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+				make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+				qdel(src)
 		return TRUE
 
 	power_change()
@@ -858,7 +879,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						if(divisible_amount)
 							var/amount_per_account = divisible_amount/length(accounts)
 							for(var/datum/db_record/gen_rec as anything in accounts)
-								var/datum/db_record/bank_rec = global.data_core.bank.find_record("id", gen_rec["id"])
+								var/datum/db_record/bank_rec = global.data_core.get_bank_record(id = gen_rec["id"])
 								if (istype(bank_rec))
 									bank_rec["current_money"] += amount_per_account
 									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
@@ -1216,7 +1237,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.grump_message(usr, "You need to be holding an ID or something with an ID to scan it in!", sound = TRUE)
 			return
 		boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
-		var/datum/db_record/bank_account = FindBankAccountByName(ID.registered)
+		var/datum/db_record/bank_account = global.data_core.get_bank_record(ID.registered)
 		if(!bank_account)
 			src.grump_message(usr, "No bank account associated with this ID found.")
 			return
@@ -1232,11 +1253,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/get_bank_data()
 		if (!src.account)
 			return
-		var/list/bank_info = list()
-		var/list/keys_of_interest = list("name", "current_money")
-		for (var/key in keys_of_interest)
-			bank_info[key] = src.account[key]
-		return bank_info
+
+		var/name = global.data_core.get_general_record(id = src.account["id"])?["name"]
+		var/current_money = src.account["current_money"]
+
+		return list(
+			"name" = name,
+			"current_money" = current_money
+		)
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))

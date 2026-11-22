@@ -1905,6 +1905,13 @@
 	create = 1
 	time = 40 SECONDS
 
+/datum/manufacture/telesci_rack
+	name = "Coordinates Rack"
+	item_outputs = list(/obj/machinery/disk_rack/telesci)
+	item_requirements = list("metal" = 30, "conductive" = 10)
+	create = 1
+	time = 40 SECONDS
+
 /datum/manufacture/shell_frame
 	name = "AI Shell Frame"
 	item_requirements = list("metal_dense" = 12)
@@ -3783,6 +3790,10 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 /datum/manufacture/crate/secure/syndicate
 	name = "Unmarked Syndicate Crate"
 	item_outputs = list(/obj/storage/secure/crate/gear/syndicate)
+
+/datum/manufacture/crate/secure/command_gear_replacement
+	name = "Command Equipment crate (Empty)"
+	item_outputs = list(/obj/storage/secure/crate/gear/nanotrasen/replacement_equipment)
 
 /******************** Carts *******************/
 

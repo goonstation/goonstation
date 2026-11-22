@@ -444,6 +444,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"XB" = (
+/obj/storage/secure/closet/security/equipment,
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
 "XD" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -543,7 +548,7 @@ Ce
 Bw
 Mc
 Ku
-Pf
+XB
 Ce
 "}
 (7,1,1) = {"

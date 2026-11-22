@@ -125,7 +125,7 @@ var/datum/latejoin_menu/latejoin_menu = new()
 
 	// During revolution rounds, all command slots appear as filled.
 	var/slot_count = J.assigned
-	if (istype(J, /datum/job/command) && istype(ticker.mode, /datum/game_mode/revolution))
+	if (istype(J, /datum/job/command) && istype(ticker.mode, /datum/game_mode/revolution) && !(ROLEPLAY_REVOLUTIONARIES && ticker.round_elapsed_ticks < 25 MINUTES))
 		slot_count = max(slot_count, J.limit)
 
 	.["job_name"] = J.name

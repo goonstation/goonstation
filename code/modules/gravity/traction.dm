@@ -39,9 +39,6 @@ proc/StopDriftFloat(atom/movable/AM)
 			return
 		StartDriftFloat(src)
 
-/obj/item/dummy/update_traction(turf/T)
-	return
-
 /mob/update_traction(turf/T)
 	. = ..()
 	if (src.traction == TRACTION_FULL || src.has_grip())

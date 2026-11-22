@@ -43,11 +43,11 @@
 */
 /obj/item/implantcase/freedom
 	name = "glass case - 'Freedom'"
-	implant_type = /obj/item/implant/emote_triggered/freedom
+	implant_type = /obj/item/implant/ability/freedom
 
 /obj/item/implantcase/signaler
 	name = "glass case - 'Signaler'"
-	implant_type = /obj/item/implant/emote_triggered/signaler
+	implant_type = /obj/item/implant/ability/signaler
 
 /obj/item/implantcase/counterrev
 	name = "glass case - 'Counter-Rev'"

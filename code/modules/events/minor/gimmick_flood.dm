@@ -1,5 +1,6 @@
 /datum/random_event/minor/gimmick_flood
 	name = "Random Flood"
+	description = "Spawn a random reagent from station drains, clogging them for a period of time"
 	disabled = 1 // disabled for now, this would be a good player-triggerable event. -warc
 	weight = 30
 	customization_available = 1

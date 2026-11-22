@@ -40,6 +40,7 @@
 		src.master.processing[src] = null
 		src.master = null
 
+	src.progid = 0
 	. = ..()
 
 /datum/computer/file/mainframe_program/asText()

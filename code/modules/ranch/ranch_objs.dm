@@ -599,8 +599,10 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 	New()
 		..()
 		feed_flags = list()
+		START_TRACKING
 
 	disposing()
+		STOP_TRACKING
 		feed_flags = null
 		happiness_mod = 0
 		hunger_mod = 0
@@ -778,7 +780,7 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 		src.vis_contents -= src.chicken
 		src.chicken.plane = PLANE_DEFAULT
 		src.chicken.layer = MOB_LAYER
-		REMOVE_ATOM_PROPERTY(src.chicken, PROP_MOB_BREATHLESS, src.type)
+		REMOVE_ATOM_PROPERTY(src.chicken, PROP_MOB_NO_OXY_LOSS, src.type)
 		UnregisterSignal(src.chicken, COMSIG_PARENT_PRE_DISPOSING)
 		src.chicken = null
 		src.UpdateIcon()
@@ -830,7 +832,7 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 		owner.visible_message("[owner] gently scoops [carrier.chicken] into [carrier].", "You carefully scoop [carrier.chicken] into [carrier].", "You hear the ruffling of feathers.")
 		carrier.vis_contents += carrier.chicken
 		carrier.UpdateIcon()
-		APPLY_ATOM_PROPERTY(target, PROP_MOB_BREATHLESS, carrier.type)
+		APPLY_ATOM_PROPERTY(target, PROP_MOB_NO_OXY_LOSS, carrier.type)
 		carrier.RegisterSignal(carrier.chicken, COMSIG_PARENT_PRE_DISPOSING, /obj/item/chicken_carrier/proc/remove_chicken)
 
 // Chicken Nametag

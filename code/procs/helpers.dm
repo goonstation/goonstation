@@ -2471,8 +2471,8 @@ proc/client_has_cap_grace(var/client/C)
 //TODO: refactor the below two into one proc
 
 /// Returns true if not incapicitated and unhandcuffed (by default)
-proc/can_act(var/mob/M, var/include_cuffs = 1)
-	return !((include_cuffs && M.restrained()) || is_incapacitated(M))
+proc/can_act(var/mob/M, var/include_cuffs = 1, ignore_no_power = FALSE)
+	return !((include_cuffs && M.restrained()) || is_incapacitated(M, ignore_no_power))
 
 /// Returns true if the given mob is incapacitated. `ignore_no_power` skips the cyborg no-power/no-cell statuses.
 proc/is_incapacitated(mob/M, ignore_no_power = FALSE)

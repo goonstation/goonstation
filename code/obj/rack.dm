@@ -52,6 +52,12 @@ TYPEINFO(/obj/rack)
 		rackbreak()
 		return
 
+/obj/rack/smash_act(atom/movable/smasher, show_message)
+	if (show_message)
+		smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+	src.deconstruct()
+	return TRUE
+
 /obj/rack/Cross(atom/movable/mover)
 	if (mover.flags & TABLEPASS)
 		return 1
