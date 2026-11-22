@@ -38,4 +38,4 @@
 				M.transfer_to(remy)
 				SPAWN(0)
 					tgui_alert(remy, "You are not an antagonist! What you are, is a chef. Get to work.", "You are not an antagonist!")
-				message_ghosts("<b>[remy.real_name] has become sapient.</b>")
+				GHOST.MESSAGE.send("<b>[GHOST.MESSAGE.format_atom(remy)] has become sapient.</b>")
