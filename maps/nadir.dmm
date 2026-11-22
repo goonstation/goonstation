@@ -22243,6 +22243,12 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
+"jLs" = (
+/obj/item/storage/wall/coathanger{
+	pixel_y = -5
+	},
+/turf/simulated/floor/wood/two,
+/area/station/security/detectives_office)
 "jLV" = (
 /obj/machinery/conveyor/SN{
 	id = "garbage";
@@ -87246,7 +87252,7 @@ lZN
 lZN
 sym
 gHe
-vBe
+fvO
 iBZ
 mKo
 ezx
@@ -87549,7 +87555,7 @@ kkZ
 pHp
 ufo
 wmR
-fvO
+jLs
 mKo
 fCA
 qBw

@@ -416,7 +416,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "acb" = (
-/obj/storage/cart/forensic/detective,
+/obj/item/storage/wall/coathanger{
+	pixel_y = -5
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "acc" = (
@@ -19782,6 +19784,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tct" = (

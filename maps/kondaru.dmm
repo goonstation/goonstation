@@ -7561,14 +7561,12 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aGb" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
-	},
 /obj/item/storage/secure/ssafe{
 	pixel_x = 3;
 	pixel_y = 28
+	},
+/obj/item/storage/wall/coathanger{
+	pixel_y = 16
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -7576,6 +7574,11 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)

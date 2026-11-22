@@ -26085,6 +26085,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
+"egN" = (
+/obj/item/storage/wall/coathanger{
+	pixel_y = -5
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "ehf" = (
 /turf/simulated/floor/stairs/wide/green/other,
 /area/station/hydroponics/bay)
@@ -88653,7 +88659,7 @@ chc
 tcD
 vfw
 uqU
-vfw
+egN
 dHj
 bfT
 bfT

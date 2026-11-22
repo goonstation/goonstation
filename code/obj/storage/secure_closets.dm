@@ -418,13 +418,10 @@
 	name = "Forensics equipment locker"
 	req_access = list(access_forensics_lockers)
 	spawn_contents = list(/obj/item/storage/box/clothing/detective,
-	/obj/item/clothing/suit/wintercoat/detective,
-	/obj/item/clothing/head/deerstalker,
 	/obj/item/clothing/glasses/thermal,
 	/obj/item/clothing/glasses/spectro,
 	/obj/item/storage/box/spy_sticker_kit/radio_only/detective,
 	/obj/item/storage/box/lglo_kit/random,
-	/obj/item/clothing/head/det_hat/gadget,
 	/obj/item/device/detective_scanner/detective,
 	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,

@@ -208,6 +208,26 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/reagent_containers/dropper/mechanical,
 	/obj/item/storage/box/ic_cones = 2)
 
+/obj/item/storage/wall/coathanger
+	name = "coat rack stand"
+	icon = 'icons/obj/storage/coat_rack.dmi'
+	icon_state = "coat_empty"
+	var/base_icon_state = "det"
+	density = 1
+	slots = 7
+	anchored = ANCHORED
+	can_hold = list(/obj/item/clothing/suit,/obj/item/clothing/head)
+	spawn_contents = list(/obj/item/clothing/head/deerstalker,
+	/obj/item/clothing/head/det_hat/gadget,
+	/obj/item/clothing/suit/det_suit,
+	/obj/item/clothing/suit/wintercoat/detective)
+
+	update_icon()
+		if (!length(src.storage?.get_contents()))
+			src.icon_state = "coat_empty"
+		else
+			src.icon_state = "coat[src.base_icon_state]"
+
 /obj/item/storage/wall/clothingrack
 	name = "clothing rack"
 	icon = 'icons/obj/storage/rack.dmi'

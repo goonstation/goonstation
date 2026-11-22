@@ -23430,11 +23430,19 @@
 	pixel_y = 14;
 	pixel_x = -13
 	},
+/obj/machinery/power/apc/autoname_east,
 /obj/item/device/light/zippo{
 	pixel_x = -13
 	},
-/obj/machinery/power/apc/autoname_east,
+/obj/item/ammo/bullets/a38{
+	pixel_y = 7;
+	pixel_x = -7
+	},
 /obj/cable,
+/obj/item/ammo/bullets/a38/stun{
+	pixel_y = 4;
+	pixel_x = -1
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lSj" = (
@@ -33173,16 +33181,18 @@
 	},
 /obj/table/wood/auto,
 /obj/machinery/light/small,
-/obj/item/ammo/bullets/a38{
-	pixel_y = 7;
-	pixel_x = -7
-	},
 /obj/item/ammo/bullets/a38/stun{
 	pixel_y = 4;
 	pixel_x = -1
 	},
-/obj/item/camera{
-	pixel_x = -10
+/obj/item/audio_tape,
+/obj/item/audio_tape,
+/obj/item/device/detective_scanner{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/device/audio_log{
+	pixel_x = 2
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -37949,23 +37959,13 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/table/wood/auto,
-/obj/item/audio_tape{
-	pixel_y = -2;
-	pixel_x = -5
-	},
-/obj/item/audio_tape{
-	pixel_y = 3;
-	pixel_x = -5
-	},
-/obj/item/device/detective_scanner{
-	pixel_y = 6;
-	pixel_x = 6
-	},
-/obj/item/device/audio_log{
-	pixel_x = 2
-	},
 /obj/machinery/light/emergency,
+/obj/item/storage/wall/coathanger{
+	pixel_y = -5
+	},
+/obj/item/storage/wall/coathanger{
+	pixel_y = -5
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tfI" = (

@@ -73568,6 +73568,9 @@
 /area/station/crew_quarters/catering)
 "wHE" = (
 /obj/disposalpipe/segment/mail,
+/obj/item/storage/wall/coathanger{
+	pixel_y = 16
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "wHL" = (

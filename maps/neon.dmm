@@ -10649,7 +10649,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/robotics)
 "hrg" = (
-/obj/stool/chair/comfy,
+/obj/item/storage/wall/coathanger{
+	pixel_w = 5
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "hrt" = (

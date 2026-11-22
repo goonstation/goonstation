@@ -2814,6 +2814,8 @@
 /area/station/security/detectives_office)
 "ayw" = (
 /obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
 /turf/simulated/floor/redblack,
 /area/station/security/detectives_office)
 "ayy" = (
@@ -29422,7 +29424,6 @@
 /area/station/medical/medbay/reception)
 "pMB" = (
 /obj/stool/bed,
-/obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -32063,6 +32064,10 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/psychiatrist)
+"rGL" = (
+/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/turf/simulated/wall/auto/supernorn,
+/area/station/security/detectives_office)
 "rGO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36725,8 +36730,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "uBt" = (
-/obj/stool/chair/dining/wood{
-	dir = 4
+/obj/item/storage/wall/coathanger{
+	pixel_y = -5
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/detectives_office)
@@ -85689,7 +85694,7 @@ kEW
 asN
 asN
 asN
-asN
+rGL
 asN
 asN
 asN

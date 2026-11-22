@@ -3566,6 +3566,9 @@
 /area/station/crew_quarters/baroffice)
 "amx" = (
 /obj/machinery/light,
+/obj/item/storage/wall/coathanger{
+	pixel_y = -5
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "amz" = (
