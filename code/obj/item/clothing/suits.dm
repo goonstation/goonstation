@@ -1554,8 +1554,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		src.setProperty("radprot", 50)
 		src.setProperty("heatprot", 45)
-		src.setProperty("meleeprot", 4)
-		src.setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/space/ntso/bellona
 	name = "NTSO combat dress"
