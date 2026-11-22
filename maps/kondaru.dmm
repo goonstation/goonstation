@@ -20586,8 +20586,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "bPG" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "bPI" = (
@@ -36288,10 +36287,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "jiW" = (
-/obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
 /obj/item/clothing/head/helmet/camera/telesci,
 /obj/machinery/light_switch/directional/north,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -45121,6 +45120,8 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/research_outpost/indigo_rye)
 "ptX" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "pur" = (

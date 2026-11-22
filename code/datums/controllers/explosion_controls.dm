@@ -287,7 +287,7 @@ var/datum/explosion_controller/explosions
 					shake_camera(C, 3 * p, p * 4)
 				C.setStatusMin("stunned", max(p, 0.5) SECONDS)
 				C.stuttering += p
-				C.lying = 1
+				C.set_lying(TRUE)
 				C.set_clothing_icon_dirty()
 
 		explosions.queue_damage(nodes, blame)

@@ -67,3 +67,6 @@
 # ...or binary
 # plus the browserassets maps weren't treated that way so oops(?)
 # By Zamujasa & /tg/station
+
+# bit obvious.
+*.bin	binary

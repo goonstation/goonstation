@@ -92,7 +92,8 @@
 	var/mob/living/critter/C = holder.owner
 	return C.seek_target(src.max_dist)
 
-/datum/aiTask/tsequence/goalbased/critter/attack/on_tick()
+/datum/aiTask/sequence/goalbased/critter/attack/on_tick()
+	..()
 	if(length(holder.owner.grabbed_by))
 		holder.owner.resist()
 
@@ -464,10 +465,12 @@
 	get_targets()
 		var/mob/living/critter/C = holder.owner
 		var/area/A = locate(C.home_area())
+		if(!length(A?.contents))
+			return list()
 		return list(get_turf(pick(A.contents)))
 
 	get_best_target(list/atom/targets)
-		return targets[1]
+		return length(targets) ? targets[1] : null
 
 // Don't worry about this, we need to enable unsimulated turf pathing for the critter gauntlet
 /datum/aiTask/sequence/goalbased/critter

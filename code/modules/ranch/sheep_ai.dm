@@ -192,6 +192,7 @@
 		var/mob/living/critter/small_animal/ranch_base/T = target
 		if(!T || !R)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if(get_dist(target,owner) >= 2)
 			interrupt(INTERRUPT_ALWAYS)
 		if(T.mate || R.mate)
@@ -218,6 +219,8 @@
 		. = ..()
 		var/mob/living/critter/small_animal/ranch_base/R = owner
 		var/mob/living/critter/small_animal/ranch_base/T = target
+		R?.use_stunned_icon = TRUE
+		T?.use_stunned_icon = TRUE
 		REMOVE_ATOM_PROPERTY(T, PROP_MOB_CANTMOVE, "SHEEP_PARTNER")
 		REMOVE_ATOM_PROPERTY(R, PROP_MOB_CANTMOVE, "SHEEP_PARTNER")
 		if(T?.is_npc && T?.ai && !T?.ai.enabled)
@@ -270,7 +273,7 @@
 	var/last_seek
 
 
-/datum/aiTask/timed/targeted/follow_mate/proc/precondition()
+/datum/aiTask/timed/targeted/follow_mate/precondition()
 	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
 	. = 0
 	if(isalive(C))
@@ -288,14 +291,15 @@
 		. = !(holder.target)
 
 /datum/aiTask/timed/targeted/follow_mate/evaluate()
-	..()
+	if(!precondition())
+		return 0
 	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
-	if(istype(C))
-		for(var/mob/M in view(target_range,C))
-			if(!isdead(M))
-				if(C.mate == M)
-					if(get_dist(C,M) > target_range/2)
-						return precondition() * FOLLOW_PRIORITY
+	if(!istype(C) || !C.mate || isdead(C.mate))
+		return 0
+	if(GET_DIST(C, C.mate) <= target_range/2)
+		return 0
+	if(C.mate in view(target_range, C))
+		return FOLLOW_PRIORITY
 	. = 0
 
 /datum/aiTask/timed/targeted/follow_mate/on_tick()

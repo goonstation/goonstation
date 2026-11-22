@@ -33833,14 +33833,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
-"cik" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/teleporter)
 "cil" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -66643,6 +66635,14 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/primary/southwest)
+"qUa" = (
+/obj/item/storage/toilet{
+	dir = 8;
+	interesting = "This toilet is immaculately clean. Like, suspiciously clean."
+	},
+/obj/landmark/start/job/medical_director,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/south)
 "qUH" = (
 /obj/machinery/vending/medical_public,
 /obj/disposalpipe/segment/transport,
@@ -69303,14 +69303,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"tkB" = (
-/obj/item/storage/toilet{
-	dir = 8;
-	interesting = "This toilet is immaculately clean. Like, suspiciously clean."
-	},
-/obj/landmark/start/job/medical_director,
-/turf/simulated/floor/plating,
-/area/station/maintenance/solar/south)
 "tlk" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
@@ -70356,6 +70348,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
+"tVT" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/teleporter)
 "tWh" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -106194,7 +106190,7 @@ aaI
 aaa
 aaa
 chg
-cik
+tVT
 cjx
 ckW
 iFq
@@ -107740,7 +107736,7 @@ cMt
 dcH
 lEO
 fBC
-tkB
+qUa
 ddv
 deU
 oDm

@@ -519,7 +519,7 @@
 		animate(H, time = 10, alpha = 1, pixel_z = destination_z, easing = LINEAR_EASING)
 		SPAWN(0)
 			sleep(1 SECOND)
-			H.lying = 1
+			H.set_lying(TRUE)
 			H.skeletonize()
 			H.transforming = 0
 			H.death()

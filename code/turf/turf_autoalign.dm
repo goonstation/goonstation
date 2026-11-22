@@ -1223,6 +1223,19 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	mod = "R-"
 	opacity = FALSE
 
+TYPEINFO(/turf/unsimulated/wall/auto/adventure/concrete)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/concrete)
+	. = ..()
+	connect_overlay = 0
+	connect_diagonal = 0
+
+/turf/unsimulated/wall/auto/adventure/concrete
+	name = "concrete wall"
+	desc = "A solid wall of concrete. It's extremely sturdy"
+	icon = 'icons/misc/terra8.dmi'
+	mod = "concrete"
+	icon_state = "concrete0"
+
 /datum/action/bar/icon/wall_tool_interact
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS

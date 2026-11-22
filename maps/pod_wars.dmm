@@ -200,6 +200,10 @@
 	dir = 1
 	},
 /area/space)
+"aH" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/blue,
+/area/pod_wars/team1/bridge)
 "aI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
@@ -287,6 +291,19 @@
 	dir = 4
 	},
 /area/pod_wars/team1/medbay)
+"ba" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/blue,
+/area/pod_wars/team1/bridge)
+"bc" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/blue/side{
+	dir = 6
+	},
+/area/pod_wars/team1/bridge)
 "bd" = (
 /obj/shrub,
 /turf/simulated/floor/purple/side{
@@ -618,11 +635,11 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "co" = (
-/turf/unsimulated/floor/stairs/wide,
+/turf/unsimulated/floor/stairs,
 /area/pod_wars/team1/bridge)
 "cp" = (
-/obj/machinery/recharger,
 /obj/table/nanotrasen/auto,
+/obj/machinery/recharger,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "cq" = (
@@ -729,6 +746,10 @@
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
+"cG" = (
+/obj/disposalpipe/segment,
+/turf/unsimulated/floor/stairs,
+/area/pod_wars/team1/bridge)
 "cH" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -821,6 +842,12 @@
 "cV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/reliant)
+"cX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/blue,
+/area/pod_wars/team1/bridge)
 "da" = (
 /turf/unsimulated/floor/airless/plating,
 /area/pod_wars/team1/bridge)
@@ -1167,15 +1194,6 @@
 "el" = (
 /turf/unsimulated/floor/red/side,
 /area/pod_wars/team2/foreprimaryhall)
-"en" = (
-/obj/machinery/computer/announcement{
-	name = "Nanotrasen Announcement Computer";
-	req_access = null
-	},
-/turf/unsimulated/floor/blue/side{
-	dir = 9
-	},
-/area/pod_wars/team1/bridge)
 "eq" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light/incandescent/netural,
@@ -1918,14 +1936,6 @@
 	dir = 6
 	},
 /area/pod_wars/spacejunk/restaurant)
-"gX" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	pixel_x = -10;
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/blue,
-/area/pod_wars/team1/bridge)
 "gY" = (
 /obj/shrub/random,
 /turf/unsimulated/floor/blue/side{
@@ -2218,6 +2228,9 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/miningoutpost)
+"ij" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/space)
 "ik" = (
 /obj/mesh/catwalk{
 	dir = 8
@@ -2333,6 +2346,13 @@
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/mess)
+"iB" = (
+/obj/machinery/computer/announcement{
+	name = "Nanotrasen Announcement Computer";
+	req_access = null
+	},
+/turf/unsimulated/floor/blue,
+/area/pod_wars/team1/bridge)
 "iC" = (
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/secdock)
@@ -2342,14 +2362,6 @@
 	dir = 5
 	},
 /area/pod_wars/team2/hangar)
-"iE" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	pixel_x = -10;
-	pixel_y = -10
-	},
-/turf/unsimulated/floor/blue,
-/area/pod_wars/team1/bridge)
 "iF" = (
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk{
@@ -3781,6 +3793,12 @@
 	dir = 5
 	},
 /area/pod_wars/team2/hangar)
+"nL" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/blue/side,
+/area/pod_wars/team1/bridge)
 "nM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -4298,6 +4316,12 @@
 	dir = 8
 	},
 /area/pod_wars/spacejunk/fstation/crewquarters)
+"pG" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/blue/side{
+	dir = 10
+	},
+/area/pod_wars/team1/bridge)
 "pH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
@@ -4936,6 +4960,13 @@
 	dir = 4
 	},
 /area/pod_wars/spacejunk/fstation)
+"se" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/blue/side,
+/area/pod_wars/team1/bridge)
 "sf" = (
 /obj/lattice,
 /obj/deployable_turret/pod_wars/nt/activated/west,
@@ -5670,6 +5701,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
+"uQ" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4
+	},
+/obj/landmark/start/job/podwars/NT,
+/turf/unsimulated/floor/blue/side,
+/area/pod_wars/team1/bridge)
 "uR" = (
 /obj/machinery/disposal/small/west,
 /obj/disposalpipe/trunk,
@@ -5698,8 +5736,10 @@
 	},
 /area/pod_wars/team2/crewlounge)
 "uY" = (
-/obj/stool/chair/comfy/blue,
-/obj/landmark/start/job/podwars/NT/commander,
+/obj/landmark/start/job/podwars/NT,
+/obj/stool/chair/comfy/blue{
+	dir = 4
+	},
 /turf/unsimulated/floor/blue/side,
 /area/pod_wars/team1/bridge)
 "va" = (
@@ -6880,13 +6920,8 @@
 /turf/unsimulated/floor,
 /area/pod_wars/team1/crewlounge)
 "zm" = (
-/obj/pod_base_critical_system/nanotrasen{
-	name = "Refinery Critical System"
-	},
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
+/obj/pod_base_critical_system/nanotrasen/refinery,
+/turf/unsimulated/floor/shuttlebay,
 /area/space)
 "zn" = (
 /obj/cable{
@@ -7176,14 +7211,6 @@
 /obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/black,
 /area/pod_wars/team1/equipmentroom)
-"Aj" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	pixel_x = 10;
-	pixel_y = -10
-	},
-/turf/unsimulated/floor/blue,
-/area/pod_wars/team1/bridge)
 "Ak" = (
 /turf/unsimulated/floor/yellow/side{
 	dir = 8
@@ -8347,17 +8374,6 @@
 "Ej" = (
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
-"El" = (
-/obj/pod_base_critical_system/syndicate{
-	dir = 4;
-	name = "Bridge Critical System"
-	},
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space,
-/area/space)
 "Em" = (
 /obj/lattice{
 	dir = 9;
@@ -8585,6 +8601,10 @@
 	icon_state = "floor"
 	},
 /area/pod_wars/team2/hangar)
+"EX" = (
+/obj/minimap/map_computer/pod_wars/nanotrasen,
+/turf/unsimulated/floor/blue,
+/area/pod_wars/team1/bridge)
 "EY" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access/syndie_shuttle,
@@ -8807,13 +8827,8 @@
 	},
 /area/pod_wars/spacejunk/restaurant/landingpads)
 "FM" = (
-/obj/pod_base_critical_system/nanotrasen{
-	name = "Bridge Critical System"
-	},
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
+/obj/pod_base_critical_system/nanotrasen/bridge,
+/turf/unsimulated/floor/shuttlebay,
 /area/space)
 "FN" = (
 /obj/machinery/shuttle/engine/heater{
@@ -8933,22 +8948,8 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
-"Gg" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4;
-	pixel_x = -10
-	},
-/turf/unsimulated/floor/blue,
-/area/pod_wars/team1/bridge)
 "Gh" = (
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b"
-	},
-/obj/pod_base_critical_system/syndicate{
-	name = "Medbay Critical System";
-	dir = 1
-	},
+/obj/pod_base_critical_system/syndicate/medbay,
 /turf/space,
 /area/space)
 "Gj" = (
@@ -9106,7 +9107,7 @@
 /area/pod_wars/team2/bar)
 "GR" = (
 /obj/decal/tile_edge/stripe/extra_big{
-	pixel_y = 10
+	dir = 1
 	},
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
@@ -9228,8 +9229,7 @@
 /area/pod_wars/spacejunk/uvb67/power)
 "Hq" = (
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 8;
-	pixel_x = 10
+	dir = 4
 	},
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
@@ -9748,8 +9748,13 @@
 	},
 /area/pod_wars/team1/hangar)
 "Jj" = (
-/obj/disposalpipe/segment,
-/turf/unsimulated/floor/stairs/wide/other,
+/obj/railing/cyan/reinforced{
+	dir = 4
+	},
+/obj/railing/cyan/reinforced{
+	dir = 8
+	},
+/turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "Jk" = (
 /obj/cable{
@@ -9776,6 +9781,13 @@
 /obj/item/clothing/suit/bedsheet/orange,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
+"Jq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/blue/side,
+/area/pod_wars/team1/bridge)
 "Jr" = (
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
@@ -9793,6 +9805,12 @@
 	icon_state = "floor"
 	},
 /area/pod_wars/team2/mining)
+"Jt" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/pod_wars/team1/primaryhall)
 "Ju" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10067,13 +10085,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
-"Kr" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	pixel_y = -10
-	},
-/turf/unsimulated/floor/blue,
-/area/pod_wars/team1/bridge)
 "Ks" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10194,7 +10205,7 @@
 "KN" = (
 /mob/living/critter/small_animal/turtle/sylvester/Commander,
 /turf/unsimulated/floor/blue/side{
-	dir = 5
+	dir = 1
 	},
 /area/pod_wars/team1/bridge)
 "KQ" = (
@@ -13702,26 +13713,9 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "XB" = (
-/obj/minimap/map_computer/pod_wars/nanotrasen{
-	pixel_x = 16;
-	pixel_y = 16
-	},
-/obj/minimap/map_computer/pod_wars/nanotrasen{
-	pixel_x = 16;
-	pixel_y = 16
-	},
-/obj/minimap/map_computer/pod_wars/nanotrasen{
-	pixel_x = 16;
-	pixel_y = 16
-	},
-/obj/minimap/map_computer/pod_wars/nanotrasen{
-	pixel_x = 16;
-	pixel_y = 16
-	},
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	pixel_x = 10;
-	pixel_y = 10
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
@@ -13924,6 +13918,12 @@
 /obj/cable,
 /turf/simulated/floor/airless/plating,
 /area/space)
+"Yu" = (
+/obj/landmark/start/job/podwars/NT/commander,
+/obj/stool/chair/comfy/blue,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/blue,
+/area/pod_wars/team1/bridge)
 "Yv" = (
 /obj/storage/closet,
 /obj/item/mop,
@@ -14342,6 +14342,10 @@
 	},
 /turf/space,
 /area/pod_wars/spacejunk/reliant)
+"ZP" = (
+/obj/pod_base_critical_system/syndicate/bridge,
+/turf/space,
+/area/space)
 "ZQ" = (
 /obj/window/cubicle{
 	dir = 2
@@ -24594,7 +24598,7 @@ eC
 eC
 eC
 eC
-mG
+eC
 zm
 uu
 Eo
@@ -24796,8 +24800,8 @@ eC
 eC
 eC
 eC
-yZ
-Xg
+eC
+ij
 uu
 Eo
 Eo
@@ -27616,9 +27620,9 @@ Lx
 ns
 pU
 yi
-yi
 jJ
-Aj
+se
+Hq
 Hq
 Hq
 Hq
@@ -27809,7 +27813,7 @@ eC
 OM
 eC
 eC
-eC
+oX
 kW
 kW
 qZ
@@ -27818,13 +27822,13 @@ pU
 gB
 gB
 gB
-gB
 VK
-Kr
+bc
 yi
 yi
 yi
 yi
+EX
 GR
 Vw
 Du
@@ -27869,7 +27873,7 @@ Xg
 Qn
 eC
 eC
-oX
+eC
 eC
 eC
 eC
@@ -28013,16 +28017,16 @@ eC
 mG
 FM
 kW
-en
+Lx
 pU
 Bw
 uY
-HA
 cp
 cp
 HA
-Ga
-Kr
+iB
+aH
+yi
 yi
 yi
 yi
@@ -28068,10 +28072,10 @@ Xm
 yO
 yK
 eC
-rj
-Xg
-Xg
-qS
+RT
+eC
+eC
+oX
 eC
 eC
 eC
@@ -28212,36 +28216,36 @@ eC
 eC
 OM
 eC
-yZ
-Xg
+rj
+ij
 kW
 KN
-Ig
 Bw
-Vw
+Bw
+nL
 HA
-cp
-cp
 HA
+HA
+Ga
+Yu
 yi
-Kr
 yi
 yi
 yi
 yi
 GR
-OQ
+Vw
 Jj
-ME
-gE
-yD
-Ui
-Ui
-Ui
-Ui
-Ui
-Ui
-JY
+lw
+aQ
+LL
+LL
+LL
+LL
+LL
+LL
+LL
+Jt
 LL
 LL
 LL
@@ -28266,14 +28270,14 @@ Ci
 Ci
 Ci
 Ci
-Hv
+Ci
 yO
-CP
-eC
-RT
 eC
 eC
-gf
+rj
+Xg
+Xg
+qS
 eC
 eC
 eC
@@ -28414,51 +28418,51 @@ eC
 eC
 OM
 eC
-eC
-eC
+yZ
+ij
 kW
-kW
-YN
-VK
+uh
 Ig
-md
-md
-md
-md
-ns
-Kr
+Bw
+uQ
+cp
+cp
+HA
+yi
+aH
+yi
 yi
 yi
 yi
 yi
 GR
-xA
-cP
-lw
-qs
-IW
-lN
-lN
-lN
-nD
-ER
-lN
-Sr
-lN
-ER
-lN
-nD
-lN
-lN
-qp
-nH
-Wt
-Fj
-Ie
+OQ
+cG
+ME
+gE
+yD
+Ui
+Ui
+Ui
+Ui
+Ui
+Ui
+JY
+LL
+LL
+LL
+LL
+LL
+LL
+Ts
+Hg
 yr
 yr
-Ie
-we
+yr
+yr
+yr
+yr
+tu
 Ci
 Ci
 Ci
@@ -28468,14 +28472,14 @@ Ci
 Ci
 Ci
 Ci
-Ci
-Zr
-Xg
-Xg
-Qn
+Hv
+yO
+CP
+eC
+RT
 eC
 eC
-eC
+gf
 eC
 eC
 eC
@@ -28617,6 +28621,208 @@ eC
 OM
 eC
 eC
+gf
+kW
+kW
+YN
+VK
+Ig
+md
+md
+md
+ns
+pG
+yi
+yi
+yi
+yi
+yi
+GR
+xA
+cP
+lw
+qs
+IW
+lN
+lN
+lN
+nD
+ER
+lN
+Sr
+lN
+ER
+lN
+nD
+lN
+lN
+qp
+nH
+Wt
+Fj
+Ie
+yr
+yr
+Ie
+we
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Zr
+Xg
+Xg
+Qn
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+Hu
+Uo
+Uo
+Uo
+Uo
+Uo
+Hu
+Hu
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+qg
+zO
+"}
+(72,1,1) = {"
+zO
+qg
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+LR
+LR
+LR
+LR
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+OM
+eC
+eC
 eC
 eC
 kW
@@ -28626,14 +28832,14 @@ uh
 VK
 Ig
 yi
-yi
 jJ
-iE
-Gg
-Gg
-Gg
-Gg
-gX
+Jq
+cX
+cX
+cX
+cX
+cX
+ba
 cU
 gs
 su
@@ -28749,7 +28955,7 @@ eC
 qg
 zO
 "}
-(72,1,1) = {"
+(73,1,1) = {"
 zO
 qg
 eC
@@ -28767,13 +28973,13 @@ eC
 eC
 eC
 eC
-eC
 LR
 LR
 LR
 LR
-eC
-eC
+Uo
+Uo
+Uo
 eC
 eC
 eC
@@ -28951,7 +29157,7 @@ eC
 qg
 zO
 "}
-(73,1,1) = {"
+(74,1,1) = {"
 zO
 qg
 eC
@@ -28976,7 +29182,7 @@ LR
 Uo
 Uo
 Uo
-eC
+Uo
 eC
 eC
 eC
@@ -29076,208 +29282,6 @@ Ci
 Ci
 Ci
 Zr
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-Hu
-Uo
-Uo
-Uo
-Uo
-Uo
-Hu
-Hu
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-qg
-zO
-"}
-(74,1,1) = {"
-zO
-qg
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-LR
-LR
-LR
-LR
-Uo
-Uo
-Uo
-Uo
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-bW
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-lB
-uh
-VK
-VK
-Ld
-gs
-EB
-lI
-ZY
-AP
-AP
-QD
-AB
-ig
-Zi
-Eb
-iV
-aI
-zl
-WE
-vq
-vq
-vq
-yO
-yO
-yO
-yv
-Ci
-Ci
-Ci
-Ci
-Ci
-Ci
-Ci
-Ci
-Ci
-Ci
-Ci
-Ci
-Ci
-Ci
-dX
 eC
 eC
 eC
@@ -29422,6 +29426,208 @@ eC
 eC
 eC
 eC
+bW
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+lB
+uh
+VK
+VK
+Ld
+gs
+EB
+lI
+ZY
+AP
+AP
+QD
+AB
+ig
+Zi
+Eb
+iV
+aI
+zl
+WE
+vq
+vq
+vq
+yO
+yO
+yO
+yv
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+Ci
+dX
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+Hu
+Uo
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+qg
+zO
+"}
+(76,1,1) = {"
+zO
+qg
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+LR
+LR
+LR
+LR
+Uo
+Uo
+Uo
+Uo
+Uo
+Uo
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
 eC
 eC
 eC
@@ -29519,8 +29725,8 @@ eC
 eC
 eC
 eC
+eC
 Hu
-Uo
 Hu
 Hu
 Hu
@@ -29557,7 +29763,7 @@ eC
 qg
 zO
 "}
-(76,1,1) = {"
+(77,1,1) = {"
 zO
 qg
 eC
@@ -29759,7 +29965,7 @@ eC
 qg
 zO
 "}
-(77,1,1) = {"
+(78,1,1) = {"
 zO
 qg
 eC
@@ -29777,7 +29983,7 @@ eC
 eC
 eC
 eC
-LR
+eC
 LR
 LR
 LR
@@ -29924,17 +30130,17 @@ eC
 eC
 eC
 eC
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
 eC
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
 eC
 eC
 eC
@@ -29961,7 +30167,7 @@ eC
 qg
 zO
 "}
-(78,1,1) = {"
+(79,1,1) = {"
 zO
 qg
 eC
@@ -30127,17 +30333,17 @@ eC
 eC
 eC
 eC
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
 eC
+eC
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
 eC
 eC
 eC
@@ -30163,7 +30369,7 @@ eC
 qg
 zO
 "}
-(79,1,1) = {"
+(80,1,1) = {"
 zO
 qg
 eC
@@ -30185,12 +30391,12 @@ eC
 LR
 LR
 LR
+LR
 Uo
 Uo
 Uo
-Uo
-Uo
-Uo
+LR
+eC
 eC
 eC
 eC
@@ -30365,7 +30571,7 @@ eC
 qg
 zO
 "}
-(80,1,1) = {"
+(81,1,1) = {"
 zO
 qg
 eC
@@ -30384,13 +30590,13 @@ eC
 eC
 eC
 eC
+eC
 LR
 LR
 LR
 LR
-Uo
-Uo
-Uo
+LR
+LR
 LR
 eC
 eC
@@ -30532,7 +30738,7 @@ eC
 eC
 eC
 eC
-eC
+Hu
 Hu
 Hu
 Hu
@@ -30567,7 +30773,7 @@ eC
 qg
 zO
 "}
-(81,1,1) = {"
+(82,1,1) = {"
 zO
 qg
 eC
@@ -30769,7 +30975,7 @@ eC
 qg
 zO
 "}
-(82,1,1) = {"
+(83,1,1) = {"
 zO
 qg
 eC
@@ -30788,14 +30994,14 @@ eC
 eC
 eC
 eC
+LR
+LR
+LR
+LR
+LR
+LR
+LR
 eC
-LR
-LR
-LR
-LR
-LR
-LR
-LR
 eC
 eC
 eC
@@ -30971,7 +31177,7 @@ eC
 qg
 zO
 "}
-(83,1,1) = {"
+(84,1,1) = {"
 zO
 qg
 eC
@@ -31081,208 +31287,6 @@ PJ
 PJ
 PJ
 zH
-GU
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-Hu
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-qg
-zO
-"}
-(84,1,1) = {"
-zO
-qg
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-LR
-LR
-LR
-LR
-LR
-LR
-LR
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-DK
-DK
-DK
-lV
-DK
-DK
-DK
-DK
-DK
-Dd
-Cp
-Dd
-uP
-Dd
-Dd
-iZ
-RK
-tC
-Ec
-Zs
-PJ
-Ds
 GU
 eC
 eC
@@ -31463,31 +31467,31 @@ eC
 eC
 eC
 eC
-eC
-PJ
-DD
-Dd
-Dd
-iX
-Fr
-bn
-Dd
+DK
+DK
+DK
+lV
+DK
+DK
+DK
+DK
+DK
 Dd
 Cp
 Dd
-Hn
+uP
 Dd
 Dd
-Dd
-Dd
-Dd
-Dd
-HZ
-Cg
+iZ
+RK
+tC
+Ec
+Zs
+PJ
 Ds
 GU
-ws
-Em
+eC
+eC
 eC
 eC
 eC
@@ -31667,29 +31671,29 @@ eC
 eC
 eC
 PJ
-Nx
+DD
 Dd
 Dd
-Dd
-Dd
-Dd
+iX
+Fr
+bn
 Dd
 Dd
 Cp
+Dd
+Hn
+Dd
+Dd
+Dd
+Dd
+Dd
+Dd
 HZ
-uP
-Dd
-Dd
-mq
-jW
-Dd
-Dd
-Dd
 Cg
 Ds
 GU
-yP
-oY
+ws
+Em
 eC
 eC
 eC
@@ -31800,6 +31804,208 @@ LR
 Uo
 Uo
 Uo
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+PJ
+Nx
+Dd
+Dd
+Dd
+Dd
+Dd
+Dd
+Dd
+Cp
+HZ
+uP
+Dd
+Dd
+mq
+jW
+Dd
+Dd
+Dd
+Cg
+Ds
+GU
+yP
+oY
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+qg
+zO
+"}
+(88,1,1) = {"
+zO
+qg
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+LR
+LR
+Uo
+Uo
+eC
 eC
 eC
 eC
@@ -31981,7 +32187,7 @@ eC
 qg
 zO
 "}
-(88,1,1) = {"
+(89,1,1) = {"
 zO
 qg
 eC
@@ -32002,7 +32208,7 @@ LR
 Uo
 Uo
 eC
-eC
+LR
 eC
 eC
 eC
@@ -32183,208 +32389,6 @@ eC
 qg
 zO
 "}
-(89,1,1) = {"
-zO
-qg
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-LR
-LR
-Uo
-Uo
-eC
-LR
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-PJ
-PJ
-PJ
-jU
-Fr
-bn
-uR
-iG
-Dd
-uP
-Dd
-Dd
-iZ
-Tr
-Da
-Dc
-Zs
-PJ
-PJ
-PJ
-Xg
-Xg
-Qn
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-qg
-zO
-"}
 (90,1,1) = {"
 zO
 qg
@@ -32476,29 +32480,29 @@ eC
 eC
 eC
 eC
-eC
-eC
 PJ
 PJ
 PJ
+jU
+Fr
+bn
+uR
+iG
+Dd
+uP
+Dd
+Dd
+iZ
+Tr
+Da
+Dc
+Zs
 PJ
 PJ
 PJ
-PJ
-PJ
-PJ
-PJ
-PJ
-PJ
-PJ
-PJ
-PJ
-PJ
-eC
-eC
-eC
-eC
-eC
+Xg
+Xg
+Qn
 eC
 eC
 eC
@@ -32680,22 +32684,22 @@ eC
 eC
 eC
 eC
-OM
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-OM
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
 eC
 eC
 eC
@@ -33084,7 +33088,7 @@ eC
 eC
 eC
 eC
-Ef
+OM
 eC
 eC
 eC
@@ -33099,7 +33103,7 @@ eC
 eC
 eC
 eC
-Ef
+OM
 eC
 eC
 eC
@@ -33286,6 +33290,7 @@ eC
 eC
 eC
 eC
+Ef
 eC
 eC
 eC
@@ -33300,8 +33305,7 @@ eC
 eC
 eC
 eC
-eC
-eC
+Ef
 eC
 eC
 eC
@@ -112069,7 +112073,7 @@ eC
 eC
 eC
 eC
-eC
+ZP
 eC
 eC
 eC
@@ -112270,8 +112274,8 @@ eC
 eC
 eC
 mG
-El
-eC
+ws
+xt
 eC
 eC
 eC
@@ -112470,11 +112474,11 @@ RT
 eC
 eC
 eC
-eC
-RT
-RT
-eC
-eC
+os
+ij
+ij
+ij
+VC
 eC
 eC
 eC
@@ -115511,7 +115515,7 @@ LD
 Hx
 lq
 Jw
-ws
+ij
 Gh
 eC
 eC
@@ -115713,8 +115717,8 @@ Hl
 Hx
 DQ
 Jw
-yP
-oY
+ij
+eC
 eC
 eC
 eC
