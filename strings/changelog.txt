@@ -1,4 +1,9 @@
 
+(t)sun nov 22 26
+(u)JORJ949
+(p)28326
+(e)🎨🧛⏰🎭|C-Sprites, A-Gamemodes, A-Status-Effects, A-RP
+(*)Roleplay Head Revolutionaries must now speak keywords to crew before they are able to be converted. See the PR for details. There are no current plans to return Revolution to the roleplay pool of gamemodes, this just applies to admin-selected modes.
 (t)fri nov 20 26
 (u)JORJ949
 (p)28321

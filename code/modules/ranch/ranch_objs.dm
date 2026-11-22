@@ -599,8 +599,10 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 	New()
 		..()
 		feed_flags = list()
+		START_TRACKING
 
 	disposing()
+		STOP_TRACKING
 		feed_flags = null
 		happiness_mod = 0
 		hunger_mod = 0

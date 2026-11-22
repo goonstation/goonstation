@@ -1,5 +1,6 @@
 /datum/random_event/minor/illegal_trinkets
 	name = "Illegal Trinkets"
+	description = "Apply contraband values to several crew trinkets, based on trinket name"
 	centcom_headline = "Security Review Notice"
 	centcom_message = "The NanoTrasen Logistics Screening Team has confirmed the possibility of stolen, smuggled, or counterfeit items aboard."
 	weight = 10

@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/obj/machinery/disk_rack, proc/add_disk_of_type, proc/delete_disk_in_slot)
 TYPEINFO(/obj/machinery/disk_rack)
 	mats = list("metal" = 30, "conductive" = 10)
 
@@ -103,6 +104,40 @@ TYPEINFO(/obj/machinery/disk_rack)
 			tgui_process.update_uis(src)
 			return
 	. = ..()
+
+/obj/machinery/disk_rack/proc/add_disk_of_type()
+	set name = "Add Disk"
+	var/chosen = tgui_input_list(usr, "Select disk type to add", "Disk To Add", concrete_typesof(src.accepted_disk_type))
+	if (chosen)
+		var/obj/item/disk/data/new_disk = new chosen(src)
+		for (var/i in 1 to DISK::RACK::MAX_DISKS)
+			if (src.disks[i])
+				continue
+			src.insert_disk(i, new_disk, null)
+			tgui_process.update_uis(src)
+			return
+
+/obj/machinery/disk_rack/proc/delete_disk_in_slot()
+	set name = "Delete Disk"
+	var/list/choices = list()
+	for (var/i in 1 to DISK::RACK::MAX_DISKS)
+		if (src.disks[i])
+			var/obj/item/disk/data/disk_choice = src.disks[i]
+			choices.Add(disk_choice.name)
+	if (length(choices) == 0)
+		boutput(usr, "Hey! No disks in this rack! What are you gonna delete?")
+		return
+	var/chosen = tgui_input_list(usr, "Select disk to DELETE", "Disk to DELETE", choices)
+	if (!chosen)
+		return
+
+	for (var/i in 1 to DISK::RACK::MAX_DISKS)
+		if (src.disks[i])
+			var/obj/item/disk/data/disk_check = src.disks[i]
+			if (disk_check.name == chosen)
+				src.remove_disk(i)
+				qdel(disk_check)
+				break
 
 /obj/machinery/disk_rack/clone
 	name = "clone rack"

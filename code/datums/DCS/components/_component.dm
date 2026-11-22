@@ -277,7 +277,7 @@ ABSTRACT_TYPE(/datum/component)
 	var/list/arguments = raw_args.Copy(2)
 	if (src.Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		global.stack_trace("Incompatible [src.type] assigned to a [src.parent.type]! args: [json_encode(arguments)]")
-		qdel(src.parent)
+		qdel(src)
 
 	src._JoinParent(src.parent)
 
