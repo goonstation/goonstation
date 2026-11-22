@@ -209,7 +209,10 @@ ABSTRACT_TYPE(/datum/storyteller)
 	proc/spawn_event(var/type = "player")
 		var/do_event = 1
 		if (!random_events.events_enabled)
-			message_admins(SPAN_INTERNAL("A spawn event would have happened now, but they are disabled!"))
+			message_admins(SPAN_INTERNAL("A spawn event would have happened now, but all events are disabled!"))
+			do_event = 0
+		if (!random_events.spawn_events_enabled)
+			message_admins(SPAN_INTERNAL("A spawn event would have happened now, but spawn events are disabled!"))
 			do_event = 0
 		if (total_clients() < minimum_population_antag_events)
 			message_admins(SPAN_INTERNAL("A spawn event would have happened now, but there is not enough players!"))

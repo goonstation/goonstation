@@ -50,6 +50,12 @@
 		"AI",
 		"Cyborg")
 
+	// Variables for RP revolutions that determine the effectiveness of the "revolutionary keywords" mechanic
+	var/const/keywords_cooldown_per_message = 1 SECOND //! How long between each message before we can add more time again
+	var/const/keywords_time_per_message = 15 SECONDS //! How much duration is added to the status per message heard containing a keyword
+	var/const/keywords_required_duration_to_convert = 45 SECONDS //! Weakened loyalty duration must be at least this much for a target to be convertable
+	var/const/keywords_maximum_duration = 60 SECONDS //! The most duration a target can have remaining on the weakened loyalty effect
+
 //Has several changes to accomodate the RP experience. See ROLEPLAY_REVOLUTIONARIES define for changes.
 /datum/game_mode/revolution/extended
 	name = "Revolution (Roleplay)"
