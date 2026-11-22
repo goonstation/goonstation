@@ -125,8 +125,10 @@ var/datum/latejoin_menu/latejoin_menu = new()
 
 	// During revolution rounds, all command slots appear as filled.
 	var/slot_count = J.assigned
+	var/disabled =  !global.job_controls.check_job_eligibility(user, J, STAPLE_JOBS | SPECIAL_JOBS) // Only checks REAL assigned value
 	if (istype(J, /datum/job/command) && istype(ticker.mode, /datum/game_mode/revolution) && !(ROLEPLAY_REVOLUTIONARIES && ticker.round_elapsed_ticks < 25 MINUTES))
 		slot_count = max(slot_count, J.limit)
+		disabled = TRUE // So we need to tell it its not available
 
 	.["job_name"] = J.name
 	.["priority_role"] = (global.job_controls.priority_job == J)
@@ -136,7 +138,7 @@ var/datum/latejoin_menu/latejoin_menu = new()
 	.["colour"] = J.ui_colour
 	.["slot_count"] = slot_count
 	.["slot_limit"] = J.limit
-	.["disabled"] = !global.job_controls.check_job_eligibility(user, J, STAPLE_JOBS | SPECIAL_JOBS)
+	.["disabled"] = disabled
 
 /datum/latejoin_menu/proc/get_silicon_jobs()
 	. = list()
