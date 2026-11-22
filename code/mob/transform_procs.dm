@@ -180,6 +180,11 @@
 	if (delete_original)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
+
+	// some critters are on harm intent by default, which causes confusion for players controlling them. this prevents that.
+	if(newmob.mind)
+		newmob.set_a_intent(INTENT_HELP)
+
 	return newmob
 
 
@@ -225,8 +230,9 @@
 		boutput(cyborg, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
 	else
 		boutput(cyborg, "<B>You have been transformed into a Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
-		boutput(cyborg, "<B>You must follow all laws that the AI has.</B>")
+		boutput(cyborg, "<B>You must follow all laws on your attached law rack.</B>")
 	boutput(cyborg, "<B>Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.</B>")
+	cyborg.show_laws()
 
 	if(gory)
 		var/mob/living/silicon/robot/R = cyborg

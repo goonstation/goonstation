@@ -10685,13 +10685,6 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
-"cUC" = (
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/table/reinforced/auto,
-/obj/disposalpipe/segment,
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint/escape)
 "cUF" = (
 /obj/machinery/light/runway_light/delay3,
 /obj/lattice{
@@ -17574,19 +17567,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"hIK" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/obj/machinery/alarm/directional/west,
-/turf/simulated/floor/caution/white{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "hIO" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -19840,6 +19820,12 @@
 	dir = 1
 	},
 /area/station/security/main)
+"jkO" = (
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/table/reinforced/auto,
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/escape)
 "jkU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -21065,6 +21051,18 @@
 	},
 /turf/space,
 /area/space)
+"kfr" = (
+/obj/machinery/computer/tetris{
+	dir = 4
+	},
+/obj/blind_switch/directional/west{
+	pixel_y = 4
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -4
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "kfw" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -23179,6 +23177,13 @@
 	dir = 10
 	},
 /area/station/science/chemistry)
+"lCD" = (
+/obj/machinery/alarm/directional/west,
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/caution/white{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "lDg" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -26251,16 +26256,6 @@
 	dir = 4
 	},
 /area/space)
-"nCr" = (
-/obj/machinery/computer/tetris,
-/obj/blind_switch/directional/west{
-	pixel_y = 4
-	},
-/obj/machinery/light_switch/directional/west{
-	pixel_y = -4
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/arcade)
 "nDs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack/corner{
@@ -28118,13 +28113,6 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
-"oRN" = (
-/obj/decoration/toiletholder{
-	dir = 8;
-	pixel_x = 32
-	},
-/turf/simulated/floor/sanitary/blue,
-/area/station/bridge/execrestroom)
 "oSr" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -41117,6 +41105,13 @@
 	},
 /turf/space,
 /area/space)
+"xEz" = (
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 6
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/bridge/execrestroom)
 "xEU" = (
 /obj/disposalpipe/segment,
 /obj/machinery/conveyor/EW{
@@ -76906,7 +76901,7 @@ xTP
 fOr
 avo
 baq
-cUC
+jkO
 bxH
 adM
 fhj
@@ -77230,7 +77225,7 @@ bAx
 xBG
 bmh
 biN
-nCr
+kfr
 bmh
 lye
 rEE
@@ -84524,7 +84519,7 @@ bJM
 mTN
 lyt
 mtl
-oRN
+xEz
 xXx
 pRS
 nfm
@@ -86928,7 +86923,7 @@ aQT
 iBE
 fRA
 vvL
-hIK
+lCD
 nvq
 aZD
 baL

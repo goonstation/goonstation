@@ -48,7 +48,7 @@
 	if(src.scan)
 		account_data["scanned_name"] = src.scan.registered
 		account_data["scanned_job"] = src.scan.assignment
-		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+		var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 		if(account)
 			account_data["scanned_credits"] = account["current_money"]
 	.["account_data"] = account_data
@@ -77,7 +77,7 @@
 			if (src.scan.registered in global.FrozenAccounts)
 				boutput(user, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 				return
-			var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+			var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 			var/reccomended_amount = round(account["current_money"]/20) //Make sure to donate generously!
 			var/text = "How much to donate? <br>Current Budget: [global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]]"
 			var/amount = tgui_input_number(user, text , src.name, reccomended_amount, account["current_money"])
@@ -129,7 +129,7 @@
 		if (src.scan.registered in global.FrozenAccounts)
 			boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 			return
-		account = FindBankAccountByName(src.scan.registered)
+		account = global.data_core.get_bank_record(src.scan.registered)
 	var/datum/supply_order/order = new/datum/supply_order()
 	order.object = supply_pack
 	order.orderedby = user.name
@@ -169,24 +169,15 @@
 		src.pda_alert("Notification: [order.object] ordered by [order.orderedby] using personal account at [order.console_location].", list(MGT_CARGO, MGA_SHIPPING))
 		return
 
-	var/list/pda_list = list()
-
-	// check visible PDAs
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		pda_list += H.get_slot(SLOT_L_HAND)
-		pda_list += H.get_slot(SLOT_R_HAND)
-		pda_list += H.get_slot(SLOT_WEAR_ID)
-		pda_list += H.get_slot(SLOT_BELT)
-
-	for (var/obj/item/device/pda2/pda in pda_list)
-		if (pda.host_program.message_on && pda.owner)
-			order.address = pda.net_id
+	var/list/obj/item/device/pda2/PDAs = user.get_visible_pdas()
+	for (var/obj/item/device/pda2/PDA in PDAs)
+		if (PDA.owner && PDA.host_program?.message_on)
+			order.address = PDA.net_id
 			break
 
 	shippingmarket.supply_requests += order
 	logTheThing(LOG_STATION, usr, "placed a request for a [supply_pack.name] at [log_loc(src)].")
-	boutput(user, "Request for [supply_pack.name] sent to Supply Console. The Quartermasters will process your request as soon as possible.")
+	boutput(user, "Request for [supply_pack.name] sent to \the [/obj/machinery/computer/supplycomp::name], and will be processed as soon as possible.")
 	src.pda_alert("Notification: [order.object] requested by [order.orderedby] at [order.console_location].", list(MGT_CARGO, MGA_CARGOREQUEST))
 	src.update_static_data_for_all_viewers()
 
@@ -211,7 +202,7 @@
 /obj/machinery/computer/ordercomp/proc/scan_id(var/obj/item/card/id/id_card, mob/user)
 	if(!istype(id_card))
 		return
-	var/datum/db_record/account = FindBankAccountByName(id_card.registered)
+	var/datum/db_record/account = global.data_core.get_bank_record(id_card.registered)
 	if(!account)
 		boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
 		src.scan = null

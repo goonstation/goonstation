@@ -140,7 +140,7 @@
 		var/adjective = pick("hard", "strong", "powerful", "rough", "driven", "beefy", "big", "tough")
 		src.visible_message(SPAN_ALERT("<B>[src] smashes into [target] with a [adjective] shoulder!</B>"))
 		logTheThing(LOG_COMBAT, src, "tackles [target] using football gear [log_loc(src)].")
-		switch (src.smash_through(O, list("window", "grille", "table"), 0))
+		switch (src.smash_through(O, list(/obj/window, /obj/mesh/grille, /obj/table), 0))
 			if (0)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)
@@ -197,7 +197,7 @@
 		indicator.maptext_height = 64
 		setProperty("movespeed", 1)
 		add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,255,255)))
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 
 	pickup(mob/M)
 		..()
@@ -235,12 +235,6 @@
 	disposing()
 		SHOULD_CALL_PARENT(FALSE)
 		return // CRASH("YOU CAN'T DELETE THE FOOTBALL! YOU WILL REGRET THIS!")
-
-	// just in case someone has to hard del a ball
-	Del()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom)

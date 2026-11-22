@@ -147,7 +147,7 @@
 
 		// step 1: clear stuns, set to conscious
 		// this has to be done *before* setting the mutantrace or it won't process the standup call 'til the next life tick
-		H.lying = FALSE
+		H.set_lying(FALSE)
 		H.remove_stuns()
 		H.delStatus("disorient")
 		H.delStatus("pinned")

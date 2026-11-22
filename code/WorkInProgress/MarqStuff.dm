@@ -450,6 +450,7 @@
 				var/obj/item/implant/projectile/body_visible/arrow/A = new
 				A.material = fusedmaterial
 				A.setMaterial(fusedmaterial, appearance = 0, setname = 0)
+				src.forensic_holder.copy_to(A.forensic_holder)
 				A.arrow = src
 				A.name = name
 				set_loc(A)
@@ -668,18 +669,18 @@
 		. = ..()
 		spread_base = initial(spread_base)
 		if(src.material)
-			if (src.material.getProperty("density") <= 2)
+			if (src.material.getProperty(MATERIAL::PROPERTY::DENSITY) <= 2)
 				spread_base *= 1.5
-			if (src.material.getProperty("density") >= 5)
+			if (src.material.getProperty(MATERIAL::PROPERTY::DENSITY) >= 5)
 				spread_base *= 0.5
-			if (src.material.getProperty("density") >= 7)
+			if (src.material.getProperty(MATERIAL::PROPERTY::DENSITY) >= 7)
 				spread_base *= 0.75
 
-			if (src.material.getProperty("hard") <= 2)
+			if (src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) <= 2)
 				max_draw = 2
-			if (src.material.getProperty("hard") >= 5)
+			if (src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) >= 5)
 				max_draw = 5
-			if (src.material.getProperty("hard") >= 8)
+			if (src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) >= 8)
 				max_draw = 10
 
 	proc/loadFromQuiver(var/mob/user)
@@ -788,11 +789,11 @@
 		current_projectile.name = loaded.name
 		loaded.set_loc(A)
 		current_projectile.implanted = A
-		current_projectile.material = loaded.head_material
+		current_projectile.coating = loaded.head_material
 		var/default_damage = 7
 		if(loaded.head_material)
-			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.damage = round(6+loaded.head_material.getProperty("hard")) //pretty close to the 7-15 range, which will get multiplied by bow draw
+			if(loaded.head_material.hasProperty(MATERIAL::PROPERTY::HARDNESS))
+				current_projectile.damage = round(6+loaded.head_material.getProperty(MATERIAL::PROPERTY::HARDNESS)) //pretty close to the 7-15 range, which will get multiplied by bow draw
 			else
 				current_projectile.damage = default_damage
 		else

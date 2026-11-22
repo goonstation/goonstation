@@ -82,6 +82,9 @@ TYPEINFO(/obj/item/card/emag)
 			C.desc = "What? It's just an ordinary closet."
 			C.welded = 1
 
+/obj/item/card/emag/gold
+	icon_state = "emag_gold"
+
 /obj/item/card/data
 	name = "data card"
 	icon_state = "data"
@@ -168,10 +171,16 @@ TYPEINFO(/obj/item/card/emag)
 	registered = "Captain"
 	assignment = "Captain"
 
-	New()
-		..()
-		src.access = get_access("Captain")
-		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
+/obj/item/card/id/gold/captains_spare/New()
+	..()
+	START_TRACKING
+	src.access = get_access("Captain")
+	src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
+
+/obj/item/card/id/gold/captains_spare/disposing()
+	STOP_TRACKING
+	. = ..()
+
 
 /obj/item/card/id/nanotrasen
 	name = "Nanotrasen identification card"
@@ -499,7 +508,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "loading arena matches..."
 				tag = "gauntlet-id-[user.client.key]"
 				queryGauntletMatches(user.client.key)
-		name = "[registered]’s ID Card ([assignment])"
+		src.update_name()
 
 	proc/SetMatchCount(var/matches)
 		switch (matches)
@@ -526,7 +535,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "Legendary Gladiator ([matches] rounds played)"
 			else
 				assignment = "what the fuck ([matches] rounds played)"
-		name = "[registered]’s ID Card ([assignment])"
+		src.update_name()
 
 // Experimental item that may be made into a 100k spacebux reward in the future?
 /obj/item/card/license_to_kill

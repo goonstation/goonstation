@@ -163,7 +163,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/riotgear, proc/authorize, proc/unau
 		ircbot.export_async("admin", ircmsg)
 
 		logTheThing(LOG_STATION, usr, "authorized armory access. Reason: [src.auth_reason || "None"]")
-		message_ghosts("<b>Armory authorized [log_loc(src.loc, ghostjump=TRUE)].")
 		var/reason_text = src.auth_reason ? "<br>[SPAN_BOLD("Reason:")] [src.auth_reason]" : null
 		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>[reason_text]", "Security Level Increased", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_STATION)
 		authed = 1

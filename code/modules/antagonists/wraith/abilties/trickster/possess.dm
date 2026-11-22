@@ -159,7 +159,7 @@
 		boutput(T, "<span class='bold' style='color:red;font-size:150%'>You have assumed control of this body! You don't have long...</span>")
 		RegisterSignal(T, COMSIG_MOB_DEATH, PROC_REF(return_wraith))
 		APPLY_ATOM_PROPERTY(T, PROP_MOB_NO_SELF_HARM, T)
-		message_ghosts("<b>[src.wraith_mob]</b> has possessed <b>[src.owner]</b> at [log_loc(src.owner, ghostjump = TRUE)]!")
+		GHOST.MESSAGE.send("<b>[src.wraith_mob]</b> has possessed [GHOST.MESSAGE.format_atom(src.owner)] at [GHOST.MESSAGE.format_loc(src.owner)].")
 		for (var/mob/dead/target_observer/TO in src.wraith_mob.observers)
 			if (TO == src.human_observer)
 				continue
@@ -171,7 +171,7 @@
 			return
 		src.wraith_mob.set_loc(get_turf(src.owner))
 		src.wraith_mob.set_dir(src.owner.dir)
-		message_ghosts("<b>[src.wraith_mob]</b> is no longer possessing <b>[src.owner]</b> at [log_loc(src.wraith_mob, ghostjump = TRUE)].")
+		GHOST.MESSAGE.send("<b>[src.wraith_mob]</b> is no longer possessing [GHOST.MESSAGE.format_atom(src.owner)] at [GHOST.MESSAGE.format_loc(src.owner)].")
 		var/mob/owner_mob = src.owner
 		for (var/mob/dead/target_observer/TO in owner_mob.observers)
 			if (TO == src.human_observer)

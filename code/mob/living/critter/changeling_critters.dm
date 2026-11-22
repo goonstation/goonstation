@@ -681,7 +681,7 @@ TYPEINFO(/mob/living/critter/changeling)
 
 	New()
 		..()
-		abilityHolder.addAbility(/datum/targetable/critter/slam)
+		abilityHolder.addAbility(/datum/targetable/critter/slam/headspider)
 		abilityHolder.updateButtons()
 		src.flags ^= TABLEPASS | DOORPASS
 

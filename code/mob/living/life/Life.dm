@@ -541,9 +541,6 @@
 		else if (final_mod < 0)
 			src.remove_stamina(abs(final_mod))
 
-		if (src.stamina_bar && src.client)
-			src.stamina_bar.update_value(src)
-
 		last_stam_change = TIME
 
 
@@ -584,7 +581,8 @@
 							resist_prob += 100
 
 		for (var/obj/item/C as anything in src.get_equipped_items())
-			resist_prob += C.getProperty("viralprot")
+			if (C.properties)
+				resist_prob += C.getProperty("viralprot")
 
 		if(src.getStatusDuration("food_disease_resist"))
 			resist_prob += 80

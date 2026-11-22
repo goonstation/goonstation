@@ -152,11 +152,12 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	else if(isnull(prev_data))
 		return FALSE
 
-	var/image/prev_overlay = prev_data[P_IMAGE] //overlay_refs[key]
-	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE] ) //If it's the same image as the other one and the appearances match then do not update
+	var/index = prev_data[P_INDEX]
+	// Is the same appearance already in that slot?
+	if(!force && index && hash == prev_data[P_ISTATE] && index <= length(src.overlays) && ref(src.overlays[index]) == hash)
+		prev_data[P_IMAGE] = I
 		return 0
 
-	var/index = prev_data[P_INDEX]
 	if(index) //There is an existing overlay in place in this slot, remove it
 		if(index <= length(src.overlays))
 			src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
@@ -196,11 +197,12 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		overlay_refs[key] = prev_data
 		return TRUE
 
-	var/image/prev_overlay = prev_data[P_IMAGE] //overlay_refs[key]
-	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE]) //If it's the same image as the other one and the appearances match then do not update
+	var/index = prev_data[P_INDEX]
+	// Is the same appearance already in that slot?
+	if(!force && index && hash == prev_data[P_ISTATE] && index <= length(src.overlays) && ref(src.overlays[index]) == hash)
+		prev_data[P_IMAGE] = I
 		return 0
 
-	var/index = prev_data[P_INDEX]
 	if(index) //There is an existing overlay in place in this slot, remove it
 		if(index <= length(src.overlays))
 			src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)

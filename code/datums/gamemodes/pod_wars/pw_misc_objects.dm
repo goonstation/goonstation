@@ -16,8 +16,39 @@
 	nanotrasen
 		team_num = TEAM_NANOTRASEN
 
+		bridge
+			name = "Bridge Critical System"
+			icon = 'icons/obj/large/96x96.dmi'
+			icon_state = "doppler_radar"
+			bound_width = 96
+			bound_height = 96
+
+		refinery
+			icon_state = "ground_receiver"
+
 	syndicate
 		team_num = TEAM_SYNDICATE
+
+		bridge
+			name = "Bridge Critical System"
+			icon = 'icons/obj/large/96x96.dmi'
+			icon_state = "doppler_radar"
+			bound_width = 96
+			bound_height = 96
+
+			New()
+				. = ..()
+				src.Turn(-90)
+				src.Scale(1, -1)
+
+		medbay
+			name = "Medbay Critical System"
+			icon_state = "ground_receiver"
+
+			New()
+				. = ..()
+				src.Turn(180)
+
 
 	disposing()
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
@@ -636,9 +667,9 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		ctrl_pt.capture(user, team_num)
 		switch(get_pod_wars_team_num(user))
 			if (TEAM_NANOTRASEN)
-				message_ghosts("<b>[user]</b> successfully captured [src] for Nanotrasen! [log_loc(src, ghostjump=TRUE)].")
+				GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(user)] successfully captured [src] for Nanotrasen!")
 			if (TEAM_SYNDICATE)
-				message_ghosts("<b>[user]</b> successfully captured [src] for the Syndicate! [log_loc(src, ghostjump=TRUE)].")
+				GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(user)] successfully captured [src] for the Syndicate!")
 
 	attack_hand(mob/user)
 		if (!can_be_captured)
@@ -658,7 +689,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
 
 			if(!ON_COOLDOWN(src, "ghostalert", 10 SECONDS))
-				message_ghosts("<b>[user]</b> is trying to capture <b>[src]</b>! [log_loc(src, ghostjump=TRUE)].")
+				GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(user)] is trying to capture <b>[src]</b>!")
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
 		else

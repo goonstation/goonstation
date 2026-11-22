@@ -38,9 +38,7 @@
 
 
 	update_icon()
-		src.overlays.len = 0
-		if (bulb)
-			bulb.UpdateIcon(src)
+		src.UpdateOverlays(bulb ? image(src.icon, bulb.tripod_overlay_state) : null, "bulb")
 
 /obj/item/tripod
 	name = "folded tripod"
@@ -62,6 +60,8 @@
 /obj/item/tripod_bulb // TODO: draw power from the tripod battery or w/e
 	name = "bulb"
 	icon = 'icons/obj/tripod.dmi'
+	/// The tripod's overlay while this bulb is in it
+	var/tripod_overlay_state = null
 
 	proc
 		removed()
@@ -70,6 +70,7 @@
 	light
 		name = "big bulb"
 		icon_state = "light_bulb"
+		tripod_overlay_state = "tripod_light"
 		var
 			datum/light/light
 
@@ -87,12 +88,10 @@
 			light.disable()
 			light.detach()
 
-		update_icon(obj/machinery/tripod/tripod)
-			tripod.overlays += "tripod_light"
-
 	beacon
 		name = "beacon bulb"
 		icon_state = "beacon_bulb"
+		tripod_overlay_state = "tripod_beacon"
 		var
 			beacon_name = "beacon"
 			datum/light/light
@@ -113,9 +112,6 @@
 			tripod.name = initial(tripod.name)
 			light.disable()
 			light.detach()
-
-		update_icon(obj/machinery/tripod/tripod)
-			tripod.overlays += "tripod_beacon"
 
 		attack_self(mob/user)
 			var/name = copytext(input(user, "What would you like to name this beacon?", "Beacon name", src.beacon_name), 1, 26)

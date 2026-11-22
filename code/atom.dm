@@ -95,7 +95,13 @@ TYPEINFO(/atom)
 		// Secret artwork is loaded on demand, rather than included in the compiled RSC.
 		src.load_runtime_icon()
 		. = ..()
-		// Lets stop having 5 implementations of this that all do it differently
+		// Movables apply their mats at the tail of /atom/movable/New() instead
+		// (Material setup can change opacity)
+		if (!ismovable(src))
+			src.apply_default_material()
+
+	/// Lets stop having 5 implementations of this that all do it differently
+	proc/apply_default_material()
 		if (!src.material && src.default_material)
 			src.setMaterial(getMaterial(src.default_material))
 
@@ -318,6 +324,10 @@ TYPEINFO(/atom)
 /atom/proc/emag_act(var/mob/user, var/obj/item/card/emag/E) //This is gonna be fun!
 	return 0
 
+/// An atom/movable is trying to smash us. Returns TRUE if the attacker did strike it.
+/atom/proc/smash_act(atom/movable/smasher, show_message=TRUE)
+	return FALSE
+
 /atom/proc/demag(var/mob/user) //hail satan full of grace
 	return 0
 
@@ -384,10 +394,14 @@ TYPEINFO(/atom)
 	return
 
 /atom/proc/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_FLUID_ENTERED, F)
+	. = 0
 
 /atom/proc/ExitedFluid(obj/fluid/F as obj)
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_FLUID_EXITED, F)
+	. = 0
 
 /atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, atom/old_loc)
 	.=0
@@ -544,16 +558,13 @@ TYPEINFO(/obj/item/disk)
 
 
 //some more of these event handler flag things are handled in set_loc far below . . .
-/atom/movable/New()
+/atom/movable/New(loc)
 	..()
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
 		return
 	if (isturf(src.loc))
-		var/turf/T = src.loc
-		if(src.opacity)
-			T.opaque_atom_count++
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
@@ -568,6 +579,15 @@ TYPEINFO(/obj/item/disk)
 			for(var/atom/A in src.loc)
 				if(A != src)
 					A.Crossed(src)
+	// Clear, then set_opacity() so lights are stripped without us and reapplied with us
+	// hopefully no longer necessary one day with new initalize
+	if (initial(src.opacity) && src.opacity && global.RL_Started && isturf(src.loc))
+		var/turf/T = src.loc
+		UNLINT(src.opacity = FALSE)
+		T.recount_opaque_atoms()
+		src.set_opacity(TRUE)
+	// After relighting, so material opacity changes start from consistent lighting
+	src.apply_default_material()
 
 
 /atom/movable/disposing()
@@ -830,34 +850,32 @@ TYPEINFO(/obj/item/disk)
 		. += " [extra]"
 
 	// handles PDA messaging shortcut for the AI
-	if (isAI(user) && ishuman(src))
+	if (isAI(user) && ismob(src))
 		var/mob/living/silicon/ai/mainframe
-		var/mob/living/carbon/human/person = src
 		if (isAIeye(user))
 			var/mob/living/intangible/aieye/ai = user
 			mainframe = ai.mainframe
 		else
 			mainframe = user
+		if (!istype(mainframe))
+			return
 
-		// we need to check to see if any of these are PDAs so that we can render them to the ai.
-		// these are where pdas can be visible in an inventory - lets check to see whats in them!
-		var/list/inv_list = list()
-		inv_list += person.get_slot(SLOT_BELT)
-		inv_list += person.get_slot(SLOT_WEAR_ID)
-		inv_list += person.get_slot(SLOT_L_HAND)
-		inv_list += person.get_slot(SLOT_R_HAND)
-
-		var/hasPDA = FALSE
-		for (var/obj/item/device/pda2/pda in inv_list) // we only care about PDAs
-			var/textToAdd
-			if (pda.host_program.message_on && pda.owner) // is their messenger enabled, is their pda swiped in??
-				textToAdd += "<br>[bicon(pda)][pda.name] - <a href='byond://?src=\ref[mainframe];net_id=[pda.net_id];owner=[pda.owner]'><u>*MESSAGE*</u></a>" // see ai.dm under Topic() to continue from here!
-			else if (pda.owner) // ownerless PDAs will not render, but we'll tell the AI when someone's messenger is disabled!
-				textToAdd += "<br>[bicon(pda)][pda.name] - *MESSENGER DISABLED*"
-			. += textToAdd
-			if (pda.owner) hasPDA = TRUE // we need at least ONE pda to be visible, or else we add the text below
-		if (!hasPDA)
-			. += "<br>*No PDA detected!*"
+		var/mob/M = src
+		var/list/obj/item/device/pda2/PDAs = M.get_visible_pdas()
+		var/found_messagable_pda = FALSE
+		var/batch_add = ""
+		if (length(PDAs))
+			for (var/obj/item/device/pda2/PDA in PDAs)
+				if (!PDA.owner)
+					continue
+				if (PDA.host_program?.message_on) // see ai.dm under Topic() to continue from here!
+					found_messagable_pda = TRUE
+					batch_add += "<br>[bicon(PDA)][PDA.name] - <a href='byond://?src=\ref[mainframe];net_id=[PDA.net_id];owner=[PDA.owner]'><u>*MESSAGE*</u></a>"
+				else
+					batch_add += "<br>[bicon(PDA)][PDA.name] - *MESSENGER DISABLED*"
+		if (!found_messagable_pda)
+			batch_add += "<br>*No messagable PDA detected!*"
+		. += batch_add
 
 /// Override MouseDrop_T instead of this. Call this instead of MouseDrop_T, but you probably shouldn't!
 /atom/proc/_MouseDrop_T(dropped, user, src_location, over_location, src_control, over_control, params)
@@ -904,7 +922,8 @@ TYPEINFO(/obj/item/disk)
 	if (!W || !user || src.storage?.storage_item_attack_by(W, user) || W.should_suppress_attack(src, user, params))
 		return
 	W.material_on_attack_use(user, src)
-	src.material_trigger_when_attacked(W, user, 1)
+	src.material_trigger_when_hit(W, user, MATERIAL::IMPACT::MELEE)
+	W.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 	if (silent)
 		return
 	var/hits = src
@@ -1135,18 +1154,55 @@ TYPEINFO(/obj/item/disk)
 		loc.passability_cache = null
 		SEND_SIGNAL(loc, COMSIG_TURF_CONTENTS_SET_DENSITY, old_density, src)
 
+/**
+ * Recomputes how many opaque movables are on this turf.
+ *
+ * Two separate events: Entered/Exited, and set_opacity
+ * An increment needs each of those to know whether the other already accounted for the atom,
+ * and during New() the order is not fixed, since a subtype decides where it calls ..()
+ *
+ * In theory this shouldn't be neded anymore, but we don't have guards against it besides regression tests.
+ * It'll also only fire for like opaque smoke stepping off a turf.
+ *
+ * TODO: We can remove this entirely once we have a proper Initalize()
+ */
+/turf/proc/recount_opaque_atoms()
+	var/count = 0
+	for (var/atom/movable/AM as anything in src)
+		if (AM.opacity)
+			count++
+	if (count == src.opaque_atom_count)
+		return
+
+	var/was_blocking = src.opacity || src.opaque_atom_count
+	src.opaque_atom_count = count
+	if (!was_blocking != !(src.opacity || count))
+		src.on_set_opacity()
+
+/**
+ * Sets our opacity without `set_opacity()` lighting rebuild.
+ * For code that rewrites a whole region in one pass and handles lighting itself.
+ */
+/turf/proc/set_opacity_no_lighting(new_opacity)
+	if (src.opacity == new_opacity)
+		return
+	UNLINT(src.opacity = new_opacity)
+	src.on_set_opacity()
+
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if (newopacity == src.opacity)
 		return // Why even bother
 
+	// zewaka todo: a turf's loc is its area, so turfs never relight here
+	// fixing it needs explosions to pause relights and rebuild once
 	var/on_turf = isturf(src.loc)
 
 	var/oldopacity = src.opacity
 
 	if(!on_turf)
-		src.opacity = newopacity
+		UNLINT(src.opacity = newopacity)
 		SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 		return
 
@@ -1167,9 +1223,9 @@ TYPEINFO(/obj/item/disk)
 			if (light.enabled)
 				affected |= light.strip(++RL_Generation)
 
-		if (src != our_turf)
-			our_turf.opaque_atom_count += newopacity ? 1 : -1
-		src.opacity = newopacity
+		UNLINT(src.opacity = newopacity)
+		if (src != our_turf) // /turf/set_opacity notifies for ==
+			our_turf.recount_opaque_atoms()
 
 		for (var/datum/light/light as anything in lights)
 			if (light.enabled)
@@ -1178,8 +1234,9 @@ TYPEINFO(/obj/item/disk)
 			for (var/turf/T as anything in affected)
 				RL_UPDATE_LIGHT(T)
 	else
-		our_turf.opaque_atom_count += newopacity ? 1 : -1
-		src.opacity = newopacity
+		UNLINT(src.opacity = newopacity)
+		if (src != our_turf)
+			our_turf.recount_opaque_atoms()
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 
@@ -1359,7 +1416,7 @@ TYPEINFO(/obj/item/disk)
 	. = ..()
 	switch(variable)
 		if("opacity")
-			src.opacity = oldval
+			UNLINT(src.opacity = oldval)
 			src.set_opacity(newval)
 		if("density")
 			src.density = oldval

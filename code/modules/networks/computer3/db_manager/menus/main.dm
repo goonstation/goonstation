@@ -38,6 +38,7 @@ ABSTRACT_TYPE(/datum/db_manager_menu/main)
 	submenus = list(
 		"View security records." = "security_list",
 		"Search for a record." = "security_search",
+		"Manage citations." = "manage_citations",
 		"Adjust settings." = "settings",
 	)
 

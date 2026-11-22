@@ -1932,7 +1932,7 @@ var/global/noir = 0
 			if (!M?.mind)
 				return
 			var/list/antag_options = list()
-			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - (concrete_typesof(/datum/antagonist/subordinate) + concrete_typesof(/datum/antagonist/generic))
+			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - concrete_typesof(/datum/antagonist/subordinate)
 			for (var/V as anything in eligible_antagonist_types)
 				var/datum/antagonist/A = V
 				if (!M.mind.get_antagonist(initial(A.id)))
@@ -2529,13 +2529,13 @@ var/global/noir = 0
 									logTheThing(LOG_ADMIN, usr, "gave everyone a random safe firearm.")
 									logTheThing(LOG_DIARY, usr, "gave everyone a random safe firearm.", "admin")
 									for (var/mob/living/L in mobs)
-										new /obj/random_item_spawner/kineticgun/safer/one(get_turf(L))
+										new /obj/random_item_spawner/kineticgun/safer/one/equip_cyborgs(get_turf(L), L)
 								if("ANY GUN")
 									message_admins("[key_name(usr)] gave everyone a completely random firearm.")
 									logTheThing(LOG_ADMIN, usr, "gave everyone a completely random firearm.")
 									logTheThing(LOG_DIARY, usr, "gave everyone a completely random firearm.", "admin")
 									for (var/mob/living/L in mobs)
-										new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
+										new /obj/random_item_spawner/kineticgun/fullrandom/equip_cyborgs(get_turf(L), L)
 
 
 						else
@@ -3615,12 +3615,6 @@ var/global/noir = 0
 				src.showPlayerCompIDs(ckey)
 			else
 				usr.client.cmd_admin_show_player_compids()
-
-		if ("lightweight_doors")
-			if (src.level < LEVEL_PA)
-				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
-
-			usr.client.lightweight_doors()
 
 		if ("lightweight_mobs")
 			if (src.level < LEVEL_PA)

@@ -29,6 +29,13 @@
 
 /datum/aiTask/sequence/goalbased/eat/get_targets()
 	. = list()
+	var/feed_nearby = FALSE
+	for_by_tcl(feed, /obj/decal/cleanable/ranch_feed) // feed is usually limited
+		if(IN_RANGE(holder.owner, feed, max_dist))
+			feed_nearby = TRUE
+			break
+	if(!feed_nearby)
+		return
 	for(var/obj/decal/cleanable/ranch_feed/F in view(max_dist, holder.owner))
 		. += F
 
@@ -133,7 +140,7 @@
 				var/mob/living/critter/small_animal/ranch_base/C = owncritter
 				if(istype(C))
 					C.visible_message(SPAN_ALERT("[C] cries out in fear!"))
-					C.gossip()
+					C.gossip(holder.target)
 					messaged = 1
 
 		holder.move_away(holder.target,target_range)
@@ -181,7 +188,7 @@
 	var/messaged = 0
 
 
-/datum/aiTask/timed/targeted/fight_shitter/proc/precondition()
+/datum/aiTask/timed/targeted/fight_shitter/precondition()
 	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
 	. = 0
 	if(istype(C))
@@ -200,20 +207,24 @@
 		. = !(holder.target)
 
 /datum/aiTask/timed/targeted/fight_shitter/evaluate()
-	..()
+	if(!precondition())
+		return 0
 	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
 	if(istype(C))
 		if(C.hyperaggressive)
 			for(var/mob/M in view(target_range,C))
 				if(!isdead(M))
 					if(!(M in C.my_friends))
+						if(C.faction)
+							if(!faction_check(C, M))
+								continue
 						if(!istype(M,C.species_type))
-							return precondition() * FIGHT_PRIORITY
+							return FIGHT_PRIORITY
 		for(var/mob/M in C.shit_list)
 			if(IN_RANGE(M,C,target_range))
 				if(M in view(target_range,C))
 					if(!isdead(M))
-						return precondition() * FIGHT_PRIORITY
+						return FIGHT_PRIORITY
 	. = 0
 
 /datum/aiTask/timed/targeted/fight_shitter/on_tick()
@@ -245,7 +256,7 @@
 				var/mob/living/critter/small_animal/ranch_base/C = owncritter
 				if(istype(C))
 					C.visible_message(SPAN_ALERT("[C] cries out in anger!"))
-					C.gossip()
+					C.gossip(M)
 					messaged = 1
 
 		var/dist = get_dist(owncritter, M)
@@ -298,6 +309,9 @@
 			for(var/mob/M in view(target_range,C))
 				if(!isdead(M))
 					if(!(M in C.my_friends))
+						if(C.faction)
+							if(!faction_check(C, M))
+								continue
 						if(!istype(M,C.species_type))
 							. += M
 			return
@@ -324,7 +338,7 @@
 	var/last_seek
 
 
-/datum/aiTask/timed/targeted/follow_momma/proc/precondition()
+/datum/aiTask/timed/targeted/follow_momma/precondition()
 	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
 	. = 0
 	if(istype(C))
@@ -355,21 +369,22 @@
 			. += 10000
 
 /datum/aiTask/timed/targeted/follow_momma/evaluate()
-	..()
+	if(!precondition()) // adults never follow, skip the view() scan
+		return 0
 	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
 	if(istype(C))
 		for(var/mob/M in view(target_range,C))
 			if(!isdead(M))
 				if(C.impressionable)
 					if(M in C.my_friends)
-						return precondition() * FOLLOW_PRIORITY
+						return FOLLOW_PRIORITY
 					else if(istype(M,C.species_type))
 						var/mob/living/critter/small_animal/ranch_base/R = M
 						if(istype(R))
 							if(R.stage > 0)
-								return precondition() * FOLLOW_PRIORITY
+								return FOLLOW_PRIORITY
 				else if (C.parent && (M == C.parent))
-					return precondition() * FOLLOW_PRIORITY
+					return FOLLOW_PRIORITY
 
 	. = 0
 

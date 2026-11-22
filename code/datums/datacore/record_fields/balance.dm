@@ -31,10 +31,15 @@
 		menu.parent.print_text("<b>Error:</b> [error]")
 		return
 
+	var/datum/db_record/personnel/general/record = global.data_core.get_general_record(id = src.parent["id"])
+	if (!istype(record))
+		CRASH("Attempted to edit field on headless record.")
+
+	var/target_name = record["name"]
 	if (amount > 0)
-		logTheThing(LOG_STATION, usr, "transferred [amount][CREDIT_SIGN] from payroll budget to [menu.record["name"]]'s account.")
+		logTheThing(LOG_STATION, usr, "transferred [amount][CREDIT_SIGN] from payroll budget to [target_name]'s account.")
 	else
-		logTheThing(LOG_STATION, usr, "transferred [-amount][CREDIT_SIGN] from [menu.record["name"]]'s account to payroll budget.")
+		logTheThing(LOG_STATION, usr, "transferred [-amount][CREDIT_SIGN] from [target_name]'s account to payroll budget.")
 
 	global.wagesystem.budgets[BUDGET_CAT_PAYROLL] -= amount
 	src.set_value(new_value)

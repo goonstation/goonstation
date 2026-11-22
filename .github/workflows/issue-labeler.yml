@@ -19,7 +19,7 @@ jobs:
             const keyLabelerConfig = fs.readFileSync(".github/keylabeler.yml", "utf8");
             const mappings = keyLabelerConfig
               .split("\n")
-              .map((line) => line.match(/^    (".*"):\s+(\S+)\s*$/))
+              .map((line) => line.match(/^(".*"):\s+(\S+)\s*$/))
               .filter(Boolean)
               .map(([, keyword, label]) => [JSON.parse(keyword), label]);
 

@@ -287,7 +287,7 @@ ABSTRACT_TYPE(/datum/job/special)
 		SPAWN(0)
 			var/obj/item/card/id/C = M.get_slot(SLOT_WEAR_ID)
 			C.assignment = "Staff Assistant"
-			C.name = "[C.registered]’s ID Card ([C.assignment])"
+			C.update_name()
 
 			M.job = "Staff Assistant" // for observers
 
@@ -359,4 +359,8 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_back = list(/obj/item/storage/backpack = 1, /obj/item/storage/backpack/studdedblack = 2)
 	slot_foot = list(/obj/item/clothing/shoes/black = 1, /obj/item/clothing/shoes/brown = 1, /obj/item/clothing/shoes/cowboy = 1, /obj/item/clothing/shoes/detective = 1)
 	items_in_backpack = list(/obj/item/handcuffs/tape_roll, /obj/item/bat)
+
+/datum/job/special/mode
+	name = "MODE"
+	limit = 0
 

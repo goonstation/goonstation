@@ -16,6 +16,8 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 
 	/// An associative list of database manager menu datums, indexed by a menu ID string.
 	VAR_PRIVATE/tmp/alist/menus = null
+	/// An ordered list of menus that the user has visited. Each entry is a list of arguments fitting the call signature of `switch_record_group()`.
+	VAR_PRIVATE/tmp/list/list/user_journey = null
 	/// The current database manager menu being displayed.
 	VAR_PRIVATE/tmp/datum/db_manager_menu/current_menu = null
 	/// The current record group being used by this database manager to access records.
@@ -29,9 +31,10 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.current_menu?.unload()
 	src.current_menu = null
 
-	for (var/datum/db_manager_menu/menu as anything in src.menus)
-		qdel(menu)
+	for (var/menu_id as anything in src.menus)
+		qdel(src.menus[menu_id])
 
+	src.user_journey = null
 	src.menus = null
 	. = ..()
 
@@ -45,6 +48,7 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.known_printers = null
 	src.selected_printer = null
 
+	src.user_journey = list()
 	src.switch_menu_to("main")
 
 /datum/computer/file/terminal_program/db_manager/input_text(text)
@@ -136,8 +140,16 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 		"printer_list"		= new /datum/db_manager_menu/printer_list(src),
 	)
 
+/// Switch this database manager to the specified record group and menu.
+/datum/computer/file/terminal_program/db_manager/proc/switch_record_group(record_group, ...)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	src.current_record_group = record_group
+	var/list/arguments = args.Copy(2)
+	src.switch_menu_to(arglist(arguments))
+
 /// Switch this database manager to the menu corresponding to the passed menu ID.
-/datum/computer/file/terminal_program/db_manager/proc/switch_menu_to(menu_id)
+/datum/computer/file/terminal_program/db_manager/proc/switch_menu_to(menu_id, ...)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if (!src.menus[menu_id])
@@ -146,10 +158,34 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.current_menu?.unload()
 	src.master.temp = null
 
-	var/list/arguments = args.Copy(2)
 	src.current_menu = src.menus[menu_id]
+	if (src.current_menu.add_to_user_journey)
+		var/list/journey_entry = args.Copy()
+		journey_entry.Insert(1, src.current_record_group)
+
+		var/list/journey = src.user_journey
+		for (var/i in 1 to length(journey))
+			var/list/entry = journey[i]
+			if (journey_entry ~= entry)
+				journey.Cut(i)
+				break
+
+		journey[++journey.len] = journey_entry
+
+	var/list/arguments = args.Copy(2)
 	src.current_menu.accept_commands = TRUE
 	src.current_menu.load(arglist(arguments))
+
+/// Switch this database manager to the previous menu.
+/datum/computer/file/terminal_program/db_manager/proc/previous_menu()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/index = length(src.user_journey)
+	if (src.current_menu.add_to_user_journey)
+		index -= 1
+
+	var/list/previous_menu = src.user_journey[index]
+	src.switch_record_group(arglist(previous_menu))
 
 /// Attempt to locate and connect to a mainframe computer at a specified address.
 /datum/computer/file/terminal_program/db_manager/proc/connect_server(address)
@@ -234,47 +270,26 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.peripheral_command("transmit", signal, ref(net_card))
 	return FALSE
 
-/// Attempt to print a specified record from the selected network printer.
-/datum/computer/file/terminal_program/db_manager/proc/network_print(record_id)
+/// Attempt to print a file from the network or local printer.
+/datum/computer/file/terminal_program/db_manager/proc/print_file(datum/computer/file/file)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if (!src.connected || !src.selected_printer || !src.server_netid)
+
+	if (src.connected && src.selected_printer && src.server_netid)
+		src.message_server("command=print&args=print [src.selected_printer]", file)
 		return TRUE
 
-	var/datum/computer/file/record/print_record = new()
-	print_record.fields += "title=Record"
-	print_record.fields += src.current_record_group.get_record(record_id, src.current_record_group.get_all_databases(), TRUE)
-
-	src.message_server("command=print&args=print [src.selected_printer]", print_record)
-	return FALSE
-
-/// Attempt to print a specified photo from the selected network printer.
-/datum/computer/file/terminal_program/db_manager/proc/network_print_photo(datum/computer/file/image/IMG)
-	SHOULD_NOT_OVERRIDE(TRUE)
-	if (!src.connected || !src.selected_printer || !src.server_netid || !IMG)
-		return TRUE
-
-	var/datum/computer/file/record/print_record = new()
-	print_record.fields += "title=File Photo"
-	print_record.fields += "<font face='Consolas'>"
-	print_record.fields += replacetext(IMG.asText(), "|n", "<br>")
-	print_record.fields += "</font>"
-
-	src.message_server("command=print&args=print [src.selected_printer]", print_record)
-	return FALSE
-
-/// Attempt to print a specified record from a local printer.
-/datum/computer/file/terminal_program/db_manager/proc/local_print(record_id)
-	SHOULD_NOT_OVERRIDE(TRUE)
 	var/obj/item/peripheral/printer = src.find_peripheral("LAR_PRINTER")
-	if (!printer)
+	if (istype(printer) && istype(file, /datum/computer/file/record))
+		var/datum/computer/file/record/record = file
+		var/title = "printout"
+		if (dd_hasprefix(record.fields[1], "title="))
+			title = copytext(record.fields[1], 7)
+			record.fields.Cut(1, 2)
+
+		var/datum/signal/signal = global.get_free_signal()
+		signal.data["title"] = title
+		signal.data["data"] = record.fields.Join("<br>")
+		src.peripheral_command("print", signal, ref(printer))
 		return TRUE
 
-	var/datum/signal/signal = global.get_free_signal()
-	signal.data["data"] = src.current_record_group.get_record(record_id, src.current_record_group.get_all_databases(), TRUE).Join()
-	signal.data["title"] = "Record"
-	src.peripheral_command("print", signal, ref(printer))
 	return FALSE
-
-/// Called when this database manager is used to update a record field.
-/datum/computer/file/terminal_program/db_manager/proc/on_field_update(datum/db_record/record, key, old_value, new_value)
-	return

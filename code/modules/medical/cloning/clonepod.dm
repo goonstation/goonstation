@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 
 	disposing()
-		message_ghosts("<b>[src]</b> has been destroyed at [log_loc(src, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] was destroyed at [GHOST.MESSAGE.format_loc(src)].")
 		mailgroups.len = 0
 		genResearch?.clonepods?.Remove(src) //Bye bye
 		connected?.linked_pods -= src
@@ -402,7 +402,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.real_name = "clone"  //No null names!!
 		src.occupant.name = src.occupant.real_name
 		if (is_puritan)
-			message_ghosts("<b>[src.occupant]</b> is being cloned as a puritan at [log_loc(src, ghostjump=TRUE)].")
+			GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src.occupant)] is being cloned as a puritan at [GHOST.MESSAGE.format_loc(src)].")
 		if (!((mindref) && (istype(mindref))))
 			logTheThing(LOG_DEBUG, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )

@@ -351,7 +351,13 @@ var/list/dirty_keystates = list()
 			process_keystates()
 
 			for(var/client/C as anything in clients) // as anything is ok here since we nullcheck
-				C?.mob?.internal_process_move(C.key_state)
+				var/mob/M = C?.mob
+				if (!M)
+					continue
+				var/keys = C.key_state
+				// do nothing if we're idle
+				if (keys || M.move_dir || length(M.movement_controller_list) || length(M.grabbed_by))
+					M.internal_process_move(keys)
 
 			for(var/datum/aiHolder/ai as anything in ai_move_scheduled) // as anything is ok here since we nullcheck
 				if (ai?.move_target)

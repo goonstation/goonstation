@@ -379,7 +379,7 @@ TYPEINFO(/obj/machinery/wirenav)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 		return
 

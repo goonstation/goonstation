@@ -252,7 +252,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 /datum/targetable/ghost_observer/reenter_corpse
 	name = "Re-enter Corpse"
-	desc = "Re-enter your original corpse."
+	desc = "Re-enter your original corpse, or locate your brain if your corpse does not exist."
 	icon_state = "reenter-corpse"
 	targeted = 0
 	cooldown = 0
@@ -443,10 +443,10 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 					if (L.buckled)
 						animate_levitate(L, 1, 10)
 				animate_levitate(target, 1, 10)
-				boutput(holder.owner, SPAN_ALERT("You levitate[target] and its occupant(s)!"))
+				boutput(holder.owner, SPAN_ALERT("You levitate [target] and its occupant(s)!"))
 			else if (istype(target, /obj/item))
 				animate_levitate(target, 1, 10)
-				boutput(holder.owner, SPAN_ALERT("You levitate[target]!"))
+				boutput(holder.owner, SPAN_ALERT("You levitate [target]!"))
 			else
 				boutput(holder.owner, SPAN_ALERT("But it's beyond your power!"))
 

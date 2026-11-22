@@ -217,7 +217,7 @@
 		remove_lifeprocess(/datum/lifeprocess/ranch/age)
 		remove_lifeprocess(/datum/lifeprocess/ranch/hunger)
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+	was_harmed(mob/M as mob, obj/item/weapon = 0, special = 0, intent = null)
 		if(src.ai)
 			if(!isalive(src))
 				return ..()
@@ -227,7 +227,9 @@
 				src.gossip(M)
 			return ..()
 
-	proc/gossip(var/mob/M)
+	proc/gossip(mob/M)
+		if(!M)
+			return
 		src.update_friendlist(M,remove = 1)
 
 		for(var/mob/living/critter/small_animal/ranch_base/C in view(src.shit_list_distance, src))
@@ -272,6 +274,9 @@
 			if(src.ai)
 				if(!(M in src.shit_list))
 					if(!(M in src.my_friends))
+						if(src.faction)
+							if(!faction_check(src, M))
+								return
 						src.shit_list |= list(M)
 						RegisterSignal(M, COMSIG_MOB_DEATH, PROC_REF(cleanup_lists))
 						src.ai.stop_move()

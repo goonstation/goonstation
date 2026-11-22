@@ -9,7 +9,7 @@
 	use_stunned_icon = FALSE
 	var/being_seen = FALSE
 	var/mob/last_witness
-	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin", "buddy_future", "bunny_mask", "kitten_wizard", "monkey_assistant", "shelterfrog", "bear", "tuba", "monkey_george")
+	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin", "buddy_future", "bunny_mask", "kitten_wizard", "kitten_bingus",  "monkey_assistant", "shelterfrog", "bear", "tuba", "monkey_george")
 	var/image/eye_light
 	var/glowing_eye_color = "#c40000ff"
 	var/glowing_eyes_enabled_alpha = 190
@@ -51,6 +51,9 @@
 
 	kitten_wizard
 		icon_state = "kitten_wizard"
+		pick_random_icon_state = 0
+	kitten_bingus
+		icon_state = "kitten_bingus"
 		pick_random_icon_state = 0
 
 	monkey_assistant
@@ -246,6 +249,13 @@
 			if(GET_DIST(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
 				return
 		last_witness = null
+
+		// skip when no client is in range
+		var/turf/T = get_turf(src)
+		if (!T || !length(global.client_hashmap.exact_supremum(T, world.view)))
+			being_seen = FALSE
+			set_dormant_status(FALSE)
+			return
 
 		for (var/mob/M in viewers(src))
 			if (M == src)

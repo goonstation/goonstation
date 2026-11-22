@@ -752,6 +752,9 @@ ABSTRACT_TYPE(/area/shuttle)
 	#ifdef UNDERWATER_MAP
 	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
+	#ifdef MAP_OVERRIDE_DONUT3
+	filler_turf = "/turf/simulated/floor/plating/jen"
+	#endif
 
 /area/shuttle/escape/centcom
 	name = "Emergency Shuttle Centcom"
@@ -1360,7 +1363,7 @@ ABSTRACT_TYPE(/area/adventure)
 	icon_state = "yellow"
 
 /area/spacehabitat/owlery
-	name = "Owlery"
+	name = "Habitat Owlery"
 	icon_state = "yellow"
 	sound_environment = 15
 

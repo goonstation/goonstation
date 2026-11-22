@@ -378,7 +378,8 @@
 				src.visible_message(SPAN_ALERT("[src] begins to twitch and move!"))
 				var/moveto = locate(M.x + rand(-1,1),M.y + rand(-1, 1),src.z)
 				//make the mops move
-				if (istype(moveto, /turf/simulated/floor) || istype(moveto, /turf/simulated/floor/shuttle) || istype(moveto, /turf/simulated/aprilfools/floor) || istype(moveto, /turf/unsimulated/floor) || istype(moveto, /turf/unsimulated/aprilfools)) step_towards(M, moveto)
+				if (istypes(moveto, list(/turf/simulated/floor, /turf/unsimulated/floor)))
+					step_towards(M, moveto)
 				SPAWN(5 SECONDS)
 					src.visible_message(SPAN_NOTICE("Thankfully, [src] settles down."))
 		else

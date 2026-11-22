@@ -77,7 +77,7 @@
 		owner.full_heal()
 		owner.reagents.clear_reagents()
 		owner.blinded = 0
-		owner.lying = 0
+		owner.set_lying(FALSE)
 		if (owner)
 			overlay_image = image("icon" = 'icons/effects/wraitheffects.dmi', "icon_state" = "evilaura", layer = MOB_EFFECT_LAYER)
 		if (owner.bioHolder.HasEffect("husk"))
@@ -343,7 +343,7 @@
 				holder.owner.show_message( SPAN_ALERT("That target seems to be warded from the effects!") )
 			else
 				T.changeStatus("stunned", max(max(T.getStatusDuration("knockdown"), T.getStatusDuration("stunned")), 3))
-				T.lying = 0
+				T.set_lying(FALSE)
 				T.delStatus("knockdown")
 				T.show_message(SPAN_ALERT("A ghostly force compels you to be still on your feet."))
 		for (var/obj/O in view(7, holder.owner))

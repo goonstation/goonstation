@@ -151,6 +151,8 @@ var/list/admin_verbs = list(
 		/client/proc/jtt,
 		/client/proc/jumptocoord,
 		/client/proc/jtc,
+		/client/proc/jump_to_z,
+		/client/proc/jtz,
 		/client/proc/admin_follow_mobject,
 		/client/proc/main_loop_context,
 		/client/proc/main_loop_tick_detail,
@@ -1823,7 +1825,8 @@ proc/alert_all_ghosts(atom/target, message)
 						O.set_loc(target)
 					else if (istype(M, /mob/dead/target_observer))
 						var/mob/dead/target_observer/TO = M
-						TO.ghostjump(target.x, target.y, target.z)
+						var/mob/dead/observer/O = TO.to_ghost()
+						O.set_loc(target)
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts()
