@@ -11,7 +11,7 @@
 /// Lower bound on one tick's measured ratio, so timing jitter or a bad timer read can't drag the estimate down
 #define TICK_TIMING_MIN_RATIO 0.5
 
-/// Smoothed wall-clock length of a server tick, as a multiple of world.tick_lag (1 = on time)
+/// How long server ticks are really taking compared to world.tick_lag. 1 is on time, 1.5 is ticks taking 50% longer
 var/global/tick_length_ratio = 1
 /// Multiply glide sizes by this so a glide lasts as long as a tick actually takes.
 /// 1 when ticks are on time, below 1 when they overrun

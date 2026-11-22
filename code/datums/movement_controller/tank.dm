@@ -156,13 +156,13 @@
 			velocity_magnitude = min(velocity_magnitude + accel * delay/delay_divisor, velocity_max)
 
 			var/target_turf = get_step(owner,(reverse_gear ? turn(velocity_dir,180) : velocity_dir))
-			owner.glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
+			owner.glide_size = DELAY_TO_GLIDE_SIZE(delay)
 			for(var/mob/M in owner) //hey maybe move this somewhere better later. idk man its all chill thou, its all cool, dont worry about it buddy
 				M.glide_size = owner.glide_size
 				M.animate_movement = SYNC_STEPS
 
 			step(owner,(reverse_gear ? turn(velocity_dir,180) : velocity_dir))
-			owner.glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
+			owner.glide_size = DELAY_TO_GLIDE_SIZE(delay)
 			owner.set_dir(owner.facing)
 			if (owner.loc != target_turf)
 				velocity_magnitude = 0

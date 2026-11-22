@@ -476,7 +476,7 @@
 		src.finish_apparition_walk(walk_generation, FALSE)
 		return
 	src.set_dir(get_dir(current_turf, next_turf))
-	src.glide_size = world.icon_size / ceil(step_delay / world.tick_lag)
+	src.glide_size = TICKS_TO_GLIDE_SIZE(ceil(step_delay / world.tick_lag))
 	src.animate_movement = SLIDE_STEPS
 	src.set_loc(next_turf)
 	if (route_index >= length(route_to_follow))

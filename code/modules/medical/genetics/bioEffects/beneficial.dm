@@ -1146,7 +1146,7 @@
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src) //stop them from rolling out from under the table
 		var/stop_delay = 0
 		for (var/i in 1 to 4)
-			src.owner.glide_size = (32 / 1) * world.tick_lag
+			src.owner.glide_size = DELAY_TO_GLIDE_SIZE(1)
 			var/move_dir = src.owner.dir
 			var/misstep_angle = 0
 			if (prob(owner.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this

@@ -94,7 +94,7 @@
 		// calculate how far the player has moved
 		var/move_complete = src.movement_last_progress + (world.time - src.movement_last_modified)/src.movement_last_delay
 
-		src.glide_size = (world.icon_size / ceil(new_delay / world.tick_lag))
+		src.glide_size = TICKS_TO_GLIDE_SIZE(ceil(new_delay / world.tick_lag))
 		next_move = world.time + (1-move_complete)*new_delay
 		src.movement_last_modified = world.time
 		src.movement_last_delay = new_delay
@@ -136,7 +136,7 @@
 		if (src.client && src.client.flying || (ismob(src) && HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP)))
 			if(isnull(get_step(src, move_dir)))
 				return
-			var/glide = 32 / (is_running ? 0.5 : 1.5) * world.tick_lag
+			var/glide = DELAY_TO_GLIDE_SIZE(is_running ? 0.5 : 1.5)
 			if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 				last_move_trigger = ticker.round_elapsed_ticks
 				deliver_move_trigger(is_running ? "sprint" : m_intent)
@@ -190,8 +190,7 @@
 				var/turf/old_loc = src.loc
 				src.prev_loc = old_loc
 
-				//use commented bit if you wanna have world fps different from client. But its not perfect!
-				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
+				var/glide = TICKS_TO_GLIDE_SIZE(ceil(delay / world.tick_lag))
 
 				var/spacemove = 0
 				if (src.traction == TRACTION_NONE && !src.has_grip())

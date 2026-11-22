@@ -213,8 +213,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 			if (user.traction == TRACTION_NONE)
 				return
 
-		// Next, we do some simple math to adjust the vehicle's glide_size based on its speed and to compensate for lag
-		src.glide_size = (32 / td) * world.tick_lag
+		// Next, we adjust the vehicle's glide_size based on its speed and to compensate for lag
+		src.glide_size = DELAY_TO_GLIDE_SIZE(td)
 
 		// we set the glide_size for all occupants of the vehicle to the same value that we used for the vehicle itself
 		// and set the occupant's animate_movement to SYNC_STEPS
@@ -232,7 +232,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		// I really have no idea why we do this, but it was present in pod movement code,
 		// and I asked mbc about it and we were both too scared to change it
 		// So, if you want to optimize this some more, I'd start by looking into removing that bit of code
-		src.glide_size = (32 / td) * world.tick_lag
+		src.glide_size = DELAY_TO_GLIDE_SIZE(td)
 
 		for(var/mob/M in src)
 			M.glide_size = src.glide_size;
@@ -2352,14 +2352,14 @@ TYPEINFO(/obj/vehicle/forklift)
 		if (!src.booster_upgrade)
 			if(user.traction == TRACTION_NONE)
 				return
-		src.glide_size = (32 / td) * world.tick_lag
+		src.glide_size = DELAY_TO_GLIDE_SIZE(td)
 		for(var/mob/M in src)
 			M.glide_size = src.glide_size
 			M.animate_movement = SYNC_STEPS
 		if(src.booster_upgrade)
 			src.UpdateOverlays(booster_image, "booster_image")
 		walk(src, direction, td)
-		src.glide_size = (32 / td) * world.tick_lag
+		src.glide_size = DELAY_TO_GLIDE_SIZE(td)
 		for(var/mob/M in src)
 			M.glide_size = src.glide_size
 			M.animate_movement = SYNC_STEPS

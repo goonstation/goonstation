@@ -417,9 +417,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 	var/mob/M = A
 	if(istype(M) && M.buckled == src)
-		M.glide_size = (32 / move_lag) * world.tick_lag
-		walk(M, movedir, move_lag, (32 / move_lag) * world.tick_lag)
-		M.glide_size = (32 / move_lag) * world.tick_lag
+		M.glide_size = DELAY_TO_GLIDE_SIZE(move_lag)
+		walk(M, movedir, move_lag, M.glide_size)
 
 		if (src.move_lag <= 1)
 			if (prob( (1-src.move_lag) * 1.2) )
@@ -427,9 +426,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 				M.throw_at(T,rand(0,5),rand(1,3))
 
 	else
-		A.glide_size = (32 / move_lag) * world.tick_lag
-		walk(A, movedir, move_lag, (32 / move_lag) * world.tick_lag)
-		A.glide_size = (32 / move_lag) * world.tick_lag
+		A.glide_size = DELAY_TO_GLIDE_SIZE(move_lag)
+		walk(A, movedir, move_lag, A.glide_size)
 
 	//for thinner conveyors, slowly nudge the items towards the center
 	if (src.table && prob(30))

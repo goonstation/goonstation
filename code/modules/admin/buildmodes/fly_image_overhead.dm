@@ -192,7 +192,7 @@ Shift + LMB on turf    = Spawn flying object<br>
 
 	proc/move_forward(var/obj/image_pilot/pilot, var/direction, var/speed=1)
 	 	// this system seems to desync sometimes, not a huge issue it seems to add a bit of variety to the way they move
-		var/glide = (32 / speed) * world.tick_lag
+		var/glide = DELAY_TO_GLIDE_SIZE(speed)
 		pilot.glide_size = glide
 		pilot.animate_movement = SLIDE_STEPS
 		var/old_loc = pilot.loc

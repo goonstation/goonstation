@@ -167,9 +167,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 				if (mobStat.statNames[i] == "Server Load:")
 					stat("Server Load:", "[world.cpu]")
 					stat("Map CPU %:", "[world.map_cpu]")
-					#if TIME_DILATION_ENABLED == 1
-					stat("Variable Ticklag:", "[world.tick_lag]")
-					#endif
+					stat("Ticklag:", "[world.tick_lag] ([round(global.tick_length_ratio, 0.01)]x)")
 					stat("Maptick/Client:", "[world.map_cpu/(length(clients) || 1)]")
 					if(config.whitelistEnabled != config.baseWhitelistEnabled)
 						var/current_status = config.whitelistEnabled ? "temporarily ON" : "temporarily OFF"

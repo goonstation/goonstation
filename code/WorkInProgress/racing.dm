@@ -458,7 +458,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 	proc/drive(var/direction, var/speed)
 		set_dir(direction)
 		driving = 1
-		src.glide_size = (32 / speed) * world.tick_lag
+		src.glide_size = DELAY_TO_GLIDE_SIZE(speed)
 		walk(src, dir, speed)
 
 	proc/stop()

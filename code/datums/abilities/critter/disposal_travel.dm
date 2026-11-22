@@ -237,7 +237,7 @@
 					if (direction & (direction-1))
 						delay *= DIAG_MOVE_DELAY_MULT
 
-					var/glide = ((32 / delay) * world.tick_lag)
+					var/glide = DELAY_TO_GLIDE_SIZE(delay)
 					src.glide_size = glide
 					src.animate_movement = SLIDE_STEPS
 					user.animate_movement = SYNC_STEPS
