@@ -593,7 +593,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 			M.buckled = src //behold the most mobile of stools
 			src.add_fingerprint(user)
 
-			M.lying = 1
+			M.set_lying(TRUE)
 			M.set_clothing_icon_dirty()
 		return
 

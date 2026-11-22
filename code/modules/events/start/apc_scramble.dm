@@ -1,5 +1,6 @@
 /datum/random_event/start/apc_scramble
 	name = "APC Scramble"
+	description = "Randomly turn station APC channels off"
 	customization_available = 0
 	required_elapsed_round_time = 0
 

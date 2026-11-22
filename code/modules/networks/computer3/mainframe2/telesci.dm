@@ -58,6 +58,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	var/obj/laser_sink/perm_portal/start_portal
 	var/obj/laser_sink/perm_portal/end_portal
 	var/image/disconnectedImage
+	var/location_portal = null
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WELDER | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
 
 	New()
@@ -505,16 +506,14 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		..()
 		if(status & (NOPOWER|BROKEN))
 			if (start_portal || end_portal)
-				qdel(start_portal)
-				start_portal = null
-				qdel(end_portal)
-				end_portal = null
 				badreceive()
-
+			src.remove_portals()
 			return
 
 		if (start_portal || end_portal)
 			use_power(50000) //Apparently this could run indefinitely on solar power. Fuck that. 25 000 -> 250 000
+			if (location_portal)
+				src.notify_disk_racks(location_portal)
 			if(prob(1))
 				badreceive()
 
@@ -574,6 +573,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				if (!target) //we didnt find a turf to send to
 					return 0
 				leaveresidual(target)
+				src.notify_disk_racks(place)
 				sleep(0.5 SECONDS)
 
 				showswirl_out(src.loc, FALSE)
@@ -610,6 +610,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				if (!target) //we didnt find a turf to send to
 					return 0
 				leaveresidual(target)
+				src.notify_disk_racks(place)
 				sleep(0.5 SECONDS)
 
 				showswirl(src.loc, FALSE)
@@ -645,6 +646,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				if (!target) //we didnt find a turf to send to
 					return 0
 
+				src.location_portal = place
+				src.notify_disk_racks(place)
 				var/list/send = list()
 				var/list/receive = list()
 				for(var/atom/movable/O as obj|mob in src.loc)
@@ -672,6 +675,11 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					end_portal = makeportal(target, src.loc)
 					logTheThing(LOG_STATION, usr, "created a portal to [log_loc(target)] at [log_loc(src.loc)] with a telepad")
 				return 1
+
+	/// Notify all telesci disk racks that we used this destination
+	proc/notify_disk_racks(location_name)
+		for_by_tcl(telesci_rack, /obj/machinery/disk_rack/telesci)
+			telesci_rack.set_destination_light(location_name)
 
 	proc/send(var/turf/target)
 		if (!target)
@@ -1011,6 +1019,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		if (end_portal)
 			qdel(end_portal)
 			end_portal = null
+		src.location_portal = null
 
 TYPEINFO(/obj/machinery/networked/teleconsole)
 	mats = 14

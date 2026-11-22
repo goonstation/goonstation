@@ -1905,6 +1905,13 @@
 	create = 1
 	time = 40 SECONDS
 
+/datum/manufacture/telesci_rack
+	name = "Coordinates Rack"
+	item_outputs = list(/obj/machinery/disk_rack/telesci)
+	item_requirements = list("metal" = 30, "conductive" = 10)
+	create = 1
+	time = 40 SECONDS
+
 /datum/manufacture/shell_frame
 	name = "AI Shell Frame"
 	item_requirements = list("metal_dense" = 12)

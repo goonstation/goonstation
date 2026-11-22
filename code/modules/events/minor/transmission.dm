@@ -1,5 +1,6 @@
 /datum/random_event/minor/transmission
 	name = "Emergency Transmission"
+	description = "Send an announcement from one of several telescience locations, adding coordinates to the telescience console"
 	disabled = 1 // set to 0 once someone actually tells me that this is fine to add, mostly from the lore standpoint
 	weight = 10
 	var/list/event_transmissions
