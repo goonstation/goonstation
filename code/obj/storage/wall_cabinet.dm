@@ -210,6 +210,7 @@ TYPEINFO(/obj/item/storage/wall)
 
 /obj/item/storage/wall/coathanger
 	name = "coat rack stand"
+	desc = "test"
 	icon = 'icons/obj/storage/coat_rack.dmi'
 	icon_state = "coat_empty"
 	var/base_icon_state = "det"
@@ -226,7 +227,7 @@ TYPEINFO(/obj/item/storage/wall)
 		if (!length(src.storage?.get_contents()))
 			src.icon_state = "coat_empty"
 		else
-			src.icon_state = "coat[src.base_icon_state]"
+			src.icon_state = "coat_[src.base_icon_state]"
 
 /obj/item/storage/wall/clothingrack
 	name = "clothing rack"
