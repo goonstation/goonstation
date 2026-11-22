@@ -365,7 +365,7 @@
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
 	desc = "A sturdy drill designed for chewing up asteroids like nobodies business."
-	power_used = 90
+	power_used = 40
 	weapon_score = 1
 	current_projectile = new/datum/projectile/laser/drill
 	appearanceString = "pod_weapon_drills"
