@@ -2404,6 +2404,8 @@
 #include "code\modules\speech\say_channels\hivemind.dm"
 #include "code\modules\speech\say_channels\kudzuchat.dm"
 #include "code\modules\speech\say_channels\looc.dm"
+#include "code\modules\speech\say_channels\martianchat.dm"
+#include "code\modules\speech\say_channels\mentormouse.dm"
 #include "code\modules\speech\say_channels\ooc.dm"
 #include "code\modules\speech\say_channels\outloud.dm"
 #include "code\modules\speech\say_channels\radio.dm"
