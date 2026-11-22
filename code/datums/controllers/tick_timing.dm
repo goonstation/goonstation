@@ -13,10 +13,8 @@
 
 /// Smoothed wall-clock length of a server tick, as a multiple of world.tick_lag (1 = on time)
 var/global/tick_length_ratio = 1
-/**
- * Multiply glide sizes by this so a glide lasts as long as a tick actually takes.
- * 1 when ticks are on time, below 1 when they overrun
- */
+/// Multiply glide sizes by this so a glide lasts as long as a tick actually takes.
+/// 1 when ticks are on time, below 1 when they overrun
 var/global/glide_size_multiplier = 1
 
 /world/Tick()
