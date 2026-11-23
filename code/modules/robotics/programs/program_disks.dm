@@ -269,4 +269,4 @@
 	New()
 		. = ..()
 		src.root.add_file(new /datum/computer/file/ai_program/ability/static_overlay)
-		src.read_only
+		src.read_only = TRUE
