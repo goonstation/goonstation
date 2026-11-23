@@ -209,8 +209,8 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/storage/box/ic_cones = 2)
 
 /obj/item/storage/wall/coatrack
-	name = "coat rack stand"
-	desc = "test"
+	name = "coat rack"
+	desc = "A rack for all your coats and hats!"
 	icon = 'icons/obj/storage/rack.dmi'
 	icon_state = "coat_empty"
 	var/base_icon_state = "det"
