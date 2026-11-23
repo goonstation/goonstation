@@ -73568,7 +73568,7 @@
 /area/station/crew_quarters/catering)
 "wHE" = (
 /obj/disposalpipe/segment/mail,
-/obj/item/storage/wall/coathanger{
+/obj/item/storage/wall/coatrack{
 	pixel_y = 16
 	},
 /turf/simulated/floor/wood/seven,

@@ -12531,9 +12531,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/storage/wall/coathanger{
-	pixel_w = 5
-	},
+/obj/item/storage/wall/coatrack,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aXC" = (

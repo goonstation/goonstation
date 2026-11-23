@@ -208,10 +208,10 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/reagent_containers/dropper/mechanical,
 	/obj/item/storage/box/ic_cones = 2)
 
-/obj/item/storage/wall/coathanger
+/obj/item/storage/wall/coatrack
 	name = "coat rack stand"
 	desc = "test"
-	icon = 'icons/obj/storage/coat_rack.dmi'
+	icon = 'icons/obj/storage/rack.dmi'
 	icon_state = "coat_empty"
 	var/base_icon_state = "det"
 	density = 1

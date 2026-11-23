@@ -2814,8 +2814,15 @@
 /area/station/security/detectives_office)
 "ayw" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bojackson,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	pixel_y = 10;
+	pixel_z = 4;
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_y = 3;
+	pixel_x = 5
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/detectives_office)
 "ayy" = (
@@ -32064,10 +32071,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/psychiatrist)
-"rGL" = (
-/obj/item/reagent_containers/food/drinks/bottle/bojackson,
-/turf/simulated/wall/auto/supernorn,
-/area/station/security/detectives_office)
 "rGO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36730,9 +36733,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "uBt" = (
-/obj/item/storage/wall/coathanger{
-	pixel_y = -5
-	},
+/obj/item/storage/wall/coatrack,
 /turf/simulated/floor/redblack,
 /area/station/security/detectives_office)
 "uCt" = (
@@ -85694,7 +85695,7 @@ kEW
 asN
 asN
 asN
-rGL
+asN
 asN
 asN
 asN

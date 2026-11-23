@@ -7565,7 +7565,7 @@
 	pixel_x = 3;
 	pixel_y = 28
 	},
-/obj/item/storage/wall/coathanger{
+/obj/item/storage/wall/coatrack{
 	pixel_y = 16
 	},
 /turf/simulated/floor/carpet/grime,

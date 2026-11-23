@@ -22244,9 +22244,7 @@
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
 "jLs" = (
-/obj/item/storage/wall/coathanger{
-	pixel_y = -5
-	},
+/obj/item/storage/wall/coatrack,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "jLV" = (

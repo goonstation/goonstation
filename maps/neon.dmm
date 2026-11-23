@@ -10649,8 +10649,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/robotics)
 "hrg" = (
-/obj/item/storage/wall/coathanger{
-	pixel_w = 5
+/obj/item/storage/wall/coatrack{
+	pixel_x = 5
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)

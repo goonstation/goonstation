@@ -2157,13 +2157,11 @@
 	},
 /area/station/science/lab)
 "bff" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/stool/chair/comfy,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bfr" = (
@@ -7772,31 +7770,12 @@
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/station/crown)
 "dZP" = (
-/obj/disposalpipe/segment/mail{
+/obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/table/reinforced/bar/auto{
-	name = "wooden table"
+/obj/stool/chair/comfy{
+	dir = 1
 	},
-/obj/item/reagent_containers/patch/mini/synthflesh{
-	desc = "Smells a bit funny, but gets the job done.";
-	name = "mending patch";
-	pixel_x = -1;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/snacks/chips{
-	pixel_y = 2;
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = -12;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = -9;
-	pixel_y = -2
-	},
-/obj/machinery/light/small,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "dZZ" = (
@@ -10738,11 +10717,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "fDN" = (
-/obj/stool/chair/couch{
-	dir = 8
-	},
-/obj/machinery/phone/wall{
-	pixel_y = 32
+/obj/item/storage/wall/coatrack{
+	pixel_y = 16
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -12128,7 +12104,8 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/device/audio_log,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "gnO" = (
@@ -15879,12 +15856,28 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/disposalpipe/segment/mail,
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/reagent_containers/patch/mini/synthflesh{
+	desc = "Smells a bit funny, but gets the job done.";
+	name = "mending patch";
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/chips{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = -12;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = -9;
+	pixel_y = -2
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "idh" = (
@@ -21466,8 +21459,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/machinery/phone,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "kXr" = (
@@ -23430,19 +23422,11 @@
 	pixel_y = 14;
 	pixel_x = -13
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/item/device/light/zippo{
 	pixel_x = -13
 	},
-/obj/item/ammo/bullets/a38{
-	pixel_y = 7;
-	pixel_x = -7
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable,
-/obj/item/ammo/bullets/a38/stun{
-	pixel_y = 4;
-	pixel_x = -1
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lSj" = (
@@ -33181,18 +33165,16 @@
 	},
 /obj/table/wood/auto,
 /obj/machinery/light/small,
+/obj/item/ammo/bullets/a38{
+	pixel_y = 7;
+	pixel_x = -7
+	},
 /obj/item/ammo/bullets/a38/stun{
 	pixel_y = 4;
 	pixel_x = -1
 	},
-/obj/item/audio_tape,
-/obj/item/audio_tape,
-/obj/item/device/detective_scanner{
-	pixel_y = 6;
-	pixel_x = 6
-	},
-/obj/item/device/audio_log{
-	pixel_x = 2
+/obj/item/camera{
+	pixel_x = -10
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -37959,13 +37941,23 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/table/wood/auto,
+/obj/item/audio_tape{
+	pixel_y = -2;
+	pixel_x = -5
+	},
+/obj/item/audio_tape{
+	pixel_y = 3;
+	pixel_x = -5
+	},
+/obj/item/device/detective_scanner{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/device/audio_log{
+	pixel_x = 2
+	},
 /obj/machinery/light/emergency,
-/obj/item/storage/wall/coathanger{
-	pixel_y = -5
-	},
-/obj/item/storage/wall/coathanger{
-	pixel_y = -5
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tfI" = (
@@ -99374,7 +99366,7 @@ wln
 fDN
 vbi
 seM
-dZP
+iCj
 wln
 eZD
 rwG
@@ -99675,7 +99667,7 @@ pkZ
 wln
 bff
 tyX
-seM
+dZP
 wuD
 wln
 xrh
