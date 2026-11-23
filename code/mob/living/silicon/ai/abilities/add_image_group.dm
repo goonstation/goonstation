@@ -66,6 +66,3 @@ ABSTRACT_TYPE(/datum/targetable/ai/program/add_image_group)
 	icon_state = "vis_static"
 	image_group = CLIENT_IMAGE_GROUP_GHOSTDRONE
 	toggleable = FALSE
-
-/datum/targetable/ai/program/add_image_group/packetvision
-/datum/targetable/ai/program/change_packetvision_frequency
