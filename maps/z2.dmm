@@ -62462,6 +62462,7 @@
 	},
 /obj/table/nanotrasen/auto,
 /obj/item/pen/pencil,
+/obj/item/disk/data/wide_floppy/read_only/ai_program/viewports,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "kmp" = (
@@ -78917,6 +78918,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/standard,
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "wzl" = (

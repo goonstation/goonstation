@@ -13397,6 +13397,7 @@
 /area/derelict_ai_sat)
 "bhp" = (
 /obj/table/auto,
+/obj/item/disk/data/wide_floppy/read_only/ai_program/tracking,
 /obj/item/device/multitool,
 /turf/simulated/floor,
 /area/derelict_ai_sat)
