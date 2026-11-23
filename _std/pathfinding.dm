@@ -515,8 +515,13 @@
 	if(!is_cardinal(direction))
 		var/turf/corner_1 = get_step(source, turn(direction, 45))
 		var/turf/corner_2 = get_step(source, turn(direction, -45))
-		return jpsTurfPassable(corner_1, source, passer, options) && jpsTurfPassable(T, corner_1, passer, options) || \
-				jpsTurfPassable(corner_2, source, passer, options) && jpsTurfPassable(T, corner_2, passer, options)
+		// the corner we go around has to be one CAN_STEP would allow
+		var/turf/avoid = options[POP_EXCLUDE]
+		var/simulated_only = options[POP_SIMULATED_ONLY]
+		var/corner_1_ok = (corner_1 != avoid) && (!simulated_only || istype(corner_1, /turf/simulated))
+		var/corner_2_ok = (corner_2 != avoid) && (!simulated_only || istype(corner_2, /turf/simulated))
+		return corner_1_ok && jpsTurfPassable(corner_1, source, passer, options) && jpsTurfPassable(T, corner_1, passer, options) || \
+				corner_2_ok && jpsTurfPassable(corner_2, source, passer, options) && jpsTurfPassable(T, corner_2, passer, options)
 	// if a source turf was included check for directional blocks between the two turfs
 	if (source && (T.blocked_dirs || source.blocked_dirs))
 		// do either of these turfs explicitly block entry or exit to the other?
