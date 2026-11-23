@@ -285,9 +285,11 @@
 /datum/pathfind/proc/pop_reached_goals(turf/current_turf, turf/goal_turf)
 	var/list/goals = ends[goal_turf]
 	if(mintargetdist == 1)
+		var/reach_turf = can_reach_from(current_turf, goal_turf)
 		var/list/reached = null
-		for(var/goal in goals)
-			if(can_reach_from(current_turf, goal))
+		for(var/atom/goal as anything in goals)
+			// windoors can still be reached from their blocked side
+			if((goal.flags & ON_BORDER) ? can_reach_from(current_turf, goal) : reach_turf)
 				LAZYLISTADD(reached, goal)
 		if(length(reached) < length(goals)) // the rest stay, maybe reachable from another tile
 			goals -= reached
