@@ -1,6 +1,7 @@
 ABSTRACT_TYPE(/datum/targetable/ai/program/add_image_group)
 /datum/targetable/ai/program/add_image_group
 	var/image_group = CLIENT_IMAGE_GROUP_ARREST_ICONS
+	var/toggleable = TRUE
 	var/on = TRUE
 
 /datum/targetable/ai/program/add_image_group/onAttach(datum/abilityHolder/H)
@@ -19,6 +20,9 @@ ABSTRACT_TYPE(/datum/targetable/ai/program/add_image_group)
 
 /datum/targetable/ai/program/add_image_group/cast(atom/target)
 	. = ..()
+	if (!src.toggleable)
+		boutput(src.holder.owner, SPAN_ALERT("You can't shut down this program!"))
+		return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 	if (src.on)
 		get_image_group(image_group).remove_mob(holder.owner)
 		var/mob/living/silicon/ai/AI = holder.owner
@@ -55,3 +59,13 @@ ABSTRACT_TYPE(/datum/targetable/ai/program/add_image_group)
 	desc = "Toggle seeing geological anomalies."
 	icon_state = "vis_geo"
 	image_group = CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES
+
+/datum/targetable/ai/program/add_image_group/drone_static
+	name = "Static Threat Analysis"
+	desc = "Try as you might, you can't seem to turn it off..."
+	icon_state = "vis_static"
+	image_group = CLIENT_IMAGE_GROUP_GHOSTDRONE
+	toggleable = FALSE
+
+/datum/targetable/ai/program/add_image_group/packetvision
+/datum/targetable/ai/program/change_packetvision_frequency

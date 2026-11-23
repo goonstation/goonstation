@@ -152,3 +152,7 @@
 /datum/computer/file/ai_program/ability/issue_citation
 	name = "CiteLock"
 	ai_abilities = list(/datum/targetable/ai/program/issue_citation)
+
+/datum/computer/file/ai_program/ability/static_overlay
+	name = "1d3NT1fy_M3"
+	ai_abilities = list(/datum/targetable/ai/program/add_image_group/drone_static)

@@ -261,3 +261,12 @@
 		. = ..()
 		src.root.add_file(new /datum/computer/file/ai_program/ability/scan/reagent)
 		src.read_only = TRUE
+
+/obj/item/disk/data/wide_floppy/read_only/ai_program/static_vision
+	name = "data disk-'VisHack3.31'"
+	software_package = "Static Threat Analysis"
+	desc = "A disk with programs for AI units to prioritize resources on static analysis."
+	New()
+		. = ..()
+		src.root.add_file(new /datum/computer/file/ai_program/ability/static_overlay)
+		src.read_only
