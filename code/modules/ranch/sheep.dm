@@ -229,7 +229,7 @@
 			. = ..()
 
 	gossip(var/mob/M)
-		if(src == M)
+		if(!M || src == M)
 			return
 		if(src.mate && src.mate == M)
 			return
@@ -240,19 +240,19 @@
 			return
 		src.update_friendlist(M,remove = 1)
 		src.update_shitlist(M)
-		src.ai.interrupt()
+		src.ai?.interrupt()
 		if(src.mate)
 			src.mate.update_friendlist(M,remove = 1)
 			src.mate.update_shitlist(M)
-			src.mate.ai.interrupt()
+			src.mate.ai?.interrupt()
 		if(P)
 			P.update_friendlist(M,remove = 1)
 			P.update_shitlist(M)
-			P.ai.interrupt()
+			P.ai?.interrupt()
 			if(P.mate)
 				P.mate.update_friendlist(M,remove = 1)
 				P.mate.update_shitlist(M)
-				P.mate.ai.interrupt()
+				P.mate.ai?.interrupt()
 
 	create_child(var/mob/M)
 		var/mob/living/critter/small_animal/ranch_base/sheep/S = M

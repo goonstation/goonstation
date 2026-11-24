@@ -1,5 +1,6 @@
 /datum/random_event/start/viscera
 	name = "Viscera Cleanup"
+	description = "Spread gibs and other cleanables around the station"
 	customization_available = 0
 	required_elapsed_round_time = 0
 

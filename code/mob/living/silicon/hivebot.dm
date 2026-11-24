@@ -749,7 +749,7 @@ Frequency:
 		if (src.stuttering)
 			src.stuttering = 0
 
-		src.lying = 0
+		src.set_lying(FALSE)
 		src.set_density(1)
 
 		if (src.get_eye_blurry())

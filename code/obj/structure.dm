@@ -17,6 +17,16 @@
 			or add reinforced metal to make the girder stronger.
 		"})
 
+		smash_act(atom/movable/smasher, show_message)
+			if (show_message)
+				smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src], displacing it!"))
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+			src.material_trigger_when_hit(src, smasher, MATERIAL::IMPACT::MELEE)
+			var/atom/A = new/obj/structure/girder/displaced( src.loc )
+			if(src.material) A.setMaterial(src.material)
+			qdel(src)
+			return TRUE
+
 		displaced
 			name = "displaced girder"
 			icon_state = "displaced"
@@ -28,6 +38,21 @@
 				use a <b>wrench</b> to anchor the girder in place,
 				or add metal or reinforced metal to turn it into fake wall that can opened by hand.
 			"})
+
+			smash_act(atom/movable/smasher, show_message)
+				if (show_message)
+					smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src], destroying it!"))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+				src.material_trigger_when_hit(src, smasher, MATERIAL::IMPACT::MELEE)
+				var/atom/A = new /obj/item/sheet(get_turf(src))
+				if (src.material)
+					A.setMaterial(src.material)
+				else
+					var/datum/material/defaultMaterial = getMaterial("steel")
+					A.setMaterial(defaultMaterial)
+				qdel(src)
+				return TRUE
+
 
 		reinforced
 			name = "reinforced girder"
@@ -41,6 +66,16 @@
 				else if (src.state == 1)
 					. = {"You can use a pair of <b>wirecutters</b> to cut the support struts,"}
 				. += "\nor add reinforced metal to finish the reinforced wall."
+
+			smash_act(atom/movable/smasher, show_message)
+				if (show_message)
+					smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src], weakening the support struts!"))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+				src.material_trigger_when_hit(src, smasher, MATERIAL::IMPACT::MELEE)
+				var/atom/A = new /obj/structure/girder(src.loc)
+				if(src.material) A.setMaterial(src.material)
+				qdel(src)
+				return TRUE
 
 	blob_act(var/power)
 		if (prob(power))
@@ -71,7 +106,7 @@ obj/structure/ex_act(severity)
 	if (user.is_hulk())
 		if (prob(50))
 			playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-			src.material_trigger_when_attacked(src, user, 1)
+			src.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 			for (var/mob/N in AIviewers(user, null))
 				if (N.client)
 					shake_camera(N, 4, 1, 8)
@@ -284,7 +319,7 @@ obj/structure/ex_act(severity)
 	if (user.is_hulk())
 		if (prob(70))
 			playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-			src.material_trigger_when_attacked(src, user, 1)
+			src.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 			for (var/mob/N in AIviewers(user, null))
 				if (N.client)
 					shake_camera(N, 4, 1, 8)
@@ -544,3 +579,110 @@ TYPEINFO(/obj/structure/woodwall)
 		wall._health = wall._max_health
 		wall.updateHealth()
 		wood.change_stack_amount(-1)
+
+/obj/structure/woodwall/web
+	name = "thick webbing"
+	desc = "Many strings of spider silk stretched between the walls."
+	icon = 'icons/obj/spiderwebs.dmi'
+	icon_state = "web_barricade"
+	projectile_passthrough_chance = 30
+	_health = 20
+	_max_health = 20
+
+	attack_hand(mob/user)
+		if (ishuman(user))
+			user.lastattacked = get_weakref(src)
+			src.visible_message(SPAN_ALERT("<b>[user]</b> tears at the [src]!"))
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+			src.changeHealth(rand(-1, -3))
+			hit_twitch(src)
+			return
+		else
+			return
+
+	attackby(obj/item/W, mob/user)
+		if (issnippingtool(W) || iscuttingtool(W) || issawingtool(W))
+			new /obj/item/material_piece/cloth/spidersilk(get_turf(src))
+			src.visible_message("[user] cuts at the [src] with [W], harvesting some silk.")
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+			src.changeHealth(rand(-5, -10))
+			hit_twitch(src)
+			return
+
+	changeHealth(var/change = 0)
+		var/prevHealth = _health
+		_health += change
+		_health = min(_health, _max_health)
+		if (prevHealth > _health)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', rand(50,90), 1)
+		updateHealth(prevHealth)
+
+	updateHealth(var/prevHealth)
+		if (_health <= 0)
+			src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+			make_cleanable(/obj/decal/cleanable/web_barricade, src.loc)
+			src.projectile_passthrough_chance = 90
+			src.onDestroy()
+			return
+		else if (_health <= 5)
+			icon_state = "web_barricade-damaged2"
+			src.projectile_passthrough_chance = 70
+			set_opacity(0)
+		else if (_health <= 15)
+			src.projectile_passthrough_chance = 50
+			icon_state = "web_barricade-damaged1"
+		else
+			src.projectile_passthrough_chance = 30
+			icon_state = "web_barricade"
+
+/obj/structure/woodwall/web/small
+    name = "webbing"
+    desc = "Thick strings of spider silk stretched between the walls."
+    icon_state = "web_block"
+    _health = 5
+    _max_health = 5
+    opacity = 0
+    attackby(obj/item/W, mob/user)
+        if (issnippingtool(W) || iscuttingtool(W) || issawingtool(W))
+            new /obj/item/material_piece/cloth/spidersilk(get_turf(src))
+            src.visible_message("[user] cuts at the [src] with [W], harvesting some silk.")
+            qdel(src)
+
+    updateHealth(var/prevHealth)
+        if (_health <= 0)
+            src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
+            playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+            make_cleanable(/obj/decal/cleanable/web_block, src.loc)
+            src.projectile_passthrough_chance = 90
+            src.onDestroy()
+            return
+        else
+            src.projectile_passthrough_chance = 30
+            icon_state = "web_block"
+
+/obj/structure/woodwall/web/small/tiny
+    name = "thin webbing"
+    desc = "A few thick strings of spider silk stretched between the walls."
+    icon_state = "web_fence"
+    _health = 3
+    _max_health = 3
+
+    updateHealth(var/prevHealth)
+        if (_health <= 0)
+            src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
+            playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+            make_cleanable(/obj/decal/cleanable/web_fence, src.loc)
+            src.projectile_passthrough_chance = 90
+            src.onDestroy()
+            return
+        else
+            src.projectile_passthrough_chance = 30
+            icon_state = "web_fence"
+    Bumped(var/mob/AM as mob)
+        . = ..()
+        if(!istype(AM)) return
+        if(AM.client?.check_key(KEY_RUN)) //stolen from sec tape help me save me im just an intern
+            playsound(src, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100)
+            make_cleanable(/obj/decal/cleanable/web_fence, src.loc)
+            qdel(src)

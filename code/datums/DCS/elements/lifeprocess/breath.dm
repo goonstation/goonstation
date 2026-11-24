@@ -72,22 +72,22 @@
 		src.update_breath_hud(target, status_updates)
 		return
 
-	// Rebreathing mobs regain losebreath.
-	if (HAS_ATOM_PROPERTY(target, PROP_MOB_REBREATHING))
-		src.update_breath_hud(target, status_updates)
-		if (target.losebreath)
-			target.losebreath -= (1.3 * mult)
-
-		return
-
-	// Breathless mobs have no requirement to breathe.
-	if (HAS_ATOM_PROPERTY(target, PROP_MOB_BREATHLESS) || ischangeling(target))
-		src.update_breath_hud(target, status_updates)
+	// Handle mobs that shouldn't take oxygen damage.
+	if (ischangeling(target) || HAS_ATOM_PROPERTY(target, PROP_MOB_NO_OXY_LOSS))
 		if (target.losebreath)
 			target.losebreath = 0
 		if (target.get_oxygen_deprivation())
 			target.take_oxygen_deprivation(-50 * mult)
 
+		src.update_breath_hud(target, status_updates)
+		return
+
+	// Handle mobs that shouldn't take losebreath.
+	if (HAS_ATOM_PROPERTY(target, PROP_MOB_NO_LOSEBREATH))
+		if (target.losebreath)
+			target.losebreath -= (1.3 * mult)
+
+		src.update_breath_hud(target, status_updates)
 		return
 
 #ifdef UNDERWATER_MAP

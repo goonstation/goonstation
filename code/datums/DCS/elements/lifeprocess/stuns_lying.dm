@@ -1,5 +1,4 @@
 /datum/element/lifeprocess/stuns_lying/process(mob/living/target, mult, datum/gas_mixture/environment)
-	var/lying_old = target.lying
 	var/can_lie = src.can_lie(target)
 
 	var/list/status_list = target.getStatusList()
@@ -8,7 +7,11 @@
 		status_list -= "resting"
 
 	if (isdead(target))
-		target.lying = (can_lie && !ismobcritter(target))
+		if (can_lie && !ismobcritter(target))
+			target.set_lying(TRUE)
+		else
+			target.set_lying(FALSE)
+
 		target.blinded = TRUE
 		setdead(target)
 
@@ -35,7 +38,7 @@
 		)
 			// Statuses that force lying.
 			if (can_lie && (resting || unconscious || knockdown || pinned))
-				target.lying = TRUE
+				target.set_lying(TRUE)
 
 			// Alive/unconscious handling.
 			if (unconscious)
@@ -58,26 +61,8 @@
 
 		// Not stunned.
 		else
-			target.lying = FALSE
+			target.set_lying(FALSE)
 			target.stat = STAT_ALIVE
-
-	if (target.lying != lying_old)
-		target.update_lying()
-
-		if (!target::density || (ismobcritter(target) && isdead(target)))
-			target.set_density(FALSE)
-		else
-			target.set_density(!target.lying)
-
-		if (target.lying && !target.buckled && !HAS_ATOM_PROPERTY(target, PROP_MOB_SUPPRESS_LAYDOWN_SOUND))
-			var/turf/T = get_turf(target)
-			if (T?.active_liquid)
-				if (T.active_liquid.my_depth_level <= 3)
-					T.active_liquid.Crossed(target)
-					playsound(target.loc, 'sound/misc/splash_2.ogg', ishuman(target) ? 40 : 15, 1, 0.3)
-
-			else
-				playsound(target.loc, 'sound/misc/body_thud.ogg', ishuman(target) ? 40 : 15, 1, 0.3)
 
 /// Whether a target is capable of lying down.
 /datum/element/lifeprocess/stuns_lying/proc/can_lie(mob/living/target)

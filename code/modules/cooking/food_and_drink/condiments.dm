@@ -186,6 +186,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment/jam)
 	desc = "Now with extra purple!"
 	icon_state = "grape-jam"
 	food_color = "#5A1D8A"
+	initial_reagents = list("sugar"=25,"juice_grape"=25)
 
 /obj/item/reagent_containers/food/snacks/condiment/jam/strawberryjam
 	name = "strawberry jam"
@@ -206,12 +207,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment/jam)
 	desc = "Dark and smooth, with a nostalgic aroma."
 	icon_state = "blueberry-jam"
 	food_color = "#3021C8"
+	initial_reagents = list("sugar"=25,"juice_blueberry"=25)
 
 /obj/item/reagent_containers/food/snacks/condiment/jam/pearjam
 	name = "pear jam"
 	desc = "No relation to any grunge bands."
 	icon_state = "pear-jam"
 	food_color = "#D3CB21"
+	initial_reagents = list("sugar"=25,"juice_pear"=25)
 
 /obj/item/reagent_containers/food/snacks/condiment/jam/peachjam
 	name = "peach jam"

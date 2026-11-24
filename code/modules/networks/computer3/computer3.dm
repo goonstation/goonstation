@@ -344,6 +344,7 @@
 					src.active_program = os
 
 				src.hd.root.add_file(os)
+				os.setup_disk(src.hd)
 
 		src.post_system()
 
@@ -673,6 +674,14 @@
 
 /obj/machinery/computer3/overload_act()
 	return !src.set_broken()
+
+/obj/machinery/computer3/smash_act(atom/movable/smasher, show_message)
+	if (show_message)
+		smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+	src.set_broken()
+	src.unscrew_monitor()
+	playsound('sound/impact_sounds/Crystal_Shatter_1.ogg')
+	return TRUE
 
 /obj/machinery/computer3/disposing()
 	if (hd)

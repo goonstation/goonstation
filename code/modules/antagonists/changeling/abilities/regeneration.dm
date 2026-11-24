@@ -36,7 +36,7 @@
 		H.in_fakedeath = 1
 		APPLY_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, "regen_stasis")
 
-		C.lying = 1
+		C.set_lying(TRUE)
 		C.canmove = 0
 		C.set_clothing_icon_dirty()
 
@@ -62,7 +62,7 @@
 				C.delStatus("disorient")
 				C.health = 100
 				C.reagents.clear_reagents()
-				C.lying = 0
+				C.set_lying(FALSE)
 				C.canmove = 1
 				boutput(C, SPAN_NOTICE("We have regenerated."))
 				logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")

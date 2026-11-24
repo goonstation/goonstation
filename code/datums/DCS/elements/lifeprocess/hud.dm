@@ -2,12 +2,11 @@
 	if (!target.client)
 		return
 
-	target.stamina_bar?.update_value(target)
-
 	if (ishuman(target))
 		var/mob/living/carbon/human/M = target
 		var/datum/hud/human/hud = M.hud
 		hud.update_health_indicator()
+		hud.stamina_bar?.update_value(target)
 		hud.update_temp_indicator()
 		hud.update_blood_indicator()
 		hud.update_pulling()
@@ -72,6 +71,7 @@
 		var/mob/living/critter/M = target
 		var/datum/hud/critter/hud = M.hud
 		hud.update_health()
+		hud.stamina_bar?.update_value(target)
 		hud.update_temp_indicator()
 		hud.update_blood_indicator()
 		hud.update_pulling()

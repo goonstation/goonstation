@@ -2700,8 +2700,7 @@
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hmicro";
-	name = "broken microwave oven";
-	pixel_y = 10
+	name = "broken microwave oven"
 	},
 /turf/simulated/floor/industrial,
 /area/space)
@@ -4668,8 +4667,7 @@
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hmicro";
-	name = "broken microwave oven";
-	pixel_y = 10
+	name = "broken microwave oven"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
@@ -19361,8 +19359,7 @@
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hmicro";
-	name = "broken microwave oven";
-	pixel_y = 10
+	name = "broken microwave oven"
 	},
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)

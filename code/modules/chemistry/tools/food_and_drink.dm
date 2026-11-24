@@ -2218,6 +2218,20 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("coconut_milk"=20)
+	var/glass_style = "coconut"
+	var/image/fluid_image
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		icon_state = "[glass_style]"
+
+		var/datum/color/average = reagents.get_average_color()
+		if (!src.fluid_image)
+			src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-[glass_style]", -1)
+		src.fluid_image.color = average.to_rgba()
+		src.UpdateOverlays(src.fluid_image, "fluid")
 
 /obj/item/reagent_containers/food/drinks/pumpkinlatte
 	name = "Spiced Pumpkin"

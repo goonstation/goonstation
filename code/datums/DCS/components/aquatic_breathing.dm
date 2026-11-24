@@ -57,7 +57,7 @@ TYPEINFO(/datum/component/aquatic_breathing)
 /datum/component/aquatic_breathing/proc/process_human(_, mult)
 	src.update_water_status()
 	var/mob/living/carbon/human/H = src.parent
-	if (HAS_ATOM_PROPERTY(H, PROP_MOB_BREATHLESS))
+	if (HAS_ATOM_PROPERTY(H, PROP_MOB_NO_OXY_LOSS))
 		return
 
 	if (src.water_need)
@@ -72,7 +72,7 @@ TYPEINFO(/datum/component/aquatic_breathing)
 /datum/component/aquatic_breathing/proc/process_critter(_, mult)
 	src.update_water_status()
 	var/mob/living/critter/C = src.parent
-	if (HAS_ATOM_PROPERTY(C, PROP_MOB_BREATHLESS))
+	if (HAS_ATOM_PROPERTY(C, PROP_MOB_NO_OXY_LOSS))
 		return
 
 	if (src.water_need)

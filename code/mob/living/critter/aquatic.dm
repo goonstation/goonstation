@@ -582,7 +582,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		return
 
 	if (isobj(target))
-		switch (user.smash_through(target, list("window", "grille", "table", "blob"))) //crab vs blob when
+		switch (user.smash_through(target, list(/obj/window, /obj/mesh/grille, /obj/table, /obj/blob))) //crab vs blob when
 			if (0)
 				if (isitem(target))
 					if (prob(33))

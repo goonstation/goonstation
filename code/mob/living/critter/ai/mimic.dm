@@ -78,7 +78,7 @@
 	//has_started marks that we've hit them once
 	var/mob/living/critter/C = holder.owner
 	var/mob/M = holder.target
-	if(C && M && BOUNDS_DIST(C, M) == 0)
+	if(C && M && can_reach(C, M))
 		C.set_dir(get_dir(C, M))
 		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
 			C.critter_attack(holder.target)
@@ -119,13 +119,19 @@
 	for(var/turf/T in orange(holder.owner, max_dist))
 		if(GET_DIST(holder.owner, T) < min_dist)
 			continue
+		var/list/items = null
+		for(var/obj/item/I in T)
+			if(!I.anchored) //don't be wall closets or buttons
+				LAZYLISTADD(items, I)
+		if(!items) // check for items first
+			continue
+		var/seen = FALSE
 		for(var/mob/living/carbon/human/H in viewers(T, 3))
 			if(!isdead(H))
-				goto breakout //this is a little cursed. If there are humans that can see this turf, jump to the end of the outer loop
-		for(var/obj/item/I in T) //otherwise add the items in this turf
-			if(!I.anchored) //don't be wall closets or buttons
-				. += I
-		breakout:
+				seen = TRUE
+				break
+		if(!seen)
+			. += items
 
 /datum/aiTask/succeedable/run_and_hide
 	name = "hiding subtask"
