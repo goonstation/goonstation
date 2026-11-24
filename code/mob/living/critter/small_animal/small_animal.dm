@@ -2940,6 +2940,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				return 2
 		return ..()
 
+	valid_target(mob/living/C)
+		if (issilicon(C))
+			return FALSE
+		. = ..()
+
 /mob/living/critter/small_animal/wasp/angry // Wasp bow & grenade
 	desc = "A wasp in space. it looks angry"
 	health_brute = 10
