@@ -58,6 +58,7 @@
 		'sound/misc/announcement_1.ogg',
 		'sound/misc/bingbong.ogg',
 		'sound/machines/announcement_clown.ogg',
+		/obj/machinery/computer/announcement/syndicate::sound_to_play,
 		'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg',
 		'sound/ambience/spooky/Void_Calls.ogg',
 	)
@@ -169,6 +170,9 @@
 	if(src.origin == ALERT_CLOWN) //Comedy precedes the call of the void
 		src.sound_to_play = 'sound/machines/announcement_clown.ogg'
 		src.sound_volume = 50
+	if(src.origin == ALERT_SYNDICATE)
+		src.sound_to_play = /obj/machinery/computer/announcement/syndicate::sound_to_play
+		src.sound_volume = /obj/machinery/computer/announcement/syndicate::sound_volume
 	else if(src.text_styling == TEXT_STYLING_ZALGO)
 		src.sound_to_play = 'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg'
 	else if(src.text_styling == TEXT_STYLING_VOID)

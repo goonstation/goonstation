@@ -297,6 +297,8 @@
 	theme = "syndicate"
 	icon_state = "announcementsyndie"
 	area_name = "Syndicate"
+	sound_to_play = 'sound/musical_instruments/bard/riff.ogg'
+	sound_volume = 70
 	req_access = list(access_syndicate_shuttle)
 	circuit_type = /obj/item/circuitboard/announcement/syndicate
 	alert_origin = ALERT_SYNDICATE
