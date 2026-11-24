@@ -11404,6 +11404,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bfT" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/west)
 "bfV" = (
@@ -11746,14 +11749,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/cafeteria)
-"bhS" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/right{
-	dir = 4
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/plating,
-/area/station/security/detectives_office)
 "bhU" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical{
@@ -25419,13 +25414,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/lobby)
-"dIQ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/switch_junction/biofilter/right/south,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "dIY" = (
 /obj/machinery/power/smes{
 	charge = 100000;
@@ -28323,9 +28311,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/ce)
 "fSt" = (
-/obj/machinery/disposal/ejection/small/west,
 /obj/storage/cart/forensic/detective,
-/obj/disposalpipe/trunk/regular/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fSC" = (
@@ -29528,7 +29514,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm/directional/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "gLp" = (
@@ -30198,9 +30183,6 @@
 	},
 /area/station/security/main)
 "hjx" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
@@ -30208,6 +30190,9 @@
 	},
 /obj/noticeboard/persistent/detectives_office/directional/north,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "hjD" = (
@@ -37089,7 +37074,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "mHm" = (
@@ -39445,6 +39429,16 @@
 /obj/item/furniture_parts/dining_chair/wood,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
+"oBJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "oBP" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel/fullstack,
@@ -44211,9 +44205,6 @@
 	name = "Catering Hangar"
 	})
 "siR" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
@@ -45218,10 +45209,6 @@
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/crew_quarters/baroffice)
-"sPK" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "sPS" = (
 /obj/blind_switch/directional/south{
 	pixel_x = 4
@@ -87458,7 +87445,7 @@ tfP
 cfK
 chb
 iZr
-dIQ
+rop
 aMq
 gKQ
 oJD
@@ -87760,10 +87747,10 @@ chc
 smn
 smn
 smn
-bhS
+kZi
 kZi
 smn
-cLa
+oBJ
 kzH
 eNW
 ezj
@@ -88364,7 +88351,7 @@ chc
 smn
 nPP
 vfw
-sPK
+vfw
 nel
 iAB
 yfu
@@ -88666,7 +88653,7 @@ chc
 tcD
 vfw
 uqU
-sPK
+vfw
 dHj
 fMm
 uZm
