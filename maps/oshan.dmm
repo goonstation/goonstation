@@ -26893,7 +26893,6 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
-/obj/decal/stage_edge,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "eOI" = (
@@ -28147,7 +28146,10 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0
 	},
-/obj/window_blinds/cog2/middle,
+/obj/window_blinds/cog2/left,
+/obj/decal/cleanable/desk_clutter,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fMA" = (
@@ -29702,7 +29704,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/wood/two,
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 4
+	},
 /area/station/hallway/primary/west)
 "gQl" = (
 /obj/machinery/chem_heater,
@@ -31694,19 +31698,11 @@
 /area/station/hallway/primary/south)
 "iAB" = (
 /obj/disposalpipe/segment/mail,
-/obj/table/reinforced/bar/auto{
-	name = "wooden table"
+/obj/machinery/door/airlock/pyro/security/alt{
+	name = "Detective's Office"
 	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0
-	},
-/obj/machinery/light/lamp/green{
-	pixel_y = 8
-	},
-/obj/window_blinds/cog2/left,
-/obj/decal/cleanable/desk_clutter{
-	pixel_x = 4
-	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "iAL" = (
@@ -34311,15 +34307,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
 "kzH" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/stairs/wood/wide{
-	dir = 4
-	},
+/turf/simulated/floor,
 /area/station/hallway/primary/west)
 "kAg" = (
 /obj/item/device/gps,
@@ -39693,8 +39681,10 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
-/obj/stool/chair/comfy{
-	dir = 8
+/obj/table/wood/round,
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/west)
@@ -41798,15 +41788,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "qtS" = (
-/obj/mapping_helper/access/forensics,
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/security/alt{
-	name = "Detective's Office"
-	},
-/turf/simulated/floor/carpet/grime,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
 "que" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -44235,9 +44220,11 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0
 	},
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/window_blinds/cog2/right,
+/obj/machinery/light/lamp/green{
+	pixel_x = -3;
+	pixel_y = 7
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "sjH" = (
@@ -47920,18 +47907,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "uZm" = (
-/obj/table/wood/round,
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_y = 8;
-	pixel_x = -8
-	},
-/obj/item/decoration/ashtray{
-	butts = 5;
-	name = "grubby old ashtray"
-	},
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_y = 3;
-	pixel_x = 8
+/obj/stool/chair/comfy{
+	dir = 1
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/west)
@@ -52138,9 +52115,6 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
-	},
-/obj/stool/chair/comfy{
-	dir = 4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/west)
@@ -87789,8 +87763,8 @@ smn
 bhS
 kZi
 smn
+cLa
 kzH
-bhi
 eNW
 ezj
 aMM
@@ -88092,7 +88066,7 @@ mHf
 guc
 qtS
 gQd
-bfT
+bhi
 ciZ
 svo
 jkA
