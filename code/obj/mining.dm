@@ -2475,10 +2475,6 @@ TYPEINFO(/obj/item/cargotele)
 		boutput(user, SPAN_NOTICE("Teleporting [cargo]..."))
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		var/value = shippingmarket.appraise_value(cargo.contents, sell = FALSE)
-
-		// detect hitchhikers
-		var/mob/hitchhikers = list()
-
 		// Logs for good measure (Convair880).
 		for (var/atom/A in cargo.contents)
 			if (ismob(A))
@@ -2486,40 +2482,9 @@ TYPEINFO(/obj/item/cargotele)
 				logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 				var/datum/job/job = find_job_in_controller_by_string(M.job)
 				value += job?.wages * 5
-				hitchhikers |= A
 			else
 				cargo.contents -= A
 				qdel(A)
-
-		// free radiation, copied code from pod portals and modified
-		for (var/mob/hitchhiker in hitchhikers)
-			// Borgs don't care about rads (for the meantime)
-			if (hitchhiker && !issilicon(hitchhiker))
-				var/mob/T = hitchhiker
-
-				var/unprotected = (T.loc != cargo)
-				var/dose = 1 SIEVERT
-
-				if (unprotected)
-					// unprotected (not inside whatever is being teleported)
-					boutput(T, SPAN_ALERT("You are exposed to some pretty swole strange particles, this can't be good..."))
-					if (prob(10))
-						dose /= 2
-				else
-					// don't kill them, just make them seriously sick
-					dose /= 2
-
-				T.take_radiation_dose(dose)
-
-				if (unprotected)
-					if(ishuman(T))
-						var/mob/living/carbon/human/H = T
-						if (H.bioHolder)
-							if (prob(75))
-								H.bioHolder.RandomEffect("bad")
-							else
-								H.bioHolder.RandomEffect("good")
-
 		if (length(cargo.contents)) //if there's a mob left inside chuck it somewhere in space
 			cargo.set_loc(src.target)
 		else
