@@ -220,6 +220,10 @@
 		user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 		src.takeDamage(6)
 
+	Exited(Obj, newloc)
+		. = ..()
+		qdel(src) // don't leave the cube behind if the person suddenly vanishes
+
 	ex_act(severity)
 		for(var/atom/A in src)
 			A.ex_act(severity)
