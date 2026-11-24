@@ -1,5 +1,6 @@
 /datum/random_event/start/weeds
 	name = "Weed Growth"
+	description = "Fill hydroponic plant pots on station with weeds"
 	customization_available = 0
 	required_elapsed_round_time = 0
 

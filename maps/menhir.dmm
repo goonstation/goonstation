@@ -1232,11 +1232,6 @@
 /area/station/hallway/secondary/west{
 	name = "West Shuttle Concourse"
 	})
-"aIR" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
-/turf/simulated/floor/purple,
-/area/station/science/teleporter)
 "aJd" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/tea{
@@ -2010,6 +2005,7 @@
 /obj/item/device/radio/intercom/science{
 	dir = 8
 	},
+/obj/item/storage/firstaid/regular,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -2892,6 +2888,14 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/qm)
+"bvR" = (
+/obj/machinery/computer/telescope{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "bwd" = (
 /obj/machinery/sink/slim{
 	dir = 8;
@@ -4488,20 +4492,6 @@
 /obj/item/storage/wall/random,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersC)
-"clH" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/radio/headset/multifreq,
-/turf/simulated/floor/purplewhite{
-	dir = 10
-	},
-/area/station/science/teleporter)
 "clS" = (
 /obj/machinery/computer/television,
 /obj/item/clothing/head/fedora{
@@ -13539,6 +13529,10 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/southwest)
+"hbB" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
 "hbJ" = (
 /obj/disposalpipe/segment/transport{
 	dir = 8;
@@ -20210,13 +20204,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/industrial,
 /area/station/hangar/sec)
-"krG" = (
-/obj/storage/crate/adventure,
-/obj/machinery/light_switch/directional/east,
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
-/area/station/science/teleporter)
 "krT" = (
 /obj/decal/tile_edge/floorguide/arrow_w,
 /obj/decal/tile_edge/floorguide/mining{
@@ -22308,6 +22295,16 @@
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/purpleblack{
 	dir = 1
+	},
+/area/station/science/teleporter)
+"lsB" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/head/helmet/camera/telesci,
+/obj/item/device/camera_viewer/telesci{
+	pixel_y = 16
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 10
 	},
 /area/station/science/teleporter)
 "lsC" = (
@@ -26151,19 +26148,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"nmT" = (
-/obj/decoration/toiletholder{
-	dir = 8;
-	pixel_x = 32
-	},
-/obj/item/storage/toilet,
-/obj/landmark/bill_spawn,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/sanitary,
-/area/station/hallway/primary/east)
 "nng" = (
 /obj/mesh/catwalk,
 /obj/machinery/light_switch/directional/west,
@@ -30416,15 +30400,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/research_outpost/limpet)
-"ptt" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "ptu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31377,17 +31352,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quartersA)
-"pSb" = (
-/obj/table/reinforced/auto,
-/obj/item/device/camera_viewer/telesci{
-	pixel_y = 16
-	},
-/obj/item/clothing/head/helmet/camera/telesci,
-/obj/machinery/firealarm/directional/west,
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "pSd" = (
 /obj/table/wood/round/auto,
 /obj/machinery/power/apc/autoname_east,
@@ -31808,6 +31772,16 @@
 	dir = 6
 	},
 /area/station/bridge)
+"qdF" = (
+/obj/machinery/firealarm/directional/west,
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "qdU" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -34062,6 +34036,19 @@
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
 	})
+"rlo" = (
+/obj/item/storage/toilet,
+/obj/landmark/bill_spawn,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 5
+	},
+/turf/simulated/floor/sanitary,
+/area/station/hallway/primary/east)
 "rlr" = (
 /obj/machinery/light{
 	dir = 8;
@@ -34885,6 +34872,13 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"rEo" = (
+/obj/machinery/light_switch/directional/east,
+/obj/storage/crate/adventure,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/teleporter)
 "rEx" = (
 /obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
@@ -39952,18 +39946,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
-"uhf" = (
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line2"
-	},
-/obj/storage/crate/furnacefuel{
-	spawn_contents = list(/obj/item/raw_material/char = 4)
-	},
-/turf/simulated/floor/caution/corner/misc{
-	dir = 6
-	},
-/area/research_outpost/limpet/maint)
 "uhi" = (
 /obj/machinery/power/pt_laser,
 /obj/machinery/light,
@@ -46832,6 +46814,18 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/chapel/sanctuary)
+"xuV" = (
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/storage/crate/furnacefuel{
+	spawn_contents = list(/obj/item/raw_material/char=4)
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/research_outpost/limpet/maint)
 "xvi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -75393,7 +75387,7 @@ sEf
 sEf
 cIX
 beS
-uhf
+xuV
 unv
 dmy
 jel
@@ -92807,9 +92801,9 @@ qUS
 vpK
 kak
 awj
-ptt
-pSb
-clH
+bvR
+qdF
+lsB
 ujP
 lYJ
 oUB
@@ -93409,7 +93403,7 @@ cLp
 fNG
 fZM
 vpK
-aIR
+hbB
 nzb
 sim
 eqv
@@ -94318,7 +94312,7 @@ acI
 abB
 lQz
 uyl
-krG
+rEo
 bcA
 ujP
 iTH
@@ -107878,7 +107872,7 @@ qfg
 qfg
 qfg
 qfg
-nmT
+rlo
 bwd
 dCn
 cKX

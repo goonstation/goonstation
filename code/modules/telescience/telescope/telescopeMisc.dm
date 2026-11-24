@@ -1,5 +1,5 @@
 var/datum/telescope_manager/tele_man
-var/list/special_places = list("Luna", "Observatory") //list of location names, which are coincidentally also landmark ids
+var/list/special_places = list() //! list of location names, which are coincidentally also landmark ids
 
 TYPEINFO(/obj/machinery/lrteleporter)
 	mats = list("telecrystal" = 10,
@@ -68,6 +68,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			src.busy = 1
 			FLICK("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
+			src.notify_disk_racks(place)
 			for(var/atom/movable/M in src.loc)
 				continue_if_overlay_or_effect(M)
 				if(M.anchored)
@@ -99,6 +100,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			src.busy = 1
 			FLICK("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
+			src.notify_disk_racks(place)
 			for(var/atom/movable/M in target)
 				if(M.anchored)
 					continue
@@ -110,6 +112,11 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
+
+	/// Notify all telesci disk racks that we used this destination
+	proc/notify_disk_racks(location_name)
+		for (var/obj/machinery/disk_rack/telesci/telesci_rack in by_type[/obj/machinery/disk_rack/telesci])
+			telesci_rack.set_destination_light(location_name)
 
 /obj/machinery/lrteleporter/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

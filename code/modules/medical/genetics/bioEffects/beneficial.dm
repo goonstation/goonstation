@@ -268,28 +268,32 @@
 			H.losebreath = 0
 		if(ismob(owner))
 			if(src.power == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH, src.type)
 			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 		health_update_queue |= owner
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			if(oldval == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH, src.type)
 			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS, src.type)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 			if(newval == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH, src.type)
 			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
-			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
-			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH, src.type)
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"

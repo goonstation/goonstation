@@ -155,13 +155,13 @@
 /obj/item/implanter/freedom
 	icon_state = "implanter1-g"
 	New()
-		src.imp = new /obj/item/implant/emote_triggered/freedom( src )
+		src.imp = new /obj/item/implant/ability/freedom( src )
 		..()
 
 /obj/item/implanter/signaler
 	icon_state = "implanter1-g"
 	New()
-		src.imp = new /obj/item/implant/emote_triggered/signaler( src )
+		src.imp = new /obj/item/implant/ability/signaler( src )
 		..()
 
 /obj/item/implanter/mindhack

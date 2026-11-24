@@ -82,6 +82,9 @@ TYPEINFO(/obj/item/card/emag)
 			C.desc = "What? It's just an ordinary closet."
 			C.welded = 1
 
+/obj/item/card/emag/gold
+	icon_state = "emag_gold"
+
 /obj/item/card/data
 	name = "data card"
 	icon_state = "data"
@@ -173,7 +176,7 @@ TYPEINFO(/obj/item/card/emag)
 	START_TRACKING
 	src.access = get_access("Captain")
 	src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
-	
+
 /obj/item/card/id/gold/captains_spare/disposing()
 	STOP_TRACKING
 	. = ..()

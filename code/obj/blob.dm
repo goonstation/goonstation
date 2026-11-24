@@ -298,6 +298,13 @@
 		src.take_damage(damage,damage_mult,damtype)
 		return
 
+	smash_act(atom/movable/smasher, show_message)
+		if(show_message)
+			smasher?.visible_message(SPAN_ALERT("<B>[smasher] savagely smashes \the [src]!"), SPAN_NOTICE("You savagely smash \the [src]"))
+		src.take_damage(rand(10,20),1,DAMAGE_CUT)
+		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
+		return TRUE
+
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		var/temp_difference = abs(temperature - src.ideal_temp)
 		var/tolerance = temp_tolerance

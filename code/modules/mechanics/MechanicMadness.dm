@@ -552,6 +552,7 @@ TYPEINFO(/obj/item/mechanics)
 				logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 				level = UNDERFLOOR
 				anchored = ANCHORED
+				src.RemoveComponentsOfType(/datum/component/glued)
 				src.unglue_attached_to()
 				set_owner(user)
 				secure()
@@ -564,7 +565,7 @@ TYPEINFO(/obj/item/mechanics)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		if(src && !QDELETED(src))
 			src.material_trigger_when_hit(used_wrench, user, MATERIAL::IMPACT::MELEE)
-			used_wrench.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
+			used_wrench?.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 		return TRUE
 
 	attackby(obj/item/W, mob/user)
@@ -594,7 +595,7 @@ TYPEINFO(/obj/item/mechanics)
 				user.visible_message(SPAN_NOTICE("[user] begins tampering with [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, work_time, PROC_REF(wrench_action), list(user, W), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				src.wrench_action(user)
+				src.wrench_action(user, W)
 			return TRUE
 		return ..()
 
@@ -751,7 +752,7 @@ TYPEINFO(/obj/item/mechanics)
 			// largely stolen from the gene booth. thanks, gene booth.
 			//subtract from perp bank account
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(perp_id.registered)
+			account = global.data_core.get_bank_record(perp_id.registered)
 
 			if (account)
 				if (account["current_money"] >= src.price)

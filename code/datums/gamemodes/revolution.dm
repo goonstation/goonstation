@@ -32,12 +32,36 @@
 	var/gibwave_started = FALSE
 	do_antag_random_spawns = 0
 	escape_possible = 0
+	var/list/unconvertable_roles = list( //TODO: Replace with job var
+		"Captain",
+		"Head of Personnel",
+		"Head of Security",
+		"Research Director",
+		"Medical Director",
+		"Chief Engineer",
+		"Communications Officer",
+		"Head of Mining",
+		"Nanotrasen Special Operative",
+		"Nanotrasen Security Consultant",
+		"Security Officer",
+		"Security Assistant",
+		"Vice Officer",
+		"Detective",
+		"AI",
+		"Cyborg")
+
+	// Variables for RP revolutions that determine the effectiveness of the "revolutionary keywords" mechanic
+	var/const/keywords_cooldown_per_message = 1 SECOND //! How long between each message before we can add more time again
+	var/const/keywords_time_per_message = 15 SECONDS //! How much duration is added to the status per message heard containing a keyword
+	var/const/keywords_required_duration_to_convert = 45 SECONDS //! Weakened loyalty duration must be at least this much for a target to be convertable
+	var/const/keywords_maximum_duration = 60 SECONDS //! The most duration a target can have remaining on the weakened loyalty effect
 
 //Has several changes to accomodate the RP experience. See ROLEPLAY_REVOLUTIONARIES define for changes.
 /datum/game_mode/revolution/extended
 	name = "Revolution (Roleplay)"
 	config_tag = "revolution_extended"
 	regular = FALSE
+	shuttle_available = SHUTTLE_AVAILABLE_DELAY
 	trackertime_min = 60 MINUTES
 	trackertime_max = 75 MINUTES
 
@@ -132,6 +156,9 @@
 	return
 
 /datum/game_mode/revolution/check_finished()
+	. = ..()
+	if(.) // You can't usually call the shuttle, but if it gets to centcom the round should still end
+		return .
 	if(ROLEPLAY_REVOLUTIONARIES) //Allow an admin or the shuttle call to determine the end instead of automatically ending.
 		return 0
 	else if(finished != 0)

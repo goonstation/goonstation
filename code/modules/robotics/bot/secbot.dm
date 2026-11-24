@@ -948,10 +948,8 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		if (src.check_records) // bot is set to actively compare security records
 			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
-			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
-				if(R["criminal"] == SECURITY::ARREST::STATE::ARREST)
-					threatcount = 7
-					break
+			if (length(global.data_core.get_open_arrests(perpname)))
+				threatcount = 7
 
 		return threatcount
 

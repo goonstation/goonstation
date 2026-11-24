@@ -308,12 +308,12 @@
 	})
 "aV" = (
 /obj/storage/crate/wooden,
-/obj/item/clothing/under/gimmick/cropbodysuit/red,
-/obj/item/clothing/under/misc/yoga/red,
+/obj/item/clothing/under/baseball/syndicate,
+/obj/item/clothing/under/baseball/syndicate,
 /obj/item/clothing/suit/hoodie/large/red,
-/obj/item/clothing/under/football/red,
-/obj/item/clothing/under/gimmick/sportsbodysuit/redslash,
+/obj/item/clothing/under/misc/yoga/red,
 /obj/item/clothing/under/jersey/red,
+/obj/item/clothing/under/football/red,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -1839,6 +1839,20 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"fo" = (
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 9
+	},
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "fq" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/prison/cell_block/wards{
@@ -2935,15 +2949,12 @@
 	})
 "iq" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/landmark/transition{
-	dir = 4;
-	tag = "vedwyd_tunnelA1";
-	dest_tag = "vedwyd_tunnelA0"
+/obj/landmark/viscontents_spawn/same_z{
+	xOffset = -15
 	},
-/obj/mapping_helper/turf/floor/darkener{
-	dir = 8
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 9
 	},
-/turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -3127,7 +3138,10 @@
 	teleport_blocked = 1
 	})
 "iR" = (
-/obj/railing/yellow,
+/obj/landmark/viscontents_spawn/same_z{
+	xOffset = 1;
+	yOffset = 4
+	},
 /turf/unsimulated/floor/stairs/dark{
 	dir = 8
 	},
@@ -3535,6 +3549,20 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"jP" = (
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 8
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 9
+	},
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "jR" = (
 /obj/machinery/light/emergencyflashing,
 /obj/table/wood/auto/desk,
@@ -3878,15 +3906,12 @@
 /area/prefab/vault)
 "kK" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/landmark/transition{
-	dir = 8;
-	tag = "vedwyd_tunnelA0";
-	dest_tag = "vedwyd_tunnelA1"
+/obj/landmark/viscontents_spawn/same_z{
+	xOffset = 15
 	},
-/obj/mapping_helper/turf/floor/darkener{
-	dir = 4
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 9
 	},
-/turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -5818,6 +5843,9 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line-broken1";
 	dir = 4
+	},
+/obj/railing/yellow{
+	dir = 1
 	},
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/adventure{
@@ -7947,7 +7975,6 @@
 	teleport_blocked = 1
 	})
 "uX" = (
-/obj/bsj_puzzle/stone_pedestal,
 /obj/item/clothing/suit/space/syndicate/specialist/knight{
 	pixel_y = 5;
 	pixel_x = 2
@@ -7967,6 +7994,7 @@
 	pixel_y = 4;
 	pixel_x = -3
 	},
+/obj/table/podium_white/syndicate,
 /turf/unsimulated/floor/engine/glow,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -9385,12 +9413,12 @@
 	irradiated = 0.7
 	})
 "yJ" = (
-/obj/bsj_puzzle/stone_pedestal,
 /obj/item/device/event_beacon{
 	name = "Scorched Earth Protocol";
 	pixel_y = 13
 	},
 /obj/map/light/dimreddish,
+/obj/table/podium_wood/syndicate,
 /turf/unsimulated/floor/carpet/red/fancy/narrow/north,
 /area/prefab/safehouse{
 	name = "Saferoom"
@@ -10401,7 +10429,6 @@
 	teleport_blocked = 1
 	})
 "BF" = (
-/obj/bsj_puzzle/stone_pedestal,
 /obj/decal/statue/dead_exec_bust{
 	plane = -100;
 	pixel_y = 17;
@@ -10409,6 +10436,7 @@
 	desc = "A sculpture bearing the likeness of some early company executive."
 	},
 /obj/machinery/light/small/floor/warm/very,
+/obj/table/podium_wood/syndicate,
 /turf/unsimulated/floor/shiny,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -10678,12 +10706,10 @@
 	teleport_blocked = 1
 	})
 "Cw" = (
-/obj/bsj_puzzle/stone_pedestal{
-	pixel_y = 6
-	},
 /obj/item/trophy{
-	pixel_y = 22
+	pixel_y = 15
 	},
+/obj/table/podium_white/syndicate,
 /turf/unsimulated/floor/shiny,
 /area/prefab/vault)
 "Cx" = (
@@ -12057,10 +12083,13 @@
 	teleport_blocked = 1
 	})
 "FP" = (
-/obj/structure/girder/reinforced,
-/obj/decal/tile_edge/line/black,
-/obj/disposalpipe/segment/transport,
-/turf/unsimulated/floor/concrete,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/railing/yellow{
+	dir = 1
+	},
+/turf/unsimulated/floor/setpieces/oldfloor,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -12174,9 +12203,9 @@
 	pixel_y = 11;
 	pixel_x = 7
 	},
-/obj/item/staple_gun/red/reloading{
-	pixel_y = 3;
-	pixel_x = 6
+/obj/item/staple_gun/red{
+	pixel_x = 7;
+	pixel_y = 2
 	},
 /turf/unsimulated/floor/shiny,
 /area/prefab/synd_lab{
@@ -12776,8 +12805,17 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"HC" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable/conduit,
+/turf/unsimulated/floor/concrete,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "HF" = (
-/obj/bsj_puzzle/stone_pedestal,
 /obj/item/clothing/shoes/stomp_boots/extreme{
 	pixel_y = -10
 	},
@@ -12806,6 +12844,7 @@
 	pixel_y = 8;
 	pixel_x = 5
 	},
+/obj/table/podium_wood/syndicate,
 /turf/unsimulated/floor/engine/glow,
 /area/prefab/safehouse{
 	name = "Saferoom"
@@ -13715,7 +13754,7 @@
 	})
 "JF" = (
 /obj/ladder{
-	id = "vedwyd_wall1";
+	id = "vedwyd_cabin";
 	icon_state = "ladder_wall"
 	},
 /obj/machinery/light/small/frostedred,
@@ -13972,13 +14011,12 @@
 	teleport_blocked = 1
 	})
 "Ks" = (
-/obj/railing/yellow,
-/obj/landmark/transition{
-	dir = 4;
-	dest_tag = "vedwyd_basement0";
-	tag = "vedwyd_basement1"
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 4
 	},
-/turf/unsimulated/floor/setpieces/pitchblack,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -14617,12 +14655,12 @@
 	teleport_blocked = 1
 	})
 "LX" = (
-/obj/landmark/transition{
-	dir = 8;
-	dest_tag = "vedwyd_basement1";
-	tag = "vedwyd_basement0"
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 8
 	},
-/turf/unsimulated/floor/setpieces/pitchblack,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -14690,6 +14728,10 @@
 /obj/machinery/light/emergencyflashing{
 	dir = 1;
 	pixel_y = 18
+	},
+/obj/landmark/viscontents_spawn/same_z{
+	xOffset = -1;
+	yOffset = -4
 	},
 /turf/unsimulated/floor/stairs/dark{
 	dir = 8
@@ -15762,13 +15804,6 @@
 	})
 "Pc" = (
 /obj/table/regal/auto,
-/obj/item/gold_ingot,
-/obj/item/gold_ingot,
-/obj/item/gold_ingot,
-/obj/item/gold_ingot,
-/obj/item/gold_ingot,
-/obj/item/gold_ingot,
-/obj/item/gold_ingot,
 /obj/item/clothing/gloves/ring/gold{
 	pixel_y = 10;
 	pixel_x = 5
@@ -15965,11 +16000,7 @@
 	teleport_blocked = 1
 	})
 "PL" = (
-/obj/structure/girder/reinforced,
-/obj/decal/tile_edge/line/black,
-/obj/cable/conduit{
-	pixel_y = -13
-	},
+/obj/cable/conduit,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -16188,9 +16219,7 @@
 	teleport_blocked = 1
 	})
 "Ql" = (
-/obj/bsj_puzzle/stone_pedestal{
-	pixel_y = 6
-	},
+/obj/table/podium_white/syndicate,
 /turf/unsimulated/floor/shiny,
 /area/prefab/vault)
 "Qm" = (
@@ -18687,15 +18716,12 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/landmark/transition{
-	dir = 4;
-	tag = "vedwyd_tunnelB1";
-	dest_tag = "vedwyd_tunnelB0"
+/obj/landmark/viscontents_spawn/same_z{
+	xOffset = -15
 	},
-/obj/mapping_helper/turf/floor/darkener{
+/turf/unsimulated/floor/stairs/dark/wide{
 	dir = 8
 	},
-/turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -18747,9 +18773,14 @@
 	teleport_blocked = 1
 	})
 "Wl" = (
-/turf/unsimulated/floor/airless/solidcolor/black{
-	name = "utility tunnel";
-	density = 1
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 8
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 8
 	},
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -19799,15 +19830,12 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/landmark/transition{
-	dir = 8;
-	tag = "vedwyd_tunnelB0";
-	dest_tag = "vedwyd_tunnelB1"
+/obj/landmark/viscontents_spawn/same_z{
+	xOffset = 15
 	},
-/obj/mapping_helper/turf/floor/darkener{
-	dir = 4
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 8
 	},
-/turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -19857,6 +19885,22 @@
 	})
 "ZE" = (
 /turf/unsimulated/floor/shiny,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
+"ZF" = (
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 8
+	},
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -21990,7 +22034,7 @@ Qd
 Qd
 Qd
 MV
-PM
+MV
 YH
 An
 fa
@@ -22145,7 +22189,7 @@ MV
 MV
 MV
 iR
-YH
+FP
 An
 zn
 IG
@@ -22298,7 +22342,7 @@ Mv
 Me
 qG
 SY
-FP
+pu
 wE
 Qf
 Eu
@@ -23217,8 +23261,8 @@ PA
 (43,1,1) = {"
 Qd
 MV
-Wl
-Wl
+fo
+ZF
 MV
 Qd
 RX
@@ -24295,7 +24339,7 @@ Qd
 (57,1,1) = {"
 Qd
 MV
-Wl
+jP
 Wl
 MV
 Qd
@@ -24449,7 +24493,7 @@ Qd
 (59,1,1) = {"
 Qd
 MV
-uT
+HC
 Ay
 MV
 Qd

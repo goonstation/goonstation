@@ -39,7 +39,7 @@
 			ow.changeStatus("stunned", 1 SECOND)
 			ow.changeStatus("knockdown", 1 SECOND)
 
-			switch (ow.smash_through(O, list("window", "grille", "table"), 0))
+			switch (ow.smash_through(O, list(/obj/window, /obj/mesh/grille, /obj/table), 0))
 				if (0)
 					if (istype(O, /obj/machinery/door) && O.density)
 						var/obj/machinery/door/D = O

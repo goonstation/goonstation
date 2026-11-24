@@ -63,15 +63,27 @@
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_ABOVE_LIGHTING // The room being dark doesn't mean *raw electricity* should be dark
 	icon = 'icons/effects/64x128.dmi'
 	icon_state = "lightning_1"
 	pixel_x = -4
+	var/datum/light/point/light
 
 	New()
 		..()
+		src.light = new /datum/light/point
+		src.light.set_color(1, 1, 0.85)
+		src.light.set_brightness(1.5)
+		src.light.attach(src)
+		src.light.enable()
 		FLICK(pick("lightning_1", "lightning_2"), src)
-		SPAWN(0.7 SECONDS)
+		SPAWN(0.5 SECONDS)
+			if (QDELETED(src))
+				return
+			// let the light linger and fade to be less jarring
+			src.light.set_brightness(1)
+			sleep(0.3 SECONDS)
+			src.light = null
 			qdel(src)
 
 /obj/lightning_target

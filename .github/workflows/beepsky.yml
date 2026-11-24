@@ -8,6 +8,11 @@ on:
     branches: [master]
   push:
 
+# A new push to a PR cancels its older run
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     name: Run Linters

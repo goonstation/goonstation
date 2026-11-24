@@ -243,17 +243,18 @@
 	lincolnshire = new
 
 
-#ifdef PREFAB_CHECKING
-	placeAllPrefabs()
-#endif
-#ifdef RANDOM_ROOM_CHECKING
-	placeAllRandomRooms()
-#endif
-
 #ifdef CI_RUNTIME_CHECKING
 	populate_station()
+#if defined(PREFAB_CHECKING)
+	placeAllPrefabs()
+#elif defined(RANDOM_ROOM_CHECKING)
+	placeAllRandomRooms()
+#else
+	var/run_until = world.time + 15 SECONDS // Total of 15s soak time
 	check_map_correctness()
-	SPAWN(15 SECONDS)
+	sleep(run_until - world.time) // Let the station run for a bit to catch runtimes from processes.
+#endif
+	SPAWN(1 SECOND)
 		Reboot_server()
 #endif
 

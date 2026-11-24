@@ -41,6 +41,7 @@ var/datum/event_controller/random_events
 	var/alive_antags_threshold = 0.1
 #endif
 	var/list/player_spawn_events = list()
+	var/spawn_events_enabled = TRUE
 	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
 	var/time_between_spawn_events_lower = 8 MINUTES
@@ -72,11 +73,11 @@ var/datum/event_controller/random_events
 			var/datum/random_event/RE = new X
 			major_events += RE
 
-		for (var/X in concrete_typesof(/datum/random_event/major/antag)+concrete_typesof(/datum/random_event/major/player_spawn/antag))
+		for (var/X in concrete_typesof(/datum/random_event/respawn/antag))
 			var/datum/random_event/RE = new X
 			antag_spawn_events += RE
 
-		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn)-concrete_typesof(/datum/random_event/major/player_spawn/antag))
+		for (var/X in concrete_typesof(/datum/random_event/respawn/player))
 			var/datum/random_event/RE = new X
 			player_spawn_events += RE
 
@@ -284,13 +285,36 @@ var/datum/event_controller/random_events
 		"eventList" = roundstartEventData
 	))
 
+	var/list/spawnEventData = list()
+	for (RE in src.player_spawn_events)
+		spawnEventData += list(list(
+			"byondRef" = ref(RE),
+			"name" = RE.name,
+			"description" = RE.description,
+			"customizable" = RE.customization_available,
+			"alwaysCustom" = RE.always_custom,
+			"available" = RE.is_event_available(),
+			"enabled" =  !RE.disabled
+		))
+	for (RE in src.antag_spawn_events)
+		spawnEventData += list(list(
+			"byondRef" = ref(RE),
+			"name" = RE.name,
+			"description" = RE.description,
+			"customizable" = RE.customization_available,
+			"alwaysCustom" = RE.always_custom,
+			"available" = RE.is_event_available(),
+			"enabled" =  !RE.disabled
+		))
+
 	.["eventData"] += list(list(
 		"name" = "spawn",
-		"enabled" = TRUE,
+		"enabled" = src.spawn_events_enabled,
 		"startTime" = src.spawn_events_begin,
 		"delayLow" = src.time_between_spawn_events_lower,
 		"delayHigh" = src.time_between_spawn_events_upper,
 		"nextEvent" = src.next_spawn_event,
+		"eventList" = spawnEventData,
 	))
 
 	.["queuedEvents"] = list()
@@ -444,6 +468,22 @@ var/datum/event_controller/random_events
 						else
 							. = FALSE
 #endif
+
+				if ("spawn")
+					. = TRUE
+					switch(params["name"])
+						if("toggle_category")
+							src.spawn_events_enabled = !src.spawn_events_enabled
+						if("startTime")
+							src.spawn_events_begin = params["new_data"]
+						if("delayLow")
+							src.time_between_spawn_events_lower = params["new_data"]
+						if("delayHigh")
+							src.time_between_spawn_events_upper = params["new_data"]
+						if("nextEvent")
+							src.next_spawn_event = params["new_data"]
+						else
+							. = FALSE
 				else
 					. = FALSE
 

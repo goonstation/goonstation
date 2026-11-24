@@ -1369,7 +1369,7 @@ ABSTRACT_TYPE(/area/adventure)
 	icon_state = "yellow"
 
 /area/spacehabitat/owlery
-	name = "Owlery"
+	name = "Habitat Owlery"
 	icon_state = "yellow"
 	sound_environment = 15
 

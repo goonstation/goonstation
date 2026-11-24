@@ -30,7 +30,7 @@ TYPEINFO(/datum/component/controlled_by_mob)
 	var/obj/O = parent
 	if(src.control_from_inside)
 		src.controlling_mob.set_loc(O)
-		APPLY_ATOM_PROPERTY(src.controlling_mob,PROP_MOB_REBREATHING,src)
+		APPLY_ATOM_PROPERTY(src.controlling_mob,PROP_MOB_NO_LOSEBREATH,src)
 	else
 		src.controlling_mob.client.eye = O
 	src.controlling_mob.add_movement_controller(src.movement_controller)
@@ -41,7 +41,7 @@ TYPEINFO(/datum/component/controlled_by_mob)
 	if(src.controlling_mob)
 		if(src.control_from_inside)
 			src.controlling_mob.set_loc(get_turf(O))
-			REMOVE_ATOM_PROPERTY(src.controlling_mob,PROP_MOB_REBREATHING,src)
+			REMOVE_ATOM_PROPERTY(src.controlling_mob,PROP_MOB_NO_LOSEBREATH,src)
 		else
 			controlling_mob.client.eye = controlling_mob
 		src.controlling_mob.remove_movement_controller(src.movement_controller)
