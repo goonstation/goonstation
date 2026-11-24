@@ -3,7 +3,7 @@
 	name = "water"
 	density = 0
 	anchored = ANCHORED
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	icon_state = "poolwater"
 	layer = EFFECTS_LAYER_UNDER_3
 	mouse_opacity = 0
@@ -60,11 +60,13 @@
 	var/falling = FALSE
 	var/fallen = FALSE
 	var/fall_time = 2 SECONDS
+	var/season_affected = TRUE
 
 #ifdef SEASON_AUTUMN
 	New()
 		..()
-		icon_state = pick("tree_red", "tree_yellow", "tree_orange")
+		if(src.season_affected)
+			src.icon_state = pick("tree_red", "tree_yellow", "tree_orange")
 #endif
 
 	attackby(obj/item/I, mob/user)
@@ -81,6 +83,7 @@
 					for (var/i in 0 to 2)
 						var/obj/item/material_piece/organic/wood/log = new(locate(our_turf.x + i, our_turf.y, our_turf.z))
 						log.Turn(90)
+						log.is_rotated = TRUE
 					qdel(src)
 					return
 				src.falling = TRUE
@@ -112,6 +115,7 @@
 		icon_state = "snowtree"
 		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
 		pixel_x = -32
+		season_affected = FALSE
 		New()
 			. = ..()
 			src.dir = pick(cardinal)
@@ -328,11 +332,13 @@
 		. = ..()
 		if(isliving(AM))
 			APPLY_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
+			APPLY_ATOM_PROPERTY(AM, PROP_MOB_AI_UNTRACKABLE, src)
 
 	Uncrossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
 			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
+			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_AI_UNTRACKABLE, src)
 
 	attackby(var/obj/item/W, mob/user)
 		user.lastattacked = get_weakref(src)
@@ -490,7 +496,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 0)
-		message_ghosts("<b>[src]</b> has been VIOLENTLY DESTROYED at [log_loc(src, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] was VIOLENTLY DESTROYED at [GHOST.MESSAGE.format_loc(src)].")
 		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
 		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
 		if(length(afterlife_turfs))

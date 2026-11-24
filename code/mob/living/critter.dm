@@ -1,5 +1,5 @@
 ABSTRACT_TYPE(/mob/living/critter)
-ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_attack, proc/admincmd_reset_task)
+ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_attack, proc/admincmd_reset_task, proc/add_hand_admin, proc/remove_hand_admin)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -12,7 +12,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/list/add_abilities = null
 
 	var/datum/hud/critter/hud
-	var/datum/hud/critter/custom_hud_type = /datum/hud/critter
+	var/datum/hud/critter/custom_hud_type = /datum/hud/critter //TODO: Remove eventually for hudzone handling
 	var/datum/organHolder/custom_organHolder_type = null
 
 	var/hand_count = 0		// Used to ease setup. Setting this in-game has no effect.
@@ -139,15 +139,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	else
 		src.organHolder = new/datum/organHolder/critter(src, custom_brain_type)
 
-	..()
+	. = ..()
 
-	hud = new custom_hud_type(src)
-	src.attach_hud(hud)
-	src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
-	src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-
-	if (src.stamina_bar)
-		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
+	src.init_hud()
 
 	health_update_queue |= src
 
@@ -171,31 +165,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	#endif
 
 /mob/living/critter/disposing()
-	if(organHolder)
-		organHolder.dispose()
-		organHolder = null
+	QDEL_NULL(organHolder)
+	QDEL_NULL(hud)
 
-	if(hud)
-		if(src.stamina_bar)
-			hud.remove_object(stamina_bar)
-
-		hud.dispose()
-		hud = null
-
-	for(var/datum/handHolder/hh in hands)
-		hh.dispose()
-	hands.len = 0
-	hands = null
-
-	for(var/datum/equipmentHolder/eh in equipment)
-		eh.dispose()
-	equipment.len = 0
-	equipment = null
-
-	for(var/obj/item/I in implant)
-		I.dispose()
-	implant.len = 0
-	implant = null
+	QDEL_LIST(src.hands)
+	QDEL_LIST(src.equipment)
+	QDEL_LIST(src.implant)
 
 	for(var/damage_type in healthlist)
 		var/datum/healthHolder/hh = healthlist[damage_type]
@@ -206,10 +181,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (src.is_npc)
 		src.registered_area?.registered_mob_critters -= src
 		src.registered_area = null
-	if (ai)
-		qdel(ai)
-		ai = null
-	..()
+	QDEL_NULL(src.ai)
+	. = ..()
 
 ///enables mob ai that was disabled by a hibernation task
 /mob/living/critter/proc/wake_from_hibernation()
@@ -223,6 +196,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/proc/setup_healths()
 	// add_health_holder(/datum/healthHolder/flesh)
 	// etc..
+
+/mob/living/critter/handle_stamina_updates()
+	. = ..()
+	if (src.client && src.hud?.stamina_bar)
+		src.hud.stamina_bar.update_value(src)
 
 /mob/living/critter/proc/setup_overlays()
 	//used for critters that have overlays for their bioholder (hair color eye color etc)
@@ -325,7 +303,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			else
 				src.wake_from_hibernation()
 		// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
-		if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate() && M != src && src.is_npc)
+		if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate() && M != src && src.is_npc && !ON_COOLDOWN(src, "retaliate", 3 SECONDS))
 			var/datum/aiTask/sequence/goalbased/retaliate/task_instance = src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task))
 			task_instance.targetted_mob = M
 			task_instance.start_time = TIME
@@ -912,7 +890,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	src.visible_message(SPAN_ALERT("[src] has been hit by [AM]."))
-	random_brute_damage(src, AM.throwforce, TRUE)
+	 // delivery throws cross through mobcritters, so reduce damage appropriately
+	random_brute_damage(src, AM.throwforce * ((thr.throw_type & THROW_DELIVERY) ? 0.1 : 1), TRUE)
 	if (src.client)
 		logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 	if(thr?.user)
@@ -1094,6 +1073,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			EH.drop(1)
 
 /mob/living/critter/emote(var/act, var/voluntary = 0)
+	set waitfor = 0
 	..()
 	var/param = null
 	if (src.hasStatus("paralysis"))
@@ -1319,7 +1299,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/ghostize()
 	var/ghost_icon = src.icon
 	if (isnull(src.icon))
-		ghost_icon = initial(src.icon)
+		ghost_icon = get_initial_icon(src)
 	var/ghost_icon_state
 	if (src.icon_state_ghost)
 		ghost_icon_state = src.icon_state_ghost
@@ -1628,6 +1608,63 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 /mob/living/critter/has_genetics()
 	return has_genes
+
+/mob/living/critter/proc/add_hand_admin()
+	set name = "Add hand"
+	var/pickable_states = list()
+	for (var/icon_state in ICON.get_icon_states('icons/mob/critter_hands.dmi'))
+		if (copytext(icon_state, -1) in list("1", "0"))
+			pickable_states |= copytext(icon_state, 1, length(icon_state))
+	var/list/data = usr.client.get_proccall_arglist(list(
+		ARG_INFO("limb_type", DATA_INPUT_LIST_PROVIDED, "Limb type", concrete_typesof(/datum/limb)),
+		ARG_INFO("icon_state", DATA_INPUT_LIST_PROVIDED, "Icon state from critter_hands.dmi", pickable_states),
+		ARG_INFO("range_attack", DATA_INPUT_BOOL, "Can range attack?", FALSE), //why isn't this defined on the limbs??
+		ARG_INFO("name", DATA_INPUT_TEXT, "Name", "hand"),
+	))
+	src.add_hand(arglist(data))
+
+/mob/living/critter/proc/add_hand(limb_type, icon_state, range_attack = FALSE, name = "hand")
+	var/datum/handHolder/HH = new()
+	HH.limb = new limb_type()
+	HH.icon = 'icons/mob/critter_hands.dmi'
+	HH.icon_state = icon_state
+	HH.can_range_attack = range_attack
+	HH.limb_name = name
+	HH.name = name
+	src.hands += HH
+	HH.spawn_dummy_holder()
+	//after many hours of careful study I have divined that the best way to update this godforsaken HUD is to delete it and rebuild it from scratch
+	qdel(src.hud)
+	qdel(src.zone_sel)
+	src.init_hud()
+
+/mob/living/critter/proc/remove_hand_admin()
+	set name = "Remove hand"
+	var/list/options = list()
+	for (var/datum/handHolder/HH as anything in src.hands)
+		options += HH.limb.type
+	var/chosen = tgui_input_list(usr, "Hand to remove", "Removing hand", options)
+	if (!chosen)
+		return
+	for (var/datum/handHolder/HH as anything in src.hands)
+		if (HH.limb.type == chosen)
+			src.remove_hand(HH)
+			return
+
+/mob/living/critter/proc/remove_hand(datum/handHolder/hand)
+	src.hands -= hand
+	qdel(hand)
+	qdel(src.hud)
+	qdel(src.zone_sel)
+	src.init_hud()
+
+/mob/living/critter/proc/init_hud()
+	src.hud = new src.custom_hud_type(src)
+	src.hud.setup_elements()
+	src.attach_hud(hud)
+
+	src.zone_sel = new(src, "CENTER[src.hud.next_right()], SOUTH")
+	src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads

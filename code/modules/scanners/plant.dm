@@ -54,8 +54,7 @@
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
 		return SPAN_ALERT("Cannot scan.")
 
-	HYPgeneticanalysis(user, A, P, DNA, show_gene_strain) // Just use the existing proc.
-	return
+	return HYPgeneticanalysis(user, A, P, DNA, show_gene_strain) // Just use the existing proc.
 
 
 TYPEINFO(/obj/item/plantanalyzer)

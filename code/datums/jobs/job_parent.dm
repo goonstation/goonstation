@@ -64,6 +64,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/list/slot_rhan = list()
 	var/list/items_in_backpack = list() // stop giving everyone a free airtank gosh
 	var/list/items_in_belt = list() // works the same as above but is for jobs that spawn with a belt that can hold things
+	var/list/items_in_mob = list() //! Items placed directly inside the mob. If a PDA, then can be put in ID slot by player preference or below var
 	var/put_id_in_pda = FALSE //! Job will automatically have their ID in their PDA on spawn. Overrides player preference; use sparingly.
 	var/access_string = null // used to quickly grab access via string, i.e. "Chief Engineer", completely overrides var/list/access if non-null !!!
 	var/list/access = list(access_fuck_all) // Please define in global get_access() proc (access.dm), so it can also be used by bots etc.
@@ -133,6 +134,8 @@ ABSTRACT_TYPE(/datum/job)
 		. = ..()
 		if (variable == "limit")
 			src.admin_set_limit = TRUE
+		else if (variable == "name" || variable == "alias_names")
+			global.job_controls?.rebuild_job_index()
 
 	proc/special_setup(var/mob/M, no_special_spawn)
 		SHOULD_NOT_SLEEP(TRUE)
@@ -181,7 +184,7 @@ ABSTRACT_TYPE(/datum/job)
 				boutput(M, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
 				boutput(M, "<B>Objective #1</B>: [newObjective.explanation_text]")
 
-			if (M.client && src.change_name_on_spawn)
+			if (M.client && src.change_name_on_spawn && !inafterlifebar(M))
 				if (!jobban_isbanned(M, "Custom Names"))
 					//if (ishuman(M)) //yyeah this doesn't work with critters fix later
 					var/default = M.real_name + " the " + src.name
@@ -202,17 +205,6 @@ ABSTRACT_TYPE(/datum/job)
 	/// The default miranda's rights for this job
 	proc/get_default_miranda()
 		return DEFAULT_MIRANDA
-
-	///Check if a string matches this job's name or alias with varying case sensitivity
-	proc/match_to_string(string, case_sensitive)
-		if (case_sensitive)
-			return src.name == string || (string in src.alias_names)
-		else
-			if(cmptext(src.name, string))
-				return TRUE
-			for (var/alias in src.alias_names)
-				if (cmptext(src.name, string))
-					return TRUE
 
 	proc/has_rounds_needed(datum/player/player, var/min = 0, var/max = 0)
 		if (src.rounds_needed_to_play)

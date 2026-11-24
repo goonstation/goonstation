@@ -184,34 +184,31 @@
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	// NT Officials
-
-	ntso
-		icon_state = "pda-nt"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
-		setup_default_module = /obj/item/device/pda_module/flashlight
-		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
-
-	ntofficial
+	nt
 		icon_state = "pda-nt"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+		bg_color = "#1b57b1"
 
-	nt_medical
-		icon_state = "pda-nt_medic"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
-		mailgroups = list(MGD_MEDICAL, MGD_COMMAND, MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+		ntso
+			setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
+			setup_default_module = /obj/item/device/pda_module/flashlight
+			mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
-	nt_engineer
-		icon_state = "pda-nt_engineer"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		setup_default_module = /obj/item/device/pda_module/tray
-		mailgroups = list(MGD_ENGINEER, MGD_SUPPLY, MGD_COMMAND, MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
+		medical
+			icon_state = "pda-nt_medic"
+			setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
+			mailgroups = list(MGD_MEDICAL, MGD_COMMAND, MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+
+		engineer
+			icon_state = "pda-nt_engineer"
+			setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+			setup_default_module = /obj/item/device/pda_module/tray
+			mailgroups = list(MGD_ENGINEER, MGD_SUPPLY, MGD_COMMAND, MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
 
 	// Security
 
@@ -322,27 +319,9 @@
 		green
 			icon_state = "pda-clown-green"
 
-		proc/on_mob_throw_end(mob/M)
-			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
-			LAZYLISTREMOVE(M.attached_objs, src)
-			src.glide_size = initial(src.glide_size)
-
-		Crossed(atom/movable/AM)
-			..()
-			if (istype(src.loc, /turf/space))
-				return
-			if (iscarbon(AM))
-				var/mob/M = AM
-				LAZYLISTADDUNIQUE(M.attached_objs, src)
-				src.glide_size = M.glide_size
-				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end))
-				if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type = THROW_PEEL_SLIP, params = list("slip_obj" = src)))
-					boutput(M, SPAN_NOTICE("You slipped on the PDA!"))
-					if (M.bioHolder.HasEffect("clumsy"))
-						M.changeStatus("knockdown", 5 SECONDS)
-						JOB_XP(M, "Clown", 1)
-				else
-					src.on_mob_throw_end(M)
+		New()
+			. = ..()
+			src.AddElement(/datum/element/slippery)
 
 	janitor
 		name = "Janitor PDA"
@@ -544,6 +523,9 @@
 
 /obj/item/device/pda2/attack_self(mob/user as mob)
 	if(!user.client)
+		return
+	if(!user.sight_check(TRUE))
+		boutput(user, SPAN_ALERT("You can't see the screen."))
 		return
 	if(!user.literate)
 		boutput(user, SPAN_ALERT("You don't know how to read, the screen is meaningless to you."))
@@ -1007,7 +989,7 @@
 		src.registered = ID.registered
 		src.assignment = ID.assignment
 		src.access = ID.access
-		src.accessed_record = data_core.bank.find_record("name", ID.registered)
+		src.accessed_record = global.data_core.get_bank_record(ID.registered)
 		if (!src.ID_image)
 			src.ID_image = image(src.icon, "blank")
 		src.ID_image = src.ID_card.icon_state
@@ -1027,7 +1009,7 @@
 			return
 
 	proc/insert_pen(obj/item/insertedPen, mob/user)
-		if (!istype(insertedPen))
+		if (!istype(insertedPen) || insertedPen.cant_drop)
 			return
 		if (user)
 			user.u_equip(insertedPen)
@@ -1188,10 +1170,79 @@
 		update_overlay("message")
 		return
 
+	proc/hud_message(message, dest)
+		if (!length(message))
+			return
+
+		if (!ismob(loc))
+			return
+
+		var/mob/M = loc
+
+		if (istype(M, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/AI = M
+			if (AI.deployed_shell)
+				M = AI.deployed_shell
+
+		if (!M.client || M.client.preferences?.flying_chat_pda_hidden)
+			return
+
+		if (isdead(M) || !M.sight_check(consciousness_check=TRUE) || !M.literate)
+			return
+
+		var/hud_element = null
+
+		// where we place the maptext depends on hud type
+		// we should probably do explicit HUD integration but we'll base it on mob type for now
+		// meatbags
+		if (istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			var/hud_slot = null
+
+			switch(H.get_slot_from_item(src))
+				if(SLOT_WEAR_ID)
+					hud_slot = "id"
+				if(SLOT_BELT)
+					hud_slot = "belt"
+				if(SLOT_L_STORE)
+					hud_slot = "storage1"
+				if(SLOT_R_STORE)
+					hud_slot = "storage2"
+				if(SLOT_L_HAND)
+					hud_slot = "lhand"
+				if(SLOT_R_HAND)
+					hud_slot = "rhand"
+
+			if (!hud_slot)
+				return
+
+			hud_element = H.hud?.get_by_id(hud_slot)
+		// robut
+		else if (istype(M, /mob/living/silicon/robot)) // covers AI Cyborg shells
+			var/mob/living/silicon/robot/R = M
+			hud_element = R.hud?.get_by_id("charge")
+		// gumball
+		else if(istype(M, /mob/living/silicon/hivebot))
+			var/mob/living/silicon/hivebot/hivebot = M
+			hud_element = hivebot.hud?.get_by_id("charge")
+		// mobcritters
+		else if (istype(M, /mob/living/critter))
+			var/mob/living/critter/critter = M  // Not perfect but *should* work for all critter types regardless of where held
+			hud_element = critter.hud.get_by_id("throw")
+
+		if (!hud_element)
+			return
+
+		if (length(message) > 80)
+			message = copytext(message, 1, 77) + "..."
+
+		DISPLAY_MAPTEXT(hud_element, list(M), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/pda, message, dest)
+
 	proc/display_message(var/message)
 		if (ismob(loc))
 			var/mob/M = loc
-			M.show_message(message)
+			if(M.literate && M.sight_check(TRUE))
+				M.show_message(message)
 
 	proc/run_program(datum/computer/file/pda_program/program)
 		if((!program) || (!program.holder))
@@ -1272,6 +1323,8 @@
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.show_message(SPAN_ALERT("Your [src] explodes!"), 1)
+			if(isdead(M) && !isturf(M.loc))
+				M.ex_act(3) //Always gib dead wearer even if in a locker or something
 
 		if(T)
 			T.hotspot_expose(700,125)
@@ -1309,6 +1362,11 @@
 		if (E.mainframe)
 			return 1
 	return ..(user)
+
+// cyborgs shouldn't be able to eject ID cards from their PDA
+/obj/item/device/pda2/cyborg/eject_id_card(var/mob/user as mob)
+	boutput(user, SPAN_ALERT("The ID card is soldered firmly into [src.name]!"))
+	return
 
 /*
  *	PDA 2 ~help file~

@@ -201,6 +201,10 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"nG" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "nY" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/stripe_delivery,
@@ -249,6 +253,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"po" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
 /area/station/hallway/secondary/exit)
 "qa" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -304,6 +314,10 @@
 	dir = 4
 	},
 /area/station/security/checkpoint/escape)
+"sk" = (
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "tj" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -442,10 +456,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"EZ" = (
-/obj/machinery/firealarm/directional/south,
-/turf/simulated/floor/wood,
-/area/station/hallway/secondary/exit)
 "FC" = (
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine_caution_west"
@@ -575,10 +585,6 @@
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine_caution_west"
 	},
-/area/station/hallway/secondary/exit)
-"QE" = (
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/wood,
 /area/station/hallway/secondary/exit)
 "RF" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -874,7 +880,7 @@ oX
 oX
 oX
 vK
-Oa
+po
 wj
 ib
 ha
@@ -1006,16 +1012,16 @@ oX
 oX
 oX
 oX
+Hg
+Hg
+Hg
 oX
 oX
 oX
 oX
-oX
-oX
-oX
-oX
-oX
-oX
+Hg
+Hg
+Hg
 oX
 oX
 vK
@@ -1038,20 +1044,20 @@ oX
 oX
 oX
 oX
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
 oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
+rO
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
 vK
 Oa
 Pu
@@ -1072,20 +1078,20 @@ oX
 oX
 oX
 oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
 pd
 Oa
 Pu
@@ -1106,20 +1112,20 @@ oX
 oX
 oX
 oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
-oX
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
 pd
 Oa
 Pu
@@ -1140,20 +1146,20 @@ oX
 oX
 oX
 oX
-oX
-oX
 Hg
 Hg
 Hg
-oX
-oX
-oX
-oX
 Hg
 Hg
 Hg
-oX
-oX
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
 vK
 GI
 cF
@@ -1180,8 +1186,8 @@ Hg
 Hg
 Hg
 Hg
-oX
-rO
+Hg
+Hg
 Hg
 Hg
 Hg
@@ -1256,10 +1262,10 @@ Hg
 Hg
 Hg
 Hg
-pd
-Oa
+vK
+Kp
 Pu
-pd
+vK
 oX
 oX
 oX
@@ -1291,8 +1297,8 @@ Hg
 Hg
 Hg
 vK
-Kp
-Pu
+GI
+mv
 vK
 oX
 oX
@@ -1306,28 +1312,28 @@ bW
 ic
 aq
 Ke
+vK
+oX
+oX
+oX
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
 pd
-oX
-oX
-oX
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-vK
-GI
-mv
-vK
+Oa
+Pu
+pd
 oX
 oX
 oX
@@ -1340,10 +1346,10 @@ aU
 ic
 pk
 Sv
-pd
-oX
-oX
-oX
+vK
+vK
+vK
+ln
 Hg
 Hg
 Hg
@@ -1358,83 +1364,15 @@ Hg
 Hg
 Hg
 Hg
-pd
+ln
 Oa
 Pu
-pd
+vK
 oX
 oX
 oX
 "}
 (20,1,1) = {"
-pd
-ic
-ic
-ic
-ic
-ic
-QE
-vK
-oX
-oX
-oX
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-pd
-Oa
-Pu
-pd
-oX
-oX
-oX
-"}
-(21,1,1) = {"
-vK
-tj
-ic
-ic
-ic
-ic
-EZ
-vK
-vK
-vK
-ln
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-Hg
-ln
-Oa
-Pu
-vK
-oX
-oX
-oX
-"}
-(22,1,1) = {"
 im
 ib
 ib
@@ -1468,7 +1406,7 @@ oX
 oX
 oX
 "}
-(23,1,1) = {"
+(21,1,1) = {"
 pd
 Yl
 Yl
@@ -1502,7 +1440,7 @@ oX
 oX
 oX
 "}
-(24,1,1) = {"
+(22,1,1) = {"
 pd
 Yl
 Yl
@@ -1536,7 +1474,7 @@ oX
 oX
 oX
 "}
-(25,1,1) = {"
+(23,1,1) = {"
 RF
 la
 la
@@ -1564,19 +1502,19 @@ Hg
 Hg
 WZ
 Oa
-Pu
+sk
 vK
 oX
 oX
 oX
 "}
-(26,1,1) = {"
+(24,1,1) = {"
 vK
 pd
 pd
 vK
 vK
-Yl
+nG
 Yl
 vK
 vK
@@ -1604,7 +1542,7 @@ vK
 oX
 oX
 "}
-(27,1,1) = {"
+(25,1,1) = {"
 pd
 PH
 ib
@@ -1638,7 +1576,7 @@ pd
 oX
 oX
 "}
-(28,1,1) = {"
+(26,1,1) = {"
 pd
 gg
 FC
@@ -1650,7 +1588,6 @@ vK
 oX
 oX
 oX
-oX
 Hg
 Hg
 Hg
@@ -1663,7 +1600,8 @@ Hg
 Hg
 Hg
 Hg
-oX
+Hg
+Hg
 pd
 gg
 PW
@@ -1672,7 +1610,7 @@ pd
 oX
 oX
 "}
-(29,1,1) = {"
+(27,1,1) = {"
 vK
 Si
 vK
@@ -1684,9 +1622,6 @@ vK
 oX
 oX
 oX
-oX
-oX
-oX
 Hg
 Hg
 Hg
@@ -1695,9 +1630,12 @@ Hg
 Hg
 Hg
 Hg
-oX
-oX
-oX
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
 vK
 Si
 vK
@@ -1706,10 +1644,78 @@ vK
 oX
 oX
 "}
-(30,1,1) = {"
+(28,1,1) = {"
 vK
 oX
 lv
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+"}
+(29,1,1) = {"
+vK
+oX
+DK
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+Hg
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+oX
+"}
+(30,1,1) = {"
+vK
+oX
+oX
 oX
 oX
 oX
@@ -1743,7 +1749,7 @@ oX
 (31,1,1) = {"
 oX
 oX
-DK
+oX
 oX
 oX
 oX

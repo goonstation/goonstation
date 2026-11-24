@@ -84,6 +84,7 @@
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
 		/obj/item/spraybottle/cleaner/robot,
 		/obj/item/sponge,
+		/obj/item/broom,
 		/obj/item/mop,
 		/obj/item/lamp_manufacturer,
 		/obj/item/saw/cyborg,
@@ -105,6 +106,7 @@
 		/obj/item/device/camera_viewer/public,
 		/obj/item/pen/omni,
 		/obj/item/paper_bin/robot,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 	)
 
 // engineer. mechanic.

@@ -1,52 +1,6 @@
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
 <body></body>
 
 <script>
-  var hookEvent = (function() {
-      var div;
-
-      // The function we use on standard-compliant browsers
-      function standardHookEvent(element, eventName, handler) {
-          element.addEventListener(eventName, handler, false);
-          return element;
-      }
-
-      // The function we use on browsers with the previous Microsoft-specific mechanism
-      function oldIEHookEvent(element, eventName, handler) {
-          element.attachEvent("on" + eventName, function(e) {
-              e = e || window.event;
-              e.preventDefault = oldIEPreventDefault;
-              e.stopPropagation = oldIEStopPropagation;
-              handler.call(element, e);
-          });
-          return element;
-      }
-
-      // Polyfill for preventDefault on old IE
-      function oldIEPreventDefault() {
-          this.returnValue = false;
-      }
-
-      // Polyfill for stopPropagation on old IE
-      function oldIEStopPropagation() {
-          this.cancelBubble = true;
-      }
-
-      // Return the appropriate function; we don't rely on document.body
-      // here just in case someone wants to use this within the head
-      div = document.createElement('div');
-      if (div.addEventListener) {
-          div = undefined;
-          return standardHookEvent;
-      }
-      if (div.attachEvent) {
-          div = undefined;
-          return oldIEHookEvent;
-      }
-      throw "Neither modern event mechanism (addEventListener nor attachEvent) is supported by this browser.";
-  })();
-
   var Page = {
 
     IsSetup: false,
@@ -992,8 +946,8 @@
   };
 
 
-  hookEvent(document, 'keydown', function(evt){
-    var keyDown = event.keyCode || event.which;
+  document.addEventListener('keydown', function(evt){
+    var keyDown = evt.keyCode;
 
     if (GM.IsAlive){
       switch(keyDown){
@@ -1064,10 +1018,10 @@
       }
     }
 
-  }, false);
+  });
 
-  hookEvent(document, 'keyup', function(evt){
-    var keyUp = event.keyCode || event.which;
+  document.addEventListener('keyup', function(evt){
+    var keyUp = evt.keyCode;
     if (GM.IsAlive){
       switch(keyUp){
 
@@ -1111,7 +1065,7 @@
         default: break;
       }
     }
-  }, false);
+  });
 
   window.onresize = function(event) {
     Page.WindowChanged();

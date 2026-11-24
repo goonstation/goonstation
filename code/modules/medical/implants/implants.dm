@@ -353,9 +353,9 @@
 		if (!H.mini_health_hud)
 			H.mini_health_hud = 1
 
-		var/datum/db_record/probably_my_record = data_core.medical.find_record("id", H.datacore_id)
-		if (probably_my_record)
-			probably_my_record["h_imp"] = "[src.sensehealth()]"
+		var/datum/db_record/personnel/medical/medical_record = global.data_core.get_medical_record(H.real_name)
+		if (medical_record)
+			medical_record["h_imp"] = "[src.sensehealth()]"
 		..()
 
 	on_crit()
@@ -500,6 +500,8 @@
 		if (!ishuman(src.owner))
 			return
 		var/mob/living/carbon/human/H = src.owner
+
+		H.delStatus("weakened_loyalty")
 
 		if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 			H.visible_message(SPAN_ALERT("<b>[H] resists the counter-revolutionary implant!</b>"))
@@ -748,13 +750,11 @@
 				access.access = get_access("Admin")
 
 /obj/item/implant/confetti
-	var/datum/component/my_comp = null
 
 	implanted(mob/M, mob/I)
 		. = ..()
-		src.my_comp = M.AddComponent(/datum/component/death_confetti)
+		M.AddElement(/datum/element/death_confetti)
 
 	on_remove(mob/M)
+		M.RemoveElement(/datum/element/death_confetti)
 		. = ..()
-		src.my_comp?.RemoveComponent()
-		src.my_comp = null

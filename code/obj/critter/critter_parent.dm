@@ -159,6 +159,7 @@
 		//DEBUG_MESSAGE("[src] woke from hibernation at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
 		//Ok, now we look to see if we should get murdlin'
 		task = "sleeping"
+		src.GetComponent(/datum/component/proximity)?.set_detection(FALSE)
 		hibernate_check = 20 //20 sleep_checks
 		do_wake_check(1)
 
@@ -175,6 +176,7 @@
 		hibernate_check = 20 //Reset this counter in case of failure
 		if(registered_area)
 			task = "hibernating"
+			src.GetComponent(/datum/component/proximity)?.set_detection(TRUE) // listen for movement
 			registered_area.registered_critters |= src
 			anchored = ANCHORED
 			//DEBUG_MESSAGE("[src] started hibernating at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"].")
@@ -783,7 +785,7 @@
 			if(nickname)
 				src.quality_name = nickname
 				src.name = "[nickname] [src.name]"
-		src.AddComponent(/datum/component/proximity)
+		src.AddComponent(/datum/component/proximity, FALSE) // enabled once hibernating
 		..()
 
 	disposing()

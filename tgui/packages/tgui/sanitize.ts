@@ -5,6 +5,8 @@
 
 import DOMPurify from 'dompurify';
 
+import { configAtom, store } from './events/store';
+
 // Default values
 export let sanitizeDefAllowTags = [
   'b',
@@ -51,6 +53,32 @@ export let sanitizeDefForbidAttrs = ['class', 'style', 'background'];
 
 // Advanced HTML tags that we can trust admins (but not players) with
 const advTag = ['img'];
+
+// Inline styles may only load our own paper assets via resource() (CDN url, or a bare filename locally)
+DOMPurify.addHook('uponSanitizeAttribute', (_node, data) => {
+  if (data.attrName !== 'style' || !data.attrValue.includes('(')) {
+    return;
+  }
+  const { style } = document.createElement('div');
+  style.cssText = data.attrValue;
+  const cdn = store.get(configAtom)?.cdn;
+  // Delete each allowed url() from a copy of the style.
+  // Urls still left in `rest` aren't allowed, the check below drops the attrib.
+  const rest = style.cssText.replace(/url\("([^"\\]*)"\)/g, (m, url) =>
+    // Local: a bare filename like `bob.png`.
+    // no slashes or colons, nor can start with `.`
+    /^[\w-][\w.-]*$/.test(url) ||
+    // CDN: only the paper folder, no path traversal
+    (cdn &&
+      url.startsWith(`${cdn}/images/tgui/paper/`) &&
+      !/\.\.|%2e/i.test(url))
+      ? ''
+      : m,
+  );
+  // Leftover urls, image fns, or escapes
+  data.keepAttr = !/\\|(?:url|image(?:-set)?|var|env|attr)\(/i.test(rest);
+  data.attrValue = style.cssText;
+});
 
 /**
  * Feed it a string and it should spit out a sanitized version.

@@ -5,8 +5,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	name = "security RecordTrak"
 	desc = "A device used to scan in prisoners and update their security records."
 	icon_state = "recordtrak"
-	var/datum/db_record/active1 = null
-	var/datum/db_record/active2 = null
 	item_state = "recordtrak"
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
@@ -18,7 +16,13 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	#define PRISONER_MODE_SUSPECT 5
 
 	///List of record settings
-	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED, PRISONER_MODE_SUSPECT)
+	VAR_PRIVATE/static/alist/modes = alist(
+		PRISONER_MODE_NONE			= SECURITY::ARREST::STATE::NONE,
+		PRISONER_MODE_PAROLED		= SECURITY::ARREST::STATE::PAROLE,
+		PRISONER_MODE_INCARCERATED	= SECURITY::ARREST::STATE::INCARCERATED,
+		PRISONER_MODE_RELEASED		= SECURITY::ARREST::STATE::RELEASED,
+		PRISONER_MODE_SUSPECT		= SECURITY::ARREST::STATE::SUSPECT,
+	)
 	///The current setting
 	var/mode = PRISONER_MODE_NONE
 	/// The sechud flag that will be applied when scanning someone
@@ -61,120 +65,38 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			boutput(user, SPAN_ALERT("The device displays an error, the target's face must be visible."))
 			return
 
-		////General Records
-		var/found = 0
-		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
-		//	boutput(user, SPAN_ALERT("Device only works in designated security areas!"))
-		//	return
 		boutput(user, SPAN_NOTICE("You scan in [target]."))
 		boutput(target, SPAN_ALERT("[user] scans you with the RecordTrak!"))
-		for(var/datum/db_record/R as anything in data_core.general.records)
-			if (lowertext(R["name"]) == lowertext(target.real_name))
-				//Update Information
-				R["name"] = target.real_name
-				R["sex"] = target.gender
-				R["pronouns"] = target.get_pronouns().name
-				R["age"] = target.bioHolder.age
-				if (!target.gloves?.print_mask)
-					R["fingerprint_right"] = "[target.limbs?.r_arm?.limb_print.id]"
-					R["fingerprint_left"] = "[target.limbs?.l_arm?.limb_print.id]"
-				R["p_stat"] = "Active"
-				R["m_stat"] = "Stable"
-				src.active1 = R
-				found = 1
 
-		if(found == 0)
-			src.active1 = new /datum/db_record()
-			src.active1["id"] = num2hex(rand(1, 0xffffff),6)
-			src.active1["rank"] = "Unassigned"
-			//Update Information
-			src.active1["name"] = target.real_name
-			src.active1["sex"] = target.gender
-			src.active1["pronouns"] = target.get_pronouns().name
-			src.active1["age"] = target.bioHolder.age
-			/////Fingerprint record update
-			if (target.gloves?.print_mask && target.gloves?.print_mask.id != FORENSIC_GLOVE_MASK_FINGERLESS)
-				src.active1["fingerprint_right"] = "Unknown"
-				src.active1["fingerprint_left"] = "Unknown"
-			else
-				if(target.limbs?.r_arm?.limb_print)
-					src.active1["fingerprint_right"] = "[target.limbs?.r_arm?.limb_print]"
-				else
-					src.active1["fingerprint_right"] = "None"
-				if(target.limbs?.l_arm?.limb_print)
-					src.active1["fingerprint_left"] = "[target.limbs?.l_arm?.limb_print]"
-				else
-					src.active1["fingerprint_right"] = "None"
-			src.active1["p_stat"] = "Active"
-			src.active1["m_stat"] = "Stable"
-			data_core.general.add_record(src.active1)
+		// Arrests
+		var/list/datum/db_record/citation/arrest/arrests = global.data_core.get_open_arrests(target.real_name)
+		if (length(arrests))
+			var/assignment = "Unknown"
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				assignment = global.get_id_card(H.wear_id)?.assignment
 
-			// Bank Records
-			var/bank_record = new/datum/db_record()
-			bank_record["name"] = src.active1["name"]
-			bank_record["id"] = src.active1["id"]
-			bank_record["current_money"] = 0
-			bank_record["unionized"] = "No"
-			bank_record["wage"] = 0
-			bank_record["notes"] = "No notes."
-			if(istype(target.wear_id, /obj/item/device/pda2))
-				var/obj/item/device/pda2/worn_pda = target.wear_id
-				bank_record["pda_net_id"] = worn_pda.net_id
-			data_core.bank.add_record(bank_record)
+			for (var/datum/db_record/citation/arrest/arrest as anything in arrests)
+				arrest.close(user.name, assignment, "Warrant closed via RecordTrak.")
 
-		////Security Records
-		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
-		if(E)
-			switch (mode)
-				if(PRISONER_MODE_NONE)
-					E["criminal"] = SECURITY::ARREST::STATE::NONE
+		// General
+		var/datum/db_record/personnel/general/general = global.data_core.get_general_record(target.real_name, ensure_record = TRUE)
+		var/record_id = general["id"]
+		general.update_from_scan(target)
 
-				if(PRISONER_MODE_PAROLED)
-					E["criminal"] = SECURITY::ARREST::STATE::PAROLE
+		// Medical
+		var/datum/db_record/personnel/medical/medical = global.data_core.get_medical_record(id = record_id, ensure_record = TRUE)
+		medical.update_from_scan(target)
 
-				if(PRISONER_MODE_RELEASED)
-					E["criminal"] = SECURITY::ARREST::STATE::RELEASED
+		// Security
+		var/datum/db_record/personnel/security/security = global.data_core.get_security_record(id = record_id, ensure_record = TRUE)
+		security.update_from_scan(target)
+		security["criminal"] = src.modes[src.mode]
+		security["sec_flag"] = src.sechud_flag
 
-				if(PRISONER_MODE_INCARCERATED)
-					E["criminal"] = SECURITY::ARREST::STATE::INCARCERATED
-
-				if(PRISONER_MODE_SUSPECT)
-					E["criminal"] = SECURITY::ARREST::STATE::SUSPECT
-			E["sec_flag"] = src.sechud_flag
-			target.update_arrest_icon()
-			return
-
-
-		src.active2 = new /datum/db_record()
-		src.active2["name"] = src.active1["name"]
-		src.active2["id"] = src.active1["id"]
-		switch (mode)
-			if(PRISONER_MODE_NONE)
-				src.active2["criminal"] = SECURITY::ARREST::STATE::ARREST
-
-			if(PRISONER_MODE_PAROLED)
-				src.active2["criminal"] = SECURITY::ARREST::STATE::PAROLE
-
-			if(PRISONER_MODE_RELEASED)
-				src.active2["criminal"] = SECURITY::ARREST::STATE::RELEASED
-
-			if(PRISONER_MODE_INCARCERATED)
-				src.active2["criminal"] = SECURITY::ARREST::STATE::INCARCERATED
-
-			if(PRISONER_MODE_SUSPECT)
-				src.active2["criminal"] =SECURITY::ARREST::STATE::SUSPECT
-
-		src.active2["sec_flag"] = src.sechud_flag
-		src.active2["mi_crim"] = "None"
-		src.active2["mi_crim_d"] = "No minor crime convictions."
-		src.active2["ma_crim"] = "None"
-		src.active2["ma_crim_d"] = "No major crime convictions."
-		src.active2["notes"] = "No notes."
-		data_core.security.add_record(src.active2)
-
-		target.update_arrest_icon()
-
-		return
+		// Bank
+		var/datum/db_record/personnel/bank/bank = global.data_core.get_bank_record(id = record_id, ensure_record = TRUE)
+		bank.update_from_scan(target)
 
 	attack_self(mob/user as mob)
 		user.showContextActions(src.contexts, src, src.contextLayout)

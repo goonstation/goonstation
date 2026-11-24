@@ -266,22 +266,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"sg" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	layer = 4;
-	opacity = 0
-	},
-/obj/mapping_helper/button/area,
-/obj/window_blinds/cog2/left{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/bridge)
 "uI" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/networked/printer{
@@ -650,7 +634,7 @@ Ic
 (9,1,1) = {"
 Ic
 Ic
-sg
+kF
 VX
 RV
 kF

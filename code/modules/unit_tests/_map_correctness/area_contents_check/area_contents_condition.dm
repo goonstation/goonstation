@@ -15,10 +15,11 @@ ABSTRACT_TYPE(/datum/area_contents_condition)
 
 
 #define CONTENTS_LT(type, num_expected) new /datum/area_contents_condition/lt(type, num_expected)
-/datum/area_contents_condition/lt/evaluate(alist/summed_contents)
+/datum/area_contents_condition/lt/evaluate(alist/summed_contents_by_type)
 	var/type = src.arguments[1]
 	var/num_expected = src.arguments[2]
-	var/num_found = length(summed_contents[type])
+	var/list/summed_contents = summed_contents_by_type[type]
+	var/num_found = length(summed_contents)
 
 	// If the amount found is less than the amount expected, pass the check.
 	if (num_found < num_expected)
@@ -26,14 +27,15 @@ ABSTRACT_TYPE(/datum/area_contents_condition)
 
 	src.output = "Less than [num_expected] instance\s of ([type]) [num_expected == 1 ? "was" : "were"] expected, [. ? "and" : "but"] [num_found] [num_found == 1 ? "was" : "were"] found."
 	if (num_found)
-		src.output += " " + summed_contents[type].Join(", ")
+		src.output += " " + summed_contents.Join(", ")
 
 
 #define CONTENTS_GT(type, num_expected) new /datum/area_contents_condition/gt(type, num_expected)
-/datum/area_contents_condition/gt/evaluate(alist/summed_contents)
+/datum/area_contents_condition/gt/evaluate(alist/summed_contents_by_type)
 	var/type = src.arguments[1]
 	var/num_expected = src.arguments[2]
-	var/num_found = length(summed_contents[type])
+	var/list/summed_contents = summed_contents_by_type[type]
+	var/num_found = length(summed_contents)
 
 	// If the amount found is greater than the amount expected, pass the check.
 	if (num_found > num_expected)
@@ -41,14 +43,15 @@ ABSTRACT_TYPE(/datum/area_contents_condition)
 
 	src.output = "Greater than [num_expected] instance\s of ([type]) [num_expected == 1 ? "was" : "were"] expected, [. ? "and" : "but"] [num_found] [num_found == 1 ? "was" : "were"] found."
 	if (num_found)
-		src.output += " " + summed_contents[type].Join(", ")
+		src.output += " " + summed_contents.Join(", ")
 
 
 #define CONTENTS_EQ(type, num_expected) new /datum/area_contents_condition/eq(type, num_expected)
-/datum/area_contents_condition/eq/evaluate(alist/summed_contents)
+/datum/area_contents_condition/eq/evaluate(alist/summed_contents_by_type)
 	var/type = src.arguments[1]
 	var/num_expected = src.arguments[2]
-	var/num_found = length(summed_contents[type])
+	var/list/summed_contents = summed_contents_by_type[type]
+	var/num_found = length(summed_contents)
 
 	// If the amount found is equal to the amount expected, pass the check.
 	if (num_found == num_expected)
@@ -56,18 +59,18 @@ ABSTRACT_TYPE(/datum/area_contents_condition)
 
 	src.output = "Exactly [num_expected] instance\s of ([type]) [num_expected == 1 ? "was" : "were"] expected, [. ? "and" : "but"] [num_found] [num_found == 1 ? "was" : "were"] found."
 	if (num_found)
-		src.output += " " + summed_contents[type].Join(", ")
+		src.output += " " + summed_contents.Join(", ")
 
 
 #define CONTENTS_OR new /datum/area_contents_condition/or
-/datum/area_contents_condition/or/evaluate(alist/summed_contents)
+/datum/area_contents_condition/or/evaluate(alist/summed_contents_by_type)
 	// Here, `arguments` is a list of expected contents lists, one of which must be satisfied.
 	for (var/list/datum/area_contents_condition/expected_contents as anything in src.arguments)
 		var/success = TRUE
 
 		// All conditions inside of `expected_contents` must pass in order to pass the subcondition.
 		for (var/datum/area_contents_condition/condition as anything in expected_contents)
-			if (!condition.evaluate(summed_contents))
+			if (!condition.evaluate(summed_contents_by_type))
 				success = FALSE
 
 		// If the subcondition passed, pass the check.

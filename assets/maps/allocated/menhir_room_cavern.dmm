@@ -1,0 +1,758 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"b" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/poolroom)
+"c" = (
+/turf/unsimulated/wall/auto/adventure/cave,
+/area/unspace/poolroom/reservoir)
+"f" = (
+/obj/item/raw_material/cobryl,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"g" = (
+/obj/map/light/graveyard{
+	brightness = 6
+	},
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"h" = (
+/obj/decal/lightshaft,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"i" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/mushrooms/type1,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"j" = (
+/obj/map/light/graveyard{
+	brightness = 3
+	},
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"m" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_cavern"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/poolroom)
+"n" = (
+/obj/river{
+	desc = "It's pouring down from somewhere far above.";
+	name = "Waterfall"
+	},
+/turf/unsimulated/wall/auto/adventure/cave,
+/area/unspace/poolroom/reservoir)
+"p" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/poolroom)
+"q" = (
+/obj/decal/cliff/shore{
+	dir = 1;
+	density = 1;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/setpieces/menhir_cavepool,
+/area/unspace/poolroom/reservoir)
+"r" = (
+/obj/decal/cliff/shore{
+	dir = 8;
+	density = 1
+	},
+/turf/unsimulated/floor/setpieces/menhir_cavepool,
+/area/unspace/poolroom/reservoir)
+"t" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/poolroom)
+"x" = (
+/obj/map/light/graveyard{
+	brightness = 6
+	},
+/turf/unsimulated/floor/setpieces/menhir_cavepool,
+/area/unspace/poolroom/reservoir)
+"z" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/mushrooms/type4,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"B" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/mushrooms/type6,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"D" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"F" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/poolroom)
+"H" = (
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"I" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/mushrooms/type2,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"J" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/poolroom)
+"L" = (
+/obj/decal/cleanable/dirt,
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"N" = (
+/turf/unsimulated/floor/setpieces/menhir_cavepool,
+/area/unspace/poolroom/reservoir)
+"Q" = (
+/turf/unsimulated/floor/void,
+/area/unspace/poolroom)
+"R" = (
+/mob/living/critter/small_animal/cockroach,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"S" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/poolroom)
+"T" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/mushrooms/type3,
+/turf/unsimulated/floor/cave,
+/area/unspace/poolroom/reservoir)
+"V" = (
+/obj/map/light/graveyard{
+	brightness = 3
+	},
+/turf/unsimulated/floor/setpieces/menhir_cavepool,
+/area/unspace/poolroom/reservoir)
+"W" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/poolroom)
+"X" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/poolroom)
+"Y" = (
+/obj/decal/lightshaft,
+/obj/effects/harmless_smoke{
+	name = "mist";
+	opacity = 0
+	},
+/turf/unsimulated/floor/setpieces/menhir_cavepool,
+/area/unspace/poolroom/reservoir)
+"Z" = (
+/turf/unsimulated/floor/void,
+/area/unspace/poolroom/reservoir)
+
+(1,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+Z
+Z
+Z
+Z
+Z
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(2,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+Z
+Z
+Z
+Z
+c
+c
+B
+H
+c
+c
+B
+c
+c
+"}
+(3,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+Z
+Z
+Z
+Z
+c
+H
+H
+H
+i
+c
+H
+c
+c
+"}
+(4,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+Z
+Z
+Z
+Z
+c
+a
+H
+H
+H
+H
+H
+f
+c
+"}
+(5,1,1) = {"
+Q
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+Z
+Z
+Z
+Z
+c
+c
+j
+H
+c
+c
+r
+c
+T
+c
+"}
+(6,1,1) = {"
+Q
+Q
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+c
+c
+c
+Z
+c
+c
+c
+H
+H
+q
+N
+N
+c
+c
+c
+"}
+(7,1,1) = {"
+Q
+Q
+Q
+t
+t
+t
+t
+t
+t
+t
+t
+t
+Z
+c
+z
+c
+c
+c
+a
+H
+h
+g
+q
+N
+N
+N
+c
+c
+"}
+(8,1,1) = {"
+Q
+Q
+Q
+Q
+t
+t
+t
+t
+t
+t
+t
+Z
+Z
+c
+H
+H
+H
+a
+H
+H
+H
+H
+q
+N
+N
+N
+c
+c
+"}
+(9,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+t
+t
+t
+t
+t
+Q
+c
+c
+c
+H
+c
+T
+a
+H
+j
+H
+H
+q
+N
+N
+N
+N
+c
+"}
+(10,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+t
+t
+t
+X
+Q
+c
+f
+H
+H
+c
+c
+H
+H
+a
+c
+R
+q
+N
+N
+N
+N
+c
+"}
+(11,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+X
+m
+X
+X
+Q
+c
+I
+c
+c
+c
+c
+H
+H
+c
+c
+c
+c
+N
+N
+x
+N
+c
+"}
+(12,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+X
+J
+X
+Q
+Q
+c
+c
+c
+c
+c
+c
+a
+H
+c
+c
+n
+n
+Y
+N
+N
+N
+c
+"}
+(13,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+X
+W
+X
+X
+X
+c
+c
+c
+c
+c
+c
+H
+H
+a
+c
+c
+c
+N
+V
+N
+c
+c
+"}
+(14,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+X
+b
+X
+F
+X
+c
+X
+X
+X
+X
+X
+D
+H
+H
+H
+q
+N
+N
+N
+N
+N
+c
+"}
+(15,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+X
+W
+b
+F
+X
+X
+X
+b
+W
+b
+S
+H
+H
+H
+H
+q
+N
+N
+N
+N
+N
+c
+"}
+(16,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+X
+X
+X
+F
+b
+b
+b
+b
+X
+X
+X
+L
+H
+H
+H
+q
+N
+N
+N
+N
+N
+c
+"}
+(17,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+X
+F
+X
+p
+X
+X
+X
+c
+c
+c
+a
+H
+c
+c
+N
+N
+N
+N
+c
+c
+"}
+(18,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+X
+X
+X
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+N
+N
+N
+N
+c
+c
+c
+"}
+(19,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Z
+Z
+Z
+Z
+c
+c
+c
+c
+c
+n
+N
+N
+N
+N
+c
+c
+Z
+"}
+(20,1,1) = {"
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+c
+c
+c
+c
+c
+c
+c
+c
+Z
+Z
+"}

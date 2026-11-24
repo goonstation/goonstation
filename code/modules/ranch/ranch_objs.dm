@@ -24,6 +24,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	icon_state = "incubator"
 	density = 1
 	anchored = ANCHORED
+	default_material = "wood"
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/my_egg = null
 	var/incubate_count = 0
 	var/image/egg_overlay = null
@@ -163,6 +164,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	name = "incubator parts"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "incubator_parts"
+	default_material = "wood"
 	w_class = W_CLASS_NORMAL
 
 // Ranch Feed Proxy
@@ -597,8 +599,10 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 	New()
 		..()
 		feed_flags = list()
+		START_TRACKING
 
 	disposing()
+		STOP_TRACKING
 		feed_flags = null
 		happiness_mod = 0
 		hunger_mod = 0
@@ -618,6 +622,7 @@ TYPEINFO(/obj/chicken_nesting_box)
 	density = 0
 	anchored = UNANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER
+	default_material = "wood"
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/incubator_parts))
@@ -667,6 +672,7 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 	var/max_eggs = 5
 	/// distance to spawn chickens in from center
 	var/spawn_radius = 2
+	HELP_MESSAGE_OVERRIDE({"Use a <b>wrench</b> on the grenade to empty its egg storage."})
 
 	get_desc()
 		. += "Features advanced egg care technology to keep up to [max_eggs] eggs safely cradled and warm. This device is capable of hatching mature roosters that will fiercely defend their master, dispatching any nearby threats or bystanders to the best of their abilities."
@@ -688,6 +694,7 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 					dest_turf = T
 				var/mob/living/critter/small_animal/ranch_base/chicken/C = new E.chicken_egg_props.rooster_type(dest_turf)
 				C.grow_up()
+				C.faction = list(FACTION_SYNDICATE)
 				C.update_friendlist(user, FALSE)
 				C.hyperaggressive = TRUE
 				C.xp = 10001
@@ -773,7 +780,7 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 		src.vis_contents -= src.chicken
 		src.chicken.plane = PLANE_DEFAULT
 		src.chicken.layer = MOB_LAYER
-		REMOVE_ATOM_PROPERTY(src.chicken, PROP_MOB_BREATHLESS, src.type)
+		REMOVE_ATOM_PROPERTY(src.chicken, PROP_MOB_NO_OXY_LOSS, src.type)
 		UnregisterSignal(src.chicken, COMSIG_PARENT_PRE_DISPOSING)
 		src.chicken = null
 		src.UpdateIcon()
@@ -825,7 +832,7 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 		owner.visible_message("[owner] gently scoops [carrier.chicken] into [carrier].", "You carefully scoop [carrier.chicken] into [carrier].", "You hear the ruffling of feathers.")
 		carrier.vis_contents += carrier.chicken
 		carrier.UpdateIcon()
-		APPLY_ATOM_PROPERTY(target, PROP_MOB_BREATHLESS, carrier.type)
+		APPLY_ATOM_PROPERTY(target, PROP_MOB_NO_OXY_LOSS, carrier.type)
 		carrier.RegisterSignal(carrier.chicken, COMSIG_PARENT_PRE_DISPOSING, /obj/item/chicken_carrier/proc/remove_chicken)
 
 // Chicken Nametag

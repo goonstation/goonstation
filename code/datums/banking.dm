@@ -31,9 +31,6 @@
 	var/time_between_lotto = 0
 	var/time_until_lotto = 0
 
-	/// The last time a bonus was issued
-	var/last_issued_bonus_time = 0
-
 	// We'll start at 0 credits, and increase it in the lotteryday proc
 	var/lotteryJackpot = 0
 	// 500 minutes ~ 8.2 hours
@@ -118,7 +115,7 @@
 					signal.data["command"] = "text_message"
 					signal.data["sender_name"] = "PAYROLL-MAILBOT"
 					signal.data["address_1"] = t["pda_net_id"]
-					signal.data["message"] = "[t["wage"]] credits have been deposited into your bank account. You have [t["current_money"]] credits total."
+					signal.data["message"] = "[t["wage"]][CREDIT_SIGN] deposited into your account. Current Balance: [t["current_money"]][CREDIT_SIGN]."
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 #endif
 			else
@@ -191,6 +188,7 @@
 						wagesystem.lotteryJackpot -= I:winner
 					else
 						wagesystem.lotteryJackpot = 0
+					user.unlock_medal("Guess who won the lottery!", TRUE)
 				else
 					boutput(user, SPAN_ALERT("This ticket isn't a winner. Better luck next time!"))
 				qdel(I)
@@ -205,13 +203,6 @@
 			user.client.add_to_bank(SB.amount)
 			boutput(user, SPAN_ALERT("You deposit [SB.amount] spacebux into your account!"))
 			qdel(SB)
-		else if(istype(I, /obj/item/currency/spacecash/))
-			if (src.accessed_record)
-				boutput(user, SPAN_NOTICE("You insert the cash into the ATM."))
-				src.accessed_record["current_money"] += I.amount
-				I.amount = 0
-				qdel(I)
-			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
 		else if(istype(I, /obj/item/currency/buttcoin/))
 			if (src.accessed_record)
 				boutput(user, SPAN_NOTICE("You force the cash into the ATM."))
@@ -219,23 +210,6 @@
 				I.amount = 0
 				qdel(I)
 			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
-		else if(istype(I, /obj/item/lotteryTicket))
-			if (src.accessed_record)
-				boutput(user, SPAN_NOTICE("You insert the lottery ticket into the ATM."))
-				if(I:winner)
-					boutput(user, SPAN_NOTICE("Congratulations, this ticket is a winner netting you [I:winner] credits"))
-					src.accessed_record["current_money"] += I:winner
-
-					if(wagesystem.lotteryJackpot > I:winner)
-						wagesystem.lotteryJackpot -= I:winner
-					else
-						wagesystem.lotteryJackpot = 0
-
-
-				else
-					boutput(user, SPAN_ALERT("This ticket isn't a winner. Better luck next time!"))
-				qdel(I)
-			else boutput(user, SPAN_ALERT("You need to log in before inserting a ticket!"))
 		else
 			..()
 		return
@@ -296,7 +270,7 @@
 
 
 	proc/TryToFindRecord()
-		src.accessed_record = data_core.bank.find_record("name", src.scan.registered)
+		src.accessed_record = global.data_core.get_bank_record(src.scan.registered)
 		return !!src.accessed_record
 
 	Topic(href, href_list)
@@ -494,6 +468,7 @@
 						wagesystem.lotteryJackpot -= I:winner
 					else
 						wagesystem.lotteryJackpot = 0
+					user.unlock_medal("Guess who won the lottery!", TRUE)
 					src.Attackhand(user)
 				else
 					boutput(user, SPAN_ALERT("This ticket isn't a winner. Better luck next time!"))
@@ -689,7 +664,7 @@
 
 	proc/TryToFindRecord()
 		if(src.scan)
-			src.accessed_record = data_core.bank.find_record("name", src.scan.registered)
+			src.accessed_record = global.data_core.get_bank_record(src.scan.registered)
 			return !!src.accessed_record
 		return 0
 
@@ -775,17 +750,6 @@
 		. = ..()
 		STOP_TRACKING
 
-proc/FindBankAccountByName(var/nametosearch)
-	RETURN_TYPE(/datum/db_record)
-	if (!nametosearch) return
-	return data_core.bank.find_record("name", nametosearch)
-
-/// Given a list of jobs, return the associated bank account records. Does not de-duplicate bank account records.
-proc/FindBankAccountsByJobs(var/list/job_list)
-	RETURN_TYPE(/list/datum/db_record)
-	. = list()
-	for (var/each_job in job_list)
-		. += data_core.general.find_records("rank", each_job)
 
 #undef STATE_LOGGEDOFF
 #undef STATE_LOGGEDIN

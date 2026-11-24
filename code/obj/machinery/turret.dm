@@ -25,8 +25,6 @@
 	var/datum/projectile/lethal = new/datum/projectile/laser/heavy/ai_turret
 	var/datum/projectile/stun = new/datum/projectile/energy_bolt/robust
 	var/list/mob/target_list = null
-	var/image/turret_overlay = null
-	var/image/turret_smoke_overlay = null
 
 /obj/machinery/turretcover
 	name = "Turret Cover"
@@ -71,48 +69,43 @@
 	if(istype(TP))
 		TP.turret_list -= src
 	STOP_TRACKING
+	QDEL_NULL(src.void)
+	QDEL_NULL(src.cover)
+	QDEL_NULL(src.base)
 	..()
 
 /obj/machinery/turret/proc/isPopping()
 	return (popping!=0)
 
 /obj/machinery/turret/power_change()
-	if(status & BROKEN)
+	. = ..()
+	src.UpdateIcon()
+
+/obj/machinery/turret/update_icon(...)
+	if (!src.powered())
+		src.icon_state = "Turret_nopower"
+		src.ClearSpecificOverlays("status_overlay")
+		return
+	var/image/turret_overlay
+	if(status & BROKEN || !src.enabled)
 		icon_state = "Turret_off"
-		var/image/turret_overlay = ClearAllOverlays()
 		turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
 		turret_overlay.plane = PLANE_SELFILLUM
-		src.UpdateOverlays(turret_overlay, "off_overlay")
-	else
-		if( powered() )
-			if (src.enabled)
-				if (src.lasers)
-					icon_state = "Turret_lethal"
-					turret_overlay = ClearAllOverlays()
-					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay")
-					turret_overlay.plane = PLANE_SELFILLUM
-					src.UpdateOverlays(turret_overlay, "lethal_overlay")
-				else
-					icon_state = "Turret_stun"
-					turret_overlay = ClearAllOverlays()
-					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay")
-					turret_overlay.plane = PLANE_SELFILLUM
-					turret_overlay.alpha = 128
-					src.UpdateOverlays(turret_overlay, "stun_overlay")
+		src.UpdateOverlays(turret_overlay, "status_overlay")
+		return
 
-			else
-				icon_state = "Turret_off"
-				turret_overlay = ClearAllOverlays()
-				turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
-				turret_overlay.plane = PLANE_SELFILLUM
-				src.UpdateOverlays(turret_overlay, "off_overlay")
-			status &= ~NOPOWER
-		else
-			SPAWN(rand(0, 15))
-				src.icon_state = "Turret_nopower"
-				turret_overlay = ClearAllOverlays()
-				src.UpdateOverlays(turret_overlay)
-				status |= NOPOWER
+	if (src.lasers)
+		icon_state = "Turret_lethal"
+		turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay")
+		turret_overlay.plane = PLANE_SELFILLUM
+		src.UpdateOverlays(turret_overlay, "status_overlay")
+	else
+		icon_state = "Turret_stun"
+		turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay")
+		turret_overlay.plane = PLANE_SELFILLUM
+		turret_overlay.alpha = 128
+		src.UpdateOverlays(turret_overlay, "status_overlay")
+
 
 /obj/machinery/turret/proc/setState(var/enabled, var/lethal)
 	src.enabled = enabled
@@ -130,12 +123,12 @@
 	if(lastfired && world.time - lastfired < shot_delay)
 		return
 
-	if (src.cover==null)
+	if (isnull(src.cover))
 		src.cover = new /obj/machinery/turretcover(src.loc)
-	if (src.base==null)
+	if (isnull(src.base))
 		src.base = new /obj/machinery/turretbase(src.loc)
 	var/turf/T = get_turf(src)
-	if (isfloor(T))
+	if (isnull(src.void) && isfloor(T))
 		src.void = new /obj/decal/turretvoid(src.loc)
 
 	if(GET_COOLDOWN(src, "emp_timer"))
@@ -225,28 +218,8 @@
 		if (src.cover!=null)
 			FLICK("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
-			turret_overlay = ClearAllOverlays()
 			SPAWN(1.4 SECONDS)
-				if(status & BROKEN)
-					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
-					turret_overlay.plane = PLANE_SELFILLUM
-					src.UpdateOverlays(turret_overlay, "off_overlay")
-				else
-					if( powered() )
-						if (src.enabled)
-							if (src.lasers)
-								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay")
-								turret_overlay.plane = PLANE_SELFILLUM
-								src.UpdateOverlays(turret_overlay, "lethal_overlay")
-							else
-								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay")
-								turret_overlay.plane = PLANE_SELFILLUM
-								turret_overlay.alpha = 128
-								src.UpdateOverlays(turret_overlay, "stun_overlay")
-						else
-							turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
-							turret_overlay.plane = PLANE_SELFILLUM
-							src.UpdateOverlays(turret_overlay, "off_overlay")
+				src.UpdateIcon()
 		SPAWN(1 SECOND)
 			if (popping==1)
 				popping = 0
@@ -259,7 +232,7 @@
 		if (src.cover!=null)
 			FLICK("popdown", src.cover)
 			src.cover.icon_state = "TurretCover"
-			turret_overlay = ClearAllOverlays()
+			src.ClearAllOverlays()
 		SPAWN(1.3 SECONDS)
 			if (popping==-1)
 				invisibility = INVIS_ALWAYS
@@ -330,27 +303,21 @@
 	src.health = 0
 	src.set_density(0)
 	src.status |= BROKEN
-	turret_overlay = ClearAllOverlays()
-	turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "explosion_overlay")
-	turret_overlay.plane = PLANE_SELFILLUM
-	src.UpdateOverlays(turret_overlay, "explosion_overlay")
-	src.icon_state = "Turret_nopower" //otherwise it doesn't want to work
+	src.ClearSpecificOverlays("turret_status")
+	var/image/explosion_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "explosion_overlay")
+	explosion_overlay.plane = PLANE_SELFILLUM
+	src.UpdateOverlays(explosion_overlay, "explosion_overlay")
+	src.icon_state = "Turret_nopower"
+	var/image/turret_smoke_overlay
 	SPAWN(0.2 SECONDS)
 		turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay_1")
-		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay_1")
+		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay")
 	SPAWN(0.9 SECONDS)
-		turret_overlay = ClearAllOverlays()
-		turret_smoke_overlay = ClearAllOverlays()
+		src.ClearSpecificOverlays("explosion_overlay")
 		turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay_2")
-		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay_2")
+		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay")
 		src.icon_state = "Turret_destroyed" //same deal here
 		SPAWN(0.6 SECONDS)
-			turret_overlay = ClearAllOverlays()
-			turret_smoke_overlay = ClearAllOverlays()
-			if (cover!=null)
-				qdel(cover)
-			if(base!=null)
-				qdel(base)
 			qdel(src)
 
 /*
@@ -370,7 +337,7 @@
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 		return
 
@@ -448,6 +415,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	var/emagged = 0
 	var/turretArea = null
 
+	var/click_count = 0
+	var/last_click_time = -INFINITY
+
 	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -487,6 +457,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	turretArea = /area/station/turret_protected/armory_outside
 	req_access = list(access_armory)
 
+/obj/machinery/turretid/incursion
+	name = "Countermeasure Turret Control"
+	enabled = 0
+	turretArea = /area/station/turret_protected/incursion
+	req_access = list(access_heads)
+
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return
 	if (issilicon(user) || isAI(user))
@@ -518,7 +494,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	. = list(
 		"enabled" = src.enabled,
 		"lethal" = src.lethal,
-		"emagged" = src.emagged
+		"emagged" = src.emagged,
+		"lockout_time" = GET_COOLDOWN(src, "spam_lockout"),
 	)
 	if (issilicon(user) || isAI(user))
 		.["locked"] = FALSE
@@ -534,6 +511,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	)
 
 
+/obj/machinery/turretid/proc/register_click(mob/user)
+	if (TIME - src.last_click_time > 3 SECONDS)
+		src.click_count = 0
+		src.last_click_time = TIME
+		return
+
+	src.click_count++
+	//start timing from the first click of this set, not the actual last click
+	if (src.click_count == 1)
+		src.last_click_time = TIME
+
+	if (src.click_count > 5)
+		logTheThing(LOG_COMBAT, user, "triggers a turret control lockout at [log_loc(src)], enabling turrets automatically")
+		ON_COOLDOWN(src, "spam_lockout", 10 SECONDS)
+		playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+		src.enabled = TRUE
+		src.updateTurrets()
+		src.click_count = 0
+
 /obj/machinery/turretid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())
 		return
@@ -542,6 +538,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 		if (!issilicon(usr) && !isAI(usr))
 			boutput(usr, "Control panel is locked!")
 			return
+
+	if (!issilicon(usr) && !isAI(usr))
+		src.register_click(ui.user)
+	if (GET_COOLDOWN(src, "spam_lockout"))
+		return
 
 	switch (action)
 		if ("setEnabled")

@@ -312,7 +312,7 @@ proc/debug_map_apc_count(delim,zlim)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/area/area = theTurf.loc
 			img.app.desc = "Area: [area.name]<br/>Type: [area.type]"
-			img.app.icon = initial(theTurf.loc.icon)
+			img.app.icon = get_initial_icon(theTurf.loc)
 			img.app.icon_state = initial(theTurf.loc.icon_state)
 
 	active_areas
@@ -1548,8 +1548,10 @@ proc/debug_map_apc_count(delim,zlim)
 		OnEnabled(var/client/C)
 			usr = C.mob
 			src.hashmap = global.tgui_input_list(C, "Which spatial hashmap do you wish to view?", "Select Spatial Hashmap", global.by_type[/datum/spatial_hashmap])
-			src.norm = global.tgui_input_list(C, "Select a norm to use", "Norm Selection", list("Manhattan", "Supremum", "Exact Supremum"))
-			src.range = global.tgui_input_number(C, "Enter a range", "Range Selection", 5, 100, 1)
+			src.norm = global.tgui_input_list(C, "Select a norm to use", "Norm Selection", list("Manhattan", "Supremum", "Vistarget Supremum", "Exact Supremum", "Point", "Vistarget Point"))
+
+			if ((src.norm != "Point") && (src.norm != "Vistarget Point"))
+				src.range = global.tgui_input_number(C, "Enter a range", "Range Selection", 5, 100, 1)
 
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			if (isnull(src.hashmap))
@@ -1562,8 +1564,14 @@ proc/debug_map_apc_count(delim,zlim)
 					count = length(src.hashmap.fast_manhattan(theTurf, src.range))
 				if ("Supremum")
 					count = length(src.hashmap.supremum(theTurf, src.range))
+				if ("Vistarget Supremum")
+					count = length(src.hashmap.vistarget_supremum(theTurf, src.range))
 				if ("Exact Supremum")
 					count = length(src.hashmap.exact_supremum(theTurf, src.range))
+				if ("Point")
+					count = length(src.hashmap.point(theTurf))
+				if ("Vistarget Point")
+					count = length(src.hashmap.vistarget_point(theTurf))
 
 			img.app.alpha = 120
 			img.app.color = rgb(count * 10, count * 10, count * 10)
@@ -1659,7 +1667,7 @@ proc/debug_map_apc_count(delim,zlim)
 	appearance_flags = RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
 
 	proc/reset()
-		src.icon = initial(src.icon)
+		src.icon = get_initial_icon(src)
 		src.color = initial(src.color)
 		src.override = initial(src.override)
 		src.desc = initial(src.desc)

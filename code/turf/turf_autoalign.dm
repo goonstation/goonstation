@@ -187,7 +187,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			else
 				return
 
-		src.material_trigger_when_attacked(W, user, 1)
+		src.material_trigger_when_hit(W, user, MATERIAL::IMPACT::MELEE)
 		src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
 
 /turf/simulated/wall/auto/reinforced/the_tuff_stuff
@@ -342,13 +342,13 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn)
 TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 	. = ..()
 	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/unsimulated/wall/auto/adventure/icemooninterior, //menhir
 		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/strip_door
 	))
 	connects_with_overlay = typecacheof(list(
-		/turf/simulated/wall/auto/shuttle,
+		/turf/simulated/wall/auto/shuttle, /turf/unsimulated/wall/auto/adventure/icemooninterior, //menhir
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/strip_door
 	))
@@ -401,14 +401,14 @@ TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn)
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 	. = ..()
 	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/unsimulated/wall/auto/adventure/icemooninterior, //menhir
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
 		/obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/strip_door
 	))
 	connects_with_overlay = typecacheof(list(
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /turf/unsimulated/wall/auto/adventure/icemooninterior, //menhir
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window,
 		/obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper, /obj/strip_door
 	))
@@ -1067,6 +1067,18 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemoon)
 	icon_state = "ice-0"
 	plane = PLANE_NOSHADOW_BELOW
 
+TYPEINFO(/turf/unsimulated/wall/auto/adventure/icemooninterior)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemooninterior)
+	. = ..()
+	connect_overlay = 0
+	connects_to = typecacheof(list(
+		/turf/cordon, // helps obscure how thin the wall is
+		/turf/unsimulated/wall/auto/adventure/icemooninterior,
+		/turf/unsimulated/wall/auto/adventure/icemoon,
+		/obj/machinery/door/unpowered/blue,
+		/turf/unsimulated/wall/setpieces/bluewall_glowing,
+		/obj/precursor_puzzle/glowing_door
+	))
 /turf/unsimulated/wall/auto/adventure/icemooninterior
 	name = "blue wall"
 	icon = 'icons/turf/walls/precursor.dmi'
@@ -1187,6 +1199,19 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	light_mod = "wall-"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
+TYPEINFO(/turf/unsimulated/wall/auto/web)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/web)
+    . = ..()
+    connect_diagonal = 1
+    connects_to = typecacheof(list(/obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/))
+/turf/unsimulated/wall/auto/web
+    name = "webbing wall"
+    desc = "A wall of tightly wound spider silk."
+    icon = 'icons/turf/walls/Spidersilkwall.dmi'
+    mod = "Spidersilk-"
+    light_mod = "wall-"
+    icon_state = "Spidersilk-0"
+
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	connect_diagonal = TRUE
 	connect_overlay = FALSE
@@ -1197,6 +1222,19 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	icon_state = "R-0"
 	mod = "R-"
 	opacity = FALSE
+
+TYPEINFO(/turf/unsimulated/wall/auto/adventure/concrete)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/concrete)
+	. = ..()
+	connect_overlay = 0
+	connect_diagonal = 0
+
+/turf/unsimulated/wall/auto/adventure/concrete
+	name = "concrete wall"
+	desc = "A solid wall of concrete. It's extremely sturdy"
+	icon = 'icons/misc/terra8.dmi'
+	mod = "concrete"
+	icon_state = "concrete0"
 
 /datum/action/bar/icon/wall_tool_interact
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION

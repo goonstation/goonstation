@@ -121,15 +121,21 @@ var/datum/job/priority_job = null
 					src.print_text("Error: no job selected, aborting...")
 					src.print_main_menu()
 					return
-				if(command == "x" || text2num(command) == 0)
+				request_count = text2num(command)
+				if(command == "x" || request_count == 0)
 					src.print_text("Cancelling job request...")
 					requested_job = null
 					src.print_main_menu()
 					return
-				else if(text2num(command))
-					request_count = text2num(command)
+				else if(request_count)
 					if (request_count > (requested_job.request_limit - requested_job.limit))
 						src.print_text("Error: cannot request that many slots")
+						src.print_text("Enter the number of job openings to request (max [requested_job.request_limit - requested_job.limit]), or type X to cancel")
+						request_count = 0
+						state = MENU_REQUEST_COUNT
+						return
+					if(request_count < 0 || request_count != round(request_count))
+						src.print_text("Error: invalid request amount")
 						src.print_text("Enter the number of job openings to request (max [requested_job.request_limit - requested_job.limit]), or type X to cancel")
 						request_count = 0
 						state = MENU_REQUEST_COUNT

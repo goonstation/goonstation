@@ -178,6 +178,8 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 					continue
 				if (istype(AM, /obj/effects/precipitation))
 					continue
+				if (istype(AM, /obj/forcefield/event))
+					continue // no moving spatial tears
 				var/turf/ejectT
 				switch(ejectdir) // find the spot to push everything
 					if (NORTH)

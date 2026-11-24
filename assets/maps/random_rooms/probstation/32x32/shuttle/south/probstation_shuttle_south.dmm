@@ -8,7 +8,7 @@
 /obj/stool/chair/office/red{
 	dir = 4
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "bS" = (
 /obj/decal/stripe_delivery,
@@ -18,7 +18,7 @@
 /area/station/hallway/secondary/northwest)
 "cg" = (
 /obj/machinery/light/small/frostedred,
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "cH" = (
 /obj/table/wood/round/auto,
@@ -161,7 +161,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "lJ" = (
 /obj/stool/chair/office/red{
@@ -185,7 +185,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "nX" = (
 /obj/table/syndicate/auto,
@@ -195,7 +195,7 @@
 	pixel_y = 4;
 	pixel_x = -4
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "oM" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
@@ -372,7 +372,7 @@
 /obj/machinery/computer/television/small{
 	pixel_y = 4
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "EE" = (
 /obj/machinery/power/apc/autoname_east,
@@ -554,7 +554,7 @@
 	pixel_x = -1;
 	pixel_y = -10
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "RN" = (
 /obj/cable{
@@ -613,6 +613,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/hallway/secondary/exit)
+"UC" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "Vu" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
@@ -628,10 +634,10 @@
 /obj/item/cigarbox/gold{
 	pixel_y = 9
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "WT" = (
-/turf/unsimulated/floor/minitiles/black,
+/turf/simulated/floor/minitiles/black,
 /area/station/maintenance/outer/nw)
 "Xg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -954,16 +960,16 @@ NX
 NX
 NX
 NX
+Mh
+Mh
+Mh
 NX
 NX
 NX
 NX
-NX
-NX
-NX
-NX
-NX
-NX
+Mh
+Mh
+Mh
 NX
 NX
 NX
@@ -986,20 +992,20 @@ tG
 (9,1,1) = {"
 NX
 NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
 NX
-NX
-NX
-NX
-NX
-NX
-NX
-NX
-NX
-NX
-NX
-NX
-NX
-NX
+dJ
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
 NX
 NX
 NX
@@ -1020,20 +1026,20 @@ tG
 (10,1,1) = {"
 NX
 NX
-NX
-NX
 Mh
 Mh
 Mh
-NX
-NX
-NX
-NX
 Mh
 Mh
 Mh
-NX
-NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
 NX
 NX
 NX
@@ -1060,8 +1066,8 @@ Mh
 Mh
 Mh
 Mh
-NX
-dJ
+Mh
+Mh
 Mh
 Mh
 Mh
@@ -1347,7 +1353,7 @@ NX
 Bc
 vC
 LQ
-LQ
+UC
 Mv
 fJ
 LQ
@@ -1530,7 +1536,6 @@ VM
 (25,1,1) = {"
 NX
 NX
-NX
 Mh
 Mh
 Mh
@@ -1543,7 +1548,8 @@ Mh
 Mh
 Mh
 Mh
-NX
+Mh
+Mh
 NX
 NX
 NX
@@ -1564,9 +1570,6 @@ VM
 (26,1,1) = {"
 NX
 NX
-NX
-NX
-NX
 Mh
 Mh
 Mh
@@ -1575,9 +1578,12 @@ Mh
 Mh
 Mh
 Mh
-NX
-NX
-NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
 NX
 NX
 NX
@@ -1599,8 +1605,6 @@ VM
 NX
 NX
 NX
-NX
-NX
 Mh
 Mh
 Mh
@@ -1609,8 +1613,10 @@ Mh
 Mh
 Mh
 Mh
-NX
-NX
+Mh
+Mh
+Mh
+Mh
 NX
 NX
 NX
@@ -1669,14 +1675,14 @@ NX
 NX
 NX
 NX
-NX
 Mh
 Mh
 Mh
 Mh
 Mh
 Mh
-NX
+Mh
+Mh
 NX
 NX
 NX
@@ -1703,14 +1709,14 @@ NX
 NX
 NX
 NX
-NX
-NX
-NX
-NX
-NX
-NX
-NX
-NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
 NX
 NX
 NX
@@ -1738,12 +1744,12 @@ NX
 NX
 NX
 NX
-NX
-NX
-NX
-NX
-NX
-NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
 NX
 NX
 NX

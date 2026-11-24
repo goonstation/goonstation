@@ -929,7 +929,7 @@
 	device_tag = "PNET_ARTCONSOL"
 	timeout = 10
 	icon = 'icons/obj/networked.dmi'
-	icon_state = "generic0"
+	icon_state = "artconsol0"
 	var/list/entries
 	var/screen_title = "Devices"
 	var/highlightMap = 0
@@ -951,14 +951,14 @@
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	power_change()
 		if(powered())
-			icon_state = "generic[src.host_id != null]"
+			icon_state = "artconsol[src.host_id != null]"
 		else
 			SPAWN(rand(0, 15))
-				icon_state = "generic-p"
+				icon_state = "artconsol-p"
 				status |= NOPOWER
 
 	receive_signal(datum/signal/signal)

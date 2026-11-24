@@ -65,9 +65,9 @@
 	if(!target || !src.client) return
 	target = targets[target]
 	if(target)
-		gpsToTurf(target, param = ID)
+		gpsToTurf(target, path = paths[target])
 
-/mob/proc/gpsToTurf(var/turf/dest, var/doText = 1, param = null, cardinal_only=FALSE, all_access = FALSE, timeout = 0)
+/mob/proc/gpsToTurf(var/turf/dest, var/doText = 1, cardinal_only=FALSE, all_access = FALSE, timeout = 0, list/path = null)
 	removeGpsPath(doText)
 	var/turf/start = get_turf(src)
 	if(dest.z != start.z)
@@ -75,7 +75,8 @@
 			boutput(usr, "You are on a different z-level!")
 		return
 	var/obj/item/card/id/id = all_access ? get_singleton(/obj/item/card/id/gold/captains_spare) : src.get_id()
-	client.GPS_Path = get_path_to(src, dest, max_distance = 120, id=id, skip_first=FALSE, cardinal_only=cardinal_only)
+	path ||= get_path_to(src, dest, max_distance = 120, id=id, skip_first=FALSE, cardinal_only=cardinal_only)
+	client.GPS_Path = path
 	if(length(client.GPS_Path))
 		if(doText && !timeout)
 			boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
@@ -85,7 +86,6 @@
 		return
 	client.GPS_Images = list()
 	SPAWN(0)
-		var/list/path = client.GPS_Path
 		for(var/i = 2, i < path.len, i++)
 			if(!client.GPS_Path) break
 			var/turf/prev = path[i-1]

@@ -7,6 +7,7 @@
 	pointCost = 50
 	target_anything = TRUE
 	targeted = TRUE
+	aim_assist_radius = AIM_ASSIST_1_TILE
 
 	/// The amount of power used when shocking a mob.
 	var/wattage = 600 KILO WATT

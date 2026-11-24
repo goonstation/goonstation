@@ -56,9 +56,10 @@
 		boutput(src, SPAN_ALERT("You can't hurt yourself here."))
 		return
 
-	if (locate(/datum/ailment/parasite/headspider) in src.ailments)
-		boutput(src, SPAN_ALERT("You feel a deep alien hunger for survival crush your attempt to escape your fate."))
-		return
+	for (var/datum/ailment_data/parasite/parasite in src.ailments)
+		if (parasite.master?.type == /datum/ailment/parasite/headspider)
+			boutput(src, SPAN_ALERT("You feel a deep alien hunger for survival crush your attempt to escape your fate."))
+			return
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src

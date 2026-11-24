@@ -186,7 +186,7 @@ TYPEINFO(/mob/living/critter/martian)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/hitscan
 		HH.name = "Martian Psychokinetic Blaster"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand_martian"
 		HH.limb_name = "Martian Psychokinetic Blaster"
 		HH.can_hold_items = FALSE

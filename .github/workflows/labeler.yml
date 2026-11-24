@@ -1,20 +1,51 @@
 name: "Pull Request Labels"
 on:
-- pull_request_target
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
-  area-label:
+  content-label:
     permissions:
       contents: read
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/labeler@v6
+    - uses: actions/labeler@v7
   size-label:
     runs-on: ubuntu-latest
     steps:
       - name: size-label
-        uses: pascalgn/size-label-action@v0.5.2
+        uses: pascalgn/size-label-action@v0.5.7
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           IGNORED: "**/*.bundle.*\n**/*.chunk.*" # **/*.dmm\n
+  area-label:
+    # Logistic regression trained on PR metadata
+    if: github.event.action != 'synchronize' && !github.event.pull_request.draft
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        sparse-checkout: .github/pr-labeler
+    - uses: actions/github-script@v9
+      with:
+        script: |
+          const model = require("./.github/pr-labeler/model.json");
+          const { score } = require("./.github/pr-labeler/score.js");
+          const pr = context.payload.pull_request;
+          const issue = { ...context.repo, issue_number: pr.number };
+
+          const files = await github.paginate(github.rest.pulls.listFiles, { ...context.repo, pull_number: pr.number, per_page: 100 });
+          const { labels, scores } = score(model, { title: pr.title, body: pr.body, files: files.map((f) => f.filename) });
+
+          // Don't re-add a label someone already removed
+          const events = await github.paginate(github.rest.issues.listEventsForTimeline, { ...issue, per_page: 100 });
+          const removed = new Set(events.filter((e) => e.event === "unlabeled").map((e) => e.label.name));
+          const toAdd = labels.filter((l) => !removed.has(l) && !pr.labels.some((x) => x.name === l));
+
+          // debug for future re-retraining
+          core.info(Object.entries(scores).slice(0, 6).map(([label, score]) => `${label}: ${score.toFixed(2)}`).join("\n"));
+          if (toAdd.length) await github.rest.issues.addLabels({ ...issue, labels: toAdd });

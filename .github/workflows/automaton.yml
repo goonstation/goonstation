@@ -10,6 +10,11 @@ on:
     branches:
       - "master"
 
+# A new push to a PR cancels its older run
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   runtime:
     name: Runtime Checker
@@ -24,9 +29,9 @@ jobs:
             "COGMAP2",
             "CLARION",
             "DONUT3",
-            "DONUT2",
             "OSHAN",
             "KONDARU",
+            "MENHIR",
             "NADIR",
             "NEON",
             "SPACE_PREFAB",
@@ -37,7 +42,7 @@ jobs:
           ]
         compiletype: ["default"]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: ./.github/actions/setup-byond
 
@@ -98,9 +103,9 @@ jobs:
             "COGMAP2",
             "CLARION",
             "DONUT3",
-            "DONUT2",
             "OSHAN",
             "KONDARU",
+            "MENHIR",
             "NADIR",
             "NEON",
             "SPACE_PREFAB",
@@ -112,7 +117,7 @@ jobs:
         compiletype: ["default"]
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           submodules: true
           token: "${{ secrets.ROBUDDYBOT_PAT }}"
@@ -167,7 +172,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: ./.github/actions/setup-byond
 

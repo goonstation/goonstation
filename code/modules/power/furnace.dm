@@ -208,6 +208,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 			return
 		actions.start(new /datum/action/bar/icon/stuff_mob_into_furnace(user, src, victim), user)
 
+	on_material_scan()
+		return "Filled more quickly by materials with high flammability"
+
 	// this is run after it's checked a person isn't being loaded in with a grab
 	// return value 0 means it can't be put it, 1 is loaded in
 	// original is 1 only if it's the item a person directly puts in, so that putting in a
@@ -217,10 +220,10 @@ TYPEINFO(/obj/machinery/power/furnace)
 		var/started_full = fuel == maxfuel
 		var/fuel_name = initial(W.name)
 		if (W.material)
-			if (W.material.getProperty("flammable") <= 1)
+			if (W.material.getProperty(MATERIAL::PROPERTY::FLAMMABLE) <= 1)
 				return 0
 			else
-				var/fuel_amount = (10 * (2 ** (W.material.getProperty("flammable") - 2)))
+				var/fuel_amount = (10 * (2 ** (W.material.getProperty(MATERIAL::PROPERTY::FLAMMABLE) - 2)))
 				if (W.amount == 1)
 					fuel += fuel_amount
 				else
@@ -318,7 +321,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 		src.user.visible_message(SPAN_ALERT("[src.user] starts to shove [src.victim] into the furnace!"))
 		logTheThing(LOG_COMBAT, src.user, "attempted to force [constructTarget(src.victim,"combat")] into a furnace at [log_loc(src.furnace)].")
 		message_admins("[key_name(src.user)] is trying to force [key_name(src.victim)] into a furnace at [log_loc(src.furnace)].")
-		message_ghosts("<b>[src.victim]</b> is being shoved in a furnace at [log_loc(src.furnace, ghostjump = TRUE)]!")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src.victim)] is being shoved in a furnace at [GHOST.MESSAGE.format_loc(src.furnace)]!")
 
 	onUpdate()
 		..()

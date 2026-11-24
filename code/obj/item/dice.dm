@@ -694,6 +694,7 @@ var/list/rollList = list()
 	name = "dice box"
 	desc = "A fancy box for holding up to five dice."
 	icon_state = "dicebox"
+	default_material = "wood"
 	var/firstopen = 1 //helps organize overlays
 	var/setcolor //color of the dice set
 

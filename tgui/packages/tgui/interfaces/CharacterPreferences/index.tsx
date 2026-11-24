@@ -65,9 +65,12 @@ export const CharacterPreferences = (_props: any) => {
   };
 
   return (
-    <Window width={600} height={750} title="Character Setup">
+    <Window width={600} height={755} title="Character Setup">
       <ModalContext value={modalContextValue}>
-        <Window.Content onKeyDown={handleKeyDown}>
+        <Window.Content
+          onKeyDown={handleKeyDown}
+          style={{ backgroundImage: 'none' }}
+        >
           <Stack vertical fill>
             <Stack.Item>
               <SavesAndProfile />

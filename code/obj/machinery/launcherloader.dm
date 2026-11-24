@@ -400,7 +400,7 @@
 				"name" = scan.registered,
 				"role" = scan.assignment,
 				"icon" = icon_src,
-				"balance" = account?.get_field("current_money"),
+				"balance" = account?["current_money"],
 			)
 		else
 			.["card"] = null
@@ -423,7 +423,7 @@
 		var/obj/item/card/id/id_card = get_id_card(I)
 		if (istype(id_card))
 			boutput(user, SPAN_NOTICE("You swipe the ID card."))
-			account = FindBankAccountByName(id_card.registered)
+			account = global.data_core.get_bank_record(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Barcode Computer")
 				if (enterpin == id_card.pin)
@@ -502,7 +502,7 @@
 
 	src.destinations["Third Party"] = "REQ-THIRDPARTY"
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
-		src.destinations[RC.name] = RC.req_code
+		src.destinations["[RC.name] ([RC.req_code])"] = RC.req_code
 
 /obj/item/portable_barcoder/attack_self(mob/user)
 	src.select_destination(user)

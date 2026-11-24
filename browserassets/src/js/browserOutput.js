@@ -75,19 +75,6 @@ var themes = {
   'theme-dark': 'Dark',
 };
 
-//Polyfill for fucking date now because of course IE8 and below don't support it
-if (!Date.now) {
-  Date.now = function now() {
-    return new Date().getTime();
-  };
-}
-//Polyfill for trim() (IE8 and below)
-if (typeof String.prototype.trim !== 'function') {
-  String.prototype.trim = function () {
-    return this.replace(/^\s+|\s+$/g, '');
-  };
-}
-
 //Actually turns the highlight term match into appropriate html
 function createHighlightMarkup() {
   var extra = '';
@@ -1338,7 +1325,26 @@ $(function () {
     setCookie('highlightcolor', opts.highlightColor, 365);
   });
 
-  $('#clearMessages').click(function () {
+  $('#clearMessages').click(function (e) {
+    e.preventDefault();
+    if ($('.popup .clearMessagesPopup').is(':visible')) {
+      return;
+    }
+    var popupContent =
+      '<div class="head">CLEAR ALL MESSAGES?</div>' +
+      '<div class="clearMessagesPopup" id="clearMessagesPopup">' +
+      '<div>This cannot be undone.</div>' +
+      '<form id="clearMessagesForm">' +
+      '<input type="submit" value="CLEAR MESSAGES" />' +
+      '<input type="button" class="cancelClearMessages" value="CANCEL" />' +
+      '</form>' +
+      '</div>';
+    createPopup(popupContent, 250);
+  });
+
+  $('body').on('submit', '#clearMessagesForm', function (e) {
+    e.preventDefault();
+    $('#clearMessagesPopup').closest('.popup').remove();
     $messages.empty();
     opts.messageCount = 0;
   });

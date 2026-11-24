@@ -2,6 +2,7 @@
  * @file
  * @copyright 2026
  * @author glowbold (https://github.com/pgmzeta)
+ * @author Changes Sovexe (https://github.com/sovexe)
  * @license MIT
  */
 import { BooleanLike } from 'tgui-core/react';
@@ -122,4 +123,5 @@ export interface DiseaseData {
   stage: number;
   max_stage: number;
   cure_method: string;
+  suppression_info?: string | null;
 }

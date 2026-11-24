@@ -277,6 +277,8 @@
 		materiel_stock += new/datum/materiel/fishing_gear/bucket_hat
 		materiel_stock += new/datum/materiel/fishing_gear/fish_box
 		materiel_stock += new/datum/materiel/fishing_gear/fish_mount
+		materiel_stock += new/datum/materiel/fishing_gear/angler_stamp
+
 		..()
 
 	accepted_token(var/obj/item/currency/fishing/token)
@@ -715,6 +717,12 @@
 	path = /obj/item/fishing_rod/master
 	description = "The ultimate fishing rod, capable of fishing in the most extreme circumstances."
 	cost = 50
+
+/datum/materiel/fishing_gear/angler_stamp
+	name = "A stamp of a true angler"
+	path = /obj/item/stamp/angler
+	description = "A tool to show your authority on fishing related manners, brought to you by National Notary"
+	cost = 25
 
 /datum/materiel/fishing_gear/fish_box
 	name = "Portable aquarium"

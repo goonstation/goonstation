@@ -1606,6 +1606,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak, var/dist_lower=1, var/dist_upper=6)
 	if(src.disposed)
 		return
+	if(!isturf(src.loc)) //Don't try to step if we're contained within something else (e.g. someone got gibbed in a locker)
+		return
 	if(isnull(get_turf(src)))
 		CRASH("Attempting to streak cleanable [identify_object(src)] which is in null.")
 
@@ -1723,3 +1725,35 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (src.color)
 			color_name = hex2color_name(src.color)
 			src.name = "[color_name] hair pile"
+
+/obj/decal/cleanable/web_barricade
+    name = "torn webbing"
+    desc = "Torn up spider silk strewn across the floor."
+    icon = 'icons/obj/spiderwebs.dmi'
+    icon_state = "web_barricade-broken"
+
+/obj/decal/cleanable/web_block
+    name = "torn webbing"
+    desc = "Torn up spider silk strewn across the floor."
+    icon = 'icons/obj/spiderwebs.dmi'
+    icon_state = "web_block-broken"
+
+/obj/decal/cleanable/web_fence
+    name = "torn webbing"
+    desc = "Torn up spider silk strewn across the floor."
+    icon = 'icons/obj/spiderwebs.dmi'
+    icon_state = "web_fence-broken"
+
+/obj/decal/cleanable/web_sack
+    name = "egg sack"
+    desc = "A large ball of webbing likely containing spider eggs."
+    icon = 'icons/obj/spiderwebs.dmi'
+    icon_state = "websack1"
+    random_icon_states = list("websack1", "websack2")
+
+    attackby(obj/item/W, mob/user)
+        if (issnippingtool(W) || iscuttingtool(W) || issawingtool(W))
+            src.visible_message("[user] cuts at the [src] with [W].")
+            playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 100, 1)
+            qdel(src)
+            return

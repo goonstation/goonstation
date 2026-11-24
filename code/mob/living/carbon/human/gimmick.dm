@@ -222,8 +222,8 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 		. = pick(get_all_jobs())
 
 	proc/say_helper_crewmember()
-		var/datum/db_record/record = pick(data_core.general.records)
-		. = record["full_name"]
+		var/datum/db_record/personnel/general/record = global.data_core.get_random_general_record()
+		return record?["full_name"]
 
 	proc/say_helper_logged_phrase()
 		. = capitalize(phrase_log.random_phrase("say"))
@@ -445,7 +445,6 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return
 		else
 			boutput(src, "<span class='bold notice'>Shitty Bill will try to respawn in roughly 3 minutes.</span>")
-			src.become_ghost()
 #ifdef TWITCH_BOT_ALLOWED
 			src = null
 

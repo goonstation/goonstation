@@ -43,7 +43,7 @@ TYPEINFO(/obj/item/motherboard)
 	name = "Computer-frame"
 	icon = 'icons/obj/computer_frame.dmi'
 	icon_state = "0"
-	material_amt = 0.5
+	material_amt = MATERIAL::AMOUNT::SHEET * 5
 	var/state = 0
 	var/obj/item/motherboard/mainboard = null
 	var/obj/item/disk/data/fixed_disk/hd = null
@@ -54,13 +54,21 @@ TYPEINFO(/obj/item/motherboard)
 	var/glass_needed = 2 //How much glass does this need for a screen?
 	var/metal_given = 5 //How much metal does this give when destroyed?
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+		make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+		qdel(src)
+		return TRUE
+
 	terminal //Light frame
 		name = "Terminal-frame"
 		desc = "A light micro-computer frame used for terminal systems."
 		icon = 'icons/obj/terminal_frame.dmi'
 		created_icon_state = "dterm"
 		computer_type = /obj/machinery/computer3/terminal
-		material_amt = 0.3
+		material_amt = MATERIAL::AMOUNT::SHEET * 3
 		max_peripherals = 2
 		metal_given = 3
 		glass_needed = 1

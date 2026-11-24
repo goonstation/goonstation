@@ -1,5 +1,7 @@
-import { describe, it } from 'vitest';
+import { afterEach, describe, it } from 'vitest';
 
+import { configAtom, store } from './events/store';
+import type { Config } from './events/types';
 import { sanitizeDefAllowTags, sanitizeText } from './sanitize';
 
 describe('sanitizeText', () => {
@@ -44,7 +46,7 @@ describe('sanitizeText', () => {
 
   describe('paper sheet config (input tags + style allowed)', () => {
     const PAPER_ALLOWED_TAGS = [...sanitizeDefAllowTags, 'input'];
-    const PAPER_FORBID_ATTRS = ['class', 'background'];
+    const PAPER_FORBID_ATTRS = ['class', 'background', 'src'];
 
     it('strips script tags', ({ expect }) => {
       const input = '<b>hi</b><script>alert(1)</script>';
@@ -131,6 +133,52 @@ describe('sanitizeText', () => {
         PAPER_FORBID_ATTRS,
       );
       expect(result).not.toContain('background=');
+    });
+
+    it('strips src attributes (input type=image)', ({ expect }) => {
+      const input = '<input type="image" src="http://evil.com/x.png">';
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
+      expect(result).not.toContain('evil.com');
+    });
+
+    describe('style url() whitelist', () => {
+      const CDN = 'https://cdn.example.test/goon';
+      const paper = (style: string) =>
+        sanitizeText(
+          `<div style="${style}">x</div>`,
+          false,
+          PAPER_ALLOWED_TAGS,
+          PAPER_FORBID_ATTRS,
+        );
+
+      afterEach(() => store.set(configAtom, { cdn: '' } as Config));
+
+      it('keeps paper assets from the CDN or local cache', ({ expect }) => {
+        expect(paper('background: url(un.png)')).toContain('un.png');
+        store.set(configAtom, { cdn: CDN } as Config);
+        const url = `${CDN}/images/tgui/paper/un.png?v=1`;
+        expect(paper(`color: red; background: url('${url}')`)).toContain(url);
+      });
+
+      it.for([
+        'background: url(https://evil.test/x.png)',
+        `background: url(${CDN}.evil.test/x.png)`,
+        `background: url(${CDN}/images/tgui/stamp_icons/x.png)`,
+        `background: url(${CDN}/images/tgui/paper/../x.png)`,
+        `background: url(${CDN}/images/tgui/paper/%2E%2E/x.png)`,
+        `background: url(${CDN}/images/tgui/paper/x.png); cursor: url(//evil.test/c), auto`,
+        'background: \\75 rl(https://evil.test/x.png)',
+        '--a: url(https://evil.test/x.png); background: var(--a)',
+        'background: image-set("https://evil.test/x.png" 1x)',
+      ])('drops the url for %s', (style, { expect }) => {
+        store.set(configAtom, { cdn: CDN } as Config);
+        expect(paper(style)).not.toContain('x.png');
+      });
     });
   });
 });

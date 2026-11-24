@@ -74,7 +74,7 @@ TYPEINFO(/mob/living/critter/hastur)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.name = "right tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "tentacler"				// the icon state of the hand UI background
 		HH.limb_name = "right tentacles"					// name for the dummy holder
 		HH.limb = new /datum/limb/abomination/hastur	// if not null, the special limb to use when attack_handing
@@ -83,7 +83,7 @@ TYPEINFO(/mob/living/critter/hastur)
 
 		HH = hands[2]
 		HH.name = "left tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "tentaclel"				// the icon state of the hand UI background
 		HH.limb_name = "left tentacles"					// name for the dummy holder
 		HH.limb = new /datum/limb/abomination/hastur	// if not null, the special limb to use when attack_handing
@@ -92,7 +92,7 @@ TYPEINFO(/mob/living/critter/hastur)
 
 		HH = hands[3]
 		HH.name = "long range tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "tentaclek"				// the icon state of the hand UI background
 		HH.limb_name = "long range tentacles"					// name for the dummy holder
 		HH.limb = new /datum/limb/longtentacle	// if not null, the special limb to use when attack_handing
@@ -102,7 +102,7 @@ TYPEINFO(/mob/living/critter/hastur)
 
 		HH = hands[4]
 		HH.name = "long range stun tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "tentacles"				// the icon state of the hand UI background
 		HH.limb_name = "long range stun tentacles"					// name for the dummy holder
 		HH.limb = new /datum/limb/longtentaclestun	// if not null, the special limb to use when attack_handing

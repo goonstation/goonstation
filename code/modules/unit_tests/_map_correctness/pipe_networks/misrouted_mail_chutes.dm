@@ -1,10 +1,6 @@
 /datum/map_correctness_check/misrouted_mail_chutes
 	check_name = "Misrouted Mail Chutes"
 	check_prefabs = FALSE
-	skip_check_on = list(
-		// Donut2's Zeta Outpost, in not being directly connected via pipe, breaks `mail_tag` routing.
-		/datum/map_settings/donut2,
-	)
 
 /datum/map_correctness_check/misrouted_mail_chutes/run_check()
 	. = list()
@@ -21,7 +17,7 @@
 			chute.destination_tag = destination
 			chute.flush(destination)
 
-	sleep(5 SECONDS)
+	wait_for_pipenet_dummies(dummy_list)
 	for (var/obj/item/pipenet_test_dummy/mail/dummy as anything in dummy_list)
 		if (istype(dummy.ejection_chute) && (dummy.ejection_chute.mail_tag == dummy.destination_tag))
 			continue

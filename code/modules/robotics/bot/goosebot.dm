@@ -14,7 +14,7 @@
 	speech_verb_say = "blares"
 
 /obj/machinery/bot/goosebot/proc/wakka_wakka()
-	src.navigate_to(get_step_rand(src), max_dist=6)
+	src.navigate_to(get_step_rand(src), src.bot_move_delay, max_dist=6)
 
 /obj/machinery/bot/goosebot/process()
 	. = ..()

@@ -117,6 +117,20 @@ var/global
 	"Flat" = 'icons/cursors/target/flat.dmi',
 	"Small" = 'icons/cursors/target/small.dmi')
 
+	list/cursors_selection_range_1 = list("Default" = 'icons/cursors/target/default-range_1.dmi',
+	"Red" = 'icons/cursors/target/red-range_1.dmi',
+	"Green" = 'icons/cursors/target/green-range_1.dmi',
+	"Blue" = 'icons/cursors/target/blue-range_1.dmi',
+	"Yellow" = 'icons/cursors/target/yellow-range_1.dmi',
+	"Cyan" = 'icons/cursors/target/cyan-range_1.dmi',
+	"White" = 'icons/cursors/target/white-range_1.dmi',
+	"Rainbow" = 'icons/cursors/target/rainbow-range_1.dmi',
+	"Animated Rainbow" = 'icons/cursors/target/rainbowanimated-range_1.dmi',
+	"Flashing" = 'icons/cursors/target/flashing-range_1.dmi',
+	"Minimalistic" = 'icons/cursors/target/minimalistic-range_1.dmi',
+	"Flat" = 'icons/cursors/target/flat-range_1.dmi',
+	"Small" = 'icons/cursors/target/small-range_1.dmi')
+
 	list/hud_style_selection = list("New" = 'icons/mob/hud_human_new.dmi',
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
@@ -245,9 +259,6 @@ var/global
 
 	list/selectable_ringtones = list()
 
-	//april fools
-	manualbreathing = 0
-	manualblinking = 0
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
@@ -301,7 +312,6 @@ var/global
 	remote_music_announcements = 0
 
 
-	outpost_destroyed = 0
 	signal_loss = 0
 	solar_gen_rate = DEFAULT_SOLARGENRATE
 	fart_attack = 0
@@ -581,7 +591,7 @@ var/global
 
 /// Generates item icons for manufacturers and other things, used in UI dialogs.
 /proc/getItemIcon(var/atom/A, var/state, var/dir)
-	return "\ref[initial(A.icon)]?state=[state || initial(A.icon_state)]&dir=[dir || initial(A.dir)]"
+	return "\ref[get_initial_icon(A)]?state=[state || initial(A.icon_state)]&dir=[dir || initial(A.dir)]"
 
 #ifdef TWITCH_BOT_ALLOWED
 var/global/mob/twitch_mob = 0

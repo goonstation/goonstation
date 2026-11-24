@@ -128,6 +128,9 @@
 				E.mainframe.law_rack_connection = null
 				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				logTheThing(LOG_STATION, E.mainframe, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
+		for_by_tcl(linker, /obj/item/device/borg_linker)
+			if(linker.linked_rack == dead_rack)
+				linker.linked_rack = null
 
 /* Get random law text for a specified slot */
 	proc/generate_random_law(var/law_number)

@@ -18,6 +18,7 @@
 		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
 		E.color = "#FF5555"
 		E.setup(src.owner.current.loc)
+		src.owner.current.delStatus("weakened_loyalty")
 		if (isliving(src.owner.current))
 			//if we got here then the implant must be disabled, so just destroy it
 			var/mob/living/living_owner = src.owner.current

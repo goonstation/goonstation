@@ -19,7 +19,7 @@
 	provides_grip = FALSE
 	/// if this floor can be pried up
 	var/pryable = TRUE
-	var/has_material = TRUE
+	var/datum/material/plating_material = null //! Material of the floor when the floor tile is removed
 
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
@@ -34,6 +34,7 @@
 
 	New()
 		..()
+		src.plating_material = src.material
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -2203,9 +2204,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
-	if(default_material)
-		var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-		src.setMaterial(mat)
+	if(src.plating_material)
+		src.setMaterial(src.plating_material)
+	else if(src.default_material)
+		src.setMaterial(getMaterial(src.default_material))
 	else
 		src.setMaterial(getMaterial("steel"))
 	levelupdate()
@@ -2313,7 +2315,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if (!intact)
 			if(T.amount >= 1)
 				restore_tile(do_hide)
-				src.default_material = src.material
+				src.plating_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
@@ -2455,7 +2457,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		..()
-		src.material_trigger_when_attacked(C, user, 1)
+		src.material_trigger_when_hit(C, user, MATERIAL::IMPACT::MELEE)
 
 /turf/simulated/floor/proc/reinforce(obj/item/rods/I)
 	src.ReplaceWithEngineFloor()
@@ -2618,8 +2620,40 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "glowing wall"
 		desc = "It seems to be humming slightly. Huh."
 		luminosity = 2
-		icon_state = "bluewall_glow"
+		icon = 'icons/misc/worlds.dmi'
+		icon_state = "bluedoor_1"
 		can_replace_with_stuff = 1
+
+		// borrowed from /obj/strip_door to make this easier
+		// i dont know why this is a wall, and i dont think i want to know.
+		var/static/list/connects_to = typecacheof(list(
+			/obj/machinery/door,
+			/obj/window,
+			/turf/simulated/wall/auto,
+			/turf/unsimulated/wall/auto,
+			/obj/precursor_puzzle/glowing_door
+		))
+
+		New()
+			..()
+			src.UpdateIcon()
+			// we shouldnt have to update neighbors because nobody's building these
+
+		update_icon()
+			..()
+			var/connectdir = get_connected_directions_bitflag(connects_to)
+			if ((connectdir & NORTH) && (connectdir & SOUTH))
+				src.dir = EAST
+				return
+			if ((connectdir & EAST) && (connectdir & WEST))
+				src.dir = NORTH
+				return
+			if ((connectdir & NORTH) || (connectdir & SOUTH))
+				src.dir = EAST
+				return
+			if ((connectdir & EAST) || (connectdir & WEST))
+				src.dir = NORTH
+				return
 
 		attackby(obj/item/W, mob/user)
 			if (istype(W, /obj/item/device/key/generic/coldsteel))
@@ -3018,6 +3052,17 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon_state = "swampgrass_edge"
 	can_dig = TRUE
 
+/turf/simulated/floor/auto/web
+    name = "web"
+    desc = "A thick coating of web."
+    icon = 'icons/turf/web.dmi'
+    icon_state = "web1"
+    pryable = FALSE
+    edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
+    icon_state_edge = "web_edge"
+    step_material = "step_outdoors"
+    step_priority = STEP_PRIORITY_MED
+
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	connect_diagonal = 1
@@ -3172,3 +3217,19 @@ DEFINE_FLOORS(bamboo,
 	icon_state = "floor$$bamboo";\
 	default_material = "bamboo";\
 	uses_default_material_appearance = TRUE)
+
+/turf/unsimulated/floor/concrete
+	name = "concrete floor"
+	desc = "It's pretty sturdy."
+	icon = 'icons/misc/terra8.dmi'
+	icon_state = "floor"
+
+/turf/unsimulated/floor/moss
+	name = "moss"
+	desc = "A deep mat of lichens and mosses."
+	icon = 'icons/misc/terra8.dmi'
+	icon_state = "moss"
+
+	New()
+		..()
+		src.dir = pick(alldirs)

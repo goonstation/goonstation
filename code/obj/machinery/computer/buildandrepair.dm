@@ -13,12 +13,19 @@
 	///State of construction of the frame, see defines above
 	var/state = STATE_UNANCHORED
 	var/obj/item/circuitboard/circuit = null
-	material_amt = 0.5
+	material_amt = MATERIAL::AMOUNT::SHEET * 5
 	HELP_MESSAGE_OVERRIDE("")
 
 	blob_act(var/power)
 		qdel(src)
 //	weight = 1.0E8
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+		make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+		qdel(src)
+		return TRUE
 
 ABSTRACT_TYPE(/obj/item/circuitboard)
 TYPEINFO(/obj/item/circuitboard)
@@ -111,10 +118,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/teleporter
 	name = "circuit board (teleporter)"
 	computertype = /obj/machinery/computer/teleporter
-/obj/item/circuitboard/secure_data
-	name = "circuit board (secure data)"
-	computertype = /obj/machinery/computer/secure_data
-	icon_state = "circuit_security"
 /obj/item/circuitboard/atmospheresiphonswitch
 	name = "circuit board (atmosphere siphon control)"
 	computertype = /obj/machinery/computer/atmosphere/siphonswitch

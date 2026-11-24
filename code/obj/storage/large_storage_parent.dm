@@ -16,6 +16,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	desc = "this is a parent item you shouldn't see!!"
 	flags = NOSPLASH | FLUID_SUBMERGE
 	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
+	gas_impermeable = TRUE
 	icon = 'icons/obj/storage/large_storage.dmi'
 	icon_state = "closed"
 	density = 1
@@ -73,6 +74,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 
 	New()
 		..()
+		src.gas_impermeable = !src.open
 		START_TRACKING
 		weld_image = image(src.icon, src.icon_welded)
 		weld_image.pixel_x = weld_image_offset_X
@@ -91,6 +93,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			src.vis_controller = null
 		STOP_TRACKING
 		..()
+
 
 	proc/make_my_stuff() // use this rather than overriding the container's New()
 		. = 1
@@ -441,6 +444,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		src.pried_open = TRUE
 		src.locked = FALSE
 		src.open = TRUE
+		src.gas_impermeable = FALSE
 		src.dump_direct_contents(user)
 		src.UpdateIcon()
 		p_class = initial(p_class)
@@ -656,6 +660,20 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			qdel(src)
 		return
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+
+		if (!src.open)
+			src._health = 0
+			src.break_open()
+			return TRUE
+
+		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+		src.flip_health = 0
+		src.bust_out()
+		return TRUE
+
 	proc/is_acceptable_content(var/atom/A)
 		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
@@ -691,6 +709,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		if (!is_short)
 			src.set_density(0)
 		src.open = 1
+		src.gas_impermeable = FALSE
 		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, src.open_sound, volume, 1, -3)
@@ -719,6 +738,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		if (!is_short)
 			src.set_density(1)
 		src.open = 0
+		src.gas_impermeable = TRUE
 
 		for (var/obj/O in get_turf(src))
 			if (src.is_acceptable_content(O))
@@ -953,14 +973,14 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
-					usr.lying = 1
+					usr.set_lying(TRUE)
 				src.close()
 		else if (src.open(user=usr))
 			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
-					usr.lying = 1
+					usr.set_lying(TRUE)
 				src.close()
 		return
 
@@ -1040,10 +1060,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			icon_state = the_wrench.icon_state
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1058,6 +1074,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		..()
 		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] begins taking apart [the_storage]."))
+		if (owner && HAS_ATOM_PROPERTY(owner, PROP_MOB_FAST_BUILD))
+			duration = round(duration / 2)
 
 	onEnd()
 		..()

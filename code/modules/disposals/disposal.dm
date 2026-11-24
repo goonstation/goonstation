@@ -64,7 +64,7 @@
 	// start the movement process
 	// argument is the disposal unit the holder started in
 	proc/start(var/obj/machinery/disposal/D)
-		if(!D.trunk || D.trunk.loc != D.loc)
+		if(!D.trunk || D.trunk.x != D.x || D.trunk.y != D.y)
 			D.expel(src)	// no trunk connected, so expel immediately
 			return
 
@@ -168,7 +168,8 @@
 		src.gas.merge(giver)
 
 	remove_air(amount)
-		return src.gas.remove(amount)
+		if (src.gas)
+			return src.gas.remove(amount)
 
 	return_air(direct)
 		if(direct)
@@ -220,6 +221,7 @@
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
 	var/welding_cost = 3 //! Amount of welding fuel it costs to install/remove
 	var/weldable = TRUE
+	var/cross_z = 0 //! When linking disposals, use this z-level. 0 results in current z-level
 
 
 	var/image/pipeimg = null
@@ -1366,10 +1368,6 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		src.reagents.add_reagent("space_fungus",3)
 		src.reagents.add_reagent("synthflesh",10)
 
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) // only relevant if strangelet
-
 	proc/update()
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
@@ -1463,7 +1461,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				src.throwforce = 88
 				src.throw_range = 0
 				src.reagents.add_reagent("george_melonium",50)
-				START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+				src.AddElement(/datum/element/ghost_observable)
 
 				if (!src.processing)
 					src.processing = TRUE
@@ -1958,14 +1956,16 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 	proc/getlinked()
 		linked = null
-		var/obj/machinery/vending/player/vendor = locate() in src.loc
+		var/z_target = src.cross_z ? src.cross_z : src.z
+
+		var/obj/machinery/vending/player/vendor = locate() in locate(src.x, src.y, z_target)
 		if (vendor)
 			src.linked = vendor
-		var/obj/machinery/disposal/D = locate() in src.loc
+		var/obj/machinery/disposal/D = locate() in locate(src.x, src.y, z_target)
 		if(D)
 			linked = D
 
-		var/obj/disposaloutlet/O = locate() in src.loc
+		var/obj/disposaloutlet/O = locate() in locate(src.x, src.y, z_target)
 		if(O)
 			linked = O
 
@@ -2090,6 +2090,8 @@ TYPEINFO(/obj/disposaloutlet)
 	var/frequency = FREQ_PDA
 	var/flusher_id = null
 	throw_speed = 1
+	/// Items thrown per tick when expelling
+	var/eject_batch_size = 15
 
 
 	ex_act(var/severity)
@@ -2189,7 +2191,14 @@ TYPEINFO(/obj/disposaloutlet)
 		var/turf/expel_loc = get_turf(src)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
 			expel_loc = get_step(expel_loc, src.dir)
+		var/ejected = 0
 		for(var/atom/movable/AM in H)
+			if (ejected >= src.eject_batch_size && !global.instant_pipe_network)
+				ejected = 0
+				sleep(1 TICK)
+			if (AM.loc != H) // may have left or been deleted while we slept :(
+				continue
+			ejected++
 			ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)

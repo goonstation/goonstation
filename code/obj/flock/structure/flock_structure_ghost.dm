@@ -19,7 +19,7 @@
 	START_TRACKING
 	if(building)
 		var/obj/flock_structure/b = building
-		icon = initial(b.icon)
+		icon = get_initial_icon(b)
 		icon_state = initial(b.icon_state)
 		src.color = COLOR_MATRIX_FLOCKMIND
 		src.alpha = 104

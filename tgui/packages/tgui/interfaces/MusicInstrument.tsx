@@ -77,6 +77,9 @@ export const MusicInstrument = () => {
   return (
     <Window title={name} width={50 + notes.length * 30} height={410}>
       <Window.Content
+        // Focusable so key events reach this after clicking/refocusing the window.
+        // Spread because BoxProps omits tabIndex currently
+        {...{ tabIndex: -1 }}
         onKeyUp={(ev) => {
           if (keybindToggle) {
             let index = getKeyboardIndex(ev.key);

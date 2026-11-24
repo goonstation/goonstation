@@ -243,6 +243,12 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_SYNDICATE_BOSS
 	icon_state = "commander"
 
+/obj/landmark/antagonist/operative/ai
+	name = LANDMARK_SYNDICATE_AI
+	icon = 'icons/map-editing/job_start.dmi'
+	icon_state = "ai"
+	color = "#ff5555"
+
 // Pirates
 
 /obj/landmark/antagonist/pirate
@@ -361,6 +367,44 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/shuttle_transit
 	name = LANDMARK_SHUTTLE_TRANSIT
+
+/obj/landmark/menhir/doorway
+	name = LANDMARK_MENHIR_DOOR
+
+/obj/landmark/menhir/extrusion
+	name = LANDMARK_MENHIR_EXTRUSION
+
+/obj/landmark/menhir/node
+	name = LANDMARK_MENHIR_NODE
+
+/obj/landmark/menhir/outreach
+	name = LANDMARK_MENHIR_OUTREACH
+
+/obj/landmark/menhir/penance
+	name = LANDMARK_MENHIR_PENANCE
+
+/obj/landmark/menhir/coalesce
+	name = LANDMARK_MENHIR_COALESCE
+
+/obj/landmark/menhir/beyond
+	name = LANDMARK_MENHIR_BEYOND
+
+/obj/landmark/menhir/passage
+	name = LANDMARK_MENHIR_PASSAGE
+	icon_state = "x3"
+
+/obj/landmark/menhir/dark
+	name = LANDMARK_MENHIR_DARK
+	icon_state = "x"
+
+/obj/landmark/menhir/stuckscan
+	name = LANDMARK_MENHIR_STUCKSCAN
+	icon_state = "x4"
+
+/obj/landmark/menhir/room
+	name = "room vismirror landmark (tag me)"
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
 
 ///emergency shuttle launch sound origin
 /obj/landmark/shuttle_subwoofer
@@ -514,6 +558,16 @@ var/global/list/job_start_locations = list()
 	icon_state = "artifact_10"
 	spawnchance = 10
 
+/obj/landmark/spawner/artifact/more_precursor
+	name = "Artifact Spawn (More Often Precursor)"
+
+	spawn_the_thing()
+		if(prob(40))
+			Artifact_Spawn(get_turf(src),"precursor")
+		else
+			Artifact_Spawn(get_turf(src))
+		qdel(src)
+
 /* ===== LRT Landmarks ===== */
 
 // consider refactoring to be associative the other way around later
@@ -633,6 +687,8 @@ var/global/list/job_start_locations = list()
 	color = "#FF0000"
 	/// target z-level to push it's contents to
 	var/targetZ = 1
+	/// always target the z level this landmark is on
+	var/targetCurrentZ = FALSE
 	/// x offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
 	var/xOffset = 0
 	/// /y offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
@@ -653,7 +709,8 @@ var/global/list/job_start_locations = list()
 	proc/setup(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
 		if (man_xOffset) src.xOffset = man_xOffset
 		if (man_yOffset) src.yOffset = man_yOffset
-		if (man_targetZ) src.targetZ = man_targetZ
+		if (src.targetCurrentZ) src.targetZ = get_z(src)
+		else if (man_targetZ) src.targetZ = man_targetZ
 		if (!isnull(man_warptarget_modifier)) src.warptarget_modifier = man_warptarget_modifier
 		var/turf/T = get_turf(src)
 		if (!T) return
@@ -672,6 +729,10 @@ var/global/list/job_start_locations = list()
 				T.vistarget.fullbright = TRUE
 				T.vistarget.RL_Init()
 		qdel(src)
+
+/obj/landmark/viscontents_spawn/same_z
+	targetCurrentZ = TRUE
+	color = "#aa00ff"
 
 /obj/landmark/viscontents_spawn/no_vis
 	name = "instant hole spawn"

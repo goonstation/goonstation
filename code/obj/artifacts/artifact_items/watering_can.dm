@@ -8,7 +8,7 @@
 	can_recycle = FALSE
 
 	New(var/loc, var/forceartiorigin)
-		..()
+		..(loc, null) // do not pass our artifact origin as a reagent type
 		var/datum/artifact/watercan/AS = new /datum/artifact/watercan(src)
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")

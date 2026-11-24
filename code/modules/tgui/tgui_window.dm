@@ -19,6 +19,8 @@
 	var/fatally_errored = FALSE
 	var/message_queue
 	var/list/sent_assets // |GOONSTATION-CHANGE| Initialize list in New instead
+	/// Last icon map revision sent to this browser window.
+	var/icon_ref_map_revision = 0
 	// Vars passed to initialize proc (and saved for later)
 	var/initial_strict_mode
 	var/initial_fancy
@@ -31,9 +33,7 @@
 
 	// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 	/**
-	 * Static list used to map in macros that will then emit execute events to the tgui window
-	 * A small disclaimer though I'm no tech wiz: I don't think it's possible to map in right or middle
-	 * clicks in the current state, as they're keywords rather than modifiers.
+	 * Maps skin macros to tgui input events.
 	 */
 	var/static/list/byondToTguiEventMap = list(
 		"MouseDown" = "byond/mousedown",
@@ -371,7 +371,7 @@
 /datum/tgui_window/proc/send_asset(datum/asset/asset)
 	if(!client || !asset)
 		return
-	sent_assets += list(asset)
+	sent_assets |= list(asset)
 	. = asset.deliver(client)
 	// |GOONSTATION-CHANGE| We have not implemented separate spritesheet assets yet
 	/*
@@ -380,6 +380,9 @@
 		send_message("asset/stylesheet", spritesheet.css_filename())
 	*/
 	send_message("asset/mappings", asset.get_associated_urls())
+	if (istype(asset, /datum/asset/json/icon_ref_map))
+		var/datum/asset/json/icon_ref_map/icon_map = asset
+		src.icon_ref_map_revision = icon_map.revision
 
 
 /**
@@ -458,7 +461,7 @@
 		if("payloadChunk")
 			var/payload_id = payload["id"]
 			append_payload_chunk(payload_id, payload["chunk"])
-			send_message("acknowlegePayloadChunk", list("id" = payload_id))
+			send_message("acknowledgePayloadChunk", list("id" = payload_id))
 
 // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 /datum/tgui_window/proc/set_mouse_macro()

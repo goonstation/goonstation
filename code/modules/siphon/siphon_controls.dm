@@ -443,24 +443,25 @@
 	<h3>RESONATORS AND DISTANCE</h3>
 	When utilizing resonators in conjunction with the<br>
 	Harmonic Siphon, it's important to understand the<br>
-	effect of distance on Type-AX and Type-SM resonators.<br>
+	effect of distance on each variant of resonator.<br>
 	<br>
-	<strong>Type-AX resonators</strong> influence lateral and vertical<br>
-	resonances based on distance from the 'pinch points'.<br>
+	<strong>Axial resonators (Type-AX)</strong> influence<br>
+	lateral and vertical resonances based on the distance<br>
+	from the siphon on the correlated axis (see brief).<br>
 	<br>
-	As an example of this, a resonator placed in column F<br>
+	As an example of this, a Type-AX placed in column F<br>
 	will always produce +8 lateral resonance per intensity,<br>
 	whether it's in F1, F8 or anywhere in between.<br>
 	<br>
 	This allows these resonators to be placed far from the<br>
 	Siphon and still significantly influence parameters.<br>
 	<br>
-	<strong>Type-SM resonators</strong>, on the other hand, reduce shear<br>
-	simply based on their distance from the Siphon itself;<br>
+	<strong>Shear moderators (Type-SM)</strong> reduce shear<br>
+	simply based on radial distance from the Siphon itself;<br>
 	as an example, G2 and D6 would both cause a Type-SM<br>
 	resonator to subtract four shear per intensity.<br>
 	<br>
-	Type-FQ resonators have a more complex set of<br>
+	Field quantizers (Type-FQ) have a complex set of<br>
 	behaviors documented below; however, their use<br>
 	is not required for most extraction. Most users<br>
 	can safely disregard associated sections.<br>
@@ -468,12 +469,12 @@
 	First of three resonant parameters,<br>
 	charted on the letter axis.<br>
 	<br>
-	Type-AX resonators will raise or lower<br>
-	this value by eight units per intensity at 'point-blank'<br>
+	<strong>Axial resonators</strong> will raise or lower this<br>
+	value by eight units per intensity at 'point-blank'<br>
 	(columns D or F), diminishing by powers of two to a <br>
 	minimum of one unit at max range (columns A or I).<br>
 	<br>
-	The prototype Type-FQ resonator will raise or lower<br>
+	Field quantizers (Type-FQ) will raise or lower<br>
 	this value by five units per intensity at 'point-blank'<br>
 	(columns D or F), diminishing by two units per tile to<br>
 	a minimum of one unit <strong>in the opposing direction</strong>
@@ -483,12 +484,12 @@
 	Second of three resonant parameters,<br>
 	charted on the number axis.<br>
 	<br>
-	Type-AX resonators will raise or lower<br>
-	this value by eight units per intensity at 'point-blank'<br>
+	<strong>Axial resonators</strong> will raise or lower this<br>
+	value by eight units per intensity at 'point-blank'<br>
 	(rows 3 or 5), diminishing by powers of two to a <br>
 	minimum of one unit at max range (rows 0 or 8).<br>
 	<br>
-	The prototype Type-FQ resonator will raise or lower<br>
+	Field quantizers (Type-FQ) will raise or lower<br>
 	this value by one unit per intensity at 'point-blank'<br>
 	(rows 3 or 5), <strong>increasing</strong> by one unit per tile to<br>
 	a maximum of four units at max range (rows 0 or 8).<br>
@@ -502,9 +503,9 @@
 	the amount of resonance cancelled.<br>
 	<br>
 	Shear cannot be produced directly, but can be mitigated<br>
-	by use of the Type-SM resonator, mitigating eight to one<br>
-	units of shear per intensity, decreasing with greater<br>
-	distance from the Harmonic Siphon.<br>
+	by use of the Shear Moderator (type-SM), nullifying up to<br>
+	8 units of shear per intensity, decreasing with greater<br>
+	radial distance from the Harmonic Siphon.<br>
 	<br>
 	<strong>Warning: A shear value of 64 or greater can cause</strong><br>
 	<strong>dangerous malfunctions, scaling with magnitude,</strong><br>
@@ -526,17 +527,18 @@
 	and cross-referencing with the database may help you<br>
 	to devise a methodology for extraction.<br>
 	<br>
-	Typical use does <strong>not</strong> require familiarization with<br>
-	the reharmonization process or associated targets.<br>
+	Typical use does <strong>not</strong> require familiarization<br>
+	with the reharmonization process or associated targets.<br>
 	<h3>TYPE-FQ</h3>
-	With authorization of the Research Director,<br>
-	the Type-FQ resonator may be manufactured, which is<br>
-	capable of applying a field dilation effect that<br>
-	delays the onset of parameter reharmonization.<br>
+	With authorization of the Research Director or<br>
+	Chief Engineer, the Field Quantizer (Type-FQ)<br>
+	resonator may be manufactured, which is capable<br>
+	of applying a field dilation effect that delays<br>
+	the onset of variable parameter reharmonization.<br>
 	<br>
 	In addition to lateral and vertical resonance<br>
 	properties enumerated in the respective sections,<br>
-	Type-FQ resonators provide 0.6% field dilation<br>
+	field quantizers provide 0.6% field dilation<br>
 	strength per intensity; field dilation strength<br>
 	influences cycle time as a denominator, with<br>
 	100% strength doubling effective cycle time.<br>

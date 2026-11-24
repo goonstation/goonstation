@@ -366,15 +366,19 @@
 			continue
 
 		// Remove the processed line.
-		if (length(src.shscript))
-			src.shscript.Cut(1, 2)
+		switch (length(src.shscript))
+			if (0)
+				src.scriptline = 0
+				break
+			if (1)
+				src.shscript.Cut()
+				src.scriptline = 0
+				break
+			else
+				src.shscript.Cut(1, 2)
+				src.scriptline++
 
-		src.scriptline++
-
-	var/shscript_length = length(src.shscript)
-	src.scriptline = shscript_length ? src.scriptline : 0
-
-	if (!shscript_length && !src.scriptprocess)
+	if (!length(src.shscript) && !src.scriptprocess)
 		if (src.parent_id && src.pipetemp)
 			src.message_user(src.pipetemp)
 

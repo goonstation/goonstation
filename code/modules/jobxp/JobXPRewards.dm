@@ -89,16 +89,23 @@ mob/verb/checkrewards()
 	proc/activate(var/client/C)
 		return
 
+	proc/claim_limit_reached(mob/user)
+		if(src.claimPerRound > 0 && src.claimedNumbers[user.key] >= src.claimPerRound)
+			boutput(user, SPAN_ALERT("Sorry, you can not claim any more of this reward, this round."))
+			return TRUE
+		return FALSE
+
 	proc/try_claim(mob/user, check_levels = TRUE)
 		if(!src.claimable || !(user.job in src.required_levels))
 			return
 
-		if(src.claimPerRound > 0) //Check for number of claims.
-			if(src.claimedNumbers.Find(user.key) && src.claimedNumbers[user.key] >= src.claimPerRound)
-				boutput(user, SPAN_ALERT("Sorry, you can not claim any more of this reward, this round."))
-				return
+		if(src.claim_limit_reached(user))
+			return
 
 		if(tgui_alert(user, "Would you like to claim this reward?", "Claim reward", list("Yes", "No")) != "Yes")
+			return
+
+		if(src.claim_limit_reached(user)) //alert blocks, so the same reward may have been claimed meanwhile
 			return
 
 		if(check_levels && !src.qualifies(user.key))
@@ -697,6 +704,9 @@ ABSTRACT_TYPE(/datum/jobXpReward/ai)
 			if (isAIeye(C.mob))
 				var/mob/living/intangible/aieye/AE = C.mob
 				A = AE.mainframe
+			if(A.syndicate)
+				boutput(C, SPAN_ALERT("Your syndicate firmware prevents you from being anything but a cool syndicate red."))
+				return FALSE
 			A.coreSkin = aiskin
 			A.update_appearance()
 			return 1

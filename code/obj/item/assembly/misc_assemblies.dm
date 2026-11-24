@@ -326,10 +326,10 @@ Contains:
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		affected_item.material_on_attack_use(attacker, attacked)
 
-/obj/item/assembly/material_trigger_when_attacked(atom/attackatom, mob/attacker, meleeorthrow, situation_modifier)
+/obj/item/assembly/material_trigger_when_hit(atom/attackatom, mob/attacker, impact_type, situation_modifier)
 	. = ..()
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
-		affected_item.material_trigger_when_attacked(attackatom, attacker, meleeorthrow, situation_modifier)
+		affected_item.material_trigger_when_hit(attackatom, attacker, impact_type, situation_modifier)
 
 /obj/item/assembly/material_on_pickup(mob/user)
 	//we pick one item here the person is touching

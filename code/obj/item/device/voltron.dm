@@ -108,7 +108,7 @@
 			check()//ohly fucke pls rewrite me
 		cableimgs = new/list((vision_radius*2+1)**2)
 		var/obj/cable/ctype = /obj/cable
-		var/cicon = initial(ctype.icon)
+		var/cicon = get_initial_icon(ctype)
 		for(var/i = 1, i <= cableimgs.len, i++)
 			var/image/cimg = image(cicon)
 			cimg.layer = 100

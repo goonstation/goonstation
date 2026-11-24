@@ -14,5 +14,6 @@ export { ColorSection } from './goonstation/ColorSection';
 export { Image } from './goonstation/Image';
 export { ItemList } from './goonstation/ItemList';
 export { Placeholder } from './goonstation/Placeholder';
+export { TintedDmIcon } from './goonstation/TintedDmIcon';
 export { Knob } from './Knob';
 export { Modal } from './Modal';

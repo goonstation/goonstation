@@ -1465,11 +1465,11 @@ datum
 						if (1 to 10)
 							if (prob(20)) M.emote("gasp")
 						if (11)
-							M.lying = 0
+							M.set_lying(FALSE)
 						if (12 to INFINITY)
 							SPAWN(5 SECONDS)
 								if (!M.reagents.has_reagent("montaguone_extra"))
-									M.lying = 1
+									M.set_lying(TRUE)
 									M.emote("deathgasp")
 					data++
 				..()
@@ -2464,6 +2464,7 @@ datum
 			fluid_r = 209
 			fluid_g = 31
 			fluid_b = 117
+			fluid_flags = FLUID_SMOKE_BANNED
 			transparency = 175
 			addiction_prob = 0.2
 			addiction_min = 10

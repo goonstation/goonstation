@@ -46,8 +46,8 @@
 	// Message Information Variables:
 	/// The non-unique ID of this message. A listener may only hear one message of a specific ID at any time.
 	var/id = ""
-	/// The datum that should act as a signal recipient for every copy of this message.
-	var/datum/signal_recipient = null
+	/// The signal holder shared by every copy of this message.
+	var/datum/signal_holder/signal_recipient = null
 	/// The original contents of this message, uneditied, unsanitised. Do not read from this directly, lest you permit HTML injection.
 	var/original_content = ""
 	/// Message flags. See `_std/defines/speech_defines/sayflags.dm`.
@@ -94,19 +94,18 @@
 	var/list/maptext_variables = null
 	/// A list of colours for the maptext to oscillate through. Use the "start_colour" value to determine the colour to animate from to `maptext_css_values["color"]`.
 	var/list/maptext_animation_colours = null
-	/// A list of callback datums to be invoked, with the message itself as the first argument and the maptext image created by this message as the second argument.
-	var/list/datum/callback/maptext_callbacks = null
 	/// A prefix that should only be displayed on the maptext.
 	var/maptext_prefix = null
 	/// A suffix that should only be displayed on the maptext.
 	var/maptext_suffix = null
 
-/datum/say_message/New(message as text, atom/speaker, flags, list/message_params = null, atom_listeners_override = null, is_copy = FALSE)
-	. = ..()
+	// Miscellaneous:
+	/// A list of callback datums to be invoked upon this message being received by a listen tree, with the message itself as the first argument and the listen tree as the second argument.
+	var/list/datum/callback/listener_callbacks = null
 
-	// If this say message datum is a copy, there is no need to run the code below as var information will be copied to this datum.
-	if (is_copy)
-		return
+// Note that this proc is for `/datum/say_message/original` and not `/datum/say_message`. Copies have all var information copied to them from another say message datum.
+/datum/say_message/original/New(message as text, atom/speaker, flags, list/message_params = null, atom_listeners_override = null)
+	. = ..()
 
 	src.original_content = message
 	src.content = message
@@ -197,16 +196,7 @@
 	src.content = src.make_safe_for_chat(src.content)
 
 /datum/say_message/disposing()
-	src.speaker = null
-	src.original_speaker = null
-	src.message_origin = null
-	src.signal_recipient = null
-	src.language = null
-	src.received_module = null
-	src.atom_listeners_override = null
-	src.atom_listeners_to_be_excluded = null
-	src.maptext_origin = null
-
+	global.stack_trace("/datum/say_message explicitly disposed. Say message datums are designed to be soft deleted.")
 	. = ..()
 
 /// Removes forbidden characters, newlines, tabs, and HTML tags from a message, and checks for URLs.
@@ -243,7 +233,7 @@
 	if (M.client)
 		if (M.client.ismuted())
 			boutput(M, "You are currently muted and may not speak.")
-			qdel(src)
+			src.content = null
 			return
 
 		if (M.client.preferences?.auto_capitalization)
@@ -424,7 +414,7 @@
 /datum/say_message/proc/Copy()
 	RETURN_TYPE(/datum/say_message)
 
-	var/datum/say_message/copy = new(is_copy = TRUE)
+	var/datum/say_message/copy = new
 
 	// Note that the below is ~5 times faster than a `for (var/V in src.vars)` loop.
 
@@ -477,8 +467,10 @@
 	copy.maptext_css_values = src.maptext_css_values?.Copy()
 	copy.maptext_variables = src.maptext_variables?.Copy()
 	copy.maptext_animation_colours = src.maptext_animation_colours?.Copy()
-	copy.maptext_callbacks = src.maptext_callbacks?.Copy()
 	copy.maptext_prefix = src.maptext_prefix
 	copy.maptext_suffix = src.maptext_suffix
+
+	// Miscellaneous:
+	copy.listener_callbacks = src.listener_callbacks?.Copy()
 
 	return copy

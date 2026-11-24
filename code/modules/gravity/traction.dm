@@ -12,8 +12,9 @@ proc/StartDriftFloat(atom/movable/AM)
 		animate_drift(AM, -1, 25)
 
 proc/StopDriftFloat(atom/movable/AM)
-	AM.temp_flags &= ~DRIFT_ANIMATION
-	animate(AM, flags=ANIMATION_END_NOW, tag="grav_drift")
+	if (AM.temp_flags & DRIFT_ANIMATION)
+		AM.temp_flags &= ~DRIFT_ANIMATION
+		animate(AM, flags=ANIMATION_END_NOW, tag="grav_drift")
 
 /// Update the atom's traction against the ground
 /atom/movable/proc/update_traction(turf/T)
@@ -37,9 +38,6 @@ proc/StopDriftFloat(atom/movable/AM)
 			StopDriftFloat(src)
 			return
 		StartDriftFloat(src)
-
-/obj/item/dummy/update_traction(turf/T)
-	return
 
 /mob/update_traction(turf/T)
 	. = ..()

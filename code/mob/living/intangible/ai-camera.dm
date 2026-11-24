@@ -141,7 +141,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 
 		. = ..()
 
-		if(src.loc.z != 1)	//you may only move on the station z level!!!
+		if(src.loc.z != 1 && !(src.mainframe.syndicate && istypes(get_area(src), list(/area/syndicate_station, /area/listeningpost))))	//you may only move on the station z level!!!
 			src.cancel_camera()
 
 	proc/add_all_statics()
@@ -149,6 +149,8 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (!src.loc || !src.client)
 			return
 		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
+			if(!T?.aiImage)
+				continue
 			src.client.images |= T.aiImage
 #endif
 
@@ -189,11 +191,13 @@ TYPEINFO(/mob/living/intangible/aieye)
 				src.client.images -= T.aiImage
 
 			for (var/turf/T as anything in (add_block - remove_block))
+				if(!T?.aiImage)
+					continue
 				src.client.images |= T.aiImage
 #endif
 
 	set_loc(atom/newloc)
-		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION) // Sorry!
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !(src.mainframe.syndicate && istypes(get_area(newloc), list(/area/syndicate_station, /area/listeningpost)))) // Sorry!
 			src.return_mainframe()
 		else
 			last_loc = src.loc
@@ -262,7 +266,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 			if(in_ai_range)
 				target.attack_ai(src, params, location, control)
 
-		if (src.client.check_any_key(KEY_POINT) && in_ai_range)
+		if (src.client.check_any_key(KEY_POINT) && (in_ai_range || src.mainframe.syndicate))
 			var/turf/T = get_turf(target)
 			mainframe.show_hologram_context(T)
 			return
@@ -329,6 +333,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
 
+	clamp_values()
+		. = ..()
+		src.stuttering = 0
+		src.druggy = 0
+		src.jitteriness = 0
+
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
 		message_admins("something tried to gib the AI Eye - if this wasn't an admin action, something has gone badly wrong")
@@ -355,16 +365,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 		else
 			death()
 
-	verb/show_laws()
-		set category = "AI Commands"
-		set name = "Show Laws"
-
-		if (src.mainframe)
-			mainframe.show_laws(0, src)
-		else
-			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
-		return
-
 	verb/cmd_return_mainframe()
 		set category = "AI Commands"
 		set name = "Recall to Mainframe"
@@ -386,47 +386,16 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (mainframe)
 			mainframe.ai_view_crew_manifest()
 
-	verb/ai_state_laws_standard()
+	verb/ai_interact_laws()
 		set category = "AI Commands"
-		set name = "State Standard Laws"
-		if (mainframe)
-			mainframe.ai_state_laws_standard()
+		set name = "Laws"
+		mainframe?.interact_laws()
 
-	verb/ai_state_laws_all()
+	verb/ai_customization()
 		set category = "AI Commands"
-		set name = "State All Laws"
-		if (mainframe)
-			mainframe.ai_state_laws_all()
+		set name = "Customize Status"
 
-	verb/ai_set_laws_all()
-		set category = "AI Commands"
-		set name = "Set Fake Laws"
-		if (mainframe)
-			mainframe.ai_set_fake_laws()
-
-	verb/ai_state_laws_fake()
-		set category = "AI Commands"
-		set name = "State Fake Laws"
-		if (mainframe)
-			mainframe.ai_state_fake_laws()
-
-	verb/ai_show_laws_fake()
-		set category = "AI Commands"
-		set name = "Show Fake Laws"
-		if (mainframe)
-			mainframe.ai_show_fake_laws()
-
-	verb/ai_statuschange()
-		set category = "AI Commands"
-		set name = "AI status"
-		if (mainframe)
-			mainframe.ai_statuschange()
-
-	verb/ai_colorchange()
-		set category = "AI Commands"
-		set name = "AI Color"
-		if (mainframe)
-			mainframe.ai_colorchange()
+		mainframe?.ai_customize_options_menu()
 
 	verb/reset_apcs()
 		set category = "AI Commands"

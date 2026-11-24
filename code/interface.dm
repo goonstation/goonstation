@@ -29,14 +29,14 @@
 					You have disabled the menu. To enable the menu again, you can use the Menu button on the top right corner of the screen!
 					<a href='byond://winset?command=enable_menu'>Or just click here!</a>
 				</div>"})
-			winset(src, null, "hide_menu.is-checked=true; mainwindow.menu=''; menub.is-visible = true")
+			src.preferences.set_client_setting(src, CLIENT_SETTING_HIDE_MENU, TRUE)
 
 		enable_menu()
 			set category = "Commands"
 			set name = "enable_menu"
 			set desc = "Reenables the menu"
 			set hidden = 1
-			winset(src, null, "mainwindow.menu='menu'; hide_menu.is-checked=false; menub.is-visible = false")
+			src.preferences.set_client_setting(src, CLIENT_SETTING_HIDE_MENU, FALSE)
 
 		github()
 			set category = "Commands"

@@ -1905,6 +1905,13 @@
 	create = 1
 	time = 40 SECONDS
 
+/datum/manufacture/telesci_rack
+	name = "Coordinates Rack"
+	item_outputs = list(/obj/machinery/disk_rack/telesci)
+	item_requirements = list("metal" = 30, "conductive" = 10)
+	create = 1
+	time = 40 SECONDS
+
 /datum/manufacture/shell_frame
 	name = "AI Shell Frame"
 	item_requirements = list("metal_dense" = 12)
@@ -2250,15 +2257,6 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_requirements = list("crystal" = 4,
 							 "conductive" = 6)
 	item_outputs = list(/obj/item/roboupgrade/spectro)
-	create = 1
-	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
-
-/datum/manufacture/robup_visualizer
-	name = "Construction Visualizer"
-	item_requirements = list("crystal" = 4,
-							 "conductive" = 6)
-	item_outputs = list(/obj/item/roboupgrade/visualizer)
 	create = 1
 	time = 90 SECONDS
 	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
@@ -3203,6 +3201,46 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 5 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
 
+/datum/manufacture/baseball_staffie
+	name = "Staff Assistant Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/staffie)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_command
+	name = "Command Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/command)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_nt
+	name = "NanoTrasen Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/nt)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_mining
+	name = "Mining Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/mining)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_cargo
+	name = "Cargo Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/cargo)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
 /datum/manufacture/labcoat
 	name = "Labcoat"
 	item_requirements = list("fabric" = 4)
@@ -3306,6 +3344,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 15 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
+	apply_material = TRUE
 
 /datum/manufacture/blindfold
 	name = "Blindfold"
@@ -3314,6 +3353,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 5 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
+	apply_material = TRUE
 
 /datum/manufacture/muzzle
 	name = "Muzzle"
@@ -3344,6 +3384,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 8 SECONDS
 	category = MANUFACTURER::CATEGORY::RESOURCE
+	apply_material = TRUE
 
 /datum/manufacture/handkerchief
 	name = "Handkerchief"
@@ -3352,6 +3393,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 4 SECONDS
 	category = MANUFACTURER::CATEGORY::RESOURCE
+	apply_material = TRUE
 
 /////// pod construction components
 
@@ -3749,6 +3791,10 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	name = "Unmarked Syndicate Crate"
 	item_outputs = list(/obj/storage/secure/crate/gear/syndicate)
 
+/datum/manufacture/crate/secure/command_gear_replacement
+	name = "Command Equipment crate (Empty)"
+	item_outputs = list(/obj/storage/secure/crate/gear/nanotrasen/replacement_equipment)
+
 /******************** Carts *******************/
 
 /datum/manufacture/cart
@@ -3939,7 +3985,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 /************ NADIR RESONATORS ************/
 
 /datum/manufacture/resonator_type_ax
-	name = "Type-AX Resonator"
+	name = "Axial Resonator - Type-AX"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive_high" = 20,
 							 "crystal" = 20,
@@ -3950,7 +3996,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_sm
-	name = "Type-SM Resonator"
+	name = "Shear Moderator - Type-SM"
 	item_requirements = list("metal_dense" = 10,
 							 "conductive_high" = 20,
 							 "crystal" = 10,
@@ -3961,7 +4007,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_fq
-	name = "Type-FQ Resonator"
+	name = "Field Quantizer - Type-FQ"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive_high" = 20,
 							 "koshmarite" = 10,
@@ -4168,7 +4214,27 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	create = 1
 	time = 4 SECONDS
 	category = MANUFACTURER::CATEGORY::MEDICINE
-/datum/manufacture/spacecillin	//
+/datum/manufacture/empty_kit/brute
+	item_outputs = list(/obj/item/storage/firstaid/brute/empty)
+/datum/manufacture/empty_kit/fire
+	item_outputs = list(/obj/item/storage/firstaid/fire/empty)
+/datum/manufacture/empty_kit/toxin
+	item_outputs = list(/obj/item/storage/firstaid/toxin/empty)
+/datum/manufacture/empty_kit/oxygen
+	item_outputs = list(/obj/item/storage/firstaid/oxygen/empty)
+/datum/manufacture/empty_kit/brain
+	item_outputs = list(/obj/item/storage/firstaid/brain/empty)
+/datum/manufacture/empty_kit/mental
+	item_outputs = list(/obj/item/storage/firstaid/mental/empty)
+/datum/manufacture/empty_docbag
+	name = "Empty Doctor's Bag"
+	item_requirements = list("metal" = 2, "fabric" = 2)
+	item_outputs = list(/obj/item/storage/firstaid/docbag/empty)
+	create = 1
+	time = 4 SECONDS
+	category = MANUFACTURER::CATEGORY::MEDICINE
+
+/datum/manufacture/spacecillin
 	name = "Spacecillin"
 	item_requirements = list("metal" = 3,
 							 "conductive" = 3)

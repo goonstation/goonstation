@@ -1,5 +1,4 @@
 // by request
-#define DUCKBOT_MOVE_SPEED 8
 #define DUCKBOT_QUACK_COOLDOWN "duckbotquackdelay"
 #define DUCKBOT_AMUSEMENT_COOLDOWN "duckbotlovesongdelay"
 #define DUCKBOT_ANNOY_TIMEOUT "duckbotnerdobsessionlength"
@@ -18,7 +17,7 @@
 	anchored = UNANCHORED
 	on = 1 // ACTION
 	health = 5
-	bot_move_delay = DUCKBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::DUCKBOT
 	var/eggs = 0
 	/// When it gets to 100, free egg!
 	var/egg_process = 0
@@ -55,7 +54,7 @@
 				src.KillPathAndGiveUp(1)
 			else if(!ON_COOLDOWN(src, DUCKBOT_ANNOY_PATHING_COOLDOWN, src.annoy_path_cooldown))
 				var/turf/randwander = get_step_truly_rand(get_turf(src.annoy_target))
-				src.navigate_to(randwander, DUCKBOT_MOVE_SPEED, 0, 30)
+				src.navigate_to(randwander, src.bot_move_delay, 0, 30)
 		else
 			for_by_tcl(M, /mob)
 				if(IN_RANGE(src, M, 7))
@@ -65,10 +64,10 @@
 						break
 	else if(prob(95))
 		// this is not true random, instead it's a mostly non-direction-changing wall-hugging behaviour
-		src.navigate_to(get_step_rand(get_turf(src)))
+		src.navigate_to(get_step_rand(get_turf(src)), src.bot_move_delay)
 	else
 		// true random step
-		src.navigate_to(get_step_truly_rand(get_turf(src)))
+		src.navigate_to(get_step_truly_rand(get_turf(src)), src.bot_move_delay)
 
 /// Sends the duckbot to a random spot on the station
 /obj/machinery/bot/duckbot/proc/mystical_journey()

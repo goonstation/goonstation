@@ -3,6 +3,7 @@
 #define INFINITY 1e69
 
 #define TICKS *world.tick_lag
+#define TICK TICKS
 
 // Not QUITE a SI unit, but used frequently nonetheless
 #define LITERS *1

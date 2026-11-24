@@ -168,8 +168,8 @@ var/list/globalRituals = list() //Global list of rituals.
 		breakLinks()
 		filterList = null
 		if(istype(owner))
-			owner.listen_tree.RemoveListenInput(LISTEN_INPUT_OUTLOUD)
-			owner.listen_tree.RemoveListenEffect(LISTEN_EFFECT_RITUAL)
+			owner.listen_tree?.RemoveListenInput(LISTEN_INPUT_OUTLOUD)
+			owner.listen_tree?.RemoveListenEffect(LISTEN_EFFECT_RITUAL)
 			owner.ritualComponent = null
 			qdel(owner)
 			owner = null
@@ -230,7 +230,7 @@ var/list/globalRituals = list() //Global list of rituals.
 		return
 
 	proc/hear(datum/say_message/message)
-		if(istype(ownerAnchor) && findtext(lowertext(message.get_content_parsable()), lowertext(name)) )// && BOUNDS_DIST(owner, M) == 0)
+		if(istype(ownerAnchor) && findtext(lowertext(message.get_original_content_parsable()), lowertext(name)) )// && BOUNDS_DIST(owner, M) == 0)
 			if(!active)
 				setActive(1)
 				ownerAnchor.tryFire(message.speaker)

@@ -8,21 +8,31 @@
 	. = ..()
 	src.name = "inflatable [src.mob_name]"
 	src.air_contents.volume = 40 LITERS
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+
+/obj/item/inflatable_mob/proc/assembly_setup(var/manipulated_gorilla, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	parent_assembly.target_item_prefix = src.mob_name
 
 /obj/item/inflatable_mob/attackby(obj/item/tank/tank, mob/user, params)
 	if (!istype(tank))
-		. = ..()
-	if (MIXTURE_PRESSURE(tank.air_contents) < (ONE_ATMOSPHERE * 2))
+		return ..()
+	src.apply_tank(tank, user)
+
+/obj/item/inflatable_mob/proc/can_inflate(obj/item/tank/tank)
+	return MIXTURE_PRESSURE(tank.air_contents) >= (ONE_ATMOSPHERE * 2)
+
+/obj/item/inflatable_mob/proc/apply_tank(obj/item/tank/tank, mob/user = null)
+	if (!src.can_inflate(tank))
 		boutput(user, SPAN_ALERT("[tank] doesn't have enough pressure to inflate a [src.mob_name]!"))
-		return
+		return FALSE
 	tank.air_contents.share(src.air_contents)
-	user.u_equip(tank)
+	user?.u_equip(tank)
 	tank.set_loc(src)
 	var/mob/mob_instance = new src.mob_type(get_turf(src))
 	if (src.material)
 		mob_instance.setMaterial(src.material)
 	mob_instance.forensic_holder = src.forensic_holder
-	user.u_equip(src)
+	user?.u_equip(src)
 	src.set_loc(mob_instance)
 	APPLY_ATOM_PROPERTY(mob_instance, PROP_MOB_CANTMOVE, src)
 	mob_instance.ai?.disable()
@@ -39,6 +49,8 @@
 			mob_instance.setMaterial(src.material) // May have broken material animations
 		tank.set_loc(get_turf(mob_instance))
 		qdel(src)
+
+	return TRUE
 
 /obj/item/inflatable_mob/gorilla
 	desc = "A slab of thick, heavy duty rubber with a little orange connector port on the side."

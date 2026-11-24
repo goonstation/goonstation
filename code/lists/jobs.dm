@@ -132,7 +132,7 @@ var/list/security_gimmicks = list(
 var/list/engineering_gimmicks = list(
 	"Head of Mining",
 	"Station Builder",
-	"Atmospherish Technician",
+	"Atmospheric Technician",
 )
 var/list/medical_gimmicks = list(
 	"Acupuncturist",

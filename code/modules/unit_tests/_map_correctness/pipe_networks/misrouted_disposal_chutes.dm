@@ -24,7 +24,7 @@
 		SPAWN(0)
 			chute.flush()
 
-	sleep(5 SECONDS)
+	wait_for_pipenet_dummies(dummy_list)
 	for (var/obj/item/pipenet_test_dummy/dummy as anything in dummy_list)
 		var/turf/T = get_turf(dummy)
 		if (T in global.landmarks[LANDMARK_DISPOSALS_ENDPOINT])

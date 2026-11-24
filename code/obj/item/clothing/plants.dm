@@ -232,6 +232,8 @@
 	hide_attack = ATTACK_VISIBLE
 	SYNDICATE_STEALTH_DESCRIPTION("It smells faintly of death.")
 	tooltip_flags = REBUILD_USER
+	blocked_from_petasusaphilic = TRUE
+
 	attack(mob/M, mob/user, def_zone)
 		if (!..() || is_incapacitated(M) || src.trick)
 			return

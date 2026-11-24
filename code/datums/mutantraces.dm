@@ -282,7 +282,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 
 		if (!needs_oxy)
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_NO_OXY_LOSS, src.type)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 
 		if (src.override_language)
 			M.say_language = src.override_language
@@ -366,7 +367,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(src.mob, movement_modifier, src.type)
 			if (needs_oxy)
-				REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_BREATHLESS, src.type)
+				REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_NO_OXY_LOSS, src.type)
 
 			if (src.override_language)
 				src.mob.say_language = initial(src.mob.say_language)
@@ -582,44 +583,34 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		var/datum/organHolder/OHM = O.organHolder
 
-		switch(mode)
-			if("set")
-				if(!src.mutant_organs.len)
-					return // All done!
-				else
-					for(var/mutorgan in src.mutant_organs)
-						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
-							if (OHM.tail)
-								qdel(OHM.tail)
-						else if(mutorgan == "butt") // butts arent organs
-							var/obj/item/clothing/head/butt/org = OHM.get_organ(mutorgan)
-							if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
-								continue
-						else // everything else is an organ, though
-							var/obj/item/organ/org = OHM.get_organ(mutorgan)
-							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
-								continue
-						var/obj/item/organ_get = src.mutant_organs[mutorgan]
-						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
-					return
-			if("reset") // Make everything mutant back into stock-ass human
-				if(!src.mutant_organs.len)
-					return // All done!
-				if (OHM.tail) // mutant to human, drop the tail. Unless you're a changer, then your butt just eats it
-					qdel(OHM.tail)
-				else
-					for(var/mutorgan in src.mutant_organs)
-						if(mutorgan == "butt") // butts arent organs
-							var/obj/item/clothing/head/butt/org = OHM.get_organ(mutorgan)
-							if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
-								continue
-						else // everything else is an organ, though
-							var/obj/item/organ/org = OHM.get_organ(mutorgan)
-							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
-								continue
-						var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
-						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
-					return
+		for(var/mutorgan in src.mutant_organs)
+			var/obj/item/organ_get
+			if (mode == "set")
+				organ_get = src.mutant_organs[mutorgan]
+			else // "reset": make everything mutant back into stock-ass human
+				organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
+
+			var/obj/item/organ/org = OHM.get_organ(mutorgan)
+			if (mutorgan == "tail") // Not everyone has a tail, so just force it in. Humans don't get one back.
+				qdel(OHM.tail)
+				org = null
+				if (mode != "set")
+					continue
+			else if (mutorgan == "butt") // butts arent organs
+				if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
+					continue
+				org = null
+			else if (!org || org.robotic || org.unusual) // No free organs, trade-ins only, keep ur robotic and unusual stuff
+				continue
+
+			var/obj/item/organ/new_organ = new organ_get(O, OHM)
+			if (org) // keep the damage so swapping species can't heal it
+				new_organ.brute_dam = org.brute_dam
+				new_organ.burn_dam = org.burn_dam
+				new_organ.tox_dam = org.tox_dam
+				if (org.broken)
+					new_organ.breakme()
+			OHM.receive_organ(new_organ, mutorgan, 0, 1, is_transformation = TRUE)
 
 	/// Applies or removes the bioeffect associated with the mutantrace
 	proc/MutateMutant(var/mob/living/carbon/human/H)
@@ -719,8 +710,17 @@ TYPEINFO(/datum/mutantrace/blob)
 
 	ghost_icon_state = "ghost-blob"
 
+	on_attach(mob/living/carbon/human/M)
+		. = ..()
+		src.mob.bioHolder.AddEffect("phagocytosis", 2, null, do_stability = FALSE, scannable = FALSE, innate = TRUE)
+
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
+
+	disposing()
+		if(src.mob)
+			src.mob.bioHolder.RemoveEffect("phagocytosis")
+		. = ..()
 
 TYPEINFO(/datum/mutantrace/flubber)
 	icon = 'icons/mob/flubber.dmi'
@@ -2008,6 +2008,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 	disposing()
 		if(ishuman(src.mob))
 			src.mob.bioHolder.RemoveEffect("accent_frog")
+			src.mob.cure_disease_by_path(/datum/ailment/disease/dehydration) // this disease is specific to frogs, it shouldn't apply to any other mutantraces
 		#ifndef RP_MODE
 			mob.sims.removeMotive("Thirst")
 		#endif
@@ -2036,15 +2037,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 		if (isdead(src.mob))
 			return
 		if(src.mob.sims.getValue("Thirst") < 25.0) // dehydration effect
-			if (prob(10))
-				src.mob.visible_message(SPAN_EMOTE(pick("[mob] wrinkles up conspicuously.", "[mob] quietly wheezes.", "[mob]'s third eyelids stick to [his_or_her(src.mob)] eyes for a moment.")))
-		if(src.mob.sims.getValue("Thirst") < 1.0)
-			if (prob(50))
-				src.mob.take_oxygen_deprivation(15)
-			if (prob(10))
-				src.mob.visible_message(SPAN_ALERT(pick("[mob] struggles to breathe!", "[mob] gasps for air!")))
-			if (prob(20))
-				src.mob.emote(pick("choke","gasp"))
+			src.mob.contract_disease(/datum/ailment/disease/dehydration, null, null, 1)
 
 	proc/dermal_absorbtion(var/absorbtion_rate) // it's actually spelled "absorption" but every other absorption proc is misspelled too
 		if(!src.mob)
@@ -2056,7 +2049,14 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 		if(!ishuman(src.mob))
 			return
 
-				// Less likely to absorb based on chem protection
+		for (var/atom/movable/container as anything in obj_loc_chain(src.mob))
+			if (container.gas_impermeable)
+				return
+		var/mob/living/carbon/human/H = src.mob
+		if (H.is_sealed())
+			return
+
+		// Less likely to absorb based on chem protection
 		var/chem_prot = clamp(GET_ATOM_PROPERTY(src.mob, PROP_MOB_CHEMPROT), 0, 40)
 		if(chem_prot >= 55)
 			return
@@ -2245,6 +2245,7 @@ TYPEINFO(/datum/mutantrace/frog/amphibian) // trait mutantrace
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | HAS_NO_SKINTONE | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS | LIGHT_EYES)
+	dna_mutagen_banned = FALSE
 	blood_color = "#50b558"
 
 	ghost_icon_state = "ghost-amphibian"

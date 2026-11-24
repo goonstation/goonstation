@@ -132,7 +132,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			if (found_cleanable)
 				T.cleanable_fluid_react(null,TRUE)
 
-	F.trigger_fluid_enter()
+	if (airborne)
+		var/obj/fluid/airborne/AF = F
+		AF.trigger_fluid_enter(dose_mobs = FALSE)
+	else
+		F.trigger_fluid_enter()
 
 //s/ ame as the above, but using a reagent_id instead of a datum
 /turf/proc/fluid_react_single(reagent_name, react_volume, airborne = 0, processing_cleanables=FALSE)
@@ -188,7 +192,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 
 	FG.reagents.add_reagent(reagent_name,react_volume)
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
-	F.done_init()
+	if (airborne)
+		var/obj/fluid/airborne/AF = F
+		AF.done_init(dose_mobs = FALSE)
+	else
+		F.done_init()
 	.= F
 
 	if (!airborne && !processing_cleanables)
@@ -202,7 +210,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			if (found_cleanable)
 				T.cleanable_fluid_react(null,TRUE)
 
-	F.trigger_fluid_enter()
+	if (airborne)
+		var/obj/fluid/airborne/AF = F
+		AF.trigger_fluid_enter(dose_mobs = FALSE)
+	else
+		F.trigger_fluid_enter()
 
 
 /turf/proc/react_all_cleanables() //Same procedure called in fluid_react and fluid_react_single. copypasted cause i dont wanna proc call overhead up in hea

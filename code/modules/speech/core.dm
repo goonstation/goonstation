@@ -111,28 +111,28 @@ TYPEINFO(/atom)
 
 /**
  *	The primary entry point for all say code; messages sent will be mutated by the speech tree, passed to a say channel, disseminated to listeners, mutated by listen trees, then finally heard by recipients.
- *	- `message`: The plain text that should be used as the content of the say message datum.
+ *	- `message_text`: The plain text that should be used as the content of the say message datum.
  *	- `flags`: The flags that should be applied to the say message datum, which determine how it should be formatted and displayed. See `_std/defines/speech_defines/sayflags.dm`.
  *	- `message_params`: Use this to override the default variables of the say message datum. Use explitly only where a speech module would not be appropriate.
  *	- `atom_listeners_override`: In lieu of being sent over a say channel, messages will instead attempt to be passed to the listen trees of these atoms directly.
  */
-/atom/proc/say(message as text, flags = 0, list/message_params = null, list/atom/atom_listeners_override = null)
+/atom/proc/say(message_text as text, flags = 0, list/message_params = null, list/atom/atom_listeners_override = null)
 	RETURN_TYPE(/datum/say_message)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if (dd_hasprefix(message, "*"))
-		src.emote(copytext(message, 2), TRUE)
+	if (dd_hasprefix(message_text, "*"))
+		src.emote(copytext(message_text, 2), TRUE)
 		return
 
 	src.ensure_speech_tree()
-	var/datum/say_message/said = new(message, src, flags, message_params, atom_listeners_override)
-	if (QDELETED(said) || !length(said.content))
+	var/datum/say_message/original/message = new(message_text, src, flags, message_params, atom_listeners_override)
+	if (!length(message.content))
 		return
 
-	SEND_SIGNAL(src, COMSIG_ATOM_SAY, said)
-	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, said)
+	SEND_SIGNAL(src, COMSIG_ATOM_SAY, message)
+	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, message)
 
-	return src.speech_tree.process(said)
+	return src.speech_tree.process(message)
 
 /// A stub proc to facilitate `say()` passing on messages prefixed with "*".
 /atom/proc/emote(act, voluntary = FALSE, atom/target)

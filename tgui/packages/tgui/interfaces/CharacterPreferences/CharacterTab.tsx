@@ -5,10 +5,10 @@
  * @license MIT
  */
 
-import { Box, Button, Image, LabeledList, Section } from 'tgui-core/components';
+import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { ColorButton } from '../../components';
+import { ColorButton, TintedDmIcon } from '../../components';
 import { CharacterPreferencesData } from './type';
 
 const CustomDetail = ({ id, color, style }) => {
@@ -39,23 +39,28 @@ interface CustomPartProps {
   slot_id: string;
 }
 
+const PART_SIZE = '64px';
+
 const CustomPart = ({ slot_id }: CustomPartProps) => {
   const { act, data } = useBackend<CharacterPreferencesData>();
+  const part = data.partsData[slot_id];
+  const iconRef = part?.icon;
+  if (!part || !iconRef) {
+    return (
+      <Button onClick={() => act('pick_part', { slot_id })}>
+        Not Selected
+      </Button>
+    );
+  }
   return (
-    <Button
-      onClick={() => act('pick_part', { slot_id })}
-      tooltip={data.partsData[slot_id]?.name ?? 'Not Selected'}
-    >
-      {data.partsData[slot_id]?.img ? (
-        <Image
-          width="64px"
-          height="64px"
-          src={`data:image/png;base64,${data.partsData[slot_id]?.img}`}
-          backgroundColor="transparent"
-        />
-      ) : (
-        'Not Selected'
-      )}
+    <Button onClick={() => act('pick_part', { slot_id })} tooltip={part.name}>
+      <TintedDmIcon
+        icon={iconRef}
+        icon_state={part.iconState}
+        width={PART_SIZE}
+        height={PART_SIZE}
+        tint={part.skintoned ? data.skinTone : null}
+      />
     </Button>
   );
 };

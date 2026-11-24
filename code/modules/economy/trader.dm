@@ -120,7 +120,7 @@
 					)
 				)
 		.["items_in_cart"] = cart_items
-		var/account = FindBankAccountByName(src.scan?.registered)
+		var/account = global.data_core.get_bank_record(src.scan?.registered)
 		if(src.barter && !src.barter_customers[barter_lookup(user)])
 			src.barter_customers[barter_lookup(user)] = 0
 		.["available_currency"] = (src.barter ? barter_customers[barter_lookup(user)] : account?["current_money"])
@@ -168,7 +168,7 @@
 			if ("trader_purchase")
 				src.handle_purchase(usr, locate(params["commodity_ref"]) in (src.goods_sell | src.goods_illegal))
 			if ("trader_haggle")
-				var/askingprice = tgui_input_number(usr, "Please enter your asking price.", "Haggle", 0)
+				var/askingprice = tgui_input_number(usr, "Please enter your asking price.", "Haggle", 0, 1000000, 0)
 				if(!isnum_safe(askingprice))
 					return
 				var/datum/commodity/commodity = locate(params["commodity_ref"]) in (src.goods_buy | src.goods_illegal | src.goods_sell)
@@ -201,7 +201,7 @@
 		if (istype(id_card))
 			boutput(user, SPAN_NOTICE("You swipe the ID card in the card reader."))
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(id_card.registered)
+			account = global.data_core.get_bank_record(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Card Reader")
 				if (enterpin == id_card.pin)
@@ -251,7 +251,7 @@
 			if (src.scan.registered in global.FrozenAccounts)
 				boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 				return
-			account = FindBankAccountByName(src.scan.registered)
+			account = global.data_core.get_bank_record(src.scan.registered)
 		if (!src.barter && !account)
 			src.say("That's odd, I can't seem to find your account!")
 			return
@@ -286,7 +286,7 @@
 		if(!sell_item)
 			boutput(user, SPAN_ALERT("You can't sell nothing!"))
 			return
-		var/account = FindBankAccountByName(src.scan?.registered)
+		var/account = global.data_core.get_bank_record(src.scan?.registered)
 		if(!src.barter && !account)
 			boutput(user, SPAN_ALERT("You need to register an ID to sell things!"))
 			return
@@ -311,7 +311,7 @@
 			if (istype(id_card))
 				boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
 				var/datum/db_record/account = null
-				account = FindBankAccountByName(id_card.registered)
+				account = global.data_core.get_bank_record(id_card.registered)
 				if(account)
 					var/enterpin = usr.enter_pin("Card Reader")
 					if (enterpin == id_card.pin)
@@ -441,7 +441,7 @@
 	///////////////////////////////////////////////
 	////// special handling for selling an item ///
 	///////////////////////////////////////////////
-	proc/sold_item(datum/commodity/C, obj/S, count, mob/user as mob)
+	proc/sold_item(datum/commodity/C, atom/S, count, mob/user as mob)
 		. = C.price * count
 
 	///////////////////////////////////
@@ -456,7 +456,7 @@
 			if(!src.scan)
 				boutput(user, SPAN_ALERT("You have to scan your ID first!"))
 				return
-			account = FindBankAccountByName(src.scan.registered)
+			account = global.data_core.get_bank_record(src.scan.registered)
 			if(!account)
 				boutput(user, SPAN_ALERT("[src]There is no account registered with this card!"))
 				return
@@ -476,12 +476,16 @@
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
 				var/list/sold_string = list()
-				for (var/obj/item/sellitem in O.contents)
-					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
+				for (var/atom/A in O.contents)
+					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, A)
 					if(tradetype)
-						cratevalue += sold_item(tradetype, sellitem, sellitem.amount, user)
-						qdel(sellitem)
-						sold_string[sellitem.type] += sellitem.amount
+						var/amount = 1
+						if(isitem(A))
+							var/obj/item/I = A
+							amount = I.amount
+						cratevalue += sold_item(tradetype, A, amount, user)
+						qdel(A)
+						sold_string[A.type] += amount
 				if(log_trades && length(sold_string))
 					logTheThing(LOG_STATION, user, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
 				if(cratevalue)
@@ -597,12 +601,12 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 				icon_state = pick(special_parrot_species)
 				P = special_parrot_species[icon_state]
 				if (ispath(P))
-					icon = initial(P.icon)
+					icon = get_initial_icon(P)
 			else if (islist(parrot_species))
 				icon_state = pick(parrot_species)
 				P = parrot_species[icon_state]
 				if (ispath(P))
-					icon = initial(P.icon)
+					icon = get_initial_icon(P)
 
 		var/pickprename = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer", "Old", "Ol'", "Zesty", "Sassy", "Bargain", "Discount", "Uncle", "Big", "Little")
 		//var/pickfirstname = pick(first_names)
@@ -919,17 +923,14 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 
 	New()
 		..()
-		var/carlsell = rand(1,9)
 		src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
 		src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
 		src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
 		src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
 		src.goods_illegal += new /datum/commodity/contraband/syndicate_headset(src)
 		src.goods_illegal += new /datum/commodity/contraband/chargedradiojammer(src)
-		if (carlsell <= 6)
-			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-		if (carlsell >= 4)
-			src.goods_illegal += new /datum/commodity/contraband/voiceanonymizer(src)
+		src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
+		src.goods_illegal += new /datum/commodity/contraband/voiceanonymizer(src)
 
 		src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 		src.goods_sell += new /datum/commodity/contraband/flare(src)
@@ -1008,6 +1009,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/podparts/skin_flames(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_uniform(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
+		src.goods_sell += new /datum/commodity/contraband/nt_flag(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
 		src.goods_sell += new /datum/commodity/contraband/swatmask/NT(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/methamphetamine(src)
@@ -1195,6 +1197,9 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/junk/ai_kit_mime(src)
 		src.goods_sell += new /datum/commodity/foam_dart_grenade(src)
 		src.goods_sell += new /datum/commodity/costume/rabbitsuit(src)
+		src.goods_sell += new /datum/commodity/costume/baseball_clown(src)
+		src.goods_sell += new /datum/commodity/costume/baseball_mime(src)
+		src.goods_sell += new /datum/commodity/costume/mouse(src)
 
 
 

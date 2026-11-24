@@ -22,10 +22,9 @@
 /mob/living/add_stam_mod_max(var/key, var/value)
 	if (!src.use_stamina) return
 	if(!isnum(value)) return
-	if(key in stamina_mods_max)
+	if(!isnull(src.stamina_mods_max[key]))
 		return 0
-	stamina_mods_max.Add(key)
-	stamina_mods_max[key] = value
+	src.stamina_mods_max[key] = value
 	return 1
 
 ///Removes a stamina max modifier with the given key.
@@ -34,10 +33,7 @@
 
 /mob/living/remove_stam_mod_max(var/key)
 	if (!src.use_stamina) return
-	if(!(key in stamina_mods_max))
-		return 0
-	stamina_mods_max.Remove(key)
-	return 1
+	return src.stamina_mods_max.Remove(key)
 
 ///Returns the total modifier for stamina max
 /mob/proc/get_stam_mod_max()
@@ -45,13 +41,12 @@
 
 /mob/living/get_stam_mod_max()
 	if (!src.use_stamina) return
-	var/val = 0
-	for(var/x in stamina_mods_max)
-		val += stamina_mods_max[x]
+	var/val = values_sum(src.stamina_mods_max)
 
 	var/stam_mod_items = 0
 	for (var/obj/item/C as anything in src.get_equipped_items())
-		stam_mod_items += C.getProperty("stammax")
+		if (C.properties)
+			stam_mod_items += C.getProperty("stammax")
 
 	return (val + stam_mod_items)
 
@@ -60,19 +55,27 @@
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX), 80, 100)) + 0
 
 //Restores stamina
-/mob/proc/add_stamina(var/x)
+/mob/proc/add_stamina(x)
 	return
 
-/mob/living/add_stamina(var/x as num)
+/mob/living/add_stamina(x as num)
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
 	stamina = min(stamina_max, stamina + x)
-	if(src.stamina_bar && src.stamina_bar.last_update != TIME)
-		src.stamina_bar.update_value(src)
-	return
+
+// kill me
+/mob/living/carbon/human/add_stamina(x as num)
+	. = ..()
+	if(src.hud?.stamina_bar?.last_update != TIME)
+		src.hud?.stamina_bar?.update_value(src)
+
+/mob/living/critter/add_stamina(x as num)
+	. = ..()
+	if(src.hud?.stamina_bar?.last_update != TIME)
+		src.hud?.stamina_bar?.update_value(src)
 
 //Removes stamina
-/mob/proc/remove_stamina(var/x)
+/mob/proc/remove_stamina(x)
 	return
 
 /mob/living/remove_stamina(var/x)
@@ -81,15 +84,25 @@
 
 	var/stam_mod_items = 0
 	for (var/obj/item/C as anything in src.get_equipped_items())
-		stam_mod_items += C.getProperty("stamcost")
+		if (C.properties)
+			stam_mod_items += C.getProperty("stamcost")
 
 	var/percReduction = 0
 	if(stam_mod_items)
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	if(src.stamina_bar?.last_update != TIME) src.stamina_bar?.update_value(src)
-	return
+
+// make it end
+/mob/living/carbon/human/remove_stamina(x as num)
+	. = ..()
+	if(src.hud?.stamina_bar?.last_update != TIME)
+		src.hud?.stamina_bar?.update_value(src)
+
+/mob/living/critter/remove_stamina(x as num)
+	. = ..()
+	if(src.hud?.stamina_bar?.last_update != TIME)
+		src.hud?.stamina_bar?.update_value(src)
 
 /// Adds 'get up' stun reduction, from taking beatdown damage.
 /mob/proc/revenge_stun_reduction(stamina_damage, brute, burn, damage_type )
@@ -126,8 +139,14 @@
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
 	stamina = clamp(x, STAMINA_NEG_CAP, stamina_max)
-	if(src.stamina_bar) src.stamina_bar.update_value(src)
-	return
+
+// this will never be unified
+/mob/living/carbon/human/set_stamina(x as num)
+	. = ..()
+	src.hud?.stamina_bar?.update_value(src)
+/mob/living/critter/set_stamina(x as num)
+	. = ..()
+	src.hud?.stamina_bar?.update_value(src)
 
 //PLEASE ONLY EVER USE THESE TO MODIFY STAMINA. NEVER SET IT DIRECTLY.
 

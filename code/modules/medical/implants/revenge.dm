@@ -124,14 +124,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.owner?.elecgib()
 		. = ..()
 
-/obj/item/implant/revenge/wasp
-	name = "wasp implant"
-	big_message = " buzzes, what?"
-	small_message = "buzzes loudly, uh oh!"
-	power = 8
-	var/wasp_type = /mob/living/critter/small_animal/wasp/angry
-	var/faction = FACTION_BOTANY
-
+ABSTRACT_TYPE(/obj/item/implant/revenge/spawner)
+/// Abstract type for implants that spawn mobs when you die. Power = number of things spawned.
+/obj/item/implant/revenge/spawner
+	var/spawned_type = null
+	var/faction = null
 	implanted(mob/M, mob/I)
 		..()
 		if (istype(M) && src.faction)
@@ -143,14 +140,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			LAZYLISTREMOVE(M.faction, src.faction)
 
 	do_effect(power)
-		// enjoy your wasps
+		// enjoy your mobs
 		for (var/i in 1 to power)
 			var/throw_type = THROW_NORMAL
-			var/mob/M = new src.wasp_type(get_turf(src))
-			if(ismob(M))
-				M.lying = TRUE // So wasps dont hit other wasps when being flung
+			var/mob/M = new src.spawned_type(get_turf(src))
+			if (ismob(M))
+				M.set_lying(TRUE) // So mobs dont hit other mobs when being flung
 				SPAWN(1 SECOND)
-					M.lying = FALSE
+					M.set_lying(FALSE)
 			else
 				throw_type = THROW_PHASE
 			M.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2, throw_type = throw_type)
@@ -159,9 +156,18 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.owner?.gib()
 		. = ..()
 
-/obj/item/implant/revenge/wasp/clownspider
+/obj/item/implant/revenge/spawner/clownspider
 	name = "funny implant"
 	big_message = " squeaks a little."
 	small_message = "emits a loud honk, uh oh!"
-	wasp_type = /mob/living/critter/spider/clown
+	spawned_type = /mob/living/critter/spider/clown
+	power = 8
 	faction = FACTION_CLOWN
+
+/obj/item/implant/revenge/spawner/wasp
+	name = "wasp implant"
+	big_message = " buzzes, what?"
+	small_message = "buzzes loudly, uh oh!"
+	power = 8
+	spawned_type = /mob/living/critter/small_animal/wasp/angry
+	faction = FACTION_BOTANY

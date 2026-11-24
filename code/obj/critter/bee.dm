@@ -115,7 +115,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 						src.visible_message(SPAN_NOTICE("<b>[src]</b> stares at [maybeOurMom] for a moment, then bumbles happily!"))
 						break
 
-			else if ((beeMom in hearers(src, null)))
+			else if (beeMom && (beeMom in hearers(src, null)))
 				if (isdead(beeMom))
 					beeMom = null //beeMomCkey still set.
 					src.visible_message(SPAN_ALERT("<b>[src]</b> bumbles MOURNFULLY."))
@@ -328,7 +328,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 		if(!user || !E) return 0
 		if(!src.alive)
 			return
-		if (E.icon_state == "gold")
+		if (E.icon_state == "emag_gold")
 			boutput(user, "<b>[src]</b> respectfully declines, as it didn't stay down the first time.")
 			return
 		E.layer = initial(src.layer)
@@ -355,7 +355,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 							src.visible_message("<b>[src]</b> drops \a [D] on the floor in an attempt to cheer [user] up!")
 							playsound(D.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg' , 30, 1)
 			else
-				E.icon_state = "id_gold"
+				E.icon_state = "emag_gold"
 				E.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [E]!")
 				E.name = "sticky [E.name]"
@@ -993,6 +993,16 @@ TYPEINFO(/obj/critter/domestic_bee)
 		else
 			..()
 
+/obj/fakeobject/bubs_standee
+	name = "fat and sassy space-bee standee"
+	desc = "A greater domestic space-bee that happens to be <s>particularly pudgy and obstinate</s> CARDBOARD!!!."
+	icon = /obj/critter/domestic_bee/bubs::icon
+	icon_state = "bubsbee"
+	default_material = "cardboard"
+	uses_default_material_appearance = TRUE
+	anchored = 1
+	density = 1
+
 /obj/critter/domestic_bee/bubs
 	name = "fat and sassy space-bee"
 	desc = "A greater domestic space-bee that happens to be particularly pudgy and obstinate."
@@ -1066,20 +1076,23 @@ TYPEINFO(/obj/critter/domestic_bee)
 			return ..()
 
 	proc/perhaps_go_to_work()
-		. = time2text(world.realtime, "DDD")
-		if (. == "Sun" || . == "Sat")
+		// Bubs works weekdays in the EST daytime.
+		var/est_day = time2text(world.realtime - (5 HOURS), "DDD")
+		if (est_day == "Sun" || est_day == "Sat")
 			return 0		//No working the weekends!
 
-		. = text2num(time2text(world.timeofday, "hh"))
-		//1 am to 9 am cst is a little offset from the Real Bubs Jobtime
-		//of course, this is tied to the server's local time so G4 will be different
-		if (. >= 1 && . < 9)
-			var/turf/T = pick_landmark(LANDMARK_BUBS_BEE_JOB)
-			if (istype(T))
-				src.hat = new /obj/item/clothing/head/flatcap (src)
-				src.hat_that_bee(src.hat)
-				src.UpdateIcon()
-				src.set_loc(T)
+		var/est_timeofday = (world.timeofday - (5 HOURS)) % (1 DAY)
+		if (est_timeofday < 0)
+			est_timeofday += 1 DAY
+		if (est_timeofday < (7 HOURS) || est_timeofday >= (15 HOURS))
+			return 0
+
+		var/turf/T = pick_landmark(LANDMARK_BUBS_BEE_JOB)
+		if (istype(T))
+			src.hat = new /obj/item/clothing/head/flatcap (src)
+			src.hat_that_bee(src.hat)
+			src.UpdateIcon()
+			src.set_loc(T)
 
 		return 1
 
@@ -2076,6 +2089,13 @@ TYPEINFO(/obj/critter/domestic_bee)
 		reagents.add_reagent("honey", 10)
 		reagents.add_reagent("cornstarch", 5)
 		reagents.add_reagent("pollen", 20)
+
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee
+	name = "Heisenbee's birthday cupcake"
+	desc = "A little birthday cupcake for Heisenbee. May not taste good to non-bees.";
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
+	icon_state = "cupcake";
+
 
 /* -------------------- END -------------------- */
 

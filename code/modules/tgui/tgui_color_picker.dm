@@ -16,6 +16,7 @@
  * * autofocus - The bool that controls if this picker should grab window focus.
  */
 /proc/tgui_color_picker(mob/user, message, title, default = "#000000", timeout = 0, autofocus = TRUE)
+	UNIT_TEST_TGUI_RESPONSE
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -44,6 +45,7 @@
  * * autofocus - The bool that controls if this picker should grab window focus.
  */
 /proc/tgui_color_picker_async(mob/user, message, title, default = "#000000", datum/callback/callback, timeout = 0, autofocus = TRUE)
+	UNIT_TEST_TGUI_RESPONSE_ASYNC(callback)
 	if (!user)
 		user = usr
 	if (!istype(user))

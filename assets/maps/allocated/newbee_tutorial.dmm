@@ -214,9 +214,9 @@
 /area/tutorial/newbee)
 "hy" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/structure/girder,
 /obj/disposalpipe/segment/vertical,
-/turf/unsimulated/floor/plating,
+/obj/structure/woodwall/web/small,
+/turf/simulated/floor/auto/web,
 /area/tutorial/newbee/room_8)
 "hC" = (
 /obj/health_scanner/floor/tutorial,
@@ -315,7 +315,7 @@
 "lI" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/disposalpipe/segment/vertical,
-/turf/unsimulated/floor/plating,
+/turf/simulated/floor/auto/web,
 /area/tutorial/newbee/room_8)
 "me" = (
 /obj/landmark/newbee/basic_movement,

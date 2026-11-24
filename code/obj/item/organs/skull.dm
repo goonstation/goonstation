@@ -91,6 +91,9 @@
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] skullbot"
 
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(B.forensic_holder)
 			user.show_text("You add [W] to [src]. That's neat.", "blue")
 			qdel(W)
 			qdel(src)

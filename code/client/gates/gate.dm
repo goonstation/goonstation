@@ -74,7 +74,24 @@
 					}
 				</style>
 			</head>
-			<body><div class="content-wrapper">[failure_message]</div></body>
+			<body>
+				<div class="content-wrapper">[failure_message]</div>
+				<script>
+					// .local-time holds a UTC ISO8601 timestamp
+					document.querySelectorAll(".local-time").forEach(function(node) {
+						const utc = new Date(node.textContent);
+						if (isNaN(utc.getTime())) return;
+						node.textContent = utc.toLocaleString(undefined, {
+							year: "numeric",
+							month: "short",
+							day: "numeric",
+							hour: "numeric",
+							minute: "2-digit",
+							timeZoneName: "short"
+						});
+					});
+				</script>
+			</body>
 		</html>
 	"}, "window=mainwindow.authfailed")
 	winshow(C, "mainwindow.authfailed", TRUE)

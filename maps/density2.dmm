@@ -1068,9 +1068,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -2248,10 +2245,6 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,
 /area/station/bridge)
 "nL" = (
-/obj/machinery/computer/secure_data{
-	dir = 8;
-	icon_state = "datasec"
-	},
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
@@ -2260,6 +2253,13 @@
 	icon_state = "tube1";
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -2785,18 +2785,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "rQ" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/fakeobject{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -4370,6 +4359,9 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -48945,7 +48937,7 @@ lL
 qU
 iz
 nL
-mE
+cg
 iz
 dg
 rC
@@ -49247,7 +49239,7 @@ iz
 mH
 iz
 nN
-mE
+fL
 qB
 mE
 rH

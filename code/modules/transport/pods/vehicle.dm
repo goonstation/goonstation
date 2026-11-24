@@ -4,6 +4,7 @@
 	icon_state = "podfire"
 	density = 1
 	flags = USEDELAY
+	gas_impermeable = TRUE
 	anchored = ANCHORED
 	provides_grip = TRUE
 	status = REQ_PHYSICAL_ACCESS
@@ -809,16 +810,7 @@
 			sec_part.run_component(mult)
 		var/obj/item/shipcomponent/engine_part = src.get_part(POD_PART_ENGINE)
 		if(engine_part?.active)
-			var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-			var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
-			var/toxins = consumed?.toxins
-			if(isnull(toxins))
-				toxins = 0
-			if(usage)
-				src.myhud?.update_fuel()
-				if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
-					engine_part.deactivate()
-			consumed?.dispose()
+			src.use_power(src.powercurrent * mult)
 
 #ifdef MAP_OVERRIDE_NADIR
 		if(src.acid_damage_multiplier > 0)
@@ -828,6 +820,22 @@
 				src.health -= max(0.1 * power, 0.2) * acid_damage_multiplier * mult
 				checkhealth()
 #endif
+
+	use_power(amount, chan)
+		var/obj/item/shipcomponent/engine_part = src.get_part(POD_PART_ENGINE)
+		if (!istype(engine_part))
+			return
+
+		var/gas_usage = amount / 3000  // 0.0333 moles consumed per 100W
+		var/datum/gas_mixture/consumed = src.fueltank?.remove_air(gas_usage)
+		var/toxins = consumed?.toxins
+		if(isnull(toxins))
+			toxins = 0
+		if(gas_usage)
+			src.myhud?.update_fuel()
+			if(abs(gas_usage - toxins)/gas_usage > 0.10) // 5% difference from expectation
+				engine_part.deactivate()
+		consumed?.dispose()
 
 	proc/checkhealth()
 		myhud?.update_health()
@@ -851,7 +859,7 @@
 					if(damage_overlays != 2)
 						particleMaster.SpawnSystem(new /datum/particleSystem/areaSmoke("#CCCCCC", 50, src))
 						damage_overlays = 2
-						fire_overlay = image('icons/effects/64x64.dmi', "pod_fire")
+						fire_overlay = image('icons/effects/64x64.dmi', "pod_fire", layer = ABOVE_OBJ_LAYER)
 						src.UpdateOverlays(fire_overlay, "fire")
 						for(var/mob/living/carbon/human/M in src)
 							M.update_burning(35)
@@ -860,7 +868,7 @@
 				if(25 to 50)
 					if(damage_overlays < 1)
 						damage_overlays = 1
-						damage_overlay = image('icons/effects/64x64.dmi', "pod_damage")
+						damage_overlay = image('icons/effects/64x64.dmi', "pod_damage", layer = ABOVE_OBJ_LAYER)
 						src.UpdateOverlays(damage_overlay, "damage")
 				if(50 to INFINITY)
 					if (damage_overlays)
@@ -1186,7 +1194,7 @@
 
 		if (was_seen_boarding && V.pilot == owner && ishuman(owner) && owner.hasStatus("drunk"))
 			var/mob/living/carbon/human/H = owner
-			H.apply_automated_arrest("DUI.", "Drove while inebriated.", requires_camera_seen = FALSE)
+			H.apply_automated_arrest("Driving under the influence.", requires_camera_seen = FALSE)
 
 /datum/action/bar/icon/eject_pod
 	duration = 50
@@ -1945,10 +1953,10 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 				pilot?.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
-					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
-						if(prob(40))
-							SPAWN(rand(0,5))
-								H.bioHolder.AddEffect(effect)
+					if(prob(40))
+						var/limb = pick(list("l_arm","r_arm","l_leg","r_leg"))
+						SPAWN(rand(0,5))
+							H.sever_limb(limb)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"
 				while(src)

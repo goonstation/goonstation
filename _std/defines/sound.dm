@@ -71,6 +71,11 @@
 #define SOUNDCHANNEL_ADMIN_LOW 1014 // lower end of the range of admin channels
 #define SOUNDCHANNEL_ADMIN_HIGH 1024 // upper end
 
+#define ADMIN_SOUND_MAX_VOLUME 200
+#define SOUND_PRIORITY_ADMIN 254
+#define SOUND_ENVIRONMENT_NONE -1
+#define SOUND_ECHO_NONE -1
+
 var/global/admin_sound_channel = SOUNDCHANNEL_ADMIN_LOW // current admin channel
 
 //sound mute

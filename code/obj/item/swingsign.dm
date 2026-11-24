@@ -11,6 +11,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	desc = "A foldable sign for writing annoucements or advertisements."
 	icon = 'icons/obj/furniture/swingsign.dmi'
 	icon_state = "blank"
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	throwforce = 10
 	density = TRUE
 	custom_suicide = TRUE
@@ -196,7 +197,7 @@ TYPEINFO(/obj/item/swingsignfolded)
 	stamina_damage = 45
 	stamina_cost = 21
 	stamina_crit_chance = 10
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 
 	/// Stored message for the deployed object

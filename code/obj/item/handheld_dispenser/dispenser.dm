@@ -331,6 +331,8 @@ TYPEINFO(/obj/item/places_pipes)
 
 /obj/item/places_pipes/adminshenanigans
 	name = "extremely powerful handheld pipe dispenser"
+	default_material = "miracle"
+	uses_default_material_appearance = TRUE
 	resources = INFINITY
 	max_resources = INFINITY
 	dispenser_delay = 1 DECI SECOND
@@ -418,7 +420,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/pipe)
 	quad_manifold
 		name = "Quadway manifold"
 		path = /obj/machinery/atmospherics/pipe/quadway/overfloor
-		cost = 4 //quad
+		cost = 3 //quad
 		icon_state = "4way"
 		desc = "A four way manifold."
 
@@ -428,7 +430,6 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/pipe)
 	heat_pipe
 		name = "Heat exchanging pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/heat_exchanging
-		cost = 3
 		icon_state = "heatpipe"
 		desc = "A heat exchanging pipe. Conducts heat very well to and from its surroundings."
 
@@ -442,7 +443,6 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/pipe)
 	bent_heat_pipe
 		name = "Bent Heat exchanging pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/heat_exchanging
-		cost = 3
 		icon_state = "heatpipebent"
 		bent = TRUE
 		desc = "A heat exchanging pipe. Conducts heat very well to and from its surroundings."
@@ -473,7 +473,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/pipe)
 
 ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine)
 /datum/pipe_recipe/atmos/machine
-	cost = 4
+	cost = 3
 
 ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/unary)
 /datum/pipe_recipe/atmos/machine/unary
@@ -674,7 +674,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine)
 /datum/pipe_recipe/fluid/machine
-	cost = 4
+	cost = 3
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 /datum/pipe_recipe/fluid/machine/unary

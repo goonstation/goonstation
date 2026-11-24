@@ -243,6 +243,14 @@
 			return
 		..()
 
+/datum/syndicate_buylist/traitor/pipe_crawling_outfit
+	name = "Pipe-Crawling outfit"
+	items = list(/obj/item/clothing/under/gimmick/mario/syndicate/waluigi, /obj/item/clothing/head/mario/waluigi)
+	cost = 3
+	desc = "An advanced uniform that allows the wearer to crawl through tight disposal shafts or dive through the station's toilet network. Comes with a matching hat."
+	job = list("Janitor")
+	vr_allowed = FALSE
+
 /datum/syndicate_buylist/traitor/overcharged_vacuum
 	name = "Overcharged Vacuum Cleaner"
 	items = list(/obj/item/handheld_vacuum/overcharged)
@@ -318,15 +326,6 @@
 	desc = "A box filled with seven random poison bottles."
 	job = list(ALL_DOCTORS, ALL_RESEARCH, "Bartender", ALL_CHEFS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/chemicompiler
-	name = "Chemicompiler"
-	items = list(/obj/item/device/chemicompiler)
-	cost = 5
-	not_in_crates = TRUE
-	desc = "A handheld version of the Chemicompiler machine in Chemistry."
-	job = list(ALL_RESEARCH, "Pharmacist")
-	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/robosuit
 	name = "Syndicate Robot Frame"

@@ -254,6 +254,8 @@ TYPEINFO(/obj/item/device/radio)
 			return TRUE
 
 		if ("toggle-microphone")
+			if (!src.has_microphone)
+				return FALSE
 			src.toggle_microphone(!src.microphone_enabled)
 			return TRUE
 
@@ -322,7 +324,10 @@ TYPEINFO(/obj/item/device/radio)
 /// Returns the HTML radio icon and tooltip.
 /obj/item/device/radio/proc/radio_icon(mob/user)
 	if (isAI(user))
-		. = "ai"
+		if(isnukeopai(user))
+			. = "ai_syndie"
+		else
+			. = "ai"
 	else if (isrobot(user))
 		. = "robo"
 	else if (ishorse(user))

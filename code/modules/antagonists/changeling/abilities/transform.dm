@@ -17,6 +17,9 @@
 			boutput(holder.owner, SPAN_ALERT("That ability is incompatible with our abilities. We should report this to a coder."))
 			return 1
 
+		if (!H.current_ident) // cloning copies the holder without our identity, so take it from the body we have now
+			H.set_up_identities(holder.owner)
+
 		if (length(H.absorbed_dna) < 2)
 			boutput(holder.owner, SPAN_ALERT("We need to absorb more DNA to use this ability."))
 			return 1
@@ -27,6 +30,9 @@
 		var/target_name = tgui_input_list(holder.owner, "Select the target DNA:", "Target DNA", sortList(H.absorbed_dna, /proc/cmp_text_asc))
 		if (!target_name)
 			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
+			return 1
+		if (!(target_name in H.absorbed_dna))
+			boutput(holder.owner, SPAN_NOTICE("That face is lost to us."))
 			return 1
 
 		var/datum/absorbedIdentity/current_ident = H.current_ident

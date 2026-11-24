@@ -9,6 +9,13 @@
 /// This is relevant to atoms so it goes here!!!! do not @ me
 #define opposite_dir_to(dir) (turn(dir, 180))
 
+/// Use the editor resource in map editors and the default resource in normal builds.
+#ifdef IN_MAP_EDITOR
+#define MAP_EDITOR_ICON(EDITOR_RESOURCE, DEFAULT_RESOURCE) EDITOR_RESOURCE
+#else
+#define MAP_EDITOR_ICON(EDITOR_RESOURCE, DEFAULT_RESOURCE) DEFAULT_RESOURCE
+#endif
+
 
 /**
  * Makes the given procs available for use with the admin interact menu
@@ -79,6 +86,7 @@
 #define THROW_PHASE			(1 << 8) //! throw has phasing through walls for two tiles. For white holes
 #define THROW_NO_CLIP		(1 << 9) //! throw has phasing through walls without a tile limit
 #define THROW_ARC			(1 << 10)//! throw in an arc, like from a catapult or something
+#define THROW_DELIVERY		(1 << 11)//! cargo delivery, doesn't set off materials on impact
 
 //For serialization purposes
 #define DESERIALIZE_ERROR				(0 << 0)
@@ -123,3 +131,10 @@
 #define UNDERFLOOR 1
 /// The atom is above the floor tiles.
 #define OVERFLOOR 2
+
+/// The atom never receives mouse events.
+#define MOUSE_OPACITY_TRANSPARENT 0
+/// The atom receives mouse events on the non-transparent pixels of its icon.
+#define MOUSE_OPACITY_ICON 1
+/// The atom receives mouse events anywhere in its bounding box, whatever its icon looks like.
+#define MOUSE_OPACITY_OPAQUE 2

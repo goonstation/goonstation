@@ -31,6 +31,7 @@
 // nukies
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
 #define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"
+#define LANDMARK_SYNDICATE_AI "AI Syndicate-Spawn"
 #define LANDMARK_NUCLEAR_BOMB "Nuclear-Bomb"
 #define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
 #define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
@@ -171,6 +172,18 @@
 #define LANDMARK_HTR_TEAM "HTR_TEAM"
 #define LANDMARK_HTR_VENDOR "HTR_VENDOR"
 #define LANDMARK_HTR_BOTS "HTR_BOTS"
+
+//Menhir map
+#define LANDMARK_MENHIR_DOOR "menhir_door"
+#define LANDMARK_MENHIR_EXTRUSION "menhir_extrusion"
+#define LANDMARK_MENHIR_NODE "menhir_node"
+#define LANDMARK_MENHIR_OUTREACH "menhir_outreach"
+#define LANDMARK_MENHIR_PENANCE "menhir_penance"
+#define LANDMARK_MENHIR_COALESCE "menhir_coalesce"
+#define LANDMARK_MENHIR_BEYOND "menhir_beyond"
+#define LANDMARK_MENHIR_PASSAGE "menhir_passage"
+#define LANDMARK_MENHIR_DARK "menhir_dark"
+#define LANDMARK_MENHIR_STUCKSCAN "menhir_stuckscan"
 
 // Map Correctness
 #define LANDMARK_DISPOSALS_ENDPOINT "disposals endpoint"

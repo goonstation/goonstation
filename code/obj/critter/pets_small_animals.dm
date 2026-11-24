@@ -554,7 +554,7 @@ TYPEINFO(/obj/critter/parrot)
 		src.name = initial(info.name)
 		src.desc = initial(info.desc)
 		src.species = initial(info.species)
-		src.icon = initial(info.icon)
+		src.icon = get_initial_icon(info)
 		src.icon_state = src.species
 		src.dead_state = "[src.species]-dead"
 		src.pixel_x = initial(info.pixel_x)

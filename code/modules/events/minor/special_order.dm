@@ -1,6 +1,7 @@
 
 /datum/random_event/minor/special_order
 	name = "Special Order"
+	description = "Spawn a special cargo requisition"
 	customization_available = TRUE
 	var/list/special_order_weights
 
@@ -333,7 +334,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 				breakfast = list()
 				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
 					var/obj/item/reagent_containers/food/snacks/F = food_type
-					if(initial(F.meal_time_flags) & MEAL_TIME_BREAKFAST)
+					if(initial(F.meal_time_flags) & FOOD::MEAL::BREAKFAST)
 						breakfast += food_type
 			for(var/i in 1 to rand(3,6))
 				src.food_order[pick(breakfast)] = pick(60; 1, 30; 2, 10; 3)
@@ -347,7 +348,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 				lunch = list()
 				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
 					var/obj/item/reagent_containers/food/snacks/F = food_type
-					if(initial(F.meal_time_flags) & MEAL_TIME_LUNCH)
+					if(initial(F.meal_time_flags) & FOOD::MEAL::LUNCH)
 						lunch += food_type
 			for(var/i in 1 to rand(3,6))
 				src.food_order[pick(lunch)] = pick(60; 1, 30; 2)
@@ -361,7 +362,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 				dinner = list()
 				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
 					var/obj/item/reagent_containers/food/snacks/F = food_type
-					if(initial(F.meal_time_flags) & MEAL_TIME_DINNER)
+					if(initial(F.meal_time_flags) & FOOD::MEAL::DINNER)
 						dinner += food_type
 			for(var/i in 1 to rand(3,6))
 				src.food_order[pick(dinner)] = pick(60; 1, 30; 2)
@@ -375,7 +376,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 				snacks = list()
 				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
 					var/obj/item/reagent_containers/food/snacks/F = food_type
-					if(initial(F.meal_time_flags) & MEAL_TIME_SNACK)
+					if(initial(F.meal_time_flags) & FOOD::MEAL::SNACK)
 						snacks += food_type
 			for(var/i in 1 to rand(3,6))
 				src.food_order[pick(snacks)] = pick(40; 1, 40; 2, 20; 3)

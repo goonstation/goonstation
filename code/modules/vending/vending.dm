@@ -4,7 +4,9 @@
 
 	var/product_cost
 	var/product_amount
+	var/product_amount_initial //! Initial product stock (for restocking)
 	var/product_hidden
+	var/product_restock //! Product is allowed to restock with a restock cartridge
 	var/logged_on_vend
 	var/infinite = FALSE
 	var/static/list/product_base64_cache = list()
@@ -12,7 +14,7 @@
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
 
-	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE, infinite=FALSE)
+	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE, infinite=FALSE, restock=TRUE)
 		..()
 		if (istext(productpath))
 			productpath = text2path(productpath)
@@ -32,11 +34,13 @@
 			//qdel(temp)
 
 		src.product_amount = amount
+		src.product_amount_initial = amount
 		src.product_cost = round(cost)
 
 		src.product_hidden = hidden
 		src.logged_on_vend = logged_on_vend
 		src.infinite = infinite
+		src.product_restock = restock
 
 	proc/getBase64Img()
 		var/path = src.product_path
@@ -177,7 +181,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			if(istype(src, /obj/machinery/vending/pizza)) //Pizza vendors need an exception so copies have inventory & don't start with money
 				src.credit = 0
 			else
-				src.product_list = new()
+				for (var/datum/data/vending_product/product in src.product_list)
+					product.product_amount = 0
 
 	/// Pick a random item with stock. Only includes hidden products if vendor is hacked.
 	proc/get_random_item()
@@ -206,7 +211,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.pay) // do we need to take their money
 			var/payed = FALSE
 			if (src.acceptcard && src.scan)
-				var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+				var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 				if (account)
 					if (account["current_money"] >= R.product_cost)
 						account["current_money"] -= R.product_cost
@@ -237,7 +242,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.pay) // do we need to take their money
 			var/payed = FALSE
 			if (src.acceptcard && src.scan)
-				var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+				var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 				if (account)
 					if (account["current_money"] >= to_throw.product_cost)
 						account["current_money"] -= to_throw.product_cost
@@ -255,6 +260,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	// because someone, somewhere, always forgets to use a ..()
 	proc/create_products(restocked=FALSE)
 		return
+
+	/// Set the current amount of each product to the initial amount, unless product is marked as not restockable.
+	proc/restock_products()
+		for (var/datum/data/vending_product/item_to_restock in src.product_list)
+			if (item_to_restock.product_restock)
+				item_to_restock.product_amount = item_to_restock.product_amount_initial
+		global.tgui_process?.update_uis(src)
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!istype(usr,/mob/living/))
@@ -412,12 +424,30 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending/overload_act()
 	return !src.set_broken()
 
+/obj/machinery/vending/smash_act(atom/movable/smasher, show_message)
+	if (show_message)
+		smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+	if (prob(50))
+		if (src.fall())
+			return TRUE
+		if (!src.set_broken())
+			return TRUE
+	else
+		if (!src.set_broken())
+			return TRUE
+		if (src.fall())
+			return TRUE
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+	make_cleanable( /obj/decal/cleanable/machine_debris, src.loc)
+	qdel(src)
+	return TRUE
+
 /obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 	if (!card || !user || !src.acceptcard)
 		return
 	boutput(user, SPAN_NOTICE("You swipe [card]."))
 	var/datum/db_record/account = null
-	account = FindBankAccountByName(card.registered)
+	account = global.data_core.get_bank_record(card.registered)
 	if (account)
 		var/enterpin = user.enter_pin("Enter PIN")
 		if (enterpin == card.pin)
@@ -513,12 +543,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		//check if cartridge type matches the vending machine
 		var/obj/item/vending/restock_cartridge/Q = W
 		if (istype(src, text2path("/obj/machinery/vending/[Q.vendingType]")))
-
-		// if (istype(src, text2path("/obj/machinery/vending/[W:vendingType]")))
-			//remove all producs, reinitialize array and then create the products like new
-			src.product_list = new()
-			src.create_products(restocked=TRUE)
-
+			src.restock_products() // this used to re-roll vending product creation, not restock
 			boutput(user, SPAN_NOTICE("You restocked the items in [src]."))
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			user.u_equip(W)
@@ -598,13 +623,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			"amount" = R.product_amount || 0,
 			"cost" = R.product_cost,
 			"img" = R.getBase64Img(),
-			"infinite" = R.infinite
+			"infinite" = R.infinite,
+			"restock" = R.product_restock,
 		))
 	if (!length(plist)) //this is needed to make TGUI clear out the list
 		.["productList"] = list()
 
 /obj/machinery/vending/ui_data(mob/user)
-	var/bankaccount = FindBankAccountByName(src.scan?.registered)
+	var/bankaccount = global.data_core.get_bank_record(src.scan?.registered)
 	. = list(
 		"windowName" = src.name,
 		"wiresOpen" = src.panel_open ? TRUE : null,
@@ -622,7 +648,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(!P.owner && src.scan?.registered)
 			.["owner"] = src.scan.registered
 			P.owner = src.scan.registered
-			P.owneraccount = FindBankAccountByName(src.scan.registered)
+			P.owneraccount = global.data_core.get_bank_record(src.scan.registered)
 		else
 			.["owner"] = P.owner
 		.["playerBuilt"] = TRUE
@@ -716,8 +742,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				if (seconds_electrified)
 					if(src.shock(usr,100))
 						return
-				var/datum/db_record/account = null
-				account = FindBankAccountByName(src.scan?.registered)
+				var/datum/db_record/personnel/bank/account = global.data_core.get_bank_record(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
 					boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
 					FLICK(src.icon_deny,src)
@@ -790,10 +815,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
 				if(player_list)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
-				if(account && (account["name"] != usr.real_name))
-				    // reduce logging spam from clerical errors
-					if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src, "buy_[usr.real_name]", 10 SECONDS))
-						logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account["name"]]).")
+
+				if (account)
+					var/datum/db_record/personnel/general/general = global.data_core.get_general_record(id = account["id"])
+					var/account_name = general?["name"]
+					if (account_name && (account_name != usr.real_name))
+						// reduce logging spam from clerical errors
+						if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src, "buy_[usr.real_name]", 10 SECONDS))
+							logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account_name]).")
 		else
 			. = FALSE
 
@@ -871,10 +900,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
 				return
 
-			var/datum/db_record/account = null
+			var/datum/db_record/personnel/bank/account = null
 			if (src.pay)
 				if (src.acceptcard && src.scan)
-					account = FindBankAccountByName(src.scan.registered)
+					account = global.data_core.get_bank_record(src.scan.registered)
 					if (!account)
 						boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
 						FLICK(src.icon_deny,src)
@@ -1056,7 +1085,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 /obj/machinery/vending/proc/fall(mob/living/carbon/victim)
 	if (!can_fall || fallen)
-		return
+		return FALSE
 	fallen = TRUE
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
@@ -1080,7 +1109,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	src.anchored = UNANCHORED
 	src.provides_grip = FALSE
 	vicTurf?.grip_atom_count -= 1
-	return
+	return TRUE
 
 /obj/machinery/vending/set_broken()
 	. = ..()
@@ -1400,7 +1429,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		product_list += new/datum/data/vending_product(/obj/item/paper, 20, cost=PAY::TRADESMAN/20)
 
 		product_list += new/datum/data/vending_product(/obj/item/device/igniter, rand(1, 6), hidden=1, cost=PAY::UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420)
+		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420, restock=FALSE)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo/juicer, rand(6, 9), hidden=1, cost=69)
 
 TYPEINFO(/obj/machinery/vending/chemistry)
@@ -1584,7 +1613,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/implanter, 1)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 3)
 		product_list += new/datum/data/vending_product(/obj/item/assembly/flash_cell, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1, restock=FALSE) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun_ricochet, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, rand(2, 4), hidden=1) // emergency snack
 
@@ -1618,9 +1647,7 @@ TYPEINFO(/obj/machinery/vending/security_ammo)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 7)
-
-		if (!restocked) //technically, this deletes any ammo left over on restock. oh well.
-			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1, restock=FALSE) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 
 /obj/machinery/vending/htr_team
 	name = "SecTech"
@@ -2029,6 +2056,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/ketchup, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/soysauce, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/gravyboat, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/jam/grapejam, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/tomato, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/apple, 10)
@@ -2113,7 +2141,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "standard-frame"
 	density = 1
-	material_amt = 0.3
+	material_amt = MATERIAL::AMOUNT::SHEET * 3
 	var/wrenched = FALSE
 	var/glassed = FALSE
 	var/boardinstalled = FALSE
@@ -2801,6 +2829,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/water_pipe, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/seedplanter/hidden, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/seed/grass, rand(3, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/botany, 5, hidden=1)
 		if (prob(25))
 			product_list += new/datum/data/vending_product(/obj/item/seed/alien, 1, hidden=1)
 
@@ -2981,6 +3010,7 @@ TYPEINFO(/obj/machinery/vending/hydroponics/mean_solarium_bullshit)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/fruit_wedges, 1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/applicator/condiment/shaker/salt, 1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cocktailshaker, 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/milkfrother, 1)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
@@ -3184,6 +3214,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/mop, 5)
+		product_list += new/datum/data/vending_product(/obj/item/broom, 5)
 		product_list += new/datum/data/vending_product(/obj/item/sponge, 4)
 		product_list += new/datum/data/vending_product(/obj/item/spraybottle/cleaner, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bucket, 4)
@@ -3199,6 +3230,8 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/instrument/whistle/janitor, 4)
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/mario/waluigi, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/mario/waluigi, 2, hidden=1)
 
 /obj/machinery/vending/air_vendor
 	name = "Oxygen Vending Machine"
@@ -3291,7 +3324,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		. = list()
 		.["cash"] = src.credit
 
-		var/datum/db_record/account = FindBankAccountByName(src.scan?.registered)
+		var/datum/db_record/account = global.data_core.get_bank_record(src.scan?.registered)
 		.["cardname"] = src.scan
 		.["bankMoney"] = account ? account["current_money"] : null
 
@@ -3333,7 +3366,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 						src.credit -= cost
 						src.fill()
 					else if(src.scan)
-						var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+						var/datum/db_record/account = global.data_core.get_bank_record(src.scan.registered)
 						if (account && account["current_money"] >= cost)
 							account["current_money"] -= cost
 							src.fill()
@@ -3506,7 +3539,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/rabbihat, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/formal_turban, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/turban, 1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal/magic, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal/magic, 1, restock=FALSE)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/chaplain/nun, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nunhood, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/flockcultist, 1)

@@ -469,6 +469,9 @@
 /obj/cable/black{
 	icon_state = "0-2"
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},

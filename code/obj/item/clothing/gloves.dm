@@ -77,9 +77,18 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		if (ismob(target))
 			target.visible_message(
 				"<span><b>[challenger]</b> slaps [target] in the face with [src]!</span>",
-				SPAN_ALERT("<b>[challenger] slaps you in the face with [src]! [capitalize(he_or_she(challenger))] has offended your honour!")
+				SPAN_ALERT("<b>[challenger] slaps you in the face with [src]! [capitalize(he_or_she(challenger))] has offended your honor!")
 			)
 			logTheThing(LOG_COMBAT, challenger, "glove-slapped [constructTarget(target,"combat")]")
+			if(ishuman(target))
+				var/mob/living/carbon/human/dork = target
+				if(istype(dork.wear_mask, /obj/item/clothing/mask/cigarette))
+					dork.visible_message(SPAN_ALERT("[dork.wear_mask] is knocked out of [dork]'s mouth!"))
+					if(ismob(challenger))
+						var/mob/slapper = challenger
+						dork.wear_mask.throw_worn_item(get_edge_cheap(dork.loc, turn(get_dir(slapper, dork), slapper.hand == LEFT_HAND ? -90 : 90)), 3, 2)
+					else
+						dork.wear_mask.throw_worn_item(get_edge_cheap(dork.loc, turn(get_dir(challenger, dork), 90)), 3, 2) //just assume they're slapping with their right hand(or whatever appendage they have) since most people are right-handed
 		else
 			target.visible_message(
 				SPAN_ALERT("<b>[challenger]</b> slaps [target] in the face with [src]!")
@@ -380,7 +389,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	get_fiber_mask()
 		if(!src.material)
 			return null
-		var/chem_prot = src.material.getProperty("chemical")
+		var/chem_prot = src.material.getProperty(MATERIAL::PROPERTY::CHEM_RESIST)
 		if(chem_prot >= 8)
 			return FORENSIC_GLOVE_MASK_NONE
 		if(chem_prot >= 6)
@@ -396,7 +405,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			..()
 			if(istype(src.material))
 
-				switch(src.material.getProperty("electrical"))
+				switch(src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
 					if(0 to 1)
 						src.setProperty("conductivity", 0.15)
 					if(1 to 2)
@@ -406,7 +415,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 					else
 						src.setProperty("conductivity", 1)
 
-				var/thermal_insul = max(0, 5 - src.material.getProperty("thermal"))
+				var/thermal_insul = max(0, 5 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND))
 
 				src.setProperty("coldprot", thermal_insul * 2)
 				src.setProperty("heatprot", thermal_insul * 2)
@@ -419,14 +428,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			..()
 			if(istype(src.material))
 				var/types = list()
-				if(src.material.getProperty("density") > 3 || src.material.getProperty("hard") > 3)
-					types["blunt"] = 0.5 * (max(src.material.getProperty("density"), src.material.getProperty("hard")) - 2)
-				if(src.material.getProperty("density") > 3)
-					types["cut"] = 0.5 * (src.material.getProperty("density") - 2)
-				if(src.material.getProperty("hard") > 3)
-					types["stab"] = 0.5 * (src.material.getProperty("hard") - 2)
+				if(src.material.getProperty(MATERIAL::PROPERTY::DENSITY) > 3 || src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) > 3)
+					types["blunt"] = 0.5 * (max(src.material.getProperty(MATERIAL::PROPERTY::DENSITY), src.material.getProperty(MATERIAL::PROPERTY::HARDNESS)) - 2)
+				if(src.material.getProperty(MATERIAL::PROPERTY::DENSITY) > 3)
+					types["cut"] = 0.5 * (src.material.getProperty(MATERIAL::PROPERTY::DENSITY) - 2)
+				if(src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) > 3)
+					types["stab"] = 0.5 * (src.material.getProperty(MATERIAL::PROPERTY::HARDNESS) - 2)
 
-				var/thermal = max(0, 5 - src.material.getProperty("thermal"))
+				var/thermal = max(0, 5 - src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND))
 				if(thermal > 0)
 					types["burn"] = thermal
 

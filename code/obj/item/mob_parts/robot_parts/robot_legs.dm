@@ -63,13 +63,19 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 			if (Skull.donor)
 				B.name = "[Skull.donor.real_name] skullbot"
 
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(B.forensic_holder)
 			user.show_text("You add [W] to [src]. That's neat.", "blue")
 			qdel(W)
 			qdel(src)
 			return
 
 		else if (istype(W, /obj/item/soulskull))
-			new /obj/machinery/bot/skullbot/ominous(get_turf(user))
+			var/obj/machinery/bot/skullbot/ominous/skullbot = new(get_turf(user))
+			skullbot.setMaterial(src.material)
+			skullbot.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(skullbot.forensic_holder)
 			boutput(user, SPAN_NOTICE("You add [W] to [src]. That's neat."))
 			qdel(W)
 			qdel(src)
@@ -114,7 +120,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
-	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
+	handlistPart = "legL-treads"
 	material_amt = ROBOT_TREAD_METAL_COST
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -153,7 +159,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
-	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
+	handlistPart = "legR-treads"
 	material_amt = ROBOT_TREAD_METAL_COST
 	powerdrain = 2.5
 	step_image_state = "tracksR"

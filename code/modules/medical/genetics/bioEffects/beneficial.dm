@@ -268,28 +268,32 @@
 			H.losebreath = 0
 		if(ismob(owner))
 			if(src.power == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH, src.type)
 			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 		health_update_queue |= owner
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			if(oldval == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH, src.type)
 			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS, src.type)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 			if(newval == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH, src.type)
 			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
-			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
-			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NO_OXY_LOSS, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NO_LOSEBREATH, src.type)
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"
@@ -362,7 +366,7 @@
 			roundedmult += round(roundedmultremainder)
 			roundedmultremainder = roundedmultremainder % 1
 		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
-			if (rand(1, regrow_prob) <= power)
+			if (regrow_prob && rand(1, regrow_prob) <= power)
 				if (ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if (H.limbs)
@@ -1129,6 +1133,8 @@
 			return
 		var/turf/T = get_turf(src.owner)
 		if (!istype(T) || src.owner.traction == TRACTION_NONE)
+			return
+		if (!src.owner.hasStatus("undertable") && (locate(/obj/table) in T)) // skittering is for getting under tables, not across them
 			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return

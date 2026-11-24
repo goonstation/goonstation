@@ -217,7 +217,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 			return
 		else
 			boutput(src, "<span class='bold notice'>Haha you died loser.</span>")
-			src.become_ghost()
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))

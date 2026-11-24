@@ -26,7 +26,7 @@
 	New(datum/abilityHolder/holder)
 		. = ..()
 		var/obj/cable/ctype = /obj/cable
-		var/cicon = initial(ctype.icon)
+		var/cicon = get_initial_icon(ctype)
 
 		// fill up the list with however many image object we're going to be using
 		src.cable_images = new/list((view_range * 2 + 1) ** 2)

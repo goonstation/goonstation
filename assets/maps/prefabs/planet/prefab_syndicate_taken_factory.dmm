@@ -145,6 +145,12 @@
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/concrete,
 /area/noGenerate)
+"E" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/simulated/floor/concrete,
+/area/noGenerate)
 "F" = (
 /turf/variableTurf/clear,
 /area/allowGenerate)
@@ -417,7 +423,7 @@ F
 (8,1,1) = {"
 F
 o
-A
+E
 A
 V
 J

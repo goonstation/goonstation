@@ -48,11 +48,11 @@ Ctrl + RMB on buildmode button     = Reset selection<br>
 			if (!object.intact)
 				return
 			var/turf/simulated/floor/F = object
-			F.icon = initial(F.icon)
+			F.icon = get_initial_icon(F)
 			F.icon_state = F.roundstart_icon_state
 			F.set_dir(F.roundstart_dir)
 		else if (istype(object, /turf/simulated/wall))
-			object.icon = initial(object.icon)
+			object.icon = get_initial_icon(object)
 			if (istype(object, /turf/simulated/wall/auto))
 				var/turf/simulated/wall/auto/W = object
 				W.UpdateIcon()

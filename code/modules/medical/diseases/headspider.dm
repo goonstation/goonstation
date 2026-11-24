@@ -119,6 +119,7 @@
 					affected_mob.ghostize()
 				D.source.mind.transfer_to(affected_mob)
 
+				D.source.remove_ability_holder(/datum/abilityHolder/changeling)
 				affected_mob.add_existing_ability_holder(D.source.changeling)
 				affected_mob.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[D.source.changeling]")
 				affected_mob.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[D.source.changeling]")

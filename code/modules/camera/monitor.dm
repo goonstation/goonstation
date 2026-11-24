@@ -55,8 +55,10 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		var/list/displayed_cameras = list()
 
 		for (var/obj/machinery/camera/camera as anything in cameras)
+			if(!camera.camera_status)
+				continue
 			if (camera.network in src.camera_networks)
-				displayed_cameras[text("[][]", camera.c_tag, (camera.camera_status ? null : " (Deactivated)"))] = camera
+				displayed_cameras[camera.c_tag] = camera
 
 		var/selected_camera = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(displayed_cameras, /proc/cmp_text_asc))
 
@@ -113,6 +115,8 @@ TYPEINFO(/obj/item/device/camera_viewer)
 /obj/item/device/camera_viewer/omniview
 	name = "ADMIN CRIMES MONITOR"
 	desc = "A portable video monitor, connected to EVERY NETWORK!"
+	default_material = "miracle"
+	uses_default_material_appearance = TRUE
 	camera_networks = list(
 		CAMERA_NETWORK_STATION,
 		CAMERA_NETWORK_PUBLIC,
@@ -126,4 +130,3 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		CAMERA_NETWORK_CARGO,
 		CAMERA_NETWORK_AI_ONLY,
 	)
-	default_material = "miracle"

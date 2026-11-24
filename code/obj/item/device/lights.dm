@@ -526,6 +526,25 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 			set_icon_state(src.icon_off)
 			src.light.disable()
 
+	custom_suicide = 1
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		user.visible_message(SPAN_ALERT(SPAN_BOLD("[user] breaks the lava lamp and drinks the forbidden lava lamp juice.")))
+		playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
+		sleep(0.3 SECONDS)
+		playsound(user,'sound/items/drink.ogg', 100)
+		eat_twitch(user)
+		new /obj/item/raw_material/shard/glass(user.loc)
+		user.take_toxin_damage(160)
+		if (src.on)
+			random_burn_damage(user, 40)
+		qdel(src)
+		SPAWN(50 SECONDS)
+			if (user && !isdead(user))
+				user.suiciding = 0
+		return 1
+
 /obj/item/device/light/lava_lamp/activated
 	New()
 		..()

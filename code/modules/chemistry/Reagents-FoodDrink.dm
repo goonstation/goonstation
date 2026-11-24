@@ -41,14 +41,16 @@ datum
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult)
 
-				var/datum/db_record/bilked = data_core.bank.find_record("name", M.real_name)
-				if (istype(bilked))
+				var/datum/db_record/personnel/bank/bank_record = global.data_core.get_bank_record(M.real_name)
+				if (istype(bank_record))
 					if(!isnull(src.counter))
 						bilk_ratio = 1
 					else
 						bilk_ratio = 0.1
-					if(bilked["current_money"] > 0)
-						bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
+
+					if (bank_record["current_money"] > 0)
+						bank_record["current_money"] = round(max(bank_record["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio, 0))
+
 				. = ..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -80,7 +82,7 @@ datum
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
 						// Maptext counter
 					else if(effect <= 50)
-						if(isnull(src.counter) && (data_core.bank.find_record("name", M.real_name)["current_money"] > 0))
+						if(isnull(src.counter) && (global.data_core.get_bank_record(M.real_name)?["current_money"] > 0))
 							src.counter = new(bilked = M,bilk = src)
 
 		fooddrink/milk
@@ -95,6 +97,7 @@ datum
 			thirst_value = 0.6
 			viscosity = 0.3
 			var/list/flushed_reagents = list("capsaicin")
+			var/was_physically_shocked = FALSE
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -113,6 +116,11 @@ datum
 						M.HealDamage("All", clamp(1 * volume, 0, 10), clamp(1 * volume, 0, 10)) //put a cap on instant healing
 						if(prob(15))
 							boutput(M, SPAN_NOTICE("The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!"))
+
+			physical_shock(force)
+				if(force >= 30)
+					was_physically_shocked = TRUE
+
 		fooddrink/milk_powder
 			name = "milk powder"
 			id = "milk_powder"
@@ -313,9 +321,9 @@ datum
 				if(!istype(holder) || !istype(holder.my_atom) || !ishuman(holder.my_atom))
 					return
 				var/mob/living/carbon/human/H = holder.my_atom
-				var/datum/db_record/gen_record = data_core.general.find_record("name", H.name)
+				var/datum/db_record/personnel/general/record = global.data_core.get_general_record(H.name)
 				// Yes. Its 21. This is Space America. That is canon now.
-				if(gen_record && text2num(gen_record["age"]) < 21)
+				if (record && (record["age"] < 21))
 					H.apply_automated_arrest("Underage drinking.")
 
 		fooddrink/alcoholic/hardcoffee
@@ -1309,9 +1317,12 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				// if the user drinks milk, they'll be fine
-				if (M.reagents.has_reagent("milk"))
+				if (M.reagents.has_any(list("milk", "super_milk")))
 					boutput(M, SPAN_NOTICE("The milk stops the burning. Ahhh."))
-					M.reagents.del_reagent("milk")
+					if(M.reagents.has_reagent("milk"))
+						M.reagents.del_reagent("milk")
+					else if(M.reagents.has_reagent("super_milk"))
+						M.reagents.del_reagent("super_milk")
 					M.reagents.del_reagent("dbreath")
 				if (probmult(8))
 					boutput(M, SPAN_ALERT("<b>Oh god! Oh GODD!!</b>"))
@@ -3628,6 +3639,17 @@ datum
 			thirst_value = 1.5
 			taste = "nutritious"
 
+		fooddrink/juice_grape
+			name = "grape juice"
+			id = "juice_grape"
+			fluid_r = 93
+			fluid_g = 20
+			fluid_b = 81
+			description = "Heavily squashed and pureed grapes, probably not made by stomping anymore."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			taste = "like grapes"
+
 		fooddrink/juice_strawberry
 			name = "strawberry juice"
 			id = "juice_strawberry"
@@ -3726,6 +3748,17 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			taste = "tart"
+
+		fooddrink/juice_pear
+			name = "pear juice"
+			id = "juice_pear"
+			fluid_r = 253
+			fluid_g = 236
+			fluid_b = 0
+			description = "A pulpy juice extracted from pears."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			taste = "pulpy"
 
 		fooddrink/juice_peach
 			name = "peach juice"
@@ -5066,3 +5099,36 @@ datum
 			taste = "a bit too sweet, but in a good way, somehow"
 			thirst_value = 1
 			caffeine_content = 0.8
+
+		fooddrink/frothedmilk
+			name = "frothed milk"
+			id = "frothedmilk"
+			description = "Silky, airy, and topped with a cloud of tiny bubbles."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 200
+			taste = list("creamy", "airy")
+
+		fooddrink/caffeinated/macchiato
+			name = "macchiato"
+			id = "macchiato"
+			fluid_r = 156
+			fluid_g = 114
+			fluid_b = 74
+			description = "A bold espresso marked with a small crown of silky milk foam."
+			reagent_state = LIQUID
+			taste = list("bold", "creamy")
+			thirst_value = 1
+			caffeine_content = 0.8
+
+		fooddrink/dulcedeleche
+			name = "dulce de leche"
+			id = "dulcedeleche"
+			fluid_r = 184
+			fluid_g = 123
+			fluid_b = 57
+			description = "A thick, velvety spread that clings to everything it touches."
+			reagent_state = SOLID
+			taste = list("rich", "sweet")

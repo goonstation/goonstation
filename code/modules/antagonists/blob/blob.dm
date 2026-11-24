@@ -64,7 +64,7 @@
 				repeater += " x[upgrade.purchased_times]"
 			upgrades += list(
 				list(
-					"iconBase64" = "[icon2base64(icon(initial(upgrade.icon), initial(upgrade.icon_state), frame = 1, dir = 0))]",
+					"iconBase64" = "[icon2base64(icon(get_initial_icon(upgrade), initial(upgrade.icon_state), frame = 1, dir = 0))]",
 					"name" = "[upgrade.name][repeater]",
 				)
 			)

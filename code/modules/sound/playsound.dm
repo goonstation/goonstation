@@ -2,6 +2,8 @@
 /// If music is playing this should return TRUE. But if music stopped playing only recently-ish it can sometimes return TRUE still.
 /// In some rare cases it can happen that this has a false negative too so like don't rely on this for anything super important, ok?
 proc/is_music_playing()
+	if (global.dj_panel?.active_music && !global.dj_panel.active_music.paused)
+		return TRUE
 	. = GET_COOLDOWN(global, "music")
 	if(!. && length(clients))
 		// alright now we do this wicked heuristic where we ask *some* client whether they have music playing, I'm sure that will work
@@ -20,28 +22,30 @@ proc/is_music_playing()
 		return
 
 	var/admin_key = admin_key(src)
-	vol = clamp(vol, 0, 100)
+	vol = clamp(vol, 0, ADMIN_SOUND_MAX_VOLUME)
 
 	var/sound/uploaded_sound = new()
 	uploaded_sound.file = S
 	uploaded_sound.wait = 0
 	uploaded_sound.volume = vol
 	uploaded_sound.repeat = 0
-	uploaded_sound.priority = 254
+	uploaded_sound.priority = SOUND_PRIORITY_ADMIN
 	uploaded_sound.channel = admin_sound_channel
 	uploaded_sound.frequency = freq
-	uploaded_sound.environment = -1
-	uploaded_sound.echo = -1
+	uploaded_sound.environment = SOUND_ENVIRONMENT_NONE
+	uploaded_sound.echo = SOUND_ECHO_NONE
 	if (!vol)
 		return
+	if (uploaded_sound.channel == dj_panel.active_music?.channel)
+		dj_panel.stop_music(stop_playback = FALSE)
 
 	logTheThing(LOG_ADMIN, src, "played sound [S]")
 	logTheThing(LOG_DIARY, src, "played sound [S]", "admin")
 	message_admins("[key_name(src)] played sound [S]")
 	SPAWN(0)
 		for (var/client/C in clients)
-			C.sound_playing[ admin_sound_channel ][1] = vol
-			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
+			C.sound_playing[uploaded_sound.channel][1] = vol
+			C.sound_playing[uploaded_sound.channel][2] = VOLUME_CHANNEL_ADMIN
 			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN ) / 100
 			C << uploaded_sound
 
@@ -50,40 +54,48 @@ proc/is_music_playing()
 				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played:</b>")][SPAN_NOTICE(" [S]")]")
 		dj_panel.move_admin_sound_channel()
 
-/client/proc/play_music_real(S as sound, var/freq as num)
+/// Pass a DJ panel to enable live playback controls.
+/client/proc/play_music_real(S as sound, var/freq as num, datum/dj_panel/panel)
 	if (!config.allow_admin_sounds)
 		alert("Admin sounds disabled")
 		return 0
 
+	var/datum/dj_music_track/track = panel?.active_music
 	var/sound/music_sound = new()
 	music_sound.file = S
 	music_sound.wait = 0
 	music_sound.repeat = 0
-	music_sound.priority = 254
+	music_sound.priority = SOUND_PRIORITY_ADMIN
 	music_sound.channel = admin_sound_channel
 	if(!freq)
 		music_sound.frequency = 1
 	else
 		music_sound.frequency = freq
-	music_sound.environment = -1
-	music_sound.echo = -1
+	music_sound.environment = SOUND_ENVIRONMENT_NONE
+	music_sound.echo = SOUND_ECHO_NONE
+	if (!panel && music_sound.channel == dj_panel.active_music?.channel)
+		dj_panel.stop_music(stop_playback = FALSE)
 
 	SPAWN(0)
 		var/admin_key = admin_key(src)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
+			if (panel && (!track || panel.active_music != track))
+				return
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 
-			if (src.djmode || src.non_admin_dj)
+			if (src && (src.djmode || src.non_admin_dj))
 				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b>")][SPAN_NOTICE(" [S]")]")
 
 			if (!client_vol)
 				continue
 
-			C.sound_playing[ admin_sound_channel ][1] = 1
-			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
-
-			music_sound.volume = client_vol
+			if (panel)
+				music_sound = panel.music_packet(C, FALSE)
+			else
+				C.sound_playing[music_sound.channel][1] = 100
+				C.sound_playing[music_sound.channel][2] = VOLUME_CHANNEL_ADMIN
+				music_sound.volume = client_vol
 			C << music_sound
 			if (src && !(src.stealth && !src.fakekey))
 				// Stealthed admins won't show the "now playing music" message,
@@ -92,11 +104,14 @@ proc/is_music_playing()
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
 		dj_panel.move_admin_sound_channel()
+		if (panel && track && panel.active_music == track)
+			panel.schedule_completion()
 	logTheThing(LOG_ADMIN, src, "started loading music [S]")
 	logTheThing(LOG_DIARY, src, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
 	// prevent radio station from interrupting us
-	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
+	if (!panel)
+		EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /client/proc/play_music_radio(soundPath, var/name)
@@ -210,12 +225,11 @@ proc/is_music_playing()
 
 	ehjax.send(src, "browseroutput", "stopaudio") //For client-side audio
 
-	var/mute_channel = 1014
-	var/sound/stopsound = sound(null,wait = 0,channel=mute_channel)
-	for (var/i = 1 to 10)
-		stopsound.channel = mute_channel
-		src << 	stopsound
-		mute_channel ++
+	var/sound/stopsound = sound(null, wait = 0)
+	for (var/channel in SOUNDCHANNEL_ADMIN_LOW to SOUNDCHANNEL_ADMIN_HIGH)
+		stopsound.channel = channel
+		src << stopsound
+		src.sound_playing[channel][1] = 0
 
 /client/verb/stop_the_radio()
 	set category = "Commands"

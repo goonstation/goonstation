@@ -10,8 +10,15 @@
 			if ((mapping_helper == other) || (mapping_helper.type != other.type))
 				continue
 
-			. += "([T.x], [T.y], [T.z]) in [global.loaded_prefab_path ? "prefab [global.loaded_prefab_path]" : "[T.loc]"]"
+			. += CI.format_location(T)
 			break
+
+
+/datum/map_correctness_check/misconfigured_mapping_helpers
+	check_name = "Misconfigured Mapping Helpers"
+
+/datum/map_correctness_check/misconfigured_mapping_helpers/run_check()
+	return CI.ERRORS.mapping_helpers
 
 
 SET_UP_CI_TRACKING(/obj/mapping_helper)

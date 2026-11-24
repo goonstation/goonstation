@@ -148,7 +148,9 @@
 	var/list/displayed_cameras = list()
 
 	for (var/obj/machinery/camera/camera as anything in cameras)
-		displayed_cameras[text("[][]", camera.c_tag, (camera.camera_status ? null : " (Deactivated)"))] = camera
+		if(!camera.camera_status)
+			continue
+		displayed_cameras[camera.c_tag] = camera
 
 	if (length(displayed_cameras) == 0)
 		boutput(user, SPAN_ALERT("There are no cameras connected to this television!"))

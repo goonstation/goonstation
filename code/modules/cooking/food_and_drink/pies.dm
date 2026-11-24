@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	desc = "A null pie. You shouldn't be able to see this!"
 	item_state = "pie"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 6
 	sliceable = FALSE
 	slice_amount = 8
@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	desc = "It smells delicious. You just want to plant your face in it."
 	icon_state = "pie"
 	splat = 1
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 3
 	throwforce = 0
 	force = 0
@@ -264,7 +264,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	icon_state = "creampie"
 	item_state = "cream_pie"
 	splat = 1
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	throwforce = 0
 	force = 0
 	bites_left = 2

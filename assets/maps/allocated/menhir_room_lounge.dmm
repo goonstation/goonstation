@@ -1,0 +1,660 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/void,
+/area/unspace/lounge)
+"b" = (
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"c" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/lounge)
+"d" = (
+/obj/table/reinforced/bar/auto,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 11
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/lounge)
+"e" = (
+/obj/table/reinforced/bar/auto,
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"f" = (
+/obj/machinery/chem_master{
+	dir = 8
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/lounge)
+"g" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/lounge)
+"i" = (
+/obj/stool/bar,
+/obj/menhir_room_objs/hidey_helper,
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"k" = (
+/obj/menhir_room_objs/hidey_helper_trigger,
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/lounge)
+"l" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/lounge)
+"n" = (
+/obj/random_item_spawner/junk/one,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"o" = (
+/obj/machinery/vending/cards,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"p" = (
+/obj/stool/chair/comfy,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/lounge)
+"q" = (
+/obj/machinery/chem_heater,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/lounge)
+"r" = (
+/obj/machinery/drainage{
+	desc = "A drainage pipe embedded in the floor to prevent flooding. Where does the drain go? The Precursors know."
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"t" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/lounge)
+"u" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_lounge"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/lounge)
+"v" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/lounge)
+"w" = (
+/obj/machinery/vending/alcohol,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/lounge)
+"x" = (
+/obj/table/reinforced/bar/auto,
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/clothing/glasses/sunglasses,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"y" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/lounge)
+"z" = (
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"B" = (
+/obj/table/reinforced/bar/auto,
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/snacks/one,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"C" = (
+/obj/machinery/chem_dispenser/alcohol/bar,
+/obj/mapping_helper/glassware_spawn,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/lounge)
+"D" = (
+/obj/item/instrument/large/jukebox,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/lounge)
+"E" = (
+/obj/table/reinforced/bar/auto,
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/reagent_containers/food/snacks/cube{
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/snacks/cube{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"F" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/lounge)
+"G" = (
+/obj/stool/bar,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/lounge)
+"H" = (
+/obj/table/wood/auto,
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/artifact/instrument,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/lounge)
+"I" = (
+/obj/table/wood/auto,
+/obj/item/instrument/saxophone,
+/obj/item/clothing/head/flatcap{
+	pixel_y = 7
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"K" = (
+/obj/table/wood/auto,
+/obj/item/boardgame/chess{
+	pixel_y = 4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/lounge)
+"M" = (
+/obj/table/reinforced/bar/auto,
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/decoration/ashtray,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"N" = (
+/obj/stool/bar,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"R" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/lounge)
+"T" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/lounge)
+"V" = (
+/obj/item/clothing/shoes/black,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"X" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/wood/seven,
+/area/unspace/lounge)
+"Z" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/lounge)
+
+(1,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+c
+c
+l
+c
+p
+K
+v
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+c
+D
+z
+z
+z
+z
+z
+I
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+c
+G
+i
+N
+z
+X
+z
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+c
+d
+e
+M
+N
+z
+z
+y
+c
+F
+c
+c
+c
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+c
+C
+N
+E
+N
+z
+z
+k
+Z
+T
+T
+g
+c
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+c
+R
+V
+B
+N
+z
+z
+y
+c
+F
+c
+T
+c
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+c
+q
+X
+x
+N
+X
+n
+c
+c
+c
+c
+g
+c
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+c
+w
+r
+b
+z
+z
+z
+o
+c
+a
+c
+F
+c
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+c
+c
+f
+c
+p
+H
+v
+c
+c
+a
+c
+u
+c
+c
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+a
+a
+t
+t
+t
+c
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}

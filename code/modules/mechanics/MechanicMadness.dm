@@ -552,6 +552,7 @@ TYPEINFO(/obj/item/mechanics)
 				logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 				level = UNDERFLOOR
 				anchored = ANCHORED
+				src.RemoveComponentsOfType(/datum/component/glued)
 				src.unglue_attached_to()
 				set_owner(user)
 				secure()
@@ -563,7 +564,8 @@ TYPEINFO(/obj/item/mechanics)
 		if (!src.dont_disconnect_on_change)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		if(src && !QDELETED(src))
-			src.material_trigger_when_attacked(used_wrench, user, 1)
+			src.material_trigger_when_hit(used_wrench, user, MATERIAL::IMPACT::MELEE)
+			used_wrench?.material_trigger_when_hit(src, user, MATERIAL::IMPACT::MELEE)
 		return TRUE
 
 	attackby(obj/item/W, mob/user)
@@ -575,17 +577,17 @@ TYPEINFO(/obj/item/mechanics)
 					boutput(user, "You must unsecure the [src] in order to rotate it.")
 			return TRUE
 		else if(iswrenchingtool(W))
-			if(src.material && src.material.getProperty("density") > 0)
+			if(src.material && src.material.getProperty(MATERIAL::PROPERTY::DENSITY) > 0)
 				if(!src.check_wrenching_conditions(user))
 					//we need to check the wrenching conditions manually here, else you get an action bar even though the action actually doesn't work
 					return TRUE
 				//work time calculation, 0.8 seconds per density, half when you have training, half for wrenching in, double for crystal material since loosening it breaks it.
-				var/work_time = src.material.getProperty("density") * 0.8 SECONDS
+				var/work_time = src.material.getProperty(MATERIAL::PROPERTY::DENSITY) * 0.8 SECONDS
 				if(src.level == OVERFLOOR)
 					work_time *= 0.5
 				if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					work_time *= 2
-				if(user.traitHolder && (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer")))
+				if(user && HAS_ATOM_PROPERTY(user, PROP_MOB_FAST_BUILD))
 					work_time *= 0.5
 				// now, let's keep the result in reasonable values, even if you are untrained and should have no business working with this
 				work_time = clamp(work_time, 1 SECONDS, 10 SECONDS)
@@ -593,7 +595,7 @@ TYPEINFO(/obj/item/mechanics)
 				user.visible_message(SPAN_NOTICE("[user] begins tampering with [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, work_time, PROC_REF(wrench_action), list(user, W), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				src.wrench_action(user)
+				src.wrench_action(user, W)
 			return TRUE
 		return ..()
 
@@ -750,7 +752,7 @@ TYPEINFO(/obj/item/mechanics)
 			// largely stolen from the gene booth. thanks, gene booth.
 			//subtract from perp bank account
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(perp_id.registered)
+			account = global.data_core.get_bank_record(perp_id.registered)
 
 			if (account)
 				if (account["current_money"] >= src.price)
@@ -2844,6 +2846,14 @@ TYPEINFO(/obj/item/mechanics)
 
 	disposing()
 		STOP_TRACKING
+		return ..()
+
+	check_wrenching_conditions(mob/user)
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			if(T.density)
+				boutput(user, SPAN_ALERT("[src] cannot be placed in a solid wall!"))
+				return FALSE
 		return ..()
 
 	proc/setID(obj/item/W as obj, mob/user as mob)

@@ -112,7 +112,7 @@
 			. += decon_complexity * 3 SECONDS
 			boutput(user, "You start to destructively deconstruct [A].")
 
-		if(user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
+		if(user && HAS_ATOM_PROPERTY(user, PROP_MOB_FAST_BUILD))
 			. = round(. * 0.75)
 
 		. *= src.decon_time_mult
@@ -491,6 +491,7 @@
 	drain_rate = 100000		// amount of power to drain per tick
 	max_power = 2e7		// maximum power that can be drained before exploding
 	color = list(1,0,0,-0.00168067,0.998559,0.00168067,0.213445,0.182953,0.786555)
+	tooltip_flags = 0 // no flags. REBUILD_ALWAYS is added conditionally
 
 	New()
 		. = ..()
@@ -512,11 +513,17 @@
 			src.light.set_color(1, 1, 1)
 		. = ..()
 		if(attached)
+			ADD_FLAG(src.tooltip_flags, REBUILD_ALWAYS)
 			var/datum/powernet/PN = attached.get_powernet()
 			if(PN)
 				if(!ON_COOLDOWN(src,"noise",rand(1 SECOND, 5 SECONDS)))
 					playsound(src,'sound/machines/engine_highpower.ogg', on_station ? 70 : 50, 1, 3, -2)
 		drain_rate = previous_drain_rate
+
+	attackby(obj/item/I, mob/user)
+		. = ..()
+		if (src.mode != POWERSINK::OPERATING)
+			REMOVE_FLAG(src.tooltip_flags, REBUILD_ALWAYS)
 
 
 /obj/item/deployer/barricade/barbed
@@ -716,6 +723,15 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 		if(src.equipped_in_slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_SALVAGER_VALUES).remove_mob(user)
 		..()
+
+/datum/client_image_group/salvager_value/add_image(image/image)
+	. = ..()
+	src.RegisterSignal(image.loc, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(clear_images_attached_to))
+
+/datum/client_image_group/salvager_value/proc/clear_images_attached_to(var/target)
+	for(var/image/image in src.images)
+		if(image.loc == target)
+			src.remove_image(image)
 
 /obj/item/device/radio_upgrade/salvager
 	name = "private radio channel upgrade"

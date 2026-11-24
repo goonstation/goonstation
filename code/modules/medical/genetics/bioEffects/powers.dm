@@ -208,30 +208,35 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			var/obj/item/implant/implant = the_object
 			if (implant.owner)
 				implant.on_remove(implant.owner)
+		var/hunger_restored = 0
 		if (ishuman(src.owner) && isitem(the_object))
-			var/mob/living/carbon/human/H = src.owner
 			var/obj/item/the_item = the_object
-			// First, restore a little hunger, and heal our organs
-			H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
+			hunger_restored = (the_item.w_class + 1) * 5 // +1 so tiny items still give a small boost
+
+		if (!QDELETED(the_object))
+			// Finally, ensure that the item is deleted regardless of what it is
+			var/obj/item/I = the_object
+			var/eaten = I.Eat(src.owner, src.owner, TRUE)
+			if (eaten == EAT_CANCELLED)
+				src.using = FALSE
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+			if(eaten) //eating can return false to indicate it failed
+				I.storage?.hide_hud(src.owner)
+				// Organs and body parts have special behaviors we need to account for
+				if (!handle_organs(the_object))
+					handle_parts(the_object)
+			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
+				src.owner.visible_message(SPAN_ALERT("[src.owner] eats [the_object]."))
+				playsound(src.owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
+				qdel(the_object)
+			logTheThing(LOG_COMBAT, src.owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(src.owner)].")
+
+		// Restore a little hunger, and heal our organs
+		if (hunger_restored)
+			var/mob/living/carbon/human/H = src.owner
+			H.sims?.affectMotive("Hunger", hunger_restored)
 			src.owner.HealDamage("All", 5, 0)
 			src.owner.UpdateDamageIcon()
-
-		if (QDELETED(the_object))
-			src.using = FALSE
-			return CAST_ATTEMPT_SUCCESS
-		// Finally, ensure that the item is deleted regardless of what it is
-		var/obj/item/I = the_object
-		if(I.Eat(src.owner, src.owner, TRUE)) //eating can return false to indicate it failed
-			I.storage?.hide_hud(src.owner)
-			// Organs and body parts have special behaviors we need to account for
-			if (!handle_organs(the_object))
-				handle_parts(the_object)
-		else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
-			src.owner.visible_message(SPAN_ALERT("[src.owner] eats [the_object]."))
-			playsound(src.owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
-			qdel(the_object)
-
-		logTheThing(LOG_COMBAT, src.owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(src.owner)].")
 		src.using = FALSE
 		return CAST_ATTEMPT_SUCCESS
 
@@ -563,10 +568,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 	///Returns true if a turf blocks xray vision in some way
 	proc/blocks_xray(turf/T)
-		if (T.density && T.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+		if (T.density && HAS_ATOM_PROPERTY(T, PROP_ATOM_NEVER_RADIOACTIVE))
 			return TRUE
 		for (var/obj/O in T)
-			if (O.density && O.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+			if (O.density && HAS_ATOM_PROPERTY(O, PROP_ATOM_NEVER_RADIOACTIVE))
 				return TRUE
 		return FALSE
 
@@ -1456,6 +1461,106 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			else
 				owner.reagents.add_reagent("methamphetamine",20 * multiplier)
 				owner.reagents.add_reagent("energydrink",5 * multiplier)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/bioEffect/power/phagocytosis
+	name = "Eukaryotic Phagocytosis"
+	desc = "Allows the subject to absorb biological organs into their body."
+	icon_state = "phagocytosis"
+	id = "phagocytosis"
+	msgGain = "You feel your organs wobbling inside you."
+	msgLose = "Your organs no longer wobble when you move."
+	cooldown = 100
+	stability_loss = 5
+	ability_path = /datum/targetable/geneticsAbility/phagocytosis
+
+/datum/targetable/geneticsAbility/phagocytosis
+	name = "Eukaryotic Phagocytosis"
+	desc = "Replace an organic organ by absorbing a new one."
+	icon_state = "phagocytosis"
+	targeted = FALSE
+
+	cast_genetics(atom/target, misfire)
+		if(..())
+			return TRUE
+		if(!owner.organHolder)
+			return TRUE
+		var/obj/item/I = owner.equipped()
+		if(!I)
+			boutput(owner, SPAN_ALERT("You need to be holding an organ to absorb it!"))
+			return TRUE
+		return absorb_organ_setup(I, (linked_power.power > 1), misfire)
+
+	proc/absorb_organ_setup(var/obj/item/I, var/eject_old, var/misfire = FALSE)
+		if(!src.owner.organHolder)
+			return TRUE
+		if(iscritter(src.owner) && !istype(I, /obj/item/organ/brain))
+			// Critters only use brains currently
+			boutput(src.owner, SPAN_ALERT("You're not sure what to do with this organ."))
+			return TRUE
+
+		var/obj/item/current_organ = null
+		var/slot
+		if(istype(I, /obj/item/organ))
+			var/obj/item/organ/organ_new = I
+			slot = organ_new.organ_holder_name
+			if(istype(I, /obj/item/organ/eye))
+				if(I == src.owner.r_hand)
+					slot = "right_eye"
+				else
+					slot = "left_eye"
+			var/obj/item/organ/organ_old = owner.organHolder.get_organ(slot)
+			current_organ = organ_old
+			if(organ_new.robotic)
+				boutput(src.owner, SPAN_ALERT("You can't absorb cybernetics!"))
+				return TRUE
+			if(organ_old?.robotic)
+				boutput(src.owner, SPAN_ALERT("You try to absorb \the [I], but you can't get rid of your cybernetics!"))
+				return TRUE
+			if(slot == "head")
+				boutput(owner, SPAN_ALERT("You can't replace your own head like that!"))
+				return TRUE
+			if(slot == "tail")
+				boutput(owner, SPAN_ALERT("You can't replace your own tail like that!"))
+				return TRUE
+		else if(istype(I, /obj/item/clothing/head/butt))
+			boutput(owner, SPAN_ALERT("You can't replace your own butt like that!"))
+			return TRUE
+		else if(istype(I, /obj/item/skull))
+			slot = "skull"
+			current_organ = owner.organHolder.get_organ("skull")
+		else
+			boutput(owner, SPAN_ALERT("You can't absorb that!"))
+			return TRUE
+
+		if(current_organ && linked_power.power <= 1)
+			boutput(owner, SPAN_ALERT("You already have that organ!"))
+			return TRUE
+		if(slot == "brain")
+			var/accept = tgui_alert(src.owner, "Are you sure that you want to replace your brain with [I]?", "Replace brain?", list("Yes", "No")) == "Yes" && src.owner.equipped() == I
+			if(!accept)
+				return TRUE
+			logTheThing(LOG_COMBAT, src.owner, "replaces their brain with [I] using their Eukaryotic Phagocytosis ability.")
+		if(misfire)
+			var/obj/item/dropped_organ = src.owner.organHolder.drop_organ(slot)
+			if(isitem(dropped_organ) && !src.linked_power.safety)
+				src.owner.visible_message("[src.owner] tried to absorb the [I], but \the [dropped_organ] just falls out instead!")
+			else
+				boutput(src.owner, SPAN_ALERT("Your organs vibrate uncomfortably!"))
+			return
+		absorb_organ(I, slot)
+
+	proc/absorb_organ(var/obj/item/I, var/slot)
+		var/dropped_organ = src.owner.organHolder.drop_organ(slot)
+		if(isitem(dropped_organ))
+			src.owner.visible_message("\The [dropped_organ] falls out of [src.owner] and \the [I] is absorbed!")
+		else
+			src.owner.visible_message("\The [I] is absorbed into [src.owner]'s body!")
+		src.owner.u_equip(I)
+		src.owner.organHolder.receive_organ(I, slot)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
