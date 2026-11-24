@@ -145,9 +145,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	icon_state = "clone_rack_med"
 	var/emagged = FALSE
 	var/net_id
-	var/list/last_heartbeats[DISK::RACK::MAX_DISKS]
-	/// If we were a concerned mother, how long would our daughter have to have NOT TEXTED for us to assume they are dead?
-	var/patience = 10 SECONDS
+	var/list/received_deaths[DISK::RACK::MAX_DISKS]
 
 /obj/machinery/disk_rack/clone/New()
 	. = ..()
@@ -156,7 +154,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_CLONER_IMPLANT)
 
 /obj/machinery/disk_rack/clone/receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
-	if(signal.data["sender"] && signal.data["command"] == "heartbeat")
+	if(signal.data["sender"] && signal.data["command"] == "clone_record_death")
 		var/uid = signal.data["bio_id"]
 		for (var/i in 1 to DISK::RACK::MAX_DISKS)
 			var/obj/item/disk/data/floppy/disk = src.disks[i]
@@ -167,17 +165,17 @@ TYPEINFO(/obj/machinery/disk_rack)
 				continue
 			var/datum/bioHolder/stored_bioholder = clone_record["holder"]
 			if (stored_bioholder.Uid == uid)
-				src.last_heartbeats[i] = TIME
+				src.received_deaths[i] = TRUE
 
 /obj/machinery/disk_rack/clone/insert_disk(index, obj/item/disk/data/floppy/disk, mob/user)
 	..()
-	src.last_heartbeats[index] = TIME //give us a grace period for the first heartbeat to turn up
+	src.received_deaths[index] = FALSE
 
 /obj/machinery/disk_rack/clone/proc/cloneable_disk(index)
 	var/obj/item/disk/data/floppy/disk = src.disks[index]
 	if (!(locate(/datum/computer/file/clone) in disk.root.contents)) //no record = no clone
 		return FALSE
-	return TIME - src.last_heartbeats[index] > src.patience
+	return src.received_deaths[index]
 
 /obj/machinery/disk_rack/clone/special_disk_data(obj/item/disk/data/floppy/disk, index)
 	if (status & NOPOWER)
