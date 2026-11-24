@@ -11644,7 +11644,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bhi" = (
-/turf/simulated/floor/stairs,
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 5
+	},
 /area/station/hallway/primary/west)
 "bhl" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -26891,6 +26893,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "eOI" = (
@@ -29524,9 +29527,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/decal/stage_edge{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "gLp" = (
@@ -34317,7 +34317,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/wood/two,
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 4
+	},
 /area/station/hallway/primary/west)
 "kAg" = (
 /obj/item/device/gps,
@@ -39648,9 +39650,6 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/stage_edge{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -49226,9 +49225,6 @@
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
-	},
-/obj/decal/stage_edge{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
