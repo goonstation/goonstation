@@ -2356,10 +2356,15 @@ TYPEINFO(/obj/item/cargotele)
 		var/obj/storage/S = cargo
 		ENSURE_TYPE(S)
 		var/mob_teled = FALSE
+
+		// detect hitchhikers
+		var/mob/hitchhikers = list()
+
 		for (var/mob/M in cargo.contents)
 			if (M)
 				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 				mob_teled = TRUE
+				hitchhikers |= M
 
 		if(!mob_teled)
 			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target)].")
@@ -2376,6 +2381,48 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			pad = src.target
 			turf = get_turf(pad)
+
+
+		// based on unglue_attached_to, get mobs attached to the crate
+		for(var/atom/movable/AM in cargo.loc)
+			var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+			if(glued_comp?.glued_to == cargo)
+				if (ismob(AM))
+					hitchhikers |= AM
+
+		// free radiation, copied code from pod portals and modified
+		for (var/mob/hitchhiker in hitchhikers)
+			// Borgs don't care about rads (for the meantime)
+			if (hitchhiker && !issilicon(hitchhiker))
+				var/mob/T = hitchhiker
+
+				var/unprotected = (T.loc != cargo)
+				var/dose = 1 SIEVERT
+
+				if (isrestrictedz(turf?.z))
+					// protected/unprotected,  we dont care
+					boutput(T, SPAN_ALERT("You are exposed to some pretty swole strange particles, this can't be good..."))
+					dose *= 3
+
+				else if (unprotected)
+					// unprotected (not inside whatever is being teleported)
+					boutput(T, SPAN_ALERT("You are exposed to some pretty swole strange particles, this can't be good..."))
+					if (prob(10))
+						dose /= 2
+				else
+					// don't kill them, just make them seriously sick
+					dose /= 2
+
+				T.take_radiation_dose(dose)
+
+				if (unprotected || isrestrictedz(turf?.z))
+					if(ishuman(T))
+						var/mob/living/carbon/human/H = T
+						if (H.bioHolder)
+							if (prob(75))
+								H.bioHolder.RandomEffect("bad")
+							else
+								H.bioHolder.RandomEffect("good")
 
 		cargo.set_loc(turf)
 		pad?.receive_cargo(cargo)
