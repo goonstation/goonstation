@@ -582,3 +582,15 @@ datum
 			minimum_to_infect = 25
 			thirst_value = 3.2
 			disease = /datum/ailment/disease/water_poisoning
+
+		disease/personality_split_serum
+			name = "Grey Serum"
+			id = "grey_serum"
+			description = "A mysterious serum extracted from the cerebral cortex of cloning patients who experienced false memories."
+			reagent_state = LIQUID
+			fluid_r = 100
+			fluid_g = 100
+			fluid_b = 100
+			taste = "like ancient history"
+			minimum_to_infect = 5
+			disease = /datum/ailment/disease/personality_split

@@ -86,7 +86,8 @@
 	/// Add a cloner defect, rolling severity according to weights
 	proc/add_random_cloner_defect(var/severity_override)
 		var/static/list/severity_weights = list(CLONER_DEFECT_SEVERITY_MINOR=CLONER_DEFECT_PROB_MINOR,
-												CLONER_DEFECT_SEVERITY_MAJOR=CLONER_DEFECT_PROB_MAJOR)
+												CLONER_DEFECT_SEVERITY_MAJOR=CLONER_DEFECT_PROB_MAJOR,
+												CLONER_DEFECT_SEVERITY_HORRIFIC=CLONER_DEFECT_PROB_HORRIFIC)
 		src.add_cloner_defect(severity_override || weighted_pick(severity_weights))
 
 	/// Debug proc- add a cloner defect of a specific type.
@@ -496,6 +497,92 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	on_add()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_OVERDOSE_WEAKNESS, src)
+
+/datum/cloner_defect/baldness
+	name = "Cloning Induced Alopecia"
+	desc = "Subject's hair follicles have failed to reconstruct."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+	stackable = FALSE
+
+	on_add()
+		. = ..()
+		src.owner.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
+		src.owner.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
+		src.owner.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
+		src.owner.update_colorful_parts()
+
+/datum/cloner_defect/genetic_instability
+	name = "Major Genetic Instability"
+	desc = "Subject's genome has mutated significantly."
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	stackable = FALSE
+
+	on_add()
+		. = ..()
+		src.owner.bioHolder.AddEffect("activator")
+
+/datum/cloner_defect/rage
+	name = "Cloning Induced Aggression"
+	desc = "Subject may become disorientated and aggressive in response to the cloning proccess."
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	stackable = FALSE // probably don't want like 90 units of raj
+
+	on_add()
+		. = ..()
+		src.owner.reagents.add_reagent("madness_toxin", 30)
+
+/datum/cloner_defect/personality_split
+	name = "Clonal-Memory Development Disorder"
+	desc = "A fault in the cloning process has imprinted abnormal personality traits and false memories in the subject's mind."
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	stackable = FALSE
+
+	on_add()
+		. = ..()
+		src.owner.contract_disease(/datum/ailment/disease/personality_split, null, null, 1)
+
+/datum/cloner_defect/cluwne
+	name = "?????"
+	desc = "ERROR- DATA EXPUNGED"
+	severity = CLONER_DEFECT_SEVERITY_HORRIFIC
+	stackable = FALSE
+	on_add()
+		. = ..()
+		src.owner.contract_disease(/datum/ailment/disease/cluwneing_around, null, null, 1)
+
+/datum/cloner_defect/catastrophic_metabolic_instability
+	name = "Catastrophic Metabolic Instability"
+	desc = "Subject's body is metabolising random chemicals through a means unknown to science."
+	severity = CLONER_DEFECT_SEVERITY_HORRIFIC
+	stackable = FALSE
+
+	on_add()
+		. = ..()
+		src.owner.bioHolder.AddEffect("drunk_random_unstable", magical = TRUE, scannable = FALSE )
+
+// potentially the worst idea of all time
+/datum/cloner_defect/defect_recursion
+	name = "Clone Defect Recursion Syndrome"
+	desc = "Subject has developed a strong reaction to the cloning process and is gaining additional faults at an unprecedented rate."
+	weight = 60
+	severity = CLONER_DEFECT_SEVERITY_HORRIFIC
+	stackable = FALSE // i am scared what could happen if this was changed to true
+	on_add()
+		. = ..()
+		var/defect_amount = rand(1, 4)
+		for(var/i= 0, i < defect_amount, i++)
+			// it is imperative that there is at least one stackable cloner defect in each rarity category or this will go very wrong
+			src.owner.cloner_defects.add_random_cloner_defect()
+
+/datum/cloner_defect/organ_damage/total
+	name = "Total Organ Failure"
+	desc = "Subject has experienced catastrophic organ failure."
+	severity = CLONER_DEFECT_SEVERITY_HORRIFIC
+
+	init()
+		src.data = list("amount" = 110,
+						"count" = rand(5, 9))
+		..()
 
 /// Write current cloner defects to an existing datacore medical record
 /proc/record_cloner_defects(mob/living/carbon/human/H)
