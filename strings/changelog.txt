@@ -1,4 +1,9 @@
 
+(t)tue nov 24 26
+(u)LorrMaster
+(p)27686
+(e)🆕🎨🎩💡|C-Feature, C-Sprites, A-Clothing, A-Station-Systems
+(*)Added the baseball mitt, a glove that can catch pocket-sized thrown items and does not drop them while down. They can be obtained from hacking uniform manufacturers.
 (t)sun nov 22 26
 (u)JORJ949
 (p)28326
