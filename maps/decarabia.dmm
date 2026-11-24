@@ -43866,20 +43866,13 @@
 /turf/simulated/floor/plating/airless/shuttlebay,
 /area/station/mining/magnet_platform)
 "keM" = (
-/obj/pool/perspective{
-	dir = 1;
-	tag = "icon-pool (NORTH)";
-	density = 0
-	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
 /obj/channel{
 	required_to_pass = 210
+	},
+/obj/pool/ladder,
+/obj/pool/perspective{
+	dir = 1;
+	tag = "icon-pool (NORTH)"
 	},
 /turf/simulated/floor/minitiles/white,
 /area/station/crew_quarters/pool)
