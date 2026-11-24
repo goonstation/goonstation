@@ -79685,17 +79685,12 @@
 /area/station/maintenance/outer/east)
 "sxW" = (
 /obj/table/endtable_classic,
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake";
-	pixel_x = -3;
-	pixel_y = 11;
-	rand_pos = 0
-	},
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
+	},
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee{
+	pixel_x = -3;
+	pixel_y = 13
 	},
 /turf/simulated/floor/twotone/purple,
 /area/station/crew_quarters/hor/horprivate)
