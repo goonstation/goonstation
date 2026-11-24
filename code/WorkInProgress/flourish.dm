@@ -158,8 +158,9 @@ TYPEINFO(/datum/component/pet)
 		SPAWN(1 DECI SECOND)
 			var/T = pick(trinket_safelist)
 			var/obj/item/trinket = new T(get_turf(src))
-			var/datum/db_record/R = pick(data_core.general.records)
-			trinket.name = "[R["name"]][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
+			var/datum/db_record/personnel/general/record = global.data_core.get_random_general_record()
+			var/record_name = record?["name"]
+			trinket.name = "[record_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 			trinket.real_name = trinket.name
 			trinket.quality = rand(5,80)
 			sleep(1 SECOND)
@@ -205,8 +206,9 @@ var/list/possible_lost_items = list(
 		SPAWN(1 DECI SECOND)
 			var/T = pick(possible_lost_items)
 			var/obj/item/I = new T(get_turf(src))
-			var/datum/db_record/R = pick(data_core.general.records)
+			var/datum/db_record/personnel/general/record = global.data_core.get_random_general_record()
+			var/record_name = record?["name"]
 			I.name = "lost [I.name]"
-			I.desc = "Didn't [R["name"]] lose one of these?"
+			I.desc = "Didn't [record_name] lose one of these?"
 			sleep(1 SECOND)
 			qdel(src)

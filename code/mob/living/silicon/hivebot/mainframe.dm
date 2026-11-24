@@ -43,8 +43,7 @@
 /mob/living/silicon/hive_mainframe/death(gibbed)
 	setdead(src)
 	src.canmove = 0
-
-	src.lying = 1
+	src.set_lying(TRUE)
 	src.icon_state = "hive_main-crash"
 
 	src.mind?.register_death()

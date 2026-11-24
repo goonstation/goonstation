@@ -1,5 +1,6 @@
 /datum/random_event/minor/trader
 	name = "Travelling Trader"
+	description = "A trader ship docks at one of two station docks, or the diner dock"
 	customization_available = TRUE
 	//moved centcom headline and message down to the event_effect to change it depending on where the shuttle docks, preserving just in case, feel free to remove if you feel it's unnecessary
 	//centcom_headline = "Commerce and Customs Alert"

@@ -10,5 +10,5 @@
 			if (table == other)
 				continue
 
-			. += "([T.x], [T.y], [T.z]) in [global.loaded_prefab_path ? "prefab [global.loaded_prefab_path]" : "[T.loc]"]"
+			. += CI.format_location(T)
 			break

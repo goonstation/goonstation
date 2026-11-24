@@ -487,11 +487,15 @@
 			return
 		..()
 
-	seek_food_target(var/range = 5)
+	seek_food_target(range = 5)
 		. = list()
+		var/list/turf/seen_turfs = list() // only find one per tile since we can have huge piles
 		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
+			if (seen_turfs[ore.loc]) continue
 			if (istypes(ore, food_blacklist)) continue
 			if (!(istype(ore, /obj/item/raw_material/rock)) && prob(30)) continue // can eat not rocks with lower chance
+			// found a delicious snack!
+			seen_turfs[ore.loc] = TRUE
 			. += ore
 
 	setup_healths()

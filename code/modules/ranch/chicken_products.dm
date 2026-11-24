@@ -841,7 +841,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 			src.in_fakedeath = 1
 			APPLY_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, src.type)
 
-			C.lying = 1
+			C.set_lying(TRUE)
 			C.canmove = 0
 			C.set_clothing_icon_dirty()
 
@@ -876,7 +876,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 			C.canmove = 1
 			REMOVE_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, src.type)
 			C.set_clothing_icon_dirty()
-			C.lying = 0
+			C.set_lying(FALSE)
 			C.sleeping = 0
 			if(src.interrupted)
 				return

@@ -287,7 +287,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			M.apply_vision(vision_modifier, src.type)
 
 		if (!needs_oxy)
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_NO_OXY_LOSS, src.type)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_CHEMSMOKE_IMMUNE, src.type)
 
 		if (src.override_language)
 			M.say_language = src.override_language
@@ -375,7 +376,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.mob.remove_vision(vision_modifier, src.type)
 
 			if (needs_oxy)
-				REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_BREATHLESS, src.type)
+				REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_NO_OXY_LOSS, src.type)
 
 			if (src.override_language)
 				src.mob.say_language = initial(src.mob.say_language)
@@ -718,8 +719,17 @@ TYPEINFO(/datum/mutantrace/blob)
 
 	ghost_icon_state = "ghost-blob"
 
+	on_attach(mob/living/carbon/human/M)
+		. = ..()
+		src.mob.bioHolder.AddEffect("phagocytosis", 2, null, do_stability = FALSE, scannable = FALSE, innate = TRUE)
+
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
+
+	disposing()
+		if(src.mob)
+			src.mob.bioHolder.RemoveEffect("phagocytosis")
+		. = ..()
 
 TYPEINFO(/datum/mutantrace/flubber)
 	icon = 'icons/mob/flubber.dmi'

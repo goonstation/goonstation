@@ -2112,7 +2112,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 					shake_camera(unfortunate_jerk, 12, 32)
 				unfortunate_jerk.changeStatus("stunned", 4 SECONDS)
 				unfortunate_jerk.stuttering += 4
-				unfortunate_jerk.lying = 1
+				unfortunate_jerk.set_lying(TRUE)
 				unfortunate_jerk.set_clothing_icon_dirty()
 
 			qdel(src)

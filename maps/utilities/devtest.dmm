@@ -81,6 +81,10 @@
 /obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
+"bV" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor,
+/area/station/devzone)
 "cj" = (
 /obj/machinery/printing_press,
 /turf/simulated/floor,
@@ -3772,7 +3776,7 @@ Nu
 Nu
 ys
 ys
-Yx
+bV
 Bw
 ng
 UD

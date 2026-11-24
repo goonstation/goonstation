@@ -74,6 +74,13 @@
 				I.setMaterial(M)
 			qdel(src)
 
+	smash_act(atom/movable/smasher, show_message)
+		if (show_message)
+			smasher?.visible_message(SPAN_ALERT("[smasher] smashes \the [src]!"))
+		playsound(src, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 40, 1)
+		src.deconstruct()
+		return TRUE
+
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && src.deconstructable)
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
@@ -538,7 +545,7 @@ TYPEINFO(/obj/stool/wooden)
 			if (M.buckled == src)
 				M.buckled = null
 				src.buckled_guy = null
-				M.lying = 0
+				M.set_lying(FALSE)
 				reset_anchored(M)
 		if (src.sheet && src.sheet.bed == src)
 			src.sheet.bed = null

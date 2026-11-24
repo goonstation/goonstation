@@ -16,8 +16,39 @@
 	nanotrasen
 		team_num = TEAM_NANOTRASEN
 
+		bridge
+			name = "Bridge Critical System"
+			icon = 'icons/obj/large/96x96.dmi'
+			icon_state = "doppler_radar"
+			bound_width = 96
+			bound_height = 96
+
+		refinery
+			icon_state = "ground_receiver"
+
 	syndicate
 		team_num = TEAM_SYNDICATE
+
+		bridge
+			name = "Bridge Critical System"
+			icon = 'icons/obj/large/96x96.dmi'
+			icon_state = "doppler_radar"
+			bound_width = 96
+			bound_height = 96
+
+			New()
+				. = ..()
+				src.Turn(-90)
+				src.Scale(1, -1)
+
+		medbay
+			name = "Medbay Critical System"
+			icon_state = "ground_receiver"
+
+			New()
+				. = ..()
+				src.Turn(180)
+
 
 	disposing()
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))

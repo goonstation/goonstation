@@ -1,5 +1,8 @@
 ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_remove_tool)
 
+/// Max stack size for stackable cyborg items
+#define CYBORG_STACK_CAPACITY 300
+
 /// Job/tool modules for cyborgs
 /obj/item/robot_module
 	name = "blank cyborg module"
@@ -36,6 +39,8 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 		// handle adding single instance of tool
 		var/obj/item/I = adding_contents
 		I.cant_drop = TRUE
+		if (I.max_stack > 1)
+			I.max_stack = CYBORG_STACK_CAPACITY
 		I.set_loc(src)
 		src.tools += I
 		return I
@@ -84,3 +89,5 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 	src.tools -= I
 	qdel(I)
 	boutput(usr, "Removed [I] from [src].")
+
+#undef CYBORG_STACK_CAPACITY

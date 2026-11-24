@@ -273,7 +273,7 @@ TYPEINFO(/obj/machinery/bot/guardbot/xmas)
 
 		var/mob/living/carbon/O = hit
 		if (!O.lying)
-			O.lying = 1
+			O.set_lying(TRUE)
 			O.visible_message(SPAN_COMBAT("<b>[O] is knocked down by the snowball!</b>"))
 			modify_christmas_cheer(1)
 			boutput(O, "Brrr!")

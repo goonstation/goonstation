@@ -148,10 +148,6 @@ TYPEINFO(/mob/living)
 		src.ensure_bp_list()
 
 	if (src.use_stamina)
-		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
-		//eventual hud merger pls
-		src.stamina_bar = new(src)
-
 		var/turf/T = get_turf(src)
 		var/area/AR = get_area(src)
 		if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
@@ -182,11 +178,6 @@ TYPEINFO(/mob/living)
 
 	if(use_stamina)
 		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
-
-	if(stamina_bar)
-		for (var/datum/hud/thishud in huds)
-			thishud.remove_object(stamina_bar)
-		stamina_bar = null
 
 	for (var/atom/A as anything in src.applied_patches)
 		qdel(A)
@@ -940,15 +931,7 @@ TYPEINFO(/mob/living)
 	if (src.juggling())
 		src.drop_juggle()
 
-/mob/living/proc/update_lying()
-	if (src.lying != src.lying_old)
-		src.lying_old = src.lying
-		src.animate_lying(src.lying)
-		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
-		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
-		SEND_SIGNAL(src, COMSIG_MOB_LAYDOWN_STANDUP, src.lying)
-
-/mob/living/proc/animate_lying(lying)
+/mob/living/animate_lying(lying)
 	animate_rest(src, !lying)
 
 

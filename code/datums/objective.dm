@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 			for (var/obj/item/currency/spacecash/C in L)
 				current_cash += C.amount
 
-		current_cash += data_core.bank.find_record("id", owner.current.datacore_id)?["current_money"] || 0
+		current_cash += global.data_core.get_bank_record(id = owner.current.datacore_id)?["current_money"] || 0
 
 		if (current_cash >= target_cash)
 			return 1

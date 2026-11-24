@@ -184,8 +184,8 @@
 	src.attach_hud(zone_sel)
 	src.update_equipment_screen_loc()
 
-	if (src.stamina_bar)
-		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
+	if (src.hud.stamina_bar)
+		hud.add_object(src.hud.stamina_bar, initial(src.hud.stamina_bar.layer), "EAST-1, NORTH")
 
 
 	if (global_sims_mode) // IF YOU ARE HERE TO DISABLE SIMS MODE, DO NOT TOUCH THIS. LOOK IN GLOBAL.DM
@@ -518,8 +518,8 @@
 		src.u_equip(src.w_uniform)
 
 	if (hud)
-		if(src.stamina_bar)
-			hud.remove_object(stamina_bar)
+		if(src.hud.stamina_bar)
+			hud.remove_object(src.hud.stamina_bar)
 
 		if (hud.master == src)
 			hud.master = null
@@ -660,7 +660,7 @@
 		src.equipped():AttackSelf(src)
 
 	src.canmove = FALSE
-	src.lying = TRUE
+	src.set_lying(TRUE)
 	src.last_sleep = 0
 	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand
@@ -2043,6 +2043,11 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	boutput(src, SPAN_ALERT("You have no idea what to do with that."))
 	boutput(src, SPAN_ALERT("This statement is universally true because if you did you probably wouldn't be desperate enough to see this message."))
 
+/mob/living/carbon/human/handle_stamina_updates()
+	. = ..()
+	if (src.client && src.hud?.stamina_bar)
+		src.hud.stamina_bar.update_value(src)
+
 /mob/living/carbon/human/full_heal()
 	blinded = 0
 	bleeding = 0
@@ -3184,7 +3189,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (!use_visible_name || src.face_visible())
 		target_name = src.real_name
 
-	var/datum/db_record/personnel/security/record = global.data_core.security.find_record("name", target_name)
+	var/datum/db_record/personnel/security/record = global.data_core.get_security_record(target_name)
 	if (!record || (record["criminal"] == SECURITY::ARREST::STATE::ARREST))
 		return
 
@@ -3202,7 +3207,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	var/arrestState = ""
 	var/visibleName = src.face_visible() ? src.real_name : src.name
-	var/datum/db_record/record = data_core.security.find_record("name", visibleName)
+	var/datum/db_record/personnel/security/record = global.data_core.get_security_record(visibleName)
 	if(record)
 		var/criminal = record["criminal"]
 		if(criminal == SECURITY::ARREST::STATE::ARREST || criminal == SECURITY::ARREST::STATE::DETAIN || criminal == SECURITY::ARREST::STATE::SUSPECT || criminal == SECURITY::ARREST::STATE::PAROLE || criminal ==SECURITY::ARREST::STATE::INCARCERATED || criminal == SECURITY::ARREST::STATE::RELEASED || \

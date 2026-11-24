@@ -84,6 +84,15 @@ export const GeneralSettings = () => {
         </Box>
         <Box mb="5px">
           <Button.Checkbox
+            checked={!data.flyingChatPdaHidden}
+            onClick={() => act('update-flyingChatPdaHidden')}
+            tooltip="PDA messages will show flying text when held in inventory."
+          >
+            See PDA messages above equipped PDAs
+          </Button.Checkbox>
+        </Box>
+        <Box mb="5px">
+          <Button.Checkbox
             checked={data.autoCapitalization}
             onClick={() => act('update-autoCapitalization')}
             tooltip="Chat messages you send will be automatically capitalized."

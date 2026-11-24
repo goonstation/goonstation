@@ -76,6 +76,14 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
+"r" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/light/incandescent/small{
+	dir = 4
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "t" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -177,6 +185,10 @@
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
+"K" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "L" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -298,7 +310,7 @@ a
 "}
 (2,1,1) = {"
 S
-P
+K
 P
 C
 a
@@ -1012,7 +1024,7 @@ a
 "}
 (23,1,1) = {"
 Z
-Y
+r
 f
 d
 d

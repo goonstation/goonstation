@@ -795,51 +795,22 @@
 
 	return
 
-// Avoids some C&P since multiple procs make use of this ability (Convair880).
-/mob/proc/smash_through(var/obj/target, var/list/can_smash, var/show_message = 1)
-	if (!src || !ismob(src) || !target || !isobj(target))
+/// Given an object, iterate over a list of types we can smash
+///
+/// Returns TRUE if we smashed upon the given target
+/mob/proc/smash_through(obj/target, list/can_smash, show_message=TRUE)
+	if (!src || !ismob(src) || !target)
 		return FALSE
 
 	if (!islist(can_smash) || !length(can_smash))
 		return FALSE
 
-	for (var/S in can_smash)
-		if (S == "window" && istype(target, /obj/window))
-			var/obj/window/W = target
-			if (show_message)
-				src.visible_message(SPAN_ALERT("[src] smashes through the window."), SPAN_NOTICE("You smash through the window."))
-			W.health = 0
-			W.smash()
+	for (var/smashable_type in can_smash)
+		if (!istype(target, smashable_type))
+			continue
+		if(target.smash_act(src, show_message))
 			return TRUE
 
-		if (S == "grille" && istype(target, /obj/mesh/grille))
-			var/obj/mesh/grille/G = target
-			if (!G.shock(src, 70))
-				if (show_message)
-					G.visible_message(SPAN_ALERT("<b>[src]</b> violently slashes [G]!"))
-				playsound(G.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
-				G.damage_slashing(15)
-				return TRUE
-
-		if (S == "door" && istype(target, /obj/machinery/door))
-			var/obj/machinery/door/door = target
-			SPAWN(0)
-				door.tear_apart(src)
-			return TRUE
-
-		if (S == "table" && istype(target, /obj/table))
-			var/obj/table/table = target
-			playsound(table.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			table.deconstruct()
-			return TRUE
-
-		if (S == "blob" && istype(target, /obj/blob))
-			var/obj/blob/B = target
-			if(show_message)
-				src.visible_message(SPAN_ALERT("<B>[src] savagely slashes [B]!"), SPAN_NOTICE("You savagely slash at \the [B]"))
-			B.take_damage(rand(10,20),1,DAMAGE_CUT)
-			playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
-			return TRUE
 	return FALSE
 
 /mob/proc/clothing_protects_from_chems()

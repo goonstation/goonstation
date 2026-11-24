@@ -2,21 +2,38 @@
 
 /datum/db_record/personnel/general/build_fields()
 	return alist(
-		"id"		= new /datum/record_field/string(src, "ID", "000000", @"[a-f0-9]{6}"),
-		"name"		= new /datum/record_field/string(src, "Name", "New Record"),
-		"full_name"	= new /datum/record_field/string(src, "Full Name", "New Record"),
-		"rank"		= new /datum/record_field/string(src, "Rank", "Unassigned"),
-		"sex"		= new /datum/record_field/choice(src, "Sex", "Other", list("Male", "Female", "Other")),
-		"pronouns"	= new /datum/record_field/choice(src, "Pronouns", "Unknown", list("he/him", "she/her", "they/them", "it/its", "Unknown")),
-		"age"		= new /datum/record_field/number(src, "Age", 0, 0, INFINITY),
-		"fprint_r"	= new /datum/record_field/string(src, "Fingerprint (R)", "Unknown"),
-		"fprint_l"	= new /datum/record_field/string(src, "Fingerprint (L)", "Unknown"),
-		"dna"		= new /datum/record_field/string(src, "DNA"),
-		"photo"		= new /datum/record_field/object/photo(src, "Photo"),
-		"p_stat"	= new /datum/record_field/choice(src, "Phys Status", "Active", list("Very Active", "Active", "*Unconscious*", "*Deceased*", "In Cryogenic Storage")),
-		"m_stat"	= new /datum/record_field/string(src, "Ment Status", "Stable"),
-		"syndint"	= new /datum/record_field/string(src, "Synd Intel"),
+		BUILD_FIELD("id",			/datum/record_field/string,			"ID", "000000", @"[a-f0-9]{6}"),
+		BUILD_FIELD("name",			/datum/record_field/string,			"Name", "New Record"),
+		BUILD_FIELD("full_name",	/datum/record_field/string,			"Full Name", "New Record"),
+		BUILD_FIELD("rank",			/datum/record_field/string,			"Rank", "Unassigned"),
+		BUILD_FIELD("sex",			/datum/record_field/choice,			"Sex", "Other", list("Male", "Female", "Other")),
+		BUILD_FIELD("pronouns",		/datum/record_field/choice,			"Pronouns", "Unknown", list("he/him", "she/her", "they/them", "it/its", "Unknown")),
+		BUILD_FIELD("age",			/datum/record_field/number,			"Age", 0, 0, INFINITY),
+		BUILD_FIELD("fprint_r",		/datum/record_field/string,			"Fingerprint (R)", "Unknown"),
+		BUILD_FIELD("fprint_l",		/datum/record_field/string,			"Fingerprint (L)", "Unknown"),
+		BUILD_FIELD("dna",			/datum/record_field/string,			"DNA"),
+		BUILD_FIELD("photo",		/datum/record_field/object/photo,	"Photo"),
+		BUILD_FIELD("p_stat",		/datum/record_field/choice,			"Phys Status", "Active", list("Very Active", "Active", "*Unconscious*", "*Deceased*", "In Cryogenic Storage")),
+		BUILD_FIELD("m_stat",		/datum/record_field/string,			"Ment Status", "Stable"),
+		BUILD_FIELD("syndint",		/datum/record_field/string,			"Synd Intel"),
 	)
+
+/datum/db_record/personnel/general/New(source)
+	. = ..()
+	src.RegisterSignal(src.get_field_datum("name"), COMSIG_FIELD_VALUE_CHANGED, PROC_REF(on_name_change))
+
+/datum/db_record/personnel/general/disposing()
+	src.UnregisterSignal(src.get_field_datum("name"), COMSIG_FIELD_VALUE_CHANGED)
+	var/name = src["name"]
+	. = ..()
+
+	src.on_name_change(null, name, null)
+
+/datum/db_record/personnel/general/to_display_string()
+	return "[src["id"]]: [src["name"]]"
+
+/datum/db_record/personnel/general/to_list_display_string()
+	return "[src["id"]]: [src["name"]]"
 
 /datum/db_record/personnel/general/init_from_human(mob/living/carbon/human/H)
 	src["id"] = H.datacore_id
@@ -61,8 +78,7 @@
 		src["photo"] = IMG
 
 /datum/db_record/personnel/general/update_from_scan(mob/living/carbon/human/H)
-	. = ..()
-
+	src["name"] = H.real_name
 	src["sex"] = (H.gender == FEMALE) ? "Female" : "Male"
 	src["pronouns"] = H.get_pronouns().name
 	src["age"] = H.bioHolder.age
@@ -74,3 +90,9 @@
 	src["dna"] = H.bioHolder.Uid
 	src["p_stat"] = "Active"
 	src["m_stat"] = "Stable"
+
+/// Called when the value of the name field is updated.
+/datum/db_record/personnel/general/proc/on_name_change(datum/record_field/field, old_value, new_value)
+	for_by_tcl(H, /mob/living/carbon/human)
+		if ((H.real_name == old_value) || (H.name == old_value) || (H.real_name == new_value) || (H.name == new_value))
+			H.update_arrest_icon()

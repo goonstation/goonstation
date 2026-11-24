@@ -763,6 +763,33 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		. += SPAN_NOTICE("*---------*")
 
+		if (isAI(user))
+			var/mob/living/silicon/ai/mainframe
+			if (isAIeye(user))
+				var/mob/living/intangible/aieye/ai = user
+				mainframe = ai.mainframe
+			else
+				mainframe = user
+			if (!istype(mainframe))
+				return
+
+			var/list/obj/item/device/pda2/PDAs = src.get_visible_pdas()
+			var/found_messagable_pda = FALSE
+			var/batch_add = ""
+			if (length(PDAs))
+				for (var/obj/item/device/pda2/PDA in PDAs)
+					if (!PDA.owner)
+						continue
+					if (PDA.host_program?.message_on) // see ai.dm under Topic() to continue from here!
+						found_messagable_pda = TRUE
+						batch_add += "<br>[bicon(PDA)][PDA.name] - <a href='byond://?src=\ref[mainframe];net_id=[PDA.net_id];owner=[PDA.owner]'><u>*MESSAGE*</u></a>"
+					else
+						batch_add += "<br>[bicon(PDA)][PDA.name] - *MESSENGER DISABLED*"
+			if (!found_messagable_pda)
+				batch_add += "<br>*No messagable PDA detected!*"
+			. += batch_add
+
+
 	choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 		var/newname
 		if(isnull(default_name))
@@ -2529,7 +2556,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)
 		if (src.get_ear_damage()) src.take_ear_damage(-INFINITY)
 		if (src.get_ear_damage(1)) src.take_ear_damage(-INFINITY, 1)
-		src.lying = 0
+		src.set_lying(FALSE)
 		src.set_density(1)
 		if(src.stat)
 			src.camera.set_camera_status(FALSE)
@@ -2720,10 +2747,13 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		if (part == "l_leg" || update_all)
 			if (src.part_leg_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
+				var/leg_layer = MOB_LIMB_LAYER
+				if (src.part_leg_l.kind_of_limb & LIMB_TREADS)
+					leg_layer = MOB_HAND_LAYER1 // Treads hide jumpsuit legs
 				if (src.part_leg_l.slot == "leg_both")
-					src.i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString, layer=leg_layer)
 				else
-					src.i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString, layer=leg_layer)
 				if (color_matrix)
 					src.internal_paint_part(src.i_leg_l, color_matrix)
 			else
@@ -2731,10 +2761,13 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		if (part == "r_leg" || update_all)
 			if (src.part_leg_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
+				var/leg_layer = MOB_LIMB_LAYER
+				if (src.part_leg_l.kind_of_limb & LIMB_TREADS)
+					leg_layer = MOB_HAND_LAYER1 // Treads hide jumpsuit legs
 				if (src.part_leg_r.slot == "leg_both")
-					src.i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString, layer=leg_layer)
 				else
-					src.i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString, layer=leg_layer)
 				if (color_matrix)
 					src.internal_paint_part(src.i_leg_r, color_matrix)
 			else
@@ -2743,11 +2776,11 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (part == "l_arm" || update_all)
 			if (src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_l.slot == "arm_both")
-					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
-					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
+					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=src.part_arm_l.arm_layer)
+					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=src.part_arm_l.hand_layer)
 				else
-					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
-					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
+					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=src.part_arm_l.arm_layer)
+					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=src.part_arm_l.hand_layer)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_l, color_matrix)
 					src.internal_paint_part(src.i_hand_l, color_matrix)
@@ -2758,11 +2791,11 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (part == "r_arm" || update_all)
 			if (src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_r.slot == "arm_both")
-					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
-					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
+					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=src.part_arm_r.arm_layer)
+					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=src.part_arm_r.hand_layer)
 				else
-					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
-					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
+					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=src.part_arm_r.arm_layer)
+					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=src.part_arm_r.hand_layer)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_r, color_matrix)
 					src.internal_paint_part(src.i_hand_r, color_matrix)
