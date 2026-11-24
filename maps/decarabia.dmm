@@ -41933,7 +41933,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer3/terminal/zeta/os_loaded{
+/obj/machinery/computer/telescope{
 	dir = 4
 	},
 /turf/simulated/floor/circuit/purple,
@@ -83608,13 +83608,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/computer/telescope{
-	pixel_y = 6
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
 "toj" = (
