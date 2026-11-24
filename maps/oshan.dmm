@@ -25152,9 +25152,6 @@
 /obj/stool/chair/comfy{
 	dir = 1
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 4
 	},
@@ -29680,14 +29677,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "gQd" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 4
@@ -31688,6 +31682,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "iAL" = (
@@ -37071,9 +37068,6 @@
 /obj/item/clothing/head/fedora{
 	pixel_y = 7
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "mHm" = (
@@ -37788,6 +37782,12 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -38636,6 +38636,9 @@
 "nPP" = (
 /obj/item/device/radio/intercom/security,
 /obj/machinery/vending/security,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "nPR" = (
@@ -41782,10 +41785,11 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "qtS" = (
+/obj/machinery/power/apc/autoname_south,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-4"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "que" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -41797,15 +41801,15 @@
 	name = "Net Cafe"
 	})
 "quk" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/secure_data{
 	name = "Security Records"
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -46196,8 +46200,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "tEB" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/west)
 "tFb" = (
@@ -52101,7 +52103,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/west)
@@ -88050,8 +88052,8 @@ smn
 quk
 dyC
 mHf
-guc
 qtS
+smn
 gQd
 bhi
 ciZ
@@ -88350,8 +88352,8 @@ bpc
 chc
 smn
 nPP
-vfw
-vfw
+guc
+guc
 nel
 iAB
 yfu
