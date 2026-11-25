@@ -4,7 +4,7 @@
 /datum/apiRoute/players/metadata/getbydatabulk
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/players/metadata/get-by-data-bulk"
-	body = /datum/apiBody/players/metadata/bulk
+	body = /datum/apiBody/players/metadatabulk
 	correct_response = /datum/apiModel/PlayerMetadataBulk
 
 	buildBody(
