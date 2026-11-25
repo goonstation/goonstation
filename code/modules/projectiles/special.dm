@@ -836,6 +836,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		for (var/atom/movable/AM in P.contents)
 			AM.set_loc(dumpturf)
 			SEND_SIGNAL(dumparea, COMSIG_AREA_INDIRECT_ENTRY, AM, "mechcomp")
+			SEND_SIGNAL(AM, COMSIG_MOVABLE_TELEPORTED)
 		..()
 
 	on_exited(obj/projectile/P, atom/movable/AM)
