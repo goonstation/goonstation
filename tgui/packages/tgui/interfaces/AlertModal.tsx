@@ -143,7 +143,13 @@ export const AlertModal = () => {
         )}
         <Section fill>
           <Stack fill vertical>
-            <Stack.Item grow basis={0} m={1} overflowY="auto">
+            <Stack.Item
+              grow
+              basis={0}
+              m={1}
+              overflowX="hidden"
+              overflowY="auto"
+            >
               <Box color="label">
                 {(() => {
                   if (!typedContentWindow) {
