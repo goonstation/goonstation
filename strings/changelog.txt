@@ -1,4 +1,9 @@
 
+(t)wed nov 25 26
+(u)JORJ949
+(p)28227
+(e)🎨⚖👮|C-Sprites, C-Balance, A-Security
+(*)The Head of Security's helmet can now have the visor dropped down to completely protect the user's head from the void of space. WARNING: May not protect against cream pies.
 (t)tue nov 24 26
 (u)glowbold
 (e)⚖💊|C-Balance, A-Medical, A-Station-Systems
