@@ -23,6 +23,8 @@
 #define POP_DOOR_CHECK "do_doorcheck"
 /// Pathfind option key; Whether to ignore passability caching (for extremely weird cases; like pods.)
 #define POP_IGNORE_CACHE "ignore_cache"
+/// Pathfind option key; INTERNAL ONLY - per-search memo of turf contents passability
+#define POP_STEP_MEMO "step_memo"
 
 // uncomment for debugging pathfinding
 //#define VISUALIZE_PATHFINDING
@@ -105,9 +107,11 @@
  * Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum.
  * If you really want to optimize things, optimize this, cuz this gets called a lot.
  */
-#define CAN_STEP(cur_turf, next) (next && jpsTurfPassable(next, cur_turf, caller_am, options) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
-/// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
-#define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
+#define CAN_STEP(cur_turf, next) (next && (next != avoid) && !(simulated_only && !istype(next, /turf/simulated)) && jpsTurfPassable(next, cur_turf, caller_am, options))
+/// If `T` blocks a `blocked` direction but is open toward us, like a windoor, the only way in may be turning into it from here
+#define BLOCKED_BUT_OPEN_TOWARD(T, blocked, toward) (T && (T.blocked_dirs & (blocked)) && !(T.blocked_dirs & (toward)))
+/// A turf that blocks some directions but not all, like one with a windoor or thindow
+#define PARTLY_DIR_BLOCKED(T) (T && T.blocked_dirs && T.blocked_dirs != (NORTH | SOUTH | EAST | WEST))
 
 #define FINISHED_SEARCH (length(paths) >= n_target_goals)
 
@@ -218,6 +222,7 @@
 	src.avoid = options[POP_EXCLUDE]
 	src.cardinal_only = options[POP_CARDINAL_ONLY]
 	src.paths = list()
+	options[POP_STEP_MEMO] = list()
 
 /**
  * search() is the proc you call to kick off and handle the actual pathfinding, and kills the pathfind datum instance when it's done.
@@ -282,9 +287,11 @@
 /datum/pathfind/proc/pop_reached_goals(turf/current_turf, turf/goal_turf)
 	var/list/goals = ends[goal_turf]
 	if(mintargetdist == 1)
+		var/reach_turf = can_reach_from(current_turf, goal_turf)
 		var/list/reached = null
-		for(var/goal in goals)
-			if(can_reach_from(current_turf, goal))
+		for(var/atom/goal as anything in goals)
+			// windoors can still be reached from their blocked side
+			if((goal.flags & ON_BORDER) ? can_reach_from(current_turf, goal) : reach_turf)
 				LAZYLISTADD(reached, goal)
 		if(length(reached) < length(goals)) // the rest stay, maybe reachable from another tile
 			goals -= reached
@@ -332,6 +339,10 @@
 /datum/pathfind/proc/cardinal_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node, start_cost = 0)
 	var/base_cost = parent_node ? parent_node.number_tiles : start_cost
 	var/steps_taken = 0
+	// see BLOCKED_BUT_OPEN_TOWARD
+	var/side_a = turn(heading, 90)
+	var/side_b = turn(heading, -90)
+	var/scan_axis = heading | turn(heading, 180)
 
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
@@ -372,21 +383,17 @@
 					src.paths[goal] = path.Copy()
 			return list(final_node, reached_target_goals)
 
-		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
-
-		switch(heading)
-			if(NORTH)
-				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, EAST, NORTHEAST))
-					interesting = TRUE
-			if(SOUTH)
-				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST))
-					interesting = TRUE
-			if(EAST)
-				if(STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHEAST))
-					interesting = TRUE
-			if(WEST)
-				if(STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHWEST))
-					interesting = TRUE
+		var/turf/side_turf_a = get_step(current_turf, side_a)
+		var/turf/side_turf_b = get_step(current_turf, side_b)
+		// have we found a forced neighbor that would make us add this turf to the open list?
+		var/interesting = PARTLY_DIR_BLOCKED(lag_turf) || BLOCKED_BUT_OPEN_TOWARD(side_turf_a, scan_axis, side_b) || BLOCKED_BUT_OPEN_TOWARD(side_turf_b, scan_axis, side_a) \
+			|| (!CAN_STEP(current_turf, side_turf_a) && CAN_STEP(current_turf, get_step(side_turf_a, heading))) \
+			|| (!CAN_STEP(current_turf, side_turf_b) && CAN_STEP(current_turf, get_step(side_turf_b, heading)))
+		if(!interesting && !cardinal_only)
+			// walking diagonally, we may need to cut into a partly blocked tile ahead from here
+			var/turf/ahead_turf_a = get_step(side_turf_a, heading)
+			var/turf/ahead_turf_b = get_step(side_turf_b, heading)
+			interesting = PARTLY_DIR_BLOCKED(ahead_turf_a) || PARTLY_DIR_BLOCKED(ahead_turf_b)
 
 		if(interesting)
 			var/datum/jps_node/newnode = new(current_turf, parent_node, steps_taken)
@@ -407,6 +414,12 @@
 */
 /datum/pathfind/proc/diag_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node)
 	var/steps_taken = 0
+	// the two tiles behind us, and the diagonal next to each
+	var/back_a = turn(heading, 135)
+	var/back_b = turn(heading, -135)
+	var/beside_a = turn(heading, 90)
+	var/beside_b = turn(heading, -90)
+
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
 
@@ -451,27 +464,21 @@
 		var/possible_child_node_pair = null
 		var/cost = parent_node.number_tiles + steps_taken // so subscans still respect max_distance
 
-		switch(heading)
+		var/turf/back_turf_a = get_step(current_turf, back_a)
+		var/turf/back_turf_b = get_step(current_turf, back_b)
+		if(PARTLY_DIR_BLOCKED(lag_turf) || PARTLY_DIR_BLOCKED(back_turf_a) || PARTLY_DIR_BLOCKED(back_turf_b) \
+				|| (!CAN_STEP(current_turf, back_turf_a) && CAN_STEP(current_turf, get_step(current_turf, beside_a))) \
+				|| (!CAN_STEP(current_turf, back_turf_b) && CAN_STEP(current_turf, get_step(current_turf, beside_b))))
+			interesting = TRUE
+		else switch(heading)
 			if(NORTHWEST)
-				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, NORTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHWEST))
-					interesting = TRUE
-				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, WEST, null, cost) || cardinal_scan_spec(current_turf, NORTH, null, cost))
+				possible_child_node_pair = (cardinal_scan_spec(current_turf, WEST, null, cost) || cardinal_scan_spec(current_turf, NORTH, null, cost))
 			if(NORTHEAST)
-				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHEAST))
-					interesting = TRUE
-				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, EAST, null, cost) || cardinal_scan_spec(current_turf, NORTH, null, cost))
+				possible_child_node_pair = (cardinal_scan_spec(current_turf, EAST, null, cost) || cardinal_scan_spec(current_turf, NORTH, null, cost))
 			if(SOUTHWEST)
-				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
-					interesting = TRUE
-				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH, null, cost) || cardinal_scan_spec(current_turf, WEST, null, cost))
+				possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH, null, cost) || cardinal_scan_spec(current_turf, WEST, null, cost))
 			if(SOUTHEAST)
-				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHEAST))
-					interesting = TRUE
-				else
-					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH, null, cost) || cardinal_scan_spec(current_turf, EAST, null, cost))
+				possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH, null, cost) || cardinal_scan_spec(current_turf, EAST, null, cost))
 
 		if(interesting || possible_child_node_pair)
 			if(isnull(newnode))
@@ -510,8 +517,13 @@
 	if(!is_cardinal(direction))
 		var/turf/corner_1 = get_step(source, turn(direction, 45))
 		var/turf/corner_2 = get_step(source, turn(direction, -45))
-		return jpsTurfPassable(corner_1, source, passer, options) && jpsTurfPassable(T, corner_1, passer, options) || \
-				jpsTurfPassable(corner_2, source, passer, options) && jpsTurfPassable(T, corner_2, passer, options)
+		// the corner we go around has to be one CAN_STEP would allow
+		var/turf/avoid = options[POP_EXCLUDE]
+		var/simulated_only = options[POP_SIMULATED_ONLY]
+		var/corner_1_ok = (corner_1 != avoid) && (!simulated_only || istype(corner_1, /turf/simulated))
+		var/corner_2_ok = (corner_2 != avoid) && (!simulated_only || istype(corner_2, /turf/simulated))
+		return corner_1_ok && jpsTurfPassable(corner_1, source, passer, options) && jpsTurfPassable(T, corner_1, passer, options) || \
+				corner_2_ok && jpsTurfPassable(corner_2, source, passer, options) && jpsTurfPassable(T, corner_2, passer, options)
 	// if a source turf was included check for directional blocks between the two turfs
 	if (source && (T.blocked_dirs || source.blocked_dirs))
 		// do either of these turfs explicitly block entry or exit to the other?
@@ -519,6 +531,11 @@
 			return FALSE
 		else if (source && HAS_ALL_FLAGS(source.blocked_dirs, direction))
 			return FALSE
+	var/list/step_memo = source && options[POP_STEP_MEMO]
+	if(step_memo)
+		var/memo = step_memo[T]
+		if(!isnull(memo))
+			return memo
 	var/id = options[POP_ID]
 	for(var/atom/A as anything in T.contents)
 		if (isobj(A))
@@ -540,12 +557,17 @@
 		if(!A.Cross(passer))
 			if(!T.pass_unstable && !source.pass_unstable)
 				T.passability_cache = FALSE
+			if(step_memo)
+				step_memo[T] = FALSE
 			return FALSE
+	if(step_memo)
+		step_memo[T] = .
 	if(!T.pass_unstable && !source.pass_unstable) // Only these are cached, the rest are speical cases for unstable interactibles.
 		T.passability_cache = .
 
 #undef CAN_STEP
-#undef STEP_NOT_HERE_BUT_THERE
+#undef BLOCKED_BUT_OPEN_TOWARD
+#undef PARTLY_DIR_BLOCKED
 #undef FINISHED_SEARCH
 
 

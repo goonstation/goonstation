@@ -38,7 +38,6 @@ TYPEINFO(/mob)
 	var/last_move_trigger = 0
 
 	var/atom/movable/screen/internals = null
-	var/atom/movable/screen/stamina_bar/stamina_bar = null
 
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = null
@@ -225,6 +224,7 @@ TYPEINFO(/mob)
 	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
 	/// last time this mob got dosed with radiation
 	var/last_radiation_dose_time = 0
+
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob
@@ -2587,6 +2587,7 @@ TYPEINFO(/mob)
 	actions.interrupt(src, INTERRUPT_ACT)
 
 /mob/proc/adjust_throw(datum/thrown_thing/thr)
+	SEND_SIGNAL(src, COMSIG_MOB_THROW_ADJUST, thr)
 	return
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
