@@ -164,13 +164,13 @@
 	name = "Classified Syndicate Files"
 	desc = "The Syndicate probably want to keep this away from NanoTrasen."
 	SYNDICATE_STEALTH_DESCRIPTION("KEEP. THIS. SAFE.")
+	tooltip_flags = REBUILD_USER
 	item_state = "folder"
 	icon_state = "folder-syndicate"
 	inhand_color = "#D20040"
 
 /obj/item/paper/image/tamper_proof/syndicate_folder/org_chart
 	desc = "The Syndicate probably want to keep this away from NanoTrasen. There's a small note slipping out of the folder: \"FOR VESTAL EYES ONLY\"."
-	tooltip_flags = REBUILD_USER
 	rarity = ITEM_RARITY_LEGENDARY // scary color!
 	path = "images/arts/Syndicate_Org_Chart.png" // by cogwerks
 	sizex = 630
