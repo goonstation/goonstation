@@ -20,7 +20,6 @@
 			)
 		)
 
-ABSTRACT_TYPE(/obj/item/paper/image/tamper_proof)
 /obj/item/paper/image/tamper_proof
 	scrollbar = FALSE
 	burn_possible = FALSE
@@ -161,7 +160,6 @@ ABSTRACT_TYPE(/obj/item/paper/image/tamper_proof)
 		path = "images/sstv/13.png"
 		desc = "Oh god."
 
-ABSTRACT_TYPE(/obj/item/paper/image/tamper_proof/syndicate_folder)
 /obj/item/paper/image/tamper_proof/syndicate_folder
 	name = "Classified Syndicate Files"
 	desc = "The Syndicate probably want to keep this away from NanoTrasen."
