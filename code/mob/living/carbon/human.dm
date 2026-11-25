@@ -184,8 +184,8 @@
 	src.attach_hud(zone_sel)
 	src.update_equipment_screen_loc()
 
-	if (src.stamina_bar)
-		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
+	if (src.hud.stamina_bar)
+		hud.add_object(src.hud.stamina_bar, initial(src.hud.stamina_bar.layer), "EAST-1, NORTH")
 
 
 	if (global_sims_mode) // IF YOU ARE HERE TO DISABLE SIMS MODE, DO NOT TOUCH THIS. LOOK IN GLOBAL.DM
@@ -518,8 +518,8 @@
 		src.u_equip(src.w_uniform)
 
 	if (hud)
-		if(src.stamina_bar)
-			hud.remove_object(stamina_bar)
+		if(src.hud.stamina_bar)
+			hud.remove_object(src.hud.stamina_bar)
 
 		if (hud.master == src)
 			hud.master = null
@@ -2043,6 +2043,11 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	boutput(src, SPAN_ALERT("You have no idea what to do with that."))
 	boutput(src, SPAN_ALERT("This statement is universally true because if you did you probably wouldn't be desperate enough to see this message."))
 
+/mob/living/carbon/human/handle_stamina_updates()
+	. = ..()
+	if (src.client && src.hud?.stamina_bar)
+		src.hud.stamina_bar.update_value(src)
+
 /mob/living/carbon/human/full_heal()
 	blinded = 0
 	bleeding = 0
@@ -2902,13 +2907,19 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (ischangeling(src)) // comic book weakness
 		return FALSE
 
-/mob/living/carbon/human/empty_hands()
+/mob/living/carbon/human/empty_hands(var/override_grip = TRUE)
 	..()
+	var/grip_l = HAS_ATOM_PROPERTY(src, PROP_MOB_GRIP_FIRM_LEFT)
+	var/grip_r = HAS_ATOM_PROPERTY(src, PROP_MOB_GRIP_FIRM_RIGHT)
+	if(!override_grip && (grip_r || grip_l) && src.equipped()?.two_handed)
+		return
 	var/h = src.hand
-	src.hand = 0
-	drop_item()
-	src.hand = 1
-	drop_item()
+	if(override_grip || !grip_r)
+		src.hand = RIGHT_HAND
+		drop_item()
+	if(override_grip || !grip_l)
+		src.hand = LEFT_HAND
+		drop_item()
 	src.hand = h
 
 /mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)

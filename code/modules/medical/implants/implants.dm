@@ -501,6 +501,8 @@
 			return
 		var/mob/living/carbon/human/H = src.owner
 
+		H.delStatus("weakened_loyalty")
+
 		if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 			H.visible_message(SPAN_ALERT("<b>[H] resists the counter-revolutionary implant!</b>"))
 			H.changeStatus("knockdown", 1 SECOND)
