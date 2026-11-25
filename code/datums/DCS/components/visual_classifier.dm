@@ -27,6 +27,7 @@
 			targets += footprints
 		visible_tiles += targets
 
+ABSTRACT_TYPE(/datum/component/visual_classifier)
 /datum/component/visual_classifier
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/enabled = TRUE
@@ -55,6 +56,8 @@
 	var/tmp/list/unindexed_categories
 	var/tmp/list/flavor_rule_by_type
 	var/tmp/mob/living/wearer
+	var/tmp/list/controls
+	var/tmp/control_label
 	var/tmp/client/viewer
 	var/tmp/datum/hud/visual_classifier/classifier_hud
 	var/tmp/scan_generation = 0
@@ -97,6 +100,7 @@
 			return
 		src.detach_wearer()
 		src.wearer = user
+		src.add_controls()
 		src.RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(start_scanning))
 		src.RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(stop_scanning))
 		src.RegisterSignal(user, COMSIG_MOB_DEATH, PROC_REF(reset_display))
@@ -105,11 +109,71 @@
 		src.start_scanning(user)
 
 	proc/detach_wearer()
-		src.stop_scanning()
 		if (!src.wearer)
 			return
+		src.stop_scanning()
+		for (var/datum/targetable/classifier/control as anything in src.controls)
+			if (QDELETED(control))
+				continue
+			var/datum/abilityHolder/holder = control.holder
+			if (control in holder.suspended)
+				holder.suspended -= control
+				holder.abilities += control
+			holder.removeAbilityInstance(control)
+		src.wearer.abilityHolder?.updateButtons()
+		src.controls = null
+		src.control_label = null
 		src.UnregisterSignal(src.wearer, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_DEATH, COMSIG_PARENT_PRE_DISPOSING))
 		src.wearer = null
+
+	proc/get_control_holder()
+		var/datum/abilityHolder/generic/holder = src.wearer.get_ability_holder(/datum/abilityHolder/generic)
+		if (holder)
+			return holder
+		var/datum/abilityHolder/original = src.wearer.abilityHolder
+		if (original && !istype(original, /datum/abilityHolder/composite))
+			var/datum/abilityHolder/composite/composite = new(src.wearer)
+			src.wearer.abilityHolder = composite
+			composite.addHolderInstance(original)
+		return src.wearer.add_ability_holder(/datum/abilityHolder/generic)
+
+	proc/add_controls()
+		var/datum/abilityHolder/holder = src.get_control_holder()
+		src.control_label = src.choose_control_label(holder)
+		src.controls = list()
+		var/static/list/control_types = list(/datum/targetable/classifier/power, /datum/targetable/classifier/focus, /datum/targetable/classifier/filter)
+		for (var/control_type in control_types)
+			var/datum/targetable/classifier/control = new control_type(holder)
+			control.scanner = src
+			control.name = "[control.name] ([src.control_label])"
+			src.controls += control
+			holder.abilities += control
+			control.onAttach(holder)
+		src.update_controls()
+		holder.updateButtons()
+
+	proc/choose_control_label(datum/abilityHolder/holder)
+		var/atom/source = src.parent
+		var/label = source == src.wearer ? "[src.display_name], innate" : source.name
+		var/list/used_labels = list()
+		for (var/datum/targetable/classifier/power/power in holder.abilities + holder.suspended)
+			used_labels += power.scanner.control_label
+		var/candidate = label
+		for (var/number in 2 to length(used_labels) + 1)
+			if (!(candidate in used_labels))
+				break
+			candidate = "[label] #[number]"
+		return candidate
+
+	proc/cancel_targeting()
+		if (src.wearer?.targeting_ability in src.controls)
+			src.wearer.targeting_ability = null
+			src.wearer.update_cursor()
+
+	proc/update_controls()
+		for (var/datum/targetable/classifier/control as anything in src.controls)
+			control.refresh_state()
+			control.object.icon_state = control.icon_state
 
 	proc/start_scanning(mob/living/user)
 		var/client/active_client = user.client
@@ -124,16 +188,22 @@
 		var/generation = src.scan_generation
 		// force_equip() still has to move the item into the wearer's contents.
 		SPAWN(0)
-			if (!QDELETED(src) && src.scan_generation == generation && src.can_scan())
-				src.show_boot()
-			while (!QDELETED(src) && src.scan_generation == generation && user.client == active_client && src.source_active())
-				src.refresh_callouts()
-				sleep(max(world.tick_lag, src.scan_interval))
-			if (!QDELETED(src) && src.scan_generation == generation)
-				if (src.source_active())
-					src.stop_scanning()
-				else
-					src.detach_wearer()
+			src?.scan_tick(generation, show_boot = TRUE)
+
+	proc/scan_tick(generation, show_boot = FALSE)
+		if (QDELETED(src) || generation != src.scan_generation)
+			return
+		if (!src.source_active())
+			src.detach_wearer()
+			return
+		if (src.wearer.client != src.viewer)
+			src.stop_scanning()
+			return
+		if (show_boot && src.can_scan())
+			src.show_boot()
+		src.refresh_callouts()
+		SPAWN(max(world.tick_lag, src.scan_interval))
+			src?.scan_tick(generation)
 
 	proc/stop_scanning()
 		src.scan_generation++
@@ -147,7 +217,7 @@
 
 	proc/reset_display()
 		src.clear_boot()
-		SEND_SIGNAL(src, COMSIG_CLASSIFIER_CHANGED, TRUE)
+		src.cancel_targeting()
 		src.set_filter(null)
 		src.clear_callouts()
 
@@ -172,7 +242,7 @@
 
 	proc/set_power(active)
 		src.enabled = !!active
-		SEND_SIGNAL(src, COMSIG_CLASSIFIER_CHANGED)
+		src.update_controls()
 		if (src.enabled && src.wearer)
 			src.start_scanning(src.wearer)
 		else if (!src.enabled)
@@ -207,7 +277,7 @@
 		var/marker_type = src.projection_types?[category]
 		if (sample && ispath(marker_type, /obj/overlay/classifier_projection))
 			src.projection = new marker_type(null, src, sample)
-		SEND_SIGNAL(src, COMSIG_CLASSIFIER_CHANGED)
+		src.update_controls()
 
 	proc/focus_on(atom/target)
 		if (!src.can_scan())
@@ -244,7 +314,7 @@
 		if (user != src.wearer || !src.can_scan())
 			return
 		src.clear_boot()
-		SEND_SIGNAL(src, COMSIG_CLASSIFIER_CHANGED, TRUE)
+		src.cancel_targeting()
 		var/list/categories = src.category_types
 		if (src.filter_order)
 			categories = (src.filter_order & categories) | categories
@@ -358,12 +428,12 @@
 		for (var/turf/tile as anything in targets_by_turf)
 			src.queue_target(targets_by_turf[tile], distance_rings, placements)
 		for (var/list/ring in distance_rings)
+			if (length(placements) >= src.target_limit)
+				break
 			for (var/atom/movable/target as anything in ring)
 				placements[target] = CLASSIFIER_BRACKETS
 				if (length(placements) >= src.target_limit)
 					break
-			if (length(placements) >= src.target_limit)
-				break
 
 		src.sync_callouts(visible_atoms, placements, visible_spills, label_layout)
 		if (announce)
@@ -616,7 +686,8 @@
 	var/max_y
 
 	proc/include_tile(obj/fluid/fluid, datum/component/visual_classifier/classifier)
-		if (!src.tile_count)
+		if (!src.anchor)
+			src.tile_count = length(fluid.group.members)
 			src.min_x = src.max_x = fluid.x
 			src.min_y = src.max_y = fluid.y
 		else
@@ -624,7 +695,6 @@
 			src.max_x = max(src.max_x, fluid.x)
 			src.min_y = min(src.min_y, fluid.y)
 			src.max_y = max(src.max_y, fluid.y)
-		src.tile_count++
 		var/rank = max(abs(fluid.x - classifier.wearer.x), abs(fluid.y - classifier.wearer.y))
 		if (fluid == classifier.focused_target)
 			rank = -2

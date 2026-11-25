@@ -376,3 +376,78 @@
 #undef CLASSIFIER_GLYPH_WIDTH
 #undef CLASSIFIER_GLYPH_BLEED
 #undef CLASSIFIER_GLITCH_TRACKS
+
+ABSTRACT_TYPE(/datum/targetable/classifier)
+/datum/targetable/classifier
+	icon = 'icons/obj/clothing/classifier_glasses.dmi'
+	copiable = FALSE
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
+	var/datum/component/visual_classifier/scanner
+
+	disposing()
+		src.scanner = null
+		. = ..()
+
+	castcheck(atom/target)
+		var/mob/living/user = src.holder.owner
+		if (!src.scanner || src.scanner.wearer != user || !src.scanner.source_active() || is_incapacitated(user))
+			return FALSE
+		return !ishuman(user) || !user.restrained()
+
+	proc/refresh_state()
+		return
+
+	power
+		name = "Toggle Survey"
+		desc = "Turn the classifier on or put it on standby."
+		icon_state = "survey"
+
+		refresh_state()
+			src.icon_state = src.scanner.enabled ? "survey" : "standby"
+
+		cast()
+			. = ..()
+			src.scanner.set_power(!src.scanner.enabled)
+			if (src.scanner.enabled)
+				boutput(src.holder.owner, SPAN_NOTICE("[src.scanner.display_name] online. Blink to accept the terms of service."))
+			else
+				boutput(src.holder.owner, SPAN_NOTICE("[src.scanner.display_name] on standby. Eyeballs restored to factory settings."))
+
+	focus
+		name = "Focus Classifier"
+		desc = "Focus on a target and highlight its class. Click again to dismiss it."
+		icon_state = "focus"
+		targeted = TRUE
+		target_anything = TRUE
+		check_range = FALSE
+
+		refresh_state()
+			src.targeted = src.scanner.enabled && !src.scanner.focused_target
+			src.icon_state = src.scanner.focused_target ? "locked" : "focus"
+
+		cast(atom/target)
+			. = ..()
+			if (!src.scanner.enabled)
+				src.holder.owner.show_text("[src.scanner.display_name] is on standby. Toggle Survey to wake it up.", "red")
+			else if (src.scanner.focused_target)
+				src.scanner.set_filter(null)
+				src.scanner.refresh_callouts()
+			else
+				src.scanner.focus_on(target)
+
+	filter
+		name = "Filter Class"
+		desc = "Cycle through the classifier's categories."
+		icon_state = "filter_all"
+
+		refresh_state()
+			var/static/list/filter_icons = list("MESS" = "filter_mess", "SPILL" = "filter_spill", "PEST" = "filter_pest")
+			src.icon_state = filter_icons[src.scanner.filter_class] || "filter_all"
+
+		cast()
+			. = ..()
+			if (!src.scanner.enabled)
+				src.holder.owner.show_text("[src.scanner.display_name] is on standby. Toggle Survey to wake it up.", "red")
+				return
+			src.scanner.cycle_filter(src.holder.owner)
