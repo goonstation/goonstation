@@ -1,5 +1,10 @@
 
 (t)wed nov 25 26
+(u)Astarthoc
+(p)28170
+(e)🆕⚗🍝|C-Feature, A-Chemistry, A-Catering
+(*)Added caramel macchiato, the sweetest cousin of macchiato.
+(*)Added caramel sauce, a sweet sauce to sweeten your drinks and baked goods.
 (u)Temthrush
 (p)28333
 (e)🎨🍝|C-Sprites, A-Catering
