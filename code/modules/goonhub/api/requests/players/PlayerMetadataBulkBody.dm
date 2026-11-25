@@ -1,11 +1,11 @@
 
-/datum/apiBody/players/metadata/bulk
+/datum/apiBody/players/metadatabulk
 	fields = list(
 		"metadata", // [string]
 		"limit" // integer
 	)
 
-/datum/apiBody/players/metadata/bulk/VerifyIntegrity()
+/datum/apiBody/players/metadatabulk/VerifyIntegrity()
 	. = ..()
 	if (
 		!length(src.values["metadata"]) \
