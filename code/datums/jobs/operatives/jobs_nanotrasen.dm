@@ -109,6 +109,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	requires_whitelist = REQUIRES_WHITELIST_ALWAYS
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
+	disallow_respawnees = TRUE
 	receives_miranda = TRUE
 	put_id_in_pda = FALSE
 	rounds_needed_to_play = ROUNDS_MIN_HIGHSEC

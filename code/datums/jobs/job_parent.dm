@@ -17,6 +17,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/variable_limit = FALSE //! does this job scale down at lower population counts
 	var/add_to_manifest = TRUE //! On join, add to general, bank, and security records.
 	var/no_late_join = FALSE
+	var/disallow_respawnees = FALSE //! Don't allow anyone respawning to join as this job.
 	var/no_jobban_from_this_job = FALSE
 	///can you roll this job if you rolled antag with a non-traitor-allowed favourite job (e.g.: prevent sec mains from forcing only captain antag rounds)
 	var/allow_antag_fallthrough = TRUE

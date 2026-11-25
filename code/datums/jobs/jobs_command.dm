@@ -7,6 +7,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	map_can_autooverride = FALSE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	job_category = JOB_COMMAND
+	disallow_respawnees = TRUE
 	unique = TRUE
 	world_announce_priority = ANNOUNCE_ORDER_HEADS
 	email_group = MGD_COMMAND
