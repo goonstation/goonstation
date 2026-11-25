@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
 	slot_poc1 = list(/obj/item/device/pda2/engine)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
-	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat/trainee)
 #ifdef HOTSPOTS_ENABLED
 	items_in_backpack = list(/obj/item/clothing/shoes/stomp_boots)
 #endif
@@ -104,6 +104,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_ears = list(/obj/item/device/radio/headset/miner)
 	slot_poc1 = list(/obj/item/device/pda2/mining)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat/mining)
 	#ifdef UNDERWATER_MAP
 	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
