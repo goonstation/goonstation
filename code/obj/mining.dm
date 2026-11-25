@@ -2392,37 +2392,29 @@ TYPEINFO(/obj/item/cargotele)
 
 		// free radiation, copied code from pod portals and modified
 		for (var/mob/hitchhiker in hitchhikers)
+			if (QDELETED(hitchhiker))
+				continue
 			// Borgs don't care about rads (for the meantime)
-			if (hitchhiker && !issilicon(hitchhiker))
-				var/mob/T = hitchhiker
+			if (issilicon(hitchhiker))
+				continue
 
-				var/unprotected = (T.loc != cargo)
-				var/dose = 1 SIEVERT
+			var/dose = 0.5 SIEVERT
 
-				if (isrestrictedz(turf?.z))
-					// protected/unprotected,  we dont care
-					boutput(T, SPAN_ALERT("You are exposed to some pretty swole strange particles, this can't be good..."))
-					dose *= 3
+			if (isrestrictedz(turf?.z) || (hitchhiker.loc != cargo))
+				boutput(hitchhiker, SPAN_ALERT("You are exposed to some pretty swole strange particles, this can't be good..."))
 
-				else if (unprotected)
-					// unprotected (not inside whatever is being teleported)
-					boutput(T, SPAN_ALERT("You are exposed to some pretty swole strange particles, this can't be good..."))
-					if (prob(10))
-						dose /= 2
-				else
-					// don't kill them, just make them seriously sick
-					dose /= 2
+				if (prob(90))
+					dose *= 2
 
-				T.take_radiation_dose(dose)
+				if(ishuman(hitchhiker))
+					var/mob/living/carbon/human/H = hitchhiker
+					if (H.bioHolder)
+						if (prob(75))
+							H.bioHolder.RandomEffect("bad")
+						else
+							H.bioHolder.RandomEffect("good")
 
-				if (unprotected || isrestrictedz(turf?.z))
-					if(ishuman(T))
-						var/mob/living/carbon/human/H = T
-						if (H.bioHolder)
-							if (prob(75))
-								H.bioHolder.RandomEffect("bad")
-							else
-								H.bioHolder.RandomEffect("good")
+			hitchhiker.take_radiation_dose(dose)
 
 		cargo.set_loc(turf)
 		pad?.receive_cargo(cargo)
