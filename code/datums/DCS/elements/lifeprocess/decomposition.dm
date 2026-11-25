@@ -70,11 +70,16 @@
 
 /// Attempt to create a plume of miasma on a turf.
 /datum/element/lifeprocess/decomposition/proc/create_miasma(mob/living/carbon/human/target, turf/T)
+	var/max_miasma = target.decomp_stage * 20
 	var/datum/reagents/reagents = T.active_airborne_liquid?.group?.reagents
 	if (reagents && prob(90))
 		reagents.get_reagent("miasma")?.flush(reagents, 2)
-		if (reagents.total_volume > target.decomp_stage * 20)
-			return
+
+		if (reagents.total_volume > max_miasma)
+			max_miasma = 0
+
+	if (!max_miasma)
+		return
 
 	for_by_tcl(IX, /obj/machinery/interdictor)
 		if (IX.expend_interdict(15, src, TRUE, ITDR_DEVERA, TRUE))
