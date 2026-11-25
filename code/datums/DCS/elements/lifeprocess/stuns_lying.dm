@@ -53,12 +53,6 @@
 
 			target.empty_hands()
 
-			// Small chance to heal by a miniscule amount.
-			if (!ON_COOLDOWN(target, "stun_recovery", 6 SECONDS) && prob(10))
-				target.take_oxygen_deprivation(-0.3)
-				target.lose_breath(-0.3)
-				target.HealDamage("All", 0.2, 0.2, 0.2)
-
 		// Not stunned.
 		else
 			target.set_lying(FALSE)

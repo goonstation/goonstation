@@ -114,6 +114,10 @@ All other chickens in this file are non-secret. Please be respectful.
 		HH.limb_name = "beak"					// name for the dummy holder
 		HH.can_hold_items = 0
 
+	restore_life_processes()
+		. = ..()
+		src.AddElement(/datum/element/lifeprocess/ranch/chicken/egg_timer)
+
 	death(var/gibbed, var/do_drop_equipment = 1)
 		..()
 		src.RemoveElement(/datum/element/lifeprocess/ranch/chicken/egg_timer)

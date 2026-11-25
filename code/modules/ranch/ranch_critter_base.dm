@@ -154,7 +154,6 @@
 		src.AddElement(/datum/element/lifeprocess/ranch/age)
 		src.AddElement(/datum/element/lifeprocess/ranch/hunger)
 		src.AddElement(/datum/element/lifeprocess/ranch/evolution)
-		src.AddElement(/datum/element/lifeprocess/ranch/chicken/egg_timer)
 		src.AddElement(/datum/element/lifeprocess/ranch/crowding)
 		src.AddElement(/datum/element/lifeprocess/chemical)
 
