@@ -763,10 +763,12 @@
 	if (!isdead(src) && src.flock)
 		if (!src.flock.isEnemy(M))
 			if (src.flock.isIgnored(M))
-				src.say("[pick_string("flockmind.txt", "flockdrone_betrayal")] [M]")
+				if (!ON_COOLDOWN(src, "flockdrone_betrayal", 1 SECOND))
+					src.say("[pick_string("flockmind.txt", "flockdrone_betrayal")] [M]")
 			else
 				emote("scream")
-				src.say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]")
+				if (!ON_COOLDOWN(src, "flockdrone_enemy", 1 SECOND))
+					src.say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]")
 		src.flock.updateEnemy(M)
 	. = ..()
 
