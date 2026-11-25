@@ -1248,20 +1248,31 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	block_vision = 1
 	c_flags = parent_type::c_flags | COVERSHAIR
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
+	/// custom name of the bucket this was flipped from
+	var/bucket_name = null
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 	attack_self(mob/user as mob)
 		boutput(user, SPAN_NOTICE("You turn the bucket right side up."))
-		var/obj/item/reagent_containers/glass/bucket/B = new bucket_type(src.loc)
-		B.setMaterial(src.material)
-		B.forensic_holder = src.forensic_holder
-		B.color = src.color
-		src.copy_filters_to(B)
+		var/obj/item/reagent_containers/glass/bucket/B = src.make_bucket()
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
 		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 		qdel(src)
 		return
+
+	/// Turns this into a bucket
+	proc/make_bucket()
+		RETURN_TYPE(/obj/item/reagent_containers/glass/bucket)
+		var/obj/item/reagent_containers/glass/bucket/bucket = new bucket_type(src.loc)
+		bucket.setMaterial(src.material)
+		bucket.forensic_holder = src.forensic_holder
+		bucket.color = src.color
+		src.copy_filters_to(bucket)
+		if (src.bucket_name)
+			bucket.name = src.bucket_name
+			bucket.real_name = src.bucket_name
+		return bucket
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
