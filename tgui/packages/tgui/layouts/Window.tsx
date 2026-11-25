@@ -96,9 +96,6 @@ export const Window = (props: Props) => {
         logger.log('set to visible');
       };
 
-      Byond.winset(Byond.windowId, {
-        'can-close': Boolean(canClose),
-      });
       logger.log('mounting');
       updateGeometry();
 
@@ -108,6 +105,14 @@ export const Window = (props: Props) => {
       };
     }
   }, [isReadyToRender, suspended, width, height, scale]);
+
+  useEffect(() => {
+    if (!suspended && isReadyToRender) {
+      Byond.winset(Byond.windowId, {
+        'can-close': Boolean(canClose),
+      });
+    }
+  }, [isReadyToRender, suspended, canClose]);
 
   const fancy = config?.window?.fancy;
   const mode = config?.window?.mode; /* |GOONSTATION-ADD| */

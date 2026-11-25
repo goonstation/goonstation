@@ -61,6 +61,7 @@
 	name = "Revolution (Roleplay)"
 	config_tag = "revolution_extended"
 	regular = FALSE
+	shuttle_available = SHUTTLE_AVAILABLE_DELAY
 	trackertime_min = 60 MINUTES
 	trackertime_max = 75 MINUTES
 
@@ -155,6 +156,9 @@
 	return
 
 /datum/game_mode/revolution/check_finished()
+	. = ..()
+	if(.) // You can't usually call the shuttle, but if it gets to centcom the round should still end
+		return .
 	if(ROLEPLAY_REVOLUTIONARIES) //Allow an admin or the shuttle call to determine the end instead of automatically ending.
 		return 0
 	else if(finished != 0)
