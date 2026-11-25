@@ -90,6 +90,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	/// Small and insectoid enough to be eaten by a frog in one gulp
 	var/edible_insect = FALSE
 
+	var/targets_cyborgs = FALSE // do we want to target cyborgs?
+
 	New(loc)
 		if(isnull(src.is_pet))
 			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
@@ -133,6 +135,11 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	animate_lying(lying)
 		animate_180_rest(src, !lying)
+
+	valid_target(mob/living/C)
+		if (!src.targets_cyborgs && issilicon(C))
+			return FALSE
+		. = ..()
 
 	proc/randomize_name()
 		src.name = pick_string_autokey(name_list)
@@ -2940,10 +2947,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				return 2
 		return ..()
 
-	valid_target(mob/living/C)
-		if (issilicon(C))
-			return FALSE
-		. = ..()
 
 /mob/living/critter/small_animal/wasp/angry // Wasp bow & grenade
 	desc = "A wasp in space. it looks angry"
