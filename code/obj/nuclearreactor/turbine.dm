@@ -4,6 +4,8 @@
 #define TURBINE_STATOR_LOAD_MAX 10e30
 #define TURBINE_FLOW_RATE_MIN 1
 #define TURBINE_OVERSPEED_MULTIPLIER 1.2
+#define TURBINE_AUTOADJUST_THRESHOLD 100 //begins adjusting at ~65% efficiency
+#define TURBINE_AUTOADJUST_RATE 5000 //
 
 // ----------------------------------------------------- //
 // Defintion for the turbine used by the nuclear reactor
@@ -56,6 +58,8 @@
 	var/obj/item/turbine_component/blade/current_blade
 	/// turbine stator object
 	var/obj/item/turbine_component/stator/current_stator
+	/// Whether the inbuilt stator load controller is enabled
+	var/auto_adjust = FALSE
 
 	var/static/sound_stall = 'sound/machines/tractor_running.ogg'
 	var/static/list/grump_sound_list = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
@@ -126,6 +130,7 @@
 		. = ..()
 
 	proc/_set_statorload_mechchomp(var/datum/mechanicsMessage/inp)
+		if(src.auto_adjust) return
 		if(!length(inp.signal)) return
 		var/newload = text2num(inp.signal)
 		if(newload != src.stator_load && isnum_safe(newload) && newload > 0)
@@ -264,6 +269,12 @@
 			src.output.air_contents.merge(air_contents)
 			src.terminal.add_avail(src.lastgen, src.processing_tier)
 
+			if(src.auto_adjust)
+				if(src.RPM < best_RPM - TURBINE_AUTOADJUST_THRESHOLD)
+					src.stator_load -= TURBINE_AUTOADJUST_RATE
+				else if(src.RPM > best_RPM + TURBINE_AUTOADJUST_THRESHOLD)
+					src.stator_load += TURBINE_AUTOADJUST_RATE
+
 		src.input.air_contents?.volume = src.flow_rate
 		src.air_contents?.volume = src.flow_rate
 
@@ -368,6 +379,7 @@
 		data["stator"] = list(
 			"installed" = !isnull(src.current_stator),
 		)
+		data["autoAdjust"] = src.auto_adjust
 		return data
 
 	ui_data(mob/user)
@@ -378,6 +390,7 @@
 
 		switch(action)
 			if("loadChange")
+				if(src.auto_adjust) return
 				var/x = params["newVal"]
 				src.stator_load = min(max(x, TURBINE_STATOR_LOAD_MIN), TURBINE_STATOR_LOAD_MAX)
 				logTheThing(LOG_STATION, src, "[src] stator load configured to [x] by [ui.user]")
@@ -385,6 +398,9 @@
 				var/x = params["newVal"]
 				src.flow_rate = min(max(x, TURBINE_FLOW_RATE_MIN), src.flow_rate_max)
 				logTheThing(LOG_STATION, src, "[src] flow rate configured to [x] by [ui.user]")
+			if("toggleAutoAdjust")
+				src.auto_adjust = !src.auto_adjust
+				logTheThing(LOG_STATION, src, "[src] inbuilt automatic stator control toggled [src.auto_adjust ? "on" : "off"] by [ui.user]")
 
 	ex_act(severity)
 		switch(severity)

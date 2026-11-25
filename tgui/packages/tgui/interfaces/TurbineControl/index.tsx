@@ -21,6 +21,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 
+import { BooleanLike } from '../../../common/react';
 import { useBackend } from '../../backend';
 import { formatPower, formatPressure, formatSiUnit } from '../../format';
 import { Window } from '../../layouts';
@@ -187,14 +188,18 @@ const bladeStatusColor = (blade: TurbineBladeData | null) => {
 
 type LoadAdjustmentControlsProps = {
   load: number;
+  autoAdjust: BooleanLike;
   onCommit: (value: string) => void;
   onAdjust: (factor: number) => void;
+  onToggle: () => void;
 };
 
 const LoadAdjustmentControls = ({
   load,
+  autoAdjust,
   onCommit,
   onAdjust,
+  onToggle,
 }: LoadAdjustmentControlsProps) => (
   <Stack vertical>
     <Stack.Item>
@@ -204,6 +209,16 @@ const LoadAdjustmentControls = ({
         </Stack.Item>
         <Stack.Item>
           <Box>kJ/rev</Box>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            icon="gears"
+            tooltip="Disables manual and MechComp control, slowly adjusts stator load when RPM is outside optimum range"
+            selected={autoAdjust}
+            onClick={onToggle}
+          >
+            Auto: {autoAdjust ? 'On' : 'Off'}
+          </Button>
         </Stack.Item>
       </Stack>
     </Stack.Item>
@@ -348,6 +363,7 @@ export const TurbineControl = () => {
       act('loadChange', { newVal: load * 1000 });
     }
   };
+  const toggleAuto = () => act('toggleAutoAdjust');
   return (
     <Window {...turbineWindowProps}>
       <Window.Content>
@@ -456,8 +472,10 @@ export const TurbineControl = () => {
                     <Stack.Item grow>
                       <LoadAdjustmentControls
                         load={data.load}
+                        autoAdjust={data.autoAdjust}
                         onCommit={commitLoad}
                         onAdjust={adjustLoad}
+                        onToggle={toggleAuto}
                       />
                     </Stack.Item>
                   </Stack>
