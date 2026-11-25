@@ -395,6 +395,23 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/arcade(src))
 			src.read_only = 1
 
+	superjanitor
+		name = "\improper CustodiKING cartridge"
+		desc = "For rising up above the rest, because you know you mop the best. An upgraded version of the CustodiPRO cartridge, with a few extra features."
+		icon_state = "cart-jani"
+		file_amount = 64
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
+			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
+			src.root.add_file( new /datum/computer/file/pda_program/mopfinder(src))
+			src.root.add_file( new /datum/computer/file/pda_program/arcade(src))
+			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src)) //fine them for being messy!!!
+			src.read_only = 1
+
 	atmos
 		name = "\improper AlertMaster cartridge"
 		desc = "For when you've fallen and you can't get up."

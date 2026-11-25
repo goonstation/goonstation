@@ -797,6 +797,32 @@
 	)
 	slots = 5
 
+/obj/item/storage/fanny/nanotrasen
+	name = "nanotrasen tacticool belt pack"
+	desc = "Definitely not a fanny pack, no sir. Look at how cool it is!"
+	icon_state = "nanotrasen"
+	item_state = "nanotrasen"
+
+/obj/item/storage/fanny/nanotrasen/large
+	name = "large nanotrasen tacticool belt pack"
+	desc = "Definitely not a fanny pack, no sir. Look at how cool and roomy it is!"
+	slots = 7
+
+/obj/item/storage/fanny/nanotrasen/janitor
+	name = "nanotrasen janitorial belt pack"
+	desc = "Definitely not a fanny pack, no sir. Look at how cool and janitorial it is!"
+	icon_state = "nanotrasen_jani"
+	item_state = "nanotrasen_jani"
+	spawn_contents = list(
+		/obj/item/cloth/towel/nanotrasen,
+		/obj/item/handheld_vacuum,
+		/obj/item/sponge,
+		/obj/item/storage/box/biohazard_bags,
+		/obj/item/holoemitter
+	)
+	slots = 5
+
+
 /* -------------------- Belts -------------------- */
 
 /obj/item/storage/belt

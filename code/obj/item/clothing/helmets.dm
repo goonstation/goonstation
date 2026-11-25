@@ -586,6 +586,28 @@
 #undef NTSO_ENGIE_MESON
 #undef NTSO_ENGIE_PRESSURE
 
+/obj/item/clothing/head/helmet/space/ntso/janitor
+	icon_state = "ntso_janitor"
+	item_state = "ntso_janitor"
+	name = "NT sanitizer helmet"
+	desc = "A modified combat helmet for Nanotrasen emergency sanitizers. Equipped with an integrated spectroscopic scanner."
+	item_function_flags = IMMUNE_TO_ACID
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if (slot == SLOT_HEAD)
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
+
+	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_HEAD)
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
+		..()
+
+	setupProperties()
+		..()
+		setProperty("viralprot", 50)
+		setProperty("chemprot", 30)
+
 /obj/item/clothing/head/helmet/space/nanotrasen
 	name = "Nanotrasen Heavy Helmet"
 	icon_state = "nthelm2"

@@ -247,6 +247,16 @@
 			/obj/item/chem_grenade/firefighting = 2,
 			/obj/item/chem_grenade/metalfoam = 2)
 
+	janitor
+		slots = 6
+		name = "janitorial supplies pouch"
+		desc = "A roomy pouch meant for janitorial supplies. Smells strongly of lavender, probably to hide all the unpleasant stuff."
+		icon_state = "ammopouch_ntsc_janitor"
+		spawn_contents = list(/obj/item/instrument/whistle/janitor,
+			/obj/item/old_grenade/spawner/cleanbot,
+			/obj/item/chem_grenade/cleaner = 3,
+			/obj/item/spraybottle/cleaner/robot)
+
 
 /obj/item/storage/breach_pouch
 	name = "mining charge pouch"

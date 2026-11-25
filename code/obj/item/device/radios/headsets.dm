@@ -181,6 +181,16 @@
 		"m" = RADIO::FREQ::MEDICAL,
 		)
 
+/obj/item/device/radio/headset/command/nt/janitor
+	name = "\improper NanoTrasen Janitor headset"
+	icon_tooltip = "NanoTrasen Emergency Sanitizer"
+	icon_override = "nt" //unique sprite coming in another PR, for now this is funny
+	secure_frequencies = list(
+		"n" = RADIO::FREQ::NANOTRASEN,
+		"h" = RADIO::FREQ::COMMAND,
+		"c" = RADIO::FREQ::CIVILIAN
+		)
+
 /obj/item/device/radio/headset/command/inspector
 	name = "inspector's headset"
 	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."

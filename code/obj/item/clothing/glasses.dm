@@ -740,13 +740,15 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 		..()
 		setProperty("disorient_resist_eye", 5)
 
-	equipped(mob/user, slot)
-		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
+	equipped(var/mob/user, var/slot)
+		..()
+		if (slot == SLOT_GLASSES)
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
 
-	unequipped(mob/user)
-		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
+	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
+		..()
 
 /obj/item/clothing/glasses/spectro/monocle //used for bartender job reward
 	name = "spectroscopic monocle"

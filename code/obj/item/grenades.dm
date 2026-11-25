@@ -230,6 +230,15 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	payload =/mob/living/critter/small_animal/wasp/angry
 	is_dangerous = TRUE
 
+/obj/item/old_grenade/spawner/cleanbot
+	name = "cleanbot grenade" //credit to Gomp for the sprite!
+	icon_state = "cleanbot"
+	icon_state_armed = "cleanbot1"
+	item_state = "cleanbot"
+	payload = /obj/machinery/bot/cleanbot
+	amount_to_spawn = 1
+	launcher_damage = 15
+
 TYPEINFO(/obj/item/old_grenade/thing_thrower)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/thing_thrower
