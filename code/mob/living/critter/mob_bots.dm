@@ -31,9 +31,9 @@ TYPEINFO(/mob/living/critter/robotic/bot)
 
 	New()
 		. = ..()
-		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/blood)
-		remove_lifeprocess(/datum/lifeprocess/radiation)
+		src.RemoveElement(/datum/element/lifeprocess/blindness)
+		src.RemoveElement(/datum/element/lifeprocess/blood)
+		src.RemoveElement(/datum/element/lifeprocess/radiation)
 		new /obj/item/implant/access/infinite/assistant(src)
 
 	setup_hands()

@@ -178,11 +178,13 @@
 				SPAN_ALERT("<b>You inhale the contents of [src]!</b>"))
 				logTheThing(LOG_CHEMISTRY, H, "inhales from [src] [log_reagents(src)] at [log_loc(H)].")
 				src.reagents.trans_to(H, 40)
-				var/datum/lifeprocess/breath/breathing = H.lifeprocesses?[/datum/lifeprocess/breath]
-				if (breathing && TOTAL_MOLES(src.air) >= BREATH_VOLUME)
+
+				// Extremely cursed. Anti-pattern. Do not repeat.
+				var/datum/element/lifeprocess/breath/breathing = src._GetElement(/datum/element/lifeprocess/breath)
+				if (breathing && (TOTAL_MOLES(src.air) >= BREATH_VOLUME))
 					var/datum/gas_mixture/breath = src.air.remove(BREATH_VOLUME)
 					breath.volume = BREATH_VOLUME
-					if (breathing.handle_breath(breath))
+					if (breathing.handle_breath(src, breath, null, 1))
 						//some extra O2 healing on top of the normal breath so this is even somewhat practical
 						user.take_oxygen_deprivation(-15)
 					src.UpdateIcon()

@@ -45,7 +45,14 @@
 	E.Detach(src)
 
 /datum/proc/HasElement(id)
-	return !!src.datum_elements?["[id]"]
+	return src.datum_elements?["[id]"] ? TRUE : FALSE
+
+/// Do not use this proc. It is an anti-pattern. There is an ongoing effort to remove existing usecases.
+/datum/proc/_GetElement(id)
+	if (!src.HasElement(id))
+		return
+
+	return DCS.GetElement(list(id))
 
 TYPEINFO(/datum/element)
 	var/initialization_args = list()

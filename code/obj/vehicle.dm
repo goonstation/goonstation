@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	density = TRUE
 	var/mob/living/rider = null //! Rider is basically the "driver" of the vehicle
 	var/in_bump = FALSE //! Sanity variable to prevent the vehicle from crashing multiple times due to a single collision
-	var/sealed_cabin = FALSE //! Does the vehicle have air conditioning? (check /datum/lifeprocess/bodytemp in bodytemp.dm for details)
+	var/sealed_cabin = FALSE //! Does the vehicle have air conditioning? (check /datum/element/lifeprocess/bodytemp in bodytemp.dm for details)
 	var/rider_visible =	TRUE //! Can we see the driver from outside of the vehicle? (used for overlays)
 	var/list/ability_buttons = null //! Storage for the ability buttons after initialization
 	var/list/ability_buttons_to_initialize = null //! List of types of ability buttons to be initialized

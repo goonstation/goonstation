@@ -51,7 +51,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 	New()
 		..()
 		AddComponent(/datum/component/hattable, TRUE, FALSE, default_hat_y, 0, 0.75)
-		remove_lifeprocess(/datum/lifeprocess/radiation)
+		src.RemoveElement(/datum/element/lifeprocess/radiation)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		START_TRACKING
 		hud = new(src)

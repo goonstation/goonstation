@@ -38,6 +38,8 @@
 
 	var/wool_grown = 0
 
+	var/wool_counter = 0
+
 	var/wool_type = /obj/item/material_piece/cloth/wool/white
 
 	var/custom_icon = FALSE
@@ -69,7 +71,7 @@
 
 	restore_life_processes()
 		. = ..()
-		add_lifeprocess(/datum/lifeprocess/ranch/sheep/grow_wool)
+		src.AddElement(/datum/element/lifeprocess/ranch/sheep/grow_wool)
 
 	death(var/gibbed, var/do_drop_equipment = 1)
 		. = ..()
@@ -83,7 +85,7 @@
 
 	reduce_lifeprocess_on_death()
 		. = ..()
-		remove_lifeprocess(/datum/lifeprocess/ranch/sheep/grow_wool)
+		src.RemoveElement(/datum/element/lifeprocess/ranch/sheep/grow_wool)
 
 	update_icon()
 
@@ -297,26 +299,6 @@
 				S.baby = child
 
 				child.visible_message(SPAN_NOTICE("Hey! Where did that [child] come from?"))
-
-/datum/lifeprocess/ranch/sheep/grow_wool
-	var/wool_counter = 0
-	process()
-		var/mob/living/critter/small_animal/ranch_base/sheep/S = critter_owner
-		if(istype(S))
-			if(S.stage == RANCH_STAGE_CHILD)
-				return
-			if(S.wool_grown)
-				wool_counter = 0
-				return
-			else
-				wool_counter += get_multiplier()
-				var/chance = max(clamp(S.happiness,0,100) - clamp(((S.hunger-25)*2) + wool_counter,0,100),20)
-				if(wool_counter >= 100)
-					S.grow_wool()
-				else if (wool_counter >= 30 && prob(chance))
-					S.grow_wool()
-				else
-					return
 
 /mob/living/critter/small_animal/ranch_base/sheep/white
 	name = "lamb"

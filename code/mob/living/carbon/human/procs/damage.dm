@@ -671,10 +671,10 @@
 		src.listen_tree.RemoveListenModifier(LISTEN_MODIFIER_BRAIN_DAMAGE)
 		src.change_misstep_chance(-66)
 
-	if (amount > 0 && src.get_brain_damage() >= BRAIN_DAMAGE_MODERATE && !(locate(/datum/lifeprocess/brain) in src.lifeprocesses))
-		src.add_lifeprocess(/datum/lifeprocess/brain)
+	if (amount > 0 && src.get_brain_damage() >= BRAIN_DAMAGE_MODERATE && !src.HasElement(/datum/element/lifeprocess/brain))
+		src.AddElement(/datum/element/lifeprocess/brain)
 	else if (amount < 0 && src.get_brain_damage() < BRAIN_DAMAGE_MODERATE)
-		src.remove_lifeprocess(/datum/lifeprocess/brain)
+		src.RemoveElement(/datum/element/lifeprocess/brain)
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)

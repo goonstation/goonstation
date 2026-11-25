@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	#endif
 	..()
-	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
+	src.RemoveElement(/datum/element/lifeprocess/blood) // caused lag, not sure why exactly
 
 /mob/living/critter/aquatic/restore_life_processes()
 	. = ..()

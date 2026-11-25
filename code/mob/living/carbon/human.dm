@@ -675,7 +675,7 @@
 		SEND_SIGNAL(checked_item, COMSIG_ITEM_ON_OWNER_DEATH, src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
-	add_lifeprocess(/datum/lifeprocess/decomposition)
+	src.AddElement(/datum/element/lifeprocess/decomposition)
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))

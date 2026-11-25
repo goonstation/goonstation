@@ -1540,14 +1540,14 @@ TYPEINFO(/datum/trait/partyanimal)
 
 	onAdd(mob/living/owner)
 		if (istype(owner))
-			owner.remove_lifeprocess(/datum/lifeprocess/faith)
+			owner.RemoveElement(/datum/element/lifeprocess/faith)
 		// If they're a chaplain, reduce their faith gain rate
 		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
 		chap_trait?.faith_mult = 0.2
 
 	onRemove(mob/living/owner)
 		if (istype(owner))
-			owner.add_lifeprocess(/datum/lifeprocess/faith)
+			owner.AddElement(/datum/element/lifeprocess/faith)
 		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
 		chap_trait?.faith_mult = 1
 

@@ -342,6 +342,8 @@
 	#define COMSIG_MOB_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
 // ---- living signals ----
+		/// When `Life()` ticks, irrespective of whether the mob is dead. (mob, mult, datum/gas_mixture/environment)
+		#define COMSIG_LIVING_LIFEPROCESS_TICK "mob_lifeprocess_tick"
 		/// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 

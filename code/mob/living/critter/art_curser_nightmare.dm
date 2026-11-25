@@ -31,11 +31,11 @@
 	New(newLoc, datum/statusEffect/art_curse/nightmare/curse)
 		..()
 		src.tracking_curse = curse
-		remove_lifeprocess(/datum/lifeprocess/mutations)
-		remove_lifeprocess(/datum/lifeprocess/organs)
-		remove_lifeprocess(/datum/lifeprocess/stuns_lying)
-		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/radiation)
+		src.RemoveElement(/datum/element/lifeprocess/mutations)
+		src.RemoveElement(/datum/element/lifeprocess/organs)
+		src.RemoveElement(/datum/element/lifeprocess/stuns_lying)
+		src.RemoveElement(/datum/element/lifeprocess/blindness)
+		src.RemoveElement(/datum/element/lifeprocess/radiation)
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT, src, 100)

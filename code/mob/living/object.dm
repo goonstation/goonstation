@@ -93,10 +93,10 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object", 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
 
-		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/blood)
-		remove_lifeprocess(/datum/lifeprocess/breath)
-		remove_lifeprocess(/datum/lifeprocess/radiation)
+		src.RemoveElement(/datum/element/lifeprocess/blindness)
+		src.RemoveElement(/datum/element/lifeprocess/blood)
+		src.RemoveElement(/datum/element/lifeprocess/breath)
+		src.RemoveElement(/datum/element/lifeprocess/radiation)
 
 	// Relay these procs
 

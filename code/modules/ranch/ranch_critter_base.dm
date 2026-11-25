@@ -134,7 +134,7 @@
 		if(attack_ability_type)
 			attack_ability = abilityHolder.addAbility(attack_ability_type)
 
-			remove_lifeprocess(/datum/lifeprocess/blindness)
+			src.RemoveElement(/datum/element/lifeprocess/blindness)
 
 		if(!gender_preference)
 			var/roll = rand(1,100)
@@ -151,12 +151,11 @@
 
 	restore_life_processes()
 		. = ..()
-		add_lifeprocess(/datum/lifeprocess/ranch/age)
-		add_lifeprocess(/datum/lifeprocess/ranch/hunger)
-		add_lifeprocess(/datum/lifeprocess/ranch/evolution)
-		add_lifeprocess(/datum/lifeprocess/chicken/egg_timer)
-		add_lifeprocess(/datum/lifeprocess/ranch/crowding)
-		add_lifeprocess(/datum/lifeprocess/chems)
+		src.AddElement(/datum/element/lifeprocess/ranch/age)
+		src.AddElement(/datum/element/lifeprocess/ranch/hunger)
+		src.AddElement(/datum/element/lifeprocess/ranch/evolution)
+		src.AddElement(/datum/element/lifeprocess/ranch/crowding)
+		src.AddElement(/datum/element/lifeprocess/chemical)
 
 	disposing()
 		qdel(src.evolved)
@@ -214,8 +213,8 @@
 
 	reduce_lifeprocess_on_death()
 		. = ..()
-		remove_lifeprocess(/datum/lifeprocess/ranch/age)
-		remove_lifeprocess(/datum/lifeprocess/ranch/hunger)
+		src.RemoveElement(/datum/element/lifeprocess/ranch/age)
+		src.RemoveElement(/datum/element/lifeprocess/ranch/hunger)
 
 	was_harmed(mob/M as mob, obj/item/weapon = 0, special = 0, intent = null)
 		if(src.ai)
@@ -434,58 +433,3 @@
 			if(src.stage >= RANCH_STAGE_SENIOR)
 				src.grow_old()
 		. = ..()
-
-/datum/lifeprocess/ranch/age
-	process()
-		var/mob/living/critter/small_animal/ranch_base/C = critter_owner
-		if(istype(C))
-
-			if(C.reagents.has_reagent("ageinium"))
-				C.age += get_multiplier()*2
-
-			else if(C.reagents.has_reagent("deageinium"))
-				if(C.age > 10)
-					C.age -= get_multiplier()
-
-			else if (C.named)
-				C.age += get_multiplier()/20
-			else
-				C.age += get_multiplier()
-
-			if(C.age > 100 && C.stage == RANCH_STAGE_CHILD)
-				C.grow_up()
-				C.after_grow_up()
-			var/old_age = max(300,min(500 + C.happiness*3 + 50*C.ageless,800))
-			if(C.age > old_age && C.stage == RANCH_STAGE_ADULT && !C.immortal)
-				C.grow_old()
-			var/max_age = max(600,min(800 + C.happiness*2,2000+100*C.ageless))
-			if(C.stage == RANCH_STAGE_SENIOR && C.age > max_age && !C.immortal)
-				C.die_of_old_age()
-
-/datum/lifeprocess/ranch/crowding
-	process()
-		var/mob/living/critter/small_animal/ranch_base/C = critter_owner
-		if (!istype(C) || !isalive(C))
-			return
-
-		var/num_neighbors = length(global.ranch_animal_hashmap.exact_supremum(get_turf(C), 5))
-		if (num_neighbors <= C.crowded_minimum)
-			return
-
-		C.change_happiness((C.crowded_minimum - num_neighbors) * C.crowding_coefficient)
-		if (prob(20))
-			C.visible_message(SPAN_ALERT("[C] looks upset at their crowded conditions."))
-
-/datum/lifeprocess/ranch/hunger
-	process()
-		var/mob/living/critter/small_animal/ranch_base/C = critter_owner
-		if(istype(C))
-			var/hunger_increase = max(round(get_multiplier()/2,1),1)
-			if(C.named)
-				C.hunger += hunger_increase/20
-			else
-				C.hunger += hunger_increase
-			if(C.hunger > 150 && !C.immortal)
-				C.die_of_hunger()
-			if(C.hunger > 30)
-				C.change_happiness(-abs((C.happiness)/3))
