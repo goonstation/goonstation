@@ -186,7 +186,7 @@
 	// NT Officials
 	nt
 		icon_state = "pda-nt"
-		setup_default_pen = /obj/item/pen/fancy
+		setup_default_pen = /obj/item/pen/NT
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 		bg_color = "#1b57b1"

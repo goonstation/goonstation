@@ -19,6 +19,11 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_card = /obj/item/card/id/nanotrasen
 	faction = list(FACTION_NANOTRASEN)
 
+	New()
+		..()
+		if (src.alt_names.len)
+			name = pick(src.alt_names)
+
 /datum/job/special/nt/special_operative
 	name = "Nanotrasen Special Operative"
 	trait_list = list("training_security")
@@ -41,7 +46,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 
 	slot_belt = list(/obj/item/swords_sheaths/ntboss)
-	slot_jump = list(/obj/item/clothing/under/misc/NT)
+	slot_jump = list(/obj/item/clothing/under/misc/ntvip)
 	slot_suit = list(/obj/item/clothing/suit/space/nanotrasen/pilot/commander)
 	slot_head = list(/obj/item/clothing/head/NTberet/commander)
 	slot_foot = list(/obj/item/clothing/shoes/swat/heavy)
@@ -124,3 +129,30 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_poc2 = list(/obj/item/device/pda2/nt/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
+
+/datum/job/special/nt/centcomrep
+	name = "CentCom Representative" //can be renamed to something like "Corporate Liaison" for non-admins
+	wages = PAY::EMBEZZLED //BIG money
+	badge = /obj/item/clothing/suit/security_badge/shielded
+
+	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_jump = list(/obj/item/clothing/under/misc/ntvip)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
+	slot_glov = null
+	slot_head = list(/obj/item/clothing/head/NTberet/vip)
+	slot_belt = list(/obj/item/device/pda2/nt)
+	slot_poc1 = list(/obj/item/device/panicbutton/medicalalert/hop)
+	//slot_lhan = list(/obj/item/storage/briefcase/nanotrasen) suggestion 1
+	//slot_lhan = list(/obj/item/cash_briefcase/nanotrasen) suggestion 2
+	items_in_backpack = list(/obj/item/device/flash)
+
+	//guarantees they get the fancy stamp if you give them the NT briefcase
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+
+		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase/nanotrasen)
+		if (B && istype(B))
+			B.storage.add_contents(new /obj/item/stamp/centcom(B))
+		return

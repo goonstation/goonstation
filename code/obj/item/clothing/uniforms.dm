@@ -892,6 +892,12 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 	icon_state = "nt"
 	item_state = "nt"
 
+/obj/item/clothing/under/misc/ntvip
+	name = "nanotrasen VIP jumpsuit"
+	desc = "The highest of higher-ups get even comfier jumpsuits."
+	icon_state = "ntvip"
+	item_state = "ntvip"
+
 /obj/item/clothing/under/misc/chaplain
 	name = "priest's robe"
 	desc = "A catholic robe."

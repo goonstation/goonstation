@@ -102,7 +102,7 @@
 
 /obj/item/stamp/centcom
 	name = "\improper centcom executive rubber stamp"
-	desc = "Some bureaucrat from Centcom probably lost this. Dang, is that National Notary's 'Admiral Sampson' model with the exclusive blackwood handle?"
+	desc = "Dang, is that National Notary's 'Admiral Sampson' model with the exclusive blackwood handle? Only the bureaucrat types get these!"
 	icon_state = "stamp-centcom"
 	default_material = "synthrubber_blue"
 	special_mode = "Centcom"

@@ -838,3 +838,14 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 
 	loaded
 		balance = 15000
+
+/obj/item/cash_briefcase/nanotrasen
+	name = "NanoTrasen Cash Briefcase"
+	desc = "A foldable briefcase emblazoned with the NanoTrasen logo that can hold an ungodly amount of cash."
+	icon_state = "briefcase_nt"
+	item_state = "briefcase_nt"
+
+	maximum_balance = 1000000 //loadsamoney
+	balance = 1000000 //it will get stolen
+	open_icon_state = "briefcase_nt-open"
+	closed_icon_state = "briefcase_nt"

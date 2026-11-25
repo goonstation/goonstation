@@ -598,6 +598,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 4)
 
+/obj/item/clothing/head/NTberet/vip
+	name = "Limited Edition Nanotrasen beret"
+	desc = "For the inner space- Oh damn, this one is signed by John Nanotrasen himself!"
+	icon_state = "ntberet_vip"
+	item_state = "ntberet_vip"
+
 /obj/item/clothing/head/XComHair
 	name = "rookie scalp"
 	desc = "Some unfortunate soldier's charred scalp. The hair is intact."
