@@ -3768,7 +3768,7 @@
 				animate_angry_wibble(hud_element)
 			SPAWN(5 SECONDS)
 				var/mob/vomitee = src.owner
-				vomitee.vomit()
+				vomitee?.vomit()
 		else if (old_desc != src.desc)
 			if (optional > 0)
 				boutput(src.owner, SPAN_ALERT(src.desc))
