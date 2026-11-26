@@ -4,6 +4,7 @@
 	victim.emote("scream");
 
 #define DRUM_BUFFER_SIZE 5
+#define FUMBLE_DAMAGE_MULTIPLIER 2
 
 /// This tool is mainly used by NanoTrasen Emergency Paramedics. It lets you remove shrapnel from someone who’s standing up, at the cost of hurting them. It's kind of a pseudo surgery that really hurts.
 /obj/item/shrapnel_extractor
@@ -89,28 +90,26 @@
 
 /obj/item/shrapnel_extractor/update_icon()
 	. = ..()
-	if(isnull(src.storage) || length(src.storage.get_contents()))
-		src.icon_state = "[src.base_icon]-full"
-	else
+	if(isnull(src.storage) || !length(src.storage.get_contents()))
 		src.icon_state = "[src.base_icon]-empty"
+	else
+		src.icon_state = "[src.base_icon]-full"
 
 
 /obj/item/shrapnel_extractor/proc/attempt_extraction(mob/living/carbon/human/patient as mob, mob/living/surgeon as mob)
-	var/fluff = pick(" messes up", "'s hand slips", " nearly drops [src]", "'s hand twitches", " accidentally vacuums up their nose")
 
 	var/screw_up_prob = calc_screw_up_prob(patient, surgeon, 10)
-
-	var/damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(1,5))
-	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(5,10))
+	var/damage = calc_surgery_damage(surgeon, screw_up_prob, rand(1,5))
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(30))
-		if(src.try_agonize_clown(surgeon, damage_high))
+		if(src.try_agonize_clown(surgeon, damage))
 			return
 
 	playsound(patient, 'sound/effects/suck.ogg', 20, TRUE)
 
 	if(prob(screw_up_prob))
-		do_slipup(surgeon, patient, "chest", damage_low, fluff)
+		do_slipup(surgeon, patient, "chest", damage * FUMBLE_DAMAGE_MULTIPLIER,\
+		 pick(" messes up", "'s hand slips", " nearly drops [src]", "'s hand twitches", " accidentally vacuums up their nose"))
 		return
 
 	for (var/obj/item/implant/projectile/I in patient.implant)
@@ -124,7 +123,7 @@
 
 		src.storage.add_contents(I, surgeon, visible=FALSE)
 
-		CAUSE_EXPECTED_PAIN(patient, damage_low)
+		CAUSE_EXPECTED_PAIN(patient, damage)
 
 		return
 
@@ -158,3 +157,4 @@
 
 #undef CAUSE_EXPECTED_PAIN
 #undef DRUM_BUFFER_SIZE
+#undef FUMBLE_DAMAGE_MULTIPLIER
