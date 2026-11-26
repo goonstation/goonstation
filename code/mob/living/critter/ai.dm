@@ -250,6 +250,7 @@ var/list/ai_move_scheduled = list()
 
 	disposing()
 		holder = null
+		target = null
 		..()
 
 	/// Called when the task is switched to by the holder
@@ -332,6 +333,10 @@ var/list/ai_move_scheduled = list()
 /datum/aiTask/prioritizer
 	var/list/transition_tasks = list()
 
+	disposing()
+		transition_tasks.len = 0
+		..()
+
 	proc/add_transition(transTask)
 		transition_tasks[transTask] = 0
 
@@ -374,6 +379,10 @@ var/list/ai_move_scheduled = list()
 		transition_task = transTask
 		..()
 
+	disposing()
+		transition_task = null
+		..()
+
 	proc/frustration_check()
 		return 0
 
@@ -406,6 +415,11 @@ var/list/ai_move_scheduled = list()
 	New(parentHolder, transTask, action)
 		transition_task = transTask
 		action_path = action
+		..()
+
+	disposing()
+		transition_task = null
+		action_instance = null
 		..()
 
 	proc/set_action_params(list/aparams)
@@ -447,6 +461,12 @@ var/list/ai_move_scheduled = list()
 
 	New(parentHolder, transTask)
 		transition_task = transTask
+		..()
+
+	disposing()
+		subtasks.len = 0
+		current_subtask = null
+		transition_task = null
 		..()
 
 	proc/add_task(var/datum/aiTask/succeedable/T)
