@@ -197,8 +197,10 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			var/image/copyfrom = pick(src.image_list)
 			halluc.appearance = copyfrom.appearance
 			halluc.loc = halluc_loc
-			parent_mob.client?.images += halluc
+			var/client/viewer = parent_mob.client
+			viewer?.images += halluc
 			SPAWN(src.image_time SECONDS)
+				viewer?.images -= halluc
 				qdel(halluc)
 		. = ..()
 
@@ -383,14 +385,15 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	UnregisterFromParent()
 		UnregisterSignal(src.parent, COMSIG_ITEM_PICKUP)
 		UnregisterSignal(src.parent, COMSIG_ITEM_DROPPED)
-		src.viewer_client.images -= src.current_image
+		src.remove_image()
 
 	proc/on_pickup_drop()
 		SPAWN(0)
-			src.make_image()
+			if (src.parent)
+				src.make_image()
 
 	proc/make_image()
-		qdel(src.current_image)
+		src.remove_image()
 		src.current_image = new /image()
 		src.current_image.appearance = copyfrom.appearance
 		src.current_image.loc = src.parent
@@ -398,9 +401,14 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		src.current_image.plane = AM_parent.plane
 		src.current_image.layer = AM_parent.layer
 		src.current_image.override = src.override
-		src.viewer_client.images += src.current_image
+		src.viewer_client?.images += src.current_image
 
-
+	proc/remove_image()
+		if (!src.current_image)
+			return
+		src.viewer_client?.images -= src.current_image
+		qdel(src.current_image)
+		src.current_image = null
 
 //#########################################################
 //                     FAKE SINGULO
