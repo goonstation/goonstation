@@ -13,13 +13,3 @@
 		issuer_ckey
 	)
 		. = ..(args)
-
-	buildAndSend(datum/ticket/T, mob/living/M)
-		src.send(
-			M.mind.get_player().id,
-			T.target,
-			html_decode(T.reason),
-			M.real_name,
-			M.job,
-			M.ckey
-		)

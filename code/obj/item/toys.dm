@@ -244,11 +244,16 @@ TYPEINFO(/obj/item/toy/handheld)
 
 	attack_self(mob/user as mob)
 		. = ..()
-		if (!arcademode)
+		if (!arcademode && user.literate && user.sight_check(TRUE))
 			src.gameholder.new_game(user)
 			return
 
-		arcadeholder.show_ui(user)
+		if(!user.sight_check(TRUE))
+			boutput(user, SPAN_ALERT("You can't see the screen!"))
+		else if(!user.literate)
+			boutput(user, SPAN_ALERT("You're illiterate and can't read the screen!"))
+		else
+			arcadeholder.show_ui(user)
 
 
 /obj/item/toy/handheld/robustris
@@ -350,12 +355,8 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 
 	New()
 		. = ..()
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 		BLOCK_SETUP(BLOCK_BOOK)
-
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	proc/generate_words()
 		var/list/words = list()

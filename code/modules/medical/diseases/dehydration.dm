@@ -7,12 +7,13 @@
 	cure_flags = CURE_CUSTOM
 	cure_desc = "Water ingestion"
 	affected_species = list("Human")
+	can_be_asymptomatic = FALSE
 //
 /datum/ailment/disease/dehydration/stage_act(var/mob/living/carbon/human/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 
-	if (!affected_mob.sims?.getValue("Thirst"))
+	if (isnull(affected_mob.sims) || isnull(affected_mob.sims.getValue("Thirst")))
 		affected_mob.cure_disease(D) // if you don't have thirst you can't get dehydrated
 		return
 
@@ -37,3 +38,4 @@
 				affected_mob.visible_message(SPAN_ALERT(pick("[affected_mob] struggles to breathe!", "[affected_mob] gasps for air!")))
 			if (affected_mob.sims.getValue("Thirst") > 1.0)
 				D.stage = 1
+

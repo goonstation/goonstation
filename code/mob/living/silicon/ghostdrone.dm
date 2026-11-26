@@ -1,4 +1,6 @@
 #define DRONE_LUM 2
+/// Stack size for stackable drone items
+#define GHOSTDRONE_STACK_CAPACITY 1000
 
 TYPEINFO(/mob/living/silicon/ghostdrone)
 	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
@@ -114,6 +116,8 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		//Make all the tools un-drop-able (to closets/tables etc)
 		for (var/obj/item/O in src.tools)
 			O.cant_drop = 1
+			if (O.max_stack > 1)
+				O.max_stack = GHOSTDRONE_STACK_CAPACITY
 
 		if(sees_static)
 			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(src)
@@ -147,11 +151,11 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 
 	clamp_values()
 		..()
-		src.lying = 0
+		src.set_lying(FALSE)
 
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
-		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
+		GHOST.MESSAGE.send("[GHOST.MESSAGE.format_atom(src, plaintext = TRUE)] was destroyed at [GHOST.MESSAGE.format_loc(src)].")
 		setdead(src)
 		if (src.mind)
 			var/mob/dead/observer/ghost = src.ghostize()
@@ -924,7 +928,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		src.show_laws_drone()
 		return
 
-	toggle_monospace()
+	verb/toggle_monospace()
 		set category = "Drone Commands"
 		set name = "Toggle Monospace Speech"
 		set desc = "Switches your speech between normal and forced-monospace mode."
@@ -1229,3 +1233,5 @@ TYPEINFO(/mob/living/silicon/ghostdrone/deluxe)
 				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
+
+#undef GHOSTDRONE_STACK_CAPACITY

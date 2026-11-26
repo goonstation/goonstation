@@ -3272,8 +3272,8 @@
 		name = "Oculine"
 		id = "oculine"
 		result = "oculine"
-		required_reagents = list("atropine" = 1, "saline" = 1, "spaceacillin" = 1)
-		result_amount = 4
+		required_reagents = list("lube" = 1, "saline" = 1, "salicylic_acid" = 1)
+		result_amount = 3
 		mix_phrase = "The mixture settles, becoming a milky white."
 
 	mannitol // COGWERKS CHEM REVISION PROJECT: maybe this could be Mannitol, side effect: makes u pee?
@@ -4978,7 +4978,7 @@
 		name = "Deageinium"
 		id = "deageinium"
 		result = "deageinium"
-		required_reagents = list("sugar" = 1, "epinephrine" = 1, "juice_apple" = 1, "chickensoup" = 1, "milk_powder" = 1)
+		required_reagents = list("sugar" = 1, "epinephrine" = 1, "juice_pear" = 1, "chickensoup" = 1, "milk_powder" = 1)
 		result_amount = 3
 		min_temperature = T0C + 21
 		mix_phrase = "The bubbling mixture gives off a scent of angst, sickeningly sweet soda and life."
@@ -5662,7 +5662,7 @@
 		required_reagents = list("frothedmilk" = 1, "espresso" = 1)
 		result_amount = 2
 		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
-    
+
 	dulcedeleche
 		name = "Dulce de leche"
 		id = "dulcedeleche"
@@ -5672,4 +5672,24 @@
 		result_amount = 1
 		mix_phrase = "The mixture slowly thickens into a velvety spread."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	caramelsauce
+		name = "Caramel Sauce"
+		id = "caramelsauce"
+		result = "caramelsauce"
+		required_reagents = list("sugar" = 1, "water" = 1, "vanilla" = 1, "butter" = 1)
+		min_temperature = T0C + 100
+		result_amount = 2
+		mix_phrase = "The ingredients melts and blend into a smooth, glossy caramel sauce."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	caramelmacchiato
+		name = "Caramel macchiato"
+		id = "caramelmacchiato"
+		result = "caramelmacchiato"
+		required_reagents = list("frothedmilk" = 2, "espresso" = 2, "vanilla" = 1, "caramelsauce" = 1)
+		result_amount = 4
+		mix_phrase = "The espresso blends with the sweet vanilla as a thick layer of velvety milk foam settles on top."
 		drinkrecipe = TRUE

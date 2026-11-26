@@ -105,7 +105,6 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						return FALSE
 
 					else if (timeleft <= 0)
-						src.location = SHUTTLE_LOC_STATION
 						if (ticker?.mode)
 							if (ticker.mode.shuttle_available == SHUTTLE_AVAILABLE_DISABLED)
 								command_alert("CentCom has received reports of unusual activity on the station. The shuttle has been returned to base as a precaution, and will not be usable.");
@@ -118,10 +117,10 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 								command_alert("CentCom reports that the emergency shuttle has veered off course due to unknown interference. The next shuttle will be equipped with electronic countermeasures to break through.");
 								src.online = FALSE
 								src.direction = SHUTTLE_DIRECTION_TO_STATION
-								src.location = SHUTTLE_LOC_CENTCOM
 								src.endtime = null
 								return FALSE
 
+						src.location = SHUTTLE_LOC_STATION
 						processScheduler.disableProcess("Fluid_Turfs")
 
 						var/area/start_location = locate(map_settings ? map_settings.escape_centcom : /area/shuttle/escape/centcom)
@@ -303,7 +302,11 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 
 						DEBUG_MESSAGE("Now moving shuttle!")
-						start_location.move_contents_to(end_location, map_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
+						var/filler_turf = text2path(start_location.filler_turf)
+						if (!filler_turf)
+							filler_turf = map_turf
+
+						start_location.move_contents_to(end_location, filler_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
 
 						if(station_repair.station_generator)
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)

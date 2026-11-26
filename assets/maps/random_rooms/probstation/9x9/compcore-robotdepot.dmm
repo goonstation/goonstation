@@ -332,14 +332,12 @@
 "J" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/guardbot_guide,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
 /obj/item/paper/book/from_file/dwainedummies{
 	pixel_x = -7;
 	pixel_y = 9
 	},
 /obj/item/clothing/suit/robuddy,
+/obj/machinery/camera/directional/south,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "K" = (

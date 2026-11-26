@@ -96,6 +96,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 //                    TRIPPY COLORS
 //#########################################################
 
+#define TRIPPY_SHIFT_DURATION (5 SECONDS)
 
 /// Trippy colors - apply an RGB swap to client's vision
 /datum/component/hallucination/trippy_colors
@@ -105,20 +106,22 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 	do_mob_tick(mob, mult)
 		if(parent_mob.client && (current_color_pattern == 0 || probmult(20))) //trippy colours
-			if(src.current_color_pattern == 1)
-				parent_mob.client.animate_color(pattern2, time=40, easing=SINE_EASING)
-				src.current_color_pattern = 2
-			else
-				parent_mob.client.animate_color(pattern1, time=40, easing=SINE_EASING)
-				src.current_color_pattern = 1
+			if (!ON_COOLDOWN(parent_mob, "trippy_color_shift", (TRIPPY_SHIFT_DURATION + (2 SECONDS))))
+				if(src.current_color_pattern == 1)
+					parent_mob.client.animate_color(pattern2, time=TRIPPY_SHIFT_DURATION, easing=SINE_EASING)
+					src.current_color_pattern = 2
+				else
+					parent_mob.client.animate_color(pattern1, time=TRIPPY_SHIFT_DURATION, easing=SINE_EASING)
+					src.current_color_pattern = 1
 		..()
 
 	UnregisterFromParent()
 		. = ..()
 		UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
 		if(parent_mob?.client)
-			animate(parent_mob.client, color = null, time = 2 SECONDS, easing = SINE_EASING)
+			animate(parent_mob.client, color = null, time = TRIPPY_SHIFT_DURATION, easing = SINE_EASING)
 
+#undef TRIPPY_SHIFT_DURATION
 
 //#########################################################
 //                    RANDOM SOUNDS
@@ -194,8 +197,10 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			var/image/copyfrom = pick(src.image_list)
 			halluc.appearance = copyfrom.appearance
 			halluc.loc = halluc_loc
-			parent_mob.client?.images += halluc
+			var/client/viewer = parent_mob.client
+			viewer?.images += halluc
 			SPAWN(src.image_time SECONDS)
+				viewer?.images -= halluc
 				qdel(halluc)
 		. = ..()
 
@@ -380,14 +385,15 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	UnregisterFromParent()
 		UnregisterSignal(src.parent, COMSIG_ITEM_PICKUP)
 		UnregisterSignal(src.parent, COMSIG_ITEM_DROPPED)
-		src.viewer_client.images -= src.current_image
+		src.remove_image()
 
 	proc/on_pickup_drop()
 		SPAWN(0)
-			src.make_image()
+			if (src.parent)
+				src.make_image()
 
 	proc/make_image()
-		qdel(src.current_image)
+		src.remove_image()
 		src.current_image = new /image()
 		src.current_image.appearance = copyfrom.appearance
 		src.current_image.loc = src.parent
@@ -395,9 +401,14 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		src.current_image.plane = AM_parent.plane
 		src.current_image.layer = AM_parent.layer
 		src.current_image.override = src.override
-		src.viewer_client.images += src.current_image
+		src.viewer_client?.images += src.current_image
 
-
+	proc/remove_image()
+		if (!src.current_image)
+			return
+		src.viewer_client?.images -= src.current_image
+		qdel(src.current_image)
+		src.current_image = null
 
 //#########################################################
 //                     FAKE SINGULO

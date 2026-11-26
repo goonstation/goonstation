@@ -408,7 +408,7 @@
 /area/noGenerate)
 "gb" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "gh" = (
 /obj/machinery/computer/television{
@@ -958,7 +958,7 @@
 	dir = 4;
 	name = "rusty airlock"
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "ot" = (
 /obj/random_item_spawner/junk/one_or_zero,
@@ -3545,7 +3545,7 @@
 /area/mining/magnet_control)
 "Fr" = (
 /obj/table/auto,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "Ft" = (
 /obj/lattice{
@@ -4148,7 +4148,7 @@
 /obj/item/photo/beepsky1{
 	desc = "You can see a securitron on the photo.  Looks kinda familiar. It appears to be holding a \"#1 Son\" mug.  Is...is that a young Officer Beepsky?"
 	},
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "Jp" = (
 /obj/lattice{
@@ -6365,7 +6365,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "YB" = (
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "YC" = (
 /obj/rail{
@@ -6450,7 +6450,7 @@
 /area/mining/manufacturing)
 "Zb" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/evilreaver/bar)
 "Zc" = (
 /obj/decal/cleanable/dirt,

@@ -10,8 +10,18 @@ import { Box } from 'tgui-core/components';
 
 interface LedProps {
   flashing: BooleanLike;
+  litColor: string;
+  unlitColor: string;
 }
 
 export const Led = (props: LedProps) => {
-  return <Box className={classes(['led-red', props.flashing && 'flashing'])} />;
+  return (
+    <Box
+      className={classes(['led', props.flashing && 'flashing'])}
+      style={{
+        '--unlit-color': props.unlitColor,
+        '--lit-color': props.litColor,
+      }}
+    />
+  );
 };

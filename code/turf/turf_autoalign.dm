@@ -187,7 +187,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			else
 				return
 
-		src.material_trigger_when_attacked(W, user, 1)
+		src.material_trigger_when_hit(W, user, MATERIAL::IMPACT::MELEE)
 		src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
 
 /turf/simulated/wall/auto/reinforced/the_tuff_stuff
@@ -1199,6 +1199,19 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	light_mod = "wall-"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
+TYPEINFO(/turf/unsimulated/wall/auto/web)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/web)
+    . = ..()
+    connect_diagonal = 1
+    connects_to = typecacheof(list(/obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/))
+/turf/unsimulated/wall/auto/web
+    name = "webbing wall"
+    desc = "A wall of tightly wound spider silk."
+    icon = 'icons/turf/walls/Spidersilkwall.dmi'
+    mod = "Spidersilk-"
+    light_mod = "wall-"
+    icon_state = "Spidersilk-0"
+
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	connect_diagonal = TRUE
 	connect_overlay = FALSE
@@ -1209,6 +1222,19 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	icon_state = "R-0"
 	mod = "R-"
 	opacity = FALSE
+
+TYPEINFO(/turf/unsimulated/wall/auto/adventure/concrete)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/concrete)
+	. = ..()
+	connect_overlay = 0
+	connect_diagonal = 0
+
+/turf/unsimulated/wall/auto/adventure/concrete
+	name = "concrete wall"
+	desc = "A solid wall of concrete. It's extremely sturdy"
+	icon = 'icons/misc/terra8.dmi'
+	mod = "concrete"
+	icon_state = "concrete0"
 
 /datum/action/bar/icon/wall_tool_interact
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION

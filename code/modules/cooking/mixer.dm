@@ -64,6 +64,7 @@ TYPEINFO(/obj/machinery/mixer)
 			mixer_recipes += new /datum/recipe/mintjam()
 			mixer_recipes += new /datum/recipe/spacejam()
 			mixer_recipes += new /datum/recipe/paperjam()
+			mixer_recipes += new /datum/recipe/caramelsauce()
 
 		src.recipes = mixer_recipes
 		src.blender_off = image(src.icon, "blender_off")

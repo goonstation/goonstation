@@ -393,8 +393,9 @@
 		if (amt_add == W.amount)
 			amt_stacked += I.stack_item(W)
 		else
-			var/obj/item/W_to_stack = W.split_stack(amt_add, src.linked_item)
-			amt_stacked += I.stack_item(W_to_stack)
+			if (amt_add) // TODO: adding 0 to stack size breaks things??
+				var/obj/item/W_to_stack = W.split_stack(amt_add, src.linked_item)
+				amt_stacked += I.stack_item(W_to_stack)
 		if (amt_stacked >= item_starting_amount)
 			return I
 

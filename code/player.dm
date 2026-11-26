@@ -367,6 +367,11 @@ var/global/list/players = list()
 	proc/fetch_medal_cache()
 		src.cached_medals = list()
 
+#ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
+		for(var/reward_type in global.rewardDB)
+			var/datum/achievementReward/reward = global.rewardDB[reward_type]
+			src.cached_medals |= reward.required_medal
+#else
 		var/datum/apiRoute/players/medals/get/getMedals = new
 		var/list/filters = list()
 		if (src.id)
@@ -393,6 +398,7 @@ var/global/list/players = list()
 		var/medals_resource_data = medal_resource_list["data"]
 		for(var/medal_data in medals_resource_data)
 			src.cached_medals |= medal_data["medal"]["title"]
+#endif
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)

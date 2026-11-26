@@ -151,3 +151,62 @@
 				/obj/item/device/light/glowstick/purple)
 				src.storage.add_contents(new glowstick(src))
 
+/obj/item/storage/box/elecrepair
+	name = "electrical repair kit"
+	icon_state = "electrical_nt"
+	desc = "A specially designed box that can hold power cells, cabling and other tools that aid in electrical repairs."
+	can_hold = list(/obj/item/cell)
+	spawn_contents = list(/obj/item/cable_coil/blue = 3,
+	/obj/item/cell/cerenkite = 2,
+	/obj/item/device/t_scanner,
+	/obj/item/pinpointer/category/apcs)
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
+
+/obj/item/storage/box/command_tech
+	name = "Electronics Backup Kit"
+	desc = "A kit of backup electronics to restore critical station inferstructure."
+	can_hold = list(/obj/item/circuitboard, /obj/item/disk/data/floppy)
+	icon_state = "circuit_kit" // sprite by jorj
+
+/obj/item/storage/box/command_tech/captain
+	spawn_contents = list(
+		/obj/item/circuitboard/announcement/bridge, //This one makes the arrivals announcement and this is the ONLY spare for it
+		/obj/item/circuitboard/announcement/captain,
+	)
+
+/obj/item/storage/box/command_tech/hos
+	spawn_contents = list(
+		/obj/item/circuitboard/card/security,
+		/obj/item/circuitboard/announcement/security,
+	)
+
+/obj/item/storage/box/command_tech/hop
+	spawn_contents = list(
+		/obj/item/circuitboard/card,
+		/obj/item/disk/data/floppy/read_only/bank_progs,
+	)
+
+/obj/item/storage/box/command_tech/rd
+	spawn_contents = list(
+		/obj/item/circuitboard/card/research,
+		/obj/item/circuitboard/announcement/research,
+		/obj/item/disk/data/floppy/manudrive/aiLaws,
+		/obj/item/disk/data/floppy/manudrive/telesci_rack,
+	)
+
+/obj/item/storage/box/command_tech/md
+	spawn_contents = list(
+		/obj/item/circuitboard/card/medical,
+		/obj/item/circuitboard/announcement/medical,
+		/obj/item/disk/data/floppy/manudrive/ai,
+		/obj/item/disk/data/floppy/manudrive/gene_booth,
+	)
+
+/obj/item/storage/box/command_tech/ce
+	spawn_contents = list(
+		/obj/item/circuitboard/card/engineering,
+		/obj/item/circuitboard/announcement/engineering,
+		/obj/item/circuitboard/announcement/cargo,
+		/obj/item/disk/data/floppy/manudrive/law_rack,
+		/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse,
+	)

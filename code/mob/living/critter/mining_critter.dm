@@ -468,12 +468,16 @@
 				src.seek_ore = TRUE
 				src.visible_message(SPAN_NOTICE("[user] shakes [src] to awaken its hunger!"))
 
-	seek_food_target(var/range = 5)
+	seek_food_target(range = 5)
 		. = list()
+		var/list/turf/seen_turfs = list() // only find one per tile since we can have huge piles
 		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
 			var/datum/component/tameable/TC = GetExactComponent(/datum/component/tameable)
+			if (seen_turfs[ore.loc]) continue
 			if (istypes(ore, TC.food_blacklist)) continue
 			if (!(istype(ore, TC.taming_foods)) && prob(30)) continue // can eat not rocks with lower chance
+			// found a delicious snack!
+			seen_turfs[ore.loc] = TRUE
 			. += ore
 
 	setup_healths()

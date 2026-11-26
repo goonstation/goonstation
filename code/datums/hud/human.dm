@@ -40,16 +40,18 @@
 		stats
 		legend
 		sel
+	var/atom/movable/screen/hud/stamina_bar/stamina_bar
 	var/list/atom/movable/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
 	var/icon/icon_hud = 'icons/mob/hud_human_new.dmi'
 
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
-
 	var/mob/living/carbon/human/master
 
 	var/layout_style = "goon"
+
+	var/hand_type_l = null
+	var/hand_type_r = null
 
 	var/mutable_appearance/default_sel_appearance
 
@@ -132,39 +134,7 @@
 
 
 	proc/update_status_effects()
-		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
-			remove_screen(statusUiElements[S])
-			if(!master || !master.statusEffects || !(S in master.statusEffects))
-				qdel(statusUiElements[S])
-				src.statusUiElements.Remove(S)
-				qdel(S)
-
-		var/spacing = 0.6
-		var/pos_x = spacing - 0.2
-
-		if(master?.statusEffects)
-			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
-				if(!S.visible) continue
-				if((S in statusUiElements) && statusUiElements[S])
-					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
-					U.icon = icon_hud
-					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
-					U.update_value()
-					add_screen(U)
-					pos_x -= spacing
-				else
-					if(S.visible)
-						var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
-						U.init(master,S)
-						U.icon = icon_hud
-						statusUiElements.Add(S)
-						statusUiElements[S] = U
-						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
-						U.update_value()
-						add_screen(U)
-						pos_x -= spacing
-						animate_buff_in(U)
-		return
+		src.sync_status_effects(src.master, src.icon_hud, "NORTH-0.7", 0.4)
 
 	clear_master()
 		master = null
@@ -253,9 +223,9 @@
 
 		stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltip_options = list("theme" = "stamina"))
 		stamina.mouse_opacity = 2
+		src.stamina_bar = create_screen("stamina_bar","Stamina", src.icon_hud, "stamina_bar", "EAST-1, NORTH", HUD_LAYER-1, customType = /atom/movable/screen/hud/stamina_bar)
 		stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", "EAST-1, NORTH", HUD_LAYER-2)
-		if (master?.stamina_bar)
-			stamina.desc = master.stamina_bar.getDesc(master)
+		stamina.desc = src.stamina_bar.getDesc(M)
 
 		bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST-2, NORTH", HUD_LAYER, tooltip_options = list("theme" = "tempInd0"))
 		bodytemp.desc = "The temperature feels fine."
@@ -742,15 +712,21 @@
 	proc/update_hands()
 		if(QDELETED(master))
 			return
+		src.lhand.ClearSpecificOverlays("hand_stun_overlay")
 		if (master.limbs && !master.limbs.l_arm)
 			lhand.icon_state = "handl[master.hand]d"
 		else
-			lhand.icon_state = "handl[master.hand]"
+			lhand.icon_state = "handl[master.hand][hand_type_l]"
+			if(src.master.limbs && src.master.limbs.l_arm)
+				SEND_SIGNAL(src.master, COMSIG_HUMAN_ARM_IS_HUD_UPDATED, src.lhand, "l_arm")
 
+		src.rhand.ClearSpecificOverlays("hand_stun_overlay")
 		if (master.limbs && !master.limbs.r_arm)
 			rhand.icon_state = "handr[!master.hand]d"
 		else
-			rhand.icon_state = "handr[!master.hand]"
+			rhand.icon_state = "handr[!master.hand][hand_type_r]"
+			if(src.master.limbs && src.master.limbs.r_arm)
+				SEND_SIGNAL(src.master, COMSIG_HUMAN_ARM_IS_HUD_UPDATED, src.rhand, "r_arm")
 
 	proc/update_stats()
 		var/newDesc = ""
@@ -1183,8 +1159,7 @@
 			for (var/atom/movable/screen/hud/H in inventory_bg)
 				H.icon = new_file
 
-			if (master.stamina_bar)
-				master.stamina_bar.icon = new_file
+			src.stamina_bar?.icon = new_file
 
 	proc/set_sprint(var/on)
 		if(stamina)

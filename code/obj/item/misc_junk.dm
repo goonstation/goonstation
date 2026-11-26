@@ -36,12 +36,8 @@
 	New()
 		..()
 		processing_items.Add(src)
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		src.AddElement(/datum/element/ghost_observable)
 		BLOCK_SETUP(BLOCK_TANK)
-
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
@@ -140,16 +136,22 @@
 	burn_possible = FALSE
 	item_function_flags = IMMUNE_TO_ACID
 
-	disposing()
-		disposed = FALSE
-		..()
-		CRASH("Something tried to delete the can_reach dummy!")
+/obj/item/dummy/disposing()
+	disposed = FALSE
+	..()
+	CRASH("Something tried to delete the can_reach dummy!")
 
-	ex_act()
-		return
+/obj/item/dummy/ex_act()
+	return
 
-	changeHealth(change)
-		return
+/obj/item/dummy/blob_act(power)
+	return
+
+/obj/item/dummy/changeHealth(change)
+	return
+
+/obj/item/dummy/update_traction(turf/T)
+	return
 
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"

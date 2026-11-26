@@ -69,7 +69,7 @@
 				block_vision = 1
 			alpha = 255
 
-		setProperty("disorient_resist_eye", src.getProperty("density") * 0.6)
+		setProperty("disorient_resist_eye", src.getProperty(MATERIAL::PROPERTY::DENSITY) * 0.6)
 
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"
@@ -240,6 +240,10 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 				src.already_worn = 1
 				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, FALSE)
 				user.visible_message(SPAN_ALERT("<B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B>"))
+			else if(H.mind.special_role == ROLE_VAMPIRE && !src.already_worn)
+				src.already_worn = 1
+				playsound(user, 'sound/voice/guy_in_shades.ogg', 100, FALSE)
+				user.visible_message(SPAN_ALERT("<B><font size=3>I wear my sunglasses in space...</font></B>"))
 	..()
 	return
 
@@ -281,9 +285,11 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 			return
 		src.image_group = "fake_arrest_icons_\ref[src]"
 		for (var/i in 1 to rand(3,7))
-			var/datum/db_record/record = pick(data_core.security.records)
+			var/datum/db_record/personnel/general/record = global.data_core.get_random_general_record()
+			var/record_name = record?["name"]
+
 			for_by_tcl(H, /mob/living/carbon/human)
-				if (H.real_name == record["name"] || H.name == record["name"])
+				if (H.real_name == record_name || H.name == record_name)
 					var/icon_state = pick(100; "*Arrest*", 20; "Contraband", 5; "Clown")
 					var/image/fake_arrest_icon = image('icons/effects/sechud.dmi',H,icon_state,EFFECTS_LAYER_UNDER_4)
 					fake_arrest_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART

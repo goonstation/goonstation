@@ -193,8 +193,6 @@ ABSTRACT_TYPE(/datum/recipe/burger)
 	/obj/item/reagent_containers/food/snacks/meatball = 1)
 	output = /obj/item/reagent_containers/food/snacks/donkpocket/warm
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/donkpocket)
-	variants = list(\
-	/obj/item/instrument/bikehorn = /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm)
 
 /datum/recipe/donkpocket2
 	ingredients = list(/obj/item/reagent_containers/food/snacks/donkpocket = 1)
@@ -202,6 +200,13 @@ ABSTRACT_TYPE(/datum/recipe/burger)
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/donkpocket)
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/donkpocket/honk = /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm)
+
+/datum/recipe/donkpocket/honk
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/meatball = 1,
+	/obj/item/instrument/bikehorn = 1)
+	output = /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm
 
 /datum/recipe/donut
 	ingredients = list(\
@@ -2195,3 +2200,10 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	/obj/item/paper = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
 	output = /obj/item/reagent_containers/food/snacks/condiment/jam/paperjam
+
+/datum/recipe/caramelsauce
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/caramelsauce

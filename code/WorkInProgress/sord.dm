@@ -217,7 +217,7 @@ TYPEINFO(/obj/item/swords/sord)
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "Greyhold Mercenary Operative"
-			C.name = "[C.registered]’s ID Card ([C.assignment])"
+			C.update_name()
 
 		update_clothing()
 
@@ -557,7 +557,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		message_ghosts("A <b>weblaying spider egg</b> has been placed at [log_loc(T, ghostjump = TRUE)].")
+		GHOST.MESSAGE.send("A <b>weblaying spider egg</b> has been placed at [GHOST.MESSAGE.format_loc(T)].")
 		message_admins("Sending weblaying spider offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || length(candidates) <= 0)
@@ -578,7 +578,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			usr.playsound_local(usr.loc, 'sound/misc/splash_1.ogg', 50)
 			var/mob/living/critter/spider/weblaying/baby/B = lucky_dude.current
 			B.make_critter(/mob/living/critter/spider/weblaying/baby, spawnturf)
-			message_ghosts("A <b>baby weblaying spider</b> has been born at [log_loc(B, ghostjump = TRUE)].")
+			GHOST.MESSAGE.send("A <b>baby weblaying spider</b> has been born at [GHOST.MESSAGE.format_loc(B)].")
 			boutput(W, SPAN_NOTICE("The egg you planted at [spawnturf] has hatched into a new spider!"))
 
 ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)

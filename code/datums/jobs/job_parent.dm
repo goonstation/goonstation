@@ -134,6 +134,8 @@ ABSTRACT_TYPE(/datum/job)
 		. = ..()
 		if (variable == "limit")
 			src.admin_set_limit = TRUE
+		else if (variable == "name" || variable == "alias_names")
+			global.job_controls?.rebuild_job_index()
 
 	proc/special_setup(var/mob/M, no_special_spawn)
 		SHOULD_NOT_SLEEP(TRUE)
@@ -203,17 +205,6 @@ ABSTRACT_TYPE(/datum/job)
 	/// The default miranda's rights for this job
 	proc/get_default_miranda()
 		return DEFAULT_MIRANDA
-
-	///Check if a string matches this job's name or alias with varying case sensitivity
-	proc/match_to_string(string, case_sensitive)
-		if (case_sensitive)
-			return src.name == string || (string in src.alias_names)
-		else
-			if(cmptext(src.name, string))
-				return TRUE
-			for (var/alias in src.alias_names)
-				if (cmptext(src.name, string))
-					return TRUE
 
 	proc/has_rounds_needed(datum/player/player, var/min = 0, var/max = 0)
 		if (src.rounds_needed_to_play)

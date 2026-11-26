@@ -828,7 +828,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "blob")))
+			switch (user.smash_through(target, list(/obj/window, /obj/mesh/grille, /obj/blob)))
 				if (FALSE)
 					if (isitem(target))
 						boutput(user, SPAN_ALERT("You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice."))
@@ -1087,7 +1087,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "door", "blob")))
+			switch (user.smash_through(target, list(/obj/window, /obj/mesh/grille, /obj/machinery/door, /obj/blob)))
 				if (0)
 					if (istype(target, /obj/item/reagent_containers))
 						if (prob(50 * quality))
@@ -1163,7 +1163,7 @@
 	log_name = "severed werewolf limb"
 	quality = 1
 
-/// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
+/// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears. Go there to make use of this.
 /datum/limb/hot //because
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -1177,17 +1177,13 @@
 			return
 
 		if (isitem(target))
-			var/obj/item/I = target
-			if(I.anchored)
-				return 0
-			var/obj/decal/cleanable/molten_item/I2 = make_cleanable(/obj/decal/cleanable/molten_item,I.loc)
-			user.visible_message(SPAN_ALERT("The [I] melts in [user]'s clutch"), SPAN_ALERT("The [I] melts in your clutch!"))
-			qdel(target)
-			I2.desc = "Looks like this was \an [I], melted by someone who was too much."
-			for(var/mob/M in AIviewers(5, target))
-				boutput(M, SPAN_ALERT("\The [I] melts."))
-			qdel(I)
-			return
+			if(prob(15) && user.bodytemperature >= T0C + 37)
+				user.get_burn_damage(20)
+				user.changeBodyTemp(-15 KELVIN, T0C + 30)
+				var/turf/TT = target.loc
+				TT.hotspot_expose(T0C + 5000, 125)
+				user.visible_message(SPAN_ALERT("[user] messes up with thier [src] and superheats the [target] "), SPAN_ALERT("You mess up and superheat [target]!"))
+				playsound(user, 'sound/impact_sounds/burn_sizzle.ogg', 100, 1)
 
 		..()
 		return
@@ -1196,6 +1192,13 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (prob(15))
+			user.get_burn_damage(20)
+			user.changeBodyTemp(30 KELVIN)
+			var/turf/TT = target.loc
+			TT.hotspot_expose(T0C + 5000, 125)
+			if(isliving(target))
+				var/mob/living/T = target
+				T.set_burning(5 SECONDS)
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 			user.visible_message(SPAN_COMBAT("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
@@ -1223,8 +1226,6 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		if (no_logs != 1)
-			logTheThing(LOG_COMBAT, user, "melts [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 3, 1, 0, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
@@ -1234,7 +1235,7 @@
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = get_weakref(target)
-
+		..()
 
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
@@ -1305,7 +1306,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "door", "blob")))
+			switch (user.smash_through(target, list(/obj/window, /obj/mesh/grille, /obj/machinery/door, /obj/blob)))
 				if (0)
 					target.Attackhand(user, params, location, control)
 					return
@@ -1573,7 +1574,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("door")))
+			switch (user.smash_through(target, list(/obj/machinery/door)))
 				if (0)
 					target.Attackhand(user, params, location, control)
 					return
@@ -1614,7 +1615,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("grille","blob")))
+			switch (user.smash_through(target, list(/obj/mesh/grille, /obj/blob)))
 				if (0)
 					if (isitem(target))
 						if (prob(60))
@@ -1732,7 +1733,7 @@
 
 		if (isobj(target))
 			user.lastattacked = get_weakref(target)
-			user.smash_through(target, list("grille"))
+			user.smash_through(target, list(/obj/mesh/grille))
 			var/obj/O = target
 			if (isitem(O) && !O.anchored)
 				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, pitch = 1.7)
@@ -2025,6 +2026,11 @@
 
 /datum/limb/gorilla // gorilla arms. they are not removable from gorillas (for now)
 	can_beat_up_robots = TRUE //it's a gorilla
+	var/list/smashable_stuff
+
+	New(obj/item/parts/holder)
+		. = ..()
+		src.smashable_stuff = list(/obj/window, /obj/table, /obj/mesh/grille, /obj/blob)
 
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -2035,8 +2041,9 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "table", "grille", "blob")))
+			switch (user.smash_through(target, src.smashable_stuff))
 				if (TRUE)
+					attack_twitch(src)
 					user.lastattacked = get_weakref(target)
 					return
 				if (FALSE)
@@ -2140,3 +2147,26 @@
 
 		user.lastattacked = get_weakref(target)
 		return
+
+/datum/limb/gorilla/gorillier
+	New(obj/item/parts/holder)
+		. = ..()
+		src.smashable_stuff = list(
+			/obj/blob,
+			/obj/machinery/computer,
+			/obj/machinery/computer3,
+			/obj/machinery/vending,
+			/obj/machinery/door,
+			/obj/machinery/manufacturer,
+			/obj/computerframe,
+			/obj/computer3frame,
+			/obj/storage/secure/closet,
+			/obj/storage/closet,
+			/obj/table,
+			/obj/machinery/disposal,
+			/obj/window,
+			/obj/structure/girder,
+			/obj/structure/woodwall,
+			/obj/mesh/grille,
+			/obj/rack,
+		)

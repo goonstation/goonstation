@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/electrical_conductivity
 	name = "Electrical conductivity"
-	id = "electrical"
+	id = MATERIAL::PROPERTY::ELECTRIC_COND
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/thermal_conductivity
 	name = "Thermal conductivity"
-	id = "thermal"
+	id = MATERIAL::PROPERTY::THERMAL_COND
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/hardness
 	name = "Hardness"
-	id = "hard"
+	id = MATERIAL::PROPERTY::HARDNESS
 
 	default_value = 3
 	prefix_low_max = 2
@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/density
 	name = "Density"
-	id = "density"
+	id = MATERIAL::PROPERTY::DENSITY
 
 	default_value = 3
 	prefix_low_max = 2
@@ -120,7 +120,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/reflectivity
 	name = "Reflectivity"
-	id = "reflective"
+	id = MATERIAL::PROPERTY::REFLECT
 
 
 	default_value = 0
@@ -151,7 +151,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/flammability
 	name = "Flammability"
-	id = "flammable"
+	id = MATERIAL::PROPERTY::FLAMMABLE
 	default_value = 1
 
 	getAdjective(var/datum/material/M)
@@ -169,7 +169,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/chemical
 	name = "Chemical resistance"
-	id = "chemical"
+	id = MATERIAL::PROPERTY::CHEM_RESIST
 	default_value = 3
 
 	prefix_high_min = 5
@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/radioactivity
 	name = "Radioactivity"
-	id = "radioactive"
+	id = MATERIAL::PROPERTY::RADS
 
 	prefix_high_min = 1
 	prefix_low_max = 9
@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/neutron_radioactivity
 	name = "Neutron Radioactivity"
-	id = "n_radioactive"
+	id = MATERIAL::PROPERTY::RADS_NEUTRON
 
 	prefix_high_min = 1
 	prefix_low_max = 9
@@ -263,7 +263,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/melting_point
 	name = "Melting Point"
-	id = "melting_point"
+	id = MATERIAL::PROPERTY::MELTING_POINT
 
 	min_value = 1 KELVIN
 	max_value = INFINITY
@@ -301,7 +301,7 @@ ABSTRACT_TYPE(/datum/material_property)
 /// Literally just indicating that it can be refined into good nuclear fuel in the centrifuge
 /datum/material_property/spent_fuel
 	name = "Fissile Isotopes"
-	id = "spent_fuel"
+	id = MATERIAL::PROPERTY::PLUTONIUM
 
 	min_value = 0
 	prefix_high_min = 0.1
@@ -325,7 +325,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/molitz_bubbles
 	name = "Gas Pockets"
-	id = "molitz_bubbles"
+	id = MATERIAL::PROPERTY::GAS_MOLITZ
 
 	min_value = 0
 	prefix_high_min = 0.1
@@ -343,7 +343,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/plasma_offgas
 	name = "Active Plasma"
-	id = "plasma_offgas"
+	id = MATERIAL::PROPERTY::GAS_PLASMA
 
 	min_value = 0
 	prefix_high_min = 0.1

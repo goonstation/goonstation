@@ -18,11 +18,14 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_TRENCH
 	can_replace_with_stuff = TRUE
 	layer = PLATING_LAYER
+	can_burn = FALSE
+	can_break = FALSE
 	HELP_MESSAGE_OVERRIDE("Climb in and out of the trench by <b>sprinting</b>.")
 
-	var/old_type
-	var/can_fill = TRUE
-	var/base_icon_state = "trench"
+	var/old_type //! turf type before digging the trench
+	var/can_fill = TRUE //! Can this trench be filled with a shovel
+	var/base_icon_state = "trench" //! icon_state style prefix
+	var/spawn_catwalk = null //! Typepath of the catwalk to spawn
 
 	unfiilable
 		can_fill = FALSE
@@ -35,6 +38,9 @@
 
 		src.buried_storage.move_storage_contents_to_turf()
 		src.update_trench_overlay()
+
+		if (src.spawn_catwalk)
+			new src.spawn_catwalk(src)
 
 	Del()
 		src.buried_storage.move_turf_contents_to_storage()
@@ -158,11 +164,14 @@
 	// Trench prying is rather buggy and unsupported by their current code.
 	pryable = FALSE
 	layer = PLATING_LAYER
+	can_burn = FALSE
+	can_break = FALSE
 	HELP_MESSAGE_OVERRIDE("Climb in and out of the trench by <b>sprinting</b>.")
 
 	var/old_type
 	var/can_fill = TRUE
 	var/base_icon_state = "trench"
+	var/spawn_catwalk = null //! Typepath of the catwalk to spawn
 
 	unfillable
 		can_fill = FALSE
@@ -175,6 +184,9 @@
 
 		src.buried_storage.move_storage_contents_to_turf()
 		src.update_trench_overlay()
+
+		if (src.spawn_catwalk)
+			new src.spawn_catwalk(src)
 
 	Del()
 		src.buried_storage.move_turf_contents_to_storage()

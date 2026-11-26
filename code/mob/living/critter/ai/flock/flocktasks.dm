@@ -290,7 +290,7 @@ stare
 
 /datum/aiTask/succeedable/build/failed()
 	var/turf/simulated/floor/build_target = holder.target
-	if(!build_target || BOUNDS_DIST(holder.owner, build_target) > 0)
+	if(!build_target || !can_reach(holder.owner, build_target))
 		return TRUE
 	var/mob/living/critter/flock/F = holder.owner
 	if(!F)
@@ -435,7 +435,7 @@ stare
 
 /datum/aiTask/succeedable/repair/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(!F || !holder.target || BOUNDS_DIST(holder.target, F) > 0)
+	if(!F || !holder.target || !can_reach(F, holder.target))
 		return TRUE
 	if(F && (!F.can_afford() || !F.abilityHolder))
 		return TRUE
@@ -452,7 +452,7 @@ stare
 			var/mob/living/critter/flock/drone/T = holder.target
 			if(T?.floorrunning)
 				T.end_floorrunning(TRUE)
-		if(F && holder.target && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
+		if(F && holder.target && can_reach(holder.owner, holder.target))
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(holder.target)
@@ -506,7 +506,7 @@ stare
 /datum/aiTask/succeedable/deposit/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/obj/flock_structure/ghost/T = holder.target
-	if(!F || !T || BOUNDS_DIST(T, F) > 0)
+	if(!F || !T || !can_reach(F, T))
 		return TRUE
 	if(F && (!F.can_afford() || !F.abilityHolder))
 		return TRUE
@@ -518,7 +518,7 @@ stare
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/obj/flock_structure/ghost/T = holder.target
-		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
+		if(F && T && can_reach(holder.owner, holder.target))
 			if(F.floorrunning)
 				F.end_floorrunning(TRUE)
 			if(F.set_hand(2)) // nanite spray
@@ -561,7 +561,7 @@ stare
 
 /datum/aiTask/succeedable/open_container/failed()
 	var/obj/storage/container_target = holder.target
-	if(!container_target || BOUNDS_DIST(holder.owner, container_target) > 0 || fails >= max_fails)
+	if(!container_target || !can_reach(holder.owner, container_target) || fails >= max_fails)
 		. = TRUE
 
 /datum/aiTask/succeedable/open_container/succeeded()
@@ -573,7 +573,7 @@ stare
 
 /datum/aiTask/succeedable/open_container/on_tick()
 	var/obj/storage/container_target = holder.target
-	if(container_target && BOUNDS_DIST(holder.owner, container_target) == FALSE && !succeeded())
+	if(container_target && can_reach(holder.owner, container_target) && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F.floorrunning)
 			F.end_floorrunning(TRUE)
@@ -620,7 +620,7 @@ stare
 
 /datum/aiTask/succeedable/rummage/failed()
 	var/obj/item/storage/container_target = holder.target
-	if(!container_target || BOUNDS_DIST(holder.owner, container_target) > 0 || fails >= max_fails)
+	if(!container_target || !can_reach(holder.owner, container_target) || fails >= max_fails)
 		. = TRUE
 
 /datum/aiTask/succeedable/rummage/succeeded()
@@ -634,7 +634,7 @@ stare
 
 /datum/aiTask/succeedable/rummage/on_tick()
 	var/obj/item/storage/container_target = holder.target
-	if(container_target && BOUNDS_DIST(holder.owner, container_target) == 0 && !succeeded())
+	if(container_target && can_reach(holder.owner, container_target) && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F.floorrunning)
 			F.end_floorrunning(TRUE)
@@ -778,7 +778,7 @@ stare
 		D.wander_count = 0
 		D.flock_name_tag?.set_info_tag(capitalize(src.name))
 
-/datum/aiTask/timed/targeted/flockdrone_shoot/proc/precondition()
+/datum/aiTask/timed/targeted/flockdrone_shoot/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(length(F.flock?.enemies))
 		return TRUE
@@ -997,7 +997,7 @@ stare
 /datum/aiTask/succeedable/butcher/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/mob/living/critter/flock/drone/T = holder.target
-	if(!F || !T || BOUNDS_DIST(T, F) > 0)
+	if(!F || !T || !can_reach(F, T))
 		return TRUE
 	if(F && !F.abilityHolder)
 		return TRUE
@@ -1009,7 +1009,7 @@ stare
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/mob/living/critter/flock/drone/T = holder.target
-		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
+		if(F && T && can_reach(holder.owner, holder.target))
 			if(F.floorrunning)
 				F.end_floorrunning(TRUE)
 			if(F.set_hand(2)) // nanite spray
@@ -1116,7 +1116,7 @@ stare
 /datum/aiTask/succeedable/deconstruct/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/atom/T = holder.target
-	if(!F || !T || BOUNDS_DIST(T, F) > 0 || !(T in F?.flock?.deconstruct_targets))
+	if(!F || !T || !can_reach(F, T) || !(T in F?.flock?.deconstruct_targets))
 		return TRUE
 
 /datum/aiTask/succeedable/deconstruct/succeeded()
@@ -1129,7 +1129,7 @@ stare
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/atom/T = holder.target
-		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
+		if(F && T && can_reach(holder.owner, holder.target))
 			if(F.floorrunning)
 				F.end_floorrunning(TRUE)
 			if(F.set_hand(2)) // nanite spray

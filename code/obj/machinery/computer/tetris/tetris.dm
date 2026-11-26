@@ -64,6 +64,8 @@ TYPEINFO(/obj/machinery/computer/tetris)
 			SPAWN(rand(0, 15))
 				src.icon_state = "tetris0"
 				status |= NOPOWER
+				if(glow_in_dark_screen)
+					src.ClearSpecificOverlays("screen_image")
 
 /obj/machinery/computer/tetris/get_desc()
 	if (src.tetris && src.tetris.highscore)

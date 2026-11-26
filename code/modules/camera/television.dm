@@ -55,6 +55,8 @@
 
 /obj/machinery/camera/television/set_camera_status(status)
 	src.camera_status = status
+	if (!src.camera_status)
+		src.disconnect_viewers()
 	var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter) || src.AddComponent(/datum/component/camera_coverage_emitter)
 	emitter.set_active(src.camera_status)
 

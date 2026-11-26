@@ -138,3 +138,14 @@
 	targeted = TRUE
 	target_anything = TRUE
 	proj = new /datum/projectile/slam/fermid
+
+/datum/targetable/critter/slam/headspider
+	border_icon = /datum/targetable/changeling::border_icon
+	border_icon_state = /datum/targetable/changeling::border_icon_state
+	hovered_border_icon_state = /datum/targetable/changeling::hovered_border_icon_state
+
+	tryCast(atom/target, params)
+		if(ismob(src.holder.owner.loc))
+			boutput(src.holder.owner, SPAN_ALERT("You cannot use that while inside another creature!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		. = ..()

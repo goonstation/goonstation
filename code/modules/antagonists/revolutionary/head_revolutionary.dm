@@ -118,10 +118,16 @@
 			src.owner.store_memory("<b>Uplink frequency:</b> [uplink.lock_code].")
 
 		if(ROLEPLAY_REVOLUTIONARIES)
+			// Grant access to the syndicate radio.
 			var/obj/item/device/radio/headset/headset = H.ears
 			if(headset && istype(headset))
 				headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/syndicatechannel)
 				boutput(H, SPAN_NOTICE(SPAN_BOLD("The syndicate has granted \the [headset] on your head access to the syndicate channel to speak with your fellow revolutionaries.")))
+			// Grant the power to brainwash
+			H.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS)
+			H.addAbility(/datum/targetable/view_revolutionary_keywords)
+			boutput(H, SPAN_ALERT(SPAN_BOLD("In order to make the crew susceptible to your flash, you must speak KEYWORDS to them. <br>\
+											You can see the list of keywords at any time using the \"View Keywords\" ability.")))
 
 	add_to_image_groups()
 		. = ..()
@@ -151,6 +157,20 @@
 	unborged()
 		SPAWN(0) //see above
 			src.add_to_image_groups()
+
+	mind_attach(source, mob/new_mob, mob/old_mob)
+		. = ..()
+		// Grant them the ability to speak keywords if cloned or whatever
+		if(ROLEPLAY_REVOLUTIONARIES && ishuman(new_mob))
+			new_mob.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS)
+			new_mob.addAbility(/datum/targetable/view_revolutionary_keywords)
+
+	mind_detach(source, mob/old_mob, mob/new_mob)
+		. = ..()
+		if(ROLEPLAY_REVOLUTIONARIES)
+			old_mob.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_REVOLUTIONARY_KEYWORDS)
+			old_mob.removeAbility(/datum/targetable/view_revolutionary_keywords)
+
 
 	get_statistics()
 		var/list/purchased_items = list()

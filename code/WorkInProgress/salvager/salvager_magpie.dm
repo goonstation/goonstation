@@ -686,16 +686,16 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy)
 				else if(O.material.getID() in list("char"))
 					. *= 0.2
 
-				if(O.material.getProperty("reflective") >= 7)
+				if(O.material.getProperty(MATERIAL::PROPERTY::REFLECT) >= 7)
 					. *= 1.3
-				if(O.material.getProperty("radioactive") >= 5)
+				if(O.material.getProperty(MATERIAL::PROPERTY::RADS) >= 5)
 					. *= 1.3
 
-				if(O.material.getProperty("density") >= 5)
+				if(O.material.getProperty(MATERIAL::PROPERTY::DENSITY) >= 5)
 					. *= 1.2
-				if(O.material.getProperty("hard") >= 5)
+				if(O.material.getProperty(MATERIAL::PROPERTY::HARDNESS) >= 5)
 					. *= 1.2
-				if(O.material.getProperty("electrical") >= 5)
+				if(O.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) >= 5)
 					. *= 1.2
 
 	sheet

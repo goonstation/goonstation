@@ -2156,13 +2156,11 @@
 /area/station/maintenance/north)
 "alJ" = (
 /obj/rack,
-/obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /obj/machinery/light{
 	dir = 8;
@@ -2170,6 +2168,16 @@
 	pixel_x = -10
 	},
 /obj/machinery/light_switch/directional/north,
+/obj/item/device/gps{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/device/gps{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/space/emerg,
+/obj/item/camera,
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "alM" = (
@@ -8420,7 +8428,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "bKM" = (
 /obj/cable{
@@ -9226,7 +9234,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "dcx" = (
 /obj/cable{
@@ -9973,7 +9981,7 @@
 /area/station/mining/refinery)
 "eoM" = (
 /obj/landmark/gps_waypoint,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "eoY" = (
 /obj/machinery/networked/test_apparatus/electrobox,
@@ -10364,7 +10372,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "eTg" = (
 /obj/stool/chair/comfy/wheelchair{
@@ -11112,25 +11120,10 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "fTa" = (
-/obj/rack,
-/obj/item/device/gps{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/device/gps{
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/obj/item/device/gps{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/device/gps{
-	pixel_x = 5;
-	pixel_y = 5
-	},
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/light,
+/obj/storage/closet/port_a_sci,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "fVd" = (
@@ -11465,7 +11458,7 @@
 /obj/machinery/chem_master{
 	dir = 4
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "gwJ" = (
 /obj/machinery/alarm/directional/north,
@@ -12214,18 +12207,26 @@
 /area/research_outpost/hangar)
 "hTZ" = (
 /obj/rack,
-/obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/device/gps{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/device/gps{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/space/emerg,
+/obj/item/camera,
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "hUo" = (
@@ -14051,7 +14052,7 @@
 	},
 /obj/table/wood/auto/desk,
 /obj/item/device/radio/intercom/catering,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "kfF" = (
 /obj/cable{
@@ -14105,7 +14106,7 @@
 	pixel_x = 8;
 	pixel_y = -2
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "kmc" = (
 /obj/machinery/atmospherics/binary/valve,
@@ -14618,7 +14619,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/beacon,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "lbH" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -16324,7 +16325,7 @@
 "nvn" = (
 /obj/item/swingsignfolded,
 /obj/reagent_dispensers/beerkeg,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "nvv" = (
 /obj/table/wood/auto,
@@ -17137,7 +17138,7 @@
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "oIn" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -17260,7 +17261,7 @@
 	pixel_x = 32
 	},
 /obj/table/wood/auto/desk,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "oTI" = (
 /obj/machinery/camera/directional/north{
@@ -17741,7 +17742,7 @@
 "pEt" = (
 /obj/table/wood/auto/desk,
 /obj/noticeboard/persistent/bar/directional/north,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "pEV" = (
 /obj/cable{
@@ -19060,7 +19061,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "rYo" = (
 /obj/table/auto,
@@ -19488,7 +19489,7 @@
 /turf/simulated/floor/purple/side,
 /area/research_outpost/hangar)
 "sFU" = (
-/obj/storage/closet/port_a_sci,
+/obj/spawner/disk_rack_lrt,
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "sGB" = (
@@ -19926,7 +19927,7 @@
 	icon_state = "line1"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/kitchen)
 "tkN" = (
 /obj/machinery/power/stats_meter{
@@ -20099,7 +20100,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "txp" = (
 /obj/cable{
@@ -21282,7 +21283,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "vcn" = (
 /turf/simulated/wall/auto/supernorn,
@@ -21765,7 +21766,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "vOd" = (
 /obj/cable{
