@@ -101,7 +101,11 @@ TYPEINFO(/mob/living/silicon)
 	return
 
 /mob/living/silicon/proc/show_laws()
-	return
+	var/list/laws = src.get_law_list(SILICON::LAWS::SET::REAL)
+	var/mob/message_mob = src.get_message_mob()
+	boutput(message_mob, SPAN_BOLD("Your laws are:"))
+	for (var/number in laws)
+		boutput(message_mob, "[number]. [laws[number]]")
 
 /mob/living/silicon/on_close_viewport(datum/viewport/vp)
 	src.mainframe?.on_close_viewport(vp)
