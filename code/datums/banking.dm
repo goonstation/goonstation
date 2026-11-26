@@ -115,7 +115,7 @@
 					signal.data["command"] = "text_message"
 					signal.data["sender_name"] = "PAYROLL-MAILBOT"
 					signal.data["address_1"] = t["pda_net_id"]
-					signal.data["message"] = "[t["wage"]] credits have been deposited into your bank account. You have [t["current_money"]] credits total."
+					signal.data["message"] = "[t["wage"]][CREDIT_SIGN] deposited into your account. Current Balance: [t["current_money"]][CREDIT_SIGN]."
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 #endif
 			else

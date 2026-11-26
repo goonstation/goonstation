@@ -128,6 +128,10 @@
 			for(var/mob/AM in T)
 				if(isobserver(AM))
 					continue
+				// dry up any glue so that it doesnt eat the set_loc
+				var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+				if (glued_comp)
+					qdel(glued_comp)
 				showswirl(AM)
 				AM.set_loc(pick_landmark(LANDMARK_LATEJOIN, locate(150, 150, 1)))
 				showswirl(AM)

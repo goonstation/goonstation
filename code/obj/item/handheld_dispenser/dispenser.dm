@@ -331,6 +331,8 @@ TYPEINFO(/obj/item/places_pipes)
 
 /obj/item/places_pipes/adminshenanigans
 	name = "extremely powerful handheld pipe dispenser"
+	default_material = "miracle"
+	uses_default_material_appearance = TRUE
 	resources = INFINITY
 	max_resources = INFINITY
 	dispenser_delay = 1 DECI SECOND

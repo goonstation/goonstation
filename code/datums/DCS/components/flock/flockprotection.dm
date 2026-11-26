@@ -48,10 +48,12 @@
 		report_name = "the " + source.vars["flock_id"]
 
 	if (snitch.flock.isIgnored(attacker))
-		snitch.say("Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_betrayal")] [attacker]")
+		if (!ON_COOLDOWN(snitch, "flockdrone_betrayal", 1 SECOND))
+			snitch.say("Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_betrayal")] [attacker]")
 
 	else if (!snitch.flock.isEnemy(attacker))
-		snitch.say("Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]")
+		if (!ON_COOLDOWN(snitch, "flockdrone_enemy", 1 SECOND))
+			snitch.say("Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]")
 
 	snitch.flock.updateEnemy(attacker)
 

@@ -1603,6 +1603,8 @@ Other Goonstation servers:[serverList]</span>"})
 	// do not put this anywhere anyone can get it. it is for crime.
 	name = "ultra hyper super rapid construction device 2 turbo: championship edition hd remix now with NEW funky mode"
 	desc = "Also known as the ultimate in grief technology, this is capable of rapidly (de)constructing walls, flooring, windows, and doors. This admin crime edition features no cooldowns and extremely reduced matter costs. Does not, in fact, have a funky mode."
+	default_material = "miracle"
+	uses_default_material_appearance = TRUE
 
 	matter = 999999
 	max_matter = 999999
