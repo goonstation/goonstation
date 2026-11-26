@@ -5,9 +5,9 @@ export enum Allowed {
 }
 
 export enum RequestState {
-  Pending = 'pending',
-  Denied = 'denied',
-  Fulfilled = 'fulfilled',
+  Pending = 'PENDING',
+  Denied = 'DENIED',
+  Fulfilled = 'FULFILLED',
 }
 
 export interface RequestData {

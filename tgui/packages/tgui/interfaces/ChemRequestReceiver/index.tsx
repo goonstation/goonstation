@@ -79,7 +79,7 @@ const ChemRequest = (props: ChemRequestProps) => {
         </Flex.Item>
         <Flex.Item>
           <Box>
-            {state === 'pending' && (
+            {state === 'PENDING' && (
               <>
                 <Button
                   disabled={!interactable}
@@ -106,10 +106,10 @@ const ChemRequest = (props: ChemRequestProps) => {
                 </Button>
               </>
             )}
-            {state !== 'pending' && (
+            {state !== 'PENDING' && (
               <Box
                 align="center"
-                backgroundColor={state === 'denied' ? 'red' : 'green'}
+                backgroundColor={state === 'DENIED' ? 'red' : 'green'}
               >
                 {capitalize(state)}
               </Box>
@@ -140,8 +140,8 @@ export const ChemRequestReceiver = () => {
         <Stack wrap="wrap">
           {requests.map((request) => {
             if (
-              (request.state === 'pending' && tabIndex === 1) ||
-              (request.state !== 'pending' && tabIndex === 2)
+              (request.state === 'PENDING' && tabIndex === 1) ||
+              (request.state !== 'PENDING' && tabIndex === 2)
             ) {
               return (
                 <Stack.Item
