@@ -68,18 +68,11 @@
 
 	var/mob/living/carbon/human/patient = target
 
-	// grumble grumble if we just check length it tries to extract useful implants and does nothing.
-	var/has_implant_that_is_shrapnel = FALSE
-	for (var/obj/item/implant/I in patient.implant)
-		if(istype(I, /obj/item/implant/projectile))
-			has_implant_that_is_shrapnel = TRUE
-			break
-
-	if(!has_implant_that_is_shrapnel)
+	if(locate(/obj/item/implant/projectile) in patient.implant)
+		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS ,PROC_REF(attempt_extraction), list(patient, user), src.icon, src.icon_state, null, src.interrupt_flags)
+	else
 		boutput(user, SPAN_NOTICE("You can't find any remnants within [target]."))
-		return
 
-	SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS ,PROC_REF(attempt_extraction), list(patient, user), src.icon, src.icon_state, null, src.interrupt_flags)
 
 /obj/item/shrapnel_extractor/attack_self(mob/user)
 	. = ..()
