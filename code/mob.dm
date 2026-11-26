@@ -440,6 +440,7 @@ TYPEINFO(/mob)
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
+	src.movement_modifiers.len = 0
 
 	for(var/x in src)
 		qdel(x)
