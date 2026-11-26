@@ -33,13 +33,13 @@
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/device/borg_linker))
 			var/obj/item/device/borg_linker/linker = I
+			var/area/new_area = get_area(linker.linked_rack)
 			if (!linker.linked_rack)
 				user?.show_message(SPAN_ALERT("\The [linker] isn't linked to a law rack!"))
 				return
 			if (linker.linked_rack in src.linked_lawracks)
-				user?.show_message(SPAN_ALERT("[src] is already linked to the same law rack as \the [linker]!"))
+				user?.show_message(SPAN_ALERT("The law rack at [new_area]  is already linked to \the [src]!"))
 				return
-			var/area/new_area = get_area(linker.linked_rack)
 			user?.show_message(SPAN_NOTICE("[src] linked to the law rack at [new_area.name]."))
 			linker.linked_rack.link_to_program_rack(src)
 			src.linked_lawracks |= linker.linked_rack
