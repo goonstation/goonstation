@@ -52,8 +52,6 @@
 
 		. += galactic_position.place_name
 
-// TODO: abstract disk light into common behaviour and flag
-
 /obj/machinery/disk_rack/telesci/special_disk_data(obj/item/disk/data/floppy/disk, index)
 	if (status & NOPOWER)
 		return list("light" = FALSE)
@@ -62,47 +60,18 @@
 /obj/machinery/disk_rack/telesci/ui_data(mob/user)
 	return ..() + list("has_lights" = TRUE)
 
-/obj/machinery/disk_rack/telesci/process(mult)
-	src.update_lights()
-
 /obj/machinery/disk_rack/telesci/remove_disk(index, mob/user)
 	. = ..()
 	src.update_lights()
 
-#define LIGHT_KEY "angry_light_[i]"
-
-/obj/machinery/disk_rack/telesci/power_change()
-	..()
-	if (status & NOPOWER)
-		for (var/i in 1 to DISK::RACK::MAX_DISKS)
-			src.ClearSpecificOverlays(LIGHT_KEY)
-
-/obj/machinery/disk_rack/telesci/proc/disk_should_blink(disk_slot)
-	if(!disk_slot || disk_slot > DISK::RACK::MAX_DISKS)
+/obj/machinery/disk_rack/telesci/disk_should_blink(index)
+	if(!index || index > DISK::RACK::MAX_DISKS)
 		return FALSE
-	if (!src.disks[disk_slot])
+	if (!src.disks[index])
 		return FALSE
-	if (src.blink_until[disk_slot] > TIME)
+	if (src.blink_until[index] > TIME)
 		return TRUE
 	return FALSE
-
-/obj/machinery/disk_rack/telesci/proc/update_lights()
-	if (status & NOPOWER)
-		return
-	for (var/i in 1 to DISK::RACK::MAX_DISKS)
-		var/obj/item/disk/data/floppy/disk = src.disks[i]
-		if (!disk || !src.disk_should_blink(i))
-			src.active_lights[i] = FALSE
-			src.ClearSpecificOverlays(LIGHT_KEY)
-			continue
-		src.active_lights[i] = TRUE
-		if (src.GetOverlayImage(LIGHT_KEY))
-			continue
-		var/image/overlay = image(src.icon, "angry_light")
-		overlay.plane = PLANE_SELFILLUM
-		overlay.pixel_y = (i-1) * 2
-		src.UpdateOverlays(overlay, LIGHT_KEY)
-#undef LIGHT_KEY
 
 /obj/machinery/disk_rack/telesci/proc/set_destination_light(location_name)
 	for (var/i in 1 to DISK::RACK::MAX_DISKS)
@@ -111,6 +80,7 @@
 			continue
 		if (location_name in src.get_locations_on_disk(disk))
 			src.blink_until[i] = TIME + src.blink_duration
+	src.update_lights()
 
 TYPEINFO(/obj/machinery/disk_rack/telesci/prefilled)
 	manufactured_type = /obj/machinery/disk_rack/telesci

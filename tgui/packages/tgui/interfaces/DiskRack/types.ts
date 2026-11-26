@@ -8,8 +8,14 @@
 import type { BooleanLike } from 'common/react';
 
 export interface DiskRackData {
-  disks: Disk[];
+  disk_slots: DiskSlot[];
   has_lights: BooleanLike;
+}
+
+export interface DiskSlot {
+  litColor: string;
+  unlitColor: string;
+  disk: Disk;
 }
 
 export interface Disk {
