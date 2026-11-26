@@ -77,6 +77,7 @@
 /obj/item/shrapnel_extractor/attack_self(mob/user)
 	. = ..()
 	if(isnull(src.storage) || !length(src.storage.get_contents()))
+		boutput(user, SPAN_NOTICE("[src] has nothing inside its storage drum to empty!"))
 		return .
 
 	for (var/obj/item/I as anything in src.storage.get_contents())
