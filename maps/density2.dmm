@@ -662,12 +662,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"eb" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "ee" = (
 /turf/space,
 /area/supply/spawn_point)
@@ -1064,14 +1058,6 @@
 /obj/machinery/turret,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"gi" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/science/teleporter)
 "gj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1672,6 +1658,12 @@
 /obj/cable/orange,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"jU" = (
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/science/teleporter)
 "kn" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/cable{
@@ -2784,12 +2776,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"rQ" = (
-/obj/spawner/disk_rack_lrt,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/science/teleporter)
 "rT" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon20_to_1_end,
 /turf/simulated/floor/auto/dirt,
@@ -3843,6 +3829,14 @@
 /obj/mesh/catwalk,
 /turf/simulated/wall/auto/asteroid,
 /area/station/mining/staff_room)
+"Af" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/science/teleporter)
 "Ah" = (
 /obj/machinery/light{
 	dir = 1;
@@ -5220,6 +5214,13 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"Kj" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "Kq" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/cable{
@@ -78476,7 +78477,7 @@ gz
 dt
 pp
 Or
-rQ
+jU
 Td
 UC
 Ia
@@ -78778,7 +78779,7 @@ gA
 hn
 Jy
 Wr
-gi
+Af
 lJ
 WO
 Ch
@@ -79978,7 +79979,7 @@ Rf
 Rf
 Rf
 dv
-eb
+Kj
 eW
 fK
 gj

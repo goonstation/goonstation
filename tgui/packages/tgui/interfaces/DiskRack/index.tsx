@@ -23,11 +23,11 @@ const getWindowHeight = (numDisks: number) =>
 
 export const DiskRack = (_props: unknown) => {
   const { act, data } = useBackend<DiskRackData>();
-  const { disk_slots, has_lights } = data;
+  const { disk_slots, has_lights, is_wide } = data;
   return (
     <Window
       height={getWindowHeight(disk_slots.length)}
-      width={304 + (has_lights ? 26 : 0)}
+      width={304 + (is_wide ? 150 : 0) + (has_lights ? 26 : 0)}
     >
       <Window.Content>
         <Stack vertical reverse>
@@ -39,9 +39,16 @@ export const DiskRack = (_props: unknown) => {
                 <Stack.Item>
                   <Stack align="center">
                     <Stack.Item>
-                      <DiskDrive onEject={handleClick} onInsert={handleClick}>
+                      <DiskDrive
+                        onEject={handleClick}
+                        onInsert={handleClick}
+                        is_wide={is_wide}
+                      >
                         {disk_slot.disk && (
-                          <DiskDrive.Disk color={disk_slot.disk.color}>
+                          <DiskDrive.Disk
+                            color={disk_slot.disk.color}
+                            is_wide={is_wide}
+                          >
                             {disk_slot.disk.name}
                           </DiskDrive.Disk>
                         )}

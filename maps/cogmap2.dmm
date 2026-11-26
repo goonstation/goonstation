@@ -55498,6 +55498,13 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"iec" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/gravity_tether/multi_area/ai_sat,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai)
 "ieu" = (
 /obj/machinery/computer3/generic/communications,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -59019,16 +59026,6 @@
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"kSL" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/gravity_tether/multi_area/ai_sat,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/ai)
 "kSZ" = (
 /obj/table/wood/auto,
 /obj/item/clothing/head/apprentice{
@@ -62232,21 +62229,6 @@
 	dir = 9
 	},
 /area/station/catwalk/north)
-"nuC" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_x = -2;
-	pixel_y = 9
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "nvi" = (
 /obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/reagent_containers/food/drinks/bottle/soda,
@@ -64879,6 +64861,16 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/research_outpost)
+"pJn" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai)
 "pJo" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -65026,6 +65018,21 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
+"pOB" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/storage/goodybag,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "pOG" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -71176,13 +71183,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
-"uLU" = (
-/obj/table/reinforced/auto,
-/obj/machinery/firealarm/directional/east,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/ai)
 "uMd" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -109725,7 +109725,7 @@ aaa
 adf
 adD
 hsx
-nuC
+pOB
 afW
 biF
 bYU
@@ -133575,8 +133575,8 @@ aHr
 vWN
 abf
 aeE
-uLU
-kSL
+iec
+pJn
 aeB
 tql
 abu

@@ -341,12 +341,6 @@
 				if (module.wonky)
 					module.pixel_x = rand(-2, 2)
 				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, module.can_be_secured, module.can_be_secured)
-				if(istype(module,/obj/item/aiModule/hologram_expansion))
-					var/obj/item/aiModule/hologram_expansion/holo = module
-					ticker.ai_law_rack_manager.default_ai_rack.holo_expansions |= holo.expansion
-				else if(istype(module,/obj/item/aiModule/ability_expansion))
-					var/obj/item/aiModule/ability_expansion/expansion = module
-					ticker.ai_law_rack_manager.default_ai_rack.ai_abilities |= expansion.ai_abilities
 
 			else
 				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE,/obj/item/aiModule/custom/centcom)

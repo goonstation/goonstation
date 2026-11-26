@@ -36391,13 +36391,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
-"fqm" = (
-/obj/machinery/alarm/directional/north,
-/obj/spawner/disk_rack_lrt,
-/turf/simulated/floor/caution/white{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "fqw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38717,20 +38710,6 @@
 /obj/item/raw_material/shard/glass,
 /turf/simulated/floor/plating/airless,
 /area/station/wreckage)
-"gRl" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/radio,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "gRr" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/disposalpipe/segment/mail,
@@ -39569,12 +39548,6 @@
 	dir = 4
 	},
 /area/station/engine/monitoring)
-"hto" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "htt" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -39834,6 +39807,19 @@
 	dir = 1
 	},
 /area/station/engine/hotloop)
+"hAa" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "hAi" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -52028,6 +52014,13 @@
 /obj/machinery/arrivalnotifier/disposals,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"pLn" = (
+/obj/machinery/alarm/directional/north,
+/obj/spawner/disk_rack_lrt,
+/turf/simulated/floor/caution/white{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "pMu" = (
 /obj/strip_door,
 /obj/machinery/conveyor/WE{
@@ -54960,6 +54953,29 @@
 	dir = 1
 	},
 /area/station/ranch)
+"rOd" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/peripheral/videocard{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/clown)
 "rOJ" = (
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/blue/checker,
@@ -56890,6 +56906,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
+"teS" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
 "tfM" = (
 /obj/machinery/computer/television,
 /turf/simulated/floor/purple/side{
@@ -58204,29 +58226,6 @@
 	dir = 1
 	},
 /area/station/engine/coldloop)
-"tYY" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/peripheral/videocard{
-	pixel_x = -8;
-	pixel_y = 14
-	},
-/obj/item/storage/goodybag{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/clown_nose,
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/clown)
 "tZh" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -97833,7 +97832,7 @@ adC
 adC
 aah
 bIP
-fqm
+pLn
 bLt
 ciT
 bOy
@@ -98437,7 +98436,7 @@ adC
 adC
 aah
 gov
-hto
+teS
 bLv
 kyx
 byR
@@ -106810,7 +106809,7 @@ acG
 adW
 aeE
 gWD
-tYY
+rOd
 agQ
 ahI
 aiG
@@ -106888,7 +106887,7 @@ bxy
 dBH
 rQQ
 cjx
-gRl
+hAa
 bFy
 bGv
 bHh

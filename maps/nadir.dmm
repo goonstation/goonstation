@@ -6948,21 +6948,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
-"dcB" = (
-/obj/table/auto,
-/obj/decal/cleanable/desk_clutter,
-/obj/decal/cleanable/dirt,
-/obj/item/instrument/bikehorn,
-/obj/item/stamp/clown,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "dcH" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/office)
@@ -23035,6 +23020,10 @@
 	dir = 4
 	},
 /area/station/crew_quarters/fitness)
+"kbG" = (
+/obj/machinery/disk_rack/ai/prefilled,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "kbT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -27366,6 +27355,21 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
+	})
+"lPq" = (
+/obj/table/auto,
+/obj/decal/cleanable/desk_clutter,
+/obj/decal/cleanable/dirt,
+/obj/item/instrument/bikehorn,
+/obj/item/stamp/clown,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/clown{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
 	})
 "lPy" = (
 /obj/cable{
@@ -103847,7 +103851,7 @@ sOU
 nej
 jXK
 eUg
-sOU
+kbG
 sOU
 pyd
 swU
@@ -105984,7 +105988,7 @@ akC
 uoh
 vqn
 oob
-dcB
+lPq
 lGD
 lGD
 lWV

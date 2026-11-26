@@ -56969,7 +56969,9 @@
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod1)
 "gmY" = (
-/obj/machinery/lawrack/syndicate,
+/obj/machinery/lawrack/syndicate{
+	pixel_x = -5
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "gny" = (
@@ -62460,6 +62462,7 @@
 	},
 /obj/table/nanotrasen/auto,
 /obj/item/pen/pencil,
+/obj/item/disk/data/wide_floppy/read_only/ai_program/viewports,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "kmp" = (
@@ -70432,6 +70435,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"qgo" = (
+/obj/machinery/disk_rack/ai/syndicate{
+	pixel_x = 7
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "qgr" = (
 /obj/decal/poster/wallsign/stencil/left/o,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -78909,6 +78918,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/standard,
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "wzl" = (
@@ -114525,7 +114535,7 @@ lzl
 lzl
 lzl
 lzl
-btf
+qgo
 btf
 btf
 btf

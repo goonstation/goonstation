@@ -1,4 +1,4 @@
-/datum/targetable/ai/module/nanite_repair
+/datum/targetable/ai/program/nanite_repair
 	name = "Nanite Repair"
 	icon_state = "nanites"
 	desc = "Send out targeted nanites to repair a silicon being or a camera."
@@ -31,7 +31,7 @@
 			boutput(holder.owner, SPAN_ALERT("[target] is not a silicon entity."))
 			return 1
 
-/datum/targetable/ai/module/camera_repair
+/datum/targetable/ai/program/camera_repair
 	name = "Repair Cameras"
 	desc = "Send out nanites to attempt to repair cameras."
 	icon_state = "camera_repair"

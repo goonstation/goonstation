@@ -183,14 +183,18 @@
 /obj/item/storage/box/command_tech/hop
 	spawn_contents = list(
 		/obj/item/circuitboard/card,
-		/obj/item/disk/data/floppy/read_only/bank_progs,
+		/obj/item/disk/data/floppy/manudrive/aiLaws,
+		/obj/item/disk/data/wide_floppy/read_only/ai_program/tracking,
+		/obj/item/disk/data/wide_floppy/read_only/ai_program/viewports,
+		/obj/item/disk/data/wide_floppy/read_only/ai_program/call_shuttle,
+		/obj/item/disk/data/wide_floppy/read_only/ai_program/hologram/standard,
 	)
 
 /obj/item/storage/box/command_tech/rd
 	spawn_contents = list(
 		/obj/item/circuitboard/card/research,
 		/obj/item/circuitboard/announcement/research,
-		/obj/item/disk/data/floppy/manudrive/aiLaws,
+		/obj/item/disk/data/floppy/manudrive/program_rack,
 		/obj/item/disk/data/floppy/manudrive/telesci_rack,
 	)
 

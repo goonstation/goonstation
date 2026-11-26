@@ -22,10 +22,8 @@
 	var/list/welded[MAX_CIRCUITS]
 	/// screwed status of law module by slot number
 	var/list/screwed[MAX_CIRCUITS]
-	/// list of hologram expansions
-	var/list/holo_expansions = list()
-	/// list of ability expansions
-	var/list/datum/targetable/ai_abilities = list()
+	/// Our linked AI program rack. Do not set or clear directly, use `link_to_program_rack()` (with null to clear)
+	var/obj/machinery/disk_rack/ai/program_rack
 
 	New(loc)
 		START_TRACKING
@@ -51,6 +49,7 @@
 
 	disposing()
 		STOP_TRACKING
+		src.link_to_program_rack(null)
 		ticker?.ai_law_rack_manager.unregister_rack(src)
 		src.drop_all_modules()
 		UpdateIcon()
@@ -315,6 +314,7 @@
 			var/obj/item/device/borg_linker/linker = I
 			linker.linked_rack = src
 			var/area/A = get_area(src.loc)
+			FLICK("cyborg_linker-active", linker)
 			boutput(user,"Linker: Linked to law rack at "+ A.name)
 			return
 		else if (istypes(I, list(/obj/item/aiModule, /obj/item/reagent_containers/food/snacks/breadslice)) && !issilicon(user))
@@ -617,19 +617,12 @@
 				R.show_text(notification_text, "red")
 				src.show_laws(R)
 				affected_mobs |= R
-				if(isAI(R))
-					var/mob/living/silicon/ai/holoAI = R
-					holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
-					src.reset_ai_abilities(R)
 		src.calculate_power_usage()
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				src.show_laws(E)
 				affected_mobs |= E.mainframe
-				var/mob/living/silicon/ai/holoAI = E.mainframe
-				holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
-				E.abilityHolder?.updateButtons()
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
@@ -677,12 +670,6 @@
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		user.visible_message(SPAN_ALERT("[user] slides a module into the law rack"), SPAN_ALERT("You slide the module into the rack."))
 		tgui_process.update_uis(src)
-		if(istype(equipped,/obj/item/aiModule/hologram_expansion))
-			var/obj/item/aiModule/hologram_expansion/holo = equipped
-			src.holo_expansions |= holo.expansion
-		else if(istype(equipped,/obj/item/aiModule/ability_expansion))
-			var/obj/item/aiModule/ability_expansion/expansion = equipped
-			src.ai_abilities |= expansion.ai_abilities
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
@@ -702,12 +689,6 @@
 		else
 			user.visible_message(SPAN_ALERT("[user] slides a module out of the law rack"), SPAN_ALERT("You slide the module out of the rack."))
 			user.put_in_hand_or_drop(src.law_circuits[slotNum])
-		if(istype(src.law_circuits[slotNum],/obj/item/aiModule/hologram_expansion))
-			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slotNum]
-			src.holo_expansions -= holo.expansion
-		else if(istype(src.law_circuits[slotNum],/obj/item/aiModule/ability_expansion))
-			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slotNum]
-			src.ai_abilities -= expansion.ai_abilities
 		src.law_circuits[slotNum].on_removed(slotNum, src, user)
 		src.law_circuits[slotNum] = null
 		tgui_process.update_uis(src)
@@ -766,24 +747,12 @@
 	 * Does not call UpdateLaws()
 	 */
 	proc/SetLaw(obj/item/aiModule/mod, slot = 1, screwed_in = FALSE, welded_in = FALSE)
-		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
-			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
-			src.holo_expansions -= holo.expansion
-		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
-			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
-			src.ai_abilities -= expansion.ai_abilities
 		if(mod && slot <= MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
 			src.welded[slot] = welded_in
 			src.screwed[slot] = screwed_in
 			mod.on_inserted(slot, src, null)
 			tgui_process.update_uis(src)
-			if(istype(mod,/obj/item/aiModule/hologram_expansion))
-				var/obj/item/aiModule/hologram_expansion/holo = mod
-				src.holo_expansions |= holo.expansion
-			else if(istype(mod,/obj/item/aiModule/ability_expansion))
-				var/obj/item/aiModule/ability_expansion/expansion = mod
-				src.ai_abilities |= expansion.ai_abilities
 			UpdateIcon()
 			src.calculate_power_usage()
 			return TRUE
@@ -801,12 +770,6 @@
 
 	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
 	proc/DeleteLaw(var/slot=1)
-		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
-			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
-			src.holo_expansions -= holo.expansion
-		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
-			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
-			src.ai_abilities -= expansion.ai_abilities
 		src.law_circuits[slot]=null
 		src.welded[slot] = FALSE
 		src.screwed[slot] = FALSE
@@ -871,19 +834,18 @@
 			if (src.law_circuits[i])
 				src.power_usage += 100
 
-	proc/reset_ai_abilities(mob/living/silicon/ai/target)
-		var/ability_type
-		var/datum/abilityHolder/silicon/ai/aiAH = target.abilityHolder
-		var/list/current_abilities = list()
-		for(var/datum/ability in aiAH.abilities)
-			current_abilities |= ability.type
-		var/list/abilities_to_remove = current_abilities - src.ai_abilities
-		for(ability_type in abilities_to_remove)
-			if (ispath(ability_type, /datum/targetable/ai/module))
-				aiAH.removeAbility(ability_type)
-		var/list/abilities_to_add = src.ai_abilities - current_abilities
-		for(ability_type in abilities_to_add)
-			aiAH.addAbility(ability_type)
+	proc/link_to_program_rack(obj/machinery/disk_rack/ai/new_rack)
+		if(src.program_rack)
+			src.program_rack.linked_lawracks -= src
+		src.program_rack = new_rack
+		if (new_rack)
+			new_rack.linked_lawracks |= src
+		src.update_ai_programs()
+
+	proc/update_ai_programs()
+		for_by_tcl(AI, /mob/living/silicon/ai)
+			if(AI.law_rack_connection == src)
+				AI.update_programs()
 
 /particles/rack_smoke
 	icon = 'icons/effects/effects.dmi'

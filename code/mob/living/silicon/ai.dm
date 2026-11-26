@@ -157,8 +157,6 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/faceColor = "#66B2F2"
 	var/datum/material/material_face = null
 	var/list/custom_emotions = null
-	///Maximum number of viewports we can have open, unlimited vision was a bit silly
-	var/viewport_limit = 2
 	/// The icon_state for the outside non-screen bit of the core. icon_state is set to this in update_appearance() (which is called by New)
 	var/coreSkin = "default"
 /* To add a new skin:
@@ -359,19 +357,12 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	if(eyecam)
 		eyecam.abilityHolder = abilityHolder
 
-	if(law_rack_connection)
-		holoHolder.text_expansion = law_rack_connection.holo_expansions.Copy()
-
-		for(var/ability_type in law_rack_connection.ai_abilities)
-			abilityHolder.addAbility(ability_type)
-
 	src.hologramContextActions = list()
 	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
 		var/datum/contextAction/ai_hologram/action = new actionType(src)
 		hologramContextActions += action
 
-
-
+	src.update_programs()
 
 	SPAWN(0)
 		src.botcard.access = get_all_accesses()
@@ -516,6 +507,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 				if (raw == "Yes")
 					src.set_law_rack(linker.linked_rack, user)
+					FLICK("cyborg_linker-active", linker)
 		else
 			boutput(user,"Linker lost connection to the stored law rack!")
 		return
@@ -2560,6 +2552,48 @@ proc/get_mobs_trackable_by_AI()
 
 /mob/living/silicon/ai/on_close_viewport(datum/viewport/vp)
 	src.eyecam?.on_close_viewport(vp)
+
+/mob/living/silicon/ai/proc/update_programs()
+	// abilities
+	var/list/new_abilities = list()
+	if (src.law_rack_connection?.program_rack)
+		new_abilities = src.law_rack_connection.program_rack.ai_abilities
+
+	var/ability_type
+	var/datum/abilityHolder/silicon/ai/aiAH = src.get_ability_holder(/datum/abilityHolder/silicon/ai)
+	var/list/current_abilities = list()
+	for(var/datum/ability in aiAH.abilities)
+		current_abilities |= ability.type
+	var/list/abilities_to_remove = current_abilities - new_abilities
+	for(ability_type in abilities_to_remove)
+		if (ispath(ability_type, /datum/targetable/ai/program))
+			aiAH.removeAbility(ability_type)
+	var/list/abilities_to_add = new_abilities - current_abilities
+	for(ability_type in abilities_to_add)
+		aiAH.addAbility(ability_type)
+
+	// skills
+	if (!src.law_rack_connection || !src.law_rack_connection.program_rack)
+		src.tracker?.cease_track()
+		src.holoHolder?.text_expansion = list()
+		for (var/datum/viewport/vp as anything in src.eyecam?.open_viewports)
+			src.on_close_viewport(vp)
+			qdel(vp)
+		return
+
+	if (!src.law_rack_connection.program_rack.can_track)
+		src.tracker.cease_track()
+
+	var/vp_count = 0
+	for (var/datum/viewport/vp as anything in src.eyecam?.open_viewports)
+		vp_count += 1
+		if (vp_count > src.law_rack_connection.program_rack.viewport_limit)
+			src.on_close_viewport(vp)
+			qdel(vp)
+
+	src.holoHolder.text_expansion = src.law_rack_connection.program_rack.hologram_libraries
+
+	src.hud.update_skills()
 
 /*-----Core-Creation---------------------------------------*/
 

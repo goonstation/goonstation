@@ -5,6 +5,8 @@
  * @license MIT
  */
 
+import { BooleanLike } from 'common/react';
+
 export interface DriveContextType {
   onContentClick?: () => void;
 }
@@ -18,4 +20,5 @@ export interface DriveBaseProps {
   onContentClick?: () => void;
   onEject: () => void;
   onInsert: () => void;
+  is_wide?: BooleanLike;
 }
