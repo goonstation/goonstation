@@ -46,9 +46,6 @@
 			params = list("use_inventory_counter" = TRUE)
 	)
 
-	if(prob(5)) // :pensive:
-		desc += " After 3 months in R&D, hopefully it's been worth the wait."
-
 /obj/item/shrapnel_extractor/get_desc(dist, mob/user)
 	. = ..()
 	. += " It's currently housing [length(src.storage.get_contents())]/[DRUM_BUFFER_SIZE] shrapnel fragments."
