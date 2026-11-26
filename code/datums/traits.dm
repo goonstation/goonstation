@@ -1712,9 +1712,8 @@ TYPEINFO(/datum/trait/partyanimal)
 	onRemove(var/mob/owner)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (!H.sims)
-				H.sims = new /datum/simsHolder(H)
-			H.sims.removeMotive("Hygiene")
+			H.sims?.removeMotive("Hygiene")
+
 //Infernal Contract Traits
 /datum/trait/hair
 	name = "Wickedly Good Hair"
