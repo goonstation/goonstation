@@ -49,7 +49,11 @@ export const DiskRack = (_props: unknown) => {
                     </Stack.Item>
                     {!!has_lights && (
                       <Stack.Item>
-                        <Led flashing={disk?.light} />
+                        <Led
+                          litColor="#f00"
+                          unlitColor="#940"
+                          flashing={disk?.light}
+                        />
                       </Stack.Item>
                     )}
                   </Stack>
