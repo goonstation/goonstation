@@ -1460,7 +1460,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.temp += "STATUS: [request.state]"
 			if(request.state == CHEM::REQUEST::STATE::PENDING)
 				src.temp += " <a href='byond://?src=\ref[src];fulfil=[TRUE];id=[request.id]'>Fulfil</a> <a href='byond://?src=\ref[src];deny=[TRUE];id=[request.id]'>Deny</a>"
-			src.temp += "<BR>"
+			src.temp += "<P>"
 
 /datum/computer/file/pda_program/station_name
 	name = "Station Namer"
