@@ -23,13 +23,15 @@ TYPEINFO(/obj/machinery/chem_heater)
 		..()
 		output_target = src.loc
 
-	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
-		if (!tryInsert(B, user))
+	attackby(obj/item/I, mob/user)
+		if (!tryInsert(I, user))
 			return ..()
 
-	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
-		if(B.w_class > W_CLASS_TINY) // You will NOT put the wav3 backtank / fuel tanks in your magic fire box
+	proc/tryInsert(obj/item/B, mob/user)
+		if(!istype(B, /obj/item/reagent_containers/glass) && !istype(B, /obj/item/reagent_containers/food/drinks))
 			return
+		if(B.w_class > W_CLASS_TINY)
+			return // You will NOT put the wav3 backtank / fuel tanks in your magic fire box
 
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
