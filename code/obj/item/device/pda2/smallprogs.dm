@@ -1453,8 +1453,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		return
 
 	proc/refresh()
+		src.temp = null
 		for (var/request_id in chem_requests)
-			temp = null
 			var/datum/chem_request/request = chem_requests[request_id]
 			src.temp += "[request.volume] units of [request.reagent_name] requested by [request.requester_name] from [request.area_name].<BR>"
 			src.temp += "STATUS: [request.state]"
