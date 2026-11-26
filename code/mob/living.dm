@@ -178,6 +178,7 @@ TYPEINFO(/mob/living)
 
 	if(use_stamina)
 		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
+	STOP_TRACKING_CAT(TR_CAT_CHAPLAINS) // added by the chaplain job's special_setup
 
 	for (var/atom/A as anything in src.applied_patches)
 		qdel(A)
