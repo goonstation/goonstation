@@ -22,7 +22,6 @@
 	hit_type = DAMAGE_BLUNT
 	force = 5
 	w_class = W_CLASS_SMALL
-	tooltip_flags = REBUILD_ALWAYS
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
@@ -85,8 +84,8 @@
 		I.pixel_x = rand(-8, 8)
 		I.pixel_y = rand(-8, 8)
 
+	src.tooltip_rebuild = TRUE
 	playsound(src, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 30, 0.1)
-
 
 /obj/item/shrapnel_extractor/update_icon()
 	. = ..()
@@ -97,7 +96,6 @@
 
 
 /obj/item/shrapnel_extractor/proc/attempt_extraction(mob/living/carbon/human/patient as mob, mob/living/surgeon as mob)
-
 	var/screw_up_prob = calc_screw_up_prob(patient, surgeon, 10)
 	var/damage = calc_surgery_damage(surgeon, screw_up_prob, rand(1,5))
 
@@ -122,6 +120,7 @@
 		patient.implant.Remove(I)
 
 		src.storage.add_contents(I, surgeon, visible=FALSE)
+		src.tooltip_rebuild = TRUE
 
 		CAUSE_EXPECTED_PAIN(patient, damage)
 
@@ -142,6 +141,7 @@
 		popped_out = stupid_clown.drop_organ("right_eye")
 
 	src.storage.add_contents(popped_out, stupid_clown, visible=FALSE)
+	src.tooltip_rebuild = TRUE
 
 	stupid_clown.visible_message(\
 		SPAN_ALERT("<b>[stupid_clown]</b> points the [src] to [his_or_her(stupid_clown)] face to check if it's working and accidentally sucks out [his_or_her(stupid_clown)] eyeball!"), \
