@@ -9,11 +9,12 @@ ABSTRACT_TYPE(/datum/vomit_behavior)
 		random_brute_damage(M, rand(4))
 		M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]"),\
 		SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b>"))
-		if (!(locate(/obj/decal/cleanable/vomit/spiders) in get_turf(M)))
+		var/turf/T = get_turf(M)
+		if (T && !(locate(/obj/decal/cleanable/vomit/spiders) in T))
 			if (prob(5))
-				new /mob/living/critter/spider/baby(M)
+				new /mob/living/critter/spider/baby(T)
 			else
-				new /mob/living/critter/spider/baby/nice(M)
+				new /mob/living/critter/spider/baby/nice(T)
 		return /obj/decal/cleanable/vomit/spiders
 
 /datum/vomit_behavior/blood
