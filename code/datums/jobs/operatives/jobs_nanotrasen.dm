@@ -52,6 +52,10 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 
+	special_setup(mob/living/carbon/human/M)
+		. = ..()
+			if (prob(20))
+				M.stow_in_available(new /obj/item/paper/image/iron_belle_ad)
 
 /datum/job/special/nt/engineer
 	name = "Nanotrasen Emergency Repair Technician"

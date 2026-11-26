@@ -55,6 +55,10 @@
 			H.equip_if_possible(new /obj/item/swords_sheaths/nukeop(H), SLOT_BELT)
 			H.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(H), SLOT_L_HAND)
 			H.equip_if_possible(new /obj/item/pinpointer/disk, SLOT_IN_BACKPACK)
+
+			if (prob(20))
+				H.stow_in_available(new /obj/item/paper/image/iron_belle_ad)
+
 		else
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate(H), SLOT_EARS)
 

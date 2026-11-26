@@ -71,6 +71,11 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_card = /obj/item/card/id/syndicate/commander
 	items_in_backpack = list(/obj/item/storage/box/capella,
 							/obj/item/dagger/syndicate)
+							
+	special_setup(mob/living/carbon/human/M)
+		. = ..()
+			if (prob(20))
+				M.stow_in_available(new /obj/item/paper/image/iron_belle_ad)
 
 /datum/job/special/syndicate/specialist/demo
 	name = "Syndicate Grenadier"
