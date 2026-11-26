@@ -274,6 +274,10 @@
 		qdel(src.region)
 
 		qdel(camera)
+		if (src.interior_area?.ship == src)
+			src.interior_area.ship = null
+		if (src.upper_area?.ship == src)
+			src.upper_area.ship = null
 		interior_area = null
 		upper_area = null
 		..()
