@@ -16,6 +16,11 @@
 	src.fuel_bar.vis_flags |= VIS_INHERIT_ID
 	src.vis_contents += src.fuel_bar
 
+/atom/movable/screen/hud/pod/read_only/healthbars/disposing()
+	QDEL_NULL(src.health_bar)
+	QDEL_NULL(src.fuel_bar)
+	. = ..()
+
 
 /atom/movable/screen/healthbar
 	var/atom/movable/screen/hud/pod/read_only/healthbars/parent = null
@@ -69,6 +74,10 @@
 	src.vis_contents += src.shield_overlay
 
 	src.update_health_overlays(50, 100, 0, 0)
+
+/atom/movable/screen/healthbar/disposing()
+	src.parent = null
+	. = ..()
 
 /atom/movable/screen/healthbar/proc/update_health_overlays(health_value, health_max, shield_value, shield_max)
 	var/text_colour = null
