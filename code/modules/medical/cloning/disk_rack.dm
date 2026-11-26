@@ -1,4 +1,6 @@
-ADMIN_INTERACT_PROCS(/obj/machinery/disk_rack, proc/add_disk_of_type)
+#define LIGHT_KEY "angry_light_[i]"
+
+ADMIN_INTERACT_PROCS(/obj/machinery/disk_rack, proc/add_disk_of_type, proc/delete_disk_in_slot)
 TYPEINFO(/obj/machinery/disk_rack)
 	mats = list("metal" = 30, "conductive" = 10)
 
@@ -47,11 +49,20 @@ TYPEINFO(/obj/machinery/disk_rack)
 /obj/machinery/disk_rack/ui_data(mob/user)
 	var/list/disk_data[DISK::RACK::MAX_DISKS]
 	for (var/i in 1 to DISK::RACK::MAX_DISKS)
+		disk_data[i] = list()
+		disk_data[i]["litColor"] = "#f00"
+		disk_data[i]["unlitColor"] = "#940"
+		#ifdef XMAS
+		if (i % 2)
+			disk_data[i]["litColor"] = "#0f0"
+			disk_data[i]["unlitColor"] = "#490"
+		#endif
 		var/obj/item/disk/data/disk = src.disks[i]
 		if (disk)
-			disk_data[i] = list("name" = disk.disk_name(), "color" = disk.disk_color)
-			disk_data[i] += src.special_disk_data(disk, i)
-	return list("disks" = disk_data)
+			disk_data[i]["disk"] = list()
+			disk_data[i]["disk"] = list("name" = disk.disk_name(), "color" = disk.disk_color)
+			disk_data[i]["disk"] += src.special_disk_data(disk, i)
+	return list("disk_slots" = disk_data)
 
 /obj/machinery/disk_rack/proc/special_disk_data(obj/item/disk/data/floppy/disk, index)
 	return list()
@@ -81,6 +92,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	user?.put_in_hand_or_drop(disk)
 	src.disks[index] = null
 	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
+	src.update_lights()
 	src.UpdateIcon()
 
 /obj/machinery/disk_rack/proc/insert_disk(index, obj/item/disk/data/disk, mob/user)
@@ -92,6 +104,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	user?.drop_item(disk)
 	disk.set_loc(src)
 	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
+	src.update_lights()
 	src.UpdateIcon()
 	return TRUE
 
@@ -105,6 +118,42 @@ TYPEINFO(/obj/machinery/disk_rack)
 			return
 	. = ..()
 
+/obj/machinery/disk_rack/process(mult)
+	. = ..()
+	src.update_lights()
+
+/obj/machinery/disk_rack/power_change()
+	..()
+	if (status & NOPOWER)
+		for (var/i in 1 to DISK::RACK::MAX_DISKS)
+			src.ClearSpecificOverlays(LIGHT_KEY)
+
+/obj/machinery/disk_rack/proc/update_lights()
+	if (status & NOPOWER)
+		return
+
+	for (var/i in 1 to DISK::RACK::MAX_DISKS)
+		if (!src.disk_should_blink(i))
+			src.ClearSpecificOverlays(LIGHT_KEY)
+			src.active_lights[i] = FALSE
+			continue
+
+		src.active_lights[i] = TRUE
+		if (src.GetOverlayImage(LIGHT_KEY))
+			continue
+		var/image/overlay = image(src.icon, "angry_light")
+		overlay.color = "#f00"
+		#ifdef XMAS
+		if (i % 2)
+			overlay.color = "#0f0"
+		#endif
+		overlay.plane = PLANE_SELFILLUM
+		overlay.pixel_y = (i-1) * 2
+		src.UpdateOverlays(overlay, LIGHT_KEY)
+
+/obj/machinery/disk_rack/proc/disk_should_blink(index)
+	return FALSE
+
 /obj/machinery/disk_rack/proc/add_disk_of_type()
 	set name = "Add Disk"
 	var/chosen = tgui_input_list(usr, "Select disk type to add", "Disk To Add", concrete_typesof(src.accepted_disk_type))
@@ -116,6 +165,28 @@ TYPEINFO(/obj/machinery/disk_rack)
 			src.insert_disk(i, new_disk, null)
 			tgui_process.update_uis(src)
 			return
+
+/obj/machinery/disk_rack/proc/delete_disk_in_slot()
+	set name = "Delete Disk"
+	var/list/choices = list()
+	for (var/i in 1 to DISK::RACK::MAX_DISKS)
+		if (src.disks[i])
+			var/obj/item/disk/data/disk_choice = src.disks[i]
+			choices.Add(disk_choice.name)
+	if (length(choices) == 0)
+		boutput(usr, "Hey! No disks in this rack! What are you gonna delete?")
+		return
+	var/chosen = tgui_input_list(usr, "Select disk to DELETE", "Disk to DELETE", choices)
+	if (!chosen)
+		return
+
+	for (var/i in 1 to DISK::RACK::MAX_DISKS)
+		if (src.disks[i])
+			var/obj/item/disk/data/disk_check = src.disks[i]
+			if (disk_check.name == chosen)
+				src.remove_disk(i)
+				qdel(disk_check)
+				break
 
 /obj/machinery/disk_rack/clone
 	name = "clone rack"
@@ -165,39 +236,6 @@ TYPEINFO(/obj/machinery/disk_rack)
 /obj/machinery/disk_rack/clone/ui_data(mob/user)
 	return ..() + list("has_lights" = TRUE)
 
-/obj/machinery/disk_rack/clone/process(mult)
-	src.update_lights()
-
-/obj/machinery/disk_rack/clone/remove_disk(index, mob/user)
-	. = ..()
-	src.update_lights()
-
-#define LIGHT_KEY "angry_light_[i]"
-
-/obj/machinery/disk_rack/clone/power_change()
-	..()
-	if (status & NOPOWER)
-		for (var/i in 1 to DISK::RACK::MAX_DISKS)
-			src.ClearSpecificOverlays(LIGHT_KEY)
-
-/obj/machinery/disk_rack/clone/proc/update_lights()
-	if (status & NOPOWER)
-		return
-	for (var/i in 1 to DISK::RACK::MAX_DISKS)
-		var/obj/item/disk/data/floppy/disk = src.disks[i]
-		if (!disk || !(src.cloneable_disk(i) || src.emagged && prob(20)))
-			src.active_lights[i] = FALSE
-			src.ClearSpecificOverlays(LIGHT_KEY)
-			continue
-		src.active_lights[i] = TRUE
-		if (src.GetOverlayImage(LIGHT_KEY))
-			continue
-		var/image/overlay = image(src.icon, "angry_light")
-		overlay.plane = PLANE_SELFILLUM
-		overlay.pixel_y = (i-1) * 2
-		src.UpdateOverlays(overlay, LIGHT_KEY)
-#undef LIGHT_KEY
-
 /obj/machinery/disk_rack/clone/emag_act(mob/user, obj/item/card/emag/E)
 	if (src.emagged)
 		return FALSE
@@ -206,6 +244,11 @@ TYPEINFO(/obj/machinery/disk_rack)
 	src.processing_tier = PROCESSING_32TH
 	return TRUE
 
+/obj/machinery/disk_rack/clone/disk_should_blink(index)
+	if (!index || index < 1 || index > DISK::RACK::MAX_DISKS || !src.disks[index])
+		return FALSE
+	if (src.cloneable_disk(index) || src.emagged && prob(20))
+		return TRUE
 
 /obj/machinery/disk_rack/office
 	New()
@@ -230,3 +273,5 @@ TYPEINFO(/obj/machinery/disk_rack)
 		rack = new(get_turf(src))
 		rack.pixel_x = -8
 		qdel(src)
+
+#undef LIGHT_KEY

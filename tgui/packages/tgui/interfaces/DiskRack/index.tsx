@@ -23,16 +23,16 @@ const getWindowHeight = (numDisks: number) =>
 
 export const DiskRack = (_props: unknown) => {
   const { act, data } = useBackend<DiskRackData>();
-  const { disks, has_lights, is_wide } = data;
+  const { disk_slots, has_lights, is_wide } = data;
   return (
     <Window
-      height={getWindowHeight(disks.length)}
+      height={getWindowHeight(disk_slots.length)}
       width={304 + (is_wide ? 150 : 0) + (has_lights ? 26 : 0)}
     >
       <Window.Content>
         <Stack vertical reverse>
           <Stack.Divider />
-          {disks.map((disk, index) => {
+          {disk_slots.map((disk_slot, index) => {
             const handleClick = () => act('diskAction', { dmIndex: index + 1 });
             return (
               <Fragment key={index}>
@@ -44,16 +44,23 @@ export const DiskRack = (_props: unknown) => {
                         onInsert={handleClick}
                         is_wide={is_wide}
                       >
-                        {disk && (
-                          <DiskDrive.Disk color={disk.color} is_wide={is_wide}>
-                            {disk.name}
+                        {disk_slot.disk && (
+                          <DiskDrive.Disk
+                            color={disk_slot.disk.color}
+                            is_wide={is_wide}
+                          >
+                            {disk_slot.disk.name}
                           </DiskDrive.Disk>
                         )}
                       </DiskDrive>
                     </Stack.Item>
                     {!!has_lights && (
                       <Stack.Item>
-                        <Led flashing={disk?.light} />
+                        <Led
+                          litColor={disk_slot.litColor}
+                          unlitColor={disk_slot.unlitColor}
+                          flashing={disk_slot.disk?.light}
+                        />
                       </Stack.Item>
                     )}
                   </Stack>

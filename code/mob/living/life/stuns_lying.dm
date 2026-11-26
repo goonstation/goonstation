@@ -42,7 +42,7 @@
 					owner.set_lying(TRUE)
 
 				owner.stat = setStat
-				owner.empty_hands()
+				owner.empty_hands(FALSE)
 
 				if (world.time - last_recovering_msg >= 60 || last_recovering_msg == 0)
 					if (prob(10))

@@ -2907,13 +2907,19 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (ischangeling(src)) // comic book weakness
 		return FALSE
 
-/mob/living/carbon/human/empty_hands()
+/mob/living/carbon/human/empty_hands(var/override_grip = TRUE)
 	..()
+	var/grip_l = HAS_ATOM_PROPERTY(src, PROP_MOB_GRIP_FIRM_LEFT)
+	var/grip_r = HAS_ATOM_PROPERTY(src, PROP_MOB_GRIP_FIRM_RIGHT)
+	if(!override_grip && (grip_r || grip_l) && src.equipped()?.two_handed)
+		return
 	var/h = src.hand
-	src.hand = 0
-	drop_item()
-	src.hand = 1
-	drop_item()
+	if(override_grip || !grip_r)
+		src.hand = RIGHT_HAND
+		drop_item()
+	if(override_grip || !grip_l)
+		src.hand = LEFT_HAND
+		drop_item()
 	src.hand = h
 
 /mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)

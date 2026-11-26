@@ -701,7 +701,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	if (src.turn_it_back_on())
 		user.visible_message(SPAN_ALERT("<b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!")) //revived, transferred client to
 		return TRUE
-	else if(!isobserver(src.brain.owner?.current))
+	else if (!isdead(src))
 		user.visible_message(SPAN_ALERT("<b>[user.name]</b> pokes the restart button on [src.name]! [src.name] comes online, but remains in hiberation mode.")) //revived, didn't transfer client to
 	else
 		user.visible_message(SPAN_ALERT("<b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.")) //didn't revive
@@ -711,8 +711,10 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	if (src.health >= 50 && src.brain)
 		setalive(src)
 		if (src.brain.owner && src.brain.owner.current)
-			if (!find_ghost_by_key(src.brain.owner.current.key)) // we don't actually need a ref to the mob (since we already have that via current)
-																// just using this proc to check for VR/afterlife/ghostcritter/etc
+			if (src.brain.owner.get_player()?.dnr)
+				return FALSE
+			// we don't need the mob itself (current has it), this just rules out VR/afterlife/ghostcritter/etc
+			if (!find_ghost_by_key(src.brain.owner.current.key))
 				return FALSE
 			var/mob/ghost = src.brain.owner.current
 			ghost.show_text(SPAN_ALERT("<B>You feel your self being pulled back from the afterlife!</B>"))

@@ -3,6 +3,11 @@
 	name = "(de/re)-construction device"
 	desc = "A magical saw-like device for unmaking things. Is that a soldering iron on the back?"
 	default_material = "miracle"
+	uses_default_material_appearance = TRUE
+	var/list/blacklisted_types = list(
+		/obj/item/storage/backpack,
+		/obj/item/storage/belt,
+	)
 
 	New()
 		. = ..()
@@ -10,7 +15,7 @@
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
 
 	pre_attackby(source, atom/target, mob/user)
-		if (!isobj(target))
+		if (!isobj(target) || istypes(target, src.blacklisted_types))
 			return
 		if (istype(target, /obj/item/electronics/frame))
 			var/obj/item/electronics/frame/F = target
