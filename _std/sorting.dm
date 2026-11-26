@@ -36,6 +36,7 @@
 		SI.associative = associative
 
 		SI.timSort(fromIndex, toIndex)
+		SI.L = null // don't keep a ref
 	return L
 
 /// Just like [/proc/sortList], but return a sorted copy of the given list
