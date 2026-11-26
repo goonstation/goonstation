@@ -77,13 +77,19 @@
 		boutput(user, SPAN_NOTICE("[src] has nothing inside its storage drum to empty!"))
 		return .
 
+	var/obj/item/organ/eye/stored_eye = locate() in src.storage.get_contents()
+
 	for (var/obj/item/I as anything in src.storage.get_contents())
 		src.storage.transfer_stored_item(I, get_turf(src))
 		I.pixel_x = rand(-8, 8)
 		I.pixel_y = rand(-8, 8)
 
 	src.tooltip_rebuild = TRUE
-	playsound(src, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 30, 0.1)
+
+	if(istype(stored_eye))
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	else
+		playsound(src, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 30, 0.1)
 
 /obj/item/shrapnel_extractor/update_icon()
 	. = ..()
