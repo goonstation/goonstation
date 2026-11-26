@@ -71,6 +71,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			reagent_list.len = 0
 			reagent_list = null
 		my_atom = null
+		active_reagent_holders -= src
 		total_volume = 0
 		addiction_tally = null
 		..()
