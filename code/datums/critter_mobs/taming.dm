@@ -67,11 +67,12 @@ TYPEINFO(/datum/component/tameable)
 	else
 		if(owner.tamed)
 			return
-		if(prob(tame_chance) && istypes(item, taming_foods))
+		if(prob(tame_chance) && is_valid_food(item))
 			owner.friends += user
 			owner.tamed = TRUE
 			owner.visible_message("[owner] with a [emote_happy] happily eats up the \the [item], and seems a little friendlier with [user].")
 			owner.emote(emote_happy)
+			owner.ai_retaliates = FALSE
 			owner.ai.interrupt()
 		else if(aggro_mode)
 			owner.visible_message(SPAN_NOTICE("[owner] hated \the [item] and bit [user]'s hand!"))
