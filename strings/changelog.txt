@@ -1,4 +1,9 @@
 
+(t)thu nov 26 26
+(u)SmileyLemonade
+(p)28256
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Adds 4 new eval operations for DWAINE: ceil, floor, round and roundto
 (t)wed nov 25 26
 (u)Astarthoc
 (p)28170
