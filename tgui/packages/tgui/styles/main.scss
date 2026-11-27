@@ -34,7 +34,7 @@
 @include meta.load-css('~tgui-core/styles/themes/paper.scss');
 @include meta.load-css('~tgui-core/styles/themes/retro.scss');
 // @include meta.load-css('~tgui-core/styles/themes/spookyconsole.scss');
-@include meta.load-css('~tgui-core/styles/themes/syndicate.scss');
+//@include meta.load-css('~tgui-core/styles/themes/syndicate.scss');
 // @include meta.load-css('~tgui-core/styles/themes/wizard.scss');
 
 // |GOOONSTATION-ADD| Our themes
@@ -42,6 +42,7 @@
 @include meta.load-css('./themes/genetek.scss');
 @include meta.load-css('./themes/retro-dark.scss');
 @include meta.load-css('./themes/wizard.scss');
+@include meta.load-css('./themes/syndicate.scss');
 // |GOOONSTATION-ADD| Theme modes
 @include meta.load-css('./theme-modes/base-light.scss');
 @include meta.load-css('./theme-modes/ntos-light.scss');
