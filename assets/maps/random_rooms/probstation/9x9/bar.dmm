@@ -33,6 +33,10 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "e" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/carpet{
 	icon_state = "fred6"
 	},
@@ -237,6 +241,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction/right/south,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred6"
 	},
@@ -248,6 +255,7 @@
 /area/station/crew_quarters/jazz)
 "J" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "L" = (
@@ -267,11 +275,6 @@
 /area/station/crew_quarters/bar)
 "N" = (
 /turf/simulated/floor/black,
-/area/station/crew_quarters/bar)
-"O" = (
-/obj/stool/bar,
-/obj/machinery/light_switch/directional/east,
-/turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "P" = (
 /obj/table/reinforced/bar/auto,
@@ -429,7 +432,7 @@ y
 a
 j
 S
-O
+u
 X
 x
 L

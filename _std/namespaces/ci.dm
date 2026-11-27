@@ -7,13 +7,29 @@
 /// Namespace for continuous integration (CI) related data.
 CREATE_NAMESPACE(CI)
 
+/// Prefabs currently loaded: `list(path, min_x, min_y, max_x, max_y, z)`
+ADD_TO_NAMESPACE(CI)(var/list/placed_prefabs = CI_LIST)
+
+/// Sends a message to anyone connected and to the CI job log.
+ADD_TO_NAMESPACE(CI)(proc/announce(text))
+	boutput(world, SPAN_ALERT(text))
+	world.log << text
+
+/// Format a turf's position and the prefab/area it's in into a single string.
+ADD_TO_NAMESPACE(CI)(proc/format_location(turf/T))
+	for (var/list/prefab as anything in CI.placed_prefabs)
+		if (T.z == prefab[6] && T.x >= prefab[2] && T.y >= prefab[3] && T.x <= prefab[4] && T.y <= prefab[5])
+			return "([T.x], [T.y], [T.z]) in [T.loc] in prefab [prefab[1]]"
+
+	return "([T.x], [T.y], [T.z]) in [T.loc]"
+
 /// Format the name, type, and position of an atom into a single string.
 ADD_TO_NAMESPACE(CI)(proc/format_position(atom/A, capitalise = TRUE))
 	var/turf/T = get_turf(A)
 	if (capitalise)
-		return "\The [A.name] ([A.type]) at ([T.x], [T.y], [T.z]) in [T.loc]"
+		return "\The [A.name] ([A.type]) at [CI.format_location(T)]"
 	else
-		return "\the [A.name] ([A.type]) at ([T.x], [T.y], [T.z]) in [T.loc]"
+		return "\the [A.name] ([A.type]) at [CI.format_location(T)]"
 
 /// Format a list of types into a list in plain English as a string.
 ADD_TO_NAMESPACE(CI)(proc/type_list(list/area/type_list, and_text = " and "))

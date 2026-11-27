@@ -74,7 +74,7 @@
 
 
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
-		/datum/trader/vurdalak,/datum/trader/buford, /datum/trader/steve)
+		/datum/trader/vurdalak,/datum/trader/buford, /datum/trader/steve, /datum/trader/sobb)
 
 		var/total_unique_traders = 5
 		while(total_unique_traders > 0)
@@ -460,7 +460,7 @@
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	// Returns value of whatever the list of objects would sell for
-	proc/appraise_value(var/list/obj/items, var/list/commodities_list, var/sell = 1)
+	proc/appraise_value(var/list/atom/targets, var/list/commodities_list, var/sell = 1)
 
 		// TODO: Does this handle common containers like satchels?
 		// If not, maybe they should?
@@ -470,54 +470,74 @@
 		var/duckets = 0  // fuck yeah duckets  ((noun) Cash, money or bills, from "ducats")
 		var/add = 0
 		if (!commodities_list)
-			for(var/obj/O in items)
+			for(var/atom/A in targets)
+				if(ismob(A))
+					var/mob/M = A
+					if(M.client?.player)
+						continue
 				for (var/C in src.commodities) // Key is type of the commodity
 					var/datum/commodity/CM = commodities[C]
-					if (istype(O, CM.comtype))
+					if (istype(A, CM.comtype))
 						add = CM.price
 						if (CM.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //not many wanderers travel to these far reaches. welcome, honored guest.
-							add *= O:amount // TODO: fix for snacks
+						if (istype(A, /obj/item/raw_material) || istype(A, /obj/item/sheet) || istype(A, /obj/item/material_piece) || istype(A, /obj/item/plant) || istype(A, /obj/item/reagent_containers/food/snacks/plant) || istype(A, /obj/item/reagent_containers/food/snacks/pizza)) //not many wanderers travel to these far reaches. welcome, honored guest.
+							if(isitem(A))
+								var/obj/item/I = A
+								add *= I.amount // TODO: fix for snacks
 							if (sell)
-								qdel(O)
+								qdel(A)
 						else
 							if (sell)
-								qdel(O)
+								qdel(A)
 						duckets += add
 						break
-					else if (istype(O, /obj/item/currency/spacecash))
-						duckets += 0.9 * O:amount
+					else if (istype(A, /obj/item/currency/spacecash))
+						if(isitem(A))
+							var/obj/item/I = A
+							duckets += 0.9 * I.amount // TODO: fix for snacks
+						else
+							duckets += 0.9
 						if (sell)
-							qdel(O)
+							qdel(A)
 						break
-					else if (istype(O, /obj/item/pressure_crystal))
-						duckets += src.appraise_pressure_crystal(O, sell)
+					else if (istype(A, /obj/item/pressure_crystal))
+						duckets += src.appraise_pressure_crystal(A, sell)
 						if (sell)
-							qdel(O)
+							qdel(A)
 						break
-					else if (O.artifact && sell)
-						src.sell_artifact(O, O.artifact)
+					else if(isobj(A))
+						var/obj/O = A
+						if (O.artifact && sell)
+							src.sell_artifact(O, O.artifact)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
-			for(var/obj/O in items)
+			for(var/atom/A in targets)
+				if(ismob(A))
+					var/mob/M = A
+					if(M.client?.player)
+						continue
 				for (var/datum/commodity/C in commodities_list)
-					if (istype(O, C.comtype))
+					if (istype(A, C.comtype))
 						add = C.price
 						if (C.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //have you come to bring us from this desolate land?
-							add *= O:amount // TODO: fix for snacks
+						if (istype(A, /obj/item/raw_material) || istype(A, /obj/item/sheet) || istype(A, /obj/item/material_piece) || istype(A, /obj/item/plant) || istype(A, /obj/item/reagent_containers/food/snacks/plant) || istype(A, /obj/item/reagent_containers/food/snacks/pizza)) //have you come to bring us from this desolate land?
+							if(isitem(A))
+								var/obj/item/I = A
+								add *= I.amount
 							if (sell)
-								qdel(O)
+								qdel(A)
 						else
 							if (sell)
-								qdel(O)
+								qdel(A)
 						duckets += add
 						break
-					else if (istype(O, /obj/item/currency/spacecash))
-						duckets += O:amount
+					else if (istype(A, /obj/item/currency/spacecash))
+						if(isitem(A))
+							var/obj/item/I = A
+							duckets += I.amount
 						if (sell)
-							qdel(O)
+							qdel(A)
 						break
 
 		return duckets

@@ -741,18 +741,52 @@
 			src.icon_state = "helmet-sec"
 			src.item_state = "helmet-sec"
 
-obj/item/clothing/head/helmet/hardhat/security/hos
+#define HOS_HELMET_TOGGLED_FLAGS (SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR)
+/obj/item/clothing/head/helmet/hardhat/security/hos
 	name = "head of security helmet"
 	icon_state = "helmet-hos"
 	item_state = "helmet-hos"
 	desc = "Somewhat protects your head from being bashed in a little more than an ordinary helmet. It has a cool stripe too to distinguish it from less cool helmets."
+	abilities = list(/obj/ability_button/flashlight_hardhat, /obj/ability_button/toggle_visor)
+	var/visor_up = TRUE // The visor's current position
+	HELP_MESSAGE_OVERRIDE("Use the <b>Toggle Visor</b> ability to toggle space resistance.")
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 7)
 
-	attack_self(mob/user as mob)
-		return
+	attack_self(mob/user)
+		for(var/obj/ability_button/toggle_visor/toggle in ability_buttons)
+			toggle.execute_ability()
+
+	proc/flip_down(var/mob/living/carbon/human/user, var/silent = FALSE)
+		src.visor_up = FALSE
+		src.see_face = FALSE
+		src.icon_state = "helmet-hos-visor-down"
+		src.item_state = "helmet-hos-visor-down"
+		src.c_flags |= HOS_HELMET_TOGGLED_FLAGS
+		src.hides_from_examine |= (C_EARS|C_MASK|C_GLASSES)
+		setProperty("space_movespeed", 0.2)
+		if (ishuman(user) && user.head == src)
+			user.update_clothing()
+		if (!silent)
+			boutput(user, SPAN_HINT("You flip the visor down. The mask now provides protection from space, but slows your movement."))
+
+
+	proc/flip_up(var/mob/living/carbon/human/user, var/silent = FALSE)
+		src.visor_up = TRUE
+		src.see_face = TRUE
+		src.icon_state = "helmet-hos"
+		src.item_state = "helmet-hos"
+		src.c_flags &= ~HOS_HELMET_TOGGLED_FLAGS
+		src.hides_from_examine &= ~(C_EARS|C_MASK|C_GLASSES)
+		setProperty("space_movespeed", 0)
+		if (ishuman(user) && user.head == src)
+			user.update_clothing()
+		if (!silent)
+			boutput(user, SPAN_HINT("You flip the visor up. The helmet no longer provides space resistance."))
+#undef HOS_HELMET_TOGGLED_FLAGS
+
 
 /obj/item/clothing/head/helmet/hardhat/security/improved // Azungar's more out of style helmet that can only be bought through QM.
 	name = "elite helmet"
@@ -1248,15 +1282,31 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	block_vision = 1
 	c_flags = parent_type::c_flags | COVERSHAIR
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
+	/// custom name of the bucket this was flipped from
+	var/bucket_name = null
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 	attack_self(mob/user as mob)
 		boutput(user, SPAN_NOTICE("You turn the bucket right side up."))
-		var/obj/item/reagent_containers/glass/bucket/B = new bucket_type(src.loc)
+		var/obj/item/reagent_containers/glass/bucket/B = src.make_bucket()
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 		qdel(src)
 		return
+
+	/// Turns this into a bucket
+	proc/make_bucket()
+		RETURN_TYPE(/obj/item/reagent_containers/glass/bucket)
+		var/obj/item/reagent_containers/glass/bucket/bucket = new bucket_type(src.loc)
+		bucket.setMaterial(src.material)
+		bucket.forensic_holder = src.forensic_holder
+		bucket.color = src.color
+		src.copy_filters_to(bucket)
+		if (src.bucket_name)
+			bucket.name = src.bucket_name
+			bucket.real_name = src.bucket_name
+		return bucket
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

@@ -3183,7 +3183,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 3
 	heal_amt = 2
-	initial_reagents = list("sugar" = 10, "vanilla" = 10)
+	initial_reagents = list("sugar" = 10, "vanilla" = 5, "caramel" = 5)
 	food_effects = list("food_energized")
 	meal_time_flags = FOOD::MEAL::SNACK
 

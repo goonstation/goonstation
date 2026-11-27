@@ -13,7 +13,7 @@ ADD_TO_NAMESPACE(DWAINE, SHELL, CONSTS)(var/const/MAX_PIPED_COMMANDS = 16)
 /// The maximum number of while loop iterations when processing a script.
 ADD_TO_NAMESPACE(DWAINE, SHELL, CONSTS)(var/const/MAX_SCRIPT_COMPLEXITY = 2048)
 /// When executing a shell script, the shell forks itself; this is the maximum fork depth.
-ADD_TO_NAMESPACE(DWAINE, SHELL, CONSTS)(var/const/MAX_SCRIPT_ITERATIONS = 128)
+ADD_TO_NAMESPACE(DWAINE, SHELL, CONSTS)(var/const/MAX_SCRIPT_ITERATIONS = 12)
 /// The maximum number of items allowed in the data stack.
 ADD_TO_NAMESPACE(DWAINE, SHELL, CONSTS)(var/const/MAX_STACK_DEPTH = 128)
 

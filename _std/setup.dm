@@ -50,13 +50,13 @@
 #define HALLOWEEN 1
 #endif
 
-#if (BUILD_TIME_MONTH == 12) || (BUILD_TIME_MONTH == 1) || (BUILD_TIME_MONTH == 2)
+#if !defined(SEASON_MANUAL_ONLY) && ((BUILD_TIME_MONTH == 12) || (BUILD_TIME_MONTH == 1) || (BUILD_TIME_MONTH == 2))
 #define SEASON_WINTER 1
-#elif (BUILD_TIME_MONTH == 3) || (BUILD_TIME_MONTH == 4) || (BUILD_TIME_MONTH == 5)
+#elif !defined(SEASON_MANUAL_ONLY)  && ((BUILD_TIME_MONTH == 3) || (BUILD_TIME_MONTH == 4) || (BUILD_TIME_MONTH == 5))
 #define SEASON_SPRING 1
-#elif (BUILD_TIME_MONTH == 6) || (BUILD_TIME_MONTH == 7) || (BUILD_TIME_MONTH == 8)
+#elif !defined(SEASON_MANUAL_ONLY)  && ((BUILD_TIME_MONTH == 6) || (BUILD_TIME_MONTH == 7) || (BUILD_TIME_MONTH == 8))
 #define SEASON_SUMMER 1
-#else
+#elif !defined(SEASON_MANUAL_ONLY)
 #define SEASON_AUTUMN 1
 #endif
 

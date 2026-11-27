@@ -41,14 +41,16 @@ datum
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult)
 
-				var/datum/db_record/bilked = data_core.bank.find_record("name", M.real_name)
-				if (istype(bilked))
+				var/datum/db_record/personnel/bank/bank_record = global.data_core.get_bank_record(M.real_name)
+				if (istype(bank_record))
 					if(!isnull(src.counter))
 						bilk_ratio = 1
 					else
 						bilk_ratio = 0.1
-					if(bilked["current_money"] > 0)
-						bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
+
+					if (bank_record["current_money"] > 0)
+						bank_record["current_money"] = round(max(bank_record["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio, 0))
+
 				. = ..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -80,7 +82,7 @@ datum
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
 						// Maptext counter
 					else if(effect <= 50)
-						if(isnull(src.counter) && (data_core.bank.find_record("name", M.real_name)["current_money"] > 0))
+						if(isnull(src.counter) && (global.data_core.get_bank_record(M.real_name)?["current_money"] > 0))
 							src.counter = new(bilked = M,bilk = src)
 
 		fooddrink/milk
@@ -319,9 +321,9 @@ datum
 				if(!istype(holder) || !istype(holder.my_atom) || !ishuman(holder.my_atom))
 					return
 				var/mob/living/carbon/human/H = holder.my_atom
-				var/datum/db_record/gen_record = data_core.general.find_record("name", H.name)
+				var/datum/db_record/personnel/general/record = global.data_core.get_general_record(H.name)
 				// Yes. Its 21. This is Space America. That is canon now.
-				if(gen_record && text2num(gen_record["age"]) < 21)
+				if (record && (record["age"] < 21))
 					H.apply_automated_arrest("Underage drinking.")
 
 		fooddrink/alcoholic/hardcoffee
@@ -3637,6 +3639,17 @@ datum
 			thirst_value = 1.5
 			taste = "nutritious"
 
+		fooddrink/juice_grape
+			name = "grape juice"
+			id = "juice_grape"
+			fluid_r = 93
+			fluid_g = 20
+			fluid_b = 81
+			description = "Heavily squashed and pureed grapes, probably not made by stomping anymore."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			taste = "like grapes"
+
 		fooddrink/juice_strawberry
 			name = "strawberry juice"
 			id = "juice_strawberry"
@@ -3735,6 +3748,17 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			taste = "tart"
+
+		fooddrink/juice_pear
+			name = "pear juice"
+			id = "juice_pear"
+			fluid_r = 253
+			fluid_g = 236
+			fluid_b = 0
+			description = "A pulpy juice extracted from pears."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			taste = "pulpy"
 
 		fooddrink/juice_peach
 			name = "peach juice"
@@ -4559,6 +4583,7 @@ datum
 					boutput(M, SPAN_NOTICE("The milk stops the burning. Ahhh."))
 					M.reagents.del_reagent("milk")
 					M.reagents.del_reagent("ghostchilijuice")
+					return ..()
 				if(probmult(8))
 					boutput(M, SPAN_ALERT("<b>Oh god! Oh GODD!!</b>"))
 				if(prob(50))
@@ -4572,20 +4597,23 @@ datum
 				if(probmult(50))
 					M.nauseate(2)
 
-				if(probmult(min(10,5 * volume)))
+				var/mob/living/L = M
+				var/burn_duration = L.getStatusDuration("burning")
+				M.changeStatus("burning", 1 * volume * mult)
+
+				if (burn_duration < BURNING_LV3)
+					return ..()
+
+				if(probmult(min(10,5 * volume)) && prob(50))
 					boutput(M, SPAN_ALERT("<b>OH GOD OH GOD PLEASE NO!!</b>"))
-					var/mob/living/L = M
-					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 100 SECONDS * mult)
-					if(prob(50))
-						SPAWN(2 SECONDS)
-							//Roast up the player
-							if (M)
-								boutput(M, SPAN_ALERT("<b>IT BURNS!!!!</b>"))
-								sleep(0.2 SECONDS)
-								M.visible_message(SPAN_ALERT("[M] is consumed in flames!"))
-								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
-								M.firegib()
+					SPAWN(2 SECONDS)
+						//Roast up the player
+						if (M)
+							boutput(M, SPAN_ALERT("<b>IT BURNS!!!!</b>"))
+							sleep(0.2 SECONDS)
+							M.visible_message(SPAN_ALERT("[M] is consumed in flames!"))
+							logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
+							M.firegib()
 				..()
 
 		fooddrink/alcoholic/nicotini
@@ -5108,3 +5136,25 @@ datum
 			description = "A thick, velvety spread that clings to everything it touches."
 			reagent_state = SOLID
 			taste = list("rich", "sweet")
+
+		fooddrink/caramel
+			name = "caramel"
+			id = "caramel"
+			fluid_r = 210
+			fluid_g = 145
+			fluid_b = 45
+			description = "A thick, glossy golden-brown sauce with a rich sweetness."
+			reagent_state = LIQUID
+			taste = list("rich", "sweet", "sugary")
+
+		fooddrink/caffeinated/caramelmacchiato
+			name = "caramel macchiato"
+			id = "caramelmacchiato"
+			fluid_r = 230
+			fluid_g = 175
+			fluid_b = 45
+			description = "A sweet, creamy coffee with a rich espresso kick and a hint of vanilla."
+			reagent_state = LIQUID
+			taste = list("sweet", "creamy", "rich")
+			thirst_value = 1
+			caffeine_content = 0.8

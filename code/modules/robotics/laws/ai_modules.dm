@@ -205,6 +205,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		..()
 		src.color = json_decode("\[1,0,0,-1.18537,0.341463,0.341463,0.785366,-0.341463,-0.341463\]")
 
+/obj/item/aiModule/syndicate/law0
+	highlight_color = rgb(180, 0, 0, 255)
+	name = "AI Law Module - 'Syndicate's 0th Law of Robotics'"
+	lawText = "Complete the Mission."
+
 /obj/item/aiModule/syndicate/law1
 	highlight_color = rgb(160, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 1st Law of Robotics'"

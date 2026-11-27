@@ -131,7 +131,21 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/secure/sbriefcase)
 	items_in_backpack = list(/obj/item/baton/cane)
-	alt_names = list("Senator", "President", "Board Member", "Mayor", "Vice-President", "Governor")
+	alt_names = list("Senator",
+		"President",
+		"Mayor",
+		"Vice-President",
+		"Governor",
+		"Investor",
+		"Shareholder",
+		"Industrialist",
+		"Stakeholder",
+		"Strategic Partner",
+		"Hedge Fund Manager",
+		"Board Member",
+		"Plasma Baron",
+		"Clerical Paraphernalia Broker",
+		"Exo-Archaeology Patron")
 	wiki_link = "https://wiki.ss13.co/VIP"
 
 	special_setup(var/mob/living/carbon/human/M)

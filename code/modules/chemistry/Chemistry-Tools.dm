@@ -603,6 +603,10 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 				return
 			user.show_text("You cut eyeholes into [src].")
 			var/obj/item/clothing/head/helmet/bucket/B = new helmet_bucket_type(src.loc)
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			B.color = src.color
+			src.copy_filters_to(B)
 			user.put_in_hand_or_drop(B)
 			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 			qdel(src)
@@ -621,11 +625,23 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 			src.reagents.reaction(get_turf(src))
 		else
 			user.show_text("You turn the bucket upside down.", "red")
-		var/obj/item/clothing/head/helmet/bucket/hat/B = new hat_bucket_type(src.loc)
+		var/obj/item/clothing/head/helmet/bucket/hat/B = src.make_hat()
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
 		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 		qdel(src)
+
+	/// Creates the hat version of this bucket
+	proc/make_hat()
+		RETURN_TYPE(/obj/item/clothing/head/helmet/bucket/hat)
+		var/obj/item/clothing/head/helmet/bucket/hat/hat = new hat_bucket_type(src.loc)
+		hat.setMaterial(src.material)
+		hat.forensic_holder = src.forensic_holder
+		hat.color = src.color
+		src.copy_filters_to(hat)
+		if (src.name != initial(src.name))
+			hat.bucket_name = src.name
+		return hat
 
 	afterattack(obj/target, mob/user, flag)
 		if(!istype(target, /obj/machinery/door/unpowered/wood))
@@ -671,7 +687,7 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 			if(ishuman(AM))
 				//the bucket lands on your head for maximum comedy
 				var/mob/living/carbon/human/H = AM
-				var/obj/item/clothing/head/helmet/bucket/hat/bucket_hat = new src.hat_bucket_type(src.loc)
+				var/obj/item/clothing/head/helmet/bucket/hat/bucket_hat = src.make_hat()
 				if(isnull(H.head))
 					H.equip_if_possible(bucket_hat, SLOT_HEAD)
 					H.set_clothing_icon_dirty()

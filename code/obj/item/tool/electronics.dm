@@ -396,7 +396,7 @@ TYPEINFO(/obj/machinery/rkit)
 	density = 1
 
 	//var/datum/electronics/electronics_items/link = null
-	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
+	req_access = list(access_sysadmin)
 	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED
 
 	var/processing = 0

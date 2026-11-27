@@ -32,6 +32,16 @@ SET_UP_CI_TRACKING(/obj/disposaloutlet)
 	src.chute = chute
 	. = ..()
 
+/// Has this dummy has finished travelling?
+/obj/item/pipenet_test_dummy/proc/arrived()
+	return get_turf(src) in global.landmarks[LANDMARK_DISPOSALS_ENDPOINT]
+
+/// Waits until every dummy has arrived for up to 5 seconds
+/proc/wait_for_pipenet_dummies(list/obj/item/pipenet_test_dummy/dummies)
+	var/give_up_at = world.time + 5 SECONDS
+	for (var/obj/item/pipenet_test_dummy/dummy as anything in dummies)
+		while (!dummy.arrived() && world.time < give_up_at)
+			sleep(1)
 
 /obj/item/pipenet_test_dummy/mail
 	var/turf/ejection_turf = null
@@ -42,6 +52,9 @@ SET_UP_CI_TRACKING(/obj/disposaloutlet)
 	src.name += " ([chute.mail_tag] ➔ [destination])"
 	src.destination_tag = destination
 	. = ..()
+
+/obj/item/pipenet_test_dummy/mail/arrived()
+	return !isnull(src.ejection_turf)
 
 /obj/item/pipenet_test_dummy/mail/pipe_eject()
 	src.ejection_turf = get_turf(src)

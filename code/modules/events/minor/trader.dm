@@ -1,5 +1,6 @@
 /datum/random_event/minor/trader
 	name = "Travelling Trader"
+	description = "A trader ship docks at one of two station docks, or the diner dock"
 	customization_available = TRUE
 	//moved centcom headline and message down to the event_effect to change it depending on where the shuttle docks, preserving just in case, feel free to remove if you feel it's unnecessary
 	//centcom_headline = "Commerce and Customs Alert"
@@ -127,6 +128,10 @@
 			for(var/mob/AM in T)
 				if(isobserver(AM))
 					continue
+				// dry up any glue so that it doesnt eat the set_loc
+				var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+				if (glued_comp)
+					qdel(glued_comp)
 				showswirl(AM)
 				AM.set_loc(pick_landmark(LANDMARK_LATEJOIN, locate(150, 150, 1)))
 				showswirl(AM)

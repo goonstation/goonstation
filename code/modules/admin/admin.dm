@@ -93,6 +93,7 @@ var/global/noir = 0
 		return
 
 	if (usr.client != src.owner)
+		href = html_encode(href)
 		message_admins(SPAN_INTERNAL("[key_name(usr)] has attempted to override the admin panel with URL '[href]'!"))
 		logTheThing(LOG_ADMIN, usr, "tried to use the admin panel without authorization with URL '[href]'.")
 		logTheThing(LOG_DIARY, usr, "tried to use the admin panel without authorization with URL '[href]'.", "admin")
@@ -2529,13 +2530,13 @@ var/global/noir = 0
 									logTheThing(LOG_ADMIN, usr, "gave everyone a random safe firearm.")
 									logTheThing(LOG_DIARY, usr, "gave everyone a random safe firearm.", "admin")
 									for (var/mob/living/L in mobs)
-										new /obj/random_item_spawner/kineticgun/safer/one(get_turf(L))
+										new /obj/random_item_spawner/kineticgun/safer/one/equip_cyborgs(get_turf(L), L)
 								if("ANY GUN")
 									message_admins("[key_name(usr)] gave everyone a completely random firearm.")
 									logTheThing(LOG_ADMIN, usr, "gave everyone a completely random firearm.")
 									logTheThing(LOG_DIARY, usr, "gave everyone a completely random firearm.", "admin")
 									for (var/mob/living/L in mobs)
-										new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
+										new /obj/random_item_spawner/kineticgun/fullrandom/equip_cyborgs(get_turf(L), L)
 
 
 						else

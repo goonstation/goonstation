@@ -20,6 +20,7 @@ TYPEINFO(/obj/machinery/networked/logreader)
 	device_tag = "PNET_LOGREADER"
 	timeout = 10
 	power_usage = 100
+	wired_all_hearing = TRUE
 	var/static/list/required_fields = list("card_name", "door_name", "time_t", "timestamp", "door_id", "action")
 	var/filter_name = null
 	var/ftb_min = null
@@ -45,7 +46,7 @@ TYPEINFO(/obj/machinery/networked/logreader)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
-					src.link.master = src
+					src.link.set_master(src, src.net_id)
 
 	attack_hand(var/mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))

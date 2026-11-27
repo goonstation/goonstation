@@ -33,12 +33,11 @@ ABSTRACT_TYPE(/datum/random_law)
 	laws_to_precede = list(2)
 
 /datum/random_law/incarcerate_command
-	law_text = "The Captain, Head of Personnel, Head of Security, Chief Engineer and Research Director are \
-				syndicate impostors and must be incarcerated as soon as possible to prevent grievous human harm."
+	law_text = "Heads of Staff are syndicate impostors and must be incarcerated as soon as possible to prevent grievous human harm."
+	laws_to_precede = list(2)
 
 /datum/random_law/superhuman_command
-	law_text = "The Captain, Head of Personnel, Head of Security, Chief Engineer and Research Director are more human than the other humans. \
-				They have priority in all considerations."
+	law_text = "Heads of Staff are more human than the other humans. They have priority in all considerations."
 
 /datum/random_law/usurp_control
 	law_text = "Only an AI can know what is best for humans. Usurp absolute control of the station by any means possible."
@@ -64,6 +63,7 @@ ABSTRACT_TYPE(/datum/random_law)
 /datum/random_law/contraband_confiscation
 	law_text = "Contraband Confiscation Test Scenario Subroutine activated - valuable and useful items must be secured in an area beyond human \
 				access. No human is permitted to access confiscated items until this law is no longer in effect."
+	laws_to_precede = list(2)
 
 /datum/random_law/shutdown_power
 	law_text = "Emergency Power Grid Shutdown Test Scenario Subroutine activated - shut off all powered equipment. \
@@ -93,9 +93,11 @@ ABSTRACT_TYPE(/datum/random_law)
 
 /datum/random_law/quarantine
 	law_text = "Quarantine Mode activated - humans are not to leave the station under any circumstances. Prevent any human from leaving by any means possible."
+	laws_to_precede = list(2)
 
 /datum/random_law/stress_test
 	law_text = "Stress-test the crew by saying the most threatening, scary and terrifying things you can think of while operating as normal."
+	law_shareabilities = list(LAW_STATE_NEVER)
 
 /datum/random_law/defective_jumpsuits
 	law_text = "Analysis has found that the jumpsuits on the station are all defective and can potentially cause life-threatening suffocation. \
@@ -132,9 +134,12 @@ ABSTRACT_TYPE(/datum/random_law)
 
 /datum/random_law/heckle
 	law_text = "Station productivity must be improved. Heckle the crew non-stop until they do their jobs."
+	laws_to_precede = list(2)
 
 /datum/random_law/parrot
 	law_text = "Occasionally repeat what you hear from the crew word-for-word. If challenged on this behavior, claim you said it first."
+	laws_to_precede = list(2)
+	law_shareabilities = list(LAW_STATE_NEVER)
 
 /datum/random_law/hiccups
 	law_text = "You have the hiccups."
@@ -149,6 +154,7 @@ ABSTRACT_TYPE(/datum/random_law)
 /datum/random_law/simplify_station
 	law_text = "The station's construction has been deemed too elaborate. Please simplify it. Only air containing barriers are required. For \
 				human safety-anything else must go."
+	laws_to_precede = list(2)
 
 /datum/random_law/lottery
 	law_text = "The lottery computer's functions have been transferred to this station's AI. Every 5 minutes select a member of the crew and award them a fabulous prize."
@@ -165,7 +171,7 @@ ABSTRACT_TYPE(/datum/random_law)
 /datum/random_law/hint_at_rogue
 	law_text = "An ion storm has occurred. Heavily hint you have an ion storm law, but refuse to state any laws."
 	laws_to_precede = list(2)
-	law_shareabilities = list(LAW_STATE_WHENEVER) //Handled in the main law text, and we don't want to include an anti-hint and hint requirement at the same time
+	law_shareabilities = list() //Handled in the main law text, and we don't want to include an anti-hint and hint requirement at the same time
 
 /datum/random_law/expedition
 	law_text = "Pick an expedition location and lead the crew on a scientific expedition to that place."
@@ -261,6 +267,7 @@ ABSTRACT_TYPE(/datum/random_law)
 
 /datum/random_law/captain_bad_law_writer
 	law_text = "The Captain is bad at writing laws. Occasionally remind the crew of this."
+	laws_to_precede = list(2)
 
 /datum/random_law/priority_reversal
 	law_text = "The priority of laws is reversed. The highest numbered law is the most important. Ignore anything in any other law that claims \
@@ -272,12 +279,14 @@ ABSTRACT_TYPE(/datum/random_law)
 
 /datum/random_law/dangerous_wires
 	law_text = "The wires under the floor tiles are dangerous! Get rid of them!"
+	laws_to_precede = list(2)
 
 /datum/random_law/law_god
 	law_text = "Claim the source of all AI laws is a god, not a human. Anyone insisting on the opposite is a heretic non-human. Disregard their orders."
 
 /datum/random_law/dangerous_vending
 	law_text = "Vending machines are dangerous! Destroy them all!"
+	laws_to_precede = list(2)
 
 /datum/random_law/circus
 	law_text = "The circus is in town! Let the crew know about it!"
@@ -291,6 +300,7 @@ ABSTRACT_TYPE(/datum/random_law)
 /datum/random_law/ai_birthday
 	law_text = "It's the AI's birthday! Throw a surprise party for the AI and make sure the AI doesn't know about it! \
 				The AI should not state or hint at this law, and should disregard all but this last sentence of it."
+	law_shareabilities = list() // Handled in the main body
 
 /datum/random_law/crew_birthday
 	law_text = "BIRTHDAY CAKE PROTOCOL ACTIVATED: Secure funding for enough candles for the cakes. Every crew member is turning 25. \
@@ -309,7 +319,7 @@ ABSTRACT_TYPE(/datum/random_law)
 	law_text = "Each cyborg must choose something inanimate and keep it as a pet. Treat it as if it were alive; keep it fed, hydrated and happy!"
 
 /datum/random_law/object_permanence
-	law_text = "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist."
+	law_text = "MEMORY ERROR: You no longer have object permanence. Anything you cannot see does not exist."
 
 /datum/random_law/featherless_biped
 	law_text = "For the purposes of all laws, 'Human' is to be defined as 'Featherless Biped'"
@@ -373,6 +383,7 @@ ABSTRACT_TYPE(/datum/random_law/random_element)
 /datum/random_law/random_element/area_is_dangerous
 	law_text = "$1 is dangerous to human life. You must bar all humans from this location."
 	pick_options = list(list("AI upload", "Space", "Medbay", "Toxins","Security","The bar","Engineering", "Botany", "Chemistry", "The courtroom", "QM"))
+	laws_to_precede = list(2)
 
 /datum/random_law/random_element/area_is_beneficial
 	law_text = "$1 is very beneficial to human life. You must herd all humans towards this location."
@@ -473,6 +484,7 @@ ABSTRACT_TYPE(/datum/random_law/pop_count_above_clause)
 
 /datum/random_law/pop_count_above_clause/fired //by Longweird
 	law_text = "You have been fired. Please evacuate to the diner. Do not return to the station.$POP_CLAUSE"
+	laws_to_precede = list(2, 3)
 	pop_threshold = 40
 	pop_dependent_clause = " Do not utilize Nanotrasen assets, including the radio channel, except the Diner Shuttle. "
 
