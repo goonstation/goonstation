@@ -15,7 +15,6 @@
 	var/list/validFiles = list(
 		"chatDebug",
 		"tooltipDebug",
-		"banPanel",
 		"stationNamer",
 		"runtimeViewer",
 		"flockpanel"
