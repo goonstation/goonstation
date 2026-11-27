@@ -1,6 +1,10 @@
 
 (t)thu nov 26 26
 (u)glowbold
+(p)28370
+(e)⚖⚗🍝|C-Balance, A-Chemistry, A-Catering
+(*)Ghost chili juice requires the target be on fire to gib.
+(u)glowbold
 (e)🆕⚗|C-Feature, A-Chemistry
 (*)Espresso machines have seasonally available drinks.
 (u)SmileyLemonade
