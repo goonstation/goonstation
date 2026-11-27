@@ -1,5 +1,9 @@
 
 (t)fri nov 27 26
+(u)SmileyLemonade
+(p)28383
+(e)🖥️|A-Computers
+(+)The DWAINE eval modulo operator (%) now supports fractional numbers.
 (u)JORJ949
 (p)28367
 (e)💊😈|A-Medical, A-Antagonists
