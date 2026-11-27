@@ -1,5 +1,9 @@
 
 (t)thu nov 26 26
+(u)Sovexe
+(p)28135
+(e)🆕🧫🔊📄⚙📜|C-Feature, C-Experimental, C-Sound, A-UI, A-Internal, C-Documentation
+(*)(Highly experimental) sustain instruments added for piano/guitar/sax
 (u)glowbold
 (p)28370
 (e)⚖⚗🍝|C-Balance, A-Chemistry, A-Catering
