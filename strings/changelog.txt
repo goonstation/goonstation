@@ -1,5 +1,8 @@
 
 (t)thu nov 26 26
+(u)glowbold
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Espresso machines have seasonally available drinks.
 (u)SmileyLemonade
 (p)28256
 (e)🆕💡|C-Feature, A-Station-Systems

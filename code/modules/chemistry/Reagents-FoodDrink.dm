@@ -5133,9 +5133,9 @@ datum
 			reagent_state = SOLID
 			taste = list("rich", "sweet")
 
-		fooddrink/caramelsauce
-			name = "caramel sauce"
-			id = "caramelsauce"
+		fooddrink/caramel
+			name = "caramel"
+			id = "caramel"
 			fluid_r = 210
 			fluid_g = 145
 			fluid_b = 45

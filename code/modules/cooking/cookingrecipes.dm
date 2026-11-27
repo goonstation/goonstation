@@ -1325,7 +1325,7 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 /datum/recipe/raw_flan // mixer
 	ingredients = list(\
 		/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
-		/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
+		/obj/item/reagent_containers/food/snacks/condiment/caramelsauce = 1,
 		/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 		/obj/item/reagent_containers/food/drinks/milk = 1)
 	output = /obj/item/reagent_containers/food/snacks/ingredient/raw_flan

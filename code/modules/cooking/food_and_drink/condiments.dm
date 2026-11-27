@@ -278,4 +278,4 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment/jam)
 	icon_state = "vanilla-extract"
 	food_color = "#D2902D"
 	initial_volume = 30
-	initial_reagents = "caramelsauce"
+	initial_reagents = "caramel"
