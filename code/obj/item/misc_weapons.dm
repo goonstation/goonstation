@@ -1621,7 +1621,6 @@ TYPEINFO(/obj/item/swords_sheaths)
 			user.put_in_hand_or_drop(sword_inside)
 			sword_inside = null //No more sword inside.
 			user.update_clothing()
-
 		else
 			boutput(user, "You don't have a free hand to draw with!")
 

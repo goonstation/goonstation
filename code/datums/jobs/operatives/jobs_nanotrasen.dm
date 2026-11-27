@@ -52,6 +52,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 
+
 /datum/job/special/nt/engineer
 	name = "Nanotrasen Emergency Repair Technician"
 	trait_list = list("training_engineer")
