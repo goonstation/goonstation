@@ -93,16 +93,6 @@
 	path = "images/pocket_guides/siphonguide.png"
 	scale_dir = -1
 
-
-/obj/item/paper/image/iron_belle_ad
-	name = "Iron Belle Pamphlet"
-	desc = "An old timey looking advertisment for a cyborg that makes blades. Charming."
-	path = "images/arts/sword_cyborg.png"
-	icon_state = "iron-belle-ad" // art by cogwerks
-	scrollbar = FALSE
-	sizex = 752
-	sizey = 757
-
 // cogwerks - creepy picture things
 
 /obj/item/paper/image/sstv
