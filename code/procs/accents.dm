@@ -2645,3 +2645,6 @@ proc/frogify(var/string)
 		string += pick(" ribbit", " croak", " brp", " weh", " burup")
 
 	return string
+
+/proc/waspify(string)
+    return replacetext(string, "s", "zz")

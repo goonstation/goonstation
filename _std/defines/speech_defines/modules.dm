@@ -93,6 +93,7 @@
 #define SPEECH_MODIFIER_ACCENT_PIGLATIN "accent_piglatin"
 #define SPEECH_MODIFIER_ACCENT_PIRATE "accent_pirate"
 #define SPEECH_MODIFIER_ACCENT_QUIET "quiet_voice"
+#define SPEECH_MODIFIER_ACCENT_WASP "accent_wasp"
 #define SPEECH_MODIFIER_ACCENT_REVERSED "reversed_speech"
 #define SPEECH_MODIFIER_ACCENT_RUSSIAN "accent_russian"
 #define SPEECH_MODIFIER_ACCENT_SCOTS "accent_scots"

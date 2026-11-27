@@ -1893,6 +1893,60 @@ TYPEINFO(/datum/mutantrace/roach)
 			OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_BUGS)
 		. = ..()
 
+TYPEINFO(/datum/mutantrace/wasp)
+	icon = 'icons/mob/roach.dmi'
+/datum/mutantrace/wasp
+	name = "wasp"
+	icon_state = "body_m"
+	override_attack = 0
+	voice_override = "roach"
+	race_mutation = /datum/bioEffect/mutantrace/wasp
+	mutant_organs = list("tail" = /obj/item/organ/tail/roach)
+	mutant_folder = 'icons/mob/roach.dmi'
+	mutantrace_speech_modifier = SPEECH_MODIFIER_ACCENT_WASP
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	typevulns = list("burn" = 1.5, "crush" = 1.5)
+	dna_mutagen_banned = FALSE
+	self_click_fluff = list("thorax", "exoskeleton", "antenna")
+	blood_id = "hemolymph"
+
+	ghost_icon_state = "ghost"
+
+	on_attach(mob/living/carbon/human/M)
+		. = ..()
+		if(ishuman(M))
+			M.mob_flags |= SHOULD_HAVE_A_TAIL
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+		OTHER_START_TRACKING_CAT(M, TR_CAT_BUGS)
+		M.bioHolder.AddEffect("scorpion_sting", do_stability = FALSE, scannable = FALSE, innate = TRUE)
+
+	say_verb()
+		return "buzzes"
+
+	sight_modifier()
+		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
+		src.mob.see_invisible = INVIS_INFRA
+
+	disposing()
+		if(ishuman(src.mob))
+			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		if(src.mob)
+			src.mob.bioHolder.RemoveEffect("scorpion_sting")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
+			OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_BUGS)
+		. = ..()
+	emote(act, voluntary)
+		var/message = null
+
+		switch (act)
+			if ("scream","howl")
+				if (src.mob.emote_check(voluntary, 3 SECONDS))
+					message = SPAN_ALERT("<B>[src.mob] buzzes loudly!</B>")
+					playsound(src.mob, 'sound/voice/animal/fly_buzz.ogg', 90, channel=VOLUME_CHANNEL_EMOTE)
+					return message
+			else
+				..()
+
 TYPEINFO(/datum/mutantrace/cat)
 	icon = 'icons/mob/cat.dmi'
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)

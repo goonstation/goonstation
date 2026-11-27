@@ -276,3 +276,12 @@
 	organ_image_over_suit = "roach_over_suit"
 	colorful = TRUE
 
+/obj/item/organ/tail/wasp
+	name = "wasp abdomen"
+	desc = "A pointy insect behind."
+	icon_state = "tail-wasp"
+	organ_image_icon = 'icons/mob/wasp.dmi'
+	tail_num = TAIL_WASP
+	organ_image_under_suit_1 = "wasp_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "wasp_over_suit"

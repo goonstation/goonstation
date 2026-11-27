@@ -27,6 +27,9 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	id = SPEECH_MODIFIER_ACCENT_BINGUS
 	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(bingus_parse))
 
+/datum/speech_module/modifier/accent/waspify
+	id = SPEECH_MODIFIER_ACCENT_WASP
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(waspify))
 
 /datum/speech_module/modifier/accent/chav
 	id = SPEECH_MODIFIER_ACCENT_CHAV

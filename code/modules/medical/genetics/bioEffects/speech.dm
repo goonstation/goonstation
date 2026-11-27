@@ -24,6 +24,24 @@
 		src.owner.ensure_speech_tree().RemoveSpeechModifier(src.id)
 		. = ..()
 
+/datum/bioEffect/speech/waspy
+	name = "Frontal Gyrus Alteration Type-WA"
+	desc = "Causes the speech center of the subject's brain to assume a more insectoid buzz when engaged."
+	id = "accent_wasp"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "You feel like zzomething'zz changed..."
+	msgLose = "You feel like everything's back to normal. Thank goodness!"
+	reclaim_fail = 10
+	probability = 0
+	occur_in_genepools = FALSE
+	can_make_injector = FALSE
+	can_copy = FALSE
+	curable_by_mutadone = FALSE
+	scanner_visibility = FALSE
+	can_research = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
 
 /datum/bioEffect/speech/smile
 	name = "Frontal Gyrus Alteration Type-S"

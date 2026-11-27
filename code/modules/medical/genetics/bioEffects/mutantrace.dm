@@ -146,6 +146,16 @@
 	msgLose = "You shed your roachy skin!"
 	icon_state  = "roach"
 
+/datum/bioEffect/mutantrace/wasp
+	name = "Vespidae Genetics"
+	desc = "Re-enables ancient vestigial genes in the subject's body."
+	id = "wasp"
+	mutantrace_option = "Wasp"
+	mutantrace_path = /datum/mutantrace/wasp
+	msgGain = "You feel like stinging someone."
+	msgLose = "You shed your exoskeleton!"
+	icon_state  = "wasp"
+
 /datum/bioEffect/mutantrace/human
 	name = "Less Primal Genetics"
 	desc = "Makes one into a boring-old human being."

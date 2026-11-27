@@ -31,7 +31,7 @@ o+`        `-` ``..-:yooos-..----------..`
 // #region --------- Options to Go Fast ----------
 
 /// Only include the tiny map Devtest, no other zlevels. Boots way faster.
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
+// #define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
 
 /// Skips FEA/mining/planet/camera setup, skips changelogs, and auto-readies up.
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE
@@ -45,9 +45,9 @@ o+`        `-` ``..-:yooos-..----------..`
 /// Skip calculating security camera coverage.
 //#define SKIP_CAMERA_COVERAGE
 /// Skip changelogs.
-//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+// #define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 /// Automatically ready up and join the game ASAP.
-//#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+// #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 
 // #endregion
 // #region --------- Convenience Options ---------
