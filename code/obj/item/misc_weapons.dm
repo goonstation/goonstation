@@ -1665,9 +1665,11 @@ TYPEINFO(/obj/item/swords_sheaths)
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Captain")
-			. = "A stylish container for your sabre. Made from the finest metals NT can afford, or so you've heard. The scabbard bears the insignia 'I.B.B'."
+			. = "A stylish container for your sabre. Made from the finest metals NT can afford, or so you've heard."
 		else
 			. = "A goofy container for a sword. What kind of nerd uses these nowadays? Sheesh!"
+
+		. += " The scabbard bears the insignia 'I.B.B'."
 
 	blue //for NTSO medal reward
 		icon_state = "blue_cap_sword_scabbard"
@@ -1703,7 +1705,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 
 /obj/item/swords_sheaths/ntboss
 	name = "Nanotrasen Commander's Scabbard"
-	desc = "A nifty container for a mighty sword. Given to Nanotrasen's most trusted commanders. The blue paint is peeling a bit..."
+	desc = "A nifty container for a mighty sword. Given to Nanotrasen's most trusted commanders. The scabbard bears the insignia 'I.B.B'. The blue paint is peeling a bit..."
 	icon_state = "ntboss_sword_scabbard"
 	item_state = "scabbard-ntboss1"
 
