@@ -1508,9 +1508,12 @@
 "afF" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	id = "catering_cargo";
 	name = "cargo driver"
 	},
-/obj/machinery/door/poddoor/pyro,
+/obj/machinery/door/poddoor/pyro{
+	id = "catering_cargo"
+	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
@@ -1824,6 +1827,7 @@
 "agF" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	id = "catering_cargo";
 	name = "cargo driver"
 	},
 /turf/simulated/floor/plating,
@@ -18884,9 +18888,12 @@
 /obj/machinery/mass_driver{
 	dir = 1;
 	drive_range = 10;
+	id = "depot_cargo";
 	name = "cargo driver"
 	},
-/obj/machinery/door/poddoor/pyro,
+/obj/machinery/door/poddoor/pyro{
+	id = "depot_cargo"
+	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
@@ -19461,6 +19468,7 @@
 /obj/machinery/mass_driver{
 	dir = 1;
 	drive_range = 10;
+	id = "depot_cargo";
 	name = "cargo driver"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
