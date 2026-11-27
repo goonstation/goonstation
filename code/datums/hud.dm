@@ -237,12 +237,15 @@
 	/// Only touches elements whose position or value changed.
 	proc/sync_status_effects(atom/owner, status_icon, screen_y, start_x)
 		var/list/datum/statusEffect/statuses = owner?.statusEffects
-		for (var/datum/statusEffect/S as anything in src.statusUiElements) //Remove ended effects
-			if (!(S in statuses))
-				var/atom/movable/screen/statusEffect/U = src.statusUiElements[S]
-				src.remove_screen(U)
-				qdel(U)
-				src.statusUiElements -= S
+		for (var/datum/statusEffect/S as anything in src.statusUiElements) //Remove ended or hidden effects
+			var/ended = !(S in statuses)
+			if (!ended && S.visible)
+				continue
+			var/atom/movable/screen/statusEffect/U = src.statusUiElements[S]
+			src.remove_screen(U)
+			qdel(U)
+			src.statusUiElements -= S
+			if (ended)
 				qdel(S)
 
 		// Nobody is looking
