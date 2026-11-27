@@ -2364,14 +2364,14 @@
 		name = "Peppermint Hot Chocolate"
 		id = "pepperminthotchocolate"
 		result = "pepperminthotchocolate"
-		required_reagents = list("chocolate" = 2, "mint" = 1, "milk" = 1)
+		required_reagents = list("chocolate" = 1, "mint" = 2, "milk" = 1)
 		result_amount = 4
 		mix_phrase = "The mixture smells like a warm hug, or possibly toothpaste."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	pepperminthotchocolate/pepperminthotchocolate2
 		id = "pepperminthotchocolate2"
-		required_reagents =list("mint" = 1, "chocolate_milk" = 3)
+		required_reagents =list("mint" = 2, "chocolate_milk" = 2)
 		result_amount = 4
 
 	mexicanhotchocolate
@@ -5620,7 +5620,7 @@
 		result_amount = 5
 
 	sweetcondensedmilk
-		name = "Sweet Condensed Milk"
+		name = "sweet condensed milk"
 		id = "sweetcondensedmilk"
 		result = "sweetcondensedmilk"
 		required_reagents = list("sugar" = 1, "milk" = 1)
@@ -5630,7 +5630,7 @@
 		drinkrecipe = TRUE
 
 	cafebombon
-		name = "Café Bombón"
+		name = "café bombón"
 		id = "cafebombon"
 		result = "cafebombon"
 		required_reagents = list("sweetcondensedmilk"=1, "espresso"= 1)
@@ -5640,7 +5640,7 @@
 		drinkrecipe = TRUE
 
 	frothedmilk
-		name = "Frothed Milk"
+		name = "frothed milk"
 		id = "frothedmilk"
 		result = "frothedmilk"
 		required_reagents = list("milk" = 1)
@@ -5655,16 +5655,31 @@
 			var/datum/reagent/fooddrink/milk/milk = holder.get_reagent("milk")
 			return milk && milk.was_physically_shocked
 
+	caramelmacchiato
+		name = "caramel macchiato"
+		id = "caramelmacchiato"
+		result = "caramelmacchiato"
+		required_reagents = list("frothedmilk" = 2, "espresso" = 2, "vanilla" = 1, "caramel" = 1)
+		result_amount = 6
+		mix_phrase = "The espresso blends with the sweet vanilla as a thick layer of velvety milk foam settles on top."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	caramelmacchiato/alt
+		id = "caramelmacchiato_alt"
+		required_reagents = list("macchiato" = 4, "vanilla" = 1, "caramel" = 1)
+
 	macchiato
-		name = "Macchiato"
+		name = "macchiato"
 		id = "macchiato"
 		result = "macchiato"
 		required_reagents = list("frothedmilk" = 1, "espresso" = 1)
 		result_amount = 2
 		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	dulcedeleche
-		name = "Dulce de leche"
+		name = "dulce de leche"
 		id = "dulcedeleche"
 		result = "dulcedeleche"
 		required_reagents = list("sweetcondensedmilk" = 1, "vanilla" = 1)
@@ -5673,3 +5688,13 @@
 		mix_phrase = "The mixture slowly thickens into a velvety spread."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
+
+	caramel
+		name = "caramel"
+		id = "caramel"
+		result = "caramel"
+		required_reagents = list("sugar" = 1, "water" = 1, "vanilla" = 1, "butter" = 1)
+		min_temperature = T0C + 100
+		result_amount = 2
+		mix_phrase = "The ingredients melts and blend into a smooth, glossy caramel sauce."
+		mix_sound = 'sound/misc/drinkfizz.ogg'

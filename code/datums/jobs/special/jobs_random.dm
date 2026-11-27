@@ -506,7 +506,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/luggable_computer/techpersonal,
 							/obj/item/storage/box/diskbox/programs,
 							/obj/item/cable_coil)
-	alt_names = list("Cybersecurity Expert", \
+	alt_names = list("Cybersecurity Consultant", \
 					"IT Specialist", \
 					"Network Technician")
 

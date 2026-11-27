@@ -4583,6 +4583,7 @@ datum
 					boutput(M, SPAN_NOTICE("The milk stops the burning. Ahhh."))
 					M.reagents.del_reagent("milk")
 					M.reagents.del_reagent("ghostchilijuice")
+					return ..()
 				if(probmult(8))
 					boutput(M, SPAN_ALERT("<b>Oh god! Oh GODD!!</b>"))
 				if(prob(50))
@@ -4596,20 +4597,23 @@ datum
 				if(probmult(50))
 					M.nauseate(2)
 
-				if(probmult(min(10,5 * volume)))
+				var/mob/living/L = M
+				var/burn_duration = L.getStatusDuration("burning")
+				M.changeStatus("burning", 1 * volume * mult)
+
+				if (burn_duration < BURNING_LV3)
+					return ..()
+
+				if(probmult(min(10,5 * volume)) && prob(50))
 					boutput(M, SPAN_ALERT("<b>OH GOD OH GOD PLEASE NO!!</b>"))
-					var/mob/living/L = M
-					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 100 SECONDS * mult)
-					if(prob(50))
-						SPAWN(2 SECONDS)
-							//Roast up the player
-							if (M)
-								boutput(M, SPAN_ALERT("<b>IT BURNS!!!!</b>"))
-								sleep(0.2 SECONDS)
-								M.visible_message(SPAN_ALERT("[M] is consumed in flames!"))
-								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
-								M.firegib()
+					SPAWN(2 SECONDS)
+						//Roast up the player
+						if (M)
+							boutput(M, SPAN_ALERT("<b>IT BURNS!!!!</b>"))
+							sleep(0.2 SECONDS)
+							M.visible_message(SPAN_ALERT("[M] is consumed in flames!"))
+							logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
+							M.firegib()
 				..()
 
 		fooddrink/alcoholic/nicotini
@@ -5132,3 +5136,25 @@ datum
 			description = "A thick, velvety spread that clings to everything it touches."
 			reagent_state = SOLID
 			taste = list("rich", "sweet")
+
+		fooddrink/caramel
+			name = "caramel"
+			id = "caramel"
+			fluid_r = 210
+			fluid_g = 145
+			fluid_b = 45
+			description = "A thick, glossy golden-brown sauce with a rich sweetness."
+			reagent_state = LIQUID
+			taste = list("rich", "sweet", "sugary")
+
+		fooddrink/caffeinated/caramelmacchiato
+			name = "caramel macchiato"
+			id = "caramelmacchiato"
+			fluid_r = 230
+			fluid_g = 175
+			fluid_b = 45
+			description = "A sweet, creamy coffee with a rich espresso kick and a hint of vanilla."
+			reagent_state = LIQUID
+			taste = list("sweet", "creamy", "rich")
+			thirst_value = 1
+			caffeine_content = 0.8
