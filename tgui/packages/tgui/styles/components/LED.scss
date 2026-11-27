@@ -1,15 +1,15 @@
-.led-red {
+.led {
   width: 16px;
   height: 16px;
-  background-color: #940;
+  background-color: var(--unlit-color);
   border-radius: 50%;
   box-shadow:
     #000 0 -1px 7px 1px,
-    inset #600 0 -1px 9px,
-    #f00 0 1px 12px;
+    inset var(--unlit-color) 0 -1px 9px,
+    var(--lit-color) 0 1px 12px;
 }
 
-.led-red.flashing {
+.led.flashing {
   animation: lit 0.65s linear infinite;
   animation-direction: alternate;
 }
@@ -18,19 +18,19 @@
   0% {
     box-shadow:
       #000 0 -1px 7px 1px,
-      inset #600 0 -1px 9px,
-      #f00 0 1px 12px;
+      inset var(--unlit-color) 0 -1px 9px,
+      var(--lit-color) 0 1px 12px;
   }
   70% {
     box-shadow:
       #000 0 -1px 7px 1px,
-      inset #600 0 -1px 9px,
-      #f00 0 1px 12px;
+      inset var(--unlit-color) 0 -1px 9px,
+      var(--lit-color) 0 1px 12px;
   }
   100% {
     box-shadow:
-      #a80101 0 -1px 2px 1px,
-      inset rgb(255, 0, 0) 0 -1px 20px,
-      #f00 0 4px 20px;
+      color-mix(in srgb, var(--lit-color) 35%, black) 0 -1px 2px 1px,
+      inset var(--lit-color) 0 -1px 20px,
+      var(--lit-color) 0 4px 20px;
   }
 }
