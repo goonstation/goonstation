@@ -353,17 +353,18 @@
 	if (islist(src.say_verb))
 		src.say_verb = pick(src.say_verb)
 
-	return {"\
-		[src.format_speaker_prefix]\
-		[src.speaker_to_display]\
-		[src.format_verb_prefix]\
-		[src.say_verb]\
-		[src.format_content_prefix]\
-		[src.format_content_style_prefix]\
-		[src.content]\
-		[src.format_content_style_suffix]\
-		[src.format_content_suffix]\
-	"}
+	var/list/output = list(
+		src.format_speaker_prefix,
+		src.speaker_to_display,
+		src.format_verb_prefix,
+		src.say_verb,
+		src.format_content_prefix,
+		src.format_content_style_prefix,
+		src.content,
+		src.format_content_style_suffix,
+		src.format_content_suffix,
+	)
+	return output.Join()
 
 /// Returns the message content with HTML escaping applied to the mutable content and the mutable tags removed.
 /// Use this if you want to output the message content *directly* to the browser.
