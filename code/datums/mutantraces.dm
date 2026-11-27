@@ -1894,15 +1894,15 @@ TYPEINFO(/datum/mutantrace/roach)
 		. = ..()
 
 TYPEINFO(/datum/mutantrace/wasp)
-	icon = 'icons/mob/roach.dmi'
+	icon = 'icons/mob/wasp.dmi'
 /datum/mutantrace/wasp
 	name = "wasp"
 	icon_state = "body_m"
 	override_attack = 0
 	voice_override = "roach"
 	race_mutation = /datum/bioEffect/mutantrace/wasp
-	mutant_organs = list("tail" = /obj/item/organ/tail/roach)
-	mutant_folder = 'icons/mob/roach.dmi'
+	mutant_organs = list("tail" = /obj/item/organ/tail/wasp)
+	mutant_folder = 'icons/mob/wasp.dmi'
 	mutantrace_speech_modifier = SPEECH_MODIFIER_ACCENT_WASP
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	typevulns = list("burn" = 1.5, "crush" = 1.5)
