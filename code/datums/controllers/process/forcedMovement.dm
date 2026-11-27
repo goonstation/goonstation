@@ -57,14 +57,26 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 /datum/force_push_controller
 	var/interval = 0.5 SECONDS
 	var/list/push_list = list()
-	var/last_tick_time = -1
+	/// world.time this controller last ran, -1 before its first run
+	var/last_run_time = -1
 
 	proc/doWork()
 		return
 
+	/**
+	 * Returns the glide size for this run.
+	 * The scheduler can run this process late, so this can be longer than the interval.
+	 * Capped at twice interval so a long pause can't make one glide crawl.
+	 */
+	proc/push_glide_size()
+		var/gap = src.last_run_time < 0 ? src.interval : clamp(world.time - src.last_run_time, world.tick_lag, src.interval * 2)
+		src.last_run_time = world.time
+		return DELAY_TO_GLIDE_SIZE(gap)
+
 /datum/force_push_controller/space
 
 	doWork()
+		var/glide = src.push_glide_size()
 		//space first :)
 		for (var/atom/movable/M as anything in src.push_list)
 			if(!M)
@@ -119,7 +131,6 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 
 					var/pre_inertia_loc = M.loc
 
-					var/glide = (32 / src.interval) * world.tick_lag
 					tmob.glide_size = glide
 					tmob.animate_movement = SLIDE_STEPS
 
@@ -144,7 +155,6 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 					continue
 
 			else if (isobj(M))
-				var/glide = (32 / src.interval) * world.tick_lag
 				M.glide_size = glide
 				M.animate_movement = SLIDE_STEPS
 
@@ -168,8 +178,7 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 		src.push_list -= AM
 
 	doWork()
-		//for glide size
-		var/adjusted_interval = src.last_tick_time < 0 ? src.interval : TIME - src.last_tick_time
+		var/glide = src.push_glide_size()
 		for (var/atom/movable/M as anything in src.push_list)
 			if (QDELETED(M))
 				src.removeAtom(M)
@@ -209,7 +218,6 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 
 				M.setStatus("slowed", 2 SECONDS, 20)
 			var/dir = src.push_list[M]
-			var/glide = (32 / adjusted_interval) * world.tick_lag
 			M.glide_size = glide
 			M.animate_movement = SLIDE_STEPS
 			if(!step(M, dir))
@@ -217,7 +225,6 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 				if(!step(M, turn(dir, 90*dirMod)))
 					step(M, turn(dir, 90*-dirMod))
 			M.glide_size = glide
-		src.last_tick_time = TIME
 
 /datum/force_push_controller/ocean/current
 	VAR_PRIVATE/flow_rate = 100

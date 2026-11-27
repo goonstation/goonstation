@@ -39,7 +39,7 @@
 			for (var/i in 1 to 100)
 				if (QDELETED(monster))
 					break
-				monster.glide_size = 32/(3 SECONDS) * world.tick_lag
+				monster.glide_size = DELAY_TO_GLIDE_SIZE(3 SECONDS)
 				monster.set_loc(get_step(monster, EAST))
 				sleep(3 SECONDS)
 

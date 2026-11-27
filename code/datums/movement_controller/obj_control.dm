@@ -45,11 +45,11 @@
 		var/turf/T = src.master.loc
 		if(istype(T))
 			// this is what pod.dm does, don't look at me!!!
-			src.master.glide_size = (32 / delay) * world.tick_lag
+			src.master.glide_size = DELAY_TO_GLIDE_SIZE(delay)
 			user.glide_size = src.master.glide_size
 			user.animate_movement = SYNC_STEPS
 			step(src.master, src.move_dir)
-			src.master.glide_size = (32 / delay) * world.tick_lag
+			src.master.glide_size = DELAY_TO_GLIDE_SIZE(delay)
 			user.glide_size = src.master.glide_size
 			user.animate_movement = SYNC_STEPS
 		src.next_move = TIME + delay

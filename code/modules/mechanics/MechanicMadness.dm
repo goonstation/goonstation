@@ -4703,7 +4703,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
-		walk(S, direction, move_lag, (32 / move_lag) * world.tick_lag)
+		walk(S, direction, move_lag, DELAY_TO_GLIDE_SIZE(move_lag))
 		set_glide_size(S)
 		if (direction == 0)
 			UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
@@ -4724,7 +4724,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
-		if (step(S, direction, (32 / move_lag) * world.tick_lag))
+		if (step(S, direction, DELAY_TO_GLIDE_SIZE(move_lag)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[direction]")
 		else
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"0")
@@ -4740,7 +4740,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		set_glide_size(S)
 
 	proc/set_glide_size(var/obj/item/storage/S)
-		S.glide_size = (32 / move_lag) * world.tick_lag
+		S.glide_size = DELAY_TO_GLIDE_SIZE(move_lag)
 		S.animate_movement = FORWARD_STEPS
 
 	/// checks if we may move right now

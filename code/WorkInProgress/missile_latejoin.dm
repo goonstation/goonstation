@@ -86,7 +86,7 @@
 		var/glide = 0
 
 		while (moved_on_flooring <= MISSILE_FLOORS_TO_STOP)
-			glide = (32 / MISSILE_SPAWN_MOVEDELAY) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
+			glide = DELAY_TO_GLIDE_SIZE(MISSILE_SPAWN_MOVEDELAY)
 			src.glide_size = glide
 			src.animate_movement = SLIDE_STEPS
 			passenger?.glide_size = glide

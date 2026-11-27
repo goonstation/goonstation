@@ -110,7 +110,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 			if(!next || next == T) // going off the edge of the map makes get_step return null, don't let things go off the edge
 				end_throwing = TRUE
 				break
-			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
+			thing.glide_size = DELAY_TO_GLIDE_SIZE(1 / thr.speed)
 			if (thr.throw_type & THROW_THROUGH_WALL)
 				var/busted = FALSE
 				if (istype(next, /turf/simulated/wall))
@@ -143,7 +143,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 				var/arc_duration = (thr.params && thr.params["arc_time"]) ? thr.params["arc_time"] / 2 : 1 SECONDS
 				animate(thing, pixel_y = 0, time = arc_duration, easing=CUBIC_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
 
-			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
+			thing.glide_size = DELAY_TO_GLIDE_SIZE(1 / thr.speed)
 			var/hit_thing = ( thr.throw_type & THROW_NO_CLIP ) ? null : thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
