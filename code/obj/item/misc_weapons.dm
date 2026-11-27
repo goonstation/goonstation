@@ -1555,7 +1555,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	var/ih_sheathed_state = "sheathedhand"
 	var/ih_sheath_state = "sheathhand"
 	var/sword_path = /obj/item/swords
-	var/drop_ad_chance = 25 // make it  zero if the sword is not made by iron belle
+	var/drop_ad_chance = 5 // make it  zero if the sword is not made by iron belle
 
 	New()
 		..()
@@ -1712,7 +1712,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	ih_sheathed_state = "scabbard-syndie1"
 	ih_sheath_state = "scabbard-syndie0"
 	sword_path = /obj/item/swords/nukeop
-	drop_ad_chance = 70 // bigger dork then captain
+	drop_ad_chance = 10 // bigger dork then captain
 
 /obj/item/swords_sheaths/ntboss
 	name = "Nanotrasen Commander's Scabbard"
@@ -1725,7 +1725,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	ih_sheathed_state = "scabbard-ntboss1"
 	ih_sheath_state = "scabbard-ntboss0"
 	sword_path = /obj/item/swords/ntboss
-	drop_ad_chance = 70 // bigger dork then captain
+	drop_ad_chance = 10 // bigger dork then captain
 
 /obj/item/swords_sheaths/pirate
 	name = "Pirate's Scabbard"
