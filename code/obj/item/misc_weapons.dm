@@ -1555,6 +1555,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	var/ih_sheathed_state = "sheathedhand"
 	var/ih_sheath_state = "sheathhand"
 	var/sword_path = /obj/item/swords
+	var/drop_ad_chance = 0
 
 	New()
 		..()
