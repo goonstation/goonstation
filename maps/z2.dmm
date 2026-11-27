@@ -22087,6 +22087,10 @@
 /obj/decal/poster/flag/syndicate{
 	pixel_y = 32
 	},
+/obj/item/paper/image/businesscard/iron_belle_ad{
+	pixel_x = -8;
+	pixel_y = -8
+	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/nw,
 /area/syndicate_station/battlecruiser)
 "bLd" = (
