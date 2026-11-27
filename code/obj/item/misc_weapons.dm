@@ -1555,7 +1555,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	var/ih_sheathed_state = "sheathedhand"
 	var/ih_sheath_state = "sheathhand"
 	var/sword_path = /obj/item/swords
-	var/drop_ad_chance = 0
+	var/drop_ad_chance = 25 // make it  zero if the sword is not made by iron belle
 
 	New()
 		..()
@@ -1620,8 +1620,19 @@ TYPEINFO(/obj/item/swords_sheaths)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)
+
+			if(src.drop_ad_chance && prob(src.drop_ad_chance))
+				src.drop_ad_chance = 0
+				var/obj/item/paper/image/iron_belle_ad/annoying_advertisment = new(get_turf(src))
+				user.visible_message(
+					SPAN_NOTICE("[user] pulls out the [src.sword_inside] from the sheath and a rolled up piece of paper pops out!"),
+					SPAN_NOTICE("You pull out the [src.sword_inside] from the sheath and a rolled up piece of paper pops out!"),
+					SPAN_NOTICE("You hear a piece of paper hit the floor.")
+				)
+
 			sword_inside = null //No more sword inside.
 			user.update_clothing()
+
 		else
 			boutput(user, "You don't have a free hand to draw with!")
 
@@ -1637,6 +1648,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	ih_sheathed_state = "sheathedhand"
 	ih_sheath_state = "sheathhand"
 	sword_path = /obj/item/swords/katana
+	drop_ad_chance = 0
 
 /obj/item/swords_sheaths/katana/reverse
 	name = "reverse-blade katana sheath"
@@ -1700,6 +1712,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	ih_sheathed_state = "scabbard-syndie1"
 	ih_sheath_state = "scabbard-syndie0"
 	sword_path = /obj/item/swords/nukeop
+	drop_ad_chance = 70 // bigger dork then captain
 
 /obj/item/swords_sheaths/ntboss
 	name = "Nanotrasen Commander's Scabbard"
@@ -1712,6 +1725,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	ih_sheathed_state = "scabbard-ntboss1"
 	ih_sheath_state = "scabbard-ntboss0"
 	sword_path = /obj/item/swords/ntboss
+	drop_ad_chance = 70 // bigger dork then captain
 
 /obj/item/swords_sheaths/pirate
 	name = "Pirate's Scabbard"
@@ -1736,6 +1750,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	ih_sheathed_state = "scabbard-clown1"
 	ih_sheath_state = "scabbard-clown0"
 	sword_path = /obj/item/swords/clown
+	drop_ad_chance = 0 // probably not iron belle made
 
 	New()
 		. = ..()
