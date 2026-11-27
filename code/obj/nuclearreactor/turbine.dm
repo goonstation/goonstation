@@ -400,7 +400,7 @@
 				logTheThing(LOG_STATION, src, "[src] flow rate configured to [x] by [ui.user]")
 			if("toggleAutoAdjust")
 				src.auto_adjust = !src.auto_adjust
-				logTheThing(LOG_STATION, src, "[src] inbuilt automatic stator control toggled [src.auto_adjust ? "on" : "off"] by [ui.user]")
+				logTheThing(LOG_STATION, src, "[ui.user] toggles [src]'s inbuilt automatic stator control [src.auto_adjust ? "on" : "off"]")
 
 	ex_act(severity)
 		switch(severity)
