@@ -1,4 +1,39 @@
 
+(t)thu nov 26 26
+(u)glowbold
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Espresso machines have seasonally available drinks.
+(u)SmileyLemonade
+(p)28256
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Adds 4 new eval operations for DWAINE: ceil, floor, round and roundto
+(t)wed nov 25 26
+(u)Astarthoc
+(p)28170
+(e)🆕⚗🍝|C-Feature, A-Chemistry, A-Catering
+(*)Added caramel macchiato, the sweetest cousin of macchiato.
+(*)Added caramel sauce, a sweet sauce to sweeten your drinks and baked goods.
+(u)Temthrush
+(p)28333
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Cream now has a bespoke cake topping sprite along with cakes as a whole getting a resprite.
+(u)JORJ949
+(p)28227
+(e)🎨⚖👮|C-Sprites, C-Balance, A-Security
+(*)The Head of Security's helmet can now have the visor dropped down to completely protect the user's head from the void of space. WARNING: May not protect against cream pies.
+(t)tue nov 24 26
+(u)glowbold
+(e)⚖💊|C-Balance, A-Medical, A-Station-Systems
+(*)The Head of Security cannot access the Genetics lab, Gene Booth, or Pharmacy.
+(+)The Ruckingenur Kit requires Systems Administrator access to lock/unlock blueprints.
+(u)cringe
+(p)28362
+(e)⚖💊|C-Balance, A-Medical
+(*)Geneticist access is required to modify entries in the the genebooth.
+(u)LorrMaster
+(p)27686
+(e)🆕🎨🎩💡|C-Feature, C-Sprites, A-Clothing, A-Station-Systems
+(*)Added the baseball mitt, a glove that can catch pocket-sized thrown items and does not drop them while down. They can be obtained from hacking uniform manufacturers.
 (t)sun nov 22 26
 (u)JORJ949
 (p)28326

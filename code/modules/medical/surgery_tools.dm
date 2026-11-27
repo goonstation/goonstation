@@ -628,6 +628,7 @@ CONTAINS:
 	proc/set_state(var/state)
 		if(state == BODYBAG_STATE_ITEM)
 			src.w_class = W_CLASS_TINY
+			src.unglue_attached_to()
 		else
 			if(src.cant_drop && !isturf(src.loc))
 				src.set_state(BODYBAG_STATE_ITEM)

@@ -44,7 +44,7 @@
 	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")
 	var/list/cake_types = list()
 	var/sliced = FALSE
-	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
+	var/static/list/frostingstyles = list("classic","sides","top swirls","bottom swirls","spirals","rose spirals")
 	var/clayer = 1
 	var/list/cake_candle = list()
 	var/litfam = FALSE //is the cake lit (candle)
@@ -88,6 +88,8 @@
 					tag = "cake[clayer]-raspberry"
 				if(/obj/item/reagent_containers/food/snacks/plant/raspberry/blueraspberry)
 					tag = "cake[clayer]-braspberry"
+				if(/obj/item/reagent_containers/food/snacks/condiment/cream)
+					tag = "cake[clayer]-cream"
 
 		if(tag && src.GetOverlayImage(tag)) //if there's a duplicate non-generic overlay, return a list of empty data
 			return list(0,0)
@@ -126,6 +128,8 @@
 			switch(frostingtype)
 				if("classic")
 					tag = "cake[clayer]-classic"
+				if("sides")
+					tag ="cake[clayer]-sides"
 				if("top swirls")
 					tag = "cake[clayer]-swirl_top"
 				if("bottom swirls")

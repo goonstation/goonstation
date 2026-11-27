@@ -549,12 +549,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 	desc = "You know that missing O-Zone from earth? We made it in a candy!"
 	real_name = "caramel"
 	icon_state = "caramel"
+	initial_reagents = list("caramel" = 5)
 
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch
 	name = "butterscotch candy"
 	desc = "It's one of those old timey butterscotch candies like your grampa used to have."
 	real_name = "butterscotch"
 	icon_state = "butterscotch"
+	initial_reagents = list("caramel" = 5)
 
 /obj/item/reagent_containers/food/snacks/candy/hard_candy
 	name = "hard candy"

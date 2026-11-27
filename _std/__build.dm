@@ -230,6 +230,9 @@ o+`        `-` ``..-:yooos-..----------..`
 /// Roleplay mode toggle.
 //#define RP_MODE
 
+/// Disable automatic season based on server build time
+//#define SEASON_MANUAL_ONLY
+
 //#define SEASON_WINTER
 //#define SEASON_SPRING
 //#define SEASON_SUMMER

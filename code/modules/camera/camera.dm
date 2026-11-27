@@ -106,9 +106,6 @@
 		qdel(src.light)
 		src.light = null
 
-	if (length(src.viewers))
-		src.disconnect_viewers()
-
 	if (global.camnets && global.camnets[network])
 		global.camnets[network].Remove(src)
 	..()
@@ -215,8 +212,6 @@
 
 		src.update_coverage()
 
-	src.disconnect_viewers()
-
 /obj/machinery/camera/blob_act(var/power)
 	return
 
@@ -230,7 +225,6 @@
 	. = ..()
 	src.set_camera_status(FALSE)
 	src.update_coverage()
-	src.disconnect_viewers()
 
 /obj/machinery/camera/was_built_from_frame(mob/user, newly_built)
 	. = ..()
@@ -247,6 +241,7 @@
 
 	else
 		src.icon_state = "camera-off"
+		src.disconnect_viewers() // we've been cut off!
 		src.UpdateOverlays(null, "on_light")
 		src.UpdateOverlays(null, "on_light_lighting")
 
@@ -320,7 +315,6 @@
 		user.visible_message(SPAN_ALERT("[user] has deactivated [src]!"), SPAN_ALERT("You have deactivated [src]."))
 		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
 		add_fingerprint(user)
-	src.disconnect_viewers()
 
 /obj/machinery/camera/proc/repair_camera(mob/user, obj/item/cable_coil/cables)
 	if (cables?.use(1))

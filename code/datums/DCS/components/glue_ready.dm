@@ -82,6 +82,8 @@ TYPEINFO(/datum/component/glue_ready)
 		return FALSE
 	if(istype(glued_to, /obj/machinery/door) || istype(glued_to, /obj/mesh/grille))
 		return FALSE
+	if(istype(glued_to, /obj/nerd_trap_door) || istype(glued_to, /obj/art_fissure_objs/door))
+		return FALSE
 	if(istype(glued_to, /mob/dead) || istype(glued_to, /mob/living/intangible) )
 		if(user)
 			boutput(user, SPAN_ALERT("Your hand with [thing_glued] passes straight through \the [glued_to]."))
