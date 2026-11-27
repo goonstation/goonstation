@@ -1,9 +1,10 @@
 /* ==================================================== */
 /* --------------------- Machine ---------------------- */
 /* ==================================================== */
+
+ADMIN_INTERACT_PROCS(/obj/machinery/espresso_machine, proc/add_drink, proc/remove_drink)
 TYPEINFO(/obj/machinery/espresso_machine)
 	mats = 30
-
 /obj/machinery/espresso_machine
 	name = "espresso machine"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
@@ -20,11 +21,51 @@ TYPEINFO(/obj/machinery/espresso_machine)
 	var/top_on = 1 //screwed on or screwed off
 	var/cup_name = "espresso cup"
 	var/image/image_cup = null
-	var/list/drink_options = list("Americano", "Cappuccino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha")
+
+	// {drink: [{reagent: amount}...]}
+	var/alist/drink_to_reagents = list(
+		"Espresso" = list("espresso" = 10),
+		"Decaf" = list("decafespresso" = 10), // 1 decaf espresso
+
+		"Americano" = list("espresso" = 4, "water" = 6),  // 3:2 water:espresso
+		"Café Bombón" = list("sweetcondensedmilk" = 5, "espresso" = 5), // chem recipe
+		"Cappuccino" = list("espresso" = 3.5, "milk" = 6.5), // 1:1:1 milk foam:milk:espresso, but milk foam + espresso creates macchiatos right now
+		"Flat White" = list("espresso" = 4, "milk" = 6), // 3:2 milk:espresso
+		"Macchiato" = list("espresso" = 5, "frothedmilk" = 5), // chem recipe
+		"Latte" = list("espresso" = 1.6, "milk" = 8.4), // 5:1 milk:espresso
+
+		"Mocha" = list("espresso" = 4.3, "milk" = 1.4, "chocolate" = 4.3), // 3:1:3 espresso:milk:chocolate
+		"Carmel Macchiato" = list("frothedmilk" = 4, "espresso" = 4, "vanilla" = 2, "caramel" = 2), // chem recipe
+	)
 
 	New()
 		..()
 		UnsubscribeProcess()
+
+		#ifdef SEASON_WINTER
+		src.drink_to_reagents += list(
+			"Peppermint Hot Chocolate" = list("chocolate" = 2, "mint" = 4, "milk" = 2), // chem recipe
+		)
+		#endif
+
+		#ifdef SEASON_SPRING
+		src.drink_to_reagents += list(
+			"Lavender Latte" = list("lavender_essence"=2, "milk"= 4, "espresso"=2), // chem recipe
+		)
+		#endif
+
+		#ifdef SEASON_SUMMER
+		src.drink_to_reagents += list(
+			"Thai Iced Coffee" = list("coffee" = 6, "sugar" = 2, "milk" = 2, "ice" = 2), // chem recipe
+		)
+		#endif
+
+		#ifdef SEASON_AUTUMN
+		src.drink_to_reagents += list(
+			"Pumpkin Spice Latte" = list("juice_pumpkin"=2, "milk"= 4, "espresso"=2, "cinnamon"=2), // chem recipe
+		)
+		#endif
+
 		src.update()
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -36,8 +77,11 @@ TYPEINFO(/obj/machinery/espresso_machine)
 			ui.open()
 
 	ui_static_data(mob/user)
+		var/list/drinks = list()
+		for (var/key in drink_to_reagents)
+			drinks += key
 		. = list(
-			"drinks" = drink_options
+			"drinks" = drinks
 		)
 
 	ui_data(mob/user)
@@ -84,34 +128,17 @@ TYPEINFO(/obj/machinery/espresso_machine)
 			if("pour")
 				. = TRUE
 				var/drink_choice = params["drink_name"]
-				switch (drink_choice)  //finds cup in contents and adds chosen drink to it
-					if ("Espresso")
+				for (var/drink_name in drink_to_reagents)
+					if (drink_name != drink_choice)
+						continue
+
+					for (var/reagent_id in drink_to_reagents[drink_choice])
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-							C.reagents.add_reagent("espresso",10)
-					if ("Latte") // 5:1 milk:espresso
-						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-							C.reagents.add_reagent("espresso", 1.6)
-							C.reagents.add_reagent("milk", 8.4)
-					if ("Mocha") // 3:1:3 espresso:milk:chocolate
-						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-							C.reagents.add_reagent("espresso", 4.3)
-							C.reagents.add_reagent("milk", 1.4)
-							C.reagents.add_reagent("chocolate", 4.3)
-					if ("Cappuccino") // 1:1:1 milk foam:milk:espresso
-						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-							C.reagents.add_reagent("espresso", 3.5)
-							C.reagents.add_reagent("milk", 6.5)
-					if ("Americano") // 3:2 water:espresso
-						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-							C.reagents.add_reagent("espresso", 4)
-							C.reagents.add_reagent("water", 6)
-					if ("Decaf") // 1 decaf espresso
-						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-							C.reagents.add_reagent("decafespresso", 10)
-					if ("Flat White") // 3:2 milk:espresso
-						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-							C.reagents.add_reagent("espresso", 4)
-							C.reagents.add_reagent("milk", 6)
+							if (reagent_id == "ice") // ICE, ICE BABY
+								C.reagents.set_reagent_temp(T0C, FALSE)
+							C.reagents.add_reagent(reagent_id, drink_to_reagents[drink_choice][reagent_id], temp_new=(reagent_id=="ice" ? T0C : T20C))
+							C.reagents.set_reagent_temp(T20C, FALSE)
+
 				playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 				use_power(10)
 
@@ -178,6 +205,61 @@ TYPEINFO(/obj/machinery/espresso_machine)
 			src.image_cup = null
 		src.UpdateOverlays(src.image_cup, "cup")
 		return
+
+	proc/add_drink()
+		set name = "Add Drink"
+
+		var/drink_name = tgui_input_text(usr, "Name of drink (can be anything)", "Add Drink")
+		if (!drink_name)
+			return
+
+		for (var/key in src.drink_to_reagents)
+			if (key == drink_name)
+				boutput(usr, SPAN_ALERT("Drink name already exists!"))
+				return
+
+		var/alist/ingredients = list()
+		while(TRUE)
+			var/list/choice_list = list()
+			for (var/key in ingredients)
+				choice_list += key
+			choice_list += list("(Add Ingredient)", "(Done)", "(Cancel)")
+			var/response = tgui_input_list(usr, "Modify drink ingredients", "Add Drink", choice_list)
+			switch(response)
+				if ("(Add Ingredient)")
+					var/datum/reagent/new_ingredient = global.pick_reagent(usr)
+					if (!istype(new_ingredient))
+						continue
+					var/volume = tgui_input_number(usr, "Amount of reagent in drink recipe?", "Add Drink", 1)
+					if (!volume || volume <= 0)
+						continue
+					ingredients += list("[new_ingredient.id]" = volume)
+				if ("(Done)")
+					break
+				if ("(Cancel)")
+					return
+				else
+					if (response in choice_list)
+						ingredients -= response
+
+		if (length(ingredients) == 0)
+			return
+
+		src.drink_to_reagents += list("[drink_name]" = ingredients)
+		src.update_static_data_for_all_viewers()
+
+	proc/remove_drink()
+		set name = "Remove Drink"
+		var/list/existing_drinks = list()
+		for (var/key in src.drink_to_reagents)
+			existing_drinks += key
+		var/remove_choice = tgui_input_list(usr, "Select a drink to remove", "Remove Drink", existing_drinks)
+		if (!remove_choice)
+			return
+
+		boutput(usr, "Removed drink [remove_choice] from [src].")
+		src.drink_to_reagents -= remove_choice
+		src.update_static_data_for_all_viewers()
 
 /* ===================================================== */
 /* ---------------------- Coffeemaker ------------------ */

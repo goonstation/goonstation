@@ -486,8 +486,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
 
 	if (isnull(src.preview))
-		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + "[src.parent.type]" // To avoid mixing up preview IDs, we gotta be *really* specific
-		src.preview = new /datum/movable_preview/character(src.barber.client, "barber", preview_id)
+		src.preview = new /datum/movable_preview/character(src.barber.client, "barber")
 
 		if (src.barbee.hud.layout_style == "tg")
 			var/mob/living/carbon/human/preview_mob = src.preview.preview_thing // So the game understands we are manipulating a human

@@ -136,7 +136,7 @@
 		if("Head of Security")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
 						access_forensics_lockers, access_armory, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
-						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab, access_pharmacy,
+						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers,
 						access_crematorium, access_kitchen, access_robotics, access_cargo, access_money,
 						access_research, access_sysadmin, access_hydro, access_ranch, access_ai_upload,
 						access_tech_storage, access_maint_tunnels, access_bar, access_janitor, access_fine_small, access_fine_large,

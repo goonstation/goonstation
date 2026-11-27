@@ -295,7 +295,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/unsimulated/wall/adaptive/concrete,
+/turf/unsimulated/wall/auto/adventure/concrete,
 /area/prefab{
 	requires_power = 1;
 	name = "Cafe et Couette"
@@ -1263,7 +1263,7 @@
 /turf/simulated/floor/auto/snow/rough,
 /area/space)
 "yS" = (
-/turf/unsimulated/wall/adaptive/concrete,
+/turf/unsimulated/wall/auto/adventure/concrete,
 /area/prefab{
 	requires_power = 1;
 	name = "Cafe et Couette"
