@@ -82,12 +82,12 @@ export const SpawnEvent = () => {
               scrollable
               fill
               title="Roles"
-              buttons={
-                <Button icon="plus" onClick={() => act('add_role')}></Button>
-              }
+              buttons={<Button icon="plus" onClick={() => act('add_role')} />}
             >
               {roles?.length > 0
-                ? roles.map((role) => <SpawnEventRole role={role} />)
+                ? roles.map((role, index) => (
+                    <SpawnEventRole role={role} key={index} />
+                  ))
                 : null}
             </Section>
           </Stack.Item>
