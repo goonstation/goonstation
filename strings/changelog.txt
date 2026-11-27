@@ -1,4 +1,9 @@
 
+(t)fri nov 27 26
+(u)JORJ949
+(p)28367
+(e)💊😈|A-Medical, A-Antagonists
+(*)Cloner record implants no longer send "heartbeat" signals, instead sending a single signal on death to indicate to the clone disk rack that the owner is dead.
 (t)thu nov 26 26
 (u)Sovexe
 (p)28135
