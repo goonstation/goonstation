@@ -232,17 +232,18 @@
 		var/image/img = H.prodoc_icons["cloner"]
 		img.icon_state = "implant-cloner"
 
-	process()
-		if (!src.implanted || isdead(src.owner)) //dead silence
+	on_death()
+		if(inafterlife(src.owner) || !src.owner || !src.loc == src.owner)
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.data = list(
 			"address_1"="00000000",
-			"command"="heartbeat",
+			"command"="clone_record_death",
 			"bio_id"= src.owner.bioHolder.Uid,
 			"sender" = src.net_id,
 		)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+		..()
 
 	on_remove(mob/M)
 		..()
@@ -256,30 +257,6 @@
 				return
 		var/image/I = H.prodoc_icons["cloner"]
 		I.icon_state = null
-
-	proc/getHealthList()
-		var/healthlist = list()
-		if (!src.implanted)
-			healthlist["OXY"] = 0
-			healthlist["TOX"] = 0
-			healthlist["BURN"] = 0
-			healthlist["BRUTE"] = 0
-			healthlist["HealthImplant"] = 0
-		else
-			var/mob/living/L
-			if (isliving(src.owner))
-				L = src.owner
-				healthlist["HealthImplant"] = 0
-				for (var/implant in L.implant)
-					if (istype(implant, /obj/item/implant/health))
-						healthlist["HealthImplant"] = 1
-						break
-				healthlist["OXY"] = round(L.get_oxygen_deprivation())
-				healthlist["TOX"] = round(L.get_toxin_damage())
-				healthlist["BURN"] = round(L.get_burn_damage())
-				healthlist["BRUTE"] = round(L.get_brute_damage())
-		return healthlist
-
 
 /obj/item/implant/health
 	name = "health implant"
