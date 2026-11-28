@@ -397,6 +397,11 @@ mob/verb/checkrewards()
 			var/obj/item/swords_sheaths/captain/T = new/obj/item/swords_sheaths/captain()
 			T.set_loc(get_turf(C.mob))
 			C.mob.put_in_hand(T)
+
+			var/obj/item/paper/image/businesscard/iron_belle_ad/IBA = new()
+			C.mob.put_in_hand_or_drop(IBA)
+			boutput(C.mob, SPAN_EMOTE("A vintage pamphlet flutters out."))
+
 			return
 
 		if (!found)
