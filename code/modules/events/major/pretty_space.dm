@@ -10,6 +10,8 @@
 		if(.)
 			if (global.is_map_on_ground_terrain)
 				. = FALSE
+			if (global.map_setting == "DECARABIA")
+				. = FALSE
 
 	admin_call(var/source)
 		if (..())

@@ -1141,9 +1141,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 DEFINE_FLOORS(minitiles,
 	name = "mini tiles";\
 	icon = 'icons/turf/floors.dmi';\
-	icon_state = "minitiles_grey";\
-	step_material = "step_plating";\
-	step_priority = STEP_PRIORITY_MED)
+	icon_state = "minitiles_grey")
 
 DEFINE_FLOORS(minitiles/white,
 	icon_state = "minitiles_white")
@@ -1843,6 +1841,9 @@ TYPEINFO(/turf/simulated/floor/grass)
 	New()
 		..()
 		src.set_dir(pick(cardinal))
+
+	walp
+		icon_state = "grass_walp"
 
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
