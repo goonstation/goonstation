@@ -1867,7 +1867,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 			name = "commander's great coat"
 			icon_state = "ntcommander_coat"
 			item_state = "ntcommander_coat"
-			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been painted blue?"
+			desc = "An awe-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Commander. So stylish even the vacuum of space refuses to claim the wearer."
 
 			setupProperties()
 				..()

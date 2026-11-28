@@ -182,6 +182,33 @@
 			qdel(start)
 			qdel(end)
 
+	on_end(var/obj/projectile/P) //better feedback on misses
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(P))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = P.x*32 + P.pixel_x
+		var/Hy = P.y*32 + P.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			O.color = list(-0.8, 0, 0, 0, -0.8, 0, 0, 0, -0.8, 1.5, 1.5, 1.5)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECONDS)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
 /datum/projectile/special/target_designator
 	sname = "foo"
 	name = "bar"

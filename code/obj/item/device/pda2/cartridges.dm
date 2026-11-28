@@ -249,6 +249,30 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src) )
 			src.read_only = 1
 
+	ntboss
+		name = "\improper R.O.B.U.S.T.E.S.T. cartridge"
+		desc = "Someone registered the shareware version of the R.O.B.U.S.T.E.R. cartridge!"
+		icon_state = "cart-hos"
+		file_amount = 128
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
+			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
+			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot/pro(src))
+			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portabrig(src))
+			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portamedbay(src))
+			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
+			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/secrecord_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
+			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
+			src.file_amount = src.file_used
+			src.read_only = 1
+
 	hos
 		name = "\improper R.O.B.U.S.T.E.R. cartridge"
 		desc = "Someone registered the shareware version of the R.O.B.U.S.T. cartridge!"
