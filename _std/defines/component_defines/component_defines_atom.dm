@@ -120,7 +120,7 @@
 	#define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
 	/// when an atom hits something when being thrown (thrown_atom, hit_target, /datum/thrown_thing)
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
-	/// when an AM is teleported by do_teleport
+	/// when an AM is teleported by do_teleport or other means of teleportation
 	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
 	/// when an AM changes contraband level (self_applied)
 	#define COMSIG_MOVABLE_CONTRABAND_CHANGED "mov_contraband_changed"
