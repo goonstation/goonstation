@@ -1,7 +1,9 @@
 /* Usage:
 	Expression:			Value:
-	`X Y %`		-->		`X % Y`
+	`X Y %`		-->		`X %% Y`
 	`9 4 %`		-->		`1`
+	`5.5 2 %`	-->		`1.5`
+	`-7 2 %`	-->		`-1`
 */
 /datum/dwaine_shell_script_operator/modulo
 	name = "%"
@@ -18,7 +20,7 @@
 		if (operand_2 == 0)
 			return DWAINE::ERR::SHELL::SCRIPT::UNDEFINED
 
-		src.shell.stack.Splice(-2, 0, SCRIPT_CLAMPVALUE(operand_1 % operand_2))
+		src.shell.stack.Splice(-2, 0, SCRIPT_CLAMPVALUE(operand_1 %% operand_2))
 		return DWAINE::ERR::SHELL::SCRIPT::SUCCESS
 
 	return DWAINE::ERR::SHELL::SCRIPT::UNDEFINED

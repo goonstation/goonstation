@@ -74,7 +74,7 @@
 		auxiliary_tree.update_target_speech_tree(null)
 
 	for (var/prefix_id in src.speech_prefixes_by_id)
-		qdel(src.speech_modifiers_by_id[prefix_id])
+		qdel(src.speech_prefixes_by_id[prefix_id])
 
 	for (var/modifier_id in src.speech_modifiers_by_id)
 		qdel(src.speech_modifiers_by_id[modifier_id])

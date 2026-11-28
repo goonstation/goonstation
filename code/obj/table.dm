@@ -207,6 +207,7 @@ TYPEINFO_NEW(/obj/table)
 		return TRUE
 
 	disposing()
+		STOP_TRACKING
 		var/turf/OL = get_turf(src)
 		if (!OL)
 			return

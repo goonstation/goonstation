@@ -204,6 +204,7 @@ TYPEINFO(/obj/item/toy/cellphone)
 		src.tetris = new /datum/game/tetris(src)
 
 	disposing()
+		QDEL_NULL(src.tetris)
 		..()
 		STOP_TRACKING
 
@@ -254,6 +255,10 @@ TYPEINFO(/obj/item/toy/handheld)
 			boutput(user, SPAN_ALERT("You're illiterate and can't read the screen!"))
 		else
 			arcadeholder.show_ui(user)
+
+	disposing()
+		QDEL_NULL(src.gameholder)
+		. = ..()
 
 
 /obj/item/toy/handheld/robustris

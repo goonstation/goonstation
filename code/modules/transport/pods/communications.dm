@@ -98,6 +98,10 @@ TYPEINFO(/obj/item/device/radio/intercom/ship)
 		rc_ship.com = src
 		return
 
+	disposing()
+		QDEL_NULL(rc_ship)
+		..()
+
 	proc/External()
 		var/broadcast = tgui_input_text(usr, "Please enter what you want to say over the external speaker:", "External Speaker", null, MAX_MESSAGE_LEN, TRUE)
 		if(!broadcast || usr.loc != src.ship) // need to check if something wasn't entered or if user isn't in a vehicle
@@ -138,6 +142,10 @@ TYPEINFO(/obj/item/device/radio/intercom/ship)
 		..()
 		src.net_id = format_net_id("\ref[src]")
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
+
+	disposing()
+		src.com = null
+		..()
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		if(!signal)

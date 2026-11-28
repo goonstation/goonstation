@@ -46,6 +46,10 @@ TYPEINFO(/obj/machinery/computer/tetris)
 	..()
 	src.tetris = new /datum/game/tetris(src)
 
+/obj/machinery/computer/tetris/disposing()
+	QDEL_NULL(src.tetris)
+	..()
+
 /obj/machinery/computer/tetris/attack_hand(mob/user)
 	if(..())
 		return
@@ -93,6 +97,7 @@ ABSTRACT_TYPE(/datum/game)
 		src.code = grabResource("html/tetris.html")
 
 	disposing()
+		src.owner = null
 		..()
 		STOP_TRACKING
 
