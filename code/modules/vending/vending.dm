@@ -737,92 +737,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				src.credit = 0
 		if("vend")
 			if(params["target"])
-				if (!src.vend_ready)
-					return
-				if (seconds_electrified)
-					if(src.shock(usr,100))
-						return
-				var/datum/db_record/personnel/bank/account = global.data_core.get_bank_record(src.scan?.registered)
-				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
-					boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
-					FLICK(src.icon_deny,src)
-					return
-				if (src.pay)
-					if (src.acceptcard && src.scan)
-						if (!account)
-							boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
-							FLICK(src.icon_deny,src)
-							return
-						if (account["current_money"] < params["cost"])
-							boutput(usr, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
-							FLICK(src.icon_deny,src)
-							return
-					else
-						if (src.credit < params["cost"])
-							boutput(usr, SPAN_ALERT("Insufficient Credit."))
-							FLICK(src.icon_deny,src)
-							return
-
-				var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
-				var/datum/data/vending_product/product
-
+				var/datum/action/vend_product/vend_action = new()
+				vend_action.user = usr
+				vend_action.vendor = src
+				vend_action.duration = src.vend_delay
+				vend_action.given_cost = params["cost"]
 				var/list/plist = player_list || product_list
 				for (var/datum/data/vending_product/R in plist)
 					if(ref(R) == (params["target"]))
-						product_amount = R.product_amount
-						product = R
-				if(product_amount <= 0 || isnull(product))
-					return
-				src.vend_ready = 0
-				src.prevend_effect()
-				src.currently_vending = product
-				SPAWN(src.vend_delay)
-					src.vend_ready = 1
-					for (var/datum/data/vending_product/R in plist)
-						if(ref(R) == params["target"])
-							product_amount = R.product_amount
-							product = R
-					if (src.pay) // do we need to take their money
-						if (src.acceptcard && account)
-							if(account["current_money"] < product.product_cost)
-								src.currently_vending = null
-								return
-						else
-							if(src.credit < product.product_cost)
-								src.currently_vending = null
-								return
-					var/atom/movable/vended = src.vend_product(product, usr)
-					if (!product.infinite)
-						if (plist == player_list && product_amount == 1)
-							player_list -= product
-							qdel(product)
-						product.product_amount--
-					if(src.pay && vended)
-						var/obj/machinery/vending/player/vMachine = src
-						if (src.acceptcard && account)
-							account["current_money"] -= product.product_cost
-						else
-							src.credit -= product.product_cost
-						if (!player_list || !vMachine.owneraccount)
-							wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
-						else
-							//Players get 90% of profit from player vending machines QMs get 10%
-							vMachine.owneraccount["current_money"] += round(product.product_cost * profit)
-							wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += round(product.product_cost * (1 - profit))
-					src.currently_vending = null
-					update_static_data(usr)
-				if(product.logged_on_vend)
-					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
-				if(player_list)
-					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
+						vend_action.product = R
+				actions.start(vend_action, src)
 
-				if (account)
-					var/datum/db_record/personnel/general/general = global.data_core.get_general_record(id = account["id"])
-					var/account_name = general?["name"]
-					if (account_name && (account_name != usr.real_name))
-						// reduce logging spam from clerical errors
-						if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src, "buy_[usr.real_name]", 10 SECONDS))
-							logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account_name]).")
 		else
 			. = FALSE
 
@@ -1326,10 +1251,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			for(var/mob/M in AIviewers(src.owner))
 				M.show_message(SPAN_NOTICE("<B>[src.owner] manages to stand \the [src.vendor] back upright!</B>"), 1)
 
-#undef WIRE_EXTEND
-#undef WIRE_SCANID
-#undef WIRE_SHOCK
-#undef WIRE_SHOOTINV
 
 /obj/machinery/vending/coffee
 	name = "coffee machine"
@@ -3674,3 +3595,111 @@ TYPEINFO(/obj/machinery/vending/murderbox_armory)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/very_incendiary, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/incendiary, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cryo, 1, infinite = TRUE)
+
+/datum/action/vend_product
+	interrupt_flags = INTERRUPT_NONE
+
+	var/mob/user
+	var/obj/machinery/vending/vendor
+	var/datum/data/vending_product/product
+	var/given_cost
+	var/datum/db_record/personnel/bank/bank_account
+
+/datum/action/vend_product/onStart()
+	. = ..()
+	if (isnull(src.user) || isnull(src.vendor) || isnull(src.product) || isnull(src.given_cost))
+		interrupt(INTERRUPT_ALWAYS)
+	if (!src.vendor.vend_ready)
+		interrupt(INTERRUPT_ALWAYS)
+	if (src.vendor.seconds_electrified)
+		if (src.vendor.shock(user, 100))
+			interrupt(INTERRUPT_ALWAYS)
+	src.bank_account = global.data_core.get_bank_record(src.vendor.scan?.registered)
+	if ((!src.vendor.allowed(user)) && (!src.vendor.emagged) && (src.vendor.wires & WIRE_SCANID))
+		user.show_message(SPAN_ALERT("Access denied."))
+		FLICK(src.vendor.icon_deny, src.vendor)
+		return
+
+	if (src.vendor.pay)
+		if (src.vendor.acceptcard && src.vendor.scan)
+			if (!src.bank_account)
+				boutput(src.user, SPAN_ALERT("No bank account associated with ID found."))
+				FLICK(src.vendor.icon_deny, src.vendor)
+				return
+			if (src.bank_account["current_money"] < given_cost)
+				boutput(src.user, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
+				FLICK(src.vendor.icon_deny, src.vendor)
+				return
+		else
+			if (src.vendor.credit < given_cost)
+				boutput(src.user, SPAN_ALERT("Insufficient Credit."))
+				FLICK(src.vendor.icon_deny, src.vendor)
+				return
+
+	if(src.product.product_amount <= 0 || isnull(src.product))
+		return
+
+	src.vendor.vend_ready = FALSE
+	src.vendor.prevend_effect()
+	src.vendor.currently_vending = src.product
+
+	if(src.product.logged_on_vend)
+		logTheThing(LOG_STATION, user, "vended a logged product ([src.product.product_name]) from [src.vendor] at [log_loc(src.vendor)].")
+	if(src.vendor.player_list)
+		logTheThing(LOG_STATION, user, "vended a player product ([src.product.product_name]) from [src.vendor] at [log_loc(src.vendor)].")
+
+	if (src.bank_account)
+		var/datum/db_record/personnel/general/general = global.data_core.get_general_record(id = src.bank_account["id"])
+		var/account_name = general?["name"]
+		if (account_name && (account_name != user.real_name))
+			// reduce logging spam from clerical errors
+			if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src.vendor, "buy_[src.user.real_name]", 10 SECONDS))
+				logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account_name]).")
+
+/datum/action/vend_product/onDelete()
+	. = ..()
+	src.vendor?.vend_ready = TRUE
+	src.vendor?.currently_vending = null
+
+/datum/action/vend_product/onEnd()
+	. = ..()
+	if (QDELETED(src.vendor) || QDELETED(src.product))
+		interrupt(INTERRUPT_ALWAYS)
+
+	if (src.vendor.pay) // do we need to take their money
+		if (src.vendor.acceptcard && src.bank_account)
+			if(src.bank_account["current_money"] < product.product_cost)
+				src.vendor.currently_vending = null
+				return
+		else
+			if(src.vendor.credit < src.product.product_cost)
+				src.vendor.currently_vending = null
+				return
+	var/atom/movable/vended = src.vendor.vend_product(src.product, src.user)
+	var/actual_cost = src.product.product_cost // product potentially deleted below
+
+	if (!src.product.infinite)
+		var/list/plist = src.vendor.player_list || src.vendor.product_list
+		if (plist == src.vendor.player_list && src.product.product_amount == 1)
+			src.vendor.player_list -= src.product
+			qdel(src.product) // only delete products from player vendors
+		src.product?.product_amount--
+	if(src.vendor.pay && vended)
+		var/obj/machinery/vending/player/player_vendor = src
+		if (src.vendor.acceptcard && src.bank_account)
+			src.bank_account["current_money"] -= actual_cost
+		else
+			src.vendor.credit -= actual_cost
+		if (!src.vendor.player_list || !player_vendor.owneraccount)
+			global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += round(actual_cost * src.vendor.profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+		else
+			//Players get 90% of profit from player vending machines QMs get 10%
+			player_vendor.owneraccount["current_money"] += round(actual_cost * src.vendor.profit)
+			global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += round(actual_cost * (1 - src.vendor.profit))
+
+	src.vendor.update_static_data_for_all_viewers()
+
+#undef WIRE_EXTEND
+#undef WIRE_SCANID
+#undef WIRE_SHOCK
+#undef WIRE_SHOOTINV
