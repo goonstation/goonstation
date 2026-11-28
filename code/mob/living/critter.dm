@@ -93,6 +93,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	var/list/friends = list()
 
+	var/aggressive = FALSE // Moved from small critter cause I think the concept of anger is a bit broad
+
+	var/tamed = FALSE
+
 	var/pull_w_class = W_CLASS_SMALL
 
 	///Whether or not we attack mobs with the neutral faction flag
@@ -346,6 +350,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	return 0
 
 /mob/living/critter/attackby(var/obj/item/I, var/mob/M)
+	if (M.GetComponent(/datum/component/tameable)) // Here instead of the component to stop accidental rockworm bludgeoning
+		var/datum/component/tameable/TC = M.GetExactComponent(/datum/component/tameable)
+		if(TC.is_valid_food(I))
+			return
 	if (isdead(src)) 	//Just copied from pets_small_animals.dm with only small modifications. yep!
 		if (src.skinresult && max_skins)
 			if (issawingtool(I) || iscuttingtool(I))
@@ -1345,6 +1353,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			. += C
 
 /mob/living/critter/proc/valid_target(var/mob/living/C)
+	if(SEND_SIGNAL(src, COMSIG_MOB_VALIDATE_TARGET,C))
+		return FALSE
 	if (isintangible(C)) return FALSE
 	if (isdead(C)) return FALSE
 	if (istype(C, src.type)) return FALSE
