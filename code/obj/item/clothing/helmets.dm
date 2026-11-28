@@ -132,10 +132,10 @@
 	var/wear_mutantrace_type = null // Used to know when to update wear images for different mutant races
 
 	update_wear_image(mob/living/carbon/human/H, override)
-		if(istype_exact(H.mutantrace, src.wear_mutantrace_type))
+		if(H && istype_exact(H.mutantrace, src.wear_mutantrace_type))
 			return
-		src.wear_mutantrace_type = H.mutantrace?.type
-		var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+		src.wear_mutantrace_type = H?.mutantrace?.type
+		var/typeinfo/datum/mutantrace/typeinfo = H?.mutantrace?.get_typeinfo()
 		if("spacemat" in typeinfo?.clothing_icon_states["head"])
 			src.wear_image_icon = typeinfo.clothing_icons["head"]
 		else
