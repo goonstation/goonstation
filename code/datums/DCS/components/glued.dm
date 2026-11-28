@@ -147,5 +147,3 @@ TYPEINFO(/datum/component/glued)
 	parent.set_loc(get_turf(parent))
 	src.glued_to = null
 	. = ..()
-
-#undef MAGIC_GLUE_ANCHORED
