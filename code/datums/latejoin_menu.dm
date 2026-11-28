@@ -129,6 +129,8 @@ var/datum/latejoin_menu/latejoin_menu = new()
 	if (istype(J, /datum/job/command) && istype(ticker.mode, /datum/game_mode/revolution) && !(ROLEPLAY_REVOLUTIONARIES && ticker.round_elapsed_ticks < 25 MINUTES))
 		slot_count = max(slot_count, J.limit)
 		disabled = TRUE // So we need to tell it its not available
+	else if(!disabled && !isadmin(user) && J.disallow_respawnees && user.client?.player?.timed_respawn_in_progress)
+		disabled = TRUE // Disallow joining as some jobs when respawning
 
 	.["job_name"] = J.name
 	.["priority_role"] = (global.job_controls.priority_job == J)
