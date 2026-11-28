@@ -29539,7 +29539,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/manufacturer/medical,
 /obj/railing/orange,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -29905,13 +29904,11 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "csv" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/railing/orange,
+/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "csy" = (
@@ -38200,8 +38197,8 @@
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "gDm" = (
-/obj/machinery/vending/port_a_nanomed,
 /obj/machinery/light,
+/obj/machinery/manufacturer/medical,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "gDx" = (
