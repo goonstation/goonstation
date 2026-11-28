@@ -122,7 +122,7 @@
 	path = "images/arts/business_mabinogi.png"
 
 /obj/item/paper/image/businesscard/iron_belle_ad
-	name = "Iron Belle Pamphlet"
+	name = "pamphlet - Iron Belle"
 	desc = "An old timey looking advertisment for a cyborg that makes blades. Charming."
 	path = "images/arts/sword_cyborg.png"
 	icon_state = "iron-belle-ad" // art by cogwerks
