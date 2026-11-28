@@ -9,9 +9,12 @@
 	var/health = 30
 	var/obj/item/displayed = null // The item held within.
 	var/destroyed = 0
+	var/alarmed = FALSE // alarmed variant, used in superstore prefab
 
 	New()
 		..()
+		if(src.alarmed)
+			START_TRACKING
 		if (ispath(src.displayed))
 			src.displayed = new src.displayed
 
@@ -84,6 +87,9 @@
 			desc = "A display case for antique possessions. It has been destroyed."
 			playsound(src, "shatter", 70, 1)
 			UpdateIcon()
+			if(src.alarmed)
+				playsound(src.loc, 'sound/machines/lavamoon_plantalarm.ogg', 50, TRUE)
+				SEND_SIGNAL(src, COMSIG_DISPLAYCASE_ALARM)
 	else
 		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
 	return
@@ -165,6 +171,18 @@
 	..()
 	return
 
+/obj/displaycase/disposing()
+	..()
+	if(src.alarmed)
+		STOP_TRACKING
+
 //lets have an actual subtype instead of just varediting this
 /obj/displaycase/captain
 	displayed = /obj/item/gun/energy/antique
+
+/obj/displaycase/alarmed
+	name = "alarmed display case"
+	alarmed = TRUE
+
+/obj/displaycase/alarmed/super_store
+	displayed = /obj/item/gun/energy/antique/first_edition

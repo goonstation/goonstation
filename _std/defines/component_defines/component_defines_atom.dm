@@ -158,6 +158,10 @@
 	/// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
 	#define COMSIG_OBJ_PROJ_COLLIDE "proj_collide_atom"
 
+// ---- displaycase signals ----
+	/// When an alarmed display case is broken
+	#define COMSIG_DISPLAYCASE_ALARM "displaycase_alarm"
+
 // ---- item signals ----
 
 	//	---- generic ----
