@@ -868,7 +868,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 	shotgun
 		comname = "Pump action shotgun"
 		desc = "A salvaged and rebuilt pump action shotgun."
-		comtype = /obj/item/gun/kinetic/pumpweapon/riotgun/salvager
+		comtype = /obj/item/gun/kinetic/pumpweapon/salvager
 		price = 1200
 		amount = 6
 
