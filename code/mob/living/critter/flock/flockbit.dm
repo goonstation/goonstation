@@ -119,6 +119,12 @@
 				return null
 	return null
 
+/mob/living/critter/flock/bit/emp_act()
+	src.TakeDamage("All", brute = 50) //convenience, not actually brute in terms of what it would be doing
+	playsound(src.loc, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 30, 1, extrarange = -10)
+	emote("scream")
+	boutput(src, SPAN_ALERT("You feel your systems collapse as the electromagnetic pulse cuts your connection to the Signal!"))
+
 /////////////////////////////////////
 
 /datum/limb/flockbit_converter // can only convert turfs but can do it for free and faster
