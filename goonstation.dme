@@ -1415,6 +1415,7 @@
 #include "code\modules\events\respawn\antagonist_critter_ghost_respawn.dm"
 #include "code\modules\events\respawn\crew_spawn.dm"
 #include "code\modules\events\respawn\playable_pests.dm"
+#include "code\modules\events\respawn\remy_gets_cooking.dm"
 #include "code\modules\events\respawn\salvagers.dm"
 #include "code\modules\events\respawn\sleeperagent.dm"
 #include "code\modules\events\respawn\sudden_sapience_disease.dm"

@@ -430,16 +430,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			return
 		M.critterize(src.plush_type)
 
-/datum/job/special/halloween/critter/remy
-	name = "Remy"
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/mouse/remy)
-		C.flags = null
-
 /datum/job/special/halloween/critter/bumblespider
 	name = "Bumblespider"
 
