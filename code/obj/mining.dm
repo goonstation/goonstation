@@ -2356,10 +2356,15 @@ TYPEINFO(/obj/item/cargotele)
 		var/obj/storage/S = cargo
 		ENSURE_TYPE(S)
 		var/mob_teled = FALSE
+
+		// detect hitchhikers
+		var/mob/hitchhikers = list()
+
 		for (var/mob/M in cargo.contents)
 			if (M)
 				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 				mob_teled = TRUE
+				hitchhikers |= M
 
 		if(!mob_teled)
 			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target)].")
@@ -2376,6 +2381,40 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			pad = src.target
 			turf = get_turf(pad)
+
+
+		// based on unglue_attached_to, get mobs attached to the crate
+		for(var/atom/movable/AM in cargo.loc)
+			var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+			if(glued_comp?.glued_to == cargo)
+				if (ismob(AM))
+					hitchhikers |= AM
+
+		// free radiation, copied code from pod portals and modified
+		for (var/mob/hitchhiker in hitchhikers)
+			if (QDELETED(hitchhiker))
+				continue
+			// Borgs don't care about rads (for the meantime)
+			if (issilicon(hitchhiker))
+				continue
+
+			var/dose = 0.5 SIEVERT
+
+			if (isrestrictedz(turf?.z) || (hitchhiker.loc != cargo))
+				boutput(hitchhiker, SPAN_ALERT("You are exposed to some pretty swole strange particles, this can't be good..."))
+
+				if (prob(90))
+					dose *= 2
+
+				if(ishuman(hitchhiker))
+					var/mob/living/carbon/human/H = hitchhiker
+					if (H.bioHolder)
+						if (prob(75))
+							H.bioHolder.RandomEffect("bad")
+						else
+							H.bioHolder.RandomEffect("good")
+
+			hitchhiker.take_radiation_dose(dose)
 
 		cargo.set_loc(turf)
 		pad?.receive_cargo(cargo)
