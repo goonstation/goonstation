@@ -27,6 +27,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 
 				src.item_state = "eldritch-limb"
 
+				APPLY_ATOM_PROPERTY(src, PROP_ATOM_SILVER_VULNERABILITY, src.artifact_type, 100)
 				src.cut_messages = list("slowly cuts through", "slowly cut through")
 				src.saw_messages = list("gradually saws through", "gradually saw through")
 				src.limb_material = "flesh"

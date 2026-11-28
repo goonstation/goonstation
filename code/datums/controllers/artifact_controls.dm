@@ -550,6 +550,7 @@ var/datum/artifact_controller/artifact_controls
 	post_setup(var/obj/artifact)
 		. = ..()
 		RegisterSignal(artifact, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(Artifact_chapel_block))
+		APPLY_ATOM_PROPERTY(artifact, PROP_ATOM_SILVER_VULNERABILITY, src, 100)
 
 	pre_destroyed(var/obj/artifact)
 		. = ..()

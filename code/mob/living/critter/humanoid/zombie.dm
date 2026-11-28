@@ -32,6 +32,7 @@
 		src.add_stam_mod_max("zombie", 100)
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/zombie, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "zombie", -5)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_SILVER_VULNERABILITY, "zombie", 100)
 		switch (src.infection_type)
 			if (NO_EAT)
 				return
