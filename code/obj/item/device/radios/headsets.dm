@@ -181,6 +181,14 @@
 		"m" = RADIO::FREQ::MEDICAL,
 		)
 
+/obj/item/device/radio/headset/command/nt/assistant //they're in training, so they can only communicate between themselves and the big guys
+	name = "\improper NanoTrasen Assistant headset"
+	desc = "Issued to NanoTrasen Assistant Operatives, this radio headset looks to be held together by hopes, dreams and duct tape."
+	icon_tooltip = "NanoTrasen Assistant Operative"
+	secure_frequencies = list(
+		"n" = RADIO::FREQ::NANOTRASEN
+		)
+
 /obj/item/device/radio/headset/command/inspector
 	name = "inspector's headset"
 	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."

@@ -124,3 +124,20 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_poc2 = list(/obj/item/device/pda2/nt/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
+
+/datum/job/special/nt/asssistant_operative
+	name = "Nanotrasen Assistant Operative" //putting the Ass in Assistant
+	wages = PAY::UNTRAINED //rookies
+	trait_list = list("training_security")
+	receives_miranda = TRUE
+	slot_head = list(/obj/item/clothing/head/NTberet)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
+	slot_mask = list(/obj/item/clothing/mask/gas/swat/NT = 20, /obj/item/clothing/mask/clown_hat/blue = 1) //heh
+	slot_poc1 = list(/obj/item/storage/ntsc_pouch/ntao)
+	slot_poc2 = list(/obj/item/paper/iou_trigger)
+	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_glov = list(/obj/item/clothing/gloves/fingerless)
+	slot_belt = list(/obj/item/barrier/collapsible/security)
+	slot_ears = list (/obj/item/device/radio/headset/command/nt/assistant)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular/empty) //lol, lmao even
